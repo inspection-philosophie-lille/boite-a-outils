@@ -1,0 +1,124 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 960px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  background-color: #e0e0e0; /* Fond de la page */
+}
+
+.question-body {
+  margin: 0 0 1.5rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate; /* Nécessaire pour que border-spacing fonctionne */
+  border-spacing: 20px 0; /* Ajoute 20px d'espace horizontal entre les colonnes */
+}
+
+tr {
+  display: flex;
+}
+
+
+
+
+td {
+  border-radius: 20px;
+  flex: 1 1 120px;
+  background: #ffffff;
+  box-shadow: 8px 8px 16px #b8b8b8, -8px -8px 16px #ffffff;
+
+  transition: transform 0.3s;
+}
+
+td:hover {
+  transform: translateY(-4px);
+}
+
+td:first-child {
+  display: flex;
+  justify-content: center;
+  flex: 0 0 120px;
+  background: #f2f2f2; /* Mots-clés */
+}
+
+/* Ajout de style pour la classe de numérotation */
+.phrase-num {
+  color: blue; /* Couleur bleue pour les numéros de phrase */
+
+}
+
+td.last-child {
+  margin-left: 20px;
+}
+
+td.answer {
+  min-height: 40px; /* Hauteur réduite des cellules de réponse */
+  padding: 5px; /* Réduction du rembourrage des cellules */
+}
+
+td div {
+  padding: 5px;
+}
+
+th {
+  border-radius: 20px;
+  background: #dcdcdc; 
+  box-shadow: 4px 4px 8px #b8b8b8, -4px -4px 8px #ffffff; 
+  display: flex;
+  flex: 1 1 120px;
+  justify-content: center;
+  padding: 10px;
+}
+
+th:first-child {
+  flex: 0 0 120px;
+}
+
+/* Footer pour les boutons */
+.question-footer {
+  display: flex;
+  justify-content: center; /* Centrer les boutons horizontalement */
+  margin: 0 0 1.5rem;
+}
+
+.buttons {
+  display: flex; /* Aligne les boutons horizontalement */
+  gap: 10px; /* Espacement entre les boutons */
+}
+
+button {
+  display: flex;
+  font-size: 1rem;
+  height: 35px; /* Hauteur réduite des boutons */
+  padding: 5px 10px; /* Ajustement du rembourrage */
+  border-radius: 20px; /* Coins arrondis pour les boutons */
+  background: #ffffff; /* Fond blanc pour les boutons */
+  box-shadow: 4px 4px 8px #b8b8b8, -4px -4px 8px #ffffff; /* Ombres */
+  cursor: pointer; /* Curseur pointer */
+}
+
+button:hover {
+  transform: translateY(-2px); /* Légère élévation au survol */
+}
+
+/* Styles pour le drag and drop */
+.ui-draggable {
+  background: #f2f2f2; /* Couleur de fond pour les réponses (gris clair) */
+  border-radius: 10px; /* Coins arrondis pour les éléments glissés */
+  box-shadow: 2px 2px 5px #b8b8b8, -2px -2px 5px #ffffff; /* Ombres */
+}
+
+.ui-draggable:hover {
+  background: #e0e0e0; /* Change de couleur au survol */
+  cursor: move; /* Curseur pour indiquer le drag */
+}
+
+.keyword.droppable-hover {
+  background: #d0d0d0; /* Indique qu'une cellule est prête à recevoir un glissement */
+  border: 2px solid #666; /* Bordure plus prononcée pour l'état hover */
+}

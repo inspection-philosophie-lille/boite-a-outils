@@ -1,0 +1,31 @@
+Pour le fichier textes.js :
+
+Crée un tableau JavaScript nommé "textes" contenant 30 objets structurés ainsi :
+
+Structure de chaque objet :
+- id : numéro incrémentiel de 1 à 30
+- contenu : Chaîne multiligne avec guillemets français (« ») contenant 10 phrases numérotées de [1] à [10], chaque numéro étant encapsulé dans une balise <span class="phrase-num">
+- reponses : Objet contenant 5 propriétés :
+  1. origine : "Auteur, *Titre*, Ville : Éditeur, année, page."
+  2. theme : Nom du concept philosophique (avec article défini)
+  3. these : Affirmation principale en 1 phrase
+  4. interet : Utilité/rôle du concept
+  5. problematique : Question ouverte formulée avec "Comment/Quel/Pourquoi..."
+
+Consignes spécifiques :
+1. Les thèmes doivent couvrir les grands concepts philosophiques (art, bonheur, conscience, état, etc.)
+2. Alterner les auteurs classiques (Platon, Kant) et modernes (Freud, Nietzsche)
+3. Les phrases dans "contenu" doivent :
+   - Être en français soutenu
+   - Utiliser des termes techniques de philosophie
+   - Développer progressivement le thème
+   - Se terminer par une conclusion forte ([10])
+4. Les réponses doivent montrer une cohérence thématique
+5. Varier les éditeurs et années de publication réalistes
+6. Inclure des balises <span> avec la classe exacte "phrase-num"
+7. Formater proprement avec indentation et sauts de ligne
+8. Utiliser uniquement des guillemets français (« ») pour le contenu
+
+Fournis le code complet prêt à l'emploi dans un seul fichier.
+ssssssssssssssssssssssssssssssssssssssssssssssssssss
+

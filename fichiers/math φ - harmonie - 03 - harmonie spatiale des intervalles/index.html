@@ -1,0 +1,502 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<!------------------------------------ Daniel Boulagnon ------------------------------------>
+<!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
+<!------------------------------------- version 2025 --------------------------------------->
+<!----------------- Exploitation à but strictement pédagogique et non lucratif ------------->
+
+<html lang="fr" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="icon" href="../../src/favicon.ico" />
+	<title>harmonie spatiale</title>	
+    <h1 class="title">harmonie spatiale des intervalles</h1>
+    <h2 class="subtitle">gamme pythagoricienne</h2>
+	<br>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            margin-top: 0.5vmin;
+            background-color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+            overflow-y: auto;
+            position: relative;
+        }
+        .title {
+            color: red;
+            font-weight: bold;
+            font-size: 40px;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: normal;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .degree-buttons {
+            position: absolute;
+            left: 1vmin;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5vmin;
+            z-index: 4;
+        }
+        .container {
+            position: relative;
+            width: 60vmin;
+            height: 60vmin;
+            max-width: 350px;
+            max-height: 350px;
+            min-width: 150px;
+            min-height: 150px;
+            background: #e0e0e0;
+            border-radius: 50%;
+            box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 1vmin;
+        }
+        .disk {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+        .white {
+            background: #e0e0e0;
+            z-index: 1;
+            box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff;
+        }
+        .black {
+            z-index: 2;
+            transform-origin: center;
+            background: #e0e0e0;
+            box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff;
+        }
+        .degree-button {
+            padding: 0.5vmin;
+            width: 12vmin;
+            height: 6vmin;
+            font-size: 2.5vmin;
+            cursor: pointer;
+            background: #e0e0e0;
+            color: #333;
+            border: none;
+            border-radius: 0.5vmin;
+            box-shadow: 2px 2px 4px #bebebe, -2px -2px 4px #ffffff;
+            transition: all 0.3s ease;
+        }
+        .degree-button.active {
+            background: linear-gradient(145deg, #cacaca, #f0f0f0);
+            box-shadow: inset 1px 1px 3px #bebebe, inset -1px -1px 3px #ffffff;
+            color: #333;
+        }
+        .degree-button:hover {
+            box-shadow: inset 2px 2px 4px #bebebe, inset -2px -2px 4px #ffffff;
+        }
+        .degree-button:active {
+            box-shadow: inset 2px 2px 4px #bebebe, inset -2px -2px 4px #ffffff;
+        }
+        .buttons {
+            position: absolute;
+            left: 50%;
+            bottom: 2vmin;
+            transform: translateX(-50%);
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            gap: 1vmin;
+        }
+        button {
+            margin: 0;
+            padding: 0;
+            width: 7vmin;
+            height: 7vmin;
+            font-size: 3vmin;
+            cursor: pointer;
+            background: #e0e0e0;
+            color: #333;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 3px 3px 6px #bebebe, -3px -3px 6px #ffffff;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+        button:hover {
+            box-shadow: inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff;
+        }
+        button:active {
+            box-shadow: inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff;
+        }
+        .chord-name {
+            width: 20vmin;
+            height: 7vmin;
+            font-size: 2.5vmin;
+            color: #333;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 3.5vmin;
+            box-shadow: inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            white-space: nowrap;
+            overflow: visible;
+        }
+        @media (max-width: 600px) {
+            .title {
+                font-size: 30px;
+                margin-top: 10px;
+                margin-bottom: 5px;
+            }
+            .subtitle {
+                font-size: 15px;
+                font-weight: normal;
+                margin-bottom: 10px;
+            }
+            .degree-buttons {
+                position: static;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 1vmin;
+                margin-bottom: 1vmin;
+            }
+            .degree-button {
+                width: 12vmin;
+                height: 5vmin;
+                font-size: 2.5vmin;
+            }
+            .container {
+                margin-left: auto;
+                margin-top: 2vmin;
+                width: 70vmin;
+                height: 70vmin;
+            }
+            .buttons {
+                position: static;
+                margin-top: 2vmin;
+                transform: none;
+                gap: 1.5vmin;
+            }
+            button {
+                width: 9vmin;
+                height: 9vmin;
+                font-size: 4vmin;
+            }
+            .chord-name {
+                width: 25vmin;
+                height: 9vmin;
+                font-size: 3vmin;
+                border-radius: 4.5vmin;
+                box-shadow: inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="degree-buttons">		
+		<button class="degree-button active" data-degree="0" style="margin-top: 12px;margin-bottom: -12px;">Tonique</button>
+		<button class="degree-button" data-degree="1" style="margin-top: 12px;margin-bottom: -12px;">Seconde</button>
+		<button class="degree-button active" data-degree="2" style="margin-top: 12px;margin-bottom: -12px;">Tierce</button>
+		<button class="degree-button" data-degree="3" style="margin-top: 12px;margin-bottom: -12px;">Quarte</button>
+		<button class="degree-button active" data-degree="4" style="margin-top: 12px;margin-bottom: -12px;">Quinte</button>
+		<button class="degree-button" data-degree="5" style="margin-top: 12px;margin-bottom: -12px;">Sixte</button>		
+		<button class="degree-button" data-degree="6" style="margin-top: 12px;margin-bottom: -12px;">Septième</button>		
+    </div>
+    <div class="container">
+        <svg class="disk black" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+            <defs>
+                <filter id="inset-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur"/>
+                    <feOffset dx="3" dy="3" result="offsetBlur"/>
+                    <feFlood flood-color="#bebebe" result="color"/>
+                    <feComposite in="color" in2="offsetBlur" operator="in" result="shadow1"/>
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur2"/>
+                    <feOffset dx="-3" dy="-3" result="offsetBlur2"/>
+                    <feFlood flood-color="#ffffff" result="color2"/>
+                    <feComposite in="color2" in2="offsetBlur2" operator="in" result="shadow2"/>
+                    <feMerge>
+                        <feMergeNode in="shadow1"/>
+                        <feMergeNode in="shadow2"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+            <circle cx="200" cy="200" r="200" fill="#e0e0e0" />
+            <circle cx="200" cy="200" r="170" fill="#e0e0e0" stroke="#bebebe" stroke-width="2" style="filter: drop-shadow(5px 5px 10px #bebebe) drop-shadow(-5px -5px 10px #ffffff);" />
+            <g id="rotating-group" transform="rotate(-15, 200, 200)">
+                <g transform="translate(200, 200)">
+                    <path id="section-0" d="M -20 -66.5 A 70 70 0 0 1 20 -66.5 L 30 -105.92 A 110 110 0 0 0 -30 -105.92 Z" fill="white" stroke="#bebebe" stroke-width="2" transform="rotate(15)" filter="url(#inset-shadow)" />
+                    <path id="section-1" d="M -20 -66.5 A 70 70 0 0 1 20 -66.5 L 30 -105.92 A 110 110 0 0 0 -30 -105.92 Z" fill="white" stroke="#bebebe" stroke-width="2" transform="rotate(75)" visibility="hidden" filter="url(#inset-shadow)" />
+                    <path id="section-2" d="M -20 -66.5 A 70 70 0 0 1 20 -66.5 L 30 -105.92 A 110 110 0 0 0 -30 -105.92 Z" fill="white" stroke="#bebebe" stroke-width="2" transform="rotate(135)" filter="url(#inset-shadow)" />
+                    <path id="section-3" d="M -20 -66.5 A 70 70 0 0 1 20 -66.5 L 30 -105.92 A 110 110 0 0 0 -30 -105.92 Z" fill="white" stroke="#bebebe" stroke-width="2" transform="rotate(165)" visibility="hidden" filter="url(#inset-shadow)" />
+                    <path id="section-4" d="M -20 -66.5 A 70 70 0 0 1 20 -66.5 L 30 -105.92 A 110 110 0 0 0 -30 -105.92 Z" fill="white" stroke="#bebebe" stroke-width="2" transform="rotate(225)" filter="url(#inset-shadow)" />
+                    <path id="section-5" d="M -20 -66.5 A 70 70 0 0 1 20 -66.5 L 30 -105.92 A 110 110 0 0 0 -30 -105.92 Z" fill="white" stroke="#bebebe" stroke-width="2" transform="rotate(285)" visibility="hidden" filter="url(#inset-shadow)" />
+                    <path id="section-6" d="M -20 -66.5 A 70 70 0 0 1 20 -66.5 L 30 -105.92 A 110 110 0 0 0 -30 -105.92 Z" fill="white" stroke="#bebebe" stroke-width="2" transform="rotate(345)" visibility="hidden" filter="url(#inset-shadow)" />
+                </g>
+                <g transform="translate(200, 200)">
+                    <g stroke="#666" stroke-width="1" visibility="hidden">
+                        <line x1="0" y1="0" x2="0" y2="-110" />
+                        <line x1="0" y1="0" x2="0" y2="-110" transform="rotate(30)" />
+                        <line x1="0" y1="0" x2="0" y2="-110" transform="rotate(60)" />
+                        <line x1="0" y1="0" x2="0" y2="-110" transform="rotate(90)" />
+                        <line x1="0" y1="0" x2="0" y2="-110" transform="rotate(120)" />
+                        <line x1="0" y1="0" x2="0" y2="-110" transform="rotate(150)" />
+                        <line x1="0" y1="0" x2="0" y2="-110" transform="rotate(180)" />
+                        <line x1="0" y1="0" x2="0" y2="-110" transform="rotate(210)" />
+                        <line x1="0" y1="0" x2="0" y2="-110" transform="rotate(240)" />
+                        <line x1="0" y1="0" x2="0" y2="-110" transform="rotate(270)" />
+                        <line x1="0" y1="0" x2="0" y2="-110" transform="rotate(300)" />
+                        <line x1="0" y1="0" x2="0" y2="-110" transform="rotate(330)" />
+                    </g>
+                </g>
+                <g id="interval-labels" transform="translate(200, 200)">
+                    <text id="interval-0" x="0" y="-130" fill="#333" text-anchor="middle" font-size="3vmin" transform="rotate(15)">Tonique</text>
+                    <text id="interval-1" x="0" y="-130" fill="#333" text-anchor="middle" font-size="3vmin" transform="rotate(75)">Seconde</text>
+                    <text id="interval-2" x="0" y="-130" fill="#333" text-anchor="middle" font-size="3vmin" transform="rotate(135)">Tierce</text>
+                    <text id="interval-3" x="0" y="-130" fill="#333" text-anchor="middle" font-size="3vmin" transform="rotate(165)">Quarte</text>
+                    <text id="interval-4" x="0" y="-130" fill="#333" text-anchor="middle" font-size="3vmin" transform="rotate(225)">Quinte</text>
+                    <text id="interval-5" x="0" y="-130" fill="#333" text-anchor="middle" font-size="3vmin" transform="rotate(285)">Sixte</text>
+                    <text id="interval-6" x="0" y="-130" fill="#333" text-anchor="middle" font-size="3vmin" transform="rotate(345)">Septième</text>
+                </g>
+                <g transform="translate(200, 200)">
+                    <g fill="#333" font-size="2.5vmin" text-anchor="middle">
+                        <text id="column-1" x="0" y="-50" transform="rotate(15)">1</text>
+                        <text id="column-2" x="0" y="-50" transform="rotate(45)">2</text>
+                        <text id="column-3" x="0" y="-50" transform="rotate(75)">3</text>
+                        <text id="column-4" x="0" y="-50" transform="rotate(105)">4</text>
+                        <text id="column-5" x="0" y="-50" transform="rotate(135)">5</text>
+                        <text id="column-6" x="0" y="-50" transform="rotate(165)">6</text>
+                        <text id="column-7" x="0" y="-50" transform="rotate(195)">7</text>
+                        <text id="column-8" x="0" y="-50" transform="rotate(225)">8</text>
+                        <text id="column-9" x="0" y="-50" transform="rotate(255)">9</text>
+                        <text id="column-10" x="0" y="-50" transform="rotate(285)">10</text>
+                        <text id="column-11" x="0" y="-50" transform="rotate(315)">11</text>
+                        <text id="column-12" x="0" y="-50" transform="rotate(345)">12</text>
+                    </g>
+                </g>
+            </g>
+            <g transform="translate(200, 200)">
+                <g fill="#333" font-size="5vmin" font-weight="bold" text-anchor="middle">
+                    <text id="note-0" x="0" y="-80" transform="rotate(0)">Do</text>
+                    <text id="note-1" x="0" y="-80" transform="rotate(30)">Do♯</text>
+                    <text id="note-2" x="0" y="-80" transform="rotate(60)">Ré</text>
+                    <text id="note-3" x="0" y="-80" transform="rotate(90)">Ré♯</text>
+                    <text id="note-4" x="0" y="-80" transform="rotate(120)">Mi</text>
+                    <text id="note-5" x="0" y="-80" transform="rotate(150)">Fa</text>
+                    <text id="note-6" x="0" y="-80" transform="rotate(180)">Fa♯</text>
+                    <text id="note-7" x="0" y="-80" transform="rotate(210)">Sol</text>
+                    <text id="note-8" x="0" y="-80" transform="rotate(240)">Sol♯</text>
+                    <text id="note-9" x="0" y="-80" transform="rotate(270)">La</text>
+                    <text id="note-10" x="0" y="-80" transform="rotate(300)">La♯</text>
+                    <text id="note-11" x="0" y="-80" transform="rotate(330)">Si</text>
+                </g>
+            </g>
+        </svg>
+    </div>
+    <div class="buttons">
+		<button id="rotate-left" style="font-size: 4vmin; line-height: 1;margin-top: 5px;">←</button>
+		<button id="play-chord" style="font-size: 3vmin;margin-top: 5px;">▶</button>
+		<button id="rotate-right" style="font-size: 4vmin; line-height: 1;margin-top: 5px;">→</button>
+        <button id="chord-name" class="chord-name"></button>
+    </div>
+    <script>
+        const rotatingGroup = document.getElementById('rotating-group');
+        const degreeButtons = document.querySelectorAll('.degree-button');
+        const chordNameDisplay = document.getElementById('chord-name');
+        let rotation = -15;
+        const degreeToAngle = {
+            0: { angle: 15, column: 'column-1', note: 0 },
+            1: { angle: 75, column: 'column-3', note: 2 },
+            2: { angle: 135, column: 'column-5', note: 4 },
+            3: { angle: 165, column: 'column-6', note: 5 },
+            4: { angle: 225, column: 'column-8', note: 7 },
+            5: { angle: 285, column: 'column-10', note: 9 },
+            6: { angle: 345, column: 'column-12', note: 11 }
+        };
+        const noteFrequencies = {
+            'Do': 261.63, 'Do♯': 277.18, 'Ré': 293.66, 'Ré♯': 311.13, 'Mi': 329.63,
+            'Fa': 349.23, 'Fa♯': 369.99, 'Sol': 392.00, 'Sol♯': 415.30, 'La': 440.00,
+            'La♯': 466.16, 'Si': 493.88
+        };
+        const noteOrder = ['Do', 'Do♯', 'Ré', 'Ré♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
+        const alteredNotes = ['Do♯', 'Ré♯', 'Fa♯', 'Sol♯', 'La♯'];
+        function getChordName() {
+            const notes = getChordNotes();
+            if (notes.length === 0) return "Aucun accord";
+            const normalizedRotation = ((rotation % 360) + 360) % 360;
+            const rotationSteps = Math.round(normalizedRotation / 30);
+            const baseNoteIndex = (rotationSteps + 12) % 12;
+            const rootNote = noteOrder[baseNoteIndex];
+            const intervals = notes.map(note => {
+                const noteIndex = noteOrder.indexOf(note);
+                return (noteIndex - baseNoteIndex + 12) % 12;
+            }).sort((a, b) => a - b);
+            if (intervals.length === 3) {
+                if (intervals.includes(4) && intervals.includes(7)) return `${rootNote} majeur`;
+                if (intervals.includes(3) && intervals.includes(7)) return `${rootNote} mineur`;
+            } else if (intervals.length === 4) {
+                if (intervals.includes(4) && intervals.includes(7) && intervals.includes(10)) return `${rootNote}7`;
+                if (intervals.includes(3) && intervals.includes(7) && intervals.includes(10)) return `${rootNote}m7`;
+            }
+            return notes.join('-');
+        }
+        function updateSections() {
+            for (let i = 1; i <= 12; i++) {
+                const column = document.getElementById(`column-${i}`);
+                if (column) column.setAttribute('visibility', 'hidden');
+            }
+            for (let i = 0; i < 12; i++) {
+                const note = document.getElementById(`note-${i}`);
+                if (note) note.setAttribute('visibility', 'hidden');
+            }
+            for (let i = 0; i <= 6; i++) {
+                const interval = document.getElementById(`interval-${i}`);
+                if (interval) interval.setAttribute('visibility', 'hidden');
+            }
+            const normalizedRotation = ((rotation % 360) + 360) % 360;
+            const rotationSteps = Math.round(normalizedRotation / 30);
+            const baseNoteIndex = (rotationSteps + 12) % 12;
+            degreeButtons.forEach(button => {
+                const degree = parseInt(button.dataset.degree);
+                const section = document.getElementById(`section-${degree}`);
+                const intervalLabel = document.getElementById(`interval-${degree}`);
+                const isActive = button.classList.contains('active');
+                const visibility = isActive ? 'visible' : 'hidden';
+                section.setAttribute('visibility', visibility);
+                if (intervalLabel) intervalLabel.setAttribute('visibility', visibility);
+                if (isActive) {
+                    const intervalAngle = degreeToAngle[degree].angle;
+                    const intervalSteps = Math.round((intervalAngle - 15) / 30);
+                    const noteIndex = (baseNoteIndex + intervalSteps) % 12;
+                    const columnIndex = ((intervalAngle - 15) / 30 + 1) % 12 || 12;
+                    const note = noteOrder[noteIndex];
+                    const fillColor = alteredNotes.includes(note) ? '#c0c0c0' : 'white';
+                    section.setAttribute('fill', fillColor);
+                    const noteElement = document.getElementById(`note-${noteIndex}`);
+                    const columnElement = document.getElementById(`column-${columnIndex}`);
+                    if (noteElement) noteElement.setAttribute('visibility', visibility);
+                    if (columnElement) columnElement.setAttribute('visibility', visibility);
+                }
+            });
+            chordNameDisplay.textContent = getChordName();
+        }
+        function getChordNotes() {
+            const chordNotes = [];
+            const normalizedRotation = ((rotation % 360) + 360) % 360;
+            const rotationSteps = Math.round(normalizedRotation / 30);
+            const baseNoteIndex = (rotationSteps + 12) % 12;
+            degreeButtons.forEach(button => {
+                if (button.classList.contains('active')) {
+                    const degree = parseInt(button.dataset.degree);
+                    const intervalAngle = degreeToAngle[degree].angle;
+                    const intervalSteps = Math.round((intervalAngle - 15) / 30);
+                    const noteIndex = (baseNoteIndex + intervalSteps) % 12;
+                    const note = noteOrder[noteIndex];
+                    chordNotes.push(note);
+                }
+            });
+            return chordNotes;
+        }
+        function playChord() {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const notes = getChordNotes();
+            const duration = 1.5;
+            notes.forEach(note => {
+                const oscillator = ctx.createOscillator();
+                const gainNode = ctx.createGain();
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(noteFrequencies[note], ctx.currentTime);
+                gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+                oscillator.connect(gainNode);
+                gainNode.connect(ctx.destination);
+                oscillator.start();
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+                oscillator.stop(ctx.currentTime + duration);
+            });
+            chordNameDisplay.textContent = getChordName();
+        }
+        // Initialize buttons as active
+        document.querySelectorAll('.degree-button[data-degree="0"], .degree-button[data-degree="2"], .degree-button[data-degree="4"]').forEach(button => {
+            button.classList.add('active');
+        });
+        updateSections();
+        document.getElementById('rotate-left').addEventListener('click', () => {
+            rotation -= 30;
+            rotatingGroup.setAttribute('transform', `rotate(${rotation}, 200, 200)`);
+            updateSections();
+        });
+        document.getElementById('rotate-right').addEventListener('click', () => {
+            rotation += 30;
+            rotatingGroup.setAttribute('transform', `rotate(${rotation}, 200, 200)`);
+            updateSections();
+        });
+        document.getElementById('play-chord').addEventListener('click', () => {
+            playChord();
+        });
+        degreeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                updateSections();
+            });
+        });
+    </script>
+</body>
+</html>

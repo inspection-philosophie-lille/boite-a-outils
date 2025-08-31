@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<!------------------------------------ Daniel Boulagnon ------------------------------------>
+<!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
+<!------------------------------------- version 2025 --------------------------------------->
+<!----------------- Exploitation à but strictement pédagogique et non lucratif ------------->
+
+<html lang="fr" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="icon" href="../../src/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@700&display=swap" rel="stylesheet">
+	<title>harmonie spatiale</title>	
+	<p style="margin: 15px; line-height: 48px; text-align: center; color:red; font-size:40px; font-weight: bold; font-family: 'Muli', sans-serif">harmonie spatiale des longueurs</p>
+	<p style="margin: 0px; line-height: 1px; text-align: center; color:black; font-size:20px">monocorde pythagoricien</p>
+
+	<br>
+	
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #e0e0e0; /* Fond neumorphique */
+            margin: 0;
+            padding: 10px; /* Réduit sur mobile */
+        }
+        #stringCanvas {
+            border: none; /* Supprimer la bordure pour le style neumorphique */
+            background-color: #e0e0e0;
+            box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff; /* Ombre neumorphique */
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 100%; /* Responsive */
+        }
+        #pianoCanvas {
+            border: none;
+            background-color: #e0e0e0;
+            box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+            border-radius: 10px;
+            margin-top: 15px; /* Réduit pour mobile */
+            max-width: 100%; /* Responsive */
+        }
+        .buttons {
+            margin: 15px 10px; /* Réduit pour mobile */
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        button {
+            margin: 8px;
+            padding: 8px 16px; /* Réduit pour mobile */
+            font-size: 14px; /* Réduit pour mobile */
+            cursor: pointer;
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 3px 3px 6px #bebebe, -3px -3px 6px #ffffff; /* Neumorphisme */
+            transition: all 0.2s ease;
+            min-width: 60px; /* Taille minimale pour ergonomie tactile */
+        }
+        button:hover {
+            box-shadow: inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff; /* Effet enfoncé */
+        }
+        button:active {
+            box-shadow: inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff;
+        }
+        .label, .sharp-label {
+            position: absolute;
+            font-size: 12px; /* Par défaut */
+            color: #333;
+            transform: rotate(-45deg);
+            transform-origin: right top; /* Justifier à droite */
+            white-space: nowrap;
+        }
+        .container {
+            background-color: #e0e0e0;
+            border-radius: 20px;
+            padding: 10px; /* Réduit pour mobile */
+            box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff; /* Neumorphisme */
+            max-width: 100%; /* Responsive */
+            margin: 10px auto; /* Réduit pour mobile */
+        }
+        h1 {
+            color: red; /* Titre en rouge */
+            font-weight: bold; /* Titre en gras */
+            text-shadow: 1px 1px 2px #bebebe, -1px -1px 2px #ffffff;
+            font-size: 24px; /* Réduit pour mobile */
+        }
+        p {
+            color: #555;
+            font-size: 14px; /* Réduit pour mobile */
+        }
+        /* Media query pour écrans étroits (mobile) */
+        @media screen and (max-width: 600px) {
+            #stringCanvas {
+                width: 100%;
+                height: 150px; /* Réduit pour mobile */
+            }
+            .string-container {
+                width: 100% !important;
+                margin: 10px auto 10px auto !important;
+            }
+            .label {
+                font-size: 7px; /* Diatoniques */
+                transform: rotate(-90deg); /* Vertical */
+                transform-origin: left top; /* Justifier à gauche */
+            }
+            .sharp-label {
+                font-size: 6px; /* Altérations, plus petit */
+                transform: rotate(-90deg); /* Vertical */
+                transform-origin: left top; /* Justifier à gauche */
+            }
+            #pianoCanvas {
+                width: 90%;
+                height: 80px; /* Réduit pour mobile */
+            }
+            .piano-container {
+                width: 90% !important;
+                margin-top: 15px !important;
+            }
+            button {
+                padding: 6px 12px;
+                font-size: 12px;
+                margin: 5px;
+                min-width: 50px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            p {
+                font-size: 12px;
+            }
+            .buttons {
+                margin: 10px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="string-container" style="position: relative; margin: 20px auto 10px auto; width: 872px;">
+            <canvas id="stringCanvas" width="872" height="200"></canvas>
+            <!-- Labels pour les positions diatoniques -->
+            <div class="label" id="label-prime">Prime (1 x L)</div>
+            <div class="label" id="label-seconde">Seconde (8/9 x L)</div>
+            <div class="label" id="label-tierce">Tierce (4/5 x L)</div>
+            <div class="label" id="label-quarte">Quarte (3/4 x L)</div>
+            <div class="label" id="label-quinte">Quinte (2/3 x L)</div>
+            <div class="label" id="label-sixte">Sixte (3/5 x L)</div>
+            <div class="label" id="label-septieme">Septième (8/15 x L)</div>
+            <div class="label" id="label-octave">Octave (1/2 x L)</div>
+            <!-- Labels pour les altérations -->
+            <div class="sharp-label" id="label-dosharp">Do# (2^(1/12) x L)</div>
+            <div class="sharp-label" id="label-resharp">Ré# (2^(3/12) x L)</div>
+            <div class="sharp-label" id="label-fasharp">Fa# (2^(6/12) x L)</div>
+            <div class="sharp-label" id="label-solsharp">Sol# (2^(8/12) x L)</div>
+            <div class="sharp-label" id="label-lasharp">La# (2^(10/12) x L)</div>
+        </div>
+        <div class="buttons">
+            <button onclick="playNote('prime')">Prime</button>
+            <button onclick="playNote('seconde')">Seconde</button>
+            <button onclick="playNote('tierce')">Tierce</button>
+            <button onclick="playNote('quarte')">Quarte</button>
+            <button onclick="playNote('quinte')">Quinte</button>
+            <button onclick="playNote('sixte')">Sixte</button>
+            <button onclick="playNote('septieme')">Septième</button>
+            <button onclick="playNote('octave')">Octave</button>
+            <button onclick="toggleSharpLabels()">Afficher/Masquer Altérations</button>
+        </div>
+        <div class="piano-container" style="margin: auto; width: 480px; margin-top: 15px;">
+            <canvas id="pianoCanvas" width="480" height="100"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const stringCanvas = document.getElementById('stringCanvas');
+        const stringCtx = stringCanvas.getContext('2d');
+        const pianoCanvas = document.getElementById('pianoCanvas');
+        const pianoCtx = pianoCanvas.getContext('2d');
+        let L = 800; // Longueur de la corde en pixels (par défaut)
+        const baseFreq = 261.63; // Fréquence fondamentale en Hz (Do4)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let offsetX = 28; // Décalage pour centrer la corde (par défaut)
+        let sharpLabelsVisible = true; // État des labels des altérations
+
+        // Ajuster les dimensions des canvas et centrer la corde
+        function resizeCanvases() {
+            const maxWidth = window.innerWidth > 600 ? 872 : window.innerWidth - 40; // Marges de 20px de chaque côté
+            const pianoMaxWidth = window.innerWidth > 600 ? 480 : window.innerWidth * 0.9;
+            stringCanvas.width = maxWidth;
+            stringCanvas.height = window.innerWidth > 600 ? 200 : 150;
+            pianoCanvas.width = pianoMaxWidth;
+            pianoCanvas.height = window.innerWidth > 600 ? 100 : 80;
+
+            // Ajuster L et offsetX pour centrer la corde
+            L = maxWidth - 56; // Longueur proportionnelle
+            offsetX = (maxWidth - L) / 2; // Centrer la corde
+            document.querySelector('.string-container').style.width = `${maxWidth}px`;
+            document.querySelector('.piano-container').style.width = `${pianoMaxWidth}px`;
+
+            // Mettre à jour les positions des labels
+            updateLabels();
+
+            // Redessiner après redimensionnement
+            drawStaticString();
+            drawPiano();
+        }
+
+        // Mettre à jour les positions des labels
+        function updateLabels() {
+            const isMobile = window.innerWidth <= 600;
+            const canvasHeight = stringCanvas.height;
+            const stringY = canvasHeight / 2;
+            const gradHeight = canvasHeight * 0.05;
+            const labelTopDiatonic = isMobile ? stringY - gradHeight - 10 : 140; // Au-dessus des barrettes sur mobile
+            const labelTopSharp = isMobile ? stringY + gradHeight + 5 : 140; // En dessous des barrettes sur mobile
+            const labelRotation = isMobile ? 'rotate(-90deg)' : 'rotate(-45deg)';
+            const labelOrigin = isMobile ? 'left top' : 'right top';
+
+            // Labels diatoniques
+            document.getElementById('label-prime').style.left = `${intervals['prime'].position()}px`;
+            document.getElementById('label-prime').style.top = `${labelTopDiatonic}px`;
+            document.getElementById('label-prime').style.transform = labelRotation;
+            document.getElementById('label-prime').style.transformOrigin = labelOrigin;
+
+            document.getElementById('label-seconde').style.left = `${intervals['seconde'].position()}px`;
+            document.getElementById('label-seconde').style.top = `${labelTopDiatonic}px`;
+            document.getElementById('label-seconde').style.transform = labelRotation;
+            document.getElementById('label-seconde').style.transformOrigin = labelOrigin;
+
+            document.getElementById('label-tierce').style.left = `${intervals['tierce'].position()}px`;
+            document.getElementById('label-tierce').style.top = `${labelTopDiatonic}px`;
+            document.getElementById('label-tierce').style.transform = labelRotation;
+            document.getElementById('label-tierce').style.transformOrigin = labelOrigin;
+
+            document.getElementById('label-quarte').style.left = `${intervals['quarte'].position()}px`;
+            document.getElementById('label-quarte').style.top = `${labelTopDiatonic}px`;
+            document.getElementById('label-quarte').style.transform = labelRotation;
+            document.getElementById('label-quarte').style.transformOrigin = labelOrigin;
+
+            document.getElementById('label-quinte').style.left = `${intervals['quinte'].position()}px`;
+            document.getElementById('label-quinte').style.top = `${labelTopDiatonic}px`;
+            document.getElementById('label-quinte').style.transform = labelRotation;
+            document.getElementById('label-quinte').style.transformOrigin = labelOrigin;
+
+            document.getElementById('label-sixte').style.left = `${intervals['sixte'].position()}px`;
+            document.getElementById('label-sixte').style.top = `${labelTopDiatonic}px`;
+            document.getElementById('label-sixte').style.transform = labelRotation;
+            document.getElementById('label-sixte').style.transformOrigin = labelOrigin;
+
+            document.getElementById('label-septieme').style.left = `${intervals['septieme'].position()}px`;
+            document.getElementById('label-septieme').style.top = `${labelTopDiatonic}px`;
+            document.getElementById('label-septieme').style.transform = labelRotation;
+            document.getElementById('label-septieme').style.transformOrigin = labelOrigin;
+
+            document.getElementById('label-octave').style.left = `${intervals['octave'].position()}px`;
+            document.getElementById('label-octave').style.top = `${labelTopDiatonic}px`;
+            document.getElementById('label-octave').style.transform = labelRotation;
+            document.getElementById('label-octave').style.transformOrigin = labelOrigin;
+
+            // Labels des altérations
+            document.getElementById('label-dosharp').style.left = `${sharps['Do#'].position()}px`;
+            document.getElementById('label-dosharp').style.top = `${labelTopSharp}px`;
+            document.getElementById('label-dosharp').style.transform = labelRotation;
+            document.getElementById('label-dosharp').style.transformOrigin = labelOrigin;
+            document.getElementById('label-dosharp').style.display = sharpLabelsVisible ? 'block' : 'none';
+
+            document.getElementById('label-resharp').style.left = `${sharps['Ré#'].position()}px`;
+            document.getElementById('label-resharp').style.top = `${labelTopSharp}px`;
+            document.getElementById('label-resharp').style.transform = labelRotation;
+            document.getElementById('label-resharp').style.transformOrigin = labelOrigin;
+            document.getElementById('label-resharp').style.display = sharpLabelsVisible ? 'block' : 'none';
+
+            document.getElementById('label-fasharp').style.left = `${sharps['Fa#'].position()}px`;
+            document.getElementById('label-fasharp').style.top = `${labelTopSharp}px`;
+            document.getElementById('label-fasharp').style.transform = labelRotation;
+            document.getElementById('label-fasharp').style.transformOrigin = labelOrigin;
+            document.getElementById('label-fasharp').style.display = sharpLabelsVisible ? 'block' : 'none';
+
+            document.getElementById('label-solsharp').style.left = `${sharps['Sol#'].position()}px`;
+            document.getElementById('label-solsharp').style.top = `${labelTopSharp}px`;
+            document.getElementById('label-solsharp').style.transform = labelRotation;
+            document.getElementById('label-solsharp').style.transformOrigin = labelOrigin;
+            document.getElementById('label-solsharp').style.display = sharpLabelsVisible ? 'block' : 'none';
+
+            document.getElementById('label-lasharp').style.left = `${sharps['La#'].position()}px`;
+            document.getElementById('label-lasharp').style.top = `${labelTopSharp}px`;
+            document.getElementById('label-lasharp').style.transform = labelRotation;
+            document.getElementById('label-lasharp').style.transformOrigin = labelOrigin;
+            document.getElementById('label-lasharp').style.display = sharpLabelsVisible ? 'block' : 'none';
+        }
+
+        // Fonction pour afficher/masquer les labels des altérations
+        function toggleSharpLabels() {
+            sharpLabelsVisible = !sharpLabelsVisible;
+            updateLabels();
+            document.querySelector('button[onclick="toggleSharpLabels()"]').textContent = 
+                sharpLabelsVisible ? 'Masquer Altérations' : 'Afficher Altérations';
+        }
+
+        // Ratios de fréquence et positions pour chaque intervalle (juste intonation)
+        const intervals = {
+            'prime': { ratio: 1, position: () => 0 + offsetX, note: 'Do' },
+            'seconde': { ratio: 9/8, position: () => L * (1 - 8/9) + offsetX, note: 'Ré' },
+            'tierce': { ratio: 5/4, position: () => L * (1 - 4/5) + offsetX, note: 'Mi' },
+            'quarte': { ratio: 4/3, position: () => L * (1 - 3/4) + offsetX, note: 'Fa' },
+            'quinte': { ratio: 3/2, position: () => L * (1 - 2/3) + offsetX, note: 'Sol' },
+            'sixte': { ratio: 5/3, position: () => L * (1 - 3/5) + offsetX, note: 'La' },
+            'septieme': { ratio: 15/8, position: () => L * (1 - 8/15) + offsetX, note: 'Si' },
+            'octave': { ratio: 2, position: () => L * (1 - 1/2) + offsetX, note: 'Do5' }
+        };
+
+        // Map des notes du clavier avec ratios (juste pour diatoniques, TET pour dièses)
+        const tet = (s) => Math.pow(2, s / 12);
+        const notes = {
+            'Do': { ratio: 1, interval: 'prime' },
+            'Do#': { ratio: tet(1), interval: null },
+            'Ré': { ratio: 9/8, interval: 'seconde' },
+            'Ré#': { ratio: tet(3), interval: null },
+            'Mi': { ratio: 5/4, interval: 'tierce' },
+            'Fa': { ratio: 4/3, interval: 'quarte' },
+            'Fa#': { ratio: tet(6), interval: null },
+            'Sol': { ratio: 3/2, interval: 'quinte' },
+            'Sol#': { ratio: tet(8), interval: null },
+            'La': { ratio: 5/3, interval: 'sixte' },
+            'La#': { ratio: tet(10), interval: null },
+            'Si': { ratio: 15/8, interval: 'septieme' },
+            'Do5': { ratio: 2, interval: 'octave' }
+        };
+
+        // Positions des altérations pour les graduations
+        const sharps = {
+            'Do#': { ratio: tet(1), position: () => L * (1 - 1 / tet(1)) + offsetX },
+            'Ré#': { ratio: tet(3), position: () => L * (1 - 1 / tet(3)) + offsetX },
+            'Fa#': { ratio: tet(6), position: () => L * (1 - 1 / tet(6)) + offsetX },
+            'Sol#': { ratio: tet(8), position: () => L * (1 - 1 / tet(8)) + offsetX },
+            'La#': { ratio: tet(10), position: () => L * (1 - 1 / tet(10)) + offsetX }
+        };
+
+        // Labels pour affichage
+        const labels = {
+            'prime': 'Prime',
+            'seconde': 'Seconde',
+            'tierce': 'Tierce',
+            'quarte': 'Quarte',
+            'quinte': 'Quinte',
+            'sixte': 'Sixte',
+            'septieme': 'Septième',
+            'octave': 'Octave'
+        };
+
+        let animationFrameId;
+        let startTime;
+        let currentNote = null;
+        let positionDoigt = offsetX; // Initialisé à offsetX pour éviter le dépassement
+        let isDragging = false;
+        let oscillator;
+        let gainNode;
+
+        function drawStaticString() {
+            stringCtx.clearRect(0, 0, stringCanvas.width, stringCanvas.height);
+            
+            // Ajuster les coordonnées pour la hauteur du canvas
+            const canvasHeight = stringCanvas.height;
+            const stringY = canvasHeight / 2;
+            const diskRadius = canvasHeight * 0.04; // Proportionnel
+            const gradHeight = canvasHeight * 0.05;
+
+            // Dessiner les disques aux extrémités (neumorphique)
+            stringCtx.beginPath();
+            stringCtx.arc(offsetX, stringY, diskRadius, 0, 2 * Math.PI); // Disque à gauche
+            stringCtx.arc(offsetX + L, stringY, diskRadius, 0, 2 * Math.PI); // Disque à droite
+            stringCtx.fillStyle = '#e0e0e0';
+            stringCtx.fill();
+            stringCtx.shadowColor = '#bebebe';
+            stringCtx.shadowBlur = 5;
+            stringCtx.shadowOffsetX = 3;
+            stringCtx.shadowOffsetY = 3;
+            stringCtx.fill();
+            stringCtx.shadowColor = '#ffffff';
+            stringCtx.shadowOffsetX = -3;
+            stringCtx.shadowOffsetY = -3;
+            stringCtx.fill();
+            stringCtx.shadowBlur = 0;
+            stringCtx.shadowOffsetX = 0;
+            stringCtx.shadowOffsetY = 0;
+
+            // Dessiner la corde fixe
+            stringCtx.beginPath();
+            stringCtx.moveTo(offsetX, stringY);
+            stringCtx.lineTo(offsetX + L, stringY);
+            stringCtx.strokeStyle = '#ccc';
+            stringCtx.lineWidth = 2;
+            stringCtx.stroke();
+
+            // Dessiner les graduations diatoniques (noir, plus épais)
+            for (let interval in intervals) {
+                const pos = intervals[interval].position();
+                if (pos >= offsetX) { // Inclure offsetX pour "Prime"
+                    stringCtx.beginPath();
+                    stringCtx.moveTo(pos, stringY - gradHeight);
+                    stringCtx.lineTo(pos, stringY + gradHeight);
+                    stringCtx.strokeStyle = '#000'; // Noir pour diatoniques
+                    stringCtx.lineWidth = 2; // Trait plus épais
+                    stringCtx.stroke();
+                }
+            }
+
+            // Dessiner les graduations des altérations (gris, standard)
+            for (let sharp in sharps) {
+                const pos = sharps[sharp].position();
+                stringCtx.beginPath();
+                stringCtx.moveTo(pos, stringY - gradHeight);
+                stringCtx.lineTo(pos, stringY + gradHeight);
+                stringCtx.strokeStyle = '#999'; // Gris pour altérations
+                stringCtx.lineWidth = 1; // Épaisseur standard
+                stringCtx.stroke();
+            }
+        }
+
+        function drawString(time) {
+            stringCtx.clearRect(0, 0, stringCanvas.width, stringCanvas.height);
+            
+            // Ajuster les coordonnées pour la hauteur du canvas
+            const canvasHeight = stringCanvas.height;
+            const stringY = canvasHeight / 2;
+            const diskRadius = canvasHeight * 0.04;
+            const gradHeight = canvasHeight * 0.05;
+            const fingerHeight = canvasHeight * 0.1;
+
+            // Dessiner les disques aux extrémités (neumorphique)
+            stringCtx.beginPath();
+            stringCtx.arc(offsetX, stringY, diskRadius, 0, 2 * Math.PI); // Disque à gauche
+            stringCtx.arc(offsetX + L, stringY, diskRadius, 0, 2 * Math.PI); // Disque à droite
+            stringCtx.fillStyle = '#e0e0e0';
+            stringCtx.fill();
+            stringCtx.shadowColor = '#bebebe';
+            stringCtx.shadowBlur = 5;
+            stringCtx.shadowOffsetX = 3;
+            stringCtx.shadowOffsetY = 3;
+            stringCtx.fill();
+            stringCtx.shadowColor = '#ffffff';
+            stringCtx.shadowOffsetX = -3;
+            stringCtx.shadowOffsetY = -3;
+            stringCtx.fill();
+            stringCtx.shadowBlur = 0;
+            stringCtx.shadowOffsetX = 0;
+            stringCtx.shadowOffsetY = 0;
+
+            // Dessiner la corde fixe
+            stringCtx.beginPath();
+            stringCtx.moveTo(offsetX, stringY);
+            stringCtx.lineTo(offsetX + L, stringY);
+            stringCtx.strokeStyle = '#ccc';
+            stringCtx.lineWidth = 2;
+            stringCtx.stroke();
+
+            // Dessiner les graduations diatoniques (noir, plus épais)
+            for (let interval in intervals) {
+                const pos = intervals[interval].position();
+                if (pos >= offsetX) { // Inclure offsetX pour "Prime"
+                    stringCtx.beginPath();
+                    stringCtx.moveTo(pos, stringY - gradHeight);
+                    stringCtx.lineTo(pos, stringY + gradHeight);
+                    stringCtx.strokeStyle = '#000'; // Noir pour diatoniques
+                    stringCtx.lineWidth = 2; // Trait plus épais
+                    stringCtx.stroke();
+                }
+            }
+
+            // Dessiner les graduations des altérations (gris, standard)
+            for (let sharp in sharps) {
+                const pos = sharps[sharp].position();
+                stringCtx.beginPath();
+                stringCtx.moveTo(pos, stringY - gradHeight);
+                stringCtx.lineTo(pos, stringY + gradHeight);
+                stringCtx.strokeStyle = '#999'; // Gris pour altérations
+                stringCtx.lineWidth = 1; // Épaisseur standard
+                stringCtx.stroke();
+            }
+
+            // Dessiner le "doigt" si pincement
+            if (positionDoigt >= offsetX && (isDragging || currentNote)) {
+                stringCtx.beginPath();
+                stringCtx.moveTo(positionDoigt, stringY - fingerHeight);
+                stringCtx.lineTo(positionDoigt, stringY + fingerHeight);
+                stringCtx.strokeStyle = '#ff5555'; // Rouge plus doux pour le style
+                stringCtx.lineWidth = 3;
+                stringCtx.stroke();
+                stringCtx.lineWidth = 1;
+            }
+
+            // Dessiner la partie vibrante uniquement si interaction active
+            if (isDragging || currentNote) {
+                const L_vib = L - (positionDoigt - offsetX);
+                if (L_vib > 0) { // Vérifier que L_vib est positif
+                    const elapsed = time - startTime;
+                    let amp = canvasHeight * 0.15; // Proportionnel à la hauteur
+                    if (isDragging) {
+                        amp *= Math.sin(2 * Math.PI * 5 * elapsed / 1000); // Vibration soutenue
+                    } else {
+                        const duration = 2000;
+                        if (elapsed > duration) {
+                            cancelAnimationFrame(animationFrameId);
+                            currentNote = null; // Réinitialiser après la fin de l'animation
+                            drawStaticString();
+                            return;
+                        }
+                        amp *= (1 - elapsed / duration) * Math.sin(2 * Math.PI * 5 * elapsed / 1000); // Vibration décroissante
+                    }
+
+                    stringCtx.beginPath();
+                    stringCtx.moveTo(positionDoigt, stringY);
+                    for (let x = 0; x <= L_vib && positionDoigt + x <= offsetX + L; x++) {
+                        const y = amp * Math.sin(Math.PI * x / L_vib);
+                        stringCtx.lineTo(positionDoigt + x, stringY + y);
+                    }
+                    stringCtx.strokeStyle = '#333';
+                    stringCtx.lineWidth = 2;
+                    stringCtx.stroke();
+                    stringCtx.lineWidth = 1;
+                }
+            }
+
+            // Continuer l'animation si nécessaire
+            if (isDragging || currentNote) {
+                animationFrameId = requestAnimationFrame(drawString);
+            } else {
+                drawStaticString();
+            }
+        }
+
+        function drawPiano(highlightNote = null) {
+            if (!pianoCtx) return; // Vérifier que le contexte existe
+            pianoCtx.clearRect(0, 0, pianoCanvas.width, pianoCanvas.height);
+            const whiteKeyWidth = pianoCanvas.width / 8; // 8 touches blanches
+            const whiteNotes = ['Do', 'Ré', 'Mi', 'Fa', 'Sol', 'La', 'Si', 'Do']; // Labels affichés
+            const noteKeys = ['Do', 'Ré', 'Mi', 'Fa', 'Sol', 'La', 'Si', 'Do5']; // Clés internes pour surbrillance
+            const blackNotes = ['Do#', 'Ré#', 'Fa#', 'Sol#', 'La#'];
+            const blackKeyPositions = [1, 2, 4, 5, 6];
+            const blackKeyWidth = whiteKeyWidth * 0.5;
+            const blackKeyHeight = pianoCanvas.height * 0.6;
+
+            // Dessiner les touches blanches (neumorphique, blanc pur)
+            for (let i = 0; i < 8; i++) {
+                pianoCtx.beginPath();
+                pianoCtx.rect(i * whiteKeyWidth, 0, whiteKeyWidth, pianoCanvas.height);
+                pianoCtx.fillStyle = noteKeys[i] === highlightNote ? '#ffcccc' : '#ffffff'; // Blanc pur pour touches blanches
+                pianoCtx.fill();
+                pianoCtx.shadowColor = '#bebebe';
+                pianoCtx.shadowBlur = 5;
+                pianoCtx.shadowOffsetX = 3;
+                pianoCtx.shadowOffsetY = 3;
+                pianoCtx.fill();
+                pianoCtx.shadowColor = '#ffffff';
+                pianoCtx.shadowOffsetX = -3;
+                pianoCtx.shadowOffsetY = -3;
+                pianoCtx.fill();
+                pianoCtx.shadowBlur = 0;
+                pianoCtx.shadowOffsetX = 0;
+                pianoCtx.shadowOffsetY = 0;
+                pianoCtx.strokeStyle = '#ccc';
+                pianoCtx.stroke();
+                pianoCtx.fillStyle = '#333';
+                pianoCtx.font = `${pianoCanvas.width > 400 ? 12 : 10}px Arial`;
+                pianoCtx.fillText(whiteNotes[i], i * whiteKeyWidth + whiteKeyWidth * 0.33, pianoCanvas.height * 0.9);
+            }
+
+            // Dessiner les touches noires (neumorphique)
+            for (let i = 0; i < blackNotes.length; i++) {
+                const x = blackKeyPositions[i] * whiteKeyWidth - blackKeyWidth / 2;
+                pianoCtx.beginPath();
+                pianoCtx.rect(x, 0, blackKeyWidth, blackKeyHeight);
+                pianoCtx.fillStyle = blackNotes[i] === highlightNote ? '#ff6666' : '#333';
+                pianoCtx.fill();
+                pianoCtx.shadowColor = '#bebebe';
+                pianoCtx.shadowBlur = 5;
+                pianoCtx.shadowOffsetX = 2;
+                pianoCtx.shadowOffsetY = 2;
+                pianoCtx.fill();
+                pianoCtx.shadowColor = '#ffffff';
+                pianoCtx.shadowOffsetX = -2;
+                pianoCtx.shadowOffsetY = -2;
+                pianoCtx.fill();
+                pianoCtx.shadowBlur = 0;
+                pianoCtx.shadowOffsetX = 0;
+                pianoCtx.shadowOffsetY = 0;
+                pianoCtx.strokeStyle = '#ccc';
+                pianoCtx.stroke();
+                pianoCtx.fillStyle = '#e0e0e0';
+                pianoCtx.font = `${pianoCanvas.width > 400 ? 10 : 8}px Arial`;
+                pianoCtx.fillText(blackNotes[i], x + 3, blackKeyHeight * 0.8);
+            }
+        }
+
+        function startSound(freq) {
+            if (oscillator) {
+                oscillator.stop();
+            }
+            oscillator = audioCtx.createOscillator();
+            gainNode = audioCtx.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            oscillator.type = 'sine';
+            oscillator.frequency.value = freq;
+
+            gainNode.gain.value = 1;
+
+            oscillator.start();
+        }
+
+        function updateSound(freq) {
+            if (oscillator) {
+                oscillator.frequency.value = freq;
+            }
+        }
+
+        function stopSound() {
+            if (gainNode) {
+                gainNode.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 2);
+            }
+            if (oscillator) {
+                oscillator.stop(audioCtx.currentTime + 2);
+            }
+        }
+
+        function playNote(intervalle) {
+            const intervalInfo = intervals[intervalle];
+            const freq = baseFreq * intervalInfo.ratio;
+            positionDoigt = intervalInfo.position();
+            currentNote = intervalInfo.note;
+
+            startSound(freq);
+            stopSound(); // Appliquer la décroissance
+
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            isDragging = false;
+            startTime = performance.now();
+            animationFrameId = requestAnimationFrame(drawString);
+
+            drawPiano(currentNote);
+
+            console.log(`Joue ${labels[intervalle]} (${currentNote}) à ${freq.toFixed(2)} Hz`);
+        }
+
+        function playPianoNote(note) {
+            const noteInfo = notes[note];
+            if (!noteInfo) return;
+            const ratio = noteInfo.ratio;
+            const freq = baseFreq * ratio;
+            positionDoigt = noteInfo.interval ? intervals[noteInfo.interval].position() : L * (1 - 1 / ratio) + offsetX;
+            currentNote = note;
+
+            startSound(freq);
+            stopSound(); // Appliquer la décroissance
+
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            isDragging = false;
+            startTime = performance.now();
+            animationFrameId = requestAnimationFrame(drawString);
+
+            drawPiano(currentNote);
+
+            console.log(`Joue ${note} à ${freq.toFixed(2)} Hz`);
+        }
+
+        // Rendre le clavier cliquable
+        pianoCanvas.addEventListener('click', (event) => {
+            const rect = pianoCanvas.getBoundingClientRect();
+            const scaleX = pianoCanvas.width / rect.width; // Correction d'échelle
+            const x = (event.clientX - rect.left) * scaleX;
+            const y = (event.clientY - rect.top) * (pianoCanvas.height / rect.height);
+            let selectedNote = null;
+            const whiteKeyWidth = pianoCanvas.width / 8;
+            const blackHeight = pianoCanvas.height * 0.6;
+            const blackKeyPositions = [1, 2, 4, 5, 6];
+            const blackNotes = ['Do#', 'Ré#', 'Fa#', 'Sol#', 'La#'];
+            const whiteNotes = ['Do', 'Ré', 'Mi', 'Fa', 'Sol', 'La', 'Si', 'Do'];
+            const blackKeyWidth = whiteKeyWidth * 0.5;
+
+            // Vérifier les touches noires d'abord
+            for (let i = 0; i < blackNotes.length; i++) {
+                const blackX = blackKeyPositions[i] * whiteKeyWidth - blackKeyWidth / 2;
+                const hitWidth = pianoCanvas.width <= 400 ? blackKeyWidth * 1.2 : blackKeyWidth; // Élargir la zone sur mobile
+                if (x >= blackX && x <= blackX + hitWidth && y <= blackHeight) {
+                    selectedNote = blackNotes[i];
+                    break;
+                }
+            }
+
+            if (!selectedNote) {
+                // Touche blanche
+                const whiteIndex = Math.floor(x / whiteKeyWidth);
+                if (whiteIndex >= 0 && whiteIndex < whiteNotes.length) {
+                    selectedNote = whiteIndex === 7 ? 'Do5' : whiteNotes[whiteIndex]; // Mapper index 7 à 'Do5'
+                }
+            }
+
+            if (selectedNote) {
+                playPianoNote(selectedNote);
+            }
+        });
+
+        // Ajouter drag and drop sur la corde
+        stringCanvas.addEventListener('mousedown', (event) => {
+            const rect = stringCanvas.getBoundingClientRect();
+            const scaleX = stringCanvas.width / rect.width;
+            positionDoigt = (event.clientX - rect.left) * scaleX;
+            if (positionDoigt < offsetX) positionDoigt = offsetX;
+            if (positionDoigt > offsetX + L) positionDoigt = offsetX + L;
+            isDragging = true;
+            const L_vib = L - (positionDoigt - offsetX);
+            const freq = baseFreq * (L / L_vib);
+            startSound(freq);
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            startTime = performance.now();
+            animationFrameId = requestAnimationFrame(drawString);
+            currentNote = null;
+            drawPiano(); // Reset highlight
+        });
+
+        document.addEventListener('mousemove', (event) => {
+            if (isDragging) {
+                const rect = stringCanvas.getBoundingClientRect();
+                const scaleX = stringCanvas.width / rect.width;
+                positionDoigt = (event.clientX - rect.left) * scaleX;
+                if (positionDoigt < offsetX) positionDoigt = offsetX;
+                if (positionDoigt > offsetX + L) positionDoigt = offsetX + L;
+                const L_vib = L - (positionDoigt - offsetX);
+                const freq = baseFreq * (L / L_vib);
+                updateSound(freq);
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                stopSound();
+                if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                drawStaticString();
+            }
+        });
+
+        // Gérer le redimensionnement
+        window.addEventListener('resize', resizeCanvases);
+
+        // Dessiner la corde statique et le clavier au repos au chargement
+        window.onload = () => {
+            resizeCanvases();
+        };
+    </script>
+</body>
+</html>

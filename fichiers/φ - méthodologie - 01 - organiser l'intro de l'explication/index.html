@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!------------------------------------ Daniel Boulagnon ------------------------------------>
+<!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
+<!------------------------------------- version 2025 --------------------------------------->
+<!----------------- Exploitation à but strictement pédagogique et non lucratif ------------->
+
+<!DOCTYPE html>
+<!------------------------------------ Daniel Boulagnon ------------------------------------>
+<!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
+<!------------------------------------- version 2025 --------------------------------------->
+<!----------------- Exploitation à but strictement pédagogique et non lucratif ------------->
+
+<html lang="fr" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="icon" href="../../src/favicon.ico" />
+	<title>explication de texte</title>	
+	<p style="margin: 15px; line-height: 48px; text-align: center; color:red; font-size:40px; font-weight: bold; font-family: 'Muli', sans-serif">explication de texte</p>
+	<p style="margin: 0px; line-height: 1px; text-align: center; color:black; font-size:20px">organiser une introduction</p>
+	<br>
+
+
+
+
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <script src='./textes.js'></script>
+  <script src="./script.js"></script>
+</head>
+<body>
+  <header class="question-header">
+
+    <p id="contenuTexte"></p>
+  </header>
+  <section class="question-body">
+    <table class="table" id="reponses">
+      <tr>
+        <th>Questions</th>
+        <th>Réponses</th>
+      </tr>
+      <tr>
+        <td class="keyword"><div>Origine</div></td>
+        <td class="answer" draggable="true" style="background: #f2f2f2;"></td>
+      </tr>
+      <tr>
+        <td class="keyword"><div>Thème</div></td>  <!-- Accent ajouté ici -->
+        <td class="answer" draggable="true" style="background: #f2f2f2;"></td>
+      </tr>
+      <tr>
+        <td class="keyword"><div>Thèse</div></td>  <!-- Accent ajouté ici -->
+        <td class="answer" draggable="true" style="background: #f2f2f2;"></td>
+      </tr>
+      <tr>
+        <td class="keyword"><div>Intérêt</div></td>  <!-- Accent ajouté ici -->
+        <td class="answer" draggable="true" style="background: #f2f2f2;"></td>
+      </tr>
+      <tr>
+        <td class="keyword"><div>Problématique</div></td>  <!-- Accent ajouté ici -->
+        <td class="answer" draggable="true" style="background: #f2f2f2;"></td>
+      </tr>
+    </table>
+  </section>
+  <footer class="question-footer">
+    <div class="buttons">
+      <button class="check-answer">Vérifier</button>
+      <button class="reset-btn">Recommencer</button>
+    </div>
+  </footer>
+  
+  <script>
+    $(document).ready(function() {
+      const texteAleatoire = textes[Math.floor(Math.random() * textes.length)];
+
+      $('#contenuTexte').html(texteAleatoire.contenu);
+
+      const reponses = Object.values(texteAleatoire.reponses)
+                             .sort(() => Math.random() - 0.5);
+
+      const motsCles = Object.keys(texteAleatoire.reponses);
+
+      $('#reponses').empty();
+
+      for (let i = 0; i < motsCles.length; i++) {
+        $('#reponses').append(`<tr>
+                                <td class="keyword">${motsCles[i].charAt(0).toUpperCase() + motsCles[i].slice(1).normalize("NFD").replace(/[\u0300-\u036f]/g, "")}</td>
+                                <td class="answer" draggable="true" style="background: #f2f2f2;">${reponses[i]}</td>
+                              </tr>`);
+      }
+
+      $('.answer').draggable({
+        revert: "invalid",
+        containment: "table" 
+      });
+
+      $('.answer').droppable({
+        accept: ".answer",
+        hoverClass: "droppable-hover",
+        drop: function(event, ui) {
+          const droppable = $(this);
+          const draggable = ui.draggable;
+
+          const temp = droppable.html();
+          droppable.html(draggable.html());
+          draggable.html(temp).css("background", "");
+          draggable.css("top", "");
+          draggable.css("left", "");
+        }
+      });
+      
+      $('.keyword').droppable({
+        accept: ".answer",
+        hoverClass: "droppable-hover",
+        drop: function(event, ui) {
+          const droppable = $(this).siblings('.answer');
+          const draggable = ui.draggable;
+
+          const temp = droppable.html();
+          droppable.html(draggable.html());
+          draggable.html(temp).css("background", "");
+          draggable.css("top", "");
+          draggable.css("left", "");
+        }
+      });
+      
+      $('.check-answer').click(function() {
+        $('#reponses .answer').each(function(index) {
+          const correctResponse = texteAleatoire.reponses[motsCles[index]];
+          if ($(this).text().trim() === correctResponse) {
+            $(this).css("background", "lightgreen");
+          } else {
+            $(this).css("background", "lightcoral");
+          }
+        });
+      });
+
+      $('.reset-btn').click(function() {
+        location.reload();
+      });
+    });
+  </script>
+</body>
+</html>
