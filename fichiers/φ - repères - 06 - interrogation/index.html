@@ -80,7 +80,7 @@
 			}
 			header p:last-child {
 				color: black;
-				font-size: clamp(0.8rem, 3vw, 1.2rem);
+				font-size: 16px; /* Forcé à 16px pour tout texte noir */
 				line-height: 1.2;
 			}
 			main {
@@ -151,10 +151,17 @@
 				position: absolute;
 				top: 7rem;
 				color: black;
-				font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+				font-size: 16px; /* Forcé à 16px pour tout texte noir */
 				font-family: Arial, Helvetica, sans-serif;
 				margin: 0 1rem;
 				text-align: justify;
+			}
+			.card-back p .reponse-label {
+				font-size: 16px; /* Forcé à 16px pour "► Réponse :" */
+			}
+			.card-back p .reponse {
+				color: black; /* Explicitly set for clarity */
+				font-size: 16px; /* Forcé à 16px pour le contenu de la réponse */
 			}
 			.line2 {
 				width: 10rem;
@@ -237,7 +244,7 @@
 				position: absolute;
 				top: 7rem;
 				color: black;
-				font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+				font-size: 16px; /* Forcé à 16px pour tout texte noir */
 				font-family: Arial, Helvetica, sans-serif;
 				display: flex;
 				align-items: center;
@@ -245,6 +252,9 @@
 				justify-content: center;
 				flex-direction: column;
 				transition: all 0.2s;
+			}
+			.Dicover h4 {
+				font-size: 16px; /* Forcé à 16px pour correspondre à .Dicover */
 			}
 			a.lien {
 				color: #000f55;
@@ -277,11 +287,21 @@
 					min-height: 300px;
 				}
 				.card-back p, .Dicover {
-					font-size: clamp(0.6rem, 2.2vw, 0.7rem);
+					font-size: 16px; /* Forcé à 16px pour tout texte noir */
 					top: 6rem; /* Scaled: 7rem * (300/350) ≈ 6rem */
+				}
+				.card-back p .reponse-label {
+					font-size: 16px; /* Forcé à 16px pour "► Réponse :" */
+				}
+				.card-back p .reponse {
+					color: black; /* Ensure response text is black */
+					font-size: 16px; /* Forcé à 16px pour le contenu de la réponse */
 				}
 				.card-back h1, .card-front h2 {
 					font-size: clamp(1rem, 3.5vw, 1.2rem);
+				}
+				.Dicover h4 {
+					font-size: 16px; /* Forcé à 16px pour correspondre à .Dicover */
 				}
 				.line, .line2 {
 					width: 8rem;
@@ -291,6 +311,12 @@
 				.arrow {
 					top: 9.86rem; /* Scaled: 11.5rem * (300/350) ≈ 9.86rem */
 					margin-bottom: 0.43rem; /* Scaled: 0.5rem * (300/350) */
+				}
+				header p:first-child {
+					font-size: 40px; /* Forcé à 40px pour correspondre à la taille maximale desktop */
+				}
+				header p:last-child {
+					font-size: 16px; /* Même taille que desktop */
 				}
 			}
 			@media (max-width: 480px) {
@@ -302,11 +328,21 @@
 					min-height: 250px;
 				}
 				.card-back p, .Dicover {
-					font-size: clamp(0.5rem, 2vw, 0.6rem);
+					font-size: 16px; /* Forcé à 16px pour tout texte noir */
 					top: 5rem; /* Scaled: 7rem * (250/350) ≈ 5rem */
+				}
+				.card-back p .reponse-label {
+					font-size: 16px; /* Forcé à 16px pour "► Réponse :" */
+				}
+				.card-back p .reponse {
+					color: black; /* Ensure response text is black */
+					font-size: 16px; /* Forcé à 16px pour le contenu de la réponse */
 				}
 				.card-back h1, .card-front h2 {
 					font-size: clamp(0.9rem, 3vw, 1rem);
+				}
+				.Dicover h4 {
+					font-size: 16px; /* Forcé à 16px pour correspondre à .Dicover */
 				}
 				.line, .line2 {
 					width: 6rem;
@@ -318,13 +354,13 @@
 					margin-bottom: 0.36rem; /* Scaled: 0.5rem * (250/350) */
 				}
 				header p:first-child {
-					font-size: clamp(1.2rem, 4vw, 1.8rem);
+					font-size: 40px; /* Forcé à 40px pour correspondre à la taille maximale desktop */
 				}
 				header p:last-child {
-					font-size: clamp(0.7rem, 2.5vw, 1rem);
+					font-size: 16px; /* Même taille que desktop */
 				}
 				footer p {
-					font-size: clamp(1.2rem, 4vw, 1.8rem);
+					font-size: 40px; /* Forcé à 40px pour correspondre à la taille maximale desktop */
 				}
 			}
 		</style>
@@ -350,7 +386,7 @@
 							<div class="card-back">
 								<h1>Réponse</h1>
 								<div class="line2"></div>
-								<p>&#9658; Réponse : <span class="reponse"></span> </p>
+								<p><span class="reponse-label">&#9658; Réponse :</span> <span class="reponse"></span></p>
 							</div>
 						</div>
 					</div>
