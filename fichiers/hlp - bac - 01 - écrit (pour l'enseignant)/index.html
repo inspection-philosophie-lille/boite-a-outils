@@ -218,6 +218,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            height: 100%;
         }
 
         .card-content {
@@ -225,6 +226,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            min-height: 100px; /* Ensure content area has a minimum height */
         }
 
         .onglet {
@@ -248,16 +250,30 @@
             scroll-snap-type: x proximity;
             gap: 1rem;
             padding: 0 0.5rem;
+            align-items: stretch; /* Ensure all cards stretch to the same height */
         }
 
         .carousel-item {
             flex: 0 0 auto;
             scroll-snap-align: start;
+            display: flex; /* Ensure the card inside stretches to full height */
+            flex-direction: column;
         }
 
         @media screen and (max-width: 575px) {
+            .carousel-items {
+                align-items: stretch;
+            }
+
             .carousel-item {
                 width: calc(100% - 1rem);
+                flex: 0 0 calc(100% - 1rem);
+            }
+
+            .card {
+                min-height: 350px;
+                max-height: 400px; /* Prevent cards from growing too tall */
+                height: 100%; /* Ensure cards take full height of container */
             }
 
             .switch-button {
@@ -273,7 +289,6 @@
             }
 
             .card {
-                min-height: 350px;
                 padding: 0.75rem;
             }
 
@@ -291,12 +306,14 @@
         @media screen and (min-width: 576px) {
             .carousel-item {
                 width: 300px;
+                flex: 0 0 300px;
             }
         }
 
         @media screen and (min-width: 768px) {
             .carousel-item {
                 width: 325px;
+                flex: 0 0 325px;
             }
 
             header {
@@ -320,6 +337,7 @@
 
             .carousel-item {
                 width: 325px;
+                flex: 0 0 325px;
             }
 
             .card {
@@ -334,6 +352,7 @@
 
             .carousel-item {
                 width: 450px;
+                flex: 0 0 450px;
             }
 
             main {
