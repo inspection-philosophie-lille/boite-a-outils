@@ -1,11 +1,12 @@
 <!--------------------------- Daniel Boulagnon --------------------------->
 <!-------------------- daniel.boulagnon@ac-lille.fr ---------------------->
-<!----------------------------- version 2024 ----------------------------->
+<!----------------------------- version 2025 ----------------------------->
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../../src/favicon.ico">
     <title>paliers de notation</title>
     <style>
@@ -21,55 +22,36 @@
             color: #000;
             font-size: 1em;
             overflow: hidden;
-            padding-right: 180px;
             position: relative;
             text-align: center;
-            top: 40px;
-            width: 360px;
-            left: 50%;
-            transform: translate(-50%, -50%)
-        }
-
-        .switch-button:before {
-            align-items: center;
-            bottom: 0;
-            content: "Explication de texte";
+            width: 90%;
+            max-width: 360px;
+            margin: 20px auto 40px;
+            padding: 0;
             display: flex;
-            justify-content: center;
-            pointer-events: none;
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 180px;
-            z-index: 3
+            justify-content: space-between;
         }
 
         .switch-button-checkbox {
-            bottom: 0;
             cursor: pointer;
             height: 100%;
-            left: 0;
+            width: 100%;
             opacity: 0;
             position: absolute;
             top: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        .switch-button-label {
+            display: flex;
             width: 100%;
-            z-index: 2
-        }
-
-        .switch-button-checkbox:checked+.switch-button-label:before {
-            transform: translateX(180px);
-            transition: transform .1s linear
-        }
-
-        .switch-button-checkbox+.switch-button-label {
-            display: block;
             position: relative;
-            padding: 16px 0;
             pointer-events: none;
-            user-select: none
+            user-select: none;
         }
 
-        .switch-button-checkbox+.switch-button-label:before {
+        .switch-button-label:before {
             background: #fff;
             border-radius: 30px;
             box-shadow: 1px 1px 5px rgba(0, 0, 0, .42);
@@ -80,15 +62,37 @@
             top: 0;
             transform: translateX(0);
             transition: transform .3s;
-            width: 100%
+            width: 50%;
+            z-index: 1;
         }
 
-        .switch-button-checkbox+.switch-button-label .switch-button-label-span {
-            position: relative
+        .switch-button-checkbox:checked + .switch-button-label:before {
+            transform: translateX(100%);
+        }
+
+        .switch-button-label span {
+            flex: 1;
+            text-align: center;
+            padding: 16px 0;
+            z-index: 3;
+            transition: color .3s;
+        }
+
+        .switch-button-checkbox:checked + .switch-button-label .label-dissertation {
+            color: #000;
+        }
+
+        .switch-button-checkbox:not(:checked) + .switch-button-label .label-explication {
+            color: #000;
+        }
+
+        .switch-button-checkbox:checked + .switch-button-label .label-explication,
+        .switch-button-checkbox:not(:checked) + .switch-button-label .label-dissertation {
+            color: #666;
         }
 
         * {
-            box-sizing: border-box
+            box-sizing: border-box;
         }
 
         body,
@@ -100,43 +104,43 @@
             color: #3d4852;
             font-family: Muli, sans-serif;
             font-size: 1rem;
-            line-height: 1.2
+            line-height: 1.2;
         }
 
         h0 {
-            color: red;					/* couleur du titre principal */
+            color: red;
             font-size: 2.5rem;
             margin-top: 0;
-            text-align: center
+            text-align: center;
         }
 
         h1 {
             color: red;
             font-size: 4rem;
             margin-top: 0;
-            text-align: center
+            text-align: center;
         }
 
         h2 {
             color: #000;
             font-size: 1.25rem;
             margin-top: 0;
-            text-align: center
+            text-align: center;
         }
 
         ul {
             margin: 0 0 1.5rem;
-            padding: 0
+            padding: 0;
         }
 
         li {
-            display: inline-block
+            display: inline-block;
         }
 
         svg {
             fill: currentColor;
             height: 1.5rem;
-            width: 1.5rem
+            width: 1.5rem;
         }
 
         img {
@@ -145,32 +149,43 @@
             margin-bottom: .5rem;
             max-width: calc(100% + 2rem);
             position: relative;
-            right: -1rem
+            right: -1rem;
         }
 
         p {
             text-align: justify;
             text-align: left;
             text-justify: inter-word;
-            margin: 0 0 .5rem
+            margin: 0 0 .5rem;
         }
 
         main {
             margin: auto;
+            padding: 0 1rem;
         }
 
         header {
-            padding: 1rem 2rem;
-            text-align: center
+            padding: 1rem 1rem;
+            text-align: center;
         }
 
         .card {
             border: 0 solid #000;
             border-radius: 15px;
             box-shadow: rgba(50, 50, 93, .25) 0 50px 100px -20px, rgba(0, 0, 0, .3) 0 30px 60px -30px, rgba(10, 37, 64, .35) 0 -2px 6px 0 inset;
-            min-height: 500px;
+            min-height: 300px;
             padding: 1rem;
-            text-align: center
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .onglet {
@@ -187,81 +202,116 @@
 
         .carousel-items {
             display: flex;
-            overflow-x: scroll;
-            position: absolute;
+            overflow-x: auto;
+            position: relative;
             width: 100%;
-            z-index: 3000
+            z-index: 3000;
+            scroll-snap-type: x proximity;
+            gap: 1rem;
+            padding: 0 0.5rem;
         }
 
         .carousel-item {
-            flex: 1 0 250px;
-            margin-bottom: 30px;
-            margin-left: 0.5rem;
-            margin-right: 0.5rem
+            flex: 0 0 auto;
+            scroll-snap-align: start;
         }
 
-
-/********************************************/
-
-        @media screen and (min-width:100px) {
+        @media screen and (max-width: 575px) {
             .carousel-item {
-                flex-basis: 300px
+                width: calc(100% - 1rem);
+            }
+
+            .switch-button {
+                font-size: 0.9em;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1rem;
+            }
+
+            .card {
+                min-height: 350px;
+                padding: 0.75rem;
             }
         }
-/********************************************/
 
-
-
-
-
-
-
-
-        @media screen and (min-width:576px) {
+        @media screen and (min-width: 576px) {
             .carousel-item {
-                flex-basis: 300px
+                width: 300px;
             }
         }
 
-        @media screen and (min-width:992px) {
+        @media screen and (min-width: 768px) {
+            .carousel-item {
+                width: 325px;
+            }
 
+            header {
+                padding: 1rem 2rem;
+            }
+        }
+
+        @media screen and (min-width: 992px) {
             body,
             button,
             input,
             optgroup,
             select,
             textarea {
-                font-size: 1.125rem
+                font-size: 1.125rem;
             }
 
             h1 {
-                font-size: 2.75rem
+                font-size: 2.75rem;
             }
 
             .carousel-item {
-                flex-basis: 325px
+                width: 325px;
+            }
+
+            .card {
+                min-height: 400px;
             }
         }
 
-        @media screen and (min-width:1280px) {
+        @media screen and (min-width: 1280px) {
             h1 {
-                font-size: 4rem
+                font-size: 4rem;
             }
 
             .carousel-item {
-                flex-basis: 450px
+                width: 450px;
+            }
+
+            main {
+                max-width: 1200px;
+            }
+
+            .card {
+                min-height: 450px;
             }
         }
 
-        @media screen and (min-width:1600px) {
-
+        @media screen and (min-width: 1600px) {
             body,
             button,
             input,
             optgroup,
             select,
             textarea {
-                font-size: 1.25rem
+                font-size: 1.25rem;
+            }
+
+            main {
+                max-width: 1400px;
+            }
+
+            .card {
+                min-height: 500px;
             }
         }
     </style>
@@ -269,11 +319,15 @@
 
 <body>
     <header>
-	<p style="margin: 15px; line-height: 48px; text-align: center; color:red; font-size:40px; font-weight: bold; font-family: 'Muli', sans-serif">paliers de notation</p>		
-	<p style="margin: 15px; line-height: 30px; text-align: center; color:black; font-size:20px">guider l'évaluation des copies de philosophie</p>
+        <p style="margin: 15px; line-height: 48px; text-align: center; color: red; font-size: 40px; font-weight: bold; font-family: 'Muli', sans-serif">paliers de notation</p>		
+        <p style="margin: 15px; line-height: 30px; text-align: center; color: black; font-size: 20px">guider l'évaluation des copies de philosophie</p>
         
         <div class="switch-button">
-            <center><input id="switch" class="switch-button-checkbox" type="checkbox"><label class="switch-button-label" for=""><span class="switch-button-label-span">Dissertation</span></label></center>
+            <input id="switch" class="switch-button-checkbox" type="checkbox">
+            <label class="switch-button-label" for="switch">
+                <span class="label-dissertation">Dissertation</span>
+                <span class="label-explication">Explication de texte</span>
+            </label>
         </div>
     </header>
     <main>
@@ -322,24 +376,36 @@
                             <div class="card">
                                 <h1 class="card-title">12-13</h1>
                                 <h2 class="card-title">Si, en plus, il y a mobilisation de références et d'exemples pertinents pour le sujet.</h2>
+                                <div class="card-content">
+                                    <p></p>
+                                </div>
                             </div>
                         </li>
                         <li class="carousel-item">
                             <div class="card">
                                 <h1 class="card-title">14-15</h1>
                                 <h2 class="card-title">Si, en plus, le raisonnement est construit, progressif et que les affirmations posées sont rigoureusement justifiées.</h2>
+                                <div class="card-content">
+                                    <p></p>
+                                </div>
                             </div>
                         </li>
                         <li class="carousel-item">
                             <div class="card">
                                 <h1 class="card-title">16-19</h1>
                                 <h2 class="card-title">Si, en plus, la copie témoigne de la maîtrise de concepts philosophiques utiles pour le sujet (notions, repères), d'une démarche de recherche et du souci des enjeux de la question, d'une précision dans l'utilisation d'une culture au service du traitement du sujet.</h2>
+                                <div class="card-content">
+                                    <p></p>
+                                </div>
                             </div>
                         </li>
                         <li class="carousel-item">
                             <div class="card">
                                 <h1 class="card-title">20</h1>
                                 <h2 class="card-title">Ce que l'on peut attendre de mieux d'un élève débutant en philosophie pour un nombre d'heures de cours donné</h2>
+                                <div class="card-content">
+                                    <p></p>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -389,24 +455,36 @@
                             <div class="card">
                                 <h1 class="card-title">12-13</h1>
                                 <h2 class="card-title">Si, en plus, le texte est interrogé avec un effort d’attention au détail du propos, ainsi qu’à sa structure logique.</h2>
+                                <div class="card-content">
+                                    <p></p>
+                                </div>
                             </div>
                         </li>
                         <li class="carousel-item">
                             <div class="card">
                                 <h1 class="card-title">14-15</h1>
                                 <h2 class="card-title">Si, en plus, les éléments du texte sont mis en perspective, avec des éléments de connaissance permettant de déterminer et d’examiner le problème.</h2>
+                                <div class="card-content">
+                                    <p></p>
+                                </div>
                             </div>
                         </li>
                         <li class="carousel-item">
                             <div class="card">
                                 <h1 class="card-title">16-19</h1>
                                 <h2 class="card-title">Si, en plus, l’explication est développée avec amplitude et justesse : l’ensemble du texte est examiné et bien situé dans une problématique et un questionnement pertinents.</h2>
+                                <div class="card-content">
+                                    <p></p>
+                                </div>
                             </div>
                         </li>
                         <li class="carousel-item">
                             <div class="card">
                                 <h1 class="card-title">20</h1>
                                 <h2 class="card-title">Ce que l'on peut attendre de mieux d'un élève débutant en philosophie pour un nombre d'heures de cours donné</h2>
+                                <div class="card-content">
+                                    <p></p>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -414,38 +492,36 @@
             </div>
         </div>
     </main>
+    <script type="text/javascript">
+        function hideAllElementByClassName(e) {
+            for (var t = document.getElementsByClassName("onglet"), n = 0; n < t.length; n++) t[n].style.display = "none";
+        }
+
+        function showElementById(e) {
+            document.getElementById(e).style.display = "block";
+        }
+
+        function addClassActiveElm(e) {
+            for (var t = document.getElementsByClassName("active"), n = 0; n < t.length; n++) removeClass(t[n], "active");
+            document.getElementById(e).className = "btnmateriel active";
+        }
+
+        function removeClass(e, t) {
+            e.className = e.className.replace(new RegExp("(?:^|\\s)" + t + "(?!\\S)"), "");
+        }
+
+        var toggleOnglets = function() {
+            hideAllElementByClassName("onglet");
+            showElementById("onglet_" + (1 + this.checked));
+        };
+
+        function initListener() {
+            document.getElementById("switch").addEventListener("change", toggleOnglets);
+        }
+
+        initListener();
+        showElementById("onglet_1");
+    </script>
 </body>
 
 </html>
-<script type="text/javascript">
-    function hideAllElementByClassNam(e) {
-        for (var t = document.getElementsByClassName("onglet"), n = 0; n < t.length; n++) t[n].style.display = "none"
-    }
-
-    function ShowElementById(e) {
-        document.getElementById(e).style.display = "block"
-    }
-
-    function addClassActiveElm(e) {
-        for (var t = document.getElementsByClassName("active"), n = 0; n < t.length; n++) removeClass(t[n], "active");
-        document.getElementById(e).className = "btnmateriel active"
-    }
-
-    function removeClass(e, t) {
-        e.className = e.className.replace(new RegExp("(?:^|\\s)" + t + "(?!\\S)"), "")
-    }
-    var DisplayHideOnglets = function() {
-            hideAllElementByClassNam("onglet");
-            var e = this.getAttribute("data-onglet");
-            void 0 !== e && null != e && (ShowElementById("onglet_" + e), addClassActiveElm("btn_" + e))
-        },
-        ToggleOnglets = function() {
-            hideAllElementByClassNam("onglet"), ShowElementById("onglet_" + (1 + this.checked))
-        };
-
-    function initListener() {
-        document.getElementById("switch").addEventListener("change", ToggleOnglets);
-        for (var e = document.getElementsByClassName("btnmateriel"), t = 0; t < e.length; t++) e[t].addEventListener("click", DisplayHideOnglets, !1)
-    }
-    initListener(), ShowElementById("onglet_1")
-</script>
