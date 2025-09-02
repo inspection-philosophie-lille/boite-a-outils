@@ -1,4 +1,43 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -11,77 +50,155 @@
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #e0e5ec;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h1 {
             color: red;
             text-transform: lowercase;
-            margin: 0; /* Supprime la marge par défaut */
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            margin: 0.5rem 0;
         }
         h2 {
-            color: black; /* Couleur du sous-titre */
-            font-size: 18px; /* Taille du sous-titre */
-            margin-top: 5px; /* Espace au-dessus du sous-titre */
+            color: black;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            margin: 0.3rem 0 0.5rem;
         }
         #game-container {
             display: flex;
-            justify-content: center;
-            max-width: 1000px;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
             width: 90%;
-            margin: 20px auto; /* Ajout d'une marge en haut et en bas */
+            max-width: 1000px;
+            margin: 1rem auto;
             background: #e0e5ec;
-            border-radius: 50px;
-            box-shadow: 20px 20px 60px #bec3c9, -20px -20px 60px #ffffff;
-            padding: 20px;
+            border-radius: 2rem;
+            box-shadow: 0.5rem 0.5rem 1.5rem #bec3c9, -0.5rem -0.5rem 1.5rem #ffffff;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        #game-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         #word-display {
-            font-size: 24px;
-            margin: 20px 0;
-            text-align: center; /* Centre le texte du mot affiché */
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            margin: 1rem 0;
+            word-break: break-word;
+            line-height: 1.5;
+        }
+        #hint {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            margin: 0.5rem 0;
         }
         #alphabet {
             display: grid;
-            grid-template-columns: repeat(9, 1fr);
-            gap: 5px;
-            justify-content: center;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(2.5rem, 1fr));
+            gap: 0.3rem;
+            width: 100%;
+            max-width: 400px;
+            margin: 1rem 0;
         }
         .letter-btn {
-            font-size: 24px;
-            margin: 5px;
-            width: 60px;
-            height: 60px;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            width: 100%;
+            aspect-ratio: 1 / 1;
             border: none;
             background: #e0e5ec;
-            box-shadow: 5px 5px 10px #bec3c9, -5px -5px 10px #ffffff;
-            border-radius: 5px;
+            box-shadow: 0.2rem 0.2rem 0.5rem #bec3c9, -0.2rem -0.2rem 0.5rem #ffffff;
+            border-radius: 0.3rem;
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .letter-btn:hover {
+            transform: scale(1.05);
         }
         .letter-btn.correct {
-            background: lightgreen; /* Si la lettre est correcte */
+            background: lightgreen;
         }
         .letter-btn.incorrect {
-            background: lightcoral; /* Si la lettre est incorrecte */
+            background: lightcoral;
+        }
+        #game-right {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         #hangman-image {
-            width: 200px;
-            height: auto; /* Ajustement automatique de la hauteur */
+            width: 100%;
+            max-width: 200px;
+            height: auto;
         }
         #score {
-            font-size: 18px;
-            margin-top: 10px;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        /* Media Queries for smaller screens */
+        @media (max-width: 768px) {
+            #game-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 0.8rem;
+            }
+            #game-right {
+                margin-top: 1rem;
+            }
+            #hangman-image {
+                max-width: 150px;
+            }
+            #alphabet {
+                grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr));
+                max-width: 100%;
+            }
+            .letter-btn {
+                font-size: clamp(0.9rem, 2.8vw, 1rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: clamp(1.2rem, 4.5vw, 1.8rem);
+            }
+            h2 {
+                font-size: clamp(0.8rem, 2.5vw, 1rem);
+            }
+            #word-display {
+                font-size: clamp(1rem, 3.5vw, 1.4rem);
+            }
+            #hint {
+                font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+            }
+            #hangman-image {
+                max-width: 120px;
+            }
+            #alphabet {
+                grid-template-columns: repeat(auto-fit, minmax(1.8rem, 1fr));
+                gap: 0.2rem;
+            }
+            .letter-btn {
+                font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            }
         }
     </style>
 </head>
 <body>
     <h1>jeu du pendu</h1>
-    <h2>réviser les repères philosophiques</h2> <!-- Sous-titre -->
+    <h2>réviser les repères philosophiques</h2>
     <div id="score">Score : 0/0</div>
     <div id="game-container">
         <div id="game-left">
-            <div id="word-display"></div> <!-- Affichage du mot -->
+            <div id="word-display"></div>
             <div id="hint"></div>
-            <div id="alphabet"></div> <!-- Affichage des lettres de l'alphabet -->
+            <div id="alphabet"></div>
         </div>
         <div id="game-right">
             <img id="hangman-image" src="src/0.png" alt="Pendu">
@@ -90,8 +207,8 @@
 
     <script>
         let definitions = [];
-        let goodAnswers = 0; // Compteur des bonnes réponses
-        let totalAnswers = 0; // Compteur des réponses totales
+        let goodAnswers = 0;
+        let totalAnswers = 0;
         let currentWord, currentHint, guessedLetters, remainingAttempts;
 
         reperes.forEach(item => {
@@ -126,12 +243,12 @@
             document.getElementById('hangman-image').src = `src/${10 - remainingAttempts}.png`;
 
             if (!wordDisplay.textContent.includes('_')) {
-                goodAnswers++; // Incrémente les bonnes réponses
-                totalAnswers++; // Incrémente le total des réponses
+                goodAnswers++;
+                totalAnswers++;
                 alert(`Bravo ! Vous avez gagné ! Le mot était : ${currentWord}`);
                 checkContinue();
             } else if (remainingAttempts === 0) {
-                totalAnswers++; // Incrémente le total des réponses
+                totalAnswers++;
                 alert(`Dommage ! Le mot était : ${currentWord}`);
                 checkContinue();
             }
@@ -200,7 +317,7 @@
             updateScore();
         }
 
-        initGame(); // Initialise le jeu au chargement de la page
+        initGame();
     </script>
 </body>
 </html>
