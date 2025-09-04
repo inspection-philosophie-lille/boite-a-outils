@@ -1,13 +1,45 @@
-Peux-tu me fournir un fichier HTML complet qui réalise les fonctionnalités suivantes :
+Prompt :
 
-    Le titre du document doit être en rouge, centré en haut de la page.
-    Les éléments de la page doivent utiliser un style neumorphique (avec des ombres douces).
-    Inclure deux dropzones où les utilisateurs peuvent faire glisser des étiquettes. Les dropzones doivent avoir une bonne esthétique.
-    Inclure un compteur de bonnes réponses et un compteur de réponses totales.
-    Ajouter un bouton 'vérifier' qui, lorsqu'il est cliqué, évalue les réponses et met à jour les compteurs.
-    Inclure une fonctionnalité pour corriger les réponses incorrectes par glissement, avec une animation fluide où chaque étiquette glisse directement vers sa colonne correcte sans se rassembler en haut.
-    Les couleurs des résultats corrects et incorrects doivent être pastel.
-    Le bouton doit être situé à 5 mm sous les dropzones.
-    Lors de l'appui sur "recommencer", un nouveau tirage au sort doit être effectué pour choisir deux nouveaux mots pour les colonnes.
+Créez une page web HTML5 interactive pour un exercice pédagogique de révision des auteurs, avec les spécifications suivantes :
 
-Fournis-moi le code HTML complet que je peux utiliser directement.
+    Structure et contenu :
+        La page doit inclure un en-tête avec un titre "mise en pratique" en rouge, en minuscules, et un sous-titre "réviser les auteurs" en gris.
+        Un conteneur central affiche un score ("Bonnes réponses : X / Y") et un bouton "vérifier" alignés horizontalement sur desktop, et verticalement sur mobile.
+        Deux zones de dépôt (dropzones) sont affichées côte à côte sur desktop et en colonne sur mobile, chacune avec un libellé indiquant où déposer des exemples (ex. : "déposez ici les exemples de [nom]"). Ces zones contiennent des étiquettes déplaçables (draggable).
+        Les données des exemples sont tirées d'un fichier externe reperes.js (non fourni, mais supposé contenir une liste d'objets avec des propriétés parts contenant name et examples).
+    Interactivité :
+        Les étiquettes (.draggable) peuvent être déplacées entre les dropzones via drag-and-drop sur desktop (événements HTML5 : dragstart, dragover, drop, etc.).
+        Sur mobile, un tap sur une étiquette la déplace vers l'autre dropzone (événement touchend).
+        Le bouton "vérifier" marque les étiquettes comme correctes (vert) ou incorrectes (rouge) en comparant leur contenu avec les exemples attendus.
+        Le bouton "corriger" déplace les étiquettes incorrectes vers la bonne dropzone avec une animation fluide :
+            Animation de 2 secondes utilisant transform pour déplacer l'étiquette (calculé via getBoundingClientRect) et opacity (de 1 à 0.5 pendant le déplacement, puis retour à 1).
+            Courbe d'accélération : cubic-bezier(0.25, 0.1, 0.25, 1).
+            Après l'animation, l'étiquette est ajoutée à la bonne dropzone et marquée comme correcte.
+        Le bouton "recommencer" réinitialise les étiquettes et charge de nouveaux exemples.
+        Le score cumule les bonnes réponses au fil des sessions, affiché dans l'élément .score.
+    Style visuel :
+        Utilisez une police Arial, un fond gris clair (#e0e0e0), et des ombres douces (box-shadow) pour un effet néomorphique.
+        Les dropzones ont un fond gris clair (#f0f0f0), une bordure en pointillés (2px dashed #ccc), et des coins arrondis (border-radius: 15px).
+        Les étiquettes ont un fond gris moyen (#d1d1d1), des coins arrondis, et des ombres néomorphiques.
+        Le bouton et l'élément de score ont un style similaire avec des coins arrondis et des ombres.
+        Les étiquettes correctes deviennent vertes (#28a745), les incorrectes rouges (#dc3545).
+    Responsivité :
+        Sur desktop (> 600px) :
+            Les dropzones sont côte à côte, occupant ~45% de la largeur chacune (flex: 1 1 45%), avec une largeur maximale de 500px et minimale de 200px.
+            Le conteneur principal est limité à 1200px (max-width: 1200px).
+            Le score et le bouton sont alignés horizontalement (flex avec gap: 15px).
+        Sur mobile (≤ 600px) :
+            Les dropzones passent en colonne (flex-direction: column).
+            Les tailles de police et d'éléments (score, bouton, étiquettes) sont réduites (ex. : 0.9em pour ≤ 600px, 0.8em pour ≤ 400px).
+            Le score et le bouton passent en disposition verticale.
+        Ajoutez <meta name="viewport" content="width=device-width, initial-scale=1.0"> pour un rendu mobile correct.
+        Utilisez touch-action: manipulation sur le body et touch-action: none sur les .draggable pour une meilleure réactivité tactile.
+    Contraintes techniques :
+        Utilisez Flexbox pour la disposition.
+        Assurez-vous que les dropzones ne débordent pas de la fenêtre sur desktop.
+        L'animation du bouton "corriger" doit être fluide sur desktop et mobile, sans provoquer de décalages ou de ralentissements.
+        Le code JavaScript doit inclure une fonction shuffleArray pour mélanger les exemples, et gérer dynamiquement la création des dropzones et des étiquettes.
+    Fichier de sortie :
+        Fournissez un fichier HTML unique avec les sections <head>, <style>, <body>, et <script> intégrées.
+        Incluez une référence au fichier externe reperes.js sans le modifier.
+        Assurez-vous que le code est compatible avec les navigateurs modernes (Chrome, Firefox, Safari).
