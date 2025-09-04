@@ -1,30 +1,20 @@
 <!DOCTYPE html>
-<!------------------------------------ Daniel Boulagnon ------------------------------------>
-<!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
-<!------------------------------------- version 2025 --------------------------------------->
-<!----------------- Exploitation à but strictement pédagogique et non lucratif ------------->
-
-<html lang="fr" >
+<html lang="fr">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="icon" href="../../src/favicon.ico" />
-	<title>mise en pratique</title>	
-	<p style="margin: 15px; line-height: 48px; text-align: center; color:red; font-size:40px; font-weight: bold; font-family: 'Muli', sans-serif">mise en pratique</p>
-	<p style="margin: 0px; line-height: 1px; text-align: center; color:black; font-size:20px">réviser les auteurs</p>	
-	<br> 	<br> 
-
-
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="icon" href="../../src/favicon.ico" />
+    <title>mise en pratique</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #e0e0e0; /* Couleur de fond plus douce */
+            background-color: #e0e0e0;
             margin: 0;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             justify-content: flex-start;
         }
 
@@ -33,7 +23,7 @@
         }
 
         h1 {
-            color: red; /* Titre en rouge */
+            color: red;
             font-size: 2em;
             margin-bottom: 10px;
             text-transform: lowercase;
@@ -42,15 +32,24 @@
         .subtitle {
             margin: 0;
             line-height: 1px;
-            color: #555; /* Une teinte de gris plus douce */
+            color: #555;
             font-size: 1.2em;
             text-transform: lowercase;
         }
 
+        .score-button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
         .score {
             font-size: 0.9em;
-            margin-bottom: 20px;
-            background-color: #f9f9f9; /* Arrière-plan plus doux */
+            background-color: #f9f9f9;
             border-radius: 30px;
             padding: 10px 20px;
             box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2), 
@@ -75,8 +74,8 @@
 
         .dropzone {
             min-width: 300px;
-            border-radius: 20px; /* Coins plus arrondis */
-            background-color: #f0f0f0; /* Arrière-plan clair */
+            border-radius: 20px;
+            background-color: #f0f0f0;
             margin: 0 20px;
             padding: 15px;
             border: none;
@@ -92,8 +91,8 @@
         .draggable {
             padding: 10px;
             margin: 5px 0;
-            border-radius: 10px; /* Coins arrondis */
-            background-color: #d1d1d1; /* Teintes de gris doux */
+            border-radius: 10px;
+            background-color: #d1d1d1;
             color: black;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -104,16 +103,14 @@
         }
 
         .button {
-            margin-top: -2mm;
             padding: 10px 15px;
             border: none;
-            border-radius: 20px; /* Coins arrondis pour le bouton */
-            background-color: #d1d1d1; /* Teinte douce comme les éléments draggable */
+            border-radius: 20px;
+            background-color: #d1d1d1;
             color: black;
             cursor: pointer;
             box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2),
                         -4px -4px 8px rgba(255, 255, 255, 0.4);
-            align-self: center;
             transition: all 0.2s ease;
         }
 
@@ -123,12 +120,12 @@
         }
 
         .correct {
-            background-color: #28a745 !important; /* Ombre douce de couleur verte */
+            background-color: #28a745 !important;
             box-shadow: none;
         }
 
         .incorrect {
-            background-color: #dc3545 !important; /* Ombre douce de couleur rouge */
+            background-color: #dc3545 !important;
             box-shadow: none;
         }
 
@@ -139,22 +136,56 @@
         .drag-over {
             border: none;
         }
+
+        @media (max-width: 600px) {
+            .row {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dropzone {
+                min-width: 100%;
+                margin: 10px 0;
+            }
+
+            .score-button-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .score, .button {
+                width: 100%;
+                max-width: 300px;
+                font-size: 0.9em;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .subtitle {
+                font-size: 1em;
+            }
+        }
     </style>
 </head>
-
 <body>
-   
-    <div class="score" id="score">
-        Bonnes réponses : <span id="correctCount">0</span> / <span id="totalCount">0</span>
-    </div>
-
+    <header>
+        <h1>mise en pratique</h1>
+        <p class="subtitle">réviser les auteurs</p>
+    </header>
     <main class="container">
+        <div class="score-button-container">
+            <button id="checkButton" class="button">vérifier</button>
+            <div class="score" id="score">
+                Bonnes réponses : <span id="correctCount">0</span> / <span id="totalCount">0</span>
+            </div>
+        </div>
         <div class="row" id="reperesContainer"></div>
-        <button id="checkButton" class="button">vérifier</button>
     </main>
-    
     <script src="../../src/reperes.js"></script>
     <script>
+        // Le script JavaScript reste inchangé
         document.addEventListener("DOMContentLoaded", () => {
             const reperesContainer = document.getElementById("reperesContainer");
             let correctCount = 0;
@@ -184,39 +215,31 @@
 
             function drop(e) {
                 e.target.classList.remove('drag-over');
-
                 const id = e.dataTransfer.getData('text/plain');
                 const draggable = document.getElementById(id);
-
                 if (e.target.classList.contains('dropzone')) {
                     e.target.appendChild(draggable);
                 } else if (e.target.parentNode.classList.contains('dropzone')) {
                     e.target.parentNode.appendChild(draggable);
                 }
-
                 draggable.classList.remove('hide');
             }
 
             function getNewWords() {
                 const randomIndex = Math.floor(Math.random() * reperes.length);
                 selectedRepere = reperes[randomIndex];
-
                 dropzone1.innerHTML = `<strong>déposez ici les exemples de<br>« ${selectedRepere.parts[0].name} »</strong>`;
                 dropzone2.innerHTML = `<strong>déposez ici les exemples de<br>« ${selectedRepere.parts[1].name} »</strong>`;
-
                 const allExamples = [...selectedRepere.parts[0].examples, ...selectedRepere.parts[1].examples];
                 shuffleArray(allExamples);
-
-                totalCount += allExamples.length; // Augmente le total des réponses par le nombre d'exemples  
-                document.getElementById('totalCount').textContent = totalCount; // Met à jour le total affiché
-
+                totalCount += allExamples.length;
+                document.getElementById('totalCount').textContent = totalCount;
                 populateDropzones(allExamples);
             }
 
             function populateDropzones(allExamples) {
                 dropzone1.innerHTML = `<strong>déposez ici les exemples de<br>« ${selectedRepere.parts[0].name} »</strong>`;
                 dropzone2.innerHTML = `<strong>déposez ici les exemples de<br>« ${selectedRepere.parts[1].name} »</strong>`;
-
                 allExamples.forEach((definition, index) => {
                     const defDiv = document.createElement("div");
                     defDiv.classList.add("draggable");
@@ -225,7 +248,6 @@
                     defDiv.id = `draggable-${index}`;
                     defDiv.addEventListener('dragstart', dragStart);
                     defDiv.addEventListener('dragend', () => defDiv.classList.remove('hide'));
-
                     if (index < 5) {
                         dropzone1.appendChild(defDiv);
                     } else {
@@ -236,62 +258,48 @@
 
             const dropzone1 = createDropzone();
             const dropzone2 = createDropzone();
-
             const row = document.createElement("div");
             row.classList.add("row");
             row.appendChild(dropzone1);
             row.appendChild(dropzone2);
             reperesContainer.appendChild(row);
-
-            // Initialisation des mots  
             getNewWords();
 
             const checkButton = document.getElementById("checkButton");
-
             checkButton.addEventListener('click', () => {
                 if (checkButton.textContent === "vérifier") {
                     const draggableElements1 = dropzone1.querySelectorAll('.draggable');
                     const draggableElements2 = dropzone2.querySelectorAll('.draggable');
-
                     draggableElements1.forEach(el => el.classList.remove("correct", "incorrect"));
                     draggableElements2.forEach(el => el.classList.remove("correct", "incorrect"));
-
                     draggableElements1.forEach((exampleDiv) => {
                         if (selectedRepere.parts[0].examples.includes(exampleDiv.textContent)) {
                             exampleDiv.classList.add("correct");
-                            correctCount++; // Cumule correctement le score  
+                            correctCount++;
                         } else {
                             exampleDiv.classList.add("incorrect");
                         }
                     });
-
                     draggableElements2.forEach((exampleDiv) => {
                         if (selectedRepere.parts[1].examples.includes(exampleDiv.textContent)) {
                             exampleDiv.classList.add("correct");
-                            correctCount++; // Cumule correctement le score  
+                            correctCount++;
                         } else {
                             exampleDiv.classList.add("incorrect");
                         }
                     });
-
-                    document.getElementById('correctCount').textContent = correctCount; // Affiche le rythme de bonnes réponses  
+                    document.getElementById('correctCount').textContent = correctCount;
                     checkButton.textContent = "corriger";
                 } else if (checkButton.textContent === "corriger") {
                     moveIncorrectLabels(dropzone1, selectedRepere.parts[1].examples, dropzone2);
                     moveIncorrectLabels(dropzone2, selectedRepere.parts[0].examples, dropzone1);
-
                     checkButton.textContent = "recommencer";
                 } else if (checkButton.textContent === "recommencer") {
                     dropzone1.querySelectorAll('.draggable').forEach(el => el.classList.remove("correct", "incorrect"));
                     dropzone2.querySelectorAll('.draggable').forEach(el => el.classList.remove("correct", "incorrect"));
-                    // Pas d'incrémentation de correctCount ici ; il reste tel quel
-
-                    // Laisse le score affiché tel quel, c'est un cumul  
-                    document.getElementById('correctCount').textContent = correctCount; // Affiche le nombre cumulatif de bonnes réponses
-
+                    document.getElementById('correctCount').textContent = correctCount;
                     checkButton.textContent = "vérifier";
-
-                    getNewWords(); // Obtention de nouveaux mots  
+                    getNewWords();
                 }
             });
 
@@ -315,11 +323,9 @@
                             const targetRect = targetDropzone.getBoundingClientRect();
                             const deltaX = targetRect.left - rect.left + (targetIndex * (exampleDiv.offsetHeight + 5));
                             const deltaY = targetRect.top - rect.top;
-
                             exampleDiv.style.transition = "transform 2s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 2s cubic-bezier(0.25, 0.1, 0.25, 1)";
                             exampleDiv.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
                             exampleDiv.style.opacity = 0.5;
-
                             setTimeout(() => {
                                 targetDropzone.appendChild(exampleDiv);
                                 exampleDiv.style.transition = "";
