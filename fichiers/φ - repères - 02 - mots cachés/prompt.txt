@@ -1,66 +1,112 @@
-Contexte :
-Je souhaite créer un jeu de mots cachés en HTML, CSS et JavaScript. 
-Le jeu doit inclure une grille de lettres dans laquelle des mots sont cachés horizontalement, verticalement et en diagonale. 
-Les joueurs doivent sélectionner deux cellules pour identifier un mot caché. Lorsque tous les mots sont trouvés, une alerte de félicitations doit s'afficher.
+Pour générer un fichier HTML comme celui fourni, avec toutes les fonctionnalités spécifiées (grille de mots cachés, boutons alignés différemment selon desktop/mobile, largeur des boutons basée sur le mot le plus long en desktop et la grille en mobile, espacement réduit des cellules en mobile, etc.), voici un prompt détaillé et structuré que vous pourriez utiliser pour une IA comme moi (Grok) ou un autre modèle de génération de code. Le prompt est conçu pour être clair, complet et précis, tout en évitant toute mention directe du code existant pour se concentrer sur les exigences fonctionnelles et visuelles.
+Prompt pour générer le fichier HTML
 
-Exigences techniques :
+Objectif : Créez un fichier HTML avec CSS et JavaScript pour une application de mots cachés (word search puzzle) interactive, respectant les contraintes suivantes pour desktop (>768px) et mobile (≤768px).
+Exigences générales
 
-    Structure HTML :
+    Structure de la page :
+        Une page HTML avec un <header> contenant :
+            Un titre <h1> : "mots cachés" (minuscules, rouge).
+            Un sous-titre <h2> : "repérer les repères" (minuscules, noir).
+        Un conteneur principal (.main-container) avec :
+            Un conteneur de contrôles (.controls-container) contenant un <select> pour choisir la taille de la grille (8x8, 10x10, 15x15) et un bouton "Recharger".
+            Un conteneur (.container) pour la grille (.grid) et la liste des mots (.words-list).
+        Une modale (.congrats-modal) affichée lorsque tous les mots sont trouvés, avec un message "Félicitations ! 🎉", un texte "Vous avez trouvé tous les mots !", et un bouton "Fermer".
+        Inclure un fichier externe reperes.js (situé dans ../../src/reperes.js) contenant une liste de mots dans une structure comme :
+        javascript
 
-        Un titre principal : "Jeu de Mots Cachés".
-
-        Un sous-titre : "Trouvez les mots cachés dans la grille" (en rouge).
-
-        Un menu déroulant pour choisir la difficulté (Facile : 8x8, Moyen : 10x10, Difficile : 15x15).
-
-        Un bouton "Recharger" pour générer une nouvelle grille.
-
-        Une grille de lettres (dynamiquement générée en JavaScript).
-
-        Une liste des mots à trouver (dynamiquement mise à jour).
-
-    Styles CSS :
-
-        Utiliser un design "neumorphic" pour un look moderne.
-
-        La grille doit avoir des cellules carrées avec des ombres pour un effet 3D.
-
-        Les mots trouvés doivent être barrés dans la liste.
-
-        Le sous-titre doit être en rouge.
-
-    Fonctionnalités JavaScript :
-
-        Générer une grille de lettres avec des mots cachés.
-
-        Remplir les cellules vides avec des lettres aléatoires (pondérées pour les lettres courantes en français).
-
-        Permettre aux joueurs de sélectionner deux cellules pour identifier un mot.
-
-        Vérifier si les cellules sélectionnées correspondent à un mot caché.
-
-        Afficher une alerte de félicitations lorsque tous les mots sont trouvés.
-
-        Recharger la grille sans recharger la page.
-
+        const reperes = [{ parts: [{ name: "CHAT" }, { name: "CHIEN" }, ...] }];
+        Si reperes.js échoue, utiliser une liste par défaut : ["TEST", "JEU", "MOT", "GRILLE", "ALEATOIRE", "PUZZLE", "JOUER", "TROUVER", "CACHE", "LETTRE"].
+    Fonctionnalités de la grille :
+        La grille (.grid) est un tableau de cellules (.cell) généré dynamiquement (8x8, 10x10, ou 15x15 selon le <select>).
+        Chaque cellule contient une lettre (majuscule, centrée, police Arial, gras).
+        Les mots (filtrés : longueur ≥ 4 et ≤ taille de la grille) sont placés aléatoirement dans 8 directions (haut, bas, gauche, droite, diagonales).
+        Les cellules vides sont remplies avec des lettres aléatoires (A-Z).
+        Les utilisateurs peuvent sélectionner un mot en cliquant/touchant deux cellules (début et fin). Si le mot est valide, il est surligné (.cell.highlighted) et barré dans la liste des mots (.words-list span.crossed-out).
+        La grille est centrée dans .container avec margin: 0 auto.
     Interactivité :
+        Supporte les clics et les événements tactiles (touchstart, touchmove, touchend) pour sélectionner les mots.
+        Le <select> (id="level") change la taille de la grille ("Facile (8x8)", "Moyen (10x10)", "Difficile (15x15)") et régénère la grille.
+        Le bouton "Recharger" régénère la grille avec la même taille.
+        La modale s’affiche lorsque tous les mots sont trouvés et peut être fermée.
+    Styles généraux :
+        Polices et couleurs :
+            Police : Arial, sans-serif.
+            Fond de page : #e0e5ec (gris clair).
+            <h1> : Rouge, 2.5rem (desktop), 1.8rem (≤768px), 1.4rem (≤480px).
+            <h2> : Noir, 1.5rem (desktop), 1.1rem (≤768px), 0.9rem (≤480px).
+        Effets visuels :
+            Pas d’ombre sur .container.
+            Ombres néomorphiques sur .cell, .cell.selected, .cell.highlighted, <select>, <button>, .words-list span :
+                .cell : box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff.
+                .cell.selected, .cell.highlighted : box-shadow: inset 5px 5px 10px #8a96a8, inset -5px -5px 10px #b8c6e0.
+                <select>, <button> : Même ombre que .cell au repos, inset lorsqu’actif.
+                .words-list span : Même ombre que .cell.
+            Modale : Ombre plus prononcée (10px 10px 20px #a3b1c6, -10px -10px 20px #ffffff).
+        Espacement vertical optimisé :
+            body: padding: 0.5rem.
+            header: margin-bottom: 1rem.
+            .main-container: gap: 1rem (desktop), gap: 0.5rem (mobile).
+            .container: padding: 1rem (desktop), padding: 0.5rem (mobile), margin-bottom: 2rem (mobile).
+            .words-list: margin: 1rem, gap: 0.3rem, min-height: 40px.
+            .words-list span: margin: 0.2rem, padding: 0.3rem 0.6rem (desktop), 0.2rem 0.5rem (≤768px), 0.2rem 0.4rem (≤480px).
 
-        Le menu déroulant doit permettre de changer la taille de la grille.
+Exigences spécifiques pour desktop (>768px)
 
-        Le bouton "Recharger" doit générer une nouvelle grille avec de nouveaux mots.
+    Boutons :
+        .controls-container : flex-direction: column.
+        <select> et <button> : width: 100%, avec une largeur égale à celle du mot le plus long dans .words-list (incluant font-size: 0.9rem, padding: 0.3rem 0.6rem, margin: 0.2rem du <span>, plus les paddings des boutons : 0.8rem horizontal).
+        Calculer la largeur dynamiquement via JavaScript (par exemple, en mesurant un <span> temporaire avec les styles de .words-list span).
+    Grille :
+        Cellules : width: 3.5vw, height: 3.5vw, min-width: 30px, min-height: 30px, max-width: 40px, max-height: 40px, font-size: 1rem.
+        Espacement : .grid { gap: 0.5rem } (~8px).
+        Marge : .grid { margin: 0 } pour égaliser les distances.
+    Distances :
+        Distance entre <h2> (sous-titre) et .controls-container = distance entre <h2> et .grid (~2rem, via header { margin-bottom: 1rem } et .main-container { gap: 1rem }).
 
-        Les mots trouvés doivent être mis en évidence dans la grille et barrés dans la liste.
+Exigences spécifiques pour mobile (≤768px)
 
-    Données :
+    Boutons :
+        .controls-container : flex-direction: row, gap: 0.5rem.
+        <select> et <button> : width: calc(50% - 0.5rem), padding: 0.5rem 0.3rem, font-size: 0.9rem.
+        Largeur totale de .controls-container (boutons + gap) ≤ largeur de .grid (de la lettre la plus à gauche à la plus à droite, incluant les contours des cellules, c’est-à-dire .grid.offsetWidth).
+        Ajuster la largeur via JavaScript pour correspondre à .grid.offsetWidth.
+    Grille :
+        Cellules : width: 8vw, height: 8vw, min-width: 25px, min-height: 25px, max-width: 35px, max-height: 35px, font-size: 0.9rem.
+        Espacement : .grid { gap: 0.3rem } (~4.8px) pour rapprocher les lettres.
+        Marge : .grid { margin: 1rem 0 } pour espacement vertical.
+    Ajustements pour petits écrans (≤480px) :
+        Cellules : width: 10vw, height: 10vw, min-width: 20px, min-height: 20px, max-width: 30px, max-height: 30px, font-size: 0.8rem.
+        Boutons : padding: 0.4rem 0.2rem, font-size: 0.7rem.
+        Mots : .words-list span { font-size: 0.6rem; padding: 0.2rem 0.4rem }.
 
-        Les mots à cacher doivent être chargés depuis un fichier externe (reperes.js).
+Exigences supplémentaires
 
-        Les mots doivent être placés aléatoirement dans la grille, dans toutes les directions possibles.
+    Liste des mots :
+        .words-list : Visible sous la grille, overflow: auto, min-height: 40px, centrée (justify-content: center), gap: 0.3rem.
+        Chaque mot dans un <span> avec font-size: 0.9rem (desktop), 0.7rem (≤768px), 0.6rem (≤480px).
+        Mots barrés (.crossed-out) avec text-decoration: line-through, color: #888.
+    <select> :
+        Centré (text-align: center; text-align-last: center).
+        Options : "Facile (8x8)", "Moyen (10x10)", "Difficile (15x15)".
+    Responsive :
+        Utiliser des media queries pour max-width: 768px et max-width: 480px.
+        Assurer que la grille et les boutons restent alignés et fonctionnels sur toutes tailles d’écran.
+    Accessibilité :
+        Utiliser user-select: none sur .cell pour éviter la sélection de texte.
+        Assurer que les événements tactiles (touch-action: none sur body et .grid) fonctionnent correctement.
+    Gestion des erreurs :
+        Si reperes.js échoue, afficher une alerte et utiliser les mots par défaut.
+        Si aucun mot n’est placé, afficher une alerte suggérant de recharger.
+    Performance :
+        Optimiser l’espace vertical avec des marges/paddings réduits.
+        Éviter les débordements inutiles (max-width: 1200px pour .main-container, max-width: 600px pour .container).
 
-Instructions supplémentaires :
+Livrable
 
-    Le code doit être bien structuré et commenté pour une meilleure compréhension.
-
-    Utiliser des fonctions modulaires pour chaque tâche (génération de la grille, placement des mots, vérification des mots, etc.).
-
-    Assurer que le code est propre, lisible et facile à maintenir.
+    Un fichier HTML unique contenant :
+        HTML avec la structure décrite.
+        CSS (dans <style>) pour tous les styles et media queries.
+        JavaScript (dans <script>) pour la logique de la grille, l’interactivité, et la gestion des largeurs dynamiques.
+    Inclure des commentaires dans le code pour expliquer les sections clés (par exemple, "Calculer la largeur du mot le plus long", "Gérer les événements tactiles").
+    Assurer que le code est testé pour desktop (>768px), mobile (≤768px), et petits écrans (≤480px).
