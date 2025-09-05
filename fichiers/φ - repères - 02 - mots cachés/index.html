@@ -57,6 +57,7 @@
             padding: 0.5rem;
             box-sizing: border-box;
             touch-action: none;
+            overflow-y: auto;
         }
 
         header {
@@ -89,14 +90,14 @@
 
         .controls-container {
             display: flex;
-            flex-direction: column; /* Boutons en colonne pour desktop */
+            flex-direction: column;
             gap: 0.5rem;
             box-sizing: border-box;
         }
 
         .controls-container select,
         .controls-container button {
-            width: 100%; /* Pleine largeur pour desktop */
+            width: 100%;
         }
 
         .container {
@@ -107,14 +108,20 @@
             max-width: 600px;
             box-sizing: border-box;
             margin: 0 auto;
+            min-height: 200px;
         }
 
         .grid {
             display: grid;
-            gap: 0.5rem; /* Espacement par défaut pour desktop */
-            margin: 0; /* Aucune marge pour égaliser la distance en desktop */
+            gap: 0.5rem;
+            margin: 0;
+            margin-bottom: -15px;
+            padding-bottom: 12px;
             justify-content: center;
             touch-action: none;
+            overflow-x: auto;
+            white-space: nowrap;
+            max-width: 100%;
         }
 
         .cell {
@@ -129,7 +136,7 @@
             align-items: center;
             background: #e0e5ec;
             border-radius: 0.8rem;
-            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            box-shadow: 3px 3px 6px #a3b1c6;
             cursor: pointer;
             font-size: 1rem;
             font-weight: bold;
@@ -138,14 +145,10 @@
             user-select: none;
         }
 
-        .cell.selected {
-            background: #a3b1c6;
-            box-shadow: inset 5px 5px 10px #8a96a8, inset -5px -5px 10px #b8c6e0;
-        }
-
+        .cell.selected,
         .cell.highlighted {
             background: #a3b1c6;
-            box-shadow: inset 5px 5px 10px #8a96a8, inset -5px -5px 10px #b8c6e0;
+            box-shadow: inset 3px 3px 6px #8a96a8;
         }
 
         button {
@@ -153,15 +156,26 @@
             border: none;
             border-radius: 0.8rem;
             background: #e0e5ec;
-            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            box-shadow: 3px 3px 6px #a3b1c6;
             cursor: pointer;
             font-size: 1rem;
             color: #333;
             box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: normal;
+            min-height: 2.5rem;
+        }
+
+        .controls-container button {
+            font-size: 1.5rem; /* Plus grand pour ↻ */
+            color: red; /* En rouge */
+            min-height: 2.8rem; /* Ajusté pour la taille accrue */
         }
 
         button:active {
-            box-shadow: inset 5px 5px 10px #8a96a8, inset -5px -5px 10px #b8c6e0;
+            box-shadow: inset 3px 3px 6px #8a96a8;
         }
 
         select {
@@ -169,16 +183,26 @@
             border: none;
             border-radius: 0.8rem;
             background: #e0e5ec;
-            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            box-shadow: 3px 3px 6px #a3b1c6;
             font-size: 1rem;
             color: #333;
             box-sizing: border-box;
             text-align: center;
             text-align-last: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: normal;
+            min-height: 2.5rem;
+        }
+
+        select option {
+            display: flex;
+            align-items: center;
         }
 
         .words-list {
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             margin-bottom: 1rem;
             text-align: center;
             display: flex;
@@ -195,7 +219,7 @@
             padding: 0.3rem 0.6rem;
             background: #e0e5ec;
             border-radius: 0.8rem;
-            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            box-shadow: 3px 3px 6px #a3b1c6;
             font-size: 0.9rem;
         }
 
@@ -220,6 +244,14 @@
             box-sizing: border-box;
         }
 
+        #congrats-modal button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: normal;
+            min-height: 2.5rem;
+        }
+
         @media (max-width: 768px) {
             h1 { font-size: 1.8rem; }
             h2 { font-size: 1.1rem; }
@@ -229,34 +261,54 @@
                 gap: 0.5rem;
             }
             .controls-container {
-                flex-direction: row; /* Boutons en ligne pour mobile */
+                flex-direction: row;
                 width: 100%;
                 margin: 0 auto;
             }
             .controls-container select,
             .controls-container button {
-                width: calc(50% - 0.5rem); /* Deux boutons côte à côte */
+                width: calc(50% - 0.5rem);
                 padding: 0.5rem 0.3rem;
                 font-size: 0.9rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                line-height: normal;
+                min-height: 2.2rem;
+            }
+            .controls-container button {
+                font-size: 1.2rem; /* Plus grand pour ↻ */
+                color: red; /* En rouge */
+                min-height: 2.2rem; /* Ajusté */
             }
             .container {
                 padding: 0.5rem;
                 margin-bottom: 2rem;
+                min-height: 250px;
             }
             .grid {
-                margin: 1rem 0; /* Restaurer la marge pour mobile */
-                gap: 0.3rem; /* Réduire l'espacement entre les cellules en mobile */
+                margin-top: 1rem;
+                margin-bottom: -15px;
+                padding-bottom: 12px;
+                gap: 0.25rem;
+                max-width: 100%;
             }
             .cell {
-                width: 8vw;
-                height: 8vw;
-                min-width: 25px;
-                min-height: 25px;
-                max-width: 35px;
-                max-height: 35px;
+                width: 7vw;
+                height: 7vw;
+                min-width: 20px;
+                min-height: 20px;
+                max-width: 28px;
+                max-height: 28px;
                 font-size: 0.9rem;
+                box-shadow: 3px 3px 6px #a3b1c6;
             }
-            .words-list span {
+            .cell.selected,
+            .cell.highlighted {
+                box-shadow: inset 3px 3px 6px #8a96a8;
+            }
+            .words-list {
+                margin-top: 1.5rem;
                 font-size: 0.7rem;
                 padding: 0.2rem 0.5rem;
             }
@@ -264,18 +316,25 @@
                 padding: 1rem;
                 width: 80%;
             }
+            #congrats-modal button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                line-height: normal;
+                min-height: 2rem;
+            }
         }
 
         @media (max-width: 480px) {
             h1 { font-size: 1.4rem; }
             h2 { font-size: 0.9rem; }
             .cell {
-                width: 10vw;
-                height: 10vw;
-                min-width: 20px;
-                min-height: 20px;
-                max-width: 30px;
-                max-height: 30px;
+                width: 8vw;
+                height: 8vw;
+                min-width: 18px;
+                min-height: 18px;
+                max-width: 25px;
+                max-height: 25px;
                 font-size: 0.8rem;
             }
             .controls-container select,
@@ -283,6 +342,16 @@
                 width: calc(50% - 0.5rem);
                 padding: 0.4rem 0.2rem;
                 font-size: 0.7rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                line-height: normal;
+                min-height: 2rem;
+            }
+            .controls-container button {
+                font-size: 1rem; /* Plus grand pour ↻ */
+                color: red; /* En rouge */
+                min-height: 2rem; /* Ajusté */
             }
             .words-list span {
                 font-size: 0.6rem;
@@ -300,11 +369,11 @@
     <div class="main-container">
         <div class="controls-container">
             <select id="level" onchange="generateGrid()">
-                <option value="8">Facile (8x8)</option>
-                <option value="10">Moyen (10x10)</option>
-                <option value="15">Difficile (15x15)</option>
+                <option value="8">facile (8x8)</option>
+                <option value="10">moyen (10x10)</option>
+                <option value="15">difficile (15x15)</option>
             </select>
-            <button onclick="reloadGrid()">Recharger</button>
+            <button onclick="reloadGrid()"><FONT size="15pt"> &#8635;</FONT></button>
         </div>
 
         <div class="container">
@@ -316,7 +385,7 @@
     <div id="congrats-modal">
         <h2>Félicitations ! 🎉</h2>
         <p>Vous avez trouvé tous les mots !</p>
-        <button onclick="closeCongratsModal()">Fermer</button>
+        <button onclick="closeCongratsModal()">fermer</button>
     </div>
 
     <script src="../../src/reperes.js"></script>
@@ -327,6 +396,7 @@
         let words = [];
         let selectedCells = [];
         let wordsToFind = [];
+        let initialControlsWidth = 0;
 
         // Directions possibles pour placer les mots
         const directions = [
@@ -364,8 +434,7 @@
             });
 
             document.body.removeChild(tempSpan);
-            // Ajouter les paddings et marges des boutons pour desktop (0.8rem padding horizontal + 0px bordure)
-            const buttonPadding = 0.8 * 16 * 2; // 0.8rem left + right en pixels
+            const buttonPadding = 0.8 * 16 * 2;
             return maxWidth + buttonPadding;
         }
 
@@ -379,7 +448,7 @@
                 alert('Erreur : Impossible de charger les mots. Utilisation des mots par défaut.');
                 words = ['TEST', 'JEU', 'MOT', 'GRILLE', 'ALEATOIRE', 'PUZZLE', 'JOUER', 'TROUVER', 'CACHE', 'LETTRE'];
             }
-            words = [...new Set(words)]; // Supprimer les doublons
+            words = [...new Set(words)];
         }
 
         // Générer la grille
@@ -392,6 +461,9 @@
                 renderGrid();
                 renderWordsList();
                 addTouchEvents();
+                if (!initialControlsWidth && wordsToFind.length > 0) {
+                    initialControlsWidth = getLongestWordWidth();
+                }
             } catch (e) {
                 console.error('Erreur dans generateGrid:', e);
                 alert('Erreur lors de la génération de la grille.');
@@ -483,7 +555,14 @@
                 console.error("L'élément #grid est introuvable dans le DOM");
                 return;
             }
-            gridElement.style.gridTemplateColumns = `repeat(${gridSize}, minmax(20px, 40px))`;
+            const isMobile = window.innerWidth <= 768;
+            let cellWidth = 40;
+            if (isMobile) {
+                const maxGridWidth = window.innerWidth * 0.95;
+                const gapSize = 0.25 * 16;
+                cellWidth = Math.min(28, (maxGridWidth - (gridSize - 1) * gapSize) / gridSize);
+            }
+            gridElement.style.gridTemplateColumns = `repeat(${gridSize}, ${cellWidth}px)`;
             gridElement.innerHTML = grid.map((cell, index) => `
                 <div class="cell ${cell.selected ? 'selected' : ''} ${cell.highlighted ? 'highlighted' : ''}" 
                      data-index="${index}">
@@ -491,18 +570,21 @@
                 </div>
             `).join('');
 
-            // Calculer la largeur réelle de la grille
+            if (isMobile) {
+                document.querySelectorAll('.cell').forEach(cell => {
+                    cell.style.width = `${cellWidth}px`;
+                    cell.style.height = `${cellWidth}px`;
+                });
+            }
+
             const gridElementRendered = document.getElementById("grid");
             const controlsContainer = document.querySelector('.controls-container');
             if (gridElementRendered && controlsContainer) {
                 const gridWidth = gridElementRendered.offsetWidth;
-                // Pour desktop (>768px), utiliser la largeur du mot le plus long
-                // Pour mobile (≤768px), utiliser la largeur de la grille
-                const isMobile = window.innerWidth <= 768;
                 if (isMobile) {
-                    controlsContainer.style.width = `${gridWidth}px`;
+                    controlsContainer.style.width = `${Math.min(gridWidth, window.innerWidth * 0.95)}px`;
                 } else {
-                    const longestWordWidth = getLongestWordWidth();
+                    const longestWordWidth = wordsToFind.length > 0 ? getLongestWordWidth() : initialControlsWidth;
                     controlsContainer.style.width = `${longestWordWidth}px`;
                 }
             }
@@ -533,8 +615,8 @@
                 const [start, end] = selectedCells;
                 const wordFound = checkWord(start, end);
                 if (wordFound) {
-                    highlightWord(start, end, wordFound);
-                    crossOutWord(wordFound);
+                    highlightWord(start, end, wordFound.word, wordFound.isReversed);
+                    crossOutWord(wordFound.word);
                 }
                 resetSelection();
             }
@@ -579,27 +661,48 @@
                 currentCol += stepCol;
             }
 
+            const reversedWord = formedWord.split('').reverse().join('');
+            let foundWord = null;
+            let isReversed = false;
+
             if (wordsToFind.includes(formedWord)) {
                 const isValid = pathIndices.every(index => grid[index].words.has(formedWord));
                 if (isValid) {
-                    return formedWord;
+                    foundWord = formedWord;
                 }
+            } else if (wordsToFind.includes(reversedWord)) {
+                const isValid = pathIndices.every(index => grid[index].words.has(reversedWord));
+                if (isValid) {
+                    foundWord = reversedWord;
+                    isReversed = true;
+                }
+            }
+
+            if (foundWord) {
+                return { word: foundWord, isReversed, pathIndices, startRow, startCol, stepRow, stepCol };
             }
             return null;
         }
 
         // Surligner un mot
-        function highlightWord(start, end, word) {
-            const startRow = Math.floor(start / gridSize);
-            const startCol = start % gridSize;
-            const endRow = Math.floor(end / gridSize);
-            const endCol = end % gridSize;
+        function highlightWord(start, end, word, isReversed) {
+            let startRow = Math.floor(start / gridSize);
+            let startCol = start % gridSize;
+            let endRow = Math.floor(end / gridSize);
+            let endCol = end % gridSize;
 
-            const rowDiff = endRow - startRow;
-            const colDiff = endCol - startCol;
-            const stepRow = rowDiff === 0 ? 0 : rowDiff / Math.abs(rowDiff);
-            const stepCol = colDiff === 0 ? 0 : colDiff / Math.abs(colDiff);
+            let rowDiff = endRow - startRow;
+            let colDiff = endCol - startCol;
+            let stepRow = rowDiff === 0 ? 0 : rowDiff / Math.abs(rowDiff);
+            let stepCol = colDiff === 0 ? 0 : colDiff / Math.abs(colDiff);
             const length = Math.max(Math.abs(rowDiff), Math.abs(colDiff)) + 1;
+
+            if (isReversed) {
+                [startRow, endRow] = [endRow, startRow];
+                [startCol, endCol] = [endCol, startCol];
+                stepRow = -stepRow;
+                stepCol = -stepCol;
+            }
 
             let currentRow = startRow;
             let currentCol = startCol;
@@ -642,6 +745,7 @@
             grid = [];
             selectedCells = [];
             wordsToFind = [];
+            initialControlsWidth = 0;
             generateGrid();
         }
 
@@ -711,6 +815,11 @@
         document.addEventListener('DOMContentLoaded', () => {
             try {
                 generateGrid();
+                // Débogage des styles
+                console.log('Button styles:', getComputedStyle(document.querySelector('.controls-container button')));
+                console.log('Select styles:', getComputedStyle(document.getElementById('level')));
+                console.log('Modal button styles:', getComputedStyle(document.querySelector('#congrats-modal button')));
+                console.log('Grid styles:', getComputedStyle(document.getElementById('grid')));
             } catch (e) {
                 console.error('Erreur lors de l\'initialisation:', e);
                 alert('Erreur lors du chargement initial de la grille.');
