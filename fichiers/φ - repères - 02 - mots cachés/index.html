@@ -89,10 +89,15 @@
 
         .controls-container {
             display: flex;
-            flex-direction: column;
+            flex-direction: row; /* Boutons sur la même ligne */
             gap: 1rem;
-            width: 100%; /* Largeur définie dynamiquement via JS */
+            width: 100%;
             box-sizing: border-box;
+        }
+
+        .controls-container select,
+        .controls-container button {
+            width: calc(50% - 0.5rem); /* Partager l'espace, en tenant compte du gap */
         }
 
         .container {
@@ -103,6 +108,7 @@
             width: 100%;
             max-width: 600px;
             box-sizing: border-box;
+            margin: 0 auto;
         }
 
         .grid {
@@ -153,7 +159,6 @@
             cursor: pointer;
             font-size: 1rem;
             color: #333;
-            width: 100%;
             box-sizing: border-box;
         }
 
@@ -169,7 +174,6 @@
             box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
             font-size: 1rem;
             color: #333;
-            width: 100%;
             box-sizing: border-box;
             text-align: center;
             text-align-last: center;
@@ -177,11 +181,14 @@
 
         .words-list {
             margin-top: 2rem;
+            margin-bottom: 2rem;
             text-align: center;
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
             justify-content: center;
+            overflow: auto;
+            min-height: 50px;
         }
 
         .words-list span {
@@ -218,9 +225,23 @@
         @media (max-width: 768px) {
             h1 { font-size: 2rem; }
             h2 { font-size: 1.2rem; }
-            .main-container { flex-direction: column; align-items: center; }
-            .controls-container { width: 100%; }
-            .container { padding: 1rem; }
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .controls-container {
+                width: 100%;
+                margin: 0 auto;
+            }
+            .controls-container select,
+            .controls-container button {
+                width: calc(50% - 0.5rem); /* Partager l'espace sur mobile */
+                padding: 0.6rem 0.5rem; /* Réduire le padding pour éviter le débordement */
+            }
+            .container {
+                padding: 1rem;
+                margin-bottom: 3rem;
+            }
             .cell {
                 width: 8vw;
                 height: 8vw;
@@ -230,12 +251,14 @@
                 max-height: 35px;
                 font-size: 0.9rem;
             }
-            button, select {
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
+            .words-list span {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
             }
-            .words-list span { font-size: 0.8rem; padding: 0.4rem 0.8rem; }
-            #congrats-modal { padding: 1.5rem; width: 80%; }
+            #congrats-modal {
+                padding: 1.5rem;
+                width: 80%;
+            }
         }
 
         @media (max-width: 480px) {
@@ -250,11 +273,16 @@
                 max-height: 30px;
                 font-size: 0.8rem;
             }
-            button, select {
-                padding: 0.5rem 0.8rem;
+            .controls-container select,
+            .controls-container button {
+                width: calc(50% - 0.5rem);
+                padding: 0.5rem 0.4rem;
                 font-size: 0.8rem;
             }
-            .words-list span { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
+            .words-list span {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.6rem;
+            }
         }
     </style>
 </head>
@@ -434,15 +462,12 @@
 
             // Calculer la largeur réelle de la grille
             const gridElementRendered = document.getElementById("grid");
-            const firstCell = gridElementRendered.querySelector('.cell');
-            if (firstCell) {
-                const cellWidth = firstCell.offsetWidth;
-                const gap = 8; // 0.5rem ≈ 8px
-                const gridWidth = gridSize * cellWidth + (gridSize - 1) * gap;
+            if (gridElementRendered) {
+                const gridWidth = gridElementRendered.offsetWidth;
                 const controlsContainer = document.querySelector('.controls-container');
                 if (controlsContainer) {
                     controlsContainer.style.width = `${gridWidth}px`;
-                    controlsContainer.style.maxWidth = '600px'; // Respecter la limite du conteneur
+                    controlsContainer.style.maxWidth = '600px';
                 }
             }
 
