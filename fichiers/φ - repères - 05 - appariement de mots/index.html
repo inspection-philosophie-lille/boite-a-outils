@@ -1,97 +1,182 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../../src/favicon.ico" />
     <title>appariement de mots</title>
-    <p style="margin: 15px; line-height: 48px; text-align: center; color:red; font-size:40px; font-weight: bold; font-family: 'Muli', sans-serif">appariement de mots</p>
-    <p style="margin: 0px; line-height: 1px; text-align: center; color:black; font-size:20px">réviser les repères</p>
-    <br>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Muli', Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             background-color: #f0f0f0;
+            overflow-x: hidden;
+        }
+        .title {
+            margin: 2vh 1rem;
+            line-height: 1.5;
+            text-align: center;
+            color: red;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: bold;
+        }
+        .subtitle {
+            margin: 0;
+            line-height: 1.2;
+            text-align: center;
+            color: black;
+            font-size: clamp(1rem, 3vw, 1.2rem);
         }
         .container {
             display: flex;
+            flex-direction: row;
+            justify-content: center;
             position: relative;
-            margin-top: 20px;
+            margin: 2vh 1rem;
+            width: 90%;
+            max-width: 1200px;
+            gap: 2rem;
         }
         .column {
-            margin: 0 50px;
+            flex: 1;
+            min-width: 0;
         }
         table {
             border-collapse: separate;
-            border-spacing: 10px 10px;
+            border-spacing: 0.5rem;
+            width: 100%;
         }
         td {
-            border-radius: 10px;
-            padding: 15px;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
             text-align: center;
             cursor: pointer;
             background-color: #e0e0e0;
-            box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+            box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            word-wrap: break-word;
         }
         canvas {
             position: absolute;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: 1;
         }
-        h1 {
-            color: red;
-            margin-bottom: 5px;
-        }
-        h2 {
-            color: black;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
         button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
+            margin: 2vh auto;
+            padding: 0.5rem 1rem;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
             cursor: pointer;
-            width: 120px;
-            height: 50px;
+            width: min(120px, 30vw);
+            height: min(50px, 12vw);
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: #e0e0e0;
             border: none;
-            border-radius: 10px;
+            border-radius: 0.5rem;
             transition: all 0.3s ease;
-            box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+            box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
         }
         button:hover {
             background-color: #d1d1d1;
-            box-shadow: inset 3px 3px 5px #bebebe, inset -3px -3px 5px #ffffff;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
         }
         button:active {
             background-color: #c0c0c0;
-            box-shadow: inset 3px 3px 5px #bebebe, inset -3px -3px 5px #ffffff;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
         }
         .reload-icon {
-            font-size: 40px;
+            font-size: clamp(1.5rem, 4vw, 2rem);
             color: red;
             line-height: normal;
-            transform: translateY(-0.5mm);
+            transform: translateY(-0.1rem);
             transition: all 0.3s ease;
         }
         button:hover .reload-icon,
         button:active .reload-icon {
             transform: translateY(0);
         }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .column {
+                margin: 0;
+            }
+            td {
+                padding: 0.5rem;
+                font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            }
+            button {
+                width: min(100px, 40vw);
+                height: min(40px, 10vw);
+            }
+        }
+        @media (max-width: 480px) {
+            .title {
+                font-size: clamp(1.5rem, 4vw, 2rem);
+            }
+            .subtitle {
+                font-size: clamp(0.8rem, 2.5vw, 1rem);
+            }
+            td {
+                padding: 0.3rem;
+                font-size: clamp(0.7rem, 2vw, 0.8rem);
+            }
+        }
     </style>
 </head>
 <body>
+    <p class="title">appariement de mots</p>
+    <p class="subtitle">réviser les repères</p>
     <div class="container">
         <div class="column">
             <table id="repereTable"></table>
@@ -124,22 +209,22 @@
         let links = [];
         let selectedReperes = [];
 
-        // Fonction pour sélectionner aléatoirement 5 mots
+        function isVerticalLayout() {
+            return window.innerWidth <= 768;
+        }
+
         function getRandomElements(array, count) {
             const shuffled = array.sort(() => 0.5 - Math.random());
             return shuffled.slice(0, count);
         }
 
-        // Fonction pour charger les réperes et définitions
         function loadReperes() {
             const repTable = document.getElementById('repereTable');
             const defTable = document.getElementById('definitionTable');
 
-            // Réinitialiser les tables
             repTable.innerHTML = '';
             defTable.innerHTML = '';
 
-            // Extraire tous les name et definition
             const allParts = [];
             reperes.forEach(repere => {
                 repere.parts.forEach(part => {
@@ -147,27 +232,24 @@
                 });
             });
 
-            // Sélectionner 5 éléments aléatoires
             const randomParts = getRandomElements(allParts, 5);
-
-            // Mélanger les mots et les définitions indépendamment
             const shuffledNames = randomParts.map(part => part.name).sort(() => 0.5 - Math.random());
             const shuffledDefinitions = randomParts.map(part => part.definition).sort(() => 0.5 - Math.random());
 
-            // Ajouter les mots mélangés dans la colonne de gauche
-            shuffledNames.forEach(name => {
+            shuffledNames.forEach((name, index) => {
                 const repRow = document.createElement('tr');
                 const repCell = document.createElement('td');
                 repCell.textContent = name;
+                repCell.dataset.index = index;
                 repRow.appendChild(repCell);
                 repTable.appendChild(repRow);
             });
 
-            // Ajouter les définitions mélangées dans la colonne de droite
-            shuffledDefinitions.forEach(definition => {
+            shuffledDefinitions.forEach((definition, index) => {
                 const defRow = document.createElement('tr');
                 const defCell = document.createElement('td');
                 defCell.textContent = definition;
+                defCell.dataset.index = index;
                 defRow.appendChild(defCell);
                 defTable.appendChild(defRow);
             });
@@ -175,66 +257,84 @@
             return randomParts;
         }
 
-        // Gestion des clics sur les cellules
         function selectCell(event, type, info) {
             const cell = event.target;
             if (usedCells.has(cell)) return;
 
             const rect = cell.getBoundingClientRect();
             const canvasRect = canvas.getBoundingClientRect();
+            const isVertical = isVerticalLayout();
+            const cellIndex = parseInt(cell.dataset.index);
+            const totalCells = 5;
 
             if (type === 'repere') {
                 if (drawing && currentDefinition) {
-                    const startX = rect.right - canvasRect.left;
-                    const startY = rect.top + rect.height / 2 - canvasRect.top;
+                    const lineX = isVertical
+                        ? currentDefinition.startX // Utiliser la même coordonnée X que la définition
+                        : rect.right - canvasRect.left;
+                    const startY = isVertical
+                        ? rect.top + rect.height / 2 - canvasRect.top // Milieu de la cellule
+                        : rect.top + rect.height / 2 - canvasRect.top;
                     const endX = currentDefinition.startX;
                     const endY = currentDefinition.startY;
-                    drawLink(startX, startY, endX, endY);
+                    drawLink(lineX, startY, endX, endY);
                     links.push({
                         repere: info,
                         definition: currentDefinition.text,
-                        lineId: {startX, startY, endX, endY}
+                        lineId: {startX: lineX, startY, endX, endY}
                     });
                     usedCells.add(cell);
                     usedCells.add(currentDefinition.cell);
                     resetDrawing();
-                } else if (!drawing) {
-                    startX = rect.right - canvasRect.left;
-                    startY = rect.top + rect.height / 2 - canvasRect.top;
+                } else if (!drawing || currentRepere) {
+                    startX = isVertical
+                        ? rect.left + (rect.width * (cellIndex + 0.5) / totalCells) - canvasRect.left
+                        : rect.right - canvasRect.left;
+                    startY = isVertical
+                        ? rect.top + rect.height / 2 - canvasRect.top // Milieu de la cellule
+                        : rect.top + rect.height / 2 - canvasRect.top;
                     drawing = true;
                     currentRepere = {info, startX, startY, cell};
+                    currentDefinition = null; // Réinitialiser la définition si un nouveau repère est sélectionné
                 }
             } else if (type === 'definition') {
                 if (drawing && currentRepere) {
+                    const lineX = isVertical
+                        ? currentRepere.startX // Utiliser la même coordonnée X que le repère
+                        : rect.left - canvasRect.left;
                     const startX = currentRepere.startX;
                     const startY = currentRepere.startY;
-                    const endX = rect.left - canvasRect.left;
-                    const endY = rect.top + rect.height / 2 - canvasRect.top;
-                    drawLink(startX, startY, endX, endY);
+                    const endY = isVertical
+                        ? rect.top + rect.height * 0.1 - canvasRect.top
+                        : rect.top + rect.height / 2 - canvasRect.top;
+                    drawLink(startX, startY, lineX, endY);
                     links.push({
                         repere: currentRepere.info,
                         definition: cell.textContent,
-                        lineId: {startX, startY, endX, endY}
+                        lineId: {startX, startY, endX: lineX, endY}
                     });
                     usedCells.add(cell);
                     usedCells.add(currentRepere.cell);
                     resetDrawing();
-                } else if (!drawing) {
-                    startX = rect.left - canvasRect.left;
-                    startY = rect.top + rect.height / 2 - canvasRect.top;
+                } else {
+                    startX = isVertical
+                        ? rect.left + (rect.width * (cellIndex + 0.5) / totalCells) - canvasRect.left
+                        : rect.left - canvasRect.left;
+                    startY = isVertical
+                        ? rect.top + rect.height * 0.1 - canvasRect.top
+                        : rect.top + rect.height / 2 - canvasRect.top;
                     drawing = true;
                     currentDefinition = {text: cell.textContent, startX, startY, cell};
+                    currentRepere = null; // Réinitialiser le repère si une nouvelle définition est sélectionnée
                 }
             }
         }
 
-        // Dessiner une flèche
         function drawLink(startX, startY, endX, endY, color = 'black') {
             ctx.beginPath();
             ctx.moveTo(startX, startY);
             ctx.lineTo(endX, endY);
 
-            // Dessiner la tête de la flèche
             const headlen = 10;
             const angle = Math.atan2(endY - startY, endX - startX);
 
@@ -247,7 +347,6 @@
             ctx.stroke();
         }
 
-        // Réinitialiser le dessin
         function resetDrawing() {
             drawing = false;
             currentRepere = null;
@@ -256,7 +355,6 @@
             document.getElementById("actionButton").innerHTML = "Vérifier";
         }
 
-        // Gestion des actions du bouton
         function performAction() {
             switch (currentAction) {
                 case "check":
@@ -271,10 +369,10 @@
             }
         }
 
-        // Vérifier les liens
         function checkLinks() {
             links.forEach(link => {
-                const isCorrect = link.repere.definition === link.definition;
+                const correspondingPart = selectedReperes.find(part => part.name === link.repere);
+                const isCorrect = correspondingPart ? correspondingPart.definition === link.definition : false;
                 const color = isCorrect ? 'green' : 'red';
                 drawLink(link.lineId.startX, link.lineId.startY, link.lineId.endX, link.lineId.endY, color);
                 link.isCorrect = isCorrect;
@@ -284,25 +382,38 @@
             document.getElementById("actionButton").innerHTML = "Corriger";
         }
 
-        // Corriger les liens
         function correctLinks() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             const repereTable = document.getElementById('repereTable');
             const definitionTable = document.getElementById('definitionTable');
             const canvasRect = canvas.getBoundingClientRect();
+            const isVertical = isVerticalLayout();
+            const totalCells = 5;
 
-            selectedReperes.forEach((repere) => {
-                const repereCell = Array.from(repereTable.rows).find(row => row.cells[0].textContent === repere.name).cells[0];
-                const definitionCell = Array.from(definitionTable.rows).find(row => row.cells[0].textContent === repere.definition).cells[0];
+            selectedReperes.forEach((repere, index) => {
+                const repereCell = Array.from(repereTable.rows).find(row => row.cells[0].textContent === repere.name)?.cells[0];
+                const definitionCell = Array.from(definitionTable.rows).find(row => row.cells[0].textContent === repere.definition)?.cells[0];
 
                 if (repereCell && definitionCell) {
-                    const startX = repereCell.getBoundingClientRect().right - canvasRect.left;
-                    const startY = repereCell.getBoundingClientRect().top + repereCell.getBoundingClientRect().height / 2 - canvasRect.top;
-                    const endX = definitionCell.getBoundingClientRect().left - canvasRect.left;
-                    const endY = definitionCell.getBoundingClientRect().top + definitionCell.getBoundingClientRect().height / 2 - canvasRect.top;
+                    const repereRect = repereCell.getBoundingClientRect();
+                    const defRect = definitionCell.getBoundingClientRect();
+                    const lineX = isVertical
+                        ? repereRect.left + (repereRect.width * (index + 0.5) / totalCells) - canvasRect.left
+                        : repereRect.right - canvasRect.left;
+                    const startY = isVertical
+                        ? repereRect.top + repereRect.height / 2 - canvasRect.top // Milieu de la cellule
+                        : repereRect.top + repereRect.height / 2 - canvasRect.top;
+                    const endX = isVertical
+                        ? lineX // Même coordonnée X pour flèche verticale
+                        : defRect.left - canvasRect.left;
+                    const endY = isVertical
+                        ? defRect.top + defRect.height * 0.1 - canvasRect.top
+                        : defRect.top + defRect.height / 2 - canvasRect.top;
 
-                    drawLink(startX, startY, endX, endY, 'green');
+                    drawLink(lineX, startY, endX, endY, 'green');
+                } else {
+                    console.warn(`Erreur : Cellule non trouvée pour repère "${repere.name}" ou définition "${repere.definition}"`);
                 }
             });
 
@@ -310,7 +421,6 @@
             document.getElementById("actionButton").innerHTML = '<span class="reload-icon">&#8635;</span>';
         }
 
-        // Recharger la page
         function reload() {
             links.length = 0;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -321,9 +431,10 @@
 
             selectedReperes = loadReperes();
             resetDrawing();
+            addEventListeners();
+            resizeCanvas();
         }
 
-        // Ajouter les écouteurs d'événements
         function addEventListeners() {
             const repCells = document.getElementById('repereTable').getElementsByTagName('td');
             const defCells = document.getElementById('definitionTable').getElementsByTagName('td');
