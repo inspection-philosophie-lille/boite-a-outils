@@ -88,7 +88,7 @@
             padding-bottom: clamp(1rem, 2vw, 1.5rem);
             padding-left: clamp(0.5rem, 1vw, 1rem);
             padding-right: clamp(0.5rem, 1vw, 1rem);
-            line-height: 3.4; /* Conservé pour interlignage suffisant */
+            line-height: 3.4;
             font-size: clamp(1rem, 2vw, 1.4rem);
             text-align: justify;
             box-sizing: border-box;
@@ -98,8 +98,8 @@
             justify-content: center;
             align-items: center;
             min-width: clamp(50px, 12vw, 80px);
-            height: calc(clamp(1rem, 2vw, 1.4rem) * 3.4 * 0.8); /* Réduit pour minimiser retours à la ligne */
-            line-height: 3.4; /* Synchronisé avec .text-container */
+            height: calc(clamp(1rem, 2vw, 1.4rem) * 3.4 * 0.8);
+            line-height: 3.4;
             border-radius: 15px;
             background-color: #e0e5ec;
             box-shadow:
@@ -110,12 +110,16 @@
             vertical-align: middle;
             box-sizing: border-box;
             text-align: center;
+            transition: border 0.2s ease; /* Transition fluide pour .hovered */
         }
         .hole.correct {
             background-color: #a8e6cf;
         }
         .hole.incorrect {
             background-color: #ffaaa5;
+        }
+        .hole.hovered {
+            border: 2px solid #333; /* Surbrillance pour le trou ciblé */
         }
         .word-bank {
             display: flex;
@@ -135,6 +139,11 @@
             cursor: move;
             user-select: none;
             font-size: clamp(0.9rem, 2vw, 1.2rem);
+            touch-action: none; /* Empêche le défilement lors du toucher */
+            transition: opacity 0.2s ease; /* Transition fluide pour .dragging */
+        }
+        .word.dragging {
+            opacity: 0.7; /* Feedback visuel pour le mot déplacé */
         }
         button {
             padding: clamp(10px, 2.5vw, 15px) clamp(20px, 4vw, 30px);
@@ -170,7 +179,7 @@
                 max-width: 98vw;
             }
             .text-container {
-                line-height: 3.0; /* Conservé pour interlignage suffisant */
+                line-height: 3.0;
                 font-size: clamp(0.9rem, 2.5vw, 1.1rem);
                 padding-top: clamp(0.8rem, 2vw, 1rem);
                 padding-bottom: clamp(0.8rem, 2vw, 1rem);
@@ -179,7 +188,7 @@
             }
             .hole {
                 min-width: clamp(40px, 10vw, 60px);
-                height: calc(clamp(0.9rem, 2.5vw, 1.1rem) * 3.0 * 0.8); /* Réduit pour minimiser retours à la ligne */
+                height: calc(clamp(0.9rem, 2.5vw, 1.1rem) * 3.0 * 0.8);
                 line-height: 3.0;
                 margin: 0 4px;
                 font-size: clamp(0.8rem, 2vw, 1rem);
@@ -277,10 +286,8 @@
 
             let textWithHoles = `${currentRepere.name}&nbsp;: ${currentRepere.definition.charAt(0).toLowerCase() + currentRepere.definition.slice(1).replace(/\.$/, '')}`;
 
-            // Ajuster dynamiquement la largeur des trous
             const maxLength = missingWords.length > 0 ? Math.max(...missingWords.map(word => word.length)) * 10 : 80;
 
-            // Remplacer uniquement les mots valides par des trous
             missingWords.forEach(word => { 
                 const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                 const regex = new RegExp(`\\b${escapedWord}\\b`, 'gi');
@@ -292,7 +299,6 @@
             const wordBank = document.getElementById('wordBank');
             wordBank.innerHTML = '';
             
-            // Éviter les doublons dans la banque de mots
             const uniqueWords = [...new Set(missingWords)];
 
             uniqueWords.sort(() => Math.random() - 0.5).forEach(word => { 
@@ -301,18 +307,30 @@
                 wordElement.textContent = word;
                 wordElement.draggable = true;
 
+                // Événements pour desktop
                 wordElement.addEventListener('dragstart', drag);
+                // Événements pour mobile
+                wordElement.addEventListener('touchstart', touchStart);
+                wordElement.addEventListener('touchmove', touchMove);
+                wordElement.addEventListener('touchend', touchEnd);
+
                 wordBank.appendChild(wordElement);
             });
 
             document.querySelectorAll('.hole').forEach(hole => {
+                // Événements pour desktop
                 hole.addEventListener('dragover', allowDrop);
                 hole.addEventListener('drop', drop);
+                // Événements pour mobile
+                hole.addEventListener('touchmove', touchMoveOverHole);
+                hole.addEventListener('touchend', touchEndOnHole);
             });
         }
 
+        // Gestion du glisser-déposer pour desktop
         function drag(event) {
             event.dataTransfer.setData("text", event.target.textContent);
+            event.target.classList.add('dragging');
         }
 
         function allowDrop(event) {
@@ -322,6 +340,7 @@
         function drop(event) {
             event.preventDefault();
             const data = event.dataTransfer.getData("text");
+            const draggedElement = Array.from(document.querySelectorAll('.word')).find(wordEl => wordEl.textContent === data);
             
             if (event.target.classList.contains('hole')) {
                 if (event.target.textContent) { 
@@ -331,16 +350,87 @@
                     wordInBank.textContent = existingTagText;
                     wordInBank.draggable = true;
                     wordInBank.addEventListener('dragstart', drag);
+                    wordInBank.addEventListener('touchstart', touchStart);
+                    wordInBank.addEventListener('touchmove', touchMove);
+                    wordInBank.addEventListener('touchend', touchEnd);
                     document.getElementById('wordBank').appendChild(wordInBank);
                 }
 
                 event.target.textContent = data;
-                const wordInBankElement = Array.from(document.querySelectorAll('.word')).find(wordEl => wordEl.textContent === data);
-                if (wordInBankElement) wordInBankElement.remove();
+                if (draggedElement) draggedElement.remove();
                 
                 event.target.addEventListener('dragover', allowDrop);
                 event.target.addEventListener('drop', drop);
+                event.target.addEventListener('touchmove', touchMoveOverHole);
+                event.target.addEventListener('touchend', touchEndOnHole);
             }
+            document.querySelectorAll('.word').forEach(word => word.classList.remove('dragging'));
+        }
+
+        // Gestion du glisser-déposer pour mobile
+        let draggedWord = null;
+
+        function touchStart(event) {
+            event.preventDefault();
+            draggedWord = event.target;
+            draggedWord.classList.add('dragging');
+        }
+
+        function touchMove(event) {
+            event.preventDefault();
+            const touch = event.touches[0];
+            const element = document.elementFromPoint(touch.clientX, touch.clientY);
+            
+            // Supprimer la surbrillance des autres trous
+            document.querySelectorAll('.hole').forEach(hole => hole.classList.remove('hovered'));
+            
+            // Ajouter la surbrillance au trou survolé
+            if (element && element.classList.contains('hole')) {
+                element.classList.add('hovered');
+            }
+        }
+
+        function touchEnd(event) {
+            event.preventDefault();
+            const touch = event.changedTouches[0];
+            const element = document.elementFromPoint(touch.clientX, touch.clientY);
+            
+            document.querySelectorAll('.hole').forEach(hole => hole.classList.remove('hovered'));
+            
+            if (element && element.classList.contains('hole')) {
+                if (element.textContent) {
+                    const existingTagText = element.textContent;
+                    const wordInBank = document.createElement('div');
+                    wordInBank.className = 'word';
+                    wordInBank.textContent = existingTagText;
+                    wordInBank.draggable = true;
+                    wordInBank.addEventListener('dragstart', drag);
+                    wordInBank.addEventListener('touchstart', touchStart);
+                    wordInBank.addEventListener('touchmove', touchMove);
+                    wordInBank.addEventListener('touchend', touchEnd);
+                    document.getElementById('wordBank').appendChild(wordInBank);
+                }
+                
+                element.textContent = draggedWord.textContent;
+                draggedWord.remove();
+                
+                element.addEventListener('touchmove', touchMoveOverHole);
+                element.addEventListener('touchend', touchEndOnHole);
+            }
+            
+            draggedWord.classList.remove('dragging');
+            draggedWord = null;
+        }
+
+        function touchMoveOverHole(event) {
+            event.preventDefault();
+            document.querySelectorAll('.hole').forEach(hole => hole.classList.remove('hovered'));
+            event.target.classList.add('hovered');
+        }
+
+        function touchEndOnHole(event) {
+            event.preventDefault();
+            document.querySelectorAll('.hole').forEach(hole => hole.classList.remove('hovered'));
         }
 
         function verifyAnswers() {
@@ -354,8 +444,12 @@
                     hole.classList.add('incorrect');
                     allCorrect = false;
                     hole.setAttribute("draggable", true);
+                    hole.addEventListener('dragstart', drag);
                     hole.addEventListener('dragover', allowDrop);
                     hole.addEventListener('drop', drop);
+                    hole.addEventListener('touchstart', touchStart);
+                    hole.addEventListener('touchmove', touchMove);
+                    hole.addEventListener('touchend', touchEnd);
                 }
             });
             
