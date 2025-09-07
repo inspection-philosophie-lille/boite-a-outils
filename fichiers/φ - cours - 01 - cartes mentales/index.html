@@ -67,7 +67,7 @@
     font-family: 'Inter', Arial, sans-serif;
     background: var(--bg);
     -webkit-font-smoothing: antialiased;
-    overflow: hidden; /* Éviter les barres de défilement inutiles */
+    overflow: hidden;
   }
 
   #cy {
@@ -95,13 +95,12 @@
     left: 12px;
   }
 
-  /* Bouton de bascule pour mobile */
+  /* Bouton de bascule pour tous les écrans */
   .toggle-menu {
     position: fixed;
     left: 10px;
     top: 10px;
     z-index: 2300;
-    display: none;
     background: var(--panel-bg);
     border: 0;
     border-radius: 8px;
@@ -197,10 +196,15 @@
     max-width: 300px;
   }
 
+  .cy-inline-input::placeholder {
+    color: #888;
+    opacity: 0.7;
+  }
+
   /* Media Queries pour responsive */
   @media (max-width: 768px) {
     .controls {
-      left: -70px; /* Réduire légèrement pour mobile */
+      left: -70px;
       gap: 8px;
       padding: 8px;
     }
@@ -226,10 +230,6 @@
 
     .color-palette {
       max-width: 180px;
-    }
-
-    .toggle-menu {
-      display: block; /* Afficher le bouton de bascule sur mobile */
     }
 
     .cy-inline-input {
@@ -272,7 +272,7 @@
 </head>
 <body>
 
-<!-- Bouton de bascule pour mobile -->
+<!-- Bouton de bascule pour tous les écrans -->
 <button class="toggle-menu" title="Afficher/Masquer le menu" onclick="toggleMenuMobile()">
   <span class="material-symbols-outlined">menu</span>
 </button>
@@ -409,7 +409,7 @@ function toggleMenuMobile() {
 
 function handleMenuVisibility(e) {
   const isMobile = window.innerWidth <= 768;
-  if (isMobile) return; // Sur mobile, seul le bouton toggle contrôle le menu
+  if (isMobile) return;
   if (e.clientX < 50) {
     controls.classList.add('visible');
     clearTimeout(hideTimeout);
@@ -434,7 +434,6 @@ controls.addEventListener('mouseleave', () => {
   }
 });
 
-// Support tactile
 document.addEventListener('touchstart', (e) => {
   if (window.innerWidth > 768) return;
   const touchX = e.touches[0].clientX;
@@ -492,8 +491,9 @@ function addnode() {
   adjustNodeSize(n);
 }
 
-/* ---------- inline edit ---------- */
-cy.on('doubleTap', 'node', function(evt) {
+/* ---------- inline edit (double-click to edit node text) ---------- */
+cy.on('dblclick', 'node', function(evt) {
+  console.log('Double-click detected on node:', evt.target.id());
   try {
     const node = evt.target;
     const bbox = node.renderedBoundingBox();
@@ -504,6 +504,7 @@ cy.on('doubleTap', 'node', function(evt) {
     const input = document.createElement('input');
     input.type = 'text';
     input.value = node.data('label') || '';
+    input.placeholder = 'Modifier le texte...';
     input.className = 'cy-inline-input';
     input.style.left = (docLeft) + 'px';
     input.style.top = (docTop) + 'px';
@@ -516,6 +517,7 @@ cy.on('doubleTap', 'node', function(evt) {
       node.data('label', input.value);
       adjustNodeSize(node);
       input.remove();
+      console.log('Node text updated to:', input.value);
     };
     input.addEventListener('blur', finalize);
     input.addEventListener('keydown', (e) => {
@@ -523,12 +525,17 @@ cy.on('doubleTap', 'node', function(evt) {
         finalize();
       } else if (e.key === 'Escape') {
         input.remove();
+        console.log('Edit cancelled');
+      }
+      // Empêcher la propagation de Delete/Backspace pour éviter la suppression du nœud
+      if (e.key === 'Delete' || e.key === 'Backspace') {
+        e.stopPropagation();
       }
     });
     input.addEventListener('mousedown', (ev) => ev.stopPropagation());
     input.addEventListener('touchstart', (ev) => ev.stopPropagation());
   } catch (err) {
-    console.error('inline edit error', err);
+    console.error('Inline edit error:', err);
   }
 });
 
@@ -557,10 +564,16 @@ cy.on('tap', 'node', function(evt) {
 /* ---------- deletion (keyboard) ---------- */
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Delete' || e.key === 'Backspace') {
+    // Ignorer si un input est actif
+    if (document.activeElement.tagName === 'INPUT') {
+      console.log('Delete/Backspace ignored: input is focused');
+      return;
+    }
     const sel = cy.$(':selected');
     if (sel.length > 0) {
       sel.remove();
       e.preventDefault();
+      console.log('Selected elements deleted');
     }
   }
 });
