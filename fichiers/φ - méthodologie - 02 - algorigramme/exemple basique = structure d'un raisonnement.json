@@ -1,0 +1,90 @@
+{
+  "nodeDataArray": [
+    {
+      "key": "05694500-79ef-46f4-a61f-08a2221311b1",
+      "text": "intitulé du sujet",
+      "loc": "351.04187402643487 54.984117500354046",
+      "category": "rectangle",
+      "color": "#f6e58d",
+      "borderColor": "#AA9941"
+    },
+    {
+      "key": "ba3cc6c8-ca87-4394-9191-5c313f5a47e6",
+      "text": "choix",
+      "loc": "351.8148465561138 159.75801963778406",
+      "category": "diamond",
+      "color": "#74b9ff",
+      "borderColor": "#286DB3"
+    },
+    {
+      "key": "fa3a66c5-fe59-4894-b551-7d5817ba406c",
+      "text": "option 1",
+      "loc": "178.77337827318456 160.77474582221316",
+      "category": "rectangle",
+      "color": "#55efc4",
+      "borderColor": "#09A378"
+    },
+    {
+      "key": "f4fe4e48-a969-433f-b5ce-f49bc2329158",
+      "text": "option 2",
+      "loc": "521.4802085966664 160.3715251700088",
+      "category": "rectangle",
+      "color": "#55efc4",
+      "borderColor": "#09A378"
+    },
+    {
+      "key": "7ec0f9e4-d0e3-4546-8481-b126f0067a8f",
+      "text": "justification de l'option 1",
+      "loc": "178.0057224266733 290.02948012639246",
+      "category": "rectangle",
+      "color": "#74b9ff",
+      "borderColor": "#286DB3"
+    },
+    {
+      "key": "e3a8ca39-1628-444c-8f5f-1c607837bfbc",
+      "text": "justification de l'option 2",
+      "loc": "521.0786962592811 288.33583335207356",
+      "category": "rectangle",
+      "color": "#74b9ff",
+      "borderColor": "#286DB3"
+    },
+    {
+      "key": "405c0c74-f9f2-44af-a907-3c048ceea747",
+      "text": "problème : soit option A, soit option B",
+      "loc": "339.5583577287126 414.711413631469",
+      "category": "rectangle",
+      "color": "#ff6b6b",
+      "borderColor": "#B31F1F"
+    }
+  ],
+  "linkDataArray": [
+    {
+      "from": "05694500-79ef-46f4-a61f-08a2221311b1",
+      "to": "ba3cc6c8-ca87-4394-9191-5c313f5a47e6"
+    },
+    {
+      "from": "ba3cc6c8-ca87-4394-9191-5c313f5a47e6",
+      "to": "fa3a66c5-fe59-4894-b551-7d5817ba406c"
+    },
+    {
+      "from": "ba3cc6c8-ca87-4394-9191-5c313f5a47e6",
+      "to": "f4fe4e48-a969-433f-b5ce-f49bc2329158"
+    },
+    {
+      "from": "fa3a66c5-fe59-4894-b551-7d5817ba406c",
+      "to": "7ec0f9e4-d0e3-4546-8481-b126f0067a8f"
+    },
+    {
+      "from": "f4fe4e48-a969-433f-b5ce-f49bc2329158",
+      "to": "e3a8ca39-1628-444c-8f5f-1c607837bfbc"
+    },
+    {
+      "from": "7ec0f9e4-d0e3-4546-8481-b126f0067a8f",
+      "to": "405c0c74-f9f2-44af-a907-3c048ceea747"
+    },
+    {
+      "from": "e3a8ca39-1628-444c-8f5f-1c607837bfbc",
+      "to": "405c0c74-f9f2-44af-a907-3c048ceea747"
+    }
+  ]
+}
