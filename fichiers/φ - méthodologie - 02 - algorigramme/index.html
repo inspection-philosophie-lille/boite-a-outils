@@ -574,23 +574,20 @@ function loadInitialData() {
       console.log(`Lien ${index} ajouté: ${l.from} -> ${l.to}`);
     });
     const padding = window.innerWidth <= 768 ? 20 : 50;
+    const xCoords = nodes.map(node => node.position().x);
+    const currentCenter = xCoords.length > 0 ? xCoords.reduce((sum, x) => sum + x, 0) / xCoords.length : 0;
+    const screenCenter = window.innerWidth / 2;
+    const offset = screenCenter - currentCenter;
+    nodes.forEach(node => {
+      const newX = node.position().x + offset;
+      node.position('x', newX);
+      console.log(`Nœud ${node.id()} repositionné: x=${newX}`);
+    });
+    cy.fit(cy.elements(), padding);
     if (window.innerWidth > 768) {
-      const xCoords = nodes.map(node => node.position().x);
-      const currentCenter = xCoords.length > 0 ? xCoords.reduce((sum, x) => sum + x, 0) / xCoords.length : 0;
-      const screenCenter = window.innerWidth / 2;
-      const offset = screenCenter - currentCenter;
-      nodes.forEach(node => {
-        const newX = node.position().x + offset;
-        node.position('x', newX);
-        console.log(`Nœud ${node.id()} repositionné: x=${newX}`);
-      });
-      cy.fit(cy.elements(), padding);
       cy.zoom(0.8);
-      cy.center();
-    } else {
-      cy.fit(cy.elements(), padding);
-      cy.center();
     }
+    cy.center();
     console.log('Chargement JSON initial terminé, éléments:', cy.elements().length);
   } catch (err) {
     console.error('Erreur lors du chargement des données initiales:', err);
@@ -853,23 +850,20 @@ function importmindmap() {
         console.log(`Lien importé ${index}: ${l.from} -> ${l.to}`);
       });
       const padding = window.innerWidth <= 768 ? 20 : 50;
+      const xCoords = nodes.map(node => node.position().x);
+      const currentCenter = xCoords.length > 0 ? xCoords.reduce((sum, x) => sum + x, 0) / xCoords.length : 0;
+      const screenCenter = window.innerWidth / 2;
+      const offset = screenCenter - currentCenter;
+      nodes.forEach(node => {
+        const newX = node.position().x + offset;
+        node.position('x', newX);
+        console.log(`Nœud importé ${node.id()} repositionné: x=${newX}`);
+      });
+      cy.fit(cy.elements(), padding);
       if (window.innerWidth > 768) {
-        const xCoords = nodes.map(node => node.position().x);
-        const currentCenter = xCoords.length > 0 ? xCoords.reduce((sum, x) => sum + x, 0) / xCoords.length : 0;
-        const screenCenter = window.innerWidth / 2;
-        const offset = screenCenter - currentCenter;
-        nodes.forEach(node => {
-          const newX = node.position().x + offset;
-          node.position('x', newX);
-          console.log(`Nœud importé ${node.id()} repositionné: x=${newX}`);
-        });
-        cy.fit(cy.elements(), padding);
         cy.zoom(0.8);
-        cy.center();
-      } else {
-        cy.fit(cy.elements(), padding);
-        cy.center();
       }
+      cy.center();
       alert('Importation réussie');
       console.log('Importation terminée, éléments:', cy.elements().length);
       fileIn.value = '';
