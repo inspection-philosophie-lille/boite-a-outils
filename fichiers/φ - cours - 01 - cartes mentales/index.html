@@ -1,360 +1,641 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"/>
-    <link rel="icon" href="../../src/favicon.ico">
-<meta name="description" content="A mind map editor, showing how subtrees can be moved, copied, deleted, and laid out."/> 
-<link rel="stylesheet" href="src/style.css"/>
-<title>cartes mentales</title>
-
-	<!-- titre principal -->
-		<p style="margin: 15px; line-height: 48px; text-align: center; color:red; font-size:40px; font-weight: bold; font-family: 'Muli', sans-serif">cartes mentales</p>		
-		<p style="margin: 0px; line-height: 1px; text-align: center; color:black; font-size:20px">réviser les cours</p>	
-
-</head>
-
-<body>
-    <script src="src/go.js"></script>
-    <div id="allSampleContent" class="p-4 w-full">
-    <script id="code">
-    function init() {
-
-      // Since 2.2 you can also author concise templates with method chaining instead of GraphObject.make
-      // For details, see https://gojs.net/latest/intro/buildingObjects.html
-      const $ = go.GraphObject.make;
-
-      myDiagram =
-        new go.Diagram("myDiagramDiv",
-          {
-            // when the user drags a node, also move/copy/delete the whole subtree starting with that node
-            "commandHandler.copiesTree": true,
-            "commandHandler.copiesParentKey": true,
-            "commandHandler.deletesTree": true,
-            "draggingTool.dragsTree": true,
-            "undoManager.isEnabled": true
-          });
-
-      // when the document is modified, add a "*" to the title and enable the "Save" button
-      myDiagram.addDiagramListener("Modified", e => {
-        var button = document.getElementById("SaveButton");
-        if (button) button.disabled = !myDiagram.isModified;
-        var idx = document.title.indexOf("*");
-        if (myDiagram.isModified) {
-          if (idx < 0) document.title += "*";
-        } else {
-          if (idx >= 0) document.title = document.title.slice(0, idx);
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
         }
-      });
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
 
-      // a node consists of some text with a line shape underneath
-      myDiagram.nodeTemplate =
-        $(go.Node, "Vertical",
-          { selectionObjectName: "TEXT" },
-          $(go.TextBlock,
-            {
-              name: "TEXT",
-              minSize: new go.Size(30, 15),
-              editable: true
-            },
-            // remember not only the text string but the scale and the font in the node data
-            new go.Binding("text", "text").makeTwoWay(),
-            new go.Binding("scale", "scale").makeTwoWay(),
-            new go.Binding("font", "font").makeTwoWay()),
-          $(go.Shape, "LineH",
-            {
-              stretch: go.GraphObject.Horizontal,
-              strokeWidth: 3, height: 3,
-              // this line shape is the port -- what links connect with
-              portId: "", fromSpot: go.Spot.LeftRightSides, toSpot: go.Spot.LeftRightSides
-            },
-            new go.Binding("stroke", "brush"),
-            // make sure links come in from the proper direction and go out appropriately
-            new go.Binding("fromSpot", "dir", d => spotConverter(d, true)),
-            new go.Binding("toSpot", "dir", d => spotConverter(d, false))),
-          // remember the locations of each node in the node data
-          new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-          // make sure text "grows" in the desired direction
-          new go.Binding("locationSpot", "dir", d => spotConverter(d, false))
-        );
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
 
-      // selected nodes show a button for adding children
-      myDiagram.nodeTemplate.selectionAdornmentTemplate =
-        $(go.Adornment, "Spot",
-          $(go.Panel, "Auto",
-            // this Adornment has a rectangular blue Shape around the selected node
-            $(go.Shape, { fill: null, stroke: "dodgerblue", strokeWidth: 3 }),
-            $(go.Placeholder, { margin: new go.Margin(4, 4, 0, 4) })
-          ),
-          // and this Adornment has a Button to the right of the selected node
-          $("Button",
-            {
-              alignment: go.Spot.Right,
-              alignmentFocus: go.Spot.Left,
-              click: addNodeAndLink  // define click behavior for this Button in the Adornment
-            },
-            $(go.TextBlock, "+",  // the Button content
-              { font: "bold 8pt sans-serif" })
-          )
-        );
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
 
-	  /* fonctions du menu contextuel qui apparaissent par click droit */
-      myDiagram.nodeTemplate.contextMenu =
-        $("ContextMenu",
-          $("ContextMenuButton",
-            $(go.TextBlock, "Augmenter"),
-            { click: (e, obj) => changeTextSize(obj, 1.1) }),
-          $("ContextMenuButton",
-            $(go.TextBlock, "Diminuer"),
-            { click: (e, obj) => changeTextSize(obj, 1 / 1.1) }),
-          $("ContextMenuButton",
-            $(go.TextBlock, "Normal/Gras"),
-            { click: (e, obj) => toggleTextWeight(obj) }),
-          $("ContextMenuButton",
-            $(go.TextBlock, "Copier"),
-            { click: (e, obj) => e.diagram.commandHandler.copySelection() }),
-          $("ContextMenuButton",
-            $(go.TextBlock, "Supprimer"),
-            { click: (e, obj) => e.diagram.commandHandler.deleteSelection() }),
-          $("ContextMenuButton",
-            $(go.TextBlock, "Annuler"),
-            { click: (e, obj) => e.diagram.commandHandler.undo() }),
-          $("ContextMenuButton",
-            $(go.TextBlock, "Rétablir"),
-            { click: (e, obj) => e.diagram.commandHandler.redo() }),
-          $("ContextMenuButton",
-            $(go.TextBlock, "Mise en page"),
-            {
-              click: (e, obj) => {
-                var adorn = obj.part;
-                adorn.diagram.startTransaction("Subtree Layout");
-                layoutTree(adorn.adornedPart);
-                adorn.diagram.commitTransaction("Subtree Layout");
-              }
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
             }
-          )
-        );
-
-      // a link is just a Bezier-curved line of the same color as the node to which it is connected
-      myDiagram.linkTemplate =
-        $(go.Link,
-          {
-            curve: go.Link.Bezier,
-            fromShortLength: -2,
-            toShortLength: -2,
-            selectable: false
-          },
-          $(go.Shape,
-            { strokeWidth: 3 },
-            new go.Binding("stroke", "toNode", n => {
-              if (n.data.brush) return n.data.brush;
-              return "black";
-            }).ofObject())
-        );
-
-      // the Diagram's context menu just displays commands for general functionality
-      myDiagram.contextMenu =
-        $("ContextMenu",
-          $("ContextMenuButton",
-            $(go.TextBlock, "Paste"),
-            { click: (e, obj) => e.diagram.commandHandler.pasteSelection(e.diagram.toolManager.contextMenuTool.mouseDownPoint) },
-            new go.Binding("visible", "", o => o.diagram && o.diagram.commandHandler.canPasteSelection(o.diagram.toolManager.contextMenuTool.mouseDownPoint)).ofObject()),
-          $("ContextMenuButton",
-            $(go.TextBlock, "Undo"),
-            { click: (e, obj) => e.diagram.commandHandler.undo() },
-            new go.Binding("visible", "", o => o.diagram && o.diagram.commandHandler.canUndo()).ofObject()),
-          $("ContextMenuButton",
-            $(go.TextBlock, "Redo"),
-            { click: (e, obj) => e.diagram.commandHandler.redo() },
-            new go.Binding("visible", "", o => o.diagram && o.diagram.commandHandler.canRedo()).ofObject()),
-          $("ContextMenuButton",
-            $(go.TextBlock, "Save"),
-            { click: (e, obj) => save() }),
-          $("ContextMenuButton",
-            $(go.TextBlock, "Load"),
-            { click: (e, obj) => load() })
-        );
-
-      myDiagram.addDiagramListener("SelectionMoved", e => {
-        var rootX = myDiagram.findNodeForKey(0).location.x;
-        myDiagram.selection.each(node => {
-          if (node.data.parent !== 0) return; // Only consider nodes connected to the root
-          var nodeX = node.location.x;
-          if (rootX < nodeX && node.data.dir !== "right") {
-            updateNodeDirection(node, "right");
-          } else if (rootX > nodeX && node.data.dir !== "left") {
-            updateNodeDirection(node, "left");
-          }
-          layoutTree(node);
-        });
-      });
-
-      // read in the predefined graph using the JSON format data held in the "mySavedModel" textarea
-      load();
-    }
-
-    function spotConverter(dir, from) {
-      if (dir === "left") {
-        return (from ? go.Spot.Left : go.Spot.Right);
-      } else {
-        return (from ? go.Spot.Right : go.Spot.Left);
-      }
-    }
-
-    function changeTextSize(obj, factor) {
-      var adorn = obj.part;
-      adorn.diagram.startTransaction("Change Text Size");
-      var node = adorn.adornedPart;
-      var tb = node.findObject("TEXT");
-      tb.scale *= factor;
-      adorn.diagram.commitTransaction("Change Text Size");
-    }
-
-    function toggleTextWeight(obj) {
-      var adorn = obj.part;
-      adorn.diagram.startTransaction("Change Text Weight");
-      var node = adorn.adornedPart;
-      var tb = node.findObject("TEXT");
-      // assume "bold" is at the start of the font specifier
-      var idx = tb.font.indexOf("bold");
-      if (idx < 0) {
-        tb.font = "bold " + tb.font;
-      } else {
-        tb.font = tb.font.slice(idx + 5);
-      }
-      adorn.diagram.commitTransaction("Change Text Weight");
-    }
-
-    function updateNodeDirection(node, dir) {
-      myDiagram.model.setDataProperty(node.data, "dir", dir);
-      // recursively update the direction of the child nodes
-      var chl = node.findTreeChildrenNodes(); // gives us an iterator of the child nodes related to this particular node
-      while (chl.next()) {
-        updateNodeDirection(chl.value, dir);
-      }
-    }
-
-    function addNodeAndLink(e, obj) {
-      var adorn = obj.part;
-      var diagram = adorn.diagram;
-      diagram.startTransaction("Add Node");
-      var oldnode = adorn.adornedPart;
-      var olddata = oldnode.data;
-      // copy the brush and direction to the new node data
-      var newdata = { text: "option", brush: olddata.brush, dir: olddata.dir, parent: olddata.key };
-      diagram.model.addNodeData(newdata);
-      layoutTree(oldnode);
-      diagram.commitTransaction("Add Node");
-
-      // if the new node is off-screen, scroll the diagram to show the new node
-      var newnode = diagram.findNodeForData(newdata);
-      if (newnode !== null) diagram.scrollToRect(newnode.actualBounds);
-    }
-
-    function layoutTree(node) {
-      if (node.data.key === 0) {  // adding to the root?
-        layoutAll();  // lay out everything
-      } else {  // otherwise lay out only the subtree starting at this parent node
-        var parts = node.findTreeParts();
-        layoutAngle(parts, node.data.dir === "left" ? 180 : 0);
-      }
-    }
-
-    function layoutAngle(parts, angle) {
-      var layout = go.GraphObject.make(go.TreeLayout,
-        {
-          angle: angle,
-          arrangement: go.TreeLayout.ArrangementFixedRoots,
-          nodeSpacing: 5,
-          layerSpacing: 20,
-          setsPortSpot: false, // don't set port spots since we're managing them with our spotConverter function
-          setsChildPortSpot: false
-        });
-      layout.doLayout(parts);
-    }
-
-    function layoutAll() {
-      var root = myDiagram.findNodeForKey(0);
-      if (root === null) return;
-      myDiagram.startTransaction("Layout");
-      // split the nodes and links into two collections
-      var rightward = new go.Set(/*go.Part*/);
-      var leftward = new go.Set(/*go.Part*/);
-      root.findLinksConnected().each(link => {
-        var child = link.toNode;
-        if (child.data.dir === "left") {
-          leftward.add(root);  // the root node is in both collections
-          leftward.add(link);
-          leftward.addAll(child.findTreeParts());
-        } else {
-          rightward.add(root);  // the root node is in both collections
-          rightward.add(link);
-          rightward.addAll(child.findTreeParts());
         }
-      });
-      // do one layout and then the other without moving the shared root node
-      layoutAngle(rightward, 0);
-      layoutAngle(leftward, 180);
-      myDiagram.commitTransaction("Layout");
+        return gk_fileData[filename] || "";
+        }
+        </script><!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>carte mentale — UI stylisée & édition inline</title>
+
+<!-- Police moderne pour le texte -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- Material Symbols (icônes stylées) -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<!-- Cytoscape -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+
+<style>
+  :root {
+    --bg: #e7e7e9;
+    --panel-bg: #e0e0e0;
+    --shadow-1: 4px 4px 10px rgba(0,0,0,0.12);
+    --shadow-2: -4px -4px 10px rgba(255,255,255,0.9);
+  }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden; /* Éviter les barres de défilement inutiles */
+  }
+
+  #cy {
+    width: 100vw;
+    height: 100vh;
+    background: var(--bg);
+    display: block;
+  }
+
+  /* panneau contrôles */
+  .controls {
+    position: fixed;
+    left: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 2200;
+    padding: 10px;
+    transition: left 0.3s ease;
+  }
+
+  .controls.visible {
+    left: 12px;
+  }
+
+  /* Bouton de bascule pour mobile */
+  .toggle-menu {
+    position: fixed;
+    left: 10px;
+    top: 10px;
+    z-index: 2300;
+    display: none;
+    background: var(--panel-bg);
+    border: 0;
+    border-radius: 8px;
+    box-shadow: var(--shadow-1), var(--shadow-2);
+    cursor: pointer;
+    padding: 8px;
+  }
+
+  .toggle-menu .material-symbols-outlined {
+    font-size: 24px;
+    color: #222;
+  }
+
+  /* bouton neutre / icône */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    padding: 6px 10px;
+    background: var(--panel-bg);
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 3px 3px 6px rgba(0,0,0,0.08), -3px -3px 6px rgba(255,255,255,0.9);
+    cursor: pointer;
+    transition: all .12s ease;
+    font-size: 18px;
+    color: #222;
+    user-select: none;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: inset 3px 3px 6px rgba(0,0,0,0.04), inset -3px -3px 6px rgba(255,255,255,0.9);
+  }
+
+  /* material symbol styling */
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  /* shape glyphs (unicode) */
+  .shape-glyph {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  /* palette */
+  .color-palette {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 6px;
+    max-width: 220px;
+    background: transparent;
+  }
+
+  .color-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 2px solid rgba(0,0,0,0.08);
+    cursor: pointer;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.06), -2px -2px 6px rgba(255,255,255,0.9);
+  }
+
+  .color-swatch:hover {
+    transform: scale(1.08);
+  }
+
+  /* hidden file input */
+  #importfile {
+    display: none;
+  }
+
+  /* inline editor input style */
+  .cy-inline-input {
+    position: absolute;
+    z-index: 9999;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 14px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.12);
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.12);
+    background: #fff;
+    outline: none;
+    width: 80%;
+    max-width: 300px;
+  }
+
+  /* Media Queries pour responsive */
+  @media (max-width: 768px) {
+    .controls {
+      left: -70px; /* Réduire légèrement pour mobile */
+      gap: 8px;
+      padding: 8px;
     }
 
-    // Show the diagram's model in JSON format
-    function save() {
-      document.getElementById("mySavedModel").value = myDiagram.model.toJson();
-      myDiagram.isModified = false;
+    .controls.visible {
+      left: 8px;
     }
-    function load() {
-      myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
+
+    .btn {
+      min-width: 36px;
+      height: 36px;
+      font-size: 16px;
     }
-    window.addEventListener('DOMContentLoaded', init);
-  </script>
 
-<div id="sample">
-  <div id="myDiagramDiv" style="border: solid 1px black; width:100%; height:650px;"></div>
-  
-  <br />
-  
-  	<!-- couleur : palevioletred, coral, darkseagreen, skyblue -->
-	
-	<textarea id="mySavedModel" style="width:100%;height:450px">
-	
-{ "class": "go.TreeModel",
-  "nodeDataArray": 
-	[
-	
-	
-		{"key":0, "text":"notion", "brush":"yellow", "loc":"0 0"},
-		
-		{"key":1, "parent":0, "text":"option 1", "brush":"red", "dir":"left", "loc":"-050 -25"},
-			{"key":11, "parent":1, "text":"option 1.1", "brush":"red", "dir":"left", "loc":"-150 -50"},
-			{"key":12, "parent":1, "text":"option 1.2", "brush":"red", "dir":"left", "loc":"-150 -25"},
-			{"key":13, "parent":1, "text":"option 1.3", "brush":"red", "dir":"left", "loc":"-150 0"},
-				{"key":111, "parent":11, "text":"option 1.1.1", "brush":"red", "dir":"left", "loc":"-250 -75"},
-				{"key":112, "parent":11, "text":"option 1.1.2", "brush":"red", "dir":"left", "loc":"-250 -50"},
+    .material-symbols-outlined, .shape-glyph {
+      font-size: 16px;
+    }
 
-		{"key":2, "parent":0, "text":"option 2", "brush":"lime", "dir":"right", "loc":"90 -25"},
-			{"key":21, "parent":2, "text":"option 2.1", "brush":"lime", "dir":"right", "loc":"200 -50"},
-			{"key":22, "parent":2, "text":"option 2.2", "brush":"lime", "dir":"right", "loc":"200 -25"},
-			{"key":23, "parent":2, "text":"option 2.3", "brush":"lime", "dir":"right", "loc":"200 0"},
-		
-		{"key":3, "parent":0, "text":"option 3", "brush":"coral", "dir":"left", "loc":"-050 52.75"},
-			{"key":31, "parent":3, "text":"option 3.1", "brush":"coral", "dir":"left", "loc":"-150 25"},
-			{"key":32, "parent":3, "text":"option 3.2", "brush":"coral", "dir":"left", "loc":"-150 50"},
-			{"key":33, "parent":3, "text":"option 3.3", "brush":"coral", "dir":"left", "loc":"-150 75"},
+    .color-swatch {
+      width: 24px;
+      height: 24px;
+    }
 
-		{"key":4, "parent":0, "text":"option 4", "brush":"blue", "dir":"right", "loc":"90 50"},
-			{"key":41, "parent":4, "text":"option 4.1", "brush":"blue", "dir":"right", "loc":"200 25"},
-				{"key":411, "parent":41, "text":"option 4.1.1", "brush":"blue", "dir":"right", "loc":"320 0"},
-				{"key":412, "parent":41, "text":"option 4.1.2", "brush":"blue", "dir":"right", "loc":"320 25"},
-			{"key":42, "parent":4, "text":"option 4.2", "brush":"blue", "dir":"right", "loc":"200 50"},
-			{"key":43, "parent":4, "text":"option 4.3", "brush":"blue", "dir":"right", "loc":"200 75"}
+    .color-palette {
+      max-width: 180px;
+    }
 
-	]
-}
-  </textarea>
+    .toggle-menu {
+      display: block; /* Afficher le bouton de bascule sur mobile */
+    }
+
+    .cy-inline-input {
+      font-size: 12px;
+      padding: 4px 6px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .controls {
+      left: -60px;
+      gap: 6px;
+      padding: 6px;
+    }
+
+    .controls.visible {
+      left: 6px;
+    }
+
+    .btn {
+      min-width: 32px;
+      height: 32px;
+      font-size: 14px;
+    }
+
+    .material-symbols-outlined, .shape-glyph {
+      font-size: 14px;
+    }
+
+    .color-swatch {
+      width: 20px;
+      height: 20px;
+    }
+
+    .color-palette {
+      max-width: 160px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Bouton de bascule pour mobile -->
+<button class="toggle-menu" title="Afficher/Masquer le menu" onclick="toggleMenuMobile()">
+  <span class="material-symbols-outlined">menu</span>
+</button>
+
+<!-- Controls -->
+<div class="controls" role="toolbar" aria-label="outils">
+  <!-- shapes -->
+  <button class="btn" title="rectangle" onclick="selectNodeShape('rectangle')"><span class="shape-glyph">▭</span></button>
+  <button class="btn" title="losange" onclick="selectNodeShape('diamond')"><span class="shape-glyph">◇</span></button>
+  <button class="btn" title="ellipse" onclick="selectNodeShape('ellipse')"><span class="shape-glyph">◯</span></button>
+
+  <!-- color menu -->
+  <button class="btn" title="couleur (sélectionner un nœud)" onclick="toggleColorPalette()"><span class="material-symbols-outlined">palette</span></button>
+  <div id="colorpalette" class="color-palette" style="display:none;">
+    <div class="color-swatch" data-color="#e0e0e0" style="background:#e0e0e0"></div>
+    <div class="color-swatch" data-color="#a3bffa" style="background:#a3bffa"></div>
+    <div class="color-swatch" data-color="#f6e58d" style="background:#f6e58d"></div>
+    <div class="color-swatch" data-color="#ff9ff3" style="background:#ff9ff3"></div>
+    <div class="color-swatch" data-color="#ff6b6b" style="background:#ff6b6b"></div>
+    <div class="color-swatch" data-color="#55efc4" style="background:#55efc4"></div>
+    <div class="color-swatch" data-color="#74b9ff" style="background:#74b9ff"></div>
+    <div class="color-swatch" data-color="#fd79a8" style="background:#fd79a8"></div>
+  </div>
+
+  <!-- add edge (arrow) -->
+  <button class="btn" title="ajouter connexion" onclick="startaddedge()"><span class="material-symbols-outlined">arrow_forward</span></button>
+
+  <!-- import / export -->
+  <button class="btn" title="importer JSON" onclick="document.getElementById('importfile').click()"><span class="material-symbols-outlined">folder_open</span></button>
+  <input id="importfile" type="file" accept=".json" onchange="importmindmap()" />
+  <button class="btn" title="exporter JSON" onclick="exportJSON()"><span class="material-symbols-outlined">save</span></button>
+  <button class="btn" title="exporter PNG" onclick="exportPNG()"><span class="material-symbols-outlined">image</span></button>
 </div>
-    </div>
+
+<!-- cytoscape container -->
+<div id="cy"></div>
+
+<script>
+/* ---------- utilitaires ---------- */
+function darkenColor(hex, percent = -30) {
+  try {
+    let c = hex.replace('#', '');
+    if (c.length === 3) c = c.split('').map(ch => ch + ch).join('');
+    let num = parseInt(c, 16);
+    let amt = Math.round(2.55 * percent);
+    let R = (num >> 16) + amt;
+    let G = (num >> 8 & 0x00FF) + amt;
+    let B = (num & 0x0000FF) + amt;
+    R = Math.max(0, Math.min(255, R));
+    G = Math.max(0, Math.min(255, G));
+    B = Math.max(0, Math.min(255, B));
+    return '#' + ((1 << 24) + (R << 16) + (G << 8) + B).toString(16).slice(1).toUpperCase();
+  } catch (e) {
+    return '#A0A0A0';
+  }
+}
+
+function adjustNodeSize(node) {
+  if (!node || !node.data) return;
+  const text = String(node.data('label') || '');
+  const lines = text.split("\n").length;
+  const longest = text.split("\n").reduce((m, s) => Math.max(m, s.length), 0);
+  const isMobile = window.innerWidth <= 768;
+  const baseWidth = isMobile ? 120 : 160;
+  const baseHeight = isMobile ? 60 : 72;
+  const width = Math.min(Math.max(baseWidth, longest * (isMobile ? 8 : 10)), isMobile ? 300 : 420);
+  const height = Math.min(Math.max(baseHeight, lines * (isMobile ? 22 : 26)), isMobile ? 240 : 320);
+  node.style('width', width + 'px');
+  node.style('height', height + 'px');
+  node.style('font-size', isMobile ? '12px' : '14px');
+  node.style('text-max-width', isMobile ? '200px' : '300px');
+}
+
+/* ---------- cytoscape init ---------- */
+let cy = cytoscape({
+  container: document.getElementById('cy'),
+  style: [
+    {
+      selector: 'node',
+      style: {
+        'label': 'data(label)',
+        'shape': 'data(shape)',
+        'background-color': 'data(color)',
+        'border-width': 2,
+        'border-color': 'data(borderColor)',
+        'color': '#222',
+        'text-valign': 'center',
+        'text-wrap': 'wrap',
+        'text-max-width': '300px',
+        'font-family': 'Inter, Arial, sans-serif',
+        'font-size': 14,
+        'padding': 8
+      }
+    },
+    {
+      selector: 'edge',
+      style: {
+        'width': 2,
+        'curve-style': 'straight',
+        'target-arrow-shape': 'triangle',
+        'line-color': '#333',
+        'target-arrow-color': '#333'
+      }
+    },
+    {
+      selector: ':selected',
+      style: {
+        'overlay-color': '#ddd',
+        'overlay-opacity': 0.4
+      }
+    }
+  ],
+  layout: { name: 'preset' },
+  userZoomingEnabled: true,
+  userPanningEnabled: true
+});
+
+/* ---------- gestion menu coulissant ---------- */
+const controls = document.querySelector('.controls');
+let hideTimeout = null;
+let isMobileMenuVisible = false;
+
+function toggleMenuMobile() {
+  isMobileMenuVisible = !isMobileMenuVisible;
+  controls.classList.toggle('visible', isMobileMenuVisible);
+  if (isMobileMenuVisible) {
+    clearTimeout(hideTimeout);
+  } else {
+    hideTimeout = setTimeout(() => {
+      controls.classList.remove('visible');
+    }, 1000);
+  }
+}
+
+function handleMenuVisibility(e) {
+  const isMobile = window.innerWidth <= 768;
+  if (isMobile) return; // Sur mobile, seul le bouton toggle contrôle le menu
+  if (e.clientX < 50) {
+    controls.classList.add('visible');
+    clearTimeout(hideTimeout);
+  } else {
+    hideTimeout = setTimeout(() => {
+      controls.classList.remove('visible');
+    }, 1000);
+  }
+}
+
+document.addEventListener('mousemove', handleMenuVisibility);
+
+controls.addEventListener('mouseenter', () => {
+  clearTimeout(hideTimeout);
+});
+
+controls.addEventListener('mouseleave', () => {
+  if (window.innerWidth > 768) {
+    hideTimeout = setTimeout(() => {
+      controls.classList.remove('visible');
+    }, 1000);
+  }
+});
+
+// Support tactile
+document.addEventListener('touchstart', (e) => {
+  if (window.innerWidth > 768) return;
+  const touchX = e.touches[0].clientX;
+  if (touchX < 50 && !isMobileMenuVisible) {
+    toggleMenuMobile();
+  }
+});
+
+/* ---------- UI state ---------- */
+let newNodeShape = 'rectangle';
+function selectNodeShape(shape) {
+  newNodeShape = shape;
+  const sel = cy.$('node:selected');
+  if (sel.length > 0) {
+    sel[0].data('shape', shape);
+    adjustNodeSize(sel[0]);
+  } else {
+    addnode();
+  }
+}
+
+/* ---------- palette color ---------- */
+function toggleColorPalette() {
+  const p = document.getElementById('colorpalette');
+  p.style.display = (p.style.display === 'flex') ? 'none' : 'flex';
+}
+
+document.querySelectorAll('.color-swatch').forEach(s => {
+  s.addEventListener('click', () => {
+    const color = s.getAttribute('data-color');
+    const sel = cy.$('node:selected');
+    if (sel.length > 0) {
+      sel[0].data('color', color);
+      sel[0].data('borderColor', darkenColor(color));
+      adjustNodeSize(sel[0]);
+    }
+    document.getElementById('colorpalette').style.display = 'none';
+  });
+});
+
+/* ---------- add node ---------- */
+function addnode() {
+  const label = prompt('texte du nœud :', 'nouveau nœud');
+  if (label === null) return;
+  const n = cy.add({
+    group: 'nodes',
+    data: {
+      label: label,
+      shape: newNodeShape,
+      color: '#e0e0e0',
+      borderColor: darkenColor('#e0e0e0')
+    },
+    position: { x: 220 + Math.random() * 360, y: 160 + Math.random() * 260 }
+  });
+  adjustNodeSize(n);
+}
+
+/* ---------- inline edit ---------- */
+cy.on('doubleTap', 'node', function(evt) {
+  try {
+    const node = evt.target;
+    const bbox = node.renderedBoundingBox();
+    const ctr = cy.container().getBoundingClientRect();
+    const docLeft = ctr.left + bbox.x1 + window.scrollX;
+    const docTop = ctr.top + bbox.y1 + window.scrollY;
+    const width = Math.max(80, bbox.w);
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = node.data('label') || '';
+    input.className = 'cy-inline-input';
+    input.style.left = (docLeft) + 'px';
+    input.style.top = (docTop) + 'px';
+    input.style.width = (width + 12) + 'px';
+    document.body.appendChild(input);
+    input.focus();
+    input.select();
+    const finalize = () => {
+      if (!document.body.contains(input)) return;
+      node.data('label', input.value);
+      adjustNodeSize(node);
+      input.remove();
+    };
+    input.addEventListener('blur', finalize);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        finalize();
+      } else if (e.key === 'Escape') {
+        input.remove();
+      }
+    });
+    input.addEventListener('mousedown', (ev) => ev.stopPropagation());
+    input.addEventListener('touchstart', (ev) => ev.stopPropagation());
+  } catch (err) {
+    console.error('inline edit error', err);
+  }
+});
+
+/* ---------- edges (add) ---------- */
+let edgeMode = false;
+let edgeSource = null;
+function startaddedge() {
+  edgeMode = true;
+  edgeSource = null;
+  setTimeout(() => alert('cliquez sur un nœud source puis un nœud cible'), 10);
+}
+cy.on('tap', 'node', function(evt) {
+  if (!edgeMode) return;
+  const n = evt.target;
+  if (!edgeSource) {
+    edgeSource = n;
+    return;
+  }
+  if (edgeSource && n && edgeSource.id() !== n.id()) {
+    cy.add({ group: 'edges', data: { source: edgeSource.id(), target: n.id() } });
+    edgeMode = false;
+    edgeSource = null;
+  }
+});
+
+/* ---------- deletion (keyboard) ---------- */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Delete' || e.key === 'Backspace') {
+    const sel = cy.$(':selected');
+    if (sel.length > 0) {
+      sel.remove();
+      e.preventDefault();
+    }
+  }
+});
+
+/* ---------- import / export ---------- */
+function importmindmap() {
+  const fileIn = document.getElementById('importfile');
+  const file = fileIn.files && fileIn.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const raw = JSON.parse(e.target.result);
+      if (!raw.nodeDataArray || !raw.linkDataArray) throw new Error('format JSON invalide (attendu nodeDataArray & linkDataArray)');
+      cy.elements().remove();
+      raw.nodeDataArray.forEach(nd => {
+        const [x, y] = String(nd.loc || '0 0').split(' ').map(Number);
+        const shape = nd.category || nd.shape || 'rectangle';
+        const color = nd.color || '#e0e0e0';
+        const borderColor = nd.borderColor || darkenColor(color);
+        const node = cy.add({
+          group: 'nodes',
+          data: {
+            id: String(nd.key),
+            label: nd.text || nd.label || '',
+            shape: shape,
+            color: color,
+            borderColor: borderColor
+          },
+          position: { x: x || 0, y: y || 0 }
+        });
+        adjustNodeSize(node);
+      });
+      raw.linkDataArray.forEach(l => {
+        cy.add({ group: 'edges', data: { id: 'e' + l.from + '-' + l.to, source: String(l.from), target: String(l.to) } });
+      });
+      const padding = window.innerWidth <= 768 ? 20 : 50;
+      cy.fit(cy.elements(), padding);
+      cy.center();
+      alert('importation réussie');
+      fileIn.value = '';
+    } catch (err) {
+      alert('erreur importation : ' + (err && err.message ? err.message : err));
+      console.error(err);
+    }
+  };
+  reader.readAsText(file);
+}
+
+function exportJSON() {
+  const nodeDataArray = cy.nodes().map(n => ({
+    key: n.id(),
+    text: n.data('label'),
+    loc: (n.position().x || 0) + ' ' + (n.position().y || 0),
+    category: n.data('shape'),
+    color: n.data('color'),
+    borderColor: n.data('borderColor')
+  }));
+  const linkDataArray = cy.edges().map(e => ({ from: e.data('source'), to: e.data('target') }));
+  const data = { nodeDataArray, linkDataArray };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'mindmap.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function exportPNG() {
+  const data = cy.png({ full: true, scale: window.innerWidth <= 768 ? 1.2 : 1.5 });
+  const a = document.createElement('a');
+  a.href = data;
+  a.download = 'mindmap.png';
+  a.click();
+}
+</script>
 </body>
-
-
 </html>
