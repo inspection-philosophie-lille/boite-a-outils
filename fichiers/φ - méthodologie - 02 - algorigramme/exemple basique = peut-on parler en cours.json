@@ -3,7 +3,7 @@
     {
       "key": "1",
       "text": "Peut-on parler en cours ?",
-      "loc": "175.3394077448747 -330.9316628701596",
+      "loc": "641.7174270075702 -330.9316628701596",
       "category": "rectangle",
       "color": "#ff6b6b",
       "borderColor": "#B31F1F"
@@ -11,7 +11,7 @@
     {
       "key": "2",
       "text": "Choix",
-      "loc": "178.50569476082003 -209.89749430523918",
+      "loc": "644.8837140235155 -209.89749430523918",
       "category": "diamond",
       "color": "#f6e58d",
       "borderColor": "#AA9941"
@@ -19,39 +19,39 @@
     {
       "key": "3",
       "text": "Option 1 : on peut parler en cours",
-      "loc": "-143.120728929385 -210.41457858769922",
+      "loc": "323.2572903333105 -210.41457858769922",
       "category": "rectangle",
-      "color": "#f6e58d",
-      "borderColor": "#AA9941"
+      "color": "#55efc4",
+      "borderColor": "#09A378"
     },
     {
       "key": "4",
       "text": "Option 2 : on ne peut pas parler en cours",
-      "loc": "548.3280182232347 -210.0797266514806",
+      "loc": "1014.7060374859302 -210.0797266514806",
       "category": "rectangle",
-      "color": "#f6e58d",
-      "borderColor": "#AA9941"
+      "color": "#55efc4",
+      "borderColor": "#09A378"
     },
     {
       "key": "5",
       "text": "Parler = participer",
-      "loc": "89.10933940774487 -69.82232346241457",
+      "loc": "555.4873586704404 -69.82232346241457",
       "category": "rectangle",
       "color": "#e0e0e0",
       "borderColor": "#949494"
     },
     {
       "key": "7",
-      "text": "Problème : soit option A, soit option B",
-      "loc": "167.7494305239182 204.07517084282458",
-      "category": "Etape3",
+      "text": "Problème : soit option 1, soit option 2",
+      "loc": "634.1274497866136 204.07517084282458",
+      "category": "rectangle",
       "color": "#ff6b6b",
       "borderColor": "#B31F1F"
     },
     {
       "key": "-2",
       "text": "Parler = coconstruire le cours",
-      "loc": "-178.51708428246025 -70.56492027334853",
+      "loc": "287.86093498023524 -70.56492027334853",
       "category": "rectangle",
       "color": "#e0e0e0",
       "borderColor": "#949494"
@@ -59,7 +59,7 @@
     {
       "key": "-10",
       "text": "Il a le devoir de participer",
-      "loc": "-93.89425311764037 65.4786378904289",
+      "loc": "372.48376614505514 65.4786378904289",
       "category": "rectangle",
       "color": "#e0e0e0",
       "borderColor": "#949494"
@@ -67,7 +67,7 @@
     {
       "key": "-11",
       "text": "Parler = demande d'explication",
-      "loc": "-501.7152619589977 -70.63553530751707",
+      "loc": "-35.33724269630221 -70.63553530751707",
       "category": "rectangle",
       "color": "#e0e0e0",
       "borderColor": "#949494"
@@ -75,7 +75,7 @@
     {
       "key": "-12",
       "text": "l'élève est un être libre (il pense par lui-même)",
-      "loc": "280.5927589668352 66.18987876915949",
+      "loc": "746.9707782295307 66.18987876915949",
       "category": "rectangle",
       "color": "#e0e0e0",
       "borderColor": "#949494"
@@ -83,7 +83,7 @@
     {
       "key": "-13",
       "text": "on dérange",
-      "loc": "319.113895216401 -70.38496583143508",
+      "loc": "785.4919144790965 -70.38496583143508",
       "category": "rectangle",
       "color": "#e0e0e0",
       "borderColor": "#949494"
@@ -91,7 +91,7 @@
     {
       "key": "-14",
       "text": "tant qu'on a pas le droit",
-      "loc": "546.7813211845103 -70.47608200455579",
+      "loc": "1013.1593404472058 -70.47608200455579",
       "category": "rectangle",
       "color": "#e0e0e0",
       "borderColor": "#949494"
@@ -99,7 +99,7 @@
     {
       "key": "-15",
       "text": "apprendre = écouter = ne pas parler",
-      "loc": "868.8132118451026 -69.81093394077448",
+      "loc": "1335.191231107798 -69.81093394077448",
       "category": "rectangle",
       "color": "#e0e0e0",
       "borderColor": "#949494"

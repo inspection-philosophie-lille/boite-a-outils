@@ -1,96 +1,63 @@
-Pour générer exactement le même fichier HTML que celui fourni dans votre dernière version (avec le menu coulissant, la carte mentale responsive, etc.), il faut créer un prompt précis et détaillé qui décrit toutes les fonctionnalités, le style, et la structure du code. Le prompt doit inclure :
+Génère un fichier HTML nommé algorigramme.html qui utilise Cytoscape.js (version 3.23.0 via CDN) pour afficher un algorigramme interactif avec les spécifications suivantes :
 
-    La description de l'interface utilisateur (UI) et des interactions.
-    Les spécifications CSS pour le design responsive, y compris les media queries.
-    Les comportements JavaScript, notamment pour Cytoscape, le menu coulissant, et les fonctionnalités d'import/export.
-    Les détails sur les dépendances externes (polices, bibliothèques).
-    Les contraintes spécifiques, comme le panneau transparent avec ombres sur les boutons uniquement.
+Structure générale :
 
-Voici un prompt optimisé pour obtenir ce fichier HTML exact :
+Le fichier doit inclure un conteneur Cytoscape (#cy) pour afficher un diagramme avec 7 nœuds et 7 liens définis par un JSON initial (fourni ci-dessous).
+Utiliser la police 'Inter' (via Google Fonts) pour le texte et 'Material Symbols Outlined' pour les icônes.
+Le style doit être moderne, avec un fond gris clair (#e7e7e9), des ombres néomorphiques, et des boutons ronds.
 
-Prompt pour générer le fichier HTML :
 
-Générez un fichier HTML complet pour une application web de carte mentale utilisant la bibliothèque Cytoscape.js (version 3.23.0). Le fichier doit inclure les fonctionnalités, le style et les comportements suivants :
-Structure générale
+Titre et sous-titre :
 
-    Langue : Français (lang="fr").
-    Charset : UTF-8.
-    Viewport : width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no pour empêcher le zoom sur mobile.
-    Titre : "carte mentale — UI stylisée & édition inline".
-    Dépendances :
-        Police Google Fonts : Inter (poids 300, 400, 600).
-        Icônes Google Material Symbols Outlined.
-        Cytoscape.js via CDN (https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js).
+Un titre <h1> avec le texte "algorigramme" (sans majuscule, en rouge, taille 24px).
+Un sous-titre <h2> avec le texte "construire un raisonnement" (sans majuscule, en noir, taille 18px).
+Les deux sont centrés horizontalement (left: 50%; transform: translateX(-50%)) en haut de la page, dans un conteneur <div class="title-container">.
 
-Interface utilisateur
 
-    Conteneur principal : Un <div id="cy"> occupant 100% de la largeur et hauteur de la fenêtre (width: 100vw; height: 100vh) pour afficher la carte mentale.
-    Panneau de contrôle :
-        Classe : .controls.
-        Position : Fixe, à gauche (left: -80px initialement, hors écran), centré verticalement (top: 50%; transform: translateY(-50%)).
-        Contenu : Boutons pour formes (rectangle, losange, ellipse), palette de couleurs, ajout de connexion, import/export JSON, export PNG.
-        Style : Pas de fond ni d'ombre sur le panneau (transparent), padding 10px, transition fluide (left 0.3s ease).
-        Comportement : Apparaît à left: 12px quand le curseur est à moins de 50px du bord gauche (ou via un bouton de bascule sur mobile), disparaît après 1 seconde si la souris s'éloigne, sauf si sur le panneau.
-    Bouton de bascule pour mobile :
-        Classe : .toggle-menu.
-        Position : Fixe, en haut à gauche (left: 10px; top: 10px).
-        Icône : Material Symbol "menu".
-        Visible uniquement sur mobile (display: block pour max-width: 768px).
-    Boutons :
-        Classe : .btn.
-        Style : Fond --panel-bg (#e0e0e0), ombres néomorphiques (3px 3px 6px rgba(0,0,0,0.08), -3px -3px 6px rgba(255,255,255,0.9)), bord arrondi (10px), transition fluide.
-        Hover : Translation vers le haut (-2px) et ombres inversées.
-        Contenu : Icônes Material Symbols ou glyphes Unicode pour formes (▭, ◇, ◯).
-    Palette de couleurs :
-        Classe : .color-palette.
-        Contenu : 8 carrés de couleur (28x28px, bord arrondi 6px, ombres néomorphiques).
-        Couleurs : #e0e0e0, #a3bffa, #f6e58d, #ff9ff3, #ff6b6b, #55efc4, #74b9ff, #fd79a8.
-        Comportement : S’affiche/masque via le bouton palette, applique la couleur au nœud sélectionné.
-    Éditeur inline :
-        Classe : .cy-inline-input.
-        Style : Input texte absolu, positionné au-dessus du nœud, avec bordure et ombre, largeur adaptative (80% sur mobile, max 300px).
+Comportement responsive :
 
-CSS responsive
+Desktop (> 768px) :
 
-    Variables CSS :
-        --bg: #e7e7e9
-        --panel-bg: #e0e0e0
-        --shadow-1: 4px 4px 10px rgba(0,0,0,0.12)
-        --shadow-2: -4px -4px 10px rgba(255,255,255,0.9)
-    Media queries :
-        max-width: 768px : Réduire les tailles des boutons (36x36px), icônes (16px), palette (24x24px), padding du panneau (8px), position initiale left: -70px, visible à left: 8px.
-        max-width: 480px : Encore réduire (boutons 32x32px, icônes 14px, palette 20x20px, padding 6px, left: -60px, visible à left: 6px).
-    Global : html, body { overflow: hidden } pour éviter les barres de défilement.
+Le conteneur #cy a une marge supérieure de 60px pour éviter la superposition avec le sous-titre, et une hauteur de calc(100vh - 60px).
+L'algorigramme est centré horizontalement par rapport au titre/sous-titre en ajustant les positions x des nœuds (calculer le centre actuel des nœuds via la moyenne des coordonnées x, puis décaler pour aligner avec window.innerWidth / 2).
+Zoom initial de 0.8 pour garantir que tout est visible sans superposition.
+Menu de contrôles fixe à gauche (position left: 12px, sans bouton de bascule).
 
-JavaScript (Cytoscape et interactions)
 
-    Initialisation Cytoscape :
-        Conteneur : #cy.
-        Style des nœuds : Forme dynamique (data(shape)), couleur (data(color)), bordure (data(borderColor)), texte centré, wrap, police Inter, taille 14px.
-        Style des arêtes : Ligne droite, flèche triangulaire, couleur #333.
-        Style sélectionné : Ombre grise légère.
-        Layout : preset.
-        Zoom et pan activés.
-    Menu coulissant :
-        Desktop : Apparaît si mousemove détecte le curseur à <50px du bord gauche, disparaît après 1s (setTimeout) sauf si survol du panneau.
-        Mobile (≤768px) : Contrôlé par un bouton .toggle-menu (via toggleMenuMobile) et touchstart à <50px du bord gauche.
-    Gestion des nœuds :
-        Ajout : Prompt pour texte, position aléatoire (x: 220+rand360, y: 160+rand260), forme par défaut rectangle, couleur #e0e0e0.
-        Taille (adjustNodeSize) : Largeur/hauteur basées sur texte (min 160x72px desktop, 120x60px mobile; max 420x320px desktop, 300x240px mobile), police 12px sur mobile.
-        Édition inline : Input positionné sur le nœud (via renderedBoundingBox), supporte mousedown et touchstart.
-    Palette de couleurs : Applique la couleur au nœud sélectionné, met à jour la bordure avec darkenColor (assombrit de 30%).
-    Connexions : Mode edgeMode pour ajouter des arêtes (clic/toucher sur source puis cible).
-    Suppression : Touches Delete/Backspace suppriment les éléments sélectionnés.
-    Import JSON :
-        Format : { nodeDataArray: [{key, text, loc, category, color, borderColor}], linkDataArray: [{from, to}] }.
-        Ajoute nœuds/arêtes, ajuste la vue avec cy.fit(elements, padding) (padding 50px desktop, 20px mobile), centre avec cy.center().
-    Export JSON : Génère un fichier JSON avec nodeDataArray et linkDataArray.
-    Export PNG : Génère une image PNG (échelle 1.5 desktop, 1.2 mobile).
+Mobile (≤ 768px) :
 
-Contraintes
+Le conteneur #cy occupe toute la hauteur (100vh), sans marge supérieure.
+Menu coulissant (caché par défaut à left: -70px, affiché via un bouton de bascule avec l'icône 'menu' en haut à gauche).
+Pas de centrage horizontal forcé ni de zoom réduit.
 
-    Le panneau .controls doit être transparent (pas de fond ni d’ombre), seuls les boutons ont des ombres.
-    Les interactions doivent être fluides sur desktop et mobile (clic/toucher).
-    Le code doit être propre, avec des commentaires pour les sections JavaScript (utilitaires, init Cytoscape, UI state, etc.).
 
-Générez le fichier HTML complet, incluant HTML, CSS et JavaScript, respectant exactement ces spécifications.
+
+
+Menu de contrôles :
+
+Contient des boutons pour :
+
+Changer la forme des nœuds (rectangle ▭, losange ◇, ellipse ◯).
+Ouvrir une palette de couleurs (8 couleurs : #e0e0e0, #a3bffa, #f6e58d, #ff9ff3, #ff6b6b, #55efc4, #74b9ff, #fd79a8).
+Ajouter une connexion (mode où l'utilisateur clique sur un nœud source puis cible).
+Importer un fichier JSON (via <input type="file"> caché).
+Exporter le diagramme en JSON (algorigramme.json).
+Exporter le diagramme en PNG (algorigramme.png, échelle 1.5 sur desktop, 1.2 sur mobile).
+
+
+Boutons avec style néomorphique, icônes Material Symbols, et hover avec légère élévation.
+Sur mobile, boutons plus petits (min-width 36px, font-size 16px).
+
+
+Fonctionnalités interactives :
+
+Ajout de nœud : En cliquant sur un bouton de forme, si aucun nœud n'est sélectionné, un nouveau nœud est créé avec un texte saisi via prompt (position aléatoire autour de x: 220-580, y: 160-420).
+Édition de texte : Double-clic sur un nœud ouvre un champ <input> positionné sur le nœud pour modifier le texte (valider avec Enter, annuler avec Escape).
+Suppression : Touche Delete/Backspace supprime les nœuds ou liens sélectionnés (ignoré si un champ <input> est actif).
+Taille des nœuds : Ajustée dynamiquement selon le texte (largeur basée sur la longueur max, hauteur sur le nombre de lignes, max 420px/320px sur desktop, 300px/240px sur mobile).
+
+
+JSON initial :
+
+Inclure le JSON suivant pour définir l'algorigramme initial :
+json

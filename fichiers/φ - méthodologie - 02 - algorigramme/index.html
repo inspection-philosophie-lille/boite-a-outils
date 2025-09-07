@@ -72,15 +72,27 @@
 
   #cy {
     width: 100vw;
-    height: 100vh;
     background: var(--bg);
     display: block;
+  }
+
+  @media (min-width: 769px) {
+    #cy {
+      margin-top: 60px;
+      height: calc(100vh - 60px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    #cy {
+      height: 100vh;
+    }
   }
 
   /* panneau contrôles */
   .controls {
     position: fixed;
-    left: -80px;
+    left: 12px;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
@@ -91,11 +103,7 @@
     transition: left 0.3s ease;
   }
 
-  .controls.visible {
-    left: 12px;
-  }
-
-  /* Bouton de bascule pour tous les écrans */
+  /* Bouton de bascule pour mobile uniquement */
   .toggle-menu {
     position: fixed;
     left: 10px;
@@ -107,6 +115,7 @@
     box-shadow: var(--shadow-1), var(--shadow-2);
     cursor: pointer;
     padding: 8px;
+    display: none;
   }
 
   .toggle-menu .material-symbols-outlined {
@@ -201,6 +210,17 @@
     opacity: 0.7;
   }
 
+  /* Titre et sous-titre */
+  .title-container {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 2100;
+    font-family: 'Inter', Arial, sans-serif;
+  }
+
   /* Media Queries pour responsive */
   @media (max-width: 768px) {
     .controls {
@@ -211,6 +231,10 @@
 
     .controls.visible {
       left: 8px;
+    }
+
+    .toggle-menu {
+      display: block;
     }
 
     .btn {
@@ -235,6 +259,10 @@
     .cy-inline-input {
       font-size: 12px;
       padding: 4px 6px;
+    }
+
+    .title-container {
+      font-size: 0.9em;
     }
   }
 
@@ -267,24 +295,31 @@
     .color-palette {
       max-width: 160px;
     }
+
+    .title-container {
+      font-size: 0.8em;
+    }
   }
 </style>
 </head>
 <body>
 
-<!-- Bouton de bascule pour tous les écrans -->
+<!-- Titre et sous-titre -->
+<div class="title-container">
+  <h1 style="color: red; font-size: 24px; margin: 0;">algorigramme</h1>
+  <h2 style="color: black; font-size: 18px; margin: 5px 0 0 0;">construire un raisonnement</h2>
+</div>
+
+<!-- Bouton de bascule uniquement pour mobile -->
 <button class="toggle-menu" title="Afficher/Masquer le menu" onclick="toggleMenuMobile()">
   <span class="material-symbols-outlined">menu</span>
 </button>
 
 <!-- Controls -->
 <div class="controls" role="toolbar" aria-label="outils">
-  <!-- shapes -->
   <button class="btn" title="rectangle" onclick="selectNodeShape('rectangle')"><span class="shape-glyph">▭</span></button>
   <button class="btn" title="losange" onclick="selectNodeShape('diamond')"><span class="shape-glyph">◇</span></button>
   <button class="btn" title="ellipse" onclick="selectNodeShape('ellipse')"><span class="shape-glyph">◯</span></button>
-
-  <!-- color menu -->
   <button class="btn" title="couleur (sélectionner un nœud)" onclick="toggleColorPalette()"><span class="material-symbols-outlined">palette</span></button>
   <div id="colorpalette" class="color-palette" style="display:none;">
     <div class="color-swatch" data-color="#e0e0e0" style="background:#e0e0e0"></div>
@@ -296,11 +331,7 @@
     <div class="color-swatch" data-color="#74b9ff" style="background:#74b9ff"></div>
     <div class="color-swatch" data-color="#fd79a8" style="background:#fd79a8"></div>
   </div>
-
-  <!-- add edge (arrow) -->
   <button class="btn" title="ajouter connexion" onclick="startaddedge()"><span class="material-symbols-outlined">arrow_forward</span></button>
-
-  <!-- import / export -->
   <button class="btn" title="importer JSON" onclick="document.getElementById('importfile').click()"><span class="material-symbols-outlined">folder_open</span></button>
   <input id="importfile" type="file" accept=".json" onchange="importmindmap()" />
   <button class="btn" title="exporter JSON" onclick="exportJSON()"><span class="material-symbols-outlined">save</span></button>
@@ -311,6 +342,12 @@
 <div id="cy"></div>
 
 <script>
+// Vérifier si Cytoscape est chargé
+if (typeof cytoscape === 'undefined') {
+  console.error('Cytoscape n\'est pas chargé. Vérifiez le CDN.');
+  alert('Erreur : Cytoscape n\'est pas chargé. Vérifiez votre connexion ou le CDN.');
+}
+
 /* ---------- utilitaires ---------- */
 function darkenColor(hex, percent = -30) {
   try {
@@ -326,12 +363,16 @@ function darkenColor(hex, percent = -30) {
     B = Math.max(0, Math.min(255, B));
     return '#' + ((1 << 24) + (R << 16) + (G << 8) + B).toString(16).slice(1).toUpperCase();
   } catch (e) {
+    console.error('Erreur darkenColor:', e);
     return '#A0A0A0';
   }
 }
 
 function adjustNodeSize(node) {
-  if (!node || !node.data) return;
+  if (!node || !node.data) {
+    console.warn('adjustNodeSize: node invalide');
+    return;
+  }
   const text = String(node.data('label') || '');
   const lines = text.split("\n").length;
   const longest = text.split("\n").reduce((m, s) => Math.max(m, s.length), 0);
@@ -344,51 +385,223 @@ function adjustNodeSize(node) {
   node.style('height', height + 'px');
   node.style('font-size', isMobile ? '12px' : '14px');
   node.style('text-max-width', isMobile ? '200px' : '300px');
+  console.log(`Node ${node.id()} ajusté: width=${width}px, height=${height}px`);
 }
 
 /* ---------- cytoscape init ---------- */
-let cy = cytoscape({
-  container: document.getElementById('cy'),
-  style: [
-    {
-      selector: 'node',
-      style: {
-        'label': 'data(label)',
-        'shape': 'data(shape)',
-        'background-color': 'data(color)',
-        'border-width': 2,
-        'border-color': 'data(borderColor)',
-        'color': '#222',
-        'text-valign': 'center',
-        'text-wrap': 'wrap',
-        'text-max-width': '300px',
-        'font-family': 'Inter, Arial, sans-serif',
-        'font-size': 14,
-        'padding': 8
+let cy;
+try {
+  cy = cytoscape({
+    container: document.getElementById('cy'),
+    style: [
+      {
+        selector: 'node',
+        style: {
+          'label': 'data(label)',
+          'shape': 'data(shape)',
+          'background-color': 'data(color)',
+          'border-width': 2,
+          'border-color': 'data(borderColor)',
+          'color': '#222',
+          'text-valign': 'center',
+          'text-wrap': 'wrap',
+          'text-max-width': '300px',
+          'font-family': 'Inter, Arial, sans-serif',
+          'font-size': 14,
+          'padding': 8
+        }
+      },
+      {
+        selector: 'edge',
+        style: {
+          'width': 2,
+          'curve-style': 'straight',
+          'target-arrow-shape': 'triangle',
+          'line-color': '#333',
+          'target-arrow-color': '#333'
+        }
+      },
+      {
+        selector: ':selected',
+        style: {
+          'overlay-color': '#ddd',
+          'overlay-opacity': 0.4
+        }
       }
+    ],
+    layout: { name: 'preset' },
+    userZoomingEnabled: true,
+    userPanningEnabled: true
+  });
+  console.log('Cytoscape initialisé avec succès');
+} catch (e) {
+  console.error('Erreur initialisation Cytoscape:', e);
+  alert('Erreur lors de l\'initialisation de Cytoscape: ' + e.message);
+}
+
+/* ---------- Données JSON initiales ---------- */
+const initialData = {
+  "nodeDataArray": [
+    {
+      "key": "05694500-79ef-46f4-a61f-08a2221311b1",
+      "text": "intitulé du sujet",
+      "loc": "352.0091701335463 89.80677735636755",
+      "category": "rectangle",
+      "color": "#f6e58d",
+      "borderColor": "#AA9941"
     },
     {
-      selector: 'edge',
-      style: {
-        'width': 2,
-        'curve-style': 'straight',
-        'target-arrow-shape': 'triangle',
-        'line-color': '#333',
-        'target-arrow-color': '#333'
-      }
+      "key": "ba3cc6c8-ca87-4394-9191-5c313f5a47e6",
+      "text": "choix",
+      "loc": "352.78214266322544 206.18823277913538",
+      "category": "diamond",
+      "color": "#74b9ff",
+      "borderColor": "#286DB3"
     },
     {
-      selector: ':selected',
-      style: {
-        'overlay-color': '#ddd',
-        'overlay-opacity': 0.4
-      }
+      "key": "fa3a66c5-fe59-4894-b551-7d5817ba406c",
+      "text": "option 1",
+      "loc": "106.22617023982315 207.2049589635645",
+      "category": "rectangle",
+      "color": "#55efc4",
+      "borderColor": "#09A378"
+    },
+    {
+      "key": "f4fe4e48-a969-433f-b5ce-f49bc2329158",
+      "text": "option 2",
+      "loc": "608.5368582367003 206.80173831136017",
+      "category": "rectangle",
+      "color": "#55efc4",
+      "borderColor": "#09A378"
+    },
+    {
+      "key": "7ec0f9e4-d0e3-4546-8481-b126f0067a8f",
+      "text": "justification de l'option 1",
+      "loc": "104.49121828620027 320.98295555396004",
+      "category": "rectangle",
+      "color": "#74b9ff",
+      "borderColor": "#286DB3"
+    },
+    {
+      "key": "e3a8ca39-1628-444c-8f5f-1c607837bfbc",
+      "text": "justification de l'option 2",
+      "loc": "609.1026420064263 323.15849320808707",
+      "category": "rectangle",
+      "color": "#74b9ff",
+      "borderColor": "#286DB3"
+    },
+    {
+      "key": "405c0c74-f9f2-44af-a907-3c048ceea747",
+      "text": "problème : soit option 1, soit option 2",
+      "loc": "346.32943047849295 440.828408523479",
+      "category": "rectangle",
+      "color": "#ff6b6b",
+      "borderColor": "#B31F1F"
     }
   ],
-  layout: { name: 'preset' },
-  userZoomingEnabled: true,
-  userPanningEnabled: true
-});
+  "linkDataArray": [
+    {
+      "from": "05694500-79ef-46f4-a61f-08a2221311b1",
+      "to": "ba3cc6c8-ca87-4394-9191-5c313f5a47e6"
+    },
+    {
+      "from": "ba3cc6c8-ca87-4394-9191-5c313f5a47e6",
+      "to": "fa3a66c5-fe59-4894-b551-7d5817ba406c"
+    },
+    {
+      "from": "ba3cc6c8-ca87-4394-9191-5c313f5a47e6",
+      "to": "f4fe4e48-a969-433f-b5ce-f49bc2329158"
+    },
+    {
+      "from": "fa3a66c5-fe59-4894-b551-7d5817ba406c",
+      "to": "7ec0f9e4-d0e3-4546-8481-b126f0067a8f"
+    },
+    {
+      "from": "f4fe4e48-a969-433f-b5ce-f49bc2329158",
+      "to": "e3a8ca39-1628-444c-8f5f-1c607837bfbc"
+    },
+    {
+      "from": "7ec0f9e4-d0e3-4546-8481-b126f0067a8f",
+      "to": "405c0c74-f9f2-44af-a907-3c048ceea747"
+    },
+    {
+      "from": "e3a8ca39-1628-444c-8f5f-1c607837bfbc",
+      "to": "405c0c74-f9f2-44af-a907-3c048ceea747"
+    }
+  ]
+};
+
+// Fonction pour charger les données JSON initiales
+function loadInitialData() {
+  if (!cy) {
+    console.error('Cytoscape non initialisé');
+    alert('Erreur : Cytoscape non initialisé');
+    return;
+  }
+  try {
+    console.log('Début chargement JSON initial');
+    cy.elements().remove();
+    const nodes = [];
+    initialData.nodeDataArray.forEach((nd, index) => {
+      const [x, y] = String(nd.loc || '0 0').split(' ').map(Number);
+      const shape = nd.category || nd.shape || 'rectangle';
+      const color = nd.color || '#e0e0e0';
+      const borderColor = nd.borderColor || darkenColor(color);
+      const node = cy.add({
+        group: 'nodes',
+        data: {
+          id: String(nd.key),
+          label: nd.text || nd.label || '',
+          shape: shape,
+          color: color,
+          borderColor: borderColor
+        },
+        position: { x: x || 0, y: y || 0 }
+      });
+      nodes.push(node);
+      adjustNodeSize(node);
+      console.log(`Nœud ${index} ajouté: ${nd.key}, label: ${nd.text}, position: (${x}, ${y})`);
+    });
+    initialData.linkDataArray.forEach((l, index) => {
+      cy.add({
+        group: 'edges',
+        data: {
+          id: 'e' + l.from + '-' + l.to,
+          source: String(l.from),
+          target: String(l.to)
+        }
+      });
+      console.log(`Lien ${index} ajouté: ${l.from} -> ${l.to}`);
+    });
+    const padding = window.innerWidth <= 768 ? 20 : 50;
+    if (window.innerWidth > 768) {
+      const xCoords = nodes.map(node => node.position().x);
+      const currentCenter = xCoords.length > 0 ? xCoords.reduce((sum, x) => sum + x, 0) / xCoords.length : 0;
+      const screenCenter = window.innerWidth / 2;
+      const offset = screenCenter - currentCenter;
+      nodes.forEach(node => {
+        const newX = node.position().x + offset;
+        node.position('x', newX);
+        console.log(`Nœud ${node.id()} repositionné: x=${newX}`);
+      });
+      cy.fit(cy.elements(), padding);
+      cy.zoom(0.8);
+      cy.center();
+    } else {
+      cy.fit(cy.elements(), padding);
+      cy.center();
+    }
+    console.log('Chargement JSON initial terminé, éléments:', cy.elements().length);
+  } catch (err) {
+    console.error('Erreur lors du chargement des données initiales:', err);
+    alert('Erreur chargement initial: ' + err.message);
+  }
+}
+
+// Charger les données initiales après un court délai pour garantir le rendu du DOM
+if (cy) {
+  setTimeout(loadInitialData, 100);
+}
 
 /* ---------- gestion menu coulissant ---------- */
 const controls = document.querySelector('.controls');
@@ -396,6 +609,7 @@ let hideTimeout = null;
 let isMobileMenuVisible = false;
 
 function toggleMenuMobile() {
+  if (window.innerWidth > 768) return;
   isMobileMenuVisible = !isMobileMenuVisible;
   controls.classList.toggle('visible', isMobileMenuVisible);
   if (isMobileMenuVisible) {
@@ -410,14 +624,6 @@ function toggleMenuMobile() {
 function handleMenuVisibility(e) {
   const isMobile = window.innerWidth <= 768;
   if (isMobile) return;
-  if (e.clientX < 50) {
-    controls.classList.add('visible');
-    clearTimeout(hideTimeout);
-  } else {
-    hideTimeout = setTimeout(() => {
-      controls.classList.remove('visible');
-    }, 1000);
-  }
 }
 
 document.addEventListener('mousemove', handleMenuVisibility);
@@ -427,11 +633,11 @@ controls.addEventListener('mouseenter', () => {
 });
 
 controls.addEventListener('mouseleave', () => {
-  if (window.innerWidth > 768) {
-    hideTimeout = setTimeout(() => {
-      controls.classList.remove('visible');
-    }, 1000);
-  }
+  const isMobile = window.innerWidth <= 768;
+  if (!isMobile) return;
+  hideTimeout = setTimeout(() => {
+    controls.classList.remove('visible');
+  }, 1000);
 });
 
 document.addEventListener('touchstart', (e) => {
@@ -441,6 +647,24 @@ document.addEventListener('touchstart', (e) => {
     toggleMenuMobile();
   }
 });
+
+// Masquer le bouton toggle sur desktop
+function handleResize() {
+  const toggleBtn = document.querySelector('.toggle-menu');
+  if (window.innerWidth > 768) {
+    toggleBtn.style.display = 'none';
+    controls.classList.remove('visible');
+    controls.style.left = '12px';
+  } else {
+    toggleBtn.style.display = 'block';
+    if (!isMobileMenuVisible) {
+      controls.style.left = '-70px';
+    }
+  }
+}
+
+window.addEventListener('resize', handleResize);
+handleResize();
 
 /* ---------- UI state ---------- */
 let newNodeShape = 'rectangle';
@@ -489,6 +713,7 @@ function addnode() {
     position: { x: 220 + Math.random() * 360, y: 160 + Math.random() * 260 }
   });
   adjustNodeSize(n);
+  console.log('Nœud ajouté manuellement:', n.id());
 }
 
 /* ---------- inline edit (double-click to edit node text) ---------- */
@@ -527,7 +752,6 @@ cy.on('dblclick', 'node', function(evt) {
         input.remove();
         console.log('Edit cancelled');
       }
-      // Empêcher la propagation de Delete/Backspace pour éviter la suppression du nœud
       if (e.key === 'Delete' || e.key === 'Backspace') {
         e.stopPropagation();
       }
@@ -536,6 +760,7 @@ cy.on('dblclick', 'node', function(evt) {
     input.addEventListener('touchstart', (ev) => ev.stopPropagation());
   } catch (err) {
     console.error('Inline edit error:', err);
+    alert('Erreur édition: ' + err.message);
   }
 });
 
@@ -558,13 +783,13 @@ cy.on('tap', 'node', function(evt) {
     cy.add({ group: 'edges', data: { source: edgeSource.id(), target: n.id() } });
     edgeMode = false;
     edgeSource = null;
+    console.log('Lien ajouté:', edgeSource.id(), '->', n.id());
   }
 });
 
 /* ---------- deletion (keyboard) ---------- */
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Delete' || e.key === 'Backspace') {
-    // Ignorer si un input est actif
     if (document.activeElement.tagName === 'INPUT') {
       console.log('Delete/Backspace ignored: input is focused');
       return;
@@ -573,7 +798,7 @@ document.addEventListener('keydown', function(e) {
     if (sel.length > 0) {
       sel.remove();
       e.preventDefault();
-      console.log('Selected elements deleted');
+      console.log('Selected elements deleted:', sel.length);
     }
   }
 });
@@ -582,14 +807,21 @@ document.addEventListener('keydown', function(e) {
 function importmindmap() {
   const fileIn = document.getElementById('importfile');
   const file = fileIn.files && fileIn.files[0];
-  if (!file) return;
+  if (!file) {
+    console.warn('Aucun fichier sélectionné pour l\'importation');
+    return;
+  }
   const reader = new FileReader();
   reader.onload = e => {
     try {
+      console.log('Début importation JSON');
       const raw = JSON.parse(e.target.result);
-      if (!raw.nodeDataArray || !raw.linkDataArray) throw new Error('format JSON invalide (attendu nodeDataArray & linkDataArray)');
+      if (!raw.nodeDataArray || !raw.linkDataArray) {
+        throw new Error('Format JSON invalide (attendu nodeDataArray & linkDataArray)');
+      }
       cy.elements().remove();
-      raw.nodeDataArray.forEach(nd => {
+      const nodes = [];
+      raw.nodeDataArray.forEach((nd, index) => {
         const [x, y] = String(nd.loc || '0 0').split(' ').map(Number);
         const shape = nd.category || nd.shape || 'rectangle';
         const color = nd.color || '#e0e0e0';
@@ -605,49 +837,87 @@ function importmindmap() {
           },
           position: { x: x || 0, y: y || 0 }
         });
+        nodes.push(node);
         adjustNodeSize(node);
+        console.log(`Nœud importé ${index}: ${nd.key}, label: ${nd.text}`);
       });
-      raw.linkDataArray.forEach(l => {
-        cy.add({ group: 'edges', data: { id: 'e' + l.from + '-' + l.to, source: String(l.from), target: String(l.to) } });
+      raw.linkDataArray.forEach((l, index) => {
+        cy.add({
+          group: 'edges',
+          data: {
+            id: 'e' + l.from + '-' + l.to,
+            source: String(l.from),
+            target: String(l.to)
+          }
+        });
+        console.log(`Lien importé ${index}: ${l.from} -> ${l.to}`);
       });
       const padding = window.innerWidth <= 768 ? 20 : 50;
-      cy.fit(cy.elements(), padding);
-      cy.center();
-      alert('importation réussie');
+      if (window.innerWidth > 768) {
+        const xCoords = nodes.map(node => node.position().x);
+        const currentCenter = xCoords.length > 0 ? xCoords.reduce((sum, x) => sum + x, 0) / xCoords.length : 0;
+        const screenCenter = window.innerWidth / 2;
+        const offset = screenCenter - currentCenter;
+        nodes.forEach(node => {
+          const newX = node.position().x + offset;
+          node.position('x', newX);
+          console.log(`Nœud importé ${node.id()} repositionné: x=${newX}`);
+        });
+        cy.fit(cy.elements(), padding);
+        cy.zoom(0.8);
+        cy.center();
+      } else {
+        cy.fit(cy.elements(), padding);
+        cy.center();
+      }
+      alert('Importation réussie');
+      console.log('Importation terminée, éléments:', cy.elements().length);
       fileIn.value = '';
     } catch (err) {
-      alert('erreur importation : ' + (err && err.message ? err.message : err));
-      console.error(err);
+      console.error('Erreur importation:', err);
+      alert('Erreur importation: ' + err.message);
     }
   };
   reader.readAsText(file);
 }
 
 function exportJSON() {
-  const nodeDataArray = cy.nodes().map(n => ({
-    key: n.id(),
-    text: n.data('label'),
-    loc: (n.position().x || 0) + ' ' + (n.position().y || 0),
-    category: n.data('shape'),
-    color: n.data('color'),
-    borderColor: n.data('borderColor')
-  }));
-  const linkDataArray = cy.edges().map(e => ({ from: e.data('source'), to: e.data('target') }));
-  const data = { nodeDataArray, linkDataArray };
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'mindmap.json';
-  a.click();
-  URL.revokeObjectURL(a.href);
+  try {
+    const nodeDataArray = cy.nodes().map(n => ({
+      key: n.id(),
+      text: n.data('label'),
+      loc: (n.position().x || 0) + ' ' + (n.position().y || 0),
+      category: n.data('shape'),
+      color: n.data('color'),
+      borderColor: n.data('borderColor')
+    }));
+    const linkDataArray = cy.edges().map(e => ({ from: e.data('source'), to: e.data('target') }));
+    const data = { nodeDataArray, linkDataArray };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'algorigramme.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    console.log('Export JSON réussi');
+  } catch (err) {
+    console.error('Erreur export JSON:', err);
+    alert('Erreur export JSON: ' + err.message);
+  }
 }
 
 function exportPNG() {
-  const data = cy.png({ full: true, scale: window.innerWidth <= 768 ? 1.2 : 1.5 });
-  const a = document.createElement('a');
-  a.href = data;
-  a.download = 'mindmap.png';
-  a.click();
+  try {
+    const data = cy.png({ full: true, scale: window.innerWidth <= 768 ? 1.2 : 1.5 });
+    const a = document.createElement('a');
+    a.href = data;
+    a.download = 'algorigramme.png';
+    a.click();
+    console.log('Export PNG réussi');
+  } catch (err) {
+    console.error('Erreur export PNG:', err);
+    alert('Erreur export PNG: ' + err.message);
+  }
 }
 </script>
 </body>
