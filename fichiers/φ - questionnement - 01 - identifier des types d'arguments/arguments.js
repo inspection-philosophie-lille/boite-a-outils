@@ -3,7 +3,7 @@ const argumentsData = [
     { name: "Généralisation hâtive", definition: "Ce malheureux a fait de la philosophie, donc la philosophie rend tous les hommes malheureux." },
     { name: "Fausse analogie", definition: "L'art est à la philosophie ce que le bonheur est au malheur. Donc la philosophie rend malheureux." },
     { name: "Appel au sentiment", definition: "Oui j'ai rendu mon DM en retard mais ce devoir était si difficile et j'y ai passé tellement d'heures, soyez humain !" },
-    { name: "Faux alternative (faux dilemme)", definition: "Soit la philosophie rend malheureux, soit elle n'a aucun effet. Or elle a bien un effet, donc elle rend malheureux." },
+    { name: "Fausse alternative (faux dilemme)", definition: "Soit la philosophie rend malheureux, soit elle n'a aucun effet. Or elle a bien un effet, donc elle rend malheureux." },
     { name: "Pétition de principe (cercle vicieux)", definition: "Le malheur est la conséquence de la philosophie, donc la philosophie rend malheureux." },
     { name: "Appel à l'ignorance", definition: "Rien ne prouve que la philosophie rend heureux. Donc la philosophie rend malheureux." },
     { name: "Sophisme du pire (de la double faute)", definition: "La pauvreté rend peut-être malheureux, mais ce n'est rien en comparaison avec la philosophie !" },
