@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -203,8 +164,7 @@
 </head>
 <body>
     <p class="title">identifier le type d'arguments</p>
-    <p class="subtitle">associez chaque exemple au nom de l'argument correspondant.</p>
-    <p class="instruction">(un clic sur la colonne de gauche puis un autre sur celle de droite)</p>
+    <p class="subtitle">associer chaque exemple au nom de l'argument correspondant.</p>
     <div class="container">
         <div class="column left">
             <table id="repereTable"></table>
@@ -339,8 +299,10 @@
                 if (drawing && currentDefinition) {
                     const lineX = isVertical
                         ? rect.left + (rect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
-                        : rect.right - canvasRect.left;
-                    const startY = rect.top + rect.height / 2 - canvasRect.top;
+                        : rect.right - 5 - canvasRect.left;
+                    const startY = isVertical
+                        ? rect.bottom - 5 - canvasRect.top
+                        : rect.top + rect.height / 2 - canvasRect.top;
                     const endX = currentDefinition.startX;
                     const endY = currentDefinition.startY;
                     drawLink(lineX, startY, endX, endY);
@@ -355,8 +317,10 @@
                 } else if (!drawing || currentRepere) {
                     startX = isVertical
                         ? rect.left + (rect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
-                        : rect.right - canvasRect.left;
-                    startY = rect.top + rect.height / 2 - canvasRect.top;
+                        : rect.right - 5 - canvasRect.left;
+                    startY = isVertical
+                        ? rect.bottom - 5 - canvasRect.top
+                        : rect.top + rect.height / 2 - canvasRect.top;
                     drawing = true;
                     currentRepere = {info, startX, startY, cell};
                     currentDefinition = null;
@@ -365,11 +329,11 @@
                 if (drawing && currentRepere) {
                     const lineX = isVertical
                         ? rect.left + (rect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
-                        : rect.left - canvasRect.left;
+                        : rect.left + 5 - canvasRect.left;
                     const startX = currentRepere.startX;
                     const startY = currentRepere.startY;
                     const endY = isVertical
-                        ? rect.top + rect.height * 0.1 - canvasRect.top
+                        ? rect.top + 5 - canvasRect.top
                         : rect.top + rect.height / 2 - canvasRect.top;
                     drawLink(startX, startY, lineX, endY);
                     links.push({
@@ -383,9 +347,9 @@
                 } else {
                     startX = isVertical
                         ? rect.left + (rect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
-                        : rect.left - canvasRect.left;
+                        : rect.left + 5 - canvasRect.left;
                     startY = isVertical
-                        ? rect.top + rect.height * 0.1 - canvasRect.top
+                        ? rect.top + 5 - canvasRect.top
                         : rect.top + rect.height / 2 - canvasRect.top;
                     drawing = true;
                     currentDefinition = {text: cell.textContent, startX, startY, cell};
@@ -467,13 +431,15 @@
                     const defRect = definitionCell.getBoundingClientRect();
                     const lineX = isVertical
                         ? repereRect.left + (repereRect.width * (index + 0.5) / totalCells) - canvasRect.left
-                        : repereRect.right - canvasRect.left;
-                    const startY = repereRect.top + repereRect.height / 2 - canvasRect.top;
+                        : repereRect.right - 5 - canvasRect.left;
+                    const startY = isVertical
+                        ? repereRect.bottom - 5 - canvasRect.top
+                        : repereRect.top + repereRect.height / 2 - canvasRect.top;
                     const endX = isVertical
                         ? defRect.left + (defRect.width * (index + 0.5) / totalCells) - canvasRect.left
-                        : defRect.left - canvasRect.left;
+                        : defRect.left + 5 - canvasRect.left;
                     const endY = isVertical
-                        ? defRect.top + defRect.height * 0.1 - canvasRect.top
+                        ? defRect.top + 5 - canvasRect.top
                         : defRect.top + defRect.height / 2 - canvasRect.top;
 
                     drawLink(lineX, startY, endX, endY, 'green');
