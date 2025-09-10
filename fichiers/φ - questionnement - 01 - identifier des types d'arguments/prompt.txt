@@ -1,23 +1,72 @@
-Prompt : "Crée un fichier HTML complet pour une application web qui permet d'associer des mots à l'aide de deux colonnes. Les utilisateurs peuvent cliquer sur les cellules des colonnes pour créer des associations. Dessinez des flèches orientées de gauche à droite entre les cellules associées, en veillant à ce que les flèches restent toujours orientées vers la droite, peu importe l'ordre de sélection des cellules. Les flèches doivent changer de couleur : vert pour les associations correctes et rouge pour les incorrectes. Incluez également un bouton avec un caractère de rechargement (🔄) qui s'abaisse d'un demi-millimètre lorsque l'utilisateur passe le curseur dessus ou clique dessus. Utilisez des styles CSS pour donner un effet neumorphique au bouton et aux cellules. Enfin, créez un fichier JavaScript reperes.js qui contient la logique nécessaire pour gérer les interactions, y compris la fonction loadReperes() qui charge les données à partir d'une source externe."
+Objectif : Générer un fichier HTML complet pour une application web interactive permettant d'associer des termes (repères) à leurs définitions en traçant des flèches entre deux colonnes. Le fichier doit inclure le HTML, le CSS et le JavaScript, avec une logique spécifique pour le positionnement des flèches en mode portable (vertical) et desktop (horizontal), en évitant la superposition des flèches.
+Instructions détaillées :
 
-Prompt : Développez une application web interactive permettant de faire des associations entre deux colonnes de mots. L'application doit inclure les fonctionnalités suivantes :
+Structure générale :
 
-1.	Interface Utilisateur : 
-o	Un titre en rouge "Faire lien".
-o	Deux colonnes : une pour les "Repères" et une pour les "Définitions", chacune affichant des mots dans des cellules de tableau.
-o	Un canevas (canvas) superposé pour dessiner des flèches entre les mots associés.
-2.	Interactions : 
-o	Lorsqu'un utilisateur clique sur une cellule dans la colonne de gauche (Repères), une flèche doit partir du bord droit de cette cellule.
-o	Si l'utilisateur clique sur une cellule dans la colonne de droite (Définitions), la flèche doit partir du bord gauche de cette cellule.
-o	Les flèches doivent toujours être orientées vers la droite, reliant les deux colonnes.
-3.	Dessin des Flèches : 
-o	Les flèches doivent rester visibles après que l'utilisateur relâche le bouton de la souris.
-o	Les flèches doivent être dessinées avec une tête de flèche pour indiquer la direction.
-4.	Bouton Vérifier : 
-o	Un bouton "Vérifier" qui, lorsqu'il est cliqué, exécute une action définie (par exemple, afficher un message d'alerte ou vérifier les associations).
-5.	Styles CSS : 
-o	Utiliser des styles modernes pour les boutons et les cellules, avec des effets au survol et au clic.
-o	Le canevas doit être positionné correctement pour superposer les colonnes.
-6.	JavaScript : 
-o	Gérer les événements de souris pour dessiner les flèches et gérer l'état des associations.
-o	Stocker les liens dessinés dans un tableau pour pouvoir redessiner ces liens si nécessaire.
+Le fichier HTML doit avoir un titre : "identifier le type d'arguments".
+Afficher un sous-titre : "associez chaque exemple au nom de l'argument correspondant."
+Inclure une instruction : "(un clic sur la colonne de gauche puis un autre sur celle de droite)".
+Utiliser une icône favicon située à "../../src/favicon.ico".
+Inclure un fichier JavaScript externe "arguments.js" qui contient les données argumentsData (un tableau d'objets avec name et definition).
+Intégrer une section de code pour charger des données depuis un fichier Excel (via XLSX), avec la fonction loadFileData et les variables globales gk_isXlsx, gk_xlsxFileLookup, gk_fileData.
+
+Disposition visuelle (HTML et CSS) :
+
+Utiliser une police "Muli" avec un fallback sur Arial, sans-serif.
+La page doit être centrée verticalement et horizontalement avec display: flex et flex-direction: column.
+Les colonnes sont dans un conteneur avec la classe .container (flex row, centrée, avec un gap de 2rem, largeur max 1200px).
+Deux colonnes : .column.left (pour repereTable, largeur auto) et .column.right (pour definitionTable, largeur flexible).
+Les tables ont border-collapse: separate et border-spacing: 0.5rem.
+Les cellules (td) ont un style neumorphique (ombres concaves/convexes) avec border-radius: 0.5rem, texte centré, et une taille de police adaptative (clamp(0.9rem, 2.5vw, 1rem)).
+Un canvas est superposé au conteneur pour dessiner les flèches (position: absolute, pointer-events: none, z-index: 1).
+Un bouton "Vérifier" avec un style neumorphique, qui change de texte en "Corriger" puis en une icône de rechargement (&#8635;) selon l'état.
+CSS responsive :
+
+À max-width: 768px, passer en disposition verticale (flex-direction: column), tables pleine largeur, ajustement des paddings et tailles de police.
+À max-width: 480px, réduire les tailles de police pour le titre, sous-titre, instruction, et cellules.
+
+Logique JavaScript :
+
+Initialisation :
+
+Charger 5 paires aléatoires depuis argumentsData (via getRandomElements) et remplir repereTable (noms) et definitionTable (définitions) avec des ordres aléatoires.
+Redimensionner le canvas pour correspondre au conteneur à l'initialisation et lors du redimensionnement de la fenêtre.
+
+Interaction :
+
+Les cellules sont cliquables pour lier un repère à une définition, en traçant une flèche.
+Les cellules utilisées sont marquées via usedCells (Set) pour empêcher les clics multiples.
+Le bouton "Vérifier" déclenche checkLinks, "Corriger" déclenche correctLinks, et l'icône de rechargement déclenche reload.
+
+Dessin des flèches :
+
+Utiliser un canvas 2D pour dessiner des flèches avec une tête (longueur 10px, angle ±π/6).
+En mode portable (window.innerWidth <= 768) :
+
+Les flèches partent et arrivent à des positions horizontales décalées : rect.left + (rect.width * (repereIndex + 0.5) / totalCells), où totalCells = 5.
+Les flèches des définitions sont décalées verticalement à rect.top + rect.height * 0.1 pour éviter le chevauchement vertical.
+Les flèches des repères partent de rect.top + rect.height / 2.
+
+En mode desktop (window.innerWidth > 768) :
+
+Les flèches partent du bord droit de la colonne de gauche (rect.right pour les repères).
+Les flèches arrivent au bord gauche de la colonne de droite (rect.left pour les définitions).
+Les flèches sont centrées verticalement (rect.top + rect.height / 2) pour les deux colonnes.
+
+Vérification et correction :
+
+Dans checkLinks, effacer le canvas (ctx.clearRect) avant de redessiner les flèches en vert (correct) ou rouge (incorrect).
+Dans correctLinks, effacer le canvas et dessiner les flèches correctes en vert, avec les mêmes règles de positionnement (bord droit/gauche en desktop, décalage en portable).
+Dans reload, effacer le canvas, vider les tables, réinitialiser les états, et recharger de nouvelles paires.
+
+Spécifications techniques :
+
+La fonction isVerticalLayout retourne true si window.innerWidth <= 768.
+Les coordonnées du canvas sont ajustées par rapport à canvasRect.left et canvasRect.top pour aligner les flèches correctement.
+Les flèches ont une épaisseur de 2px (ctx.lineWidth = 2).
+Les erreurs (par exemple, cellules non trouvées) sont signalées via console.warn.
+
+Sortie attendue :
+
+Fournir un fichier HTML complet avec les sections <head>, <body>, et <script>, incluant tout le CSS et JavaScript inline.
+Le code doit être identique à celui fourni dans la dernière version, respectant toutes les modifications demandées (positionnement des flèches, anti-superposition, effacement du canvas).
