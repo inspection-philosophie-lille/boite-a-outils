@@ -1,4 +1,43 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -164,8 +203,8 @@
 </head>
 <body>
     <p class="title">identifier le type d'arguments</p>
-    <p class="subtitle">associer chaque exemple au nom de l'argument correspondant</p>
-    <p class="instruction"></p>
+    <p class="subtitle">associez chaque exemple au nom de l'argument correspondant.</p>
+    <p class="instruction">(un clic sur la colonne de gauche puis un autre sur celle de droite)</p>
     <div class="container">
         <div class="column left">
             <table id="repereTable"></table>
@@ -414,12 +453,13 @@
 
             const repereTable = document.getElementById('repereTable');
             const definitionTable = document.getElementById('definitionTable');
+            const repereRows = Array.from(repereTable.rows);
             const canvasRect = canvas.getBoundingClientRect();
             const isVertical = isVerticalLayout();
             const totalCells = 5;
 
             selectedReperes.forEach((repere, index) => {
-                const repereCell = Array.from(repereTable.rows).find(row => row.cells[0].textContent === repere.name)?.cells[0];
+                const repereCell = repereRows[index]?.cells[0];
                 const definitionCell = Array.from(definitionTable.rows).find(row => row.cells[0].textContent === repere.definition)?.cells[0];
 
                 if (repereCell && definitionCell) {
@@ -438,7 +478,7 @@
 
                     drawLink(lineX, startY, endX, endY, 'green');
                 } else {
-                    console.warn(`Erreur : Cellule non trouvée pour repère "${repere.name}" ou définition "${repere.definition}"`);
+                    console.warn(`Erreur : Cellule non trouvée pour repère à l'index ${index} ou définition "${repere.definition}"`);
                 }
             });
 
