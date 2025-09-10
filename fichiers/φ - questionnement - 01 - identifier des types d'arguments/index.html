@@ -1,4 +1,43 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -183,7 +222,46 @@
     </div>
     <button id="actionButton" onclick="performAction()" disabled>Vérifier</button>
     <script src="arguments.js"></script>
+    <script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
 
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+    </script>
     <script>
         let startX, startY, drawing = false;
         const canvas = document.getElementById('lineCanvas');
@@ -260,70 +338,70 @@
             const isVertical = isVerticalLayout();
             const totalCells = 5;
 
-            let repereIndex = type === 'repere'
-                ? parseInt(cell.dataset.index)
-                : (currentRepere ? parseInt(currentRepere.cell.dataset.index) : -1);
-
             if (type === 'repere') {
+                const repereIndex = parseInt(cell.dataset.index);
                 if (drawing && currentDefinition) {
-                    const lineX = isVertical
-                        ? rect.left + (rect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
-                        : rect.right - 5 - canvasRect.left;
+                    // Tracer de repereTable (bas) vers definitionTable (haut)
+                    const repereRect = rect;
+                    const defRect = currentDefinition.cell.getBoundingClientRect();
+                    const startX = isVertical
+                        ? repereRect.left + (repereRect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
+                        : repereRect.right - 5 - canvasRect.left;
                     const startY = isVertical
-                        ? rect.bottom - 5 - canvasRect.top
-                        : rect.top + rect.height / 2 - canvasRect.top;
-                    const endX = currentDefinition.startX;
-                    const endY = currentDefinition.startY;
-                    drawLink(lineX, startY, endX, endY);
+                        ? repereRect.bottom - 5 - canvasRect.top
+                        : repereRect.top + repereRect.height / 2 - canvasRect.top;
+                    const endX = isVertical
+                        ? defRect.left + (defRect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
+                        : defRect.left + 5 - canvasRect.left;
+                    const endY = isVertical
+                        ? defRect.top + 5 - canvasRect.top
+                        : defRect.top + defRect.height / 2 - canvasRect.top;
+                    drawLink(startX, startY, endX, endY);
                     links.push({
                         repere: info,
                         definition: currentDefinition.text,
-                        lineId: {startX: lineX, startY, endX, endY}
+                        lineId: {startX, startY, endX, endY}
                     });
                     usedCells.add(cell);
                     usedCells.add(currentDefinition.cell);
                     resetDrawing();
                     actionButton.disabled = links.length !== 5;
-                } else if (!drawing || currentRepere) {
-                    startX = isVertical
-                        ? rect.left + (rect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
-                        : rect.right - 5 - canvasRect.left;
-                    startY = isVertical
-                        ? rect.bottom - 5 - canvasRect.top
-                        : rect.top + rect.height / 2 - canvasRect.top;
+                } else {
                     drawing = true;
-                    currentRepere = {info, startX, startY, cell};
+                    currentRepere = {info, cell};
                     currentDefinition = null;
                 }
             } else if (type === 'definition') {
                 if (drawing && currentRepere) {
-                    const lineX = isVertical
-                        ? rect.left + (rect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
-                        : rect.left + 5 - canvasRect.left;
-                    const startX = currentRepere.startX;
-                    const startY = currentRepere.startY;
+                    // Tracer de repereTable (bas) vers definitionTable (haut)
+                    const repereRect = currentRepere.cell.getBoundingClientRect();
+                    const defRect = rect;
+                    const repereIndex = parseInt(currentRepere.cell.dataset.index);
+                    const startX = isVertical
+                        ? repereRect.left + (repereRect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
+                        : repereRect.right - 5 - canvasRect.left;
+                    const startY = isVertical
+                        ? repereRect.bottom - 5 - canvasRect.top
+                        : repereRect.top + repereRect.height / 2 - canvasRect.top;
+                    const endX = isVertical
+                        ? defRect.left + (defRect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
+                        : defRect.left + 5 - canvasRect.left;
                     const endY = isVertical
-                        ? rect.top + 5 - canvasRect.top
-                        : rect.top + rect.height / 2 - canvasRect.top;
-                    drawLink(startX, startY, lineX, endY);
+                        ? defRect.top + 5 - canvasRect.top
+                        : defRect.top + defRect.height / 2 - canvasRect.top;
+                    drawLink(startX, startY, endX, endY);
                     links.push({
                         repere: currentRepere.info,
                         definition: cell.textContent,
-                        lineId: {startX, startY, endX: lineX, endY}
+                        lineId: {startX, startY, endX, endY}
                     });
                     usedCells.add(cell);
                     usedCells.add(currentRepere.cell);
                     resetDrawing();
                     actionButton.disabled = links.length !== 5;
                 } else {
-                    startX = isVertical
-                        ? rect.left + (rect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
-                        : rect.left + 5 - canvasRect.left;
-                    startY = isVertical
-                        ? rect.top + 5 - canvasRect.top
-                        : rect.top + rect.height / 2 - canvasRect.top;
                     drawing = true;
-                    currentDefinition = {text: cell.textContent, startX, startY, cell};
+                    currentDefinition = {text: cell.textContent, cell};
                     currentRepere = null;
                 }
             }
@@ -403,7 +481,7 @@
                 if (repereCell && definitionCell) {
                     const repereRect = repereCell.getBoundingClientRect();
                     const defRect = definitionCell.getBoundingClientRect();
-                    const lineX = isVertical
+                    const startX = isVertical
                         ? repereRect.left + (repereRect.width * (index + 0.5) / totalCells) - canvasRect.left
                         : repereRect.right - 5 - canvasRect.left;
                     const startY = isVertical
@@ -416,7 +494,7 @@
                         ? defRect.top + 5 - canvasRect.top
                         : defRect.top + defRect.height / 2 - canvasRect.top;
 
-                    drawLink(lineX, startY, endX, endY, 'green');
+                    drawLink(startX, startY, endX, endY, 'green');
                 } else {
                     console.warn(`Erreur : Cellule non trouvée pour repère à l'index ${index} ou définition "${repere.definition}"`);
                 }
