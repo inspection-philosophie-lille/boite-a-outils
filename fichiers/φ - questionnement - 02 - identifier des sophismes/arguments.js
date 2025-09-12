@@ -10,8 +10,6 @@ const reperes = [
   	{ name: "Appel à l'ignorance",definition :"Rien ne prouve que la philosophie rend heureux. Donc la philosophie rend malheureux"}, 	
 	{ name: "Sophisme du pire(de la double faute)",definition :"La pauvreté rend peut-être malheureux, mais ce n'est rien en comparaison avec la philosophie!"}, 	
   	{ name: "Appel au sentiment",definition :"Oui, j'ai rendu mon DM en retard, mais ce travail était si difficile et j'y ai passé tellement d'heures, soyez humain !"},
-
-
 	{ name: "Faux dilemme", definition: "Soit tu es avec nous, soit tu es contre nous." },
 	{ name: "Faux dilemme", definition: "L'hydroélectricité est une énergie verte oui ou non." },
 	{ name: "Faux dilemme", definition: "On tue l'industrie ou on pollue." },
