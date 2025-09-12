@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content" />
-    <link rel="icon" href="favicon.ico" />
-	<title>classer</title>
-	<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content" />
+  <link rel="icon" href="favicon.ico" />
+  <title>classer</title>
+  <style>
     * {
       box-sizing: border-box;
     }
@@ -212,8 +212,24 @@
         width: fit-content;
       }
       .container {
-        width: 600px;
+        width: auto;
         max-width: none;
+        margin: 2vh auto;
+        padding: 0 1rem;
+      }
+      .column.left {
+        flex: 0 0 auto;
+        width: auto;
+      }
+      .column.right {
+        flex: 1;
+      }
+      #repereTable {
+        width: auto;
+        display: inline-block;
+      }
+      #definitionTable {
+        width: 100%;
       }
     }
   </style>
@@ -238,10 +254,8 @@
       <button id="scoreButton" disabled>score : 0/0</button>
     </div>
   </div>
-
   <!-- Chargement du fichier externe reperes.js -->
-    <script src="reperes.js"></script>
-
+  <script src="reperes.js"></script>
   <script>
     // Extraction des paires { name, definition } depuis reperes.js
     const argumentsData = reperes.flatMap(category =>
@@ -250,7 +264,6 @@
         definition: part.definition
       }))
     );
-
     // Variables globales
     let startX, startY, drawing = false;
     const canvas = document.getElementById('lineCanvas');
@@ -265,29 +278,24 @@
     let currentDefinition = null;
     let links = [];
     let selectedReperes = [];
-
     // Fonction pour redimensionner le canvas
     function resizeCanvas() {
       const container = document.querySelector('.container');
       canvas.width = container.offsetWidth;
       canvas.height = container.offsetHeight;
     }
-
     // Écouteurs d'événements pour le redimensionnement
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('load', resizeCanvas);
-
     // Vérifie si le layout est vertical (mobile)
     function isVerticalLayout() {
       return window.innerWidth <= 768;
     }
-
     // Sélectionne aléatoirement des éléments dans un tableau
     function getRandomElements(array, count) {
       const shuffled = array.slice().sort(() => 0.5 - Math.random());
       return shuffled.slice(0, count);
     }
-
     // Charge les repères et définitions dans les tables
     function loadReperes() {
       if (!argumentsData || !Array.isArray(argumentsData) || argumentsData.length === 0) {
@@ -319,7 +327,6 @@
       });
       return randomParts;
     }
-
     // Sélectionne une cellule (repère ou définition)
     function selectCell(event, type, info) {
       const cell = event.target;
@@ -398,7 +405,6 @@
         }
       }
     }
-
     // Dessine un lien entre deux cellules
     function drawLink(startX, startY, endX, endY, color = "black") {
       ctx.beginPath();
@@ -419,7 +425,6 @@
       ctx.lineWidth = 2;
       ctx.stroke();
     }
-
     // Réinitialise le dessin
     function resetDrawing() {
       drawing = false;
@@ -429,7 +434,6 @@
       document.getElementById("actionButton").innerHTML = "vérifier";
       actionButton.disabled = links.length !== 5;
     }
-
     // Met à jour le bouton de score
     function updateScoreButton(currentGoodAnswers) {
       totalExpectedAnswers += 5;
@@ -437,7 +441,6 @@
       scoreButton.textContent = `score : ${totalGoodAnswers}/${totalExpectedAnswers}`;
       scoreButton.disabled = false;
     }
-
     // Exécute l'action en cours (vérifier, corriger, recharger)
     function performAction() {
       if (actionButton.disabled) return;
@@ -453,7 +456,6 @@
           break;
       }
     }
-
     // Vérifie les liens créés
     function checkLinks() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -475,7 +477,6 @@
       document.getElementById("actionButton").innerHTML = "corriger";
       actionButton.disabled = false;
     }
-
     // Corrige les liens (affiche les bonnes réponses)
     function correctLinks() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -520,7 +521,6 @@
       document.getElementById("actionButton").innerHTML = '<span class="reload-icon">↻</span>';
       actionButton.disabled = false;
     }
-
     // Recharge les données
     function reload() {
       links.length = 0;
@@ -538,7 +538,6 @@
       resizeCanvas();
       actionButton.disabled = true;
     }
-
     // Ajoute les écouteurs d'événements aux cellules
     function addEventListeners() {
       const repCells = document.getElementById("repereTable").getElementsByTagName("td");
@@ -550,7 +549,6 @@
         cell.addEventListener("click", (event) => selectCell(event, "definition", cell.textContent));
       });
     }
-
     // Initialisation au chargement de la page
     window.onload = function () {
       selectedReperes = loadReperes();
