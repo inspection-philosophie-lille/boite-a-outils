@@ -39,7 +39,7 @@
             justify-content: center;
             align-items: center;
             gap: 15px;
-            margin-bottom: 15px;
+            margin-top: 15px;
             width: 100%;
             max-width: 800px;
             flex-wrap: wrap;
@@ -120,6 +120,10 @@
         .button:hover {
             box-shadow: inset 4px 4px 10px rgba(0, 0, 0, 0.3),
                         inset -4px -4px 10px rgba(255, 255, 255, 0.5);
+        }
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
         .correct {
             background-color: #28a745 !important;
@@ -208,16 +212,16 @@
 <body>
     <header>
         <h1>application "distinguer"</h1>
-        <p class="subtitle">distinguer par drag and drup</p>
+        <p class="subtitle">distinguer par drag and drop</p>
     </header>
     <main class="container">
+        <div class="row" id="reperesContainer"></div>
         <div class="score-button-container">
-            <button id="checkButton" class="button">vérifier</button>
+            <button id="checkButton" class="button" disabled>vérifier</button>
             <div class="score" id="score">
                 bonnes réponses : <span id="correctCount">0</span> / <span id="totalCount">0</span>
             </div>
         </div>
-        <div class="row" id="reperesContainer"></div>
     </main>
     <script src="reperes.js"></script>
     <script>
@@ -227,6 +231,8 @@
             let totalCount = 0;
             let selectedRepere = null;
             let dropzone1, dropzone2;
+            let allExamples = [];
+            let allPlaced = false;
 
             function dragStart(e) {
                 e.dataTransfer.setData('text/plain', e.target.id);
@@ -260,6 +266,7 @@
                     e.target.parentNode.appendChild(draggable);
                 }
                 draggable.classList.remove('hide');
+                checkAllPlaced();
             }
 
             function touchHandler(e) {
@@ -270,6 +277,18 @@
                 const targetDropzone = currentDropzone === dropzone1 ? dropzone2 : dropzone1;
                 targetDropzone.appendChild(draggable);
                 draggable.classList.remove('hide');
+                checkAllPlaced();
+            }
+
+            function checkAllPlaced() {
+                const allDraggables = document.querySelectorAll('.draggable');
+                const allInDropzone = Array.from(allDraggables).every(d => d.parentNode.classList.contains('dropzone'));
+                const checkButton = document.getElementById("checkButton");
+                if (allInDropzone && allDraggables.length > 0) {
+                    checkButton.disabled = false;
+                } else {
+                    checkButton.disabled = true;
+                }
             }
 
             function getNewWords() {
@@ -277,11 +296,12 @@
                 selectedRepere = reperes[randomIndex];
                 dropzone1.innerHTML = `<strong>déposez ici les exemples de<br>« ${selectedRepere.parts[0].name} »</strong>`;
                 dropzone2.innerHTML = `<strong>déposez ici les exemples de<br>« ${selectedRepere.parts[1].name} »</strong>`;
-                const allExamples = [...selectedRepere.parts[0].examples, ...selectedRepere.parts[1].examples];
+                allExamples = [...selectedRepere.parts[0].examples, ...selectedRepere.parts[1].examples];
                 shuffleArray(allExamples);
                 totalCount += allExamples.length;
                 document.getElementById('totalCount').textContent = totalCount;
                 populateDropzones(allExamples);
+                document.getElementById("checkButton").disabled = true;
             }
 
             function populateDropzones(allExamples) {
