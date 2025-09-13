@@ -1,0 +1,15 @@
+Créez un fichier JavaScript nommé "arguments.js" pour une application web interactive intitulée "identifier le type d'arguments". Ce fichier doit fournir un tableau de données utilisé pour associer des noms d'arguments à leurs définitions. Voici les exigences exactes :
+
+1. **Contenu** :
+   - Déclarez une variable globale `argumentsData` comme un tableau de 5 objets.
+   - Chaque objet doit avoir deux propriétés : `name` (chaîne, nom de l'argument) et `definition` (chaîne, définition correspondante).
+   - Incluez un doublon dans les noms pour tester la gestion des flèches dans l'application.
+   - Le tableau doit correspondre exactement à :
+     ```javascript
+     const argumentsData = [
+         { name: "Argument A", definition: "Définition 1" },
+         { name: "Argument A", definition: "Définition 2" },
+         { name: "Argument B", definition: "Définition 3" },
+         { name: "Argument C", definition: "Définition 4" },
+         { name: "Argument D", definition: "Définition 5" }
+     ];
