@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content" />
-<link rel="icon" href="../../src/favicon.ico" />
-<title>identifier le type d'arguments</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content" />	
+	<link rel="icon" href="../../src/favicon.ico" />
+    <title>identifier le type d'arguments</title>
 	<style>
     * {
       box-sizing: border-box;
@@ -236,16 +236,16 @@
 </head>
 <body>
 <div class="main-wrapper">
-  <div class="title-wrapper">
+	<div class="title-wrapper">
     <p class="title">identifier le type d'arguments</p>
     <p class="subtitle">associez chaque exemple au nom de l'argument correspondant.</p>
-  </div>
-  <div class="container">
+	</div>
+	<div class="container">
     <div class="column left">
-      <table id="repereTable"></table>
+		<table id="repereTable"></table>
     </div>
     <div class="column right">
-      <table id="definitionTable"></table>
+		<table id="definitionTable"></table>
     </div>
     <canvas id="lineCanvas"></canvas>
   </div>
@@ -254,8 +254,8 @@
     <button id="scoreButton" disabled>score : 0/0</button>
   </div>
 </div>
-<!-- Chargement du fichier externe arguments.js -->
-<script src="arguments.js"></script>
+<!-- Chargement du fichier externe fichier_à_modifier.js -->
+<script src="fichier_à_modifier.js"></script>
 <script>
 // Variables globales
 let startX, startY, drawing = false;
@@ -304,31 +304,31 @@ function loadReperes() {
   defTable.innerHTML = '';
   const randomParts = getRandomElementsWithIndex(argumentsData, 5);
   repereCellsData = randomParts.map((part, j) => ({
-    name: part.name,
-    display: part.name,
+    colonne_de_gauche: part.colonne_de_gauche,
+    display: part.colonne_de_gauche,
     idx: part._idx, // index d'origine dans argumentsData pour unicité
-    definition: part.definition // utile pour la vérif
+    colonne_de_droite: part.colonne_de_droite // utile pour la vérif
   }));
   selectedReperes = randomParts;
   // Mélange indépendant pour affichage
   const names = [...repereCellsData].sort(() => 0.5 - Math.random());
-  const definitions = randomParts.map(part => part.definition).sort(() => 0.5 - Math.random());
+  const definitions = randomParts.map(part => part.colonne_de_droite).sort(() => 0.5 - Math.random());
 
   names.forEach((obj, index) => {
     const repRow = document.createElement('tr');
     const repCell = document.createElement('td');
     repCell.textContent = obj.display;
     repCell.dataset.idx = obj.idx;
-    repCell.dataset.definition = obj.definition; // pour vérif éventuelle
+    repCell.dataset.colonne_de_droite = obj.colonne_de_droite; // pour vérif éventuelle
     repCell.dataset.logicIndex = index;
     repRow.appendChild(repCell);
     repTable.appendChild(repRow);
   });
 
-  definitions.forEach((definition, index) => {
+  definitions.forEach((colonne_de_droite, index) => {
     const defRow = document.createElement('tr');
     const defCell = document.createElement('td');
-    defCell.textContent = definition;
+    defCell.textContent = colonne_de_droite;
     defCell.dataset.logicIndex = index;
     defRow.appendChild(defCell);
     defTable.appendChild(defRow);
@@ -354,7 +354,7 @@ function selectCell(event, type) {
       const endX = isVertical ? defRect.left + (defRect.width * (logicIndex + 0.5) / totalCells) - canvasRect.left : defRect.left + 5 - canvasRect.left;
       const endY = isVertical ? defRect.top + 5 - canvasRect.top : defRect.top + defRect.height / 2 - canvasRect.top;
       drawLink(startX, startY, endX, endY);
-      links.push({ repereIdx: idx, repereCell: cell, defCell: currentDefinition.cell, definition: currentDefinition.text, lineId: { startX, startY, endX, endY } });
+      links.push({ repereIdx: idx, repereCell: cell, defCell: currentDefinition.cell, colonne_de_droite: currentDefinition.text, lineId: { startX, startY, endX, endY } });
       usedCells.add(cell);
       usedCells.add(currentDefinition.cell);
       cell.classList.add('used');
@@ -376,7 +376,7 @@ function selectCell(event, type) {
       const endX = isVertical ? defRect.left + (defRect.width * (currentRepere.logicIndex + 0.5) / totalCells) - canvasRect.left : defRect.left + 5 - canvasRect.left;
       const endY = isVertical ? defRect.top + 5 - canvasRect.top : defRect.top + defRect.height / 2 - canvasRect.top;
       drawLink(startX, startY, endX, endY);
-      links.push({ repereIdx: currentRepere.idx, repereCell: currentRepere.cell, defCell: cell, definition: cell.textContent, lineId: { startX, startY, endX, endY } });
+      links.push({ repereIdx: currentRepere.idx, repereCell: currentRepere.cell, defCell: cell, colonne_de_droite: cell.textContent, lineId: { startX, startY, endX, endY } });
       usedCells.add(cell);
       usedCells.add(currentRepere.cell);
       cell.classList.add('used');
@@ -452,7 +452,7 @@ function checkLinks() {
   let currentGoodAnswers = 0;
   links.forEach((link) => {
     const parti = argumentsData[link.repereIdx];
-    const isCorrect = parti && parti.definition === link.definition;
+    const isCorrect = parti && parti.colonne_de_droite === link.colonne_de_droite;
     const color = isCorrect ? "green" : "red";
     drawLink(link.lineId.startX, link.lineId.startY, link.lineId.endX, link.lineId.endY, color);
     link.isCorrect = isCorrect;
@@ -472,29 +472,59 @@ function correctLinks() {
   const canvasRect = canvas.getBoundingClientRect();
   const isVertical = isVerticalLayout();
   const totalCells = 5;
-  // On utilise les repereCellsData pour rappel exact du lien visuel
-  repereCellsData.forEach((repere, index) => {
+
+  // Récupérer les repères avec leurs cellules et trier par logicIndex
+  const repereWithCells = repereCellsData.map((repere) => {
     const repereCell = Array.from(repereTable.rows).find(
       (row) => parseInt(row.cells[0].dataset.idx) === repere.idx
     )?.cells[0];
-    const definitionCell = Array.from(definitionTable.rows).find(
-      (row) => row.cells[0].textContent === repere.definition
-    )?.cells[0];
-    if (repereCell && definitionCell) {
-      const repereRect = repereCell.getBoundingClientRect();
+    const logicIndex = repereCell ? parseInt(repereCell.dataset.logicIndex) : -1;
+    return { repere, repereCell, logicIndex };
+  }).filter(rep => rep.repereCell).sort((a, b) => a.logicIndex - b.logicIndex);
+
+  // Récupérer les cellules de définition et trier par logicIndex
+  let definitionCells = Array.from(definitionTable.rows)
+    .map(row => ({
+      cell: row.cells[0],
+      text: row.cells[0].textContent,
+      logicIndex: parseInt(row.cells[0].dataset.logicIndex)
+    }))
+    .sort((a, b) => a.logicIndex - b.logicIndex);
+
+  // Assigner chaque repère à la prochaine cellule de définition disponible
+  repereWithCells.forEach((rep) => {
+    // Trouver la première cellule de définition non utilisée correspondant à rep.repere.colonne_de_droite
+    const defIndex = definitionCells.findIndex(def => def.text === rep.repere.colonne_de_droite);
+    if (defIndex !== -1) {
+      const definitionCell = definitionCells[defIndex].cell;
+      const repereRect = rep.repereCell.getBoundingClientRect();
       const defRect = definitionCell.getBoundingClientRect();
-      const logicIndex = parseInt(repereCell.dataset.logicIndex);
-      const startX = isVertical ? repereRect.left + (repereRect.width * (logicIndex + 0.5) / totalCells) - canvasRect.left : repereRect.right - 5 - canvasRect.left;
-      const startY = isVertical ? repereRect.bottom - 5 - canvasRect.top : repereRect.top + repereRect.height / 2 - canvasRect.top;
-      const endX = isVertical ? defRect.left + (defRect.width * (logicIndex + 0.5) / totalCells) - canvasRect.left : defRect.left + 5 - canvasRect.left;
-      const endY = isVertical ? defRect.top + 5 - canvasRect.top : defRect.top + defRect.height / 2 - canvasRect.top;
+      const logicIndex = rep.logicIndex;
+
+      const startX = isVertical
+        ? repereRect.left + (repereRect.width * (logicIndex + 0.5) / totalCells) - canvasRect.left
+        : repereRect.right - 5 - canvasRect.left;
+      const startY = isVertical
+        ? repereRect.bottom - 5 - canvasRect.top
+        : repereRect.top + repereRect.height / 2 - canvasRect.top;
+      const endX = isVertical
+        ? defRect.left + (defRect.width * (logicIndex + 0.5) / totalCells) - canvasRect.left
+        : defRect.left + 5 - canvasRect.left;
+      const endY = isVertical
+        ? defRect.top + 5 - canvasRect.top
+        : defRect.top + defRect.height / 2 - canvasRect.top;
+
       drawLink(startX, startY, endX, endY, "green");
+
+      // Retirer la cellule de définition utilisée
+      definitionCells.splice(defIndex, 1);
     } else {
       console.warn(
-        `Erreur : Cellule non trouvée pour repère "${repere.name}" index ${repere.idx} ou définition "${repere.definition}"`
+        `Erreur : Aucune cellule de définition disponible pour repère "${rep.repere.colonne_de_gauche}" index ${rep.repere.idx} avec définition "${rep.repere.colonne_de_droite}"`
       );
     }
   });
+
   currentAction = "reload";
   document.getElementById("actionButton").innerHTML = '<span class="reload-icon">↻</span>';
   actionButton.disabled = false;
