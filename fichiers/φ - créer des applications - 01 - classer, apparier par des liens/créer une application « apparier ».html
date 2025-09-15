@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!------------------------------------ Daniel Boulagnon ------------------------------------>
+<!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
+<!------------------------------------- version 2025 --------------------------------------->
+<!----------------- Exploitation à but strictement pédagogique et non lucratif ------------->
+
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>créer une application « apparier »</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link rel="icon" href="../../src/favicon.ico" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .entry, .title-inputs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .entry-container {
+            width: 100%;
+        }
+        .entry {
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
+        }
+        input {
+            padding: 5px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            background-color: #e0e0e0;
+            box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        input:focus {
+            box-shadow: inset 1px 1px 3px #bebebe, inset -1px -1px 3px #ffffff;
+        }
+        button {
+            padding: 10px;
+            background-color: #e0e0e0;
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        button:hover {
+            background-color: #d0d0d0;
+            box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+        }
+        button:active {
+            box-shadow: inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff;
+        }
+        .remove-button, .add-button {
+            width: 40px;
+        }
+        .remove-button .cross {
+            color: red;
+            font-size: 24px;
+            transform: translateY(-1px);
+        }
+        .add-button .plus {
+            font-size: 24px;
+            transform: translateY(-1px);
+        }
+        .title-button .title-icon {
+            font-size: 24px;
+            transform: translateY(-1px);
+        }
+        h1 {
+            color: red;
+            text-align: center;
+            text-shadow: 1px 1px 2px #bebebe, -1px -1px 2px #ffffff;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+            width: 100%;
+        }
+        .title-inputs input {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>créer une application «&nbsp;apparier&nbsp;»</h1>
+    <div class="title-inputs">
+        <input type="text" id="app-title" placeholder="titre de l'application">
+        <input type="text" id="app-subtitle" placeholder="sous-titre de l'application">
+    </div>
+    <div id="entries" class="entry-container">
+        <div class="entry">
+            <button onclick="removeEntry(this)" class="remove-button"><span class="cross">✗</span></button>
+            <input type="text" placeholder="colonne de gauche" class="left">
+            <input type="text" placeholder="colonne de droite" class="right">
+            <button onclick="addEntry()" class="add-button"><span class="plus">+</span></button>
+        </div>
+    </div>
+    <div class="button-container">
+        <button onclick="saveTitle()" class="title-button" style="width: 100%;"><i class="fas fa-save"></i></button>
+    </div>
+    <script>
+        function addEntry() {
+            const entriesDiv = document.getElementById('entries');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'entry';
+            newEntry.innerHTML = `
+                <button onclick="removeEntry(this)" class="remove-button"><span class="cross">✗</span></button>
+                <input type="text" placeholder="colonne de gauche" class="left">
+                <input type="text" placeholder="colonne de droite" class="right">
+                <button onclick="addEntry()" class="add-button"><span class="plus">+</span></button>
+            `;
+            entriesDiv.appendChild(newEntry);
+        }
+        function removeEntry(button) {
+            if (document.querySelectorAll('.entry').length > 1) {
+                button.parentElement.remove();
+            }
+        }
+        function saveTitle() {
+            const title = document.getElementById('app-title').value.trim();
+            const subtitle = document.getElementById('app-subtitle').value.trim();
+            const entries = document.querySelectorAll('.entry');
+            let jsContent = '';
+
+            if (title) {
+                jsContent += `const title = "${title}";\n`;
+            }
+            if (subtitle) {
+                jsContent += `const subtitle = "${subtitle}";\n`;
+            }
+
+            jsContent += 'const argumentsData = [\n';
+            entries.forEach((entry, index) => {
+                const left = entry.querySelector('.left').value.trim();
+                const right = entry.querySelector('.right').value.trim();
+
+                if (left && right) {
+                    jsContent += `    { colonne_de_gauche: "${left}", colonne_de_droite: "${right}" }`;
+                    if (index < entries.length - 1) {
+                        jsContent += ',';
+                    }
+                    jsContent += '\n';
+                }
+            });
+            jsContent += '];';
+
+            const blob = new Blob([jsContent], { type: 'text/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'fichier_ressource.js'; // Nom du fichier modifié
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
