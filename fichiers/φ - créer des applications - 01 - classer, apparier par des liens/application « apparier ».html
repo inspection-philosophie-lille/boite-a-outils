@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <!------------------------------------ Daniel Boulagnon ------------------------------------>
 <!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
 <!------------------------------------- version 2025 --------------------------------------->
@@ -48,7 +9,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="icon" href="../../src/favicon.ico" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content" />
-	<title id="pageTabTitle">titre de l'onglet</title>
+	<title id="pageTabTitle">application « apparier »</title>
 <style>
   * {
     box-sizing: border-box;
@@ -353,7 +314,7 @@
 <body>
   <div class="main-wrapper">
     <div class="title-wrapper">
-      <p class="title" id="pageTitle">application "apparier"</p>
+      <p class="title" id="pageTitle">application «&nbsp;apparier&nbsp;»</p>
       <p class="subtitle" id="pageSubtitle">associer un élément à un autre</p>
     </div>
     <div class="container">
@@ -368,11 +329,11 @@
     <div class="button-wrapper">
       <button id="actionButton" onclick="performAction()" disabled>
         vérifier
-        <span class="tooltip">Vérifier les associations, afficher les corrections ou recharger l'exercice</span>
+        <span class="tooltip">vérifier les associations</span>
       </button>
       <button id="scoreButton" disabled>
         0 / 0
-        <span class="tooltip">Affiche le score actuel (réponses correctes / total)</span>
+        <span class="tooltip">score actuel (réponses correctes / total)</span>
       </button>
     </div>
   </div>
@@ -541,7 +502,7 @@
       currentRepere = null;
       currentDefinition = null;
       currentAction = "check";
-      document.getElementById("actionButton").innerHTML = 'vérifier<span class="tooltip">Vérifier les associations, afficher les corrections ou recharger l\'exercice</span>';
+      document.getElementById("actionButton").innerHTML = 'vérifier<span class="tooltip">vérifier les associations</span>';
       actionButton.disabled = links.length !== selectedReperes.length;
     }
     function performAction() {
@@ -575,10 +536,10 @@
       });
       totalCorrect += correctCount;
       totalAnswers += selectedReperes.length;
-      scoreButton.innerHTML = `${totalCorrect} / ${totalAnswers}<span class="tooltip">Affiche le score actuel (réponses correctes / total)</span>`;
+      scoreButton.innerHTML = `${totalCorrect} / ${totalAnswers}<span class="tooltip">score actuel (réponses correctes / total)</span>`;
       scoreButton.disabled = false;
       currentAction = "correct";
-      document.getElementById("actionButton").innerHTML = 'corriger<span class="tooltip">Vérifier les associations, afficher les corrections ou recharger l\'exercice</span>';
+      document.getElementById("actionButton").innerHTML = 'corriger<span class="tooltip">afficher les corrections</span>';
       actionButton.disabled = false;
     }
     function correctLinks() {
@@ -621,7 +582,7 @@
         }
       });
       currentAction = "reload";
-      document.getElementById("actionButton").innerHTML = '<span class="reload-icon">↻</span><span class="tooltip">Vérifier les associations, afficher les corrections ou recharger l\'exercice</span>';
+      document.getElementById("actionButton").innerHTML = '<span class="reload-icon">↻</span><span class="tooltip">recharger l\'exercice</span>';
       actionButton.disabled = false;
     }
     function reload() {
