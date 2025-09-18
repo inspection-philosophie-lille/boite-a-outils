@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<DOCTYPE html>
 <!------------------------------------ Daniel Boulagnon ------------------------------------>
 <!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
 <!------------------------------------- version 2025 --------------------------------------->
@@ -257,10 +218,10 @@
     }
     button {
       margin: 0.5vh 0;
-      width: min(65px, 22vw);
+      width: calc((100% - 1rem) / 2);
       height: min(40px, 10vw);
       padding: 0.15rem 0.3rem;
-      font-size: clamp(0.65rem, 1.6vw, 0.75rem);
+      font-size: clamp(1rem, 3vw, 1.2rem);
     }
     .button-wrapper {
       gap: 1rem;
@@ -269,6 +230,8 @@
       justify-content: center;
       align-items: center;
       margin: 0;
+      width: 90%;
+      max-width: 100%;
     }
     .tooltip {
       font-size: 0.75rem;
@@ -288,10 +251,10 @@
     }
     button {
       margin: 0.5vh 0;
-      width: min(55px, 20vw);
+      width: calc((100% - 1rem) / 2);
       height: min(40px, 10vw);
       padding: 0.1rem 0.2rem;
-      font-size: clamp(0.55rem, 1.4vw, 0.65rem);
+      font-size: clamp(0.8rem, 2.5vw, 1rem);
     }
     .button-wrapper {
       gap: 1rem;
@@ -300,6 +263,8 @@
       justify-content: center;
       align-items: center;
       margin: 0;
+      width: 90%;
+      max-width: 100%;
     }
     .container {
       margin: 0;
@@ -341,9 +306,15 @@
       margin: 0;
     }
     .container {
-      width: 600px;
-      max-width: none;
+      width: 100%;
+      max-width: 90%;
       margin: 0 auto;
+    }
+    .column.left, .column.right {
+      flex: 1;
+    }
+    #repereTable, #definitionTable {
+      width: 100%;
     }
   }
 </style>
@@ -422,18 +393,19 @@
       const randomParts = getRandomElements(argumentsData, maxPairs);
       const shuffledNames = randomParts.map(part => part.colonne_de_gauche).sort(() => 0.5 - Math.random());
       const shuffledDefinitions = randomParts.map(part => part.colonne_de_droite).sort(() => 0.5 - Math.random());
-      shuffledNames.forEach((name, index) => {
+      randomParts.forEach((part, index) => {
         const repRow = document.createElement('tr');
         const repCell = document.createElement('td');
-        repCell.textContent = name;
+        repCell.textContent = part.colonne_de_gauche;
+        repCell.dataset.id = index; // Unique ID for each pair
         repCell.dataset.index = index;
         repRow.appendChild(repCell);
         repTable.appendChild(repRow);
-      });
-      shuffledDefinitions.forEach((definition, index) => {
+
         const defRow = document.createElement('tr');
         const defCell = document.createElement('td');
-        defCell.textContent = definition;
+        defCell.textContent = part.colonne_de_droite;
+        defCell.dataset.id = index; // Same ID to match the pair
         defCell.dataset.index = index;
         defRow.appendChild(defCell);
         defTable.appendChild(defRow);
@@ -590,17 +562,15 @@
       const totalCells = selectedReperes.length;
       selectedReperes.forEach((repere, index) => {
         const repereCell = Array.from(repereTable.rows).find(
-          (row) => row.cells[0].textContent === repere.colonne_de_gauche
+          (row) => row.cells[0].dataset.id === index.toString()
         )?.cells[0];
         const definitionCell = Array.from(definitionTable.rows).find(
-          (row) => row.cells[0].textContent === repere.colonne_de_droite
+          (row) => row.cells[0].dataset.id === index.toString()
         )?.cells[0];
         if (repereCell && definitionCell) {
           const repereRect = repereCell.getBoundingClientRect();
           const defRect = definitionCell.getBoundingClientRect();
-          const repereIndex = Array.from(repereTable.rows).findIndex(
-            (row) => row.cells[0].textContent === repere.colonne_de_gauche
-          );
+          const repereIndex = parseInt(repereCell.dataset.index);
           const startX = isVertical
             ? repereRect.left + (repereRect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
             : repereRect.right - 5 - canvasRect.left;
@@ -616,7 +586,7 @@
           drawLink(startX, startY, endX, endY, "green");
         } else {
           console.warn(
-            `Erreur : Cellule non trouvée pour repère "${repere.colonne_de_gauche}" ou définition "${repere.colonne_de_droite}"`
+            `Erreur : Cellule non trouvée pour repère (id: ${index}) ou définition (id: ${index})`
           );
         }
       });
