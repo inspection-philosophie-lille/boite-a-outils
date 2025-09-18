@@ -9,6 +9,6 @@ const argumentsData = [
     { colonne_de_gauche: "mot 6", colonne_de_droite: "mot 6'" }, /* remplacer "mot 6" par le premier couple de mot à relier et "mot 6'" par son vis-à-vis en laissant les guillements */
     { colonne_de_gauche: "mot 7", colonne_de_droite: "mot 7'" }, /* remplacer "mot 7" par le premier couple de mot à relier et "mot 7'" par son vis-à-vis en laissant les guillements */
     { colonne_de_gauche: "mot 8", colonne_de_droite: "mot 8'" }, /* remplacer "mot 8" par le premier couple de mot à relier et "mot 8'" par son vis-à-vis en laissant les guillements */
-    { colonne_de_gauche: "mot 9", colonne_de_droite: "mot 9'" }  /* remplacer "mot 9" par le premier couple de mot à relier et "mot 9'" par son vis-à-vis en laissant les guillements */
+    { colonne_de_gauche: "mot 9", colonne_de_droite: "mot 9'" },  /* remplacer "mot 9" par le premier couple de mot à relier et "mot 9'" par son vis-à-vis en laissant les guillements */
 	/* on peut ajouter des termes à cette liste, mais il faut terminer en ne mettant surtout pas de virgule après "}" */	
 ];

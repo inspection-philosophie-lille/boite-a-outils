@@ -1,0 +1,383 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<!-- Daniel Boulagnon -->
+<!-- daniel.boulagnon@ac-lille.fr -->
+<!-- version 2025 -->
+<!-- Exploitation à but strictement pédagogique et non lucratif -->
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>créer / modifier une application « apparier »</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.rel='stylesheet'">
+	<link rel="icon" href="../../src/favicon.ico" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .entry, .title-inputs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .entry-container {
+            width: 100%;
+        }
+        .entry {
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
+        }
+        input {
+            padding: 5px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            background-color: #e0e0e0;
+            box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        input:focus {
+            box-shadow: inset 1px 1px 3px #bebebe, inset -1px -1px 3px #ffffff;
+        }
+        button {
+            padding: 10px;
+            background-color: #e0e0e0;
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        button:hover {
+            background-color: #d0d0d0;
+            box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+        }
+        button:active {
+            box-shadow: inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff;
+        }
+        .remove-button, .add-button, .open-button, .title-button {
+            width: 40px;
+            height: 40px;
+        }
+        .remove-button .cross {
+            color: red;
+            font-size: 24px;
+            transform: translateY(-1px);
+            font-style: normal;
+        }
+        .add-button .plus {
+            font-size: 24px;
+            transform: translateY(-1px);
+            font-style: normal;
+        }
+        .open-button .open-icon {
+            font-size: 24px;
+            transform: translateY(-1px);
+            font-style: normal;
+        }
+        .title-button .title-icon {
+            font-size: 24px;
+            transform: translateY(-1px);
+            font-style: normal;
+        }
+        /* Suppression des styles italiques pour les icônes Font Awesome */
+		i.far, i.fas {
+			font-style: normal !important;
+        }
+        h1 {
+            color: red;
+            text-align: center;
+            text-shadow: 1px 1px 2px #bebebe, -1px -1px 2px #ffffff;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+            width: 100%;
+        }
+        .title-inputs input {
+            width: 100%;
+        }
+        #file-input {
+            display: none;
+        }
+        .loading {
+            display: none;
+            color: #333;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        /* Icônes du bas en noir et blanc sobres, même si FA charge différemment */
+        .button-container button i {
+            color: #000;
+        }
+        .button-container button:hover i {
+            color: #000;
+        }
+        /* Rendus de secours au cas où FA ne charge pas */
+        .fa-folder-open::before { content: "📂"; font-style: normal; color: #000; }
+        .fa-save::before { content: "💾"; font-style: normal; color: #000; }
+        .fa-times::before { content: "✗"; color: #000; font-style: normal; }
+        .fa-plus::before { content: "+"; font-style: normal; color: #000; }
+        /* Custom tooltip styles */
+        .tooltip {
+            position: absolute;
+            background-color: white;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        button:hover .tooltip {
+            opacity: 1;
+        }
+        /* Position tooltip above the button */
+        button .tooltip {
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 5px;
+        }
+        @media (max-width: 768px) {
+            .tooltip {
+                font-size: 0.75rem;
+                padding: 3px 6px;
+            }
+        }
+        @media (max-width: 480px) {
+            .tooltip {
+                font-size: 0.65rem;
+                padding: 2px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>créer / modifier une application «&nbsp;apparier&nbsp;»</h1>
+    <div class="title-inputs">
+        <input type="text" id="app-title" placeholder="titre de l'application">
+        <input type="text" id="app-subtitle" placeholder="sous-titre de l'application">
+    </div>
+    <div id="entries" class="entry-container">
+        <div class="entry">
+            <button onclick="removeEntry(this)" class="remove-button">
+                <i class="far fa-times cross"></i>
+                <span class="tooltip">Supprimer cette entrée</span>
+            </button>
+            <input type="text" placeholder="colonne de gauche" class="left">
+            <input type="text" placeholder="colonne de droite" class="right">
+            <button onclick="addEntry()" class="add-button">
+                <i class="far fa-plus plus"></i>
+                <span class="tooltip">Ajouter une nouvelle entrée</span>
+            </button>
+        </div>
+    </div>
+    <div class="button-container">
+        <button onclick="openFile()" class="open-button">
+            <i class="fas fa-folder-open open-icon"></i>
+            <span class="tooltip">Ouvrir un fichier JavaScript</span>
+        </button>
+        <button onclick="saveTitle()" class="title-button" style="width: 40px;">
+            <i class="fas fa-save title-icon"></i>
+            <span class="tooltip">Sauvegarder les données</span>
+        </button>
+        <input type="file" id="file-input" accept=".js" style="display: none;" onchange="loadFile(event)">
+    </div>
+    <div id="loading" class="loading">Chargement...</div>
+    <script>
+        function addEntry() {
+            const entriesDiv = document.getElementById('entries');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'entry';
+            newEntry.innerHTML = `
+                <button onclick="removeEntry(this)" class="remove-button">
+                    <i class="far fa-times cross"></i>
+                    <span class="tooltip">Supprimer cette entrée</span>
+                </button>
+                <input type="text" placeholder="colonne de gauche" class="left">
+                <input type="text" placeholder="colonne de droite" class="right">
+                <button onclick="addEntry()" class="add-button">
+                    <i class="far fa-plus plus"></i>
+                    <span class="tooltip">Ajouter une nouvelle entrée</span>
+                </button>
+            `;
+            entriesDiv.appendChild(newEntry);
+        }
+
+        function removeEntry(button) {
+            if (document.querySelectorAll('.entry').length > 1) {
+                button.parentElement.remove();
+            }
+        }
+
+        function saveTitle() {
+            const title = document.getElementById('app-title').value.trim();
+            const subtitle = document.getElementById('app-subtitle').value.trim();
+            const entries = document.querySelectorAll('.entry');
+            let jsContent = '';
+
+            if (title) {
+                jsContent += `const title = "${title}";\n`;
+            }
+            if (subtitle) {
+                jsContent += `const subtitle = "${subtitle}";\n`;
+            }
+
+            jsContent += 'const argumentsData = [\n';
+            entries.forEach((entry, index) => {
+                const left = entry.querySelector('.left').value.trim();
+                const right = entry.querySelector('.right').value.trim();
+
+                if (left && right) {
+                    jsContent += `    { colonne_de_gauche: "${left}", colonne_de_droite: "${right}" }`;
+                    if (index < entries.length - 1) {
+                        jsContent += ',';
+                    }
+                    jsContent += '\n';
+                }
+            });
+            jsContent += '];';
+
+            const blob = new Blob([jsContent], { type: 'text/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'fichier_ressource.js';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function openFile() {
+            document.getElementById('file-input').click();
+        }
+
+        function loadFile(event) {
+            const file = event.target.files[0];
+            if (!file || !file.name.endsWith('.js')) {
+                alert('Veuillez sélectionner un fichier JavaScript (.js).');
+                return;
+            }
+
+            const loadingIndicator = document.getElementById('loading');
+            loadingIndicator.style.display = 'block';
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const script = document.createElement('script');
+                    script.textContent = e.target.result;
+                    document.body.appendChild(script);
+
+                    requestAnimationFrame(() => {
+                        const entriesDiv = document.getElementById('entries');
+                        entriesDiv.innerHTML = '';
+                        document.getElementById('app-title').value = '';
+                        document.getElementById('app-subtitle').value = '';
+
+                        if (typeof title !== 'undefined') {
+                            document.getElementById('app-title').value = title;
+                        }
+                        if (typeof subtitle !== 'undefined') {
+                            document.getElementById('app-subtitle').value = subtitle;
+                        }
+
+                        if (typeof argumentsData !== 'undefined' && Array.isArray(argumentsData)) {
+                            argumentsData.forEach(data => {
+                                const newEntry = document.createElement('div');
+                                newEntry.className = 'entry';
+                                newEntry.innerHTML = `
+                                    <button onclick="removeEntry(this)" class="remove-button">
+                                        <i class="far fa-times cross"></i>
+                                        <span class="tooltip">Supprimer cette entrée</span>
+                                    </button>
+                                    <input type="text" placeholder="colonne de gauche" class="left" value="${data.colonne_de_gauche || ''}">
+                                    <input type="text" placeholder="colonne de droite" class="right" value="${data.colonne_de_droite || ''}">
+                                    <button onclick="addEntry()" class="add-button">
+                                        <i class="far fa-plus plus"></i>
+                                        <span class="tooltip">Ajouter une nouvelle entrée</span>
+                                    </button>
+                                `;
+                                entriesDiv.appendChild(newEntry);
+                            });
+                        }
+
+                        document.body.removeChild(script);
+                        loadingIndicator.style.display = 'none';
+                    });
+                } catch (err) {
+                    loadingIndicator.style.display = 'none';
+                    alert('Erreur lors du chargement du fichier : ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+</html>
