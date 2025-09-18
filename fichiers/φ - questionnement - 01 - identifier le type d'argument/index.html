@@ -1,568 +1,640 @@
-<!DOCTYPE html>
+<DOCTYPE html>
+<!------------------------------------ Daniel Boulagnon ------------------------------------>
+<!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
+<!------------------------------------- version 2025 --------------------------------------->
+<!----------------- Exploitation à but strictement pédagogique et non lucratif ------------->
+
 <html lang="fr">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content" />	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="icon" href="../../src/favicon.ico" />
-    <title>identifier le type d'argument</title>
-	<style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Muli', Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      background-color: #f0f0f0;
-      overflow-x: hidden;
-    }
-    .main-wrapper {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .title-wrapper {
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-    .title {
-      margin: 2vh 1rem;
-      color: red;
-      font-size: clamp(1.8rem, 5vw, 2.5rem);
-      font-weight: bold;
-    }
-    .subtitle {
-      margin: 0 1rem 2vh;
-      line-height: 1.2;
-      color: #555;
-      font-size: clamp(1rem, 3vw, 1.2rem);
-      text-transform: none;
-    }
-    .button-wrapper {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin: 2vh 0;
-    }
+	<meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content" />
+	<title id="pageTabTitle">application « apparier »</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Muli', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    overflow-x: hidden;
+  }
+  .main-wrapper {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .title-wrapper {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    margin: 0;
+  }
+  .title {
+    margin: 2vh 0;
+    line-height: 1.5;
+    text-align: center;
+    color: red;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    font-weight: bold;
+  }
+  .subtitle {
+    margin: 0;
+    line-height: 1.2;
+    text-align: center;
+    color: black;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    text-transform: none;
+  }
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    gap: 2rem;
+  }
+  .column {
+    min-width: 0;
+  }
+  .column.left {
+    flex: 0 0 auto;
+  }
+  .column.right {
+    flex: 1;
+  }
+  #repereTable {
+    width: max-content;
+  }
+  #definitionTable {
+    width: 100%;
+  }
+  table {
+    border-collapse: separate;
+    border-spacing: 0.5rem;
+  }
+  td {
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    text-align: center;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    word-wrap: break-word;
+  }
+  td:active:not(.used) {
+    background-color: #c0c0c0;
+    box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
+  }
+  td.used {
+    background-color: #d0d0d0;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  td:not(.used):hover {
+    background-color: #d1d1d1;
+    box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
+  }
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  button {
+    margin: 2vh 0;
+    padding: 0.5rem 1rem;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    line-height: 1;
+    cursor: pointer;
+    width: min(120px, 30vw);
+    height: min(50px, 12vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
+    position: relative;
+  }
+  button:disabled {
+    background-color: #d0d0d0;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  button:hover:not(:disabled) {
+    background-color: #d1d1d1;
+    box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
+  }
+  button:active:not(:disabled) {
+    background-color: #c0c0c0;
+    box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
+  }
+  .reload-icon {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: red;
+    line-height: normal;
+    transform: translateY(-0.15rem);
+  }
+  .tooltip {
+    position: absolute;
+    background-color: white;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  button:hover .tooltip {
+    opacity: 1;
+  }
+  button .tooltip {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 5px;
+  }
+  @media (max-width: 768px) {
     .container {
-      display: flex;
-      flex-direction: row;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
       justify-content: center;
-      position: relative;
-      margin: 2vh 1rem;
-      width: 90%;
-      max-width: 1200px;
-      gap: 2rem;
+      align-items: center;
     }
     .column {
-      min-width: 0;
+      margin: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
     }
-    .column.left {
-      flex: 0 0 auto;
-    }
-    .column.right {
+    .column.left, .column.right {
       flex: 1;
     }
-    #repereTable {
-      width: max-content;
+    #repereTable, #definitionTable {
+      width: 100%;
+      max-width: 90%;
+      margin: 0 auto;
+      max-height: 35vh;
+      overflow-y: auto;
     }
     #definitionTable {
-      width: 100%;
-    }
-    table {
-      border-collapse: separate;
-      border-spacing: 0.5rem;
+      max-height: 40vh;
     }
     td {
-      border-radius: 0.5rem;
-      padding: 0.75rem;
-      text-align: center;
-      cursor: pointer;
-      background-color: #e0e0e0;
-      box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
-      font-size: clamp(0.9rem, 2.5vw, 1rem);
-      word-wrap: break-word;
-    }
-    td:active:not(.used) {
-      background-color: #c0c0c0;
-      box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
-    }
-    td.used {
-      background-color: #d0d0d0;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-    td:not(.used):hover {
-      background-color: #d1d1d1;
-      box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
-    }
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
+      padding: 0.4rem;
+      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
     }
     button {
-      padding: 0.5rem 1rem;
-      font-size: clamp(0.9rem, 2.5vw, 1rem);
-      line-height: 1;
-      cursor: pointer;
-      width: 120px;
-      height: 50px;
-      display: flex;
-      align-items: center;
+      margin: 0.5vh 0;
+      width: calc((100% - 1rem) / 2);
+      height: min(40px, 10vw);
+      padding: 0.15rem 0.3rem;
+      font-size: clamp(1rem, 3vw, 1.2rem);
+    }
+    .button-wrapper {
+      gap: 1rem;
+      flex-direction: row;
+      flex-wrap: nowrap;
       justify-content: center;
-      background-color: #e0e0e0;
-      border: none;
-      border-radius: 0.5rem;
-      transition: all 0.3s ease;
-      box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
-    }
-    button:disabled {
-      background-color: #d0d0d0;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-    button:hover:not(:disabled) {
-      background-color: #d1d1d1;
-      box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
-    }
-    button:active:not(:disabled) {
-      background-color: #c0c0c0;
-      box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
-    }
-    #scoreButton {
-      background-color: #e0e0e0;
-      border: none;
-      border-radius: 0.5rem;
-      padding: 0.5rem 1rem;
-      font-size: clamp(0.9rem, 2.5vw, 1rem);
-      cursor: default;
-      box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
-      width: 120px;
-      height: 50px;
-      display: flex;
       align-items: center;
-      justify-content: center;
+      margin: 0;
+      width: 90%;
+      max-width: 100%;
     }
-    .reload-icon {
+    .tooltip {
+      font-size: 0.75rem;
+      padding: 3px 6px;
+    }
+  }
+  @media (max-width: 480px) {
+    .title {
       font-size: clamp(1.5rem, 4vw, 2rem);
-      color: red;
-      line-height: normal;
-      transform: translateY(-0.15rem);
     }
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        gap: 0.5rem;
-        margin: 0.5vh 0.5rem;
-      }
-      .column {
-        margin: 0;
-      }
-      .column.left, .column.right {
-        flex: 1;
-      }
-      #repereTable, #definitionTable {
-        width: 100%;
-        max-height: 35vh;
-        overflow-y: auto;
-      }
-      #definitionTable {
-        max-height: 40vh;
-      }
-      td {
-        padding: 0.4rem;
-        font-size: clamp(0.8rem, 2.5vw, 0.9rem);
-      }
-      .button-wrapper {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-      button {
-        width: 100px;
-        height: 50px;
-      }
+    .subtitle {
+      font-size: clamp(0.8rem, 2.5vw, 1rem);
     }
-    @media (max-width: 480px) {
-      .title {
-        font-size: clamp(1.5rem, 4vw, 2rem);
-      }
-      .subtitle {
-        font-size: clamp(0.8rem, 2.5vw, 1rem);
-      }
-      td {
-        padding: 0.2rem;
-        font-size: clamp(0.7rem, 2vw, 0.8rem);
-      }
-      button {
-        width: 90px;
-        height: 50px;
-      }
+    td {
+      padding: 0.2rem;
+      font-size: clamp(0.7rem, 2vw, 0.8rem);
     }
-    @media (min-width: 769px) {
-      .main-wrapper {
-        width: fit-content;
-      }
-      .container {
-        width: auto;
-        max-width: none;
-        margin: 2vh auto;
-        padding: 0 1rem;
-      }
-      .column.left {
-        flex: 0 0 auto;
-        width: auto;
-      }
-      .column.right {
-        flex: 1;
-      }
-      #repereTable {
-        width: auto;
-        display: inline-block;
-      }
-      #definitionTable {
-        width: 100%;
-      }
+    button {
+      margin: 0.5vh 0;
+      width: calc((100% - 1rem) / 2);
+      height: min(40px, 10vw);
+      padding: 0.1rem 0.2rem;
+      font-size: clamp(0.8rem, 2.5vw, 1rem);
     }
-  </style>
+    .button-wrapper {
+      gap: 1rem;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      width: 90%;
+      max-width: 100%;
+    }
+    .container {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+    #repereTable, #definitionTable {
+      width: 100%;
+      max-width: 90%;
+      margin: 0 auto;
+    }
+    .tooltip {
+      font-size: 0.65rem;
+      padding: 2px 5px;
+    }
+  }
+  @media (min-width: 769px) {
+    .main-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: fit-content;
+      margin: 0 auto;
+    }
+    .title-wrapper {
+      width: fit-content;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+    }
+    .button-wrapper {
+      width: fit-content;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 0;
+    }
+    .container {
+      width: 100%;
+      max-width: 90%;
+      margin: 0 auto;
+    }
+    .column.left, .column.right {
+      flex: 1;
+    }
+    #repereTable, #definitionTable {
+      width: 100%;
+    }
+  }
+</style>
 </head>
 <body>
-<div class="main-wrapper">
-	<div class="title-wrapper">
-    <p class="title">identifier le type d'argument</p>
-    <p class="subtitle">associer chaque type d'argument à l'exemple correspondant</p>
-	</div>
-	<div class="container">
-    <div class="column left">
-		<table id="repereTable"></table>
+  <div class="main-wrapper">
+    <div class="title-wrapper">
+      <p class="title" id="pageTitle">application «&nbsp;apparier&nbsp;»</p>
+      <p class="subtitle" id="pageSubtitle">associer un élément à un autre</p>
     </div>
-    <div class="column right">
-		<table id="definitionTable"></table>
+    <div class="container">
+      <div class="column left">
+        <table id="repereTable"></table>
+      </div>
+      <div class="column right">
+        <table id="definitionTable"></table>
+      </div>
+      <canvas id="lineCanvas"></canvas>
     </div>
-    <canvas id="lineCanvas"></canvas>
+    <div class="button-wrapper">
+      <button id="actionButton" onclick="performAction()" disabled>
+        vérifier
+        <span class="tooltip">vérifier les associations</span>
+      </button>
+      <button id="scoreButton" disabled>
+        0 / 0
+        <span class="tooltip">score actuel (réponses correctes / total)</span>
+      </button>
+    </div>
   </div>
-  <div class="button-wrapper">
-    <button id="actionButton" onclick="performAction()" disabled>vérifier</button>
-    <button id="scoreButton" disabled>score : 0/0</button>
-  </div>
-</div>
-<!-- Chargement du fichier externe fichier_à_modifier.js -->
-<script src="fichier_à_modifier.js"></script>
-<script>
-// Variables globales
-let startX, startY, drawing = false;
-const canvas = document.getElementById('lineCanvas');
-const ctx = canvas.getContext('2d');
-const actionButton = document.getElementById('actionButton');
-const scoreButton = document.getElementById('scoreButton');
-let totalGoodAnswers = 0;
-let totalExpectedAnswers = 0;
-const usedCells = new Set();
-let currentAction = "check";
-let currentRepere = null;
-let currentDefinition = null;
-let links = [];
-let selectedReperes = [];
-let repereCellsData = []; // nouvelle variable pour stocker les infos uniques de la colonne de gauche
+  <script src="fichier_ressource.js"></script>
+  <script>
+    let startX, startY, drawing = false;
+    const canvas = document.getElementById('lineCanvas');
+    const ctx = canvas.getContext('2d');
+    const actionButton = document.getElementById('actionButton');
+    const scoreButton = document.getElementById('scoreButton');
+    let totalCorrect = 0;
+    let totalAnswers = 0;
+    const usedCells = new Set();
+    let currentAction = "check";
+    let currentRepere = null;
+    let currentDefinition = null;
+    let links = [];
+    let selectedReperes = [];
 
-// Fonction pour redimensionner le canvas
-function resizeCanvas() {
-  const container = document.querySelector('.container');
-  canvas.width = container.offsetWidth;
-  canvas.height = container.offsetHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-window.addEventListener('load', resizeCanvas);
-
-function isVerticalLayout() {
-  return window.innerWidth <= 768;
-}
-
-// Sélectionne aléatoirement des éléments dans un tableau (et retient index unique)
-function getRandomElementsWithIndex(array, count) {
-  const shuffled = array.map((item, idx) => ({...item, _idx: idx})).sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
-}
-
-// Charge les repères et définitions dans les tables
-function loadReperes() {
-  if (!argumentsData || !Array.isArray(argumentsData) || argumentsData.length === 0) {
-    console.error("Erreur : argumentsData est indéfini ou vide");
-    return [];
-  }
-  const repTable = document.getElementById('repereTable');
-  const defTable = document.getElementById('definitionTable');
-  repTable.innerHTML = '';
-  defTable.innerHTML = '';
-  const randomParts = getRandomElementsWithIndex(argumentsData, 5);
-  repereCellsData = randomParts.map((part, j) => ({
-    colonne_de_gauche: part.colonne_de_gauche,
-    display: part.colonne_de_gauche,
-    idx: part._idx, // index d'origine dans argumentsData pour unicité
-    colonne_de_droite: part.colonne_de_droite // utile pour la vérif
-  }));
-  selectedReperes = randomParts;
-  // Mélange indépendant pour affichage
-  const names = [...repereCellsData].sort(() => 0.5 - Math.random());
-  const definitions = randomParts.map(part => part.colonne_de_droite).sort(() => 0.5 - Math.random());
-
-  names.forEach((obj, index) => {
-    const repRow = document.createElement('tr');
-    const repCell = document.createElement('td');
-    repCell.textContent = obj.display;
-    repCell.dataset.idx = obj.idx;
-    repCell.dataset.colonne_de_droite = obj.colonne_de_droite; // pour vérif éventuelle
-    repCell.dataset.logicIndex = index;
-    repRow.appendChild(repCell);
-    repTable.appendChild(repRow);
-  });
-
-  definitions.forEach((colonne_de_droite, index) => {
-    const defRow = document.createElement('tr');
-    const defCell = document.createElement('td');
-    defCell.textContent = colonne_de_droite;
-    defCell.dataset.logicIndex = index;
-    defRow.appendChild(defCell);
-    defTable.appendChild(defRow);
-  });
-  return randomParts; // inutile mais conservé pour compat
-}
-
-function selectCell(event, type) {
-  const cell = event.target;
-  if (usedCells.has(cell)) return;
-  const rect = cell.getBoundingClientRect();
-  const canvasRect = canvas.getBoundingClientRect();
-  const isVertical = isVerticalLayout();
-  const totalCells = 5;
-  if (type === 'repere') {
-    const idx = parseInt(cell.dataset.idx);
-    const logicIndex = parseInt(cell.dataset.logicIndex);
-    if (drawing && currentDefinition) {
-      const repereRect = rect;
-      const defRect = currentDefinition.cell.getBoundingClientRect();
-      const startX = isVertical ? repereRect.left + (repereRect.width * (logicIndex + 0.5) / totalCells) - canvasRect.left : repereRect.right - 5 - canvasRect.left;
-      const startY = isVertical ? repereRect.bottom - 5 - canvasRect.top : repereRect.top + repereRect.height / 2 - canvasRect.top;
-      const endX = isVertical ? defRect.left + (defRect.width * (logicIndex + 0.5) / totalCells) - canvasRect.left : defRect.left + 5 - canvasRect.left;
-      const endY = isVertical ? defRect.top + 5 - canvasRect.top : defRect.top + defRect.height / 2 - canvasRect.top;
-      drawLink(startX, startY, endX, endY);
-      links.push({ repereIdx: idx, repereCell: cell, defCell: currentDefinition.cell, colonne_de_droite: currentDefinition.text, lineId: { startX, startY, endX, endY } });
-      usedCells.add(cell);
-      usedCells.add(currentDefinition.cell);
-      cell.classList.add('used');
-      currentDefinition.cell.classList.add('used');
-      resetDrawing();
-      actionButton.disabled = links.length !== 5;
-    } else {
-      drawing = true;
-      currentRepere = { idx, cell, logicIndex };
-      currentDefinition = null;
+    function loadTitleAndSubtitle() {
+      if (typeof title !== 'undefined') {
+        document.getElementById('pageTitle').textContent = title;
+      }
+      if (typeof subtitle !== 'undefined') {
+        document.getElementById('pageSubtitle').textContent = subtitle;
+      }
+      if (typeof onglet !== 'undefined') {
+        document.getElementById('pageTabTitle').textContent = onglet;
+      }
     }
-  } else if (type === 'definition') {
-    const logicIndex = parseInt(cell.dataset.logicIndex);
-    if (drawing && currentRepere) {
-      const repereRect = currentRepere.cell.getBoundingClientRect();
-      const defRect = rect;
-      const startX = isVertical ? repereRect.left + (repereRect.width * (currentRepere.logicIndex + 0.5) / totalCells) - canvasRect.left : repereRect.right - 5 - canvasRect.left;
-      const startY = isVertical ? repereRect.bottom - 5 - canvasRect.top : repereRect.top + repereRect.height / 2 - canvasRect.top;
-      const endX = isVertical ? defRect.left + (defRect.width * (currentRepere.logicIndex + 0.5) / totalCells) - canvasRect.left : defRect.left + 5 - canvasRect.left;
-      const endY = isVertical ? defRect.top + 5 - canvasRect.top : defRect.top + defRect.height / 2 - canvasRect.top;
-      drawLink(startX, startY, endX, endY);
-      links.push({ repereIdx: currentRepere.idx, repereCell: currentRepere.cell, defCell: cell, colonne_de_droite: cell.textContent, lineId: { startX, startY, endX, endY } });
-      usedCells.add(cell);
-      usedCells.add(currentRepere.cell);
-      cell.classList.add('used');
-      currentRepere.cell.classList.add('used');
-      resetDrawing();
-      actionButton.disabled = links.length !== 5;
-    } else {
-      drawing = true;
-      currentDefinition = { text: cell.textContent, cell, logicIndex };
-      currentRepere = null;
+
+    function isVerticalLayout() {
+      return window.innerWidth <= 768;
     }
-  }
-}
+    function getRandomElements(array, count) {
+      const shuffled = array.slice().sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, count);
+    }
+    function loadReperes() {
+      if (!argumentsData || !Array.isArray(argumentsData) || argumentsData.length === 0) {
+        console.error("Erreur : argumentsData est indéfini ou vide");
+        return [];
+      }
+      const repTable = document.getElementById('repereTable');
+      const defTable = document.getElementById('definitionTable');
+      repTable.innerHTML = '';
+      defTable.innerHTML = '';
+      const maxPairs = Math.min(5, argumentsData.length);
+      const randomParts = getRandomElements(argumentsData, maxPairs);
+      const shuffledNames = randomParts.map(part => part.colonne_de_gauche).sort(() => 0.5 - Math.random());
+      const shuffledDefinitions = randomParts.map(part => part.colonne_de_droite).sort(() => 0.5 - Math.random());
+      randomParts.forEach((part, index) => {
+        const repRow = document.createElement('tr');
+        const repCell = document.createElement('td');
+        repCell.textContent = part.colonne_de_gauche;
+        repCell.dataset.id = index; // Unique ID for each pair
+        repCell.dataset.index = index;
+        repRow.appendChild(repCell);
+        repTable.appendChild(repRow);
 
-// Dessine un lien entre deux cellules
-function drawLink(startX, startY, endX, endY, color = "black") {
-  ctx.beginPath();
-  ctx.moveTo(startX, startY);
-  ctx.lineTo(endX, endY);
-  const headlen = 10;
-  const angle = Math.atan2(endY - startY, endX - startX);
-  ctx.lineTo(
-    endX - headlen * Math.cos(angle - Math.PI / 6),
-    endY - headlen * Math.sin(angle - Math.PI / 6)
-  );
-  ctx.moveTo(endX, endY);
-  ctx.lineTo(
-    endX - headlen * Math.cos(angle + Math.PI / 6),
-    endY - headlen * Math.sin(angle + Math.PI / 6)
-  );
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 2;
-  ctx.stroke();
-}
-
-// Réinitialise le dessin
-function resetDrawing() {
-  drawing = false;
-  currentRepere = null;
-  currentDefinition = null;
-  currentAction = "check";
-  document.getElementById("actionButton").innerHTML = "vérifier";
-  actionButton.disabled = links.length !== 5;
-}
-
-// Met à jour le bouton de score
-function updateScoreButton(currentGoodAnswers) {
-  totalExpectedAnswers += 5;
-  totalGoodAnswers += currentGoodAnswers;
-  scoreButton.textContent = `score : ${totalGoodAnswers}/${totalExpectedAnswers}`;
-  scoreButton.disabled = false;
-}
-
-// Exécute l'action en cours (vérifier, corriger, recharger)
-function performAction() {
-  if (actionButton.disabled) return;
-  switch (currentAction) {
-    case "check":
-      checkLinks();
-      break;
-    case "correct":
-      correctLinks();
-      break;
-    case "reload":
-      reload();
-      break;
-  }
-}
-
-// Vérifie les liens créés
-function checkLinks() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  let currentGoodAnswers = 0;
-  links.forEach((link) => {
-    const parti = argumentsData[link.repereIdx];
-    const isCorrect = parti && parti.colonne_de_droite === link.colonne_de_droite;
-    const color = isCorrect ? "green" : "red";
-    drawLink(link.lineId.startX, link.lineId.startY, link.lineId.endX, link.lineId.endY, color);
-    link.isCorrect = isCorrect;
-    if (isCorrect) currentGoodAnswers++;
-  });
-  updateScoreButton(currentGoodAnswers);
-  currentAction = "correct";
-  document.getElementById("actionButton").innerHTML = "corriger";
-  actionButton.disabled = false;
-}
-
-// Corrige les liens (affiche les bonnes réponses)
-function correctLinks() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const repereTable = document.getElementById("repereTable");
-  const definitionTable = document.getElementById("definitionTable");
-  const canvasRect = canvas.getBoundingClientRect();
-  const isVertical = isVerticalLayout();
-  const totalCells = 5;
-
-  // Récupérer les repères avec leurs cellules et trier par logicIndex
-  const repereWithCells = repereCellsData.map((repere) => {
-    const repereCell = Array.from(repereTable.rows).find(
-      (row) => parseInt(row.cells[0].dataset.idx) === repere.idx
-    )?.cells[0];
-    const logicIndex = repereCell ? parseInt(repereCell.dataset.logicIndex) : -1;
-    return { repere, repereCell, logicIndex };
-  }).filter(rep => rep.repereCell).sort((a, b) => a.logicIndex - b.logicIndex);
-
-  // Récupérer les cellules de définition et trier par logicIndex
-  let definitionCells = Array.from(definitionTable.rows)
-    .map(row => ({
-      cell: row.cells[0],
-      text: row.cells[0].textContent,
-      logicIndex: parseInt(row.cells[0].dataset.logicIndex)
-    }))
-    .sort((a, b) => a.logicIndex - b.logicIndex);
-
-  // Assigner chaque repère à la prochaine cellule de définition disponible
-  repereWithCells.forEach((rep) => {
-    // Trouver la première cellule de définition non utilisée correspondant à rep.repere.colonne_de_droite
-    const defIndex = definitionCells.findIndex(def => def.text === rep.repere.colonne_de_droite);
-    if (defIndex !== -1) {
-      const definitionCell = definitionCells[defIndex].cell;
-      const repereRect = rep.repereCell.getBoundingClientRect();
-      const defRect = definitionCell.getBoundingClientRect();
-      const logicIndex = rep.logicIndex;
-
-      const startX = isVertical
-        ? repereRect.left + (repereRect.width * (logicIndex + 0.5) / totalCells) - canvasRect.left
-        : repereRect.right - 5 - canvasRect.left;
-      const startY = isVertical
-        ? repereRect.bottom - 5 - canvasRect.top
-        : repereRect.top + repereRect.height / 2 - canvasRect.top;
-      const endX = isVertical
-        ? defRect.left + (defRect.width * (logicIndex + 0.5) / totalCells) - canvasRect.left
-        : defRect.left + 5 - canvasRect.left;
-      const endY = isVertical
-        ? defRect.top + 5 - canvasRect.top
-        : defRect.top + defRect.height / 2 - canvasRect.top;
-
-      drawLink(startX, startY, endX, endY, "green");
-
-      // Retirer la cellule de définition utilisée
-      definitionCells.splice(defIndex, 1);
-    } else {
-      console.warn(
-        `Erreur : Aucune cellule de définition disponible pour repère "${rep.repere.colonne_de_gauche}" index ${rep.repere.idx} avec définition "${rep.repere.colonne_de_droite}"`
+        const defRow = document.createElement('tr');
+        const defCell = document.createElement('td');
+        defCell.textContent = part.colonne_de_droite;
+        defCell.dataset.id = index; // Same ID to match the pair
+        defCell.dataset.index = index;
+        defRow.appendChild(defCell);
+        defTable.appendChild(defRow);
+      });
+      return randomParts;
+    }
+    function selectCell(event, type, info) {
+      const cell = event.target;
+      if (usedCells.has(cell)) return;
+      const rect = cell.getBoundingClientRect();
+      const canvasRect = canvas.getBoundingClientRect();
+      const isVertical = isVerticalLayout();
+      const totalCells = selectedReperes.length;
+      if (type === 'repere') {
+        const repereIndex = parseInt(cell.dataset.index);
+        if (drawing && currentDefinition) {
+          const repereRect = rect;
+          const defRect = currentDefinition.cell.getBoundingClientRect();
+          const startX = isVertical
+            ? repereRect.left + (repereRect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
+            : repereRect.right - 5 - canvasRect.left;
+          const startY = isVertical
+            ? repereRect.bottom - 5 - canvasRect.top
+            : repereRect.top + repereRect.height / 2 - canvasRect.top;
+          const endX = isVertical
+            ? defRect.left + (defRect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
+            : defRect.left + 5 - canvasRect.left;
+          const endY = isVertical
+            ? defRect.top + 5 - canvasRect.top
+            : defRect.top + defRect.height / 2 - canvasRect.top;
+          drawLink(startX, startY, endX, endY);
+          links.push({
+            repere: info,
+            definition: currentDefinition.text,
+            lineId: { startX, startY, endX, endY },
+          });
+          usedCells.add(cell);
+          usedCells.add(currentDefinition.cell);
+          cell.classList.add('used');
+          currentDefinition.cell.classList.add('used');
+          resetDrawing();
+          actionButton.disabled = links.length !== selectedReperes.length;
+        } else {
+          drawing = true;
+          currentRepere = { info, cell };
+          currentDefinition = null;
+        }
+      } else if (type === 'definition') {
+        if (drawing && currentRepere) {
+          const repereRect = currentRepere.cell.getBoundingClientRect();
+          const defRect = rect;
+          const repereIndex = parseInt(currentRepere.cell.dataset.index);
+          const startX = isVertical
+            ? repereRect.left + (repereRect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
+            : repereRect.right - 5 - canvasRect.left;
+          const startY = isVertical
+            ? repereRect.bottom - 5 - canvasRect.top
+            : repereRect.top + repereRect.height / 2 - canvasRect.top;
+          const endX = isVertical
+            ? defRect.left + (defRect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
+            : defRect.left + 5 - canvasRect.left;
+          const endY = isVertical
+            ? defRect.top + 5 - canvasRect.top
+            : defRect.top + defRect.height / 2 - canvasRect.top;
+          drawLink(startX, startY, endX, endY);
+          links.push({
+            repere: currentRepere.info,
+            definition: cell.textContent,
+            lineId: { startX, startY, endX, endY },
+          });
+          usedCells.add(cell);
+          usedCells.add(currentRepere.cell);
+          cell.classList.add('used');
+          currentRepere.cell.classList.add('used');
+          resetDrawing();
+          actionButton.disabled = links.length !== selectedReperes.length;
+        } else {
+          drawing = true;
+          currentDefinition = { text: cell.textContent, cell };
+          currentRepere = null;
+        }
+      }
+    }
+    function drawLink(startX, startY, endX, endY, color = "black") {
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(endX, endY);
+      const headlen = 10;
+      const angle = Math.atan2(endY - startY, endX - startX);
+      ctx.lineTo(
+        endX - headlen * Math.cos(angle - Math.PI / 6),
+        endY - headlen * Math.sin(angle - Math.PI / 6)
       );
+      ctx.moveTo(endX, endY);
+      ctx.lineTo(
+        endX - headlen * Math.cos(angle + Math.PI / 6),
+        endY - headlen * Math.sin(angle + Math.PI / 6)
+      );
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
     }
-  });
-
-  currentAction = "reload";
-  document.getElementById("actionButton").innerHTML = '<span class="reload-icon">↻</span>';
-  actionButton.disabled = false;
-}
-
-// Recharge les données
-function reload() {
-  links.length = 0;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  usedCells.clear();
-  document.getElementById("repereTable").innerHTML = "";
-  document.getElementById("definitionTable").innerHTML = "";
-  loadReperes();
-  resetDrawing();
-  addEventListeners();
-  resizeCanvas();
-  actionButton.disabled = true;
-}
-
-// Ajoute les écouteurs d'événements aux cellules
-function addEventListeners() {
-  const repCells = document.getElementById("repereTable").getElementsByTagName("td");
-  const defCells = document.getElementById("definitionTable").getElementsByTagName("td");
-  Array.from(repCells).forEach((cell) => {
-    cell.addEventListener("click", (event) => selectCell(event, "repere"));
-  });
-  Array.from(defCells).forEach((cell) => {
-    cell.addEventListener("click", (event) => selectCell(event, "definition"));
-  });
-}
-
-// Initialisation au chargement de la page
-window.onload = function () {
-  loadReperes();
-  resizeCanvas();
-  addEventListeners();
-  actionButton.disabled = true;
-};
-</script>
+    function resetDrawing() {
+      drawing = false;
+      currentRepere = null;
+      currentDefinition = null;
+      currentAction = "check";
+      document.getElementById("actionButton").innerHTML = 'vérifier<span class="tooltip">vérifier les associations</span>';
+      actionButton.disabled = links.length !== selectedReperes.length;
+    }
+    function performAction() {
+      if (actionButton.disabled) return;
+      switch (currentAction) {
+        case "check":
+          checkLinks();
+          break;
+        case "correct":
+          correctLinks();
+          break;
+        case "reload":
+          reload();
+          break;
+      }
+    }
+    function checkLinks() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let correctCount = 0;
+      links.forEach((link) => {
+        const correspondingPart = selectedReperes.find(
+          (part) => part.colonne_de_gauche === link.repere
+        );
+        const isCorrect = correspondingPart
+          ? correspondingPart.colonne_de_droite === link.definition
+          : false;
+        const color = isCorrect ? "green" : "red";
+        drawLink(link.lineId.startX, link.lineId.startY, link.lineId.endX, link.lineId.endY, color);
+        link.isCorrect = isCorrect;
+        if (isCorrect) correctCount++;
+      });
+      totalCorrect += correctCount;
+      totalAnswers += selectedReperes.length;
+      scoreButton.innerHTML = `${totalCorrect} / ${totalAnswers}<span class="tooltip">score actuel (réponses correctes / total)</span>`;
+      scoreButton.disabled = false;
+      currentAction = "correct";
+      document.getElementById("actionButton").innerHTML = 'corriger<span class="tooltip">afficher les corrections</span>';
+      actionButton.disabled = false;
+    }
+    function correctLinks() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const repereTable = document.getElementById("repereTable");
+      const definitionTable = document.getElementById("definitionTable");
+      const canvasRect = canvas.getBoundingClientRect();
+      const isVertical = isVerticalLayout();
+      const totalCells = selectedReperes.length;
+      selectedReperes.forEach((repere, index) => {
+        const repereCell = Array.from(repereTable.rows).find(
+          (row) => row.cells[0].dataset.id === index.toString()
+        )?.cells[0];
+        const definitionCell = Array.from(definitionTable.rows).find(
+          (row) => row.cells[0].dataset.id === index.toString()
+        )?.cells[0];
+        if (repereCell && definitionCell) {
+          const repereRect = repereCell.getBoundingClientRect();
+          const defRect = definitionCell.getBoundingClientRect();
+          const repereIndex = parseInt(repereCell.dataset.index);
+          const startX = isVertical
+            ? repereRect.left + (repereRect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
+            : repereRect.right - 5 - canvasRect.left;
+          const startY = isVertical
+            ? repereRect.bottom - 5 - canvasRect.top
+            : repereRect.top + repereRect.height / 2 - canvasRect.top;
+          const endX = isVertical
+            ? defRect.left + (defRect.width * (repereIndex + 0.5) / totalCells) - canvasRect.left
+            : defRect.left + 5 - canvasRect.left;
+          const endY = isVertical
+            ? defRect.top + 5 - canvasRect.top
+            : defRect.top + defRect.height / 2 - canvasRect.top;
+          drawLink(startX, startY, endX, endY, "green");
+        } else {
+          console.warn(
+            `Erreur : Cellule non trouvée pour repère (id: ${index}) ou définition (id: ${index})`
+          );
+        }
+      });
+      currentAction = "reload";
+      document.getElementById("actionButton").innerHTML = '<span class="reload-icon">↻</span><span class="tooltip">recharger l\'exercice</span>';
+      actionButton.disabled = false;
+    }
+    function reload() {
+      links.length = 0;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      usedCells.clear();
+      const repCells = document.getElementById("repereTable").getElementsByTagName("td");
+      const defCells = document.getElementById("definitionTable").getElementsByTagName("td");
+      Array.from(repCells).forEach((cell) => cell.classList.remove("used"));
+      Array.from(defCells).forEach((cell) => cell.classList.remove("used"));
+      document.getElementById("repereTable").innerHTML = "";
+      document.getElementById("definitionTable").innerHTML = "";
+      selectedReperes = loadReperes();
+      resetDrawing();
+      addEventListeners();
+      resizeCanvas();
+      actionButton.disabled = true;
+    }
+    function addEventListeners() {
+      const repCells = document.getElementById("repereTable").getElementsByTagName("td");
+      const defCells = document.getElementById("definitionTable").getElementsByTagName("td");
+      Array.from(repCells).forEach((cell) => {
+        cell.addEventListener("click", (event) => selectCell(event, "repere", cell.textContent));
+      });
+      Array.from(defCells).forEach((cell) => {
+        cell.addEventListener("click", (event) => selectCell(event, "definition", cell.textContent));
+      });
+    }
+    function resizeCanvas() {
+      const container = document.querySelector('.container');
+      canvas.width = container.offsetWidth;
+      canvas.height = container.offsetHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('load', resizeCanvas);
+    window.onload = function () {
+      selectedReperes = loadReperes();
+      loadTitleAndSubtitle();
+      resizeCanvas();
+      addEventListeners();
+      actionButton.disabled = true;
+      scoreButton.disabled = true;
+    };
+  </script>
 </body>
 </html>
