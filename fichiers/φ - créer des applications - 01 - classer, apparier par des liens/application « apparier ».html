@@ -1,4 +1,4 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <!------------------------------------ Daniel Boulagnon ------------------------------------>
 <!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
 <!------------------------------------- version 2025 --------------------------------------->
@@ -376,10 +376,12 @@
     function isVerticalLayout() {
       return window.innerWidth <= 768;
     }
+
     function getRandomElements(array, count) {
       const shuffled = array.slice().sort(() => 0.5 - Math.random());
       return shuffled.slice(0, count);
     }
+
     function loadReperes() {
       if (!argumentsData || !Array.isArray(argumentsData) || argumentsData.length === 0) {
         console.error("Erreur : argumentsData est indéfini ou vide");
@@ -390,28 +392,48 @@
       repTable.innerHTML = '';
       defTable.innerHTML = '';
       const maxPairs = Math.min(5, argumentsData.length);
-      const randomParts = getRandomElements(argumentsData, maxPairs);
-      const shuffledNames = randomParts.map(part => part.colonne_de_gauche).sort(() => 0.5 - Math.random());
-      const shuffledDefinitions = randomParts.map(part => part.colonne_de_droite).sort(() => 0.5 - Math.random());
-      randomParts.forEach((part, index) => {
+      
+      // Sélectionner aléatoirement les éléments de la colonne de gauche
+      const randomLeftElements = getRandomElements(argumentsData, maxPairs);
+      
+      // Créer les paires en associant chaque élément de gauche à son correspondant de droite
+      const selectedPairs = randomLeftElements.map((leftElement, index) => ({
+        colonne_de_gauche: leftElement.colonne_de_gauche,
+        colonne_de_droite: leftElement.colonne_de_droite,
+        id: index // Assigner un ID unique pour chaque paire
+      }));
+
+      // Mélanger indépendamment l'ordre des éléments pour l'affichage
+      const shuffledNames = selectedPairs.map(part => part.colonne_de_gauche).sort(() => 0.5 - Math.random());
+      const shuffledDefinitions = selectedPairs.map(part => part.colonne_de_droite).sort(() => 0.5 - Math.random());
+
+      // Construire la table de gauche
+      shuffledNames.forEach((name, index) => {
+        const pair = selectedPairs.find(part => part.colonne_de_gauche === name);
         const repRow = document.createElement('tr');
         const repCell = document.createElement('td');
-        repCell.textContent = part.colonne_de_gauche;
-        repCell.dataset.id = index; // Unique ID for each pair
+        repCell.textContent = name;
+        repCell.dataset.id = pair.id; // Utiliser l'ID de la paire
         repCell.dataset.index = index;
         repRow.appendChild(repCell);
         repTable.appendChild(repRow);
+      });
 
+      // Construire la table de droite
+      shuffledDefinitions.forEach((definition, index) => {
+        const pair = selectedPairs.find(part => part.colonne_de_droite === definition);
         const defRow = document.createElement('tr');
         const defCell = document.createElement('td');
-        defCell.textContent = part.colonne_de_droite;
-        defCell.dataset.id = index; // Same ID to match the pair
+        defCell.textContent = definition;
+        defCell.dataset.id = pair.id; // Utiliser l'ID de la paire
         defCell.dataset.index = index;
         defRow.appendChild(defCell);
         defTable.appendChild(defRow);
       });
-      return randomParts;
+
+      return selectedPairs;
     }
+
     function selectCell(event, type, info) {
       const cell = event.target;
       if (usedCells.has(cell)) return;
@@ -489,6 +511,7 @@
         }
       }
     }
+
     function drawLink(startX, startY, endX, endY, color = "black") {
       ctx.beginPath();
       ctx.moveTo(startX, startY);
@@ -508,6 +531,7 @@
       ctx.lineWidth = 2;
       ctx.stroke();
     }
+
     function resetDrawing() {
       drawing = false;
       currentRepere = null;
@@ -516,6 +540,7 @@
       document.getElementById("actionButton").innerHTML = 'vérifier<span class="tooltip">vérifier les associations</span>';
       actionButton.disabled = links.length !== selectedReperes.length;
     }
+
     function performAction() {
       if (actionButton.disabled) return;
       switch (currentAction) {
@@ -530,6 +555,7 @@
           break;
       }
     }
+
     function checkLinks() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       let correctCount = 0;
@@ -553,6 +579,7 @@
       document.getElementById("actionButton").innerHTML = 'corriger<span class="tooltip">afficher les corrections</span>';
       actionButton.disabled = false;
     }
+
     function correctLinks() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const repereTable = document.getElementById("repereTable");
@@ -560,13 +587,15 @@
       const canvasRect = canvas.getBoundingClientRect();
       const isVertical = isVerticalLayout();
       const totalCells = selectedReperes.length;
-      selectedReperes.forEach((repere, index) => {
+
+      selectedReperes.forEach((repere) => {
         const repereCell = Array.from(repereTable.rows).find(
-          (row) => row.cells[0].dataset.id === index.toString()
+          (row) => row.cells[0].textContent === repere.colonne_de_gauche
         )?.cells[0];
         const definitionCell = Array.from(definitionTable.rows).find(
-          (row) => row.cells[0].dataset.id === index.toString()
+          (row) => row.cells[0].textContent === repere.colonne_de_droite
         )?.cells[0];
+
         if (repereCell && definitionCell) {
           const repereRect = repereCell.getBoundingClientRect();
           const defRect = definitionCell.getBoundingClientRect();
@@ -586,7 +615,7 @@
           drawLink(startX, startY, endX, endY, "green");
         } else {
           console.warn(
-            `Erreur : Cellule non trouvée pour repère (id: ${index}) ou définition (id: ${index})`
+            `Erreur : Cellule non trouvée pour repère "${repere.colonne_de_gauche}" ou définition "${repere.colonne_de_droite}"`
           );
         }
       });
@@ -594,6 +623,7 @@
       document.getElementById("actionButton").innerHTML = '<span class="reload-icon">↻</span><span class="tooltip">recharger l\'exercice</span>';
       actionButton.disabled = false;
     }
+
     function reload() {
       links.length = 0;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -610,6 +640,7 @@
       resizeCanvas();
       actionButton.disabled = true;
     }
+
     function addEventListeners() {
       const repCells = document.getElementById("repereTable").getElementsByTagName("td");
       const defCells = document.getElementById("definitionTable").getElementsByTagName("td");
@@ -620,11 +651,13 @@
         cell.addEventListener("click", (event) => selectCell(event, "definition", cell.textContent));
       });
     }
+
     function resizeCanvas() {
       const container = document.querySelector('.container');
       canvas.width = container.offsetWidth;
       canvas.height = container.offsetHeight;
     }
+
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('load', resizeCanvas);
     window.onload = function () {
