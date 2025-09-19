@@ -1,0 +1,455 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../src/favicon.ico" />
+    <title>mise en pratique</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: flex-start;
+            touch-action: manipulation;
+        }
+
+        header {
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: red;
+            font-size: 1.8em;
+            margin-bottom: 8px;
+            text-transform: lowercase;
+        }
+
+        .subtitle {
+            margin: 0;
+            color: #555;
+            font-size: 1.1em;
+            text-transform: lowercase;
+        }
+
+        .score-button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 800px;
+            flex-wrap: wrap;
+        }
+
+        .score {
+            font-size: 1em;
+            background-color: #f9f9f9;
+            border-radius: 20px;
+            padding: 8px 15px;
+            box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2), 
+                        -6px -6px 12px rgba(255, 255, 255, 0.7);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            flex-grow: 1;
+            justify-content: flex-start;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .dropzone {
+            flex: 1 1 45%;
+            max-width: 500px;
+            min-width: 200px;
+            border-radius: 15px;
+            background-color: #f0f0f0;
+            margin: 5px;
+            padding: 10px;
+            border: 2px dashed #ccc;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2), 
+                        -6px -6px 12px rgba(255, 255, 255, 0.9);
+        }
+
+        .draggable {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 10px;
+            background-color: #d1d1d1;
+            color: black;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: center;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2), 
+                        -4px -4px 8px rgba(255, 255, 255, 0.4);
+            font-size: 1em;
+            touch-action: none;
+        }
+
+        .button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 15px;
+            background-color: #d1d1d1;
+            color: black;
+            cursor: pointer;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2),
+                        -4px -4px 8px rgba(255, 255, 255, 0.4);
+            transition: all 0.2s ease;
+            font-size: 1em;
+        }
+
+        .button:hover {
+            box-shadow: inset 4px 4px 10px rgba(0, 0, 0, 0.3),
+                        inset -4px -4px 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .correct {
+            background-color: #28a745 !important;
+            box-shadow: none;
+        }
+
+        .incorrect {
+            background-color: #dc3545 !important;
+            box-shadow: none;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .drag-over {
+            border: 2px solid #666;
+        }
+
+        @media (max-width: 600px) {
+            .row {
+                flex-direction: column;
+                align-items: center;
+                gap: 5px;
+            }
+
+            .dropzone {
+                flex: 1 1 100%;
+                min-width: 90%;
+                max-width: 100%;
+                margin: 5px;
+                padding: 8px;
+            }
+
+            .score-button-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .score, .button {
+                width: 100%;
+                max-width: 250px;
+                font-size: 0.9em;
+            }
+
+            h1 {
+                font-size: 1.4em;
+            }
+
+            .subtitle {
+                font-size: 0.9em;
+            }
+
+            .draggable {
+                font-size: 0.9em;
+                padding: 6px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 1.2em;
+            }
+
+            .subtitle {
+                font-size: 0.8em;
+            }
+
+            .score, .button {
+                font-size: 0.8em;
+                padding: 6px 10px;
+            }
+
+            .draggable {
+                font-size: 0.8em;
+                padding: 5px;
+            }
+        }
+
+        @media (min-width: 601px) {
+            .dropzone {
+                margin: 5px 10px;
+            }
+
+            .row {
+                max-width: 100%;
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>mise en pratique</h1>
+        <p class="subtitle">réviser les auteurs</p>
+    </header>
+    <main class="container">
+        <div class="score-button-container">
+            <button id="checkButton" class="button">vérifier</button>
+            <div class="score" id="score">
+                Bonnes réponses : <span id="correctCount">0</span> / <span id="totalCount">0</span>
+            </div>
+        </div>
+        <div class="row" id="reperesContainer"></div>
+    </main>
+    <script src="../../src/reperes.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const reperesContainer = document.getElementById("reperesContainer");
+            let correctCount = 0;
+            let totalCount = 0;
+            let selectedRepere = null;
+            let dropzone1, dropzone2;
+
+            function dragStart(e) {
+                e.dataTransfer.setData('text/plain', e.target.id);
+                setTimeout(() => {
+                    e.target.classList.add('hide');
+                }, 0);
+            }
+
+            function dragEnter(e) {
+                e.preventDefault();
+                e.target.classList.add('drag-over');
+            }
+
+            function dragOver(e) {
+                e.preventDefault();
+                e.target.classList.add('drag-over');
+            }
+
+            function dragLeave(e) {
+                e.target.classList.remove('drag-over');
+            }
+
+            function drop(e) {
+                e.preventDefault();
+                e.target.classList.remove('drag-over');
+                const id = e.dataTransfer.getData('text/plain');
+                const draggable = document.getElementById(id);
+                if (e.target.classList.contains('dropzone')) {
+                    e.target.appendChild(draggable);
+                } else if (e.target.parentNode.classList.contains('dropzone')) {
+                    e.target.parentNode.appendChild(draggable);
+                }
+                draggable.classList.remove('hide');
+            }
+
+            function touchHandler(e) {
+                e.preventDefault();
+                const draggable = e.target.closest('.draggable');
+                if (!draggable) return;
+
+                const currentDropzone = draggable.parentNode;
+                const targetDropzone = currentDropzone === dropzone1 ? dropzone2 : dropzone1;
+                targetDropzone.appendChild(draggable);
+                draggable.classList.remove('hide');
+            }
+
+            function getNewWords() {
+                const randomIndex = Math.floor(Math.random() * reperes.length);
+                selectedRepere = reperes[randomIndex];
+                dropzone1.innerHTML = `<strong>déposez ici les exemples de<br>« ${selectedRepere.parts[0].name} »</strong>`;
+                dropzone2.innerHTML = `<strong>déposez ici les exemples de<br>« ${selectedRepere.parts[1].name} »</strong>`;
+                const allExamples = [...selectedRepere.parts[0].examples, ...selectedRepere.parts[1].examples];
+                shuffleArray(allExamples);
+                totalCount += allExamples.length;
+                document.getElementById('totalCount').textContent = totalCount;
+                populateDropzones(allExamples);
+            }
+
+            function populateDropzones(allExamples) {
+                dropzone1.innerHTML = `<strong>déposez ici les exemples de<br>« ${selectedRepere.parts[0].name} »</strong>`;
+                dropzone2.innerHTML = `<strong>déposez ici les exemples de<br>« ${selectedRepere.parts[1].name} »</strong>`;
+                allExamples.forEach((definition, index) => {
+                    const defDiv = document.createElement("div");
+                    defDiv.classList.add("draggable");
+                    defDiv.textContent = definition;
+                    defDiv.setAttribute("draggable", "true");
+                    defDiv.id = `draggable-${index}`;
+                    defDiv.addEventListener('dragstart', dragStart);
+                    defDiv.addEventListener('dragend', () => defDiv.classList.remove('hide'));
+                    defDiv.addEventListener('touchend', touchHandler);
+                    if (index < allExamples.length / 2) {
+                        dropzone1.appendChild(defDiv);
+                    } else {
+                        dropzone2.appendChild(defDiv);
+                    }
+                });
+            }
+
+            function createDropzone() {
+                const dropzone = document.createElement("div");
+                dropzone.classList.add("dropzone");
+                dropzone.addEventListener('dragenter', dragEnter);
+                dropzone.addEventListener('dragover', dragOver);
+                dropzone.addEventListener('dragleave', dragLeave);
+                dropzone.addEventListener('drop', drop);
+                return dropzone;
+            }
+
+            dropzone1 = createDropzone();
+            dropzone2 = createDropzone();
+            const row = document.createElement("div");
+            row.classList.add("row");
+            row.appendChild(dropzone1);
+            row.appendChild(dropzone2);
+            reperesContainer.appendChild(row);
+            getNewWords();
+
+            const checkButton = document.getElementById("checkButton");
+            checkButton.addEventListener('click', () => {
+                if (checkButton.textContent === "vérifier") {
+                    const draggableElements1 = dropzone1.querySelectorAll('.draggable');
+                    const draggableElements2 = dropzone2.querySelectorAll('.draggable');
+                    draggableElements1.forEach(el => el.classList.remove("correct", "incorrect"));
+                    draggableElements2.forEach(el => el.classList.remove("correct", "incorrect"));
+                    draggableElements1.forEach((exampleDiv) => {
+                        if (selectedRepere.parts[0].examples.includes(exampleDiv.textContent)) {
+                            exampleDiv.classList.add("correct");
+                            correctCount++;
+                        } else {
+                            exampleDiv.classList.add("incorrect");
+                        }
+                    });
+                    draggableElements2.forEach((exampleDiv) => {
+                        if (selectedRepere.parts[1].examples.includes(exampleDiv.textContent)) {
+                            exampleDiv.classList.add("correct");
+                            correctCount++;
+                        } else {
+                            exampleDiv.classList.add("incorrect");
+                        }
+                    });
+                    document.getElementById('correctCount').textContent = correctCount;
+                    checkButton.textContent = "corriger";
+                } else if (checkButton.textContent === "corriger") {
+                    moveIncorrectLabels(dropzone1, selectedRepere.parts[1].examples, dropzone2);
+                    moveIncorrectLabels(dropzone2, selectedRepere.parts[0].examples, dropzone1);
+                    checkButton.textContent = "recommencer";
+                } else if (checkButton.textContent === "recommencer") {
+                    dropzone1.querySelectorAll('.draggable').forEach(el => el.classList.remove("correct", "incorrect"));
+                    dropzone2.querySelectorAll('.draggable').forEach(el => el.classList.remove("correct", "incorrect"));
+                    document.getElementById('correctCount').textContent = correctCount;
+                    checkButton.textContent = "vérifier";
+                    getNewWords();
+                }
+            });
+
+            function moveIncorrectLabels(sourceDropzone, correctExamples, targetDropzone) {
+                const draggableElements = sourceDropzone.querySelectorAll('.draggable');
+                draggableElements.forEach((exampleDiv) => {
+                    if (exampleDiv.classList.contains("incorrect")) {
+                        const targetIndex = correctExamples.indexOf(exampleDiv.textContent);
+                        if (targetIndex !== -1) {
+                            const rect = exampleDiv.getBoundingClientRect();
+                            const targetRect = targetDropzone.getBoundingClientRect();
+                            const deltaX = targetRect.left - rect.left;
+                            const deltaY = targetRect.top - rect.top + (targetIndex * (rect.height + 5));
+
+                            exampleDiv.style.transition = "transform 2s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 2s cubic-bezier(0.25, 0.1, 0.25, 1)";
+                            exampleDiv.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+                            exampleDiv.style.opacity = 0.5;
+
+                            setTimeout(() => {
+                                targetDropzone.appendChild(exampleDiv);
+                                exampleDiv.style.transition = "";
+                                exampleDiv.style.transform = "";
+                                exampleDiv.style.opacity = 1;
+                                exampleDiv.classList.remove("incorrect");
+                                exampleDiv.classList.add("correct");
+                            }, 2000);
+                        }
+                    }
+                });
+            }
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+        });
+    </script>
+</body>
+</html>

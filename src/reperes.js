@@ -1,3 +1,7 @@
+const onglet = "apparier des mots";
+const title = "apparier des mots";
+const subtitle = "réviser les repères en associant un élément à un autre";
+
 const reperes = [
   {
     definition: "absolu/relatif",
