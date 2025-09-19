@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!-- Daniel Boulagnon -->
-<!-- daniel.boulagnon@ac-lille.fr -->
-<!-- version 2025 -->
-<!-- Exploitation à but strictement pédagogique et non lucratif -->
-
 <html lang="fr">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -267,12 +262,15 @@
             document.getElementById("appTitle").textContent = title;
             document.getElementById("appSubtitle").textContent = subtitle;
             const reperesContainer = document.getElementById("reperesContainer");
-            let correctCount = 0;
-            let totalCount = 0;
+            
+            let correctCount = 0; // Score cumulé correct
+            let totalCount = 0;   // Score cumulé total
+            
             let selectedRepere = null;
             let dropzone1, dropzone2;
             let allExamples = [];
             const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+
             function dragStart(e) {
                 e.dataTransfer.setData('text/plain', e.target.id);
                 setTimeout(() => {
@@ -331,8 +329,12 @@
                 dropzone2.innerHTML = `<strong>déposer ici les exemples de la<br>${category2.trim()}</strong>`;
                 allExamples = [...selectedRepere.parts[0].examples, ...selectedRepere.parts[1].examples];
                 shuffleArray(allExamples);
-                totalCount = allExamples.length;
+                
+                // === CORRECTION 1 ===
+                // On ajoute le nombre de questions de cette manche au total
+                totalCount += allExamples.length;
                 document.getElementById('totalCount').textContent = totalCount;
+                
                 populateDropzones(allExamples);
                 document.getElementById("checkButton").disabled = true;
             }
@@ -371,6 +373,7 @@
                 }
                 return dropzone;
             }
+
             dropzone1 = createDropzone();
             dropzone2 = createDropzone();
             const row = document.createElement("div");
@@ -378,34 +381,47 @@
             row.appendChild(dropzone1);
             row.appendChild(dropzone2);
             reperesContainer.appendChild(row);
+            
+            // Initialisation de la première partie
             getNewWords();
+            
             const checkButton = document.getElementById("checkButton");
             checkButton.addEventListener('click', () => {
                 if (checkButton.textContent === "vérifier") {
+                    
+                    // === CORRECTION 2 ===
+                    // On vérifie les réponses et on met à jour le score
                     const draggableElements1 = dropzone1.querySelectorAll('.draggable');
                     const draggableElements2 = dropzone2.querySelectorAll('.draggable');
                     draggableElements1.forEach(el => el.classList.remove("correct", "incorrect"));
                     draggableElements2.forEach(el => el.classList.remove("correct", "incorrect"));
-                    correctCount = 0;
+                    
+                    let currentRoundCorrect = 0; // Variable locale pour le score de la manche
+                    
                     draggableElements1.forEach((exampleDiv) => {
                         if (selectedRepere.parts[0].examples.includes(exampleDiv.textContent)) {
                             exampleDiv.classList.add("correct");
-                            correctCount++;
+                            currentRoundCorrect++;
                         } else {
                             exampleDiv.classList.add("incorrect");
                         }
                     });
+                    
                     draggableElements2.forEach((exampleDiv) => {
                         if (selectedRepere.parts[1].examples.includes(exampleDiv.textContent)) {
                             exampleDiv.classList.add("correct");
-                            correctCount++;
+                            currentRoundCorrect++;
                         } else {
                             exampleDiv.classList.add("incorrect");
                         }
                     });
+                    
+                    correctCount += currentRoundCorrect; // On ajoute le score de la manche au total
+                    
                     document.getElementById('correctCount').textContent = correctCount;
                     checkButton.textContent = "corriger";
                     checkButton.setAttribute("data-tooltip", "corriger les erreurs");
+                
                 } else if (checkButton.textContent === "corriger") {
                     moveIncorrectLabels(dropzone1, selectedRepere.parts[1].examples, dropzone2);
                     moveIncorrectLabels(dropzone2, selectedRepere.parts[0].examples, dropzone1);
@@ -414,12 +430,12 @@
                 } else if (checkButton.querySelector('.refresh-symbol')) {
                     dropzone1.querySelectorAll('.draggable').forEach(el => el.classList.remove("correct", "incorrect"));
                     dropzone2.querySelectorAll('.draggable').forEach(el => el.classList.remove("correct", "incorrect"));
-                    document.getElementById('correctCount').textContent = correctCount;
                     checkButton.textContent = "vérifier";
                     checkButton.setAttribute("data-tooltip", "vérifier les réponses");
                     getNewWords();
                 }
             });
+
             function moveIncorrectLabels(sourceDropzone, correctExamples, targetDropzone) {
                 const draggableElements = sourceDropzone.querySelectorAll('.draggable');
                 draggableElements.forEach((exampleDiv) => {
@@ -445,6 +461,7 @@
                     }
                 });
             }
+
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
