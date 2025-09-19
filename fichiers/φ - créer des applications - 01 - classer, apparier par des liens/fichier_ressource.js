@@ -1,16 +1,8 @@
-const onglet = "application « apparier »";
 const title = "application « apparier »";
 const subtitle = "associer un élément à un autre";
 
 const argumentsData = [
 	{ colonne_de_gauche: "mot 1", colonne_de_droite: "mot 1'" }, /* remplacer "mot 1" par le premier couple de mot à relier et "mot 1'" par son vis-à-vis en laissant les guillements */
-
-
-
-	{ colonne_de_gauche: "mot 1", colonne_de_droite: "mot 10'" }, /* remplacer "mot 1" par le premier couple de mot à relier et "mot 1'" par son vis-à-vis en laissant les guillements */
-	{ colonne_de_gauche: "mot 23", colonne_de_droite: "mot 3'" }, /* remplacer "mot 1" par le premier couple de mot à relier et "mot 1'" par son vis-à-vis en laissant les guillements */
-
-
     { colonne_de_gauche: "mot 2", colonne_de_droite: "mot 2'" }, /* remplacer "mot 2" par le premier couple de mot à relier et "mot 2'" par son vis-à-vis en laissant les guillements */
     { colonne_de_gauche: "mot 3", colonne_de_droite: "mot 3'" }, /* remplacer "mot 3" par le premier couple de mot à relier et "mot 3'" par son vis-à-vis en laissant les guillements */
     { colonne_de_gauche: "mot 4", colonne_de_droite: "mot 4'" }, /* remplacer "mot 4" par le premier couple de mot à relier et "mot 4'" par son vis-à-vis en laissant les guillements */

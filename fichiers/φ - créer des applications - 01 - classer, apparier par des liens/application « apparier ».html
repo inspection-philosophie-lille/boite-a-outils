@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Daniel Boulagnon - version 2025 - Code complet "apparier" -->
 <html lang="fr">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -139,7 +138,8 @@
     function loadTitleAndSubtitle() {
       if (typeof title !== 'undefined') document.getElementById('pageTitle').textContent = title;
       if (typeof subtitle !== 'undefined') document.getElementById('pageSubtitle').textContent = subtitle;
-      if (typeof onglet !== 'undefined') document.getElementById('pageTabTitle').textContent = onglet;
+      // MODIFICATION : Utilise la variable 'title' pour l'onglet afin qu'il corresponde au titre de la page.
+      if (typeof title !== 'undefined') document.getElementById('pageTabTitle').textContent = title;
     }
     function isVerticalLayout() { return window.innerWidth <= 768; }
     function getRandomElements(array, count) { const shuffled = array.slice().sort(() => 0.5 - Math.random()); return shuffled.slice(0, count); }
