@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -55,7 +16,7 @@
             background-color: #e0e5ec;
             color: #333;
             line-height: 1.6;
-            padding: 10px; /* Réduit pour mobile */
+            padding: 10px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -67,7 +28,7 @@
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
-            padding: 10px; /* Réduit pour maximiser la largeur sur mobile */
+            padding: 10px;
         }
         
         header {
@@ -201,6 +162,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
+            transform: translateY(-2px); /* Déplace le caractère "↺" vers le haut */
         }
         
         .btn-help {
@@ -223,12 +185,13 @@
             width: 100%;
             display: flex;
             justify-content: center;
+            align-items: center;
         }
         
         .grid-container {
             display: grid;
             gap: 2px;
-            margin: 15px 0;
+            margin: 15px auto;
             position: relative;
             width: 100%;
             max-width: 500px;
@@ -309,6 +272,8 @@
             margin-top: 20px;
             width: 100%;
             max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .word-input {
@@ -319,13 +284,13 @@
         
         @media (max-width: 600px) {
             body {
-                padding: 5px; /* Réduit encore pour maximiser l'espace */
+                padding: 5px;
             }
             
             .container {
-                padding: 5px; /* Réduit pour aligner avec la largeur maximale */
-                width: 100%; /* Occupe toute la largeur disponible */
-                max-width: 100%; /* Supprime la limite de 1200px sur mobile */
+                padding: 5px;
+                width: 100%;
+                max-width: 100%;
             }
             
             header {
@@ -343,22 +308,28 @@
             
             .configuration {
                 width: 100%;
-                max-width: none; /* Supprime la limite de 380px */
-                min-width: 0; /* Supprime la contrainte minimale */
+                max-width: none;
+                min-width: 0;
                 padding: 10px;
                 box-sizing: border-box;
             }
             
             .grid-preview {
                 width: 100%;
-                max-width: none; /* Supprime la limite de 100% */
-                min-width: 0; /* Supprime la contrainte minimale */
+                max-width: none;
+                min-width: 0;
                 padding: 10px;
                 box-sizing: border-box;
             }
             
             .grid-container {
-                max-width: 100%; /* S'adapte à la largeur du conteneur */
+                max-width: 100%;
+                margin: 15px auto;
+            }
+            
+            .word-input-container {
+                max-width: 100%;
+                margin: 15px auto;
             }
             
             .action-buttons {
