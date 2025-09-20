@@ -1,183 +1,1059 @@
-<!DOCTYPE html>
-<!--------------------------- Daniel Boulagnon --------------------------->
-<!-------------------- daniel.boulagnon@ac-lille.fr ---------------------->
-<!----------------------------- version 2024 ----------------------------->
-<html lang="fr" >
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="fr">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="icon" href="../../src/favicon.ico" />
-	<title>mots croisés</title>	
-	<p style="margin: 15px; line-height: 48px; text-align: center; color:red; font-size:40px; font-weight: bold; font-family: 'Muli', sans-serif">mots croisés</p>
-	<p style="margin: 0px; line-height: 1px; text-align: center; color:black; font-size:20px">réviser les repères</p>
-	<br>
-
-	<link rel='stylesheet' href='bootstrap.min.css'>
-	<link rel="stylesheet" href="./style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mots croisés</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #e0e5ec;
+            color: #333;
+            line-height: 1.6;
+            padding: 15px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 20px;
+            background: #e0e5ec;
+            box-shadow: 8px 8px 16px #c1c6cd, 
+                       -8px -8px 16px #ffffff;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #ff0000;
+        }
+        
+        .app-description {
+            font-size: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #5a6c7d;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+        
+        .configuration {
+            flex: 1;
+            min-width: 280px;
+            max-width: 380px;
+            background: #e0e5ec;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 8px 8px 16px #c1c6cd, 
+                       -8px -8px 16px #ffffff;
+        }
+        
+        .grid-preview {
+            flex: 2;
+            min-width: 300px;
+            max-width: 100%;
+            background: #e0e5ec;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 8px 8px 16px #c1c6cd, 
+                       -8px -8px 16px #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .form-group {
+            margin-bottom: 18px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input, select, button {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: #e0e5ec;
+            box-shadow: inset 4px 4px 8px #c1c6cd, 
+                       inset -4px -4px 8px #ffffff;
+            color: #2c3e50;
+            outline: none;
+        }
+        
+        button {
+            background: #c8cdd4;
+            color: #2c3e50;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+            box-shadow: 5px 5px 10px #c1c6cd, 
+                       -5px -5px 10px #ffffff;
+            transition: all 0.2s ease;
+            text-transform: none;
+            position: relative;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        button:hover {
+            box-shadow: inset 4px 4px 8px #c1c6cd, 
+                       inset -4px -4px 8px #ffffff;
+        }
+        
+        button:active {
+            box-shadow: inset 6px 6px 12px #c1c6cd, 
+                       inset -6px -6px 12px #ffffff;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+            width: 100%;
+        }
+        
+        .action-buttons button {
+            flex: 1;
+        }
+        
+        .btn-correction {
+            background-color: #c8cdd4;
+            color: #2c3e50;
+        }
+        
+        .btn-correction.refresh-mode {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .btn-help {
+            background-color: #c8cdd4;
+            color: #2c3e50;
+        }
+        
+        .btn-help:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        
+        .btn-score {
+            background-color: #c8cdd4;
+            color: #2c3e50;
+        }
+        
+        .grid-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .grid-container {
+            display: grid;
+            gap: 2px;
+            margin: 15px 0;
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .grid-cell {
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e0e5ec;
+            border-radius: 6px;
+            box-shadow: 2px 2px 5px #c1c6cd, 
+                       -2px -2px 5px #ffffff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        
+        .grid-cell.empty {
+            background: transparent;
+            box-shadow: none;
+            cursor: default;
+        }
+        
+        .grid-cell.filled {
+            background: #d1d9e6;
+            box-shadow: inset 2px 2px 5px #c1c6cd, 
+                       inset -2px -2px 5px #ffffff;
+        }
+        
+        .grid-cell.space {
+            visibility: hidden;
+        }
+        
+        .grid-cell.correct {
+            color: #28a745;
+        }
+        
+        .grid-cell.incorrect {
+            color: #dc3545;
+        }
+        
+        .grid-cell.numbered {
+            position: relative;
+        }
+        
+        .cell-number {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            font-size: 0.55rem;
+            color: #5a6c7d;
+            font-weight: bold;
+        }
+        
+        .tooltip {
+            position: fixed;
+            background-color: white;
+            color: black;
+            padding: 10px 12px;
+            border-radius: 8px;
+            z-index: 100;
+            max-width: 280px;
+            box-shadow: 4px 4px 12px rgba(0,0,0,0.15);
+            font-size: 0.85rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border: 1px solid #ddd;
+        }
+        
+        .word-input-container {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .word-input {
+            text-transform: uppercase;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .configuration, .grid-preview {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .grid-container {
+                max-width: 100%;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-buttons button {
+                flex: none;
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            
+            h1 {
+                font-size: 1.7rem;
+            }
+            
+            .configuration, .grid-preview {
+                padding: 15px;
+            }
+            
+            .grid-cell {
+                font-size: 1rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .cell-number {
+                font-size: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .app-description {
+                font-size: 0.9rem;
+            }
+            
+            .configuration, .grid-preview {
+                padding: 12px;
+            }
+            
+            .grid-cell {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1 id="main-title">mots croisés</h1>
+            <p id="subtitle" class="app-description">résoudre les mots croisés en utilisant les définitions fournies</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="configuration">
+                <h2>configuration</h2>
+                <div class="form-group">
+                    <label for="grid-size">taille de la grille</label>
+                    <select id="grid-size" title="sélectionnez la taille de la grille">
+                        <option value="10">10x10 (facile)</option>
+                        <option value="12" selected>12x12 (moyen)</option>
+                        <option value="15">15x15 (difficile)</option>
+                    </select>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="correction-btn" class="btn-correction" title="vérifier les réponses et corriger les erreurs">
+                        corriger
+                    </button>
+                    <button id="help-btn" class="btn-help" title="obtenir de l'aide en remplissant quelques lettres">
+                        aide
+                    </button>
+                    <button id="score-btn" class="btn-score" title="voir votre score actuel">
+                        <span id="current-score">0</span> / <span id="total-score">0</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="grid-preview">
+                <div class="grid-wrapper">
+                    <div id="grid-container" class="grid-container"></div>
+                </div>
+                
+                <div class="word-input-container">
+                    <div class="form-group">
+                        <label for="word-input">saisir un mot complet</label>
+                        <input type="text" id="word-input" class="word-input" placeholder="tapez un mot et appuyez sur entrée" title="entrez un mot complet pour le placer dans la grille">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="row info margin-bottom-sm">
-	<div class="col-md-12">
-	<center>
-		<button class="btn btn-lg btn-default pen-ignore hidden-print" id="btnCheck"data-toggle="tooltip" title="Enlever les mauvaises lettres">Vérification</button>
-		<button class="btn btn-lg btn-default pen-ignore hidden-print" id="btnHint" data-toggle="tooltip" title="Ajouter une lettre">Aide</button>
-		<button class="btn btn-lg btn-default pen-ignore hidden-print" id="btnReset"data-toggle="tooltip" title="Recommencer">Autre grille</button>
-	</center>
-	</div>
-</div>
+    <div id="tooltip" class="tooltip"></div>
 
-<div class="row" style="margin-left: 7px;" >
-	<div class="col-lg-12">
-	<!-- Boutons Créer et lire requis pour les mots croisés générés par l'utilisateur - désactivés pour les questions interdites -->
-	</div>
-	<div class="col-lg-12 text-center wjec-crossword" id="crossword"></div>
+    <script src="../../src/reperes.js"></script>
 
-	<div class="wjec-crossword-clues col-lg-6 margin-bottom-md">
-		<h3><p style="color:red">HORIZONTAL</p></h3>
-		<div class="clueBlock" id="cluesAcross">
-			<div class="clueDirection" id="directionAcross"></div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-			<div class="line">
-				<input class="word" type="text" />
-				<span class="lineNum"></span>
-				<input class="clue" />
-			</div>
-		</div>
-	</div>
+    <script>
+        let currentScore = 0;
+        let totalScore = 0;
+        let totalWordsInGame = 0;
+        let correctionShown = false;
 
-	<div class="wjec-crossword-clues col-lg-6 margin-bottom-md">
-		<h3><p style="color:red">VERTICAL</p></h3>
-		<div class="clueBlock" id="cluesDown">
-			<div class="clueDirection" id="directionDown"></div>
-		</div>
-	</div>
-
-</div>
-
-
-	<script src='jquery-2.2.4.min.js'></script>
-	<script src='bootstrap.min.js'></script>
-	<script  src="./script.js"></script>
-
+        document.addEventListener('DOMContentLoaded', function() {
+            const gridSizeSelect = document.getElementById('grid-size');
+            const correctionBtn = document.getElementById('correction-btn');
+            const helpBtn = document.getElementById('help-btn');
+            const scoreBtn = document.getElementById('score-btn');
+            const gridContainer = document.getElementById('grid-container');
+            const wordInput = document.getElementById('word-input');
+            const tooltip = document.getElementById('tooltip');
+            const currentScoreElement = document.getElementById('current-score');
+            const totalScoreElement = document.getElementById('total-score');
+            
+            let gridSize = parseInt(gridSizeSelect.value);
+            let grid = [];
+            let solutionGrid = [];
+            let words = [];
+            let placedWords = [];
+            let wordNumber = 1;
+            let isHelpMode = false;
+            let selectedCell = null;
+            let selectedDirection = 'horizontal';
+            
+            correctionBtn.addEventListener('click', function() {
+                if (correctionShown) {
+                    generateGrid();
+                } else {
+                    showCorrection();
+                }
+            });
+            
+            helpBtn.addEventListener('click', toggleHelpMode);
+            scoreBtn.addEventListener('click', showScoreDetails);
+            wordInput.addEventListener('keydown', handleWordInput);
+            gridSizeSelect.addEventListener('change', generateGrid);
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.code === 'Space' && selectedCell) {
+                    e.preventDefault();
+                    selectedDirection = selectedDirection === 'horizontal' ? 'vertical' : 'horizontal';
+                    highlightWordFromCell(selectedCell);
+                }
+            });
+            
+            generateGrid();
+            
+            function generateGrid() {
+                gridSize = parseInt(gridSizeSelect.value);
+                
+                grid = [];
+                solutionGrid = [];
+                words = [];
+                placedWords = [];
+                wordNumber = 1;
+                isHelpMode = false;
+                selectedCell = null;
+                correctionShown = false;
+                
+                correctionBtn.textContent = "corriger";
+                correctionBtn.classList.remove('refresh-mode');
+                correctionBtn.title = "vérifier les réponses et corriger les erreurs";
+                
+                helpBtn.textContent = "aide";
+                helpBtn.disabled = false;
+                
+                wordInput.value = '';
+                
+                gridContainer.innerHTML = '';
+                
+                const screenWidth = window.innerWidth;
+                
+                if (screenWidth < 768) {
+                    gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+                } else {
+                    gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 40px)`;
+                }
+                
+                for (let i = 0; i < gridSize; i++) {
+                    grid[i] = [];
+                    solutionGrid[i] = [];
+                    for (let j = 0; j < gridSize; j++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'grid-cell empty';
+                        cell.dataset.row = i;
+                        cell.dataset.col = j;
+                        cell.dataset.index = i * gridSize + j;
+                        
+                        cell.addEventListener('click', function() {
+                            if (this.classList.contains('filled')) {
+                                selectCell(this);
+                            }
+                        });
+                        
+                        gridContainer.appendChild(cell);
+                        grid[i][j] = '';
+                        solutionGrid[i][j] = '';
+                    }
+                }
+                
+                useReperesData();
+                
+                currentScore = 0;
+                updateScoreDisplay();
+            }
+            
+            function selectCell(cell) {
+                document.querySelectorAll('.grid-cell.selected').forEach(c => {
+                    c.classList.remove('selected');
+                });
+                
+                document.querySelectorAll('.grid-cell.highlighted').forEach(c => {
+                    c.classList.remove('highlighted');
+                });
+                
+                document.querySelectorAll('.grid-cell.correct').forEach(c => {
+                    c.classList.remove('correct');
+                });
+                
+                document.querySelectorAll('.grid-cell.incorrect').forEach(c => {
+                    c.classList.remove('incorrect');
+                });
+                
+                cell.classList.add('selected');
+                selectedCell = cell;
+                
+                highlightWordFromCell(cell);
+                
+                wordInput.focus();
+            }
+            
+            function highlightWordFromCell(cell) {
+                const row = parseInt(cell.dataset.row);
+                const col = parseInt(cell.dataset.col);
+                
+                for (const wordInfo of placedWords) {
+                    if (wordInfo.row === row && wordInfo.col === col) {
+                        highlightWord(wordInfo);
+                        return;
+                    }
+                }
+                
+                for (const wordInfo of placedWords) {
+                    if (wordInfo.horizontal) {
+                        if (wordInfo.row === row && col >= wordInfo.col && col < wordInfo.col + wordInfo.word.length) {
+                            highlightWord(wordInfo);
+                            return;
+                        }
+                    } else {
+                        if (wordInfo.col === col && row >= wordInfo.row && row < wordInfo.row + wordInfo.word.length) {
+                            highlightWord(wordInfo);
+                            return;
+                        }
+                    }
+                }
+            }
+            
+            function highlightWord(wordInfo) {
+                if (wordInfo.horizontal && selectedDirection === 'horizontal') {
+                    for (let i = 0; i < wordInfo.word.length; i++) {
+                        const cell = document.querySelector(`.grid-cell[data-row="${wordInfo.row}"][data-col="${wordInfo.col + i}"]`);
+                        if (cell && !cell.classList.contains('space')) {
+                            cell.classList.add('highlighted');
+                        }
+                    }
+                } else if (!wordInfo.horizontal && selectedDirection === 'vertical') {
+                    for (let i = 0; i < wordInfo.word.length; i++) {
+                        const cell = document.querySelector(`.grid-cell[data-row="${wordInfo.row + i}"][data-col="${wordInfo.col}"]`);
+                        if (cell && !cell.classList.contains('space')) {
+                            cell.classList.add('highlighted');
+                        }
+                    }
+                } else {
+                    selectedDirection = wordInfo.horizontal ? 'horizontal' : 'vertical';
+                    highlightWord(wordInfo);
+                }
+            }
+            
+            function handleWordInput(e) {
+                if (e.key === 'Enter' && selectedCell && wordInput.value.length > 0) {
+                    e.preventDefault();
+                    const word = wordInput.value.toUpperCase().replace(/[^A-Z ]/g, '');
+                    
+                    if (word.length > 0) {
+                        fillWord(word);
+                        wordInput.value = '';
+                    }
+                }
+            }
+            
+            function fillWord(word) {
+                if (!selectedCell) return;
+                
+                const row = parseInt(selectedCell.dataset.row);
+                const col = parseInt(selectedCell.dataset.col);
+                
+                for (const wordInfo of placedWords) {
+                    if (wordInfo.horizontal && selectedDirection === 'horizontal') {
+                        if (wordInfo.row === row && col >= wordInfo.col && col < wordInfo.col + wordInfo.word.length) {
+                            const startCol = wordInfo.col;
+                            let inputIndex = 0;
+                            for (let i = 0; i < wordInfo.word.length && inputIndex < word.length; i++) {
+                                const cell = document.querySelector(`.grid-cell[data-row="${wordInfo.row}"][data-col="${startCol + i}"]`);
+                                if (cell.classList.contains('space')) {
+                                    if (word[inputIndex] === ' ') {
+                                        inputIndex++;
+                                    }
+                                    continue;
+                                }
+                                if (inputIndex < word.length) {
+                                    cell.textContent = word[inputIndex];
+                                    cell.classList.remove('empty');
+                                    cell.classList.add('filled');
+                                    inputIndex++;
+                                }
+                            }
+                            break;
+                        }
+                    } else if (!wordInfo.horizontal && selectedDirection === 'vertical') {
+                        if (wordInfo.col === col && row >= wordInfo.row && row < wordInfo.row + wordInfo.word.length) {
+                            const startRow = wordInfo.row;
+                            let inputIndex = 0;
+                            for (let i = 0; i < wordInfo.word.length && inputIndex < word.length; i++) {
+                                const cell = document.querySelector(`.grid-cell[data-row="${startRow + i}"][data-col="${wordInfo.col}"]`);
+                                if (cell.classList.contains('space')) {
+                                    if (word[inputIndex] === ' ') {
+                                        inputIndex++;
+                                    }
+                                    continue;
+                                }
+                                if (inputIndex < word.length) {
+                                    cell.textContent = word[inputIndex];
+                                    cell.classList.remove('empty');
+                                    cell.classList.add('filled');
+                                    inputIndex++;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            function useReperesData() {
+                if (typeof reperes !== 'undefined' && reperes.length > 0) {
+                    words = [];
+                    for (const category of reperes) {
+                        for (const part of category.parts) {
+                            words.push({
+                                name: part.name.toUpperCase(), // Stocker en majuscules pour correspondre à la grille
+                                definition: part.definition,
+                                examples: part.examples
+                            });
+                        }
+                    }
+                    totalWordsInGame = words.length;
+                    
+                    placeWordsInGrid();
+                } else {
+                    alert("Erreur: Aucune donnée trouvée. Veuillez vous assurer que le fichier reperes.js est correctement chargé.");
+                }
+            }
+            
+            function placeWordsInGrid() {
+                const firstWord = words[0];
+                const firstWordName = firstWord.name;
+                const firstWordLength = firstWordName.length;
+                
+                const centerRow = Math.floor(gridSize / 2);
+                const centerCol = Math.floor((gridSize - firstWordLength) / 2);
+                
+                placeWordHorizontally(firstWordName, centerRow, centerCol, firstWord);
+                placedWords.push({
+                    word: firstWordName, 
+                    row: centerRow, 
+                    col: centerCol, 
+                    horizontal: true, 
+                    definition: firstWord.definition,
+                    number: wordNumber++
+                });
+                
+                for (let i = 1; i < words.length; i++) {
+                    const wordObj = words[i];
+                    const word = wordObj.name;
+                    let placed = false;
+                    let attempts = 0;
+                    
+                    while (!placed && attempts < 100) {
+                        attempts++;
+                        
+                        const randomCharIndex = Math.floor(Math.random() * word.length);
+                        const randomChar = word[randomCharIndex];
+                        if (randomChar === ' ') continue;
+                        
+                        const matchingCells = findMatchingCells(randomChar);
+                        
+                        if (matchingCells.length > 0) {
+                            const randomCellIndex = Math.floor(Math.random() * matchingCells.length);
+                            const cell = matchingCells[randomCellIndex];
+                            
+                            const placeHorizontal = Math.random() > 0.5;
+                            
+                            if (placeHorizontal) {
+                                const row = parseInt(cell.dataset.row);
+                                const col = parseInt(cell.dataset.col) - randomCharIndex;
+                                
+                                if (canPlaceWordHorizontally(word, row, col) && 
+                                    checkCrossingConstraints(word, row, col, true)) {
+                                    placeWordHorizontally(word, row, col, wordObj);
+                                    placedWords.push({
+                                        word: word, 
+                                        row: row, 
+                                        col: col, 
+                                        horizontal: true, 
+                                        definition: wordObj.definition,
+                                        number: wordNumber++
+                                    });
+                                    placed = true;
+                                }
+                            } else {
+                                const row = parseInt(cell.dataset.row) - randomCharIndex;
+                                const col = parseInt(cell.dataset.col);
+                                
+                                if (canPlaceWordVertically(word, row, col) && 
+                                    checkCrossingConstraints(word, row, col, false)) {
+                                    placeWordVertically(word, row, col, wordObj);
+                                    placedWords.push({
+                                        word: word, 
+                                        row: row, 
+                                        col: col, 
+                                        horizontal: false, 
+                                        definition: wordObj.definition,
+                                        number: wordNumber++
+                                    });
+                                    placed = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                showNumberedCells();
+            }
+            
+            function showNumberedCells() {
+                for (let i = 0; i < gridSize; i++) {
+                    for (let j = 0; j < gridSize; j++) {
+                        if (solutionGrid[i][j] !== '' && solutionGrid[i][j] !== ' ') {
+                            const cell = document.querySelector(`.grid-cell[data-row="${i}"][data-col="${j}"]`);
+                            cell.classList.remove('empty');
+                            cell.classList.add('filled');
+                            
+                            for (const wordInfo of placedWords) {
+                                if (wordInfo.row === i && wordInfo.col === j) {
+                                    cell.classList.add('numbered');
+                                    const numberEl = document.createElement('span');
+                                    numberEl.className = 'cell-number';
+                                    numberEl.textContent = wordInfo.number;
+                                    cell.appendChild(numberEl);
+                                    
+                                    cell.addEventListener('mouseover', function(e) {
+                                        showTooltip(e, wordInfo.definition);
+                                    });
+                                    cell.addEventListener('mousemove', function(e) {
+                                        moveTooltip(e);
+                                    });
+                                    cell.addEventListener('mouseout', function() {
+                                        hideTooltip();
+                                    });
+                                }
+                            }
+                        } else if (solutionGrid[i][j] === ' ') {
+                            const cell = document.querySelector(`.grid-cell[data-row="${i}"][data-col="${j}"]`);
+                            cell.classList.remove('empty');
+                            cell.classList.add('space');
+                        }
+                    }
+                }
+            }
+            
+            function findMatchingCells(char) {
+                const cells = [];
+                for (let i = 0; i < gridSize; i++) {
+                    for (let j = 0; j < gridSize; j++) {
+                        if (solutionGrid[i][j] === char && solutionGrid[i][j] !== ' ') {
+                            cells.push(document.querySelector(`.grid-cell[data-row="${i}"][data-col="${j}"]`));
+                        }
+                    }
+                }
+                return cells;
+            }
+            
+            function canPlaceWordHorizontally(word, row, col) {
+                if (col < 0 || col + word.length > gridSize) return false;
+                
+                for (let i = 0; i < word.length; i++) {
+                    const currentChar = solutionGrid[row][col + i];
+                    if (currentChar !== '' && currentChar !== word[i] && word[i] !== ' ') {
+                        return false;
+                    }
+                }
+                
+                return true;
+            }
+            
+            function canPlaceWordVertically(word, row, col) {
+                if (row < 0 || row + word.length > gridSize) return false;
+                
+                for (let i = 0; i < word.length; i++) {
+                    const currentChar = solutionGrid[row + i][col];
+                    if (currentChar !== '' && currentChar !== word[i] && word[i] !== ' ') {
+                        return false;
+                    }
+                }
+                
+                return true;
+            }
+            
+            function checkCrossingConstraints(word, row, col, isHorizontal) {
+                if (isHorizontal) {
+                    // Vérifications existantes pour les croisements
+                    for (let i = 0; i < word.length; i++) {
+                        const currentRow = row;
+                        const currentCol = col + i;
+                        
+                        if (word[i] === ' ') continue;
+                        if (solutionGrid[currentRow][currentCol] !== '') {
+                            continue;
+                        }
+                        
+                        if (currentRow > 0 && solutionGrid[currentRow-1][currentCol] !== '' && solutionGrid[currentRow-1][currentCol] !== ' ') return false;
+                        if (currentRow < gridSize-1 && solutionGrid[currentRow+1][currentCol] !== '' && solutionGrid[currentRow+1][currentCol] !== ' ') return false;
+                        
+                        if (i === 0 && currentCol > 0 && solutionGrid[currentRow][currentCol-1] !== '' && solutionGrid[currentRow][currentCol-1] !== ' ') return false;
+                        if (i === word.length-1 && currentCol < gridSize-1 && solutionGrid[currentRow][currentCol+1] !== '' && solutionGrid[currentRow][currentCol+1] !== ' ') return false;
+                    }
+                    
+                    // Nouvelle vérification pour éviter la concaténation horizontale non désirée
+                    if (col > 0 && solutionGrid[row][col-1] !== '' && solutionGrid[row][col-1] !== ' ') {
+                        let concatenatedWord = '';
+                        // Lire vers la gauche jusqu'à une cellule vide ou hors grille
+                        let leftCol = col - 1;
+                        while (leftCol >= 0 && solutionGrid[row][leftCol] !== '' && solutionGrid[row][leftCol] !== ' ') {
+                            concatenatedWord = solutionGrid[row][leftCol] + concatenatedWord;
+                            leftCol--;
+                        }
+                        // Ajouter le mot proposé
+                        concatenatedWord += word;
+                        // Vérifier si le mot concaténé est valide mais non prévu
+                        if (words.some(w => w.name === concatenatedWord) && !placedWords.some(pw => pw.word === concatenatedWord)) {
+                            return false;
+                        }
+                    }
+                    if (col + word.length < gridSize && solutionGrid[row][col + word.length] !== '' && solutionGrid[row][col + word.length] !== ' ') {
+                        let concatenatedWord = word;
+                        // Lire vers la droite jusqu'à une cellule vide ou hors grille
+                        let rightCol = col + word.length;
+                        while (rightCol < gridSize && solutionGrid[row][rightCol] !== '' && solutionGrid[row][rightCol] !== ' ') {
+                            concatenatedWord += solutionGrid[row][rightCol];
+                            rightCol++;
+                        }
+                        // Vérifier si le mot concaténé est valide mais non prévu
+                        if (words.some(w => w.name === concatenatedWord) && !placedWords.some(pw => pw.word === concatenatedWord)) {
+                            return false;
+                        }
+                    }
+                } else {
+                    // Vérifications existantes pour les mots verticaux
+                    for (let i = 0; i < word.length; i++) {
+                        const currentRow = row + i;
+                        const currentCol = col;
+                        
+                        if (word[i] === ' ') continue;
+                        if (solutionGrid[currentRow][currentCol] !== '') {
+                            continue;
+                        }
+                        
+                        if (currentCol > 0 && solutionGrid[currentRow][currentCol-1] !== '' && solutionGrid[currentRow][currentCol-1] !== ' ') return false;
+                        if (currentCol < gridSize-1 && solutionGrid[currentRow][currentCol+1] !== '' && solutionGrid[currentRow][currentCol+1] !== ' ') return false;
+                        
+                        if (i === 0 && currentRow > 0 && solutionGrid[currentRow-1][currentCol] !== '' && solutionGrid[currentRow-1][currentCol] !== ' ') return false;
+                        if (i === word.length-1 && currentRow < gridSize-1 && solutionGrid[currentRow+1][currentCol] !== '' && solutionGrid[currentRow+1][currentCol] !== ' ') return false;
+                    }
+                }
+                
+                return true;
+            }
+            
+            function placeWordHorizontally(word, row, col, wordObj) {
+                for (let i = 0; i < word.length; i++) {
+                    solutionGrid[row][col + i] = word[i];
+                }
+            }
+            
+            function placeWordVertically(word, row, col, wordObj) {
+                for (let i = 0; i < word.length; i++) {
+                    solutionGrid[row + i][col] = word[i];
+                }
+            }
+            
+            function showCorrection() {
+                let correctWords = 0;
+                
+                for (let i = 0; i < gridSize; i++) {
+                    for (let j = 0; j < gridSize; j++) {
+                        if (solutionGrid[i][j] !== '' && solutionGrid[i][j] !== ' ') {
+                            const cell = document.querySelector(`.grid-cell[data-row="${i}"][data-col="${j}"]`);
+                            
+                            if (cell.textContent === solutionGrid[i][j]) {
+                                cell.classList.add('correct');
+                                correctWords++;
+                            } else {
+                                cell.classList.add('incorrect');
+                            }
+                            
+                            cell.textContent = solutionGrid[i][j];
+                        }
+                    }
+                }
+                
+                currentScore = correctWords;
+                totalScore += correctWords;
+                updateScoreDisplay();
+                
+                correctionBtn.textContent = "↺";
+                correctionBtn.classList.add('refresh-mode');
+                correctionBtn.title = "générer une nouvelle grille";
+                helpBtn.disabled = true;
+                correctionShown = true;
+            }
+            
+            function toggleHelpMode() {
+                if (helpBtn.disabled) return;
+                
+                isHelpMode = !isHelpMode;
+                helpBtn.textContent = isHelpMode ? "Mode aide (ON)" : "Aide";
+                
+                if (isHelpMode) {
+                    addHelpLetters();
+                }
+            }
+            
+            function addHelpLetters() {
+                let lettersAdded = 0;
+                const maxLettersToAdd = Math.floor(placedWords.length * 0.3);
+                
+                while (lettersAdded < maxLettersToAdd) {
+                    const randomWordIndex = Math.floor(Math.random() * placedWords.length);
+                    const wordInfo = placedWords[randomWordIndex];
+                    const word = wordInfo.word;
+                    
+                    const randomLetterIndex = Math.floor(Math.random() * word.length);
+                    if (word[randomLetterIndex] === ' ') continue;
+                    
+                    let row, col;
+                    
+                    if (wordInfo.horizontal) {
+                        row = wordInfo.row;
+                        col = wordInfo.col + randomLetterIndex;
+                    } else {
+                        row = wordInfo.row + randomLetterIndex;
+                        col = wordInfo.col;
+                    }
+                    
+                    const cell = document.querySelector(`.grid-cell[data-row="${row}"][data-col="${col}"]`);
+                    
+                    if (cell.textContent === '' && !cell.classList.contains('space')) {
+                        cell.textContent = word[randomLetterIndex];
+                        cell.classList.remove('empty');
+                        cell.classList.add('filled');
+                        lettersAdded++;
+                    }
+                }
+            }
+            
+            function showScoreDetails() {
+                alert(`Score actuel: ${currentScore} bonnes réponses sur ${totalWordsInGame} mots possibles\nScore total cumulé: ${totalScore}`);
+            }
+            
+            function updateScoreDisplay() {
+                currentScoreElement.textContent = currentScore;
+                totalScoreElement.textContent = totalScore;
+            }
+            
+            function showTooltip(e, definition) {
+                tooltip.innerHTML = `<div>${definition}</div>`;
+                tooltip.style.display = 'block';
+                tooltip.style.opacity = '1';
+                moveTooltip(e);
+            }
+            
+            function moveTooltip(e) {
+                const x = e.clientX + 10;
+                const y = e.clientY + 10;
+                tooltip.style.left = `${x}px`;
+                tooltip.style.top = `${y}px`;
+            }
+            
+            function hideTooltip() {
+                tooltip.style.opacity = '0';
+                setTimeout(() => {
+                    tooltip.style.display = 'none';
+                }, 300);
+            }
+        });
+    </script>
 </body>
 </html>
