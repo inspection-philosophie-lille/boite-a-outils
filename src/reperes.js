@@ -1,13 +1,9 @@
-const onglet = "apparier des mots";
-const title = "apparier des mots";
-const subtitle = "réviser les repères en associant un élément à un autre";
-
 const reperes = [
   {
     definition: "absolu/relatif",
     parts: [
       {
-        name: "absoluttt",
+        name: "absolu",
         definition: "Ce qui est indépendant de toute condition ou relationttt.",
         examples: [
           "La vitesse de la lumière dans le vide est constante, indépendamment du référentiel.",
@@ -18,7 +14,7 @@ const reperes = [
         ]
       },
       {
-        name: "relatifff",
+        name: "relatif",
         definition: "Ce qui dépend de conditions ou de relations.",
         examples: [
           "La perception du temps varie selon la vitesse de déplacement d'un observateur.",
@@ -34,7 +30,7 @@ const reperes = [
     definition: "abstrait/concret",
     parts: [
       {
-        name: "abstraittt",
+        name: "abstrait",
         definition: "Ce qui n'a pas de réalité tangible et qui est souvent difficile à saisir.",
         examples: [
           "Les émotions telles que la tristesse ou la joie.",
@@ -45,7 +41,7 @@ const reperes = [
         ]
       },
       {
-        name: "concretttt",
+        name: "concret",
         definition: "Ce qui a une existence réelle et tangible.",
         examples: [
           "Un bâtiment que l'on peut toucher et visiter.",
@@ -61,7 +57,7 @@ const reperes = [
     definition: "en acte/en puissance",
     parts: [
       {
-        name: "en acteee",
+        name: "en acte",
         definition: "Ce qui est réalisé ou mis en œuvre dans la réalité.",
         examples: [
           "Un sportif qui participe à une compétition.",
@@ -88,7 +84,7 @@ const reperes = [
     definition: "analyse/synthèse",
     parts: [
       {
-        name: "analyseeeee",
+        name: "analyse",
         definition: "Le processus de décomposition d'un tout en ses éléments constitutifs.",
         examples: [
           "L'examen des composants d'un texte littéraire pour en comprendre le sens.",
