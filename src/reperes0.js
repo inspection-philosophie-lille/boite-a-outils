@@ -1,12 +1,10 @@
-const onglet = "apparier des mots";
-const title = "apparier des mots";
-const subtitle = "réviser les repères en associant un élément à un autre";
-
 const reperes = [
-
+  {
+    definition: "absolu/relatif",
+    parts: [
       {
         name: "absolu",
-        definition: "Ce qui est indépendant de toute condition ou relation.",
+        definition: "Ce qui est indépendant de toute condition ou relationttt.",
         examples: [
           "La vitesse de la lumière dans le vide est constante, indépendamment du référentiel.",
           "Les lois de la physique sont invariantes dans tous les systèmes de référence inertiels.",
@@ -25,7 +23,12 @@ const reperes = [
           "Le poids d'un objet change en fonction de la gravité de la planète où il se trouve.",
           "La notion de succès varie selon les critères personnels et sociaux."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "abstrait/concret",
+    parts: [
       {
         name: "abstrait",
         definition: "Ce qui n'a pas de réalité tangible et qui est souvent difficile à saisir.",
@@ -47,7 +50,12 @@ const reperes = [
           "Un événement marquant comme un mariage.",
           "Une expérience vécue qui a un impact direct sur une personne."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "en acte/en puissance",
+    parts: [
       {
         name: "en acte",
         definition: "Ce qui est réalisé ou mis en œuvre dans la réalité.",
@@ -69,7 +77,12 @@ const reperes = [
           "Une idée qui pourrait changer le monde si elle était mise en œuvre.",
           "Un talent latent qui peut se développer avec la pratique."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "analyse/synthèse",
+    parts: [
       {
         name: "analyse",
         definition: "Le processus de décomposition d'un tout en ses éléments constitutifs.",
@@ -91,7 +104,12 @@ const reperes = [
           "Construire un plan d'action basé sur des recherches diverses.",
           "Fournir une réponse intégrée à une question complexe en réunissant différentes perspectives."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "concept/image/métaphore",
+    parts: [
       {
         name: "concept",
         definition: "Une idée abstraite qui représente un ensemble de propriétés ou de caractéristiques.",
@@ -124,7 +142,12 @@ const reperes = [
           "Un océan de tristesse l'envahit.",
           "La vie est un voyage parsemé d'embûches."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "contingent/nécessaire",
+    parts: [
       {
         name: "contingent",
         definition: "Ce qui est soumis à des conditions ou des événements extérieurs.",
@@ -146,7 +169,12 @@ const reperes = [
           "La nécessité de respirer pour survivre.",
           "Les exigences légales qui doivent être respectées."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "croire/savoir",
+    parts: [
       {
         name: "croire",
         definition: "Accepter quelque chose comme vrai sans preuve définitive.",
@@ -168,7 +196,12 @@ const reperes = [
           "Savoir cuisiner des plats traditionnels grâce à la pratique.",
           "Comprendre les principes scientifiques derrière des phénomènes naturels."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "essentiel/accidentel",
+    parts: [
       {
         name: "essentiel",
         definition: "Ce qui est fondamental et indispensable.",
@@ -190,7 +223,12 @@ const reperes = [
           "Un détail dans une œuvre d'art sans impact sur le message principal.",
           "Une rencontre fortuite sans conséquence significative."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "exemple/preuve",
+    parts: [
       {
         name: "exemple",
         definition: "Un cas spécifique qui illustre un point ou une idée.",
@@ -212,7 +250,12 @@ const reperes = [
           "Des enregistrements ou des vidéos servant de vérification.",
           "Des données quantitatives soutenant une théorie."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "expliquer/comprendre",
+    parts: [
       {
         name: "expliquer",
         definition: "Rendre clair ou intelligible un sujet ou une idée.",
@@ -234,7 +277,12 @@ const reperes = [
           "Envisager les conséquences d'un acte.",
           "Percevoir les émotions d'une personne à travers ses expressions."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "en fait/en droit",
+    parts: [
       {
         name: "en fait",
         definition: "Ce qui est réellement ou objectivement vrai.",
@@ -256,7 +304,12 @@ const reperes = [
           "Une décision d'un tribunal fondée sur la législation.",
           "Une obligation légale découlant d'un contrat."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "formel/matériel",
+    parts: [
       {
         name: "formel",
         definition: "Concernant les aspects structurels ou procéduraux.",
@@ -278,7 +331,12 @@ const reperes = [
           "Un produit tangible à vendre sur le marché.",
           "Les outils nécessaires pour effectuer une tâche."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "genre/espèce/individu",
+    parts: [
       {
         name: "genre",
         definition: "Une catégorie qui regroupe des éléments ayant des caractéristiques communes.",
@@ -311,7 +369,12 @@ const reperes = [
           "Un étudiant dans une classe.",
           "Une œuvre d'art créée par un artiste."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "hypothèse/conséquence/conclusion",
+    parts: [
       {
         name: "hypothèse",
         definition: "Une supposition ou proposition à tester.",
@@ -344,7 +407,12 @@ const reperes = [
           "Un jugement final formé après une enquête.",
           "Une évaluation des conséquences d'une action."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "idéal/réel",
+    parts: [
       {
         name: "idéal",
         definition: "Un état de perfection qui peut être souhaité mais rarement atteint.",
@@ -366,7 +434,12 @@ const reperes = [
           "Les problèmes de santé qui touchent la population.",
           "Les événements historiques qui ont façonné le monde."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "identité/égalité/différence",
+    parts: [
       {
         name: "identité",
         definition: "L'ensemble des caractéristiques qui définissent un individu ou un groupe.",
@@ -399,7 +472,12 @@ const reperes = [
           "Les expériences personnelles qui façonnent les opinions.",
           "Les intérêts ou passions qui varient d'une personne à l'autre."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "impossible/possible",
+    parts: [
       {
         name: "impossible",
         definition: "Ce qui ne peut pas se produire ou être réalisé.",
@@ -421,7 +499,12 @@ const reperes = [
           "Une amélioration des relations interpersonnelles par la communication.",
           "L'atteinte d'objectifs personnels avec de la détermination."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "intuitif/discursif",
+    parts: [
       {
         name: "intuitif",
         definition: "Ce qui se comprend ou se ressent sans raisonnement explicite.",
@@ -443,7 +526,12 @@ const reperes = [
           "Une présentation qui suit une logique claire.",
           "Un article analytique qui examine des données et des conclusions."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "légal/légitime",
+    parts: [
       {
         name: "légal",
         definition: "Ce qui est conforme aux lois établies.",
@@ -465,7 +553,12 @@ const reperes = [
           "Un acte de désobéissance civile pour dénoncer une injustice.",
           "Une lutte pour la protection de l'environnement."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "médiat/immédiat",
+    parts: [
       {
         name: "médiat",
         definition: "Ce qui est intermédiaire ou qui passe par un intermédiaire.",
@@ -487,7 +580,12 @@ const reperes = [
           "Une décision prise sur un coup de tête.",
           "Les émotions qui émergent sans réflexion préalable."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "objectif/subjectif/intersubjectif",
+    parts: [
       {
         name: "objectif",
         definition: "Ce qui est basé sur des faits et des observations mesurables.",
@@ -520,7 +618,12 @@ const reperes = [
           "Une expérience collective dans un groupe.",
           "Des croyances partagées au sein d'une communauté."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "obligation/contrainte",
+    parts: [
       {
         name: "obligation",
         definition: "Une exigence ou un devoir imposé, souvent par des lois ou des normes.",
@@ -542,7 +645,12 @@ const reperes = [
           "Les obligations familiales qui restreignent la liberté personnelle.",
           "Les conditions de marché qui influencent une entreprise."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "origine/fondement",
+    parts: [
       {
         name: "origine",
         definition: "Le point de départ ou la source d'où quelque chose provient.",
@@ -564,7 +672,12 @@ const reperes = [
           "Les croyances fondamentales d'une philosophie.",
           "Les bases d'une relation solide entre des individus."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "persuader/convaincre",
+    parts: [
       {
         name: "persuader",
         definition: "Amener quelqu'un à adopter une opinion ou une action par des arguments.",
@@ -586,7 +699,12 @@ const reperes = [
           "Une preuve irréfutable qui confirme une affirmation.",
           "Une expérience personnelle partagée qui touche les émotions."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "principe/cause/fin",
+    parts: [
       {
         name: "principe",
         definition: "Une règle ou une croyance fondamentale qui guide le comportement.",
@@ -619,7 +737,12 @@ const reperes = [
           "L'intention d'un projet artistique de provoquer une réflexion.",
           "L'aspiration d'une société à garantir le bien-être de tous ses membres."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "public/privé",
+    parts: [
       {
         name: "public",
         definition: "Ce qui est accessible à tous, sans restriction.",
@@ -641,7 +764,12 @@ const reperes = [
           "Les informations confidentielles d'une entreprise.",
           "Les moments d'intimité partagés avec un partenaire."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "ressemblance/analogie",
+    parts: [
       {
         name: "ressemblance",
         definition: "Ce qui est similaire ou semblable.",
@@ -663,7 +791,12 @@ const reperes = [
           "Le cycle de l'eau sur Terre qui est analogue à la circulation sanguine dans le corps.",
           "La structure d'une entreprise qui est souvent comparée à celle d'un organisme vivant."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "théorie/pratique",
+    parts: [
       {
         name: "théorie",
         definition: "Un ensemble d'idées ou de principes qui expliquent un phénomène.",
@@ -685,7 +818,12 @@ const reperes = [
           "Un entraînement sportif pour améliorer les performances.",
           "La mise en œuvre d'une stratégie marketing sur le terrain."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "transcendant/immanent",
+    parts: [
       {
         name: "transcendant",
         definition: "Ce qui est au-delà des limites de l'expérience humaine.",
@@ -707,7 +845,12 @@ const reperes = [
           "Les principes éthiques ancrés dans la société.",
           "Les valeurs culturelles qui façonnent l'identité d'un groupe."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "universel/général/particulier/singulier",
+    parts: [
       {
         name: "universel",
         definition: "Ce qui est valable pour tous et en tout lieu.",
@@ -751,7 +894,12 @@ const reperes = [
           "Une théorie révolutionnaire qui remet en question l'établissement.",
           "Une passion personnelle qui définit une identité."
         ]
-      },
+      }
+    ]
+  },
+  {
+    definition: "vrai/probable/certain",
+    parts: [
       {
         name: "vrai",
         definition: "Ce qui est conforme à la réalité et vérifiable.",

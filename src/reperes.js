@@ -1,4 +1,4 @@
-const reperes = [
+window.reperes = [
   {
     definition: "absolu/relatif",
     parts: [
