@@ -1,0 +1,5 @@
+dans le dossier repère, il faut ajouter la toute fin dans le fichier central !
+début a été aussi modifié !
+
+Lorsque l'affichage est en desktop ou en mobile, est-ce que tu peux faire que toute la hauteur soit visible, du titre au bas de la grille ? 
+En sorte que l'on est pas besoin de "scroller" verticalement !
