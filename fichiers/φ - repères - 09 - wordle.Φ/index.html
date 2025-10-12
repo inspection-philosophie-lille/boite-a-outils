@@ -1,0 +1,2339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#00CC00">
+    <meta name="description" content="Devinez un mot de longueur variable en 6 essais !">
+    <title>wordle.Φ</title>
+	<link rel="icon" href="../../src/favicon.ico">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: sans-serif;
+            background-color: #e0e5ec;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 10px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode {
+            background-color: #1a1a1a;
+        }
+        
+        .main {
+            background-color: #e0e5ec;
+            color: #333;
+            width: 100%;
+            max-width: 500px;
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .main {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            padding: 10px 15px;
+            flex-shrink: 0;
+            height: 60px;
+            background: #e0e5ec;
+            margin: 0; /* Marge réduite à 0 */
+            border-radius: 0; /* Pas de bordure arrondie */
+        }
+        
+        body.dark-mode .toolbar {
+            background: #2d2d2d;
+        }
+        
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            z-index: 1;
+            flex: 1;
+            justify-content: flex-start;
+        }
+        
+        .toolbar-center {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+        
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            z-index: 1;
+            flex: 1;
+            justify-content: flex-end;
+            position: relative;
+        }
+        
+        .app-title {
+            margin: 0;
+            font-size: 28px;
+            font-weight: normal;
+            text-align: center;
+            color: #555;
+            pointer-events: auto;
+        }
+        
+        body.dark-mode .app-title {
+            color: #e0e0e0;
+        }
+        
+        .app-title span {
+            color: #00CC00;
+        }
+        
+        .infinity {
+            position: absolute;
+            top: 70%;
+            left: calc(50% - 80px);
+            padding: 5px 10px 3px;
+            line-height: 1;
+            font-size: 12px;
+            color: #fff;
+            white-space: nowrap;
+            background-color: #00CC00;
+            transform: rotate(-7deg);
+            box-shadow: 0 5px 10px -2px rgba(0,0,0,.3);
+            display: none;
+            border-radius: 10px;
+        }
+        
+        .toolbar-btn {
+            position: relative;
+            z-index: 1;
+            padding: 8px;
+            cursor: pointer;
+            background: #e0e5ec;
+            border: none;
+            color: #666;
+            font-size: 18px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        
+        body.dark-mode .toolbar-btn {
+            background: #2d2d2d;
+            color: #b0b0b0;
+        }
+        
+        .toolbar-btn:hover {
+            color: #333;
+            background-color: #f0f0f0;
+        }
+        
+        body.dark-mode .toolbar-btn:hover {
+            color: #e0e0e0;
+            background-color: #3d3d3d;
+        }
+        
+        .toolbar-btn.active {
+            color: #333;
+        }
+        
+        body.dark-mode .toolbar-btn.active {
+            color: #e0e0e0;
+        }
+        
+        .svg-icon {
+            width: 36px;
+            height: 36px;
+            fill: currentColor;
+        }
+
+        .toolbar-btn .svg-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* Styles pour l'icône hamburger */
+        .hamburger-icon {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 18px;
+            height: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            width: 18px;
+            height: 3px;
+            background-color: currentColor;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .toolbar-btn.active .hamburger-icon {
+            transform: rotate(90deg);
+        }
+
+        .toolbar-btn.active .hamburger-icon span {
+            transform: none;
+        }
+
+        /* Menu coulissant */
+        .slide-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100vh;
+            background-color: #e0e5ec;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 1001;
+            padding: 80px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            border-radius: 20px 0 0 20px;
+        }
+
+        body.dark-mode .slide-menu {
+            background-color: #2d2d2d;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+        }
+
+        .slide-menu.open {
+            right: 0;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: none;
+            background: #e0e5ec;
+            color: #333;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            margin-bottom: 5px;
+        }
+
+        body.dark-mode .menu-item {
+            background: #2d2d2d;
+            color: #e0e0e0;
+        }
+
+        .menu-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        body.dark-mode .menu-item:hover {
+            background-color: #3d3d3d;
+        }
+
+        .menu-item .svg-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+        }
+
+        /* Adaptation pour petits écrans */
+        @media (max-height: 600px) {
+            .toolbar-btn .svg-icon {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .toolbar-btn {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .toolbar {
+                height: 50px;
+                padding: 8px 12px;
+            }
+            
+            .app-title {
+                font-size: 24px;
+            }
+
+            .hamburger-icon {
+                width: 16px;
+                height: 12px;
+            }
+
+            .hamburger-icon span {
+                width: 16px;
+                height: 2px;
+            }
+
+            .slide-menu {
+                width: 250px;
+                padding: 60px 15px 15px;
+            }
+        }
+
+        @media (max-height: 500px) {
+            .toolbar-btn .svg-icon {
+                width: 24px;
+                height: 24px;
+            }
+            
+            .toolbar-btn {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .toolbar {
+                height: 45px;
+                padding: 6px 10px;
+            }
+            
+            .app-title {
+                font-size: 22px;
+            }
+
+            .hamburger-icon {
+                width: 14px;
+                height: 10px;
+            }
+
+            .hamburger-icon span {
+                width: 14px;
+                height: 2px;
+            }
+
+            .slide-menu {
+                width: 220px;
+                padding: 50px 10px 10px;
+            }
+        }
+        
+        .toast-msg {
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            top: 65px; /* Remonté pour être plus proche du titre */
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .toast-msg .inner {
+            padding: 10px 16px;
+            background-color: #333;
+            color: #fff;
+            border-radius: 12px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 4px 4px 8px rgba(0,0,0,0.2);
+            font-size: 14px;
+        }
+        
+        body.dark-mode .toast-msg .inner {
+            background-color: #444;
+        }
+        
+        .game-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+            padding: 0; /* Padding supprimé */
+            gap: 0; /* Gap réduit à 0 */
+        }
+        
+        .user-entries {
+            padding: 5px;
+            background: #e0e5ec;
+            flex: 0.6; /* Réduit de 1 à 0.6 pour diminuer la hauteur */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 0;
+            border-radius: 0; /* Pas de bordure arrondie */
+            margin: 0; /* Marge réduite à 0 */
+        }
+        
+        body.dark-mode .user-entries {
+            background: #2d2d2d;
+        }
+        
+        .entry {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2px; /* Réduit de 4px à 2px */
+            flex-shrink: 0;
+        }
+        
+        .letter {
+            margin: 1px; /* Réduit de 2px à 1px */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 8px; /* Légèrement réduit */
+            background: #e0e5ec;
+            color: #333;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            flex-shrink: 0;
+            min-width: 40px;
+            height: 50px;
+            transform-style: preserve-3d;
+        }
+        
+        body.dark-mode .letter {
+            background: #2d2d2d;
+            color: #e0e0e0;
+        }
+        
+        .letter.flip {
+            animation: flip 0.6s ease-in-out;
+        }
+        
+        .letter.pop {
+            animation: pop 0.2s ease-in-out;
+        }
+        
+        .letter.shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        @keyframes flip {
+            0% { transform: rotateX(0); }
+            50% { transform: rotateX(90deg); }
+            100% { transform: rotateX(0); }
+        }
+        
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        /* Désactiver les animations si le paramètre est désactivé */
+        body.no-animations .letter.flip,
+        body.no-animations .letter.pop,
+        body.no-animations .letter.shake {
+            animation: none !important;
+        }
+        
+        /* Système responsive intelligent pour les lettres */
+        .letter {
+            flex: 1;
+            max-width: 60px;
+        }
+        
+        /* Adaptation pour grands écrans (desktop) */
+        @media (min-width: 768px) {
+            .letter {
+                max-width: 70px;
+                height: 60px;
+                font-size: 28px;
+            }
+            
+            .main {
+                max-width: 600px;
+            }
+        }
+        
+        /* Adaptation pour très petits écrans */
+        @media (max-width: 380px) {
+            .letter {
+                height: 35px;
+                margin: 1px;
+                font-size: 16px;
+                max-width: 30px;
+                border-radius: 6px;
+            }
+            
+            .entry {
+                margin-bottom: 1px;
+            }
+        }
+        
+        /* Adaptation pour écrans moyens (tablettes) */
+        @media (max-width: 480px) {
+            .letter {
+                height: 40px;
+                margin: 1px;
+                font-size: 18px;
+                max-width: 35px;
+                border-radius: 6px;
+            }
+        }
+        
+        /* Adaptation hauteur écran */
+        @media (max-height: 700px) {
+            .letter {
+                height: 40px;
+                margin: 1px;
+            }
+            
+            .entry {
+                margin-bottom: 1px;
+            }
+            
+            .user-entries {
+                padding: 3px;
+            }
+        }
+        
+        @media (max-height: 600px) {
+            .letter {
+                height: 35px;
+                margin: 1px;
+            }
+            
+            .entry {
+                margin-bottom: 1px;
+            }
+            
+            .user-entries {
+                padding: 2px;
+            }
+        }
+        
+        @media (max-height: 500px) {
+            .letter {
+                height: 30px;
+                margin: 1px;
+                font-size: 14px;
+            }
+            
+            .entry {
+                margin-bottom: 1px;
+            }
+            
+            .user-entries {
+                padding: 1px;
+            }
+        }
+        
+        /* Styles pour les lettres avec couleurs */
+        .letter.v0 {
+            background: #888;
+            color: white;
+        }
+        
+        .letter.v1 {
+            background: #b59f3b;
+            color: white;
+        }
+        
+        .letter.v2 {
+            background: #00CC00;
+            color: white;
+        }
+        
+        /* Mode daltonien */
+        body.color-blind .letter.v0 {
+            background: #666666;
+        }
+        
+        body.color-blind .letter.v1 {
+            background: #ff8c00;
+        }
+        
+        body.color-blind .letter.v2 {
+            background: #1e90ff;
+        }
+        
+        body.dark-mode.color-blind .letter.v0 {
+            background: #888888;
+        }
+        
+        body.dark-mode.color-blind .letter.v1 {
+            background: #ffa500;
+        }
+        
+        body.dark-mode.color-blind .letter.v2 {
+            background: #4169e1;
+        }
+        
+        .letter .hint {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            z-index: 1;
+            color: rgba(0,0,0,0.3);
+            text-align: center;
+            font-size: 10px;
+            padding-top: 2px;
+        }
+        
+        .keyboard {
+            flex-shrink: 0;
+            padding: 8px; /* Réduit de 10px à 8px */
+            margin: 0; /* Marge réduite à 0 */
+            background: #e0e5ec;
+            border-radius: 0; /* Pas de bordure arrondie */
+        }
+        
+        body.dark-mode .keyboard {
+            background: #2d2d2d;
+        }
+        
+        .keyboard-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 4px; /* Réduit de 6px à 4px */
+        }
+        
+        .keyboard-key {
+            height: 50px;
+            margin: 2px; /* Réduit de 3px à 2px */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 10px; /* Légèrement réduit */
+            background: #e0e5ec;
+            color: #333;
+            border: none;
+            min-width: 30px;
+            transition: all 0.2s ease;
+            flex: 1;
+            max-width: 45px;
+        }
+        
+        body.dark-mode .keyboard-key {
+            background: #2d2d2d;
+            color: #e0e0e0;
+        }
+        
+        /* Adaptation du clavier pour desktop */
+        @media (min-width: 768px) {
+            .keyboard-key {
+                height: 55px;
+                max-width: 50px;
+                font-size: 18px;
+            }
+        }
+        
+        /* Adaptation du clavier pour petits écrans */
+        @media (max-height: 700px) {
+            .keyboard-key {
+                height: 40px;
+                font-size: 14px;
+                min-width: 25px;
+                max-width: 35px;
+                margin: 1px;
+            }
+            
+            .keyboard {
+                padding: 6px;
+            }
+        }
+        
+        @media (max-height: 600px) {
+            .keyboard-key {
+                height: 35px;
+                font-size: 13px;
+                min-width: 22px;
+                max-width: 30px;
+                margin: 1px;
+            }
+            
+            .keyboard {
+                padding: 4px;
+            }
+            
+            .keyboard-row {
+                margin-bottom: 3px;
+            }
+        }
+        
+        @media (max-height: 500px) {
+            .keyboard-key {
+                height: 30px;
+                font-size: 12px;
+                min-width: 20px;
+                max-width: 25px;
+                margin: 1px;
+            }
+            
+            .keyboard {
+                padding: 3px;
+            }
+            
+            .keyboard-row {
+                margin-bottom: 2px;
+            }
+        }
+        
+        /* Adaptation clavier très petits écrans */
+        @media (max-width: 380px) {
+            .keyboard-key {
+                height: 35px;
+                font-size: 13px;
+                min-width: 22px;
+                max-width: 28px;
+                margin: 1px;
+                border-radius: 8px;
+            }
+            
+            .keyboard-key.wide {
+                min-width: 40px;
+            }
+        }
+        
+        .keyboard-key:hover {
+            background: #d0d0d0;
+            color: #000;
+        }
+        
+        body.dark-mode .keyboard-key:hover {
+            background: #3d3d3d;
+            color: #ffffff;
+        }
+        
+        .keyboard-key.fn {
+            background: #c0c0c0;
+        }
+        
+        body.dark-mode .keyboard-key.fn {
+            background: #3d3d3d;
+        }
+        
+        .keyboard-key.k0 {
+            background: #888;
+            color: white;
+        }
+        
+        .keyboard-key.k1 {
+            background: #b59f3b;
+            color: white;
+        }
+        
+        .keyboard-key.k2 {
+            background: #00CC00;
+            color: white;
+        }
+        
+        /* Mode daltonien pour le clavier */
+        body.color-blind .keyboard-key.k0 {
+            background: #666666;
+        }
+        
+        body.color-blind .keyboard-key.k1 {
+            background: #ff8c00;
+        }
+        
+        body.color-blind .keyboard-key.k2 {
+            background: #1e90ff;
+        }
+        
+        body.dark-mode.color-blind .keyboard-key.k0 {
+            background: #888888;
+        }
+        
+        body.dark-mode.color-blind .keyboard-key.k1 {
+            background: #ffa500;
+        }
+        
+        body.dark-mode.color-blind .keyboard-key.k2 {
+            background: #4169e1;
+        }
+        
+        /* Styles pour les touches larges (Backspace et Entrée) */
+        .keyboard-key.wide {
+            min-width: 60px;
+            flex: 1.5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 2px;
+            margin-left: 2px;
+            margin-right: 2px;
+            margin-top: 1px;
+            padding-right: 0px;	
+            color: white;
+        }
+        
+        /* Adaptation touches larges pour petits écrans */
+        @media (max-width: 380px) {
+            .keyboard-key.wide {
+                min-width: 40px;
+            }
+        }
+        
+        /* Style spécifique pour la touche Entrée */
+        .keyboard-key.enter-key {
+            font-size: 28px;
+            line-height: 1;
+            padding-top: 0;
+            padding-bottom: 5px;
+        }
+        
+        /* Adaptation touche Entrée pour petits écrans */
+        @media (max-width: 380px) {
+            .keyboard-key.enter-key {
+                font-size: 24px;
+            }
+        }
+        
+        /* Styles pour les modales */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        .modal {
+            background: #e0e5ec;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            color: #333;
+        }
+        
+        body.dark-mode .modal {
+            background: #2d2d2d;
+            color: #e0e0e0;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+        }
+        
+        body.dark-mode .modal-header {
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00CC00;
+        }
+        
+        .modal-close {
+            background: #e0e5ec;
+            border: none;
+            color: #888;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .modal-close {
+            background: #2d2d2d;
+            color: #b0b0b0;
+        }
+        
+        .modal-close:hover {
+            color: #333;
+        }
+        
+        body.dark-mode .modal-close:hover {
+            color: #e0e0e0;
+        }
+        
+        .modal-content {
+            margin-bottom: 20px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .btn {
+        }
+        
+        .btn-primary {
+            background-color: #00CC00;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #00AA00;
+            transform: translateY(-2px);
+        }
+        
+        body.dark-mode .btn-primary:hover {
+        }
+        
+        .btn-secondary {
+            background-color: #e0e5ec;
+            color: #333;
+        }
+        
+        body.dark-mode .btn-secondary {
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #d0d5dc;
+            transform: translateY(-2px);
+        }
+        
+        body.dark-mode .btn-secondary:hover {
+            background-color: #3d3d3d;
+        }
+        
+        .settings-group {
+            margin-bottom: 20px;
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #e0e5ec;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+        
+        body.dark-mode .setting-item {
+            background: #2d2d2d;
+        }
+        
+        .setting-label {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        input:checked + .slider {
+            background-color: #00CC00;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .help-content p {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .help-examples {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .help-example {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .example-letter {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 10px;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+        }
+        
+        .example-letter.correct {
+            background: #00CC00;
+        }
+        
+        .example-letter.present {
+            background: #b59f3b;
+        }
+        
+        .example-letter.absent {
+            background: #888;
+        }
+        
+        /* Mode daltonien pour les exemples d'aide */
+        body.color-blind .example-letter.present {
+            background: #ff8c00;
+        }
+        
+        body.color-blind .example-letter.correct {
+            background: #1e90ff;
+        }
+        
+        .copyright-notice {
+            margin-top: 30px;
+            padding-top: 20px;
+            font-size: 14px;
+            color: #666;
+            border-top: 2px solid rgba(0,0,0,0.1);
+        }
+        
+        body.dark-mode .copyright-notice {
+            color: #b0b0b0;
+            border-top: 2px solid rgba(255,255,255,0.1);
+        }
+        
+        .copyright-notice p {
+            margin: 5px 0;
+        }
+        
+        .stats-distribution {
+            position: relative;
+            height: 25px;
+            line-height: 25px;
+            background-color: #e0e5ec;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        
+        body.dark-mode .stats-distribution {
+            background-color: #2d2d2d;
+        }
+        
+        .stats-distribution .label {
+            position: relative;
+            z-index: 2;
+            display: inline-block;
+            padding-left: 10px;
+            color: #333;
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        body.dark-mode .stats-distribution .label {
+            color: #e0e0e0;
+        }
+        
+        .stats-distribution .pc {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1;
+            background-color: #c0c0c0;
+            border-radius: 12px;
+        }
+        
+        .stats-distribution.best .pc {
+            background-color: #00CC00;
+        }
+        
+        /* Mode daltonien pour les statistiques */
+        body.color-blind .stats-distribution.best .pc {
+            background-color: #1e90ff;
+        }
+        
+        /* Styles pour les boutons de sélection de clavier */
+        .keyboard-layouts {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .keyboard-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            background: #e0e5ec;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .keyboard-option {
+            background: #2d2d2d;
+        }
+        
+        .keyboard-option:hover {
+        }
+        
+        body.dark-mode .keyboard-option:hover {
+        }
+        
+        .keyboard-option.selected {
+            background: #f0fff0;
+        }
+        
+        body.dark-mode .keyboard-option.selected {
+            background: #1a2a1a;
+        }
+        
+        .keyboard-option .radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            margin-right: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .keyboard-option.selected .radio {
+            border-color: #00CC00;
+            background: #00CC00;
+        }
+        
+        .keyboard-option.selected .radio::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .keyboard-info {
+            flex: 1;
+        }
+        
+        .keyboard-name {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .keyboard-description {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        body.dark-mode .keyboard-description {
+            color: #b0b0b0;
+        }
+        
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 0.35s;
+        }
+        
+        .fade-enter, .fade-leave-to {
+            transition-duration: 0.2s;
+            opacity: 0;
+        }
+        
+        /* Styles pour le sélecteur de longueur */
+        .length-select {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 10px;
+            background-color: #e0e5ec;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .length-select {
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+        }
+        
+        .length-select:hover {
+        }
+        
+        body.dark-mode .length-select:hover {
+        }
+        
+        .length-select:focus {
+            outline: none;
+        }
+        
+        /* Adaptation pour petits écrans */
+        @media (max-height: 600px) {
+            .length-select {
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="main">
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <!-- Bouton aide retiré de la toolbar -->
+                </div>
+                
+                <div class="toolbar-center">
+                    <div class="app-title">
+                        WORDLE<span>·Φ </span>
+                        <div class="infinity" id="infinityBadge">mode INFINI</div>
+                    </div>
+                </div>
+                
+                <div class="toolbar-right">
+                    <button class="toolbar-btn menu" id="menuButton" title="Menu">
+                        <div class="hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Menu coulissant -->
+            <div class="menu-overlay" id="menuOverlay"></div>
+            <div class="slide-menu" id="slideMenu">
+                <button class="menu-item" id="settingsButton">
+                    <svg class="svg-icon">
+                        <use xlink:href="#svg-settings"></use>
+                    </svg>
+                    paramètres
+                </button>
+                <button class="menu-item" id="statsButton">
+                    <svg class="svg-icon">
+                        <use xlink:href="#svg-stats"></use>
+                    </svg>
+                    statistiques
+                </button>
+                <button class="menu-item" id="keyboardButton">
+                    <svg class="svg-icon">
+                        <use xlink:href="#svg-keyboard"></use>
+                    </svg>
+                    clavier
+                </button>
+                <button class="menu-item" id="helpButton">
+                    <svg class="svg-icon">
+                        <use xlink:href="#svg-help"></use>
+                    </svg>
+                    aide
+                </button>
+            </div>
+            
+            <div class="toast-msg" id="toastMsg"></div>
+            
+            <div class="game-container">
+                <div class="user-entries" id="userEntries">
+                    <!-- Les entrées seront générées dynamiquement -->
+                </div>
+                
+                <div class="keyboard">
+                    <div class="keyboard-row" id="keyboardRow1">
+                        <!-- Les touches seront générées dynamiquement -->
+                    </div>
+                    <div class="keyboard-row" id="keyboardRow2">
+                        <!-- Les touches seront générées dynamiquement -->
+                    </div>
+                    <div class="keyboard-row" id="keyboardRow3">
+                        <!-- Les touches seront générées dynamiquement -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal d'aide -->
+            <div class="modal-overlay hidden" id="helpModal">
+                <div class="modal">
+                    <div class="modal-header">
+                        <div class="modal-title">règles du jeu</div>
+                        <button class="modal-close" id="closeHelp">×</button>
+                    </div>
+                    <div class="help-content">
+                        <p><strong>devinez le mot en 6 essais maximum ! </strong>le mot comporte <span id="helpWordLength">5</span> lettres. la touche « entrée » permet de valider.</p>
+                        
+                        <div class="help-examples">
+                            <div class="help-example">
+                                <div class="example-letter correct">X</div>
+                                <div>lettre dans le mot et à la bonne place</div>
+                            </div>
+                            <div class="help-example">
+                                <div class="example-letter present">X</div>
+                                <div>lettre dans le mot mais pas à la bonne place</div>
+                            </div>
+                            <div class="help-example">
+                                <div class="example-letter absent">X</div>
+                                <div>lettre absente du mot</div>
+                            </div>
+                        </div>
+                        
+                        <p><strong>astuces : </strong>le clavier permet de saisir le mot.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal des statistiques -->
+            <div class="modal-overlay hidden" id="statsModal">
+                <div class="modal">
+                    <div class="modal-header">
+                        <div class="modal-title">statistiques</div>
+                        <button class="modal-close" id="closeStats">×</button>
+                    </div>
+                    <div class="stats-content">
+                        <div class="stats-group">
+                            <p><strong id="statsGames">0</strong> partie(s) jouée(s)</p>
+                            <p><strong id="statsVictories">0</strong> victoire(s) (<span id="statsVictoriesPc">0</span>%)</p>
+                            <p>série actuelle : <strong id="statsCurrentStreak">0</strong></p>
+                            <p>meilleure série : <strong id="statsBestStreak">0</strong></p>
+                        </div>
+                        
+                        <div class="stats-distributions">
+                            <br><h3>distribution des essais :</h3>
+                            <div id="statsDistribution">
+                                <!-- Généré dynamiquement -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal de fin de partie -->
+            <div class="modal-overlay hidden" id="gameResultModal">
+                <div class="modal">
+                    <div class="modal-header">
+                        <div class="modal-title" id="gameResultTitle"></div>
+                        <button class="modal-close" id="closeGameResult">×</button>
+                    </div>
+                    <div class="modal-content">
+                        <p id="gameResultMessage"></p>
+                        <p>une nouvelle partie ?</p>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-primary" id="newGameFromModal">
+                            recommencer
+                        </button>
+                        <button class="btn btn-secondary" id="continueGame">
+                            terminer
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal des paramètres -->
+            <div class="modal-overlay hidden" id="settingsModal">
+                <div class="modal">
+                    <div class="modal-header">
+                        <div class="modal-title">paramètres</div>
+                        <button class="modal-close" id="closeSettings">×</button>
+                    </div>
+                    <div class="settings-content">
+                        <div class="settings-group">
+                            <!-- Sélecteur de longueur de mot - maintenant jusqu'à 12 lettres -->
+                            <div class="setting-item">
+                                <span class="setting-label">longueur du mot</span>
+                                <select id="wordLengthSelect" class="length-select">
+                                    <option value="3">3 lettres</option>
+                                    <option value="4">4 lettres</option>
+                                    <option value="5">5 lettres</option>
+                                    <option value="6">6 lettres</option>
+                                    <option value="7">7 lettres</option>
+                                    <option value="8">8 lettres</option>
+                                    <option value="9">9 lettres</option>
+                                    <option value="10">10 lettres</option>
+                                    <option value="11">11 lettres</option>
+                                    <option value="12">12 lettres</option>
+                                </select>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <span class="setting-label">mode sombre</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="darkModeToggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <span class="setting-label">mode daltonien</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="colorBlindToggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <span class="setting-label">animations</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="animationsToggle" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <span class="setting-label">mode infini</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="infinityToggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal du clavier -->
+            <div class="modal-overlay hidden" id="keyboardModal">
+                <div class="modal">
+                    <div class="modal-header">
+                        <div class="modal-title">configuration du clavier</div>
+                        <button class="modal-close" id="closeKeyboard">×</button>
+                    </div>
+                    <div class="settings-content">
+                        <p>Sélectionnez la disposition de votre clavier :</p>
+                        
+                        <div class="keyboard-layouts" id="keyboardOptions">
+                            <!-- Généré dynamiquement -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section des icônes SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol viewBox="0 0 24 24" id="svg-help">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+        </symbol>
+        
+        <symbol viewBox="0 0 24 24" id="svg-settings">
+            <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+        </symbol>
+        
+        <symbol viewBox="0 0 24 24" id="svg-stats">
+            <path d="M16,11V3H8v6H2v12h20V11H16z M10,5h4v14h-4V5z M4,11h4v8H4V11z M20,19h-4v-6h4V19z"/>
+        </symbol>
+        
+        <symbol viewBox="0 0 24 24" id="svg-keyboard">
+            <path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/>
+        </symbol>
+    </svg>
+
+    <!-- Chargement du dictionnaire externe -->
+    <script src="../../src/reperes.js"></script>
+    
+    <script>
+        // État global du jeu
+        const gameState = {
+            wordLength: 5,
+            nbTries: 6,
+            userInput: '',
+            currentLine: 0,
+            gameFinished: false,
+            gameSuccess: false,
+            targetWord: '',
+            words: [],
+            keys: {},
+            toastMsg: '',
+            toastTimeout: null,
+            showHelp: false,
+            showSettings: false,
+            showSummary: false,
+            showMenu: false,
+            showKeyboardSettings: false,
+            darkMode: false,
+            colorBlindMode: false,
+            animations: true,
+            infinityMode: false,
+            keyboardType: 'azerty',
+            stats: {
+                games: 0,
+                victories: 0,
+                victoriesPc: 0,
+                currentStreak: 0,
+                bestStreak: 0,
+                tries: [0, 0, 0, 0, 0, 0]
+            },
+            keyboardLayouts: {
+                azerty: [
+                    ['A', 'Z', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+                    ['Q', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M'],
+                    ['BACKSPACE', 'W', 'X', 'C', 'V', 'B', 'N', 'ENTER']
+                ],
+                qwerty: [
+                    ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+                    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+                    ['BACKSPACE', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'ENTER']
+                ],
+                bepo: [
+                    ['B', 'É', 'P', 'O', 'È', 'V', 'D', 'L', 'J', 'Z'],
+                    ['A', 'U', 'I', 'E', ',', 'C', 'T', 'S', 'R', 'N'],
+                    ['BACKSPACE', 'À', 'Y', 'X', '.', 'K', 'Ê', 'M', 'ENTER']
+                ],
+                qwertz: [
+                    ['Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O', 'P'],
+                    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+                    ['BACKSPACE', 'Y', 'X', 'C', 'V', 'B', 'N', 'M', 'ENTER']
+                ]
+            }
+        };
+
+        // Cache pour les mots valides (performance)
+        let validWordsCache = null;
+
+        // Initialisation du jeu
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+            initGame();
+            setupEventListeners();
+            loadStats();
+            loadKeyboardSettings();
+            startNewGame();
+            applyTheme();
+        });
+
+        function initGame() {
+            updateHelpWordLength();
+            renderKeyboard();
+            // S'assurer que le badge infini est caché au départ
+            document.getElementById('infinityBadge').style.display = 'none';
+        }
+
+        function setupEventListeners() {
+            // Menu
+            document.getElementById('menuButton').addEventListener('click', toggleMenu);
+            document.getElementById('menuOverlay').addEventListener('click', closeMenu);
+            
+            // Menu items
+            document.getElementById('settingsButton').addEventListener('click', openSettings);
+            document.getElementById('statsButton').addEventListener('click', openStats);
+            document.getElementById('keyboardButton').addEventListener('click', openKeyboardSettings);
+            document.getElementById('helpButton').addEventListener('click', openHelp);
+            
+            // Modals
+            document.getElementById('closeHelp').addEventListener('click', closeHelp);
+            document.getElementById('closeStats').addEventListener('click', closeStats);
+            document.getElementById('closeSettings').addEventListener('click', closeSettings);
+            document.getElementById('closeKeyboard').addEventListener('click', closeKeyboard);
+            document.getElementById('closeGameResult').addEventListener('click', closeGameResult);
+            document.getElementById('newGameFromModal').addEventListener('click', startNewGameFromModal);
+            document.getElementById('continueGame').addEventListener('click', closeGameResult);
+            
+            // Settings toggles
+            document.getElementById('darkModeToggle').addEventListener('change', toggleDarkMode);
+            document.getElementById('colorBlindToggle').addEventListener('change', toggleColorBlindMode);
+            document.getElementById('animationsToggle').addEventListener('change', toggleAnimations);
+            document.getElementById('infinityToggle').addEventListener('change', toggleInfinityMode);
+            
+            // Nouveau sélecteur de longueur
+            document.getElementById('wordLengthSelect').addEventListener('change', changeWordLength);
+            
+            // Clavier physique et accessibilité
+            document.addEventListener('keyup', keyMonitor);
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    if (!document.getElementById('helpModal').classList.contains('hidden')) closeHelp();
+                    if (!document.getElementById('statsModal').classList.contains('hidden')) closeStats();
+                    if (!document.getElementById('settingsModal').classList.contains('hidden')) closeSettings();
+                    if (!document.getElementById('keyboardModal').classList.contains('hidden')) closeKeyboard();
+                    if (!document.getElementById('gameResultModal').classList.contains('hidden')) closeGameResult();
+                    if (gameState.showMenu) closeMenu();
+                }
+            });
+
+            // Redimensionnement de la fenêtre pour s'adapter
+            window.addEventListener('resize', function() {
+                renderGameGrid();
+            });
+        }
+
+        // Fonction getValidWords() : PRÉ-CALCULE ET CACHE tous les mots valides
+        function getValidWords() {
+            // Retourne le cache s'il existe déjà
+            if (validWordsCache) return validWordsCache;
+            
+            // Extraire et normaliser tous les mots de reperes.js
+            validWordsCache = [];
+            const seen = new Set(); // Éviter les doublons
+            
+            window.reperes.forEach(repere => {
+                if (repere && repere.parts) {
+                    repere.parts.forEach(part => {
+                        if (part && part.name) {
+                            const word = part.name.toUpperCase().trim()
+                                .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Normaliser (enlever accents)
+                            // Filtrer : mots de 3-12 lettres, sans espaces, non vides, pas de doublons
+                            if (word && !word.includes(' ') && word.length >= 3 && word.length <= 12 && !seen.has(word)) {
+                                validWordsCache.push(word);
+                                seen.add(word);
+                            }
+                        }
+                    });
+                }
+            });
+            
+            return validWordsCache;
+        }
+
+        function renderKeyboard() {
+            const layout = gameState.keyboardLayouts[gameState.keyboardType];
+            
+            // Labels ARIA pour l'accessibilité
+            const getAriaLabel = (key) => {
+                switch(key) {
+                    case 'ENTER': return 'Valider le mot';
+                    case 'BACKSPACE': return 'Effacer la dernière lettre';
+                    default: return `Touche ${key}`;
+                }
+            };
+            
+            document.getElementById('keyboardRow1').innerHTML = layout[0].map(key => 
+                `<button class="keyboard-key ${getKeyClass(key)}" aria-label="${getAriaLabel(key)}">${key}</button>`
+            ).join('');
+            
+            document.getElementById('keyboardRow2').innerHTML = layout[1].map(key => 
+                `<button class="keyboard-key ${getKeyClass(key)}" aria-label="${getAriaLabel(key)}">${key}</button>`
+            ).join('');
+            
+            document.getElementById('keyboardRow3').innerHTML = layout[2].map(key => {
+                const wideClass = (key === 'ENTER' || key === 'BACKSPACE') ? ' wide' : '';
+                const enterClass = (key === 'ENTER') ? ' enter-key' : '';
+                const content = (key !== 'ENTER' && key !== 'BACKSPACE') ? key : 
+                              (key === 'ENTER') ? '↵' : '⌫';
+                return `<button class="keyboard-key ${getKeyClass(key)}${wideClass}${enterClass}" aria-label="${getAriaLabel(key)}">${content}</button>`;
+            }).join('');
+            
+            // Ajouter les event listeners aux touches
+            document.querySelectorAll('.keyboard-key').forEach(button => {
+                button.addEventListener('click', function() {
+                    const key = this.textContent === '↵' ? 'ENTER' : 
+                               this.textContent === '⌫' ? 'BACKSPACE' : this.textContent;
+                    keyPressed(key);
+                });
+            });
+        }
+
+        function renderGameGrid() {
+            const userEntries = document.getElementById('userEntries');
+            userEntries.innerHTML = '';
+            
+            for (let i = 0; i < gameState.nbTries; i++) {
+                const entry = document.createElement('div');
+                entry.className = `entry ${i === gameState.currentLine ? 'current' : ''}`;
+                entry.setAttribute('aria-label', `Ligne ${i + 1}${i === gameState.currentLine ? ', ligne actuelle' : ''}`);
+                
+                for (let j = 0; j < gameState.wordLength; j++) {
+                    const letter = document.createElement('div');
+                    const cell = gameState.words[i] ? gameState.words[i][j] : ['', 0];
+                    const stateLabels = ['lettre absente', 'lettre mal placée', 'lettre correcte'];
+                    
+                    // Utilisation du système responsive basé sur flexbox
+                    letter.className = `letter v${cell[1]}`;
+                    letter.textContent = cell[0];
+                    letter.setAttribute('aria-label', cell[0] ? `${cell[0]}, ${stateLabels[cell[1]]}` : 'Case vide');
+                    
+                    // Ajouter l'indice si nécessaire
+                    if (gameState.showHint && i === gameState.currentLine && getHints()[j] !== '_') {
+                        const hint = document.createElement('div');
+                        hint.className = 'hint';
+                        hint.textContent = getHints()[j];
+                        letter.appendChild(hint);
+                    }
+                    
+                    entry.appendChild(letter);
+                }
+                
+                userEntries.appendChild(entry);
+            }
+        }
+
+        function getHints() {
+            const hints = Array(gameState.wordLength).fill('_');
+            if (gameState.currentLine > 0) {
+                for (let line of gameState.words.slice(0, gameState.currentLine)) {
+                    for (let i = 0; i < line.length; i++) {
+                        if (line[i][1] === 2) {
+                            hints[i] = line[i][0];
+                        }
+                    }
+                }
+            }
+            return hints.includes('_') ? hints : Array(gameState.wordLength).fill('_');
+        }
+
+        function getKeyClass(key) {
+            if (key === 'ENTER' || key === 'BACKSPACE') {
+                return 'keyboard-key fn';
+            }
+            
+            const color = gameState.keys[key] || 0;
+            return `keyboard-key k${color}`;
+        }
+
+        // Logique du jeu avec gestion des accents
+        function startNewGame() {
+            // Récupérer TOUS les mots disponibles
+            const allValidWords = getValidWords();
+            
+            // Choisir un mot AU HASARD parmi tous les mots, quelle que soit sa longueur
+            const randomWord = allValidWords[Math.floor(Math.random() * allValidWords.length)];
+            
+            // Utiliser la longueur du mot choisi au hasard
+            gameState.targetWord = randomWord;
+            gameState.wordLength = randomWord.length;
+            
+            console.log('Mot à trouver:', gameState.targetWord, 'Longueur:', gameState.wordLength);
+            resetGame();
+        }
+
+        function resetGame() {
+            gameState.userInput = '';
+            gameState.currentLine = 0;
+            gameState.gameFinished = false;
+            gameState.gameSuccess = false;
+            gameState.words = [];
+            gameState.keys = {}; // Réinitialiser les couleurs du clavier
+            
+            // Créer la grille
+            for (let i = 0; i < gameState.nbTries; i++) {
+                const line = [];
+                for (let j = 0; j < gameState.wordLength; j++) {
+                    line.push(['', 0]);
+                }
+                gameState.words.push(line);
+            }
+            
+            renderGameGrid();
+            renderKeyboard(); // Réinitialiser le clavier
+            updateHelpWordLength();
+        }
+
+        function keyPressed(key) {
+            if (gameState.gameFinished) return;
+            
+            switch(key) {
+                case 'ENTER':
+                    submitWord();
+                    return;
+                case 'BACKSPACE':
+                    erase();
+                    return;
+            }
+            
+            // Accepter les lettres accentuées
+            if (/^[A-ZÀÂÄÆÇÉÈÊËÎÏÔŒÙÛÜÝŸ]$/i.test(key)) {
+                if (gameState.userInput.length < gameState.wordLength) {
+                    gameState.userInput += key;
+                    updateCurrentLine();
+                }
+            }
+        }
+
+        function updateCurrentLine() {
+            const currentLine = [];
+            for (let i = 0; i < gameState.wordLength; i++) {
+                if (i < gameState.userInput.length) {
+                    currentLine.push([gameState.userInput[i], 0]);
+                } else {
+                    currentLine.push(['', 0]);
+                }
+            }
+            gameState.words[gameState.currentLine] = currentLine;
+            renderGameGrid();
+        }
+
+        function submitWord() {
+            if (gameState.userInput.length !== gameState.wordLength) {
+                showToast(`Veuillez saisir un mot de ${gameState.wordLength} lettres.`);
+                
+                // Animation shake même si le mot est incomplet (si animations activées)
+                if (gameState.animations) {
+                    const currentEntry = document.querySelectorAll('.entry')[gameState.currentLine];
+                    const letters = currentEntry.querySelectorAll('.letter');
+                    
+                    letters.forEach(letter => {
+                        letter.classList.add('shake');
+                        setTimeout(() => {
+                            letter.classList.remove('shake');
+                        }, 500);
+                    });
+                }
+                return;
+            }
+            
+            // Animation shake avant l'évaluation (si animations activées)
+            if (gameState.animations) {
+                const currentEntry = document.querySelectorAll('.entry')[gameState.currentLine];
+                const letters = currentEntry.querySelectorAll('.letter');
+                
+                letters.forEach(letter => {
+                    letter.classList.add('shake');
+                    setTimeout(() => {
+                        letter.classList.remove('shake');
+                    }, 500);
+                });
+                
+                // Attendre la fin de l'animation shake avant de continuer
+                setTimeout(() => {
+                    processWordEvaluation();
+                }, 500);
+            } else {
+                processWordEvaluation();
+            }
+        }
+
+        // Nouvelle fonction pour séparer le traitement de l'évaluation
+        function processWordEvaluation() {
+            const evaluation = evaluateWord(gameState.userInput);
+            gameState.words[gameState.currentLine] = evaluation;
+            updateKeys();
+            renderGameGrid();
+            renderKeyboard();
+            
+            // Normaliser les deux mots pour la comparaison finale (sans accents)
+            const normalizeWord = (word) => {
+                return word.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+            };
+            
+            const normalizedInput = normalizeWord(gameState.userInput);
+            const normalizedTarget = normalizeWord(gameState.targetWord);
+            
+            if (normalizedInput === normalizedTarget) {
+                gameState.gameFinished = true;
+                gameState.gameSuccess = true;
+                updateStats(true);
+                if (gameState.infinityMode) {
+                    // Mode infini : relancer automatiquement une nouvelle partie
+                    showToast(`Bravo ! Le mot était ${gameState.targetWord}. Nouvelle partie...`);
+                    setTimeout(() => {
+                        startNewGame();
+                    }, 2000);
+                } else {
+                    showGameResult(true);
+                }
+            } else if (gameState.currentLine >= gameState.nbTries - 1) {
+                gameState.gameFinished = true;
+                updateStats(false);
+                if (gameState.infinityMode) {
+                    // Mode infini : afficher la solution et relancer automatiquement une nouvelle partie
+                    showToast(`Dommage ! Le mot était ${gameState.targetWord}. Nouvelle partie...`);
+                    setTimeout(() => {
+                        startNewGame();
+                    }, 2000);
+                } else {
+                    showGameResult(false);
+                }
+            } else {
+                gameState.currentLine++;
+                gameState.userInput = '';
+                updateCurrentLine();
+            }
+        }
+
+        function evaluateWord(attempt) {
+            const result = [];
+            const targetArr = gameState.targetWord.split('');
+            const attemptArr = attempt.toUpperCase().split('');
+            
+            // Fonction pour normaliser les caractères (enlever les accents)
+            const normalizeChar = (char) => {
+                return char.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            };
+            
+            // Créer des copies normalisées pour la comparaison
+            const normalizedTargetArr = targetArr.map(normalizeChar);
+            const normalizedAttemptArr = attemptArr.map(normalizeChar);
+            
+            for (let i = 0; i < gameState.wordLength; i++) {
+                if (normalizedAttemptArr[i] === normalizedTargetArr[i]) {
+                    result.push([attemptArr[i], 2]);
+                    targetArr[i] = '_';
+                    attemptArr[i] = '_';
+                    normalizedTargetArr[i] = '_';
+                    normalizedAttemptArr[i] = '_';
+                } else {
+                    result.push([attempt[i], 0]);
+                }
+            }
+            
+            for (let i = 0; i < gameState.wordLength; i++) {
+                if (normalizedAttemptArr[i] !== '_') {
+                    const foundIndex = normalizedTargetArr.indexOf(normalizedAttemptArr[i]);
+                    if (foundIndex !== -1) {
+                        result[i] = [attempt[i], 1];
+                        targetArr[foundIndex] = '_';
+                        normalizedTargetArr[foundIndex] = '_';
+                    }
+                }
+            }
+            
+            return result;
+        }
+
+        function updateKeys() {
+            for (let i = 0; i < gameState.userInput.length; i++) {
+                const letter = gameState.userInput[i].toUpperCase();
+                const color = gameState.words[gameState.currentLine][i][1];
+                
+                if (!gameState.keys[letter] || gameState.keys[letter] < color) {
+                    gameState.keys[letter] = color;
+                }
+            }
+        }
+
+        function erase() {
+            if (gameState.userInput.length > 0) {
+                gameState.userInput = gameState.userInput.slice(0, -1);
+                updateCurrentLine();
+            }
+        }
+
+        function keyMonitor(event) {
+            const key = event.key.toUpperCase();
+            
+            // Accepter les lettres (y compris accentuées) et les caractères spéciaux
+            if ((key >= 'A' && key <= 'Z') || /^[ÀÂÄÆÇÉÈÊËÎÏÔŒÙÛÜÝŸ]$/.test(key)) {
+                keyPressed(key);
+            } else if (key === 'ENTER') {
+                keyPressed('ENTER');
+            } else if (key === 'BACKSPACE') {
+                keyPressed('BACKSPACE');
+            }
+        }
+
+        // Fonctions d'interface
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById('toastMsg');
+            
+            // Nettoyer l'ancien timeout
+            if (gameState.toastTimeout) {
+                clearTimeout(gameState.toastTimeout);
+                gameState.toastTimeout = null;
+            }
+            
+            toast.innerHTML = `<div class="inner">${message}</div>`;
+            toast.style.display = 'flex';
+            
+            gameState.toastTimeout = setTimeout(() => {
+                toast.style.display = 'none';
+                gameState.toastTimeout = null;
+            }, duration);
+        }
+
+        function toggleMenu() {
+            gameState.showMenu = !gameState.showMenu;
+            const menuButton = document.getElementById('menuButton');
+            const slideMenu = document.getElementById('slideMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            
+            if (gameState.showMenu) {
+                menuButton.classList.add('active');
+                slideMenu.classList.add('open');
+                menuOverlay.classList.add('open');
+            } else {
+                menuButton.classList.remove('active');
+                slideMenu.classList.remove('open');
+                menuOverlay.classList.remove('open');
+            }
+        }
+
+        function closeMenu() {
+            gameState.showMenu = false;
+            document.getElementById('menuButton').classList.remove('active');
+            document.getElementById('slideMenu').classList.remove('open');
+            document.getElementById('menuOverlay').classList.remove('open');
+        }
+
+        function openSettings() {
+            closeMenu();
+            document.getElementById('wordLengthSelect').value = gameState.wordLength;
+            document.getElementById('darkModeToggle').checked = gameState.darkMode;
+            document.getElementById('colorBlindToggle').checked = gameState.colorBlindMode;
+            document.getElementById('animationsToggle').checked = gameState.animations;
+            document.getElementById('infinityToggle').checked = gameState.infinityMode;
+            document.getElementById('settingsModal').classList.remove('hidden');
+        }
+
+        function openStats() {
+            closeMenu();
+            updateStatsDisplay();
+            document.getElementById('statsModal').classList.remove('hidden');
+        }
+
+        function openKeyboardSettings() {
+            closeMenu();
+            renderKeyboardOptions();
+            document.getElementById('keyboardModal').classList.remove('hidden');
+        }
+
+        function openHelp() {
+            closeMenu();
+            document.getElementById('helpModal').classList.remove('hidden');
+        }
+
+        function closeHelp() {
+            document.getElementById('helpModal').classList.add('hidden');
+        }
+
+        function closeStats() {
+            document.getElementById('statsModal').classList.add('hidden');
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').classList.add('hidden');
+        }
+
+        function closeKeyboard() {
+            document.getElementById('keyboardModal').classList.add('hidden');
+        }
+
+        function showGameResult(success) {
+            const modal = document.getElementById('gameResultModal');
+            const title = document.getElementById('gameResultTitle');
+            const message = document.getElementById('gameResultMessage');
+            
+            if (success) {
+                title.textContent = 'Félicitations !';
+                title.style.color = '#00CC00';
+                message.innerHTML = `Vous avez trouvé le mot <strong>${gameState.targetWord}</strong> en ${gameState.currentLine + 1} essai${gameState.currentLine + 1 > 1 ? 's' : ''} !`;
+            } else {
+                title.textContent = 'Dommage !';
+                title.style.color = '#FF4444';
+                message.innerHTML = `Le mot à trouver était : <strong>${gameState.targetWord}</strong>`;
+            }
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeGameResult() {
+            document.getElementById('gameResultModal').classList.add('hidden');
+            if (gameState.infinityMode && gameState.gameFinished) {
+                startNewGame();
+            }
+        }
+
+        function startNewGameFromModal() {
+            startNewGame();
+            document.getElementById('gameResultModal').classList.add('hidden');
+            showToast('Nouvelle partie !');
+        }
+
+        function updateHelpWordLength() {
+            document.getElementById('helpWordLength').textContent = gameState.wordLength;
+        }
+
+        // Nouvelle fonction pour changer la longueur du mot
+        function changeWordLength() {
+            const newLength = parseInt(this.value);
+            if (newLength !== gameState.wordLength) {
+                gameState.wordLength = newLength;
+                saveSettings();
+                startNewGame();
+                showToast(`Longueur du mot définie à ${newLength} lettres`);
+            }
+        }
+
+        function renderKeyboardOptions() {
+            const options = document.getElementById('keyboardOptions');
+            const layouts = ['azerty', 'qwerty', 'bepo', 'qwertz'];
+            const names = {
+                azerty: 'AZERTY - Disposition française standard',
+                qwerty: 'QWERTY - Disposition anglaise internationale', 
+                bepo: 'BÉPO - Disposition ergonomique française',
+                qwertz: 'QWERTZ - Disposition allemande et centre-européenne'
+            };
+            
+            options.innerHTML = layouts.map(layout => `
+                <div class="keyboard-option ${gameState.keyboardType === layout ? 'selected' : ''}" 
+                     onclick="changeKeyboardLayout('${layout}')">
+                    <div class="radio"></div>
+                    <div class="keyboard-info">
+                        <div class="keyboard-name">${names[layout].split(' - ')[0]}</div>
+                        <div class="keyboard-description">${names[layout].split(' - ')[1]}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function changeKeyboardLayout(type) {
+            gameState.keyboardType = type;
+            saveKeyboardSettings();
+            renderKeyboard();
+            closeKeyboard();
+            showToast(`Clavier ${type.toUpperCase()} sélectionné`);
+        }
+
+        function toggleDarkMode() {
+            gameState.darkMode = this.checked;
+            saveSettings();
+            applyTheme();
+        }
+
+        function toggleColorBlindMode() {
+            gameState.colorBlindMode = this.checked;
+            saveSettings();
+            applyTheme();
+        }
+
+        function toggleAnimations() {
+            gameState.animations = this.checked;
+            saveSettings();
+            applyTheme();
+        }
+
+        function toggleInfinityMode() {
+            gameState.infinityMode = this.checked;
+            saveSettings();
+            document.getElementById('infinityBadge').style.display = gameState.infinityMode ? 'block' : 'none';
+            if (gameState.infinityMode) {
+                showToast('Mode infini activé !');
+            } else {
+                showToast('Mode infini désactivé');
+            }
+            startNewGame();
+        }
+
+        function applyTheme() {
+            if (gameState.darkMode) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+            
+            if (gameState.colorBlindMode) {
+                document.body.classList.add('color-blind');
+            } else {
+                document.body.classList.remove('color-blind');
+            }
+            
+            // Gérer la classe pour les animations
+            if (!gameState.animations) {
+                document.body.classList.add('no-animations');
+            } else {
+                document.body.classList.remove('no-animations');
+            }
+        }
+
+        // Gestion des statistiques
+        function updateStats(success) {
+            gameState.stats.games++;
+            
+            if (success) {
+                gameState.stats.victories++;
+                gameState.stats.currentStreak++;
+                if (gameState.stats.currentStreak > gameState.stats.bestStreak) {
+                    gameState.stats.bestStreak = gameState.stats.currentStreak;
+                }
+                gameState.stats.tries[gameState.currentLine]++;
+            } else {
+                gameState.stats.currentStreak = 0;
+                gameState.stats.tries[5]++;
+            }
+            
+            gameState.stats.victoriesPc = ((gameState.stats.victories / gameState.stats.games) * 100).toFixed(1).replace('.', ',');
+            saveStats();
+        }
+
+        function updateStatsDisplay() {
+            document.getElementById('statsGames').textContent = gameState.stats.games;
+            document.getElementById('statsVictories').textContent = gameState.stats.victories;
+            document.getElementById('statsVictoriesPc').textContent = gameState.stats.victoriesPc;
+            document.getElementById('statsCurrentStreak').textContent = gameState.stats.currentStreak;
+            document.getElementById('statsBestStreak').textContent = gameState.stats.bestStreak;
+            
+            const distribution = document.getElementById('statsDistribution');
+            distribution.innerHTML = '';
+            
+            let bestTriesIndex = 0;
+            let maxCount = 0;
+            
+            for (let i = 0; i < 6; i++) {
+                if (gameState.stats.tries[i] > maxCount && gameState.stats.tries[i] > 0) {
+                    maxCount = gameState.stats.tries[i];
+                    bestTriesIndex = i;
+                }
+            }
+            
+            // Libellés personnalisés sans "s" pour 1 essai, avec "s" pour les autres
+            const labels = ['- en un essai :', '- en deux essais :', '- en trois essais :', '- en quatre essais :', '- en cinq essais :', '- en six essais :'];
+            
+            for (let i = 0; i < 6; i++) {
+                const percentage = gameState.stats.games > 0 ? (gameState.stats.tries[i] / gameState.stats.games * 100) : 0;
+                const percentageText = percentage > 0 ? ` (${percentage.toFixed(1).replace('.', ',')}%)` : '';
+                const div = document.createElement('div');
+                div.className = `stats-distribution ${i === bestTriesIndex ? 'best' : ''}`;
+                div.innerHTML = `
+                    <div class="label">${labels[i]}${percentageText}</div>
+                    <div class="pc" style="width: ${percentage}%"></div>
+                `;
+                distribution.appendChild(div);
+            }
+        }
+
+        function saveStats() {
+            localStorage.setItem('wordleStats', JSON.stringify(gameState.stats));
+        }
+
+        function loadStats() {
+            const savedStats = localStorage.getItem('wordleStats');
+            if (savedStats) {
+                gameState.stats = JSON.parse(savedStats);
+            }
+        }
+
+        function loadKeyboardSettings() {
+            const savedKeyboard = localStorage.getItem('wordleKeyboard');
+            if (savedKeyboard) {
+                gameState.keyboardType = savedKeyboard;
+            }
+        }
+
+        function saveKeyboardSettings() {
+            localStorage.setItem('wordleKeyboard', gameState.keyboardType);
+        }
+
+        // Fonctions de sauvegarde/chargement des paramètres
+        function saveSettings() {
+            localStorage.setItem('wordleSettings', JSON.stringify({
+                wordLength: gameState.wordLength,
+                darkMode: gameState.darkMode,
+                colorBlindMode: gameState.colorBlindMode,
+                animations: gameState.animations,
+                infinityMode: gameState.infinityMode
+            }));
+        }
+
+        function loadSettings() {
+            const savedSettings = localStorage.getItem('wordleSettings');
+            if (savedSettings) {
+                const settings = JSON.parse(savedSettings);
+                gameState.wordLength = settings.wordLength || 5;
+                gameState.darkMode = settings.darkMode || false;
+                gameState.colorBlindMode = settings.colorBlindMode || false;
+                gameState.animations = settings.animations !== undefined ? settings.animations : true;
+                gameState.infinityMode = settings.infinityMode || false;
+            }
+        }
+
+        // Nettoyage quand la page se ferme
+        window.addEventListener('beforeunload', function() {
+            if (gameState.toastTimeout) {
+                clearTimeout(gameState.toastTimeout);
+            }
+        });
+    </script>
+</body>
+</html>
