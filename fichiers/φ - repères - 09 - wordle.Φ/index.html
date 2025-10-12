@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!------------------------------------ Daniel Boulagnon ------------------------------------>
+<!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
+<!------------------------------------- version 2025 --------------------------------------->
+<!----------------- Exploitation à but strictement pédagogique et non lucratif ------------->
+
 <html lang="fr">
 <head>
     <meta charset="utf-8">
@@ -206,6 +211,13 @@
 
         .toolbar-btn.active .hamburger-icon span {
             transform: none;
+        }
+
+        /* Styles pour le bouton indice - Même apparence que le menu hamburger */
+        .hint-btn {
+            font-weight: bold;
+            font-size: 20px;
+            /* Les autres styles (couleur, background) sont hérités de .toolbar-btn */
         }
 
         /* Menu coulissant */
@@ -1288,7 +1300,8 @@
         <div class="main">
             <div class="toolbar">
                 <div class="toolbar-left">
-                    <!-- Bouton aide retiré de la toolbar -->
+                    <!-- Bouton indice avec la même apparence que le menu -->
+                    <button class="toolbar-btn hint-btn" id="hintButton" title="Obtenir un indice">?</button>
                 </div>
                 
                 <div class="toolbar-center">
@@ -1334,7 +1347,7 @@
                     <svg class="svg-icon">
                         <use xlink:href="#svg-help"></use>
                     </svg>
-                    aide
+                    règles du jeu
                 </button>
             </div>
             
@@ -1404,7 +1417,7 @@
                         </div>
                         
                         <div class="stats-distributions">
-                            <br><h3>distribution des essais :</h3>
+                            <br><h3>distribution des résultats :</h3>
                             <div id="statsDistribution">
                                 <!-- Généré dynamiquement -->
                             </div>
@@ -1502,7 +1515,7 @@
                         <button class="modal-close" id="closeKeyboard">×</button>
                     </div>
                     <div class="settings-content">
-                        <p>Sélectionnez la disposition de votre clavier :</p>
+                        <p>sélectionnez la disposition de votre clavier :</p>
                         
                         <div class="keyboard-layouts" id="keyboardOptions">
                             <!-- Généré dynamiquement -->
@@ -1630,6 +1643,9 @@
             document.getElementById('menuButton').addEventListener('click', toggleMenu);
             document.getElementById('menuOverlay').addEventListener('click', closeMenu);
             
+            // Bouton indice
+            document.getElementById('hintButton').addEventListener('click', showHint);
+            
             // Menu items
             document.getElementById('settingsButton').addEventListener('click', openSettings);
             document.getElementById('statsButton').addEventListener('click', openStats);
@@ -1670,6 +1686,75 @@
             // Redimensionnement de la fenêtre pour s'adapter
             window.addEventListener('resize', function() {
                 renderGameGrid();
+            });
+        }
+
+        // Fonction pour afficher un indice
+        function showHint() {
+            if (gameState.gameFinished) {
+                showToast("La partie est terminée !");
+                return;
+            }
+            
+            // Récupérer la définition du mot cible
+            const targetWord = gameState.targetWord.toLowerCase();
+            let definition = "Aucune définition disponible";
+            let example = "";
+            
+            // Chercher dans le dictionnaire
+            if (window.reperes) {
+                for (const repere of window.reperes) {
+                    for (const part of repere.parts) {
+                        const normalizedWord = part.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                        if (normalizedWord === targetWord) {
+                            definition = part.definition || "Définition non disponible";
+                            example = part.examples && part.examples.length > 0 ? part.examples[0] : "";
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            // Afficher l'indice dans une modal
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.style.display = 'flex';
+            modal.style.zIndex = '1002';
+            modal.innerHTML = `
+                <div class="modal" style="max-width: 400px;">
+                    <div class="modal-header">
+                        <div class="modal-title">Indice</div>
+                        <button class="modal-close" id="closeHint">×</button>
+                    </div>
+                    <div class="modal-content">
+                        <p><strong>Définition :</strong> ${definition}</p>
+                        ${example ? `<p><strong>Exemple :</strong> ${example}</p>` : ''}
+                        <p style="margin-top: 15px; font-style: italic; color: #666;">
+                            Mot de ${gameState.wordLength} lettres
+                        </p>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-primary" id="closeHintBtn">Fermer</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Gérer la fermeture
+            document.getElementById('closeHint').addEventListener('click', function() {
+                document.body.removeChild(modal);
+            });
+            
+            document.getElementById('closeHintBtn').addEventListener('click', function() {
+                document.body.removeChild(modal);
+            });
+            
+            // Fermer en cliquant en dehors
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
             });
         }
 
@@ -2188,10 +2273,10 @@
             const options = document.getElementById('keyboardOptions');
             const layouts = ['azerty', 'qwerty', 'bepo', 'qwertz'];
             const names = {
-                azerty: 'AZERTY - Disposition française standard',
-                qwerty: 'QWERTY - Disposition anglaise internationale', 
-                bepo: 'BÉPO - Disposition ergonomique française',
-                qwertz: 'QWERTZ - Disposition allemande et centre-européenne'
+                azerty: 'AZERTY - disposition française standard',
+                qwerty: 'QWERTY - disposition anglaise internationale', 
+                bepo: 'BÉPO - disposition ergonomique française',
+                qwertz: 'QWERTZ - disposition allemande et centre-européenne'
             };
             
             options.innerHTML = layouts.map(layout => `
@@ -2306,7 +2391,7 @@
             }
             
             // Libellés personnalisés sans "s" pour 1 essai, avec "s" pour les autres
-            const labels = ['- en un essai :', '- en deux essais :', '- en trois essais :', '- en quatre essais :', '- en cinq essais :', '- en six essais :'];
+            const labels = ['• en un essai ', '• en deux essais ', '• en trois essais ', '• en quatre essais ', '• en cinq essais ', '• en six essais '];
             
             for (let i = 0; i < 6; i++) {
                 const percentage = gameState.stats.games > 0 ? (gameState.stats.tries[i] / gameState.stats.games * 100) : 0;
