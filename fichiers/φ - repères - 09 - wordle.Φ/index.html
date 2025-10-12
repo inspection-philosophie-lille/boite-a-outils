@@ -1444,7 +1444,7 @@
                     </div>
                     <div class="settings-content">
                         <div class="settings-group">
-                            <!-- Sélecteur de longueur de mot - maintenant jusqu'à 12 lettres -->
+                            <!-- Sélecteur de longueur de mot - maintenant limité à 6 lettres sur mobile -->
                             <div class="setting-item">
                                 <span class="setting-label">longueur du mot</span>
                                 <select id="wordLengthSelect" class="length-select">
@@ -1594,9 +1594,22 @@
         // Cache pour les mots valides (performance)
         let validWordsCache = null;
 
+        // Fonction pour détecter si on est sur un appareil mobile
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   (window.innerWidth <= 768);
+        }
+
         // Initialisation du jeu
         document.addEventListener('DOMContentLoaded', function() {
             loadSettings();
+            
+            // Vérifier et corriger la longueur si nécessaire sur mobile
+            if (isMobileDevice() && gameState.wordLength > 6) {
+                gameState.wordLength = 6;
+                saveSettings();
+            }
+            
             initGame();
             setupEventListeners();
             loadStats();
@@ -1788,8 +1801,25 @@
             // Récupérer TOUS les mots disponibles
             const allValidWords = getValidWords();
             
-            // Choisir un mot AU HASARD parmi tous les mots, quelle que soit sa longueur
-            const randomWord = allValidWords[Math.floor(Math.random() * allValidWords.length)];
+            // Filtrer les mots selon la limitation mobile si nécessaire
+            let filteredWords = allValidWords;
+            if (isMobileDevice()) {
+                filteredWords = allValidWords.filter(word => word.length <= 6);
+                
+                // Si la longueur actuelle est > 6, la ramener à 6
+                if (gameState.wordLength > 6) {
+                    gameState.wordLength = 6;
+                    // Mettre à jour le sélecteur dans les paramètres
+                    const lengthSelect = document.getElementById('wordLengthSelect');
+                    if (lengthSelect) {
+                        lengthSelect.value = '6';
+                    }
+                    saveSettings();
+                }
+            }
+            
+            // Choisir un mot AU HASARD parmi les mots filtrés
+            const randomWord = filteredWords[Math.floor(Math.random() * filteredWords.length)];
             
             // Utiliser la longueur du mot choisi au hasard
             gameState.targetWord = randomWord;
@@ -2138,6 +2168,14 @@
         // Nouvelle fonction pour changer la longueur du mot
         function changeWordLength() {
             const newLength = parseInt(this.value);
+            
+            // Limiter à 6 lettres maximum sur mobile
+            if (isMobileDevice() && newLength > 6) {
+                showToast('Limité à 6 lettres maximum sur mobile');
+                this.value = 6; // Réinitialiser la valeur dans le sélecteur
+                return;
+            }
+            
             if (newLength !== gameState.wordLength) {
                 gameState.wordLength = newLength;
                 saveSettings();
