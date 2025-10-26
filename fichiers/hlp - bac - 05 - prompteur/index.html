@@ -1336,9 +1336,11 @@
             gap: 8px;
             min-width: 220px;
             min-height: 48px;
-            margin: 20px 0;
+            margin: 20px auto;
             transition: all 0.2s ease;
             -webkit-tap-highlight-color: transparent;
+            width: 100%;
+            max-width: 300px;
         }
         .file-upload-btn:hover {
             box-shadow: 2px 2px 4px var(--shadow-dark), -2px -2px 4px var(--shadow-light);
@@ -1430,6 +1432,38 @@
             .alignment-controls {
                 justify-content: flex-start;
                 width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .toolbar-center {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+            
+            .control-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+            
+            .speed-control {
+                font-size: 22px;
+            }
+            
+            .size-control {
+                font-size: 16px;
+            }
+            
+            .toolbar-btn {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .progress-indicators {
+                flex-direction: column;
+                gap: 10px;
             }
         }
 
@@ -1595,6 +1629,22 @@
             .main-toolbar {
                 padding: 5px 8px;
             }
+            
+            .toolbar-center {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+        }
+        
+        /* Correction pour le bouton play/pause sur mobile */
+        #playPauseBtn.active {
+            background: var(--bg-color) !important;
+            box-shadow: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light) !important;
+        }
+        
+        #fullscreenPlayPauseBtn.active {
+            background: var(--bg-color) !important;
+            box-shadow: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light) !important;
         }
     </style>
 </head>
@@ -2526,6 +2576,12 @@
                     loadFile(file);
                 }
             });
+            
+            // Gestion du toucher pour mobile
+            fileUploadBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                fileInput.click();
+            });
         }
 
         // Fonction pour charger un fichier
@@ -2837,7 +2893,7 @@
             alert('Paramètres réinitialisés avec succès');
         }
 
-        // Fonction de défilement automatique
+        // Fonction de défilement automatique - CORRECTION 1: Remise au début après la fin
         function scrollText(timestamp) {
             if (!prompterState.isPlaying) return;
             
@@ -2858,9 +2914,11 @@
             const targetPosition = textHeight - containerHeight - twoLinesHeight/2 + containerHeight/2;
             
             if (prompterState.currentPosition >= targetPosition) {
-                // Si on est en fin de texte, on arrête le défilement et on bascule sur "play"
+                // CORRECTION 1: Si on est en fin de texte, on arrête le défilement et on remet au début
                 pauseScrolling();
-                prompterState.currentPosition = targetPosition;
+                prompterState.currentPosition = 0; // Remise au début
+                updateTextDisplay();
+                updateProgressIndicators();
                 return;
             }
             
@@ -2875,6 +2933,18 @@
 
         function startScrolling() {
             if (!prompterState.isPlaying) {
+                // CORRECTION 1: Si on est à la fin, on remet au début
+                const textHeight = prompterText.scrollHeight;
+                const containerHeight = prompterDisplay.clientHeight;
+                const twoLinesHeight = calculateTwoLinesHeight();
+                const targetPosition = textHeight - containerHeight - twoLinesHeight/2 + containerHeight/2;
+                
+                if (prompterState.currentPosition >= targetPosition) {
+                    prompterState.currentPosition = 0;
+                    updateTextDisplay();
+                    updateProgressIndicators();
+                }
+                
                 prompterState.isPlaying = true;
                 prompterState.lastTimestamp = null;
                 prompterState.startTime = Date.now();
