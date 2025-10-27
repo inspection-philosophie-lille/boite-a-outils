@@ -562,6 +562,17 @@
             background-color: rgba(109, 131, 242, 0.1);
         }
 
+        /* NOUVEAU : Conteneur pour le bouton de chargement */
+        .file-upload-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            width: 100%;
+            z-index: 3;
+            position: relative;
+        }
+
         .prompter-text {
             font-size: 2.5rem;
             line-height: 1.4;
@@ -574,8 +585,8 @@
             white-space: pre-line;
             color: #000000;
             font-family: 'Arial', sans-serif;
-            padding: 20px;
-            margin: 10px;
+            padding: 10px 20px;
+            margin: 5px;
             user-select: none;
             -webkit-user-select: none;
             -webkit-touch-callout: none;
@@ -1331,12 +1342,12 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 24px;
+            padding: 10px 20px;
             font-size: 1rem;
             gap: 8px;
             min-width: 220px;
-            min-height: 48px;
-            margin: 20px auto;
+            min-height: 44px;
+            margin: 0; /* PLUS BESOIN DE MARGIN NÉGATIVE */
             transition: all 0.2s ease;
             -webkit-tap-highlight-color: transparent;
             width: 100%;
@@ -1351,8 +1362,8 @@
             background: var(--bg-color) !important;
         }
         .file-upload-btn .file-upload-icon {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             display: inline-block;
             vertical-align: middle;
         }
@@ -1365,10 +1376,10 @@
         }
         /* Pour les marges réduites autour du texte */
         .file-upload-btn {
-            padding-left: 8px;  /* distance avant le texte */
-            padding-right: 8px; /* distance après le texte */
-            padding-top: 8px;
-            padding-bottom: 8px;
+            padding-left: 8px;
+            padding-right: 8px;
+            padding-top: 6px;
+            padding-bottom: 6px;
         }
 
         .hidden-file-input {
@@ -1384,7 +1395,149 @@
             margin: 0 5px;
         }
 
-        /* Responsive */
+       /* CORRECTION MOBILE - TOUS LES BOUTONS SUR UNE SEULE LIGNE */
+@media (max-width: 768px) {
+    .main-toolbar {
+        flex-direction: row;
+        height: auto;
+        padding: 10px 5px;
+        justify-content: space-between;
+        gap: 5px;
+    }
+    
+    .toolbar-left,
+    .toolbar-center,
+    .toolbar-right {
+        flex: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .toolbar-left {
+        display: none; /* Caché sur mobile */
+    }
+    
+    .toolbar-center {
+        flex: 1;
+        justify-content: center;
+        gap: 5px;
+    }
+    
+    .toolbar-right {
+        flex: none;
+        gap: 5px;
+    }
+    
+    /* Tous les boutons avec la même taille sur mobile */
+    .control-btn, .toolbar-btn {
+        width: 42px !important;
+        height: 42px !important;
+        min-width: 42px !important;
+        min-height: 42px !important;
+        flex-shrink: 0;
+    }
+    
+    .control-btn {
+        font-size: 16px !important;
+    }
+    
+    .speed-control {
+        font-size: 18px !important;
+    }
+    
+    .size-control {
+        font-size: 12px !important;
+    }
+    
+    .toolbar-btn svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+    
+    .hamburger-icon {
+        width: 14px !important;
+        height: 10px !important;
+    }
+    
+    .hamburger-icon span {
+        width: 14px !important;
+        height: 1.5px !important;
+    }
+    
+    /* Ajustement des espacements */
+    .toolbar-center {
+        gap: 5px !important;
+    }
+    
+    .toolbar-right {
+        gap: 5px !important;
+    }
+    
+    /* Ajustement de la hauteur de la toolbar pour mobile */
+    .main-toolbar {
+        height: 60px;
+        min-height: 60px;
+    }
+}
+
+	/* Pour les très petits écrans */
+	@media (max-width: 400px) {
+		.control-btn, .toolbar-btn {
+			width: 38px !important;
+			height: 38px !important;
+		}
+		
+		.control-btn {
+			font-size: 14px !important;
+		}
+		
+		.speed-control {
+			font-size: 16px !important;
+		}
+		
+		.size-control {
+			font-size: 10px !important;
+		}
+		
+		.toolbar-btn svg {
+			width: 16px !important;
+			height: 16px !important;
+		}
+		
+		.main-toolbar {
+			gap: 3px;
+			padding: 8px 3px;
+		}
+		
+		.toolbar-center,
+		.toolbar-right {
+			gap: 3px !important;
+		}
+	}
+
+	/* Pour les écrans très étroits */
+	@media (max-width: 360px) {
+		.control-btn, .toolbar-btn {
+			width: 36px !important;
+			height: 36px !important;
+		}
+		
+		.control-btn {
+			font-size: 13px !important;
+		}
+		
+		.speed-control {
+			font-size: 15px !important;
+		}
+		
+		.size-control {
+			font-size: 9px !important;
+		}
+	}
+
+        /* Responsive pour écrans moyens */
         @media (max-width: 900px) {
             .prompter-text {
                 font-size: 2rem;
@@ -1432,38 +1585,6 @@
             .alignment-controls {
                 justify-content: flex-start;
                 width: 100%;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .toolbar-center {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 8px;
-            }
-            
-            .control-btn {
-                width: 45px;
-                height: 45px;
-                font-size: 20px;
-            }
-            
-            .speed-control {
-                font-size: 22px;
-            }
-            
-            .size-control {
-                font-size: 16px;
-            }
-            
-            .toolbar-btn {
-                width: 45px;
-                height: 45px;
-            }
-            
-            .progress-indicators {
-                flex-direction: column;
-                gap: 10px;
             }
         }
 
@@ -1596,8 +1717,9 @@
             }
 
             .file-upload-btn {
-                padding: 10px 16px;
+                padding: 8px 14px;
                 font-size: 0.9rem;
+                min-height: 40px;
             }
         }
 
@@ -1629,11 +1751,6 @@
             .main-toolbar {
                 padding: 5px 8px;
             }
-            
-            .toolbar-center {
-                flex-wrap: wrap;
-                gap: 5px;
-            }
         }
         
         /* Correction pour le bouton play/pause sur mobile */
@@ -1658,6 +1775,15 @@
 
     <!-- Menu coulissant du haut pour le mode plein écran -->
     <div class="fullscreen-top-menu" id="fullscreenTopMenu">
+        <button class="control-btn" id="fullscreenFileBtn" title="charger un fichier">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14,2 14,8 20,8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10,9 9,9 8,9"></polyline>
+            </svg>
+        </button>
         <button class="control-btn play" id="fullscreenPlayPauseBtn" title="lancer le défilement"></button>
         <button class="control-btn speed-control" id="fullscreenSpeedDownBtn" title="diminuer la vitesse" style="padding-bottom: 5px;">−</button>
         <button class="control-btn speed-control" id="fullscreenSpeedUpBtn" title="augmenter la vitesse" style="padding-bottom: 5px;">+</button>
@@ -1686,37 +1812,46 @@
             <h1>prompteur</h1>
         </header>
 
-        <!-- Toolbar principale avec tous les boutons sur une ligne SANS CADRE -->
-        <div class="main-toolbar">
-            <div class="toolbar-left">
-                <!-- Vide à gauche -->
-            </div>
+       <!-- Toolbar principale avec tous les boutons sur une ligne SANS CADRE -->
+		<div class="main-toolbar">
+			<div class="toolbar-left">
+				<!-- Vide à gauche - caché sur mobile -->
+			</div>
 
-            <div class="toolbar-center">
-                <!-- 5 boutons ronds centrés -->
-                <button class="control-btn play" id="playPauseBtn" title="lancer le défilement"></button>
-                <button class="control-btn speed-control" id="speedDownBtn" title="diminuer la vitesse" style="padding-bottom: 5px;">−</button>
-                <button class="control-btn speed-control" id="speedUpBtn" title="augmenter la vitesse" style="padding-bottom: 5px;">+</button>
-                <button class="control-btn size-control" id="textSizeDownBtn" title="diminuer la taille du texte">A−</button>
-                <button class="control-btn size-control" id="textSizeUpBtn" title="augmenter la taille du texte">A+</button>
-            </div>
-
-            <div class="toolbar-right">
-                <!-- 2 boutons à droite -->
-                <button class="toolbar-btn" id="fullscreenBtn" title="mode plein écran">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+			<div class="toolbar-center">
+				<!-- 6 boutons ronds centrés -->
+				<button class="control-btn" id="fileBtn" title="charger un fichier">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14,2 14,8 20,8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10,9 9,9 8,9"></polyline>
                     </svg>
                 </button>
-                <button class="toolbar-btn menu" id="menuButton" title="menu">
-                    <div class="hamburger-icon">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </button>
-            </div>
-        </div>
+				<button class="control-btn play" id="playPauseBtn" title="lancer le défilement"></button>
+				<button class="control-btn speed-control" id="speedDownBtn" title="diminuer la vitesse" style="padding-bottom: 5px;">−</button>
+				<button class="control-btn speed-control" id="speedUpBtn" title="augmenter la vitesse" style="padding-bottom: 5px;">+</button>
+				<button class="control-btn size-control" id="textSizeDownBtn" title="diminuer la taille du texte">A−</button>
+				<button class="control-btn size-control" id="textSizeUpBtn" title="augmenter la taille du texte">A+</button>
+			</div>
+
+			<div class="toolbar-right">
+				<!-- 2 boutons à droite -->
+				<button class="toolbar-btn" id="fullscreenBtn" title="mode plein écran">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+					</svg>
+				</button>
+				<button class="toolbar-btn menu" id="menuButton" title="menu">
+					<div class="hamburger-icon">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				</button>
+			</div>
+		</div>
 
         <!-- Indicateurs de progression -->
         <div class="progress-indicators">
@@ -1759,23 +1894,14 @@
         <!-- Zone du prompteur -->
         <div class="prompter-container">
             <div class="prompter-display" id="prompterDisplay">
+                <!-- Le bouton de chargement a été retiré de la fenêtre du prompteur -->
                 <div class="prompter-line" id="prompterLine">
                     <div class="prompter-marker">▶</div>
                     <div class="prompter-marker">◀</div>
                 </div>
                 <div class="prompter-text" id="prompterText">
-                    <button class="file-upload-btn" id="fileUploadBtn">
-                        <svg class="file-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14,2 14,8 20,8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10,9 9,9 8,9"></polyline>
-                        </svg>
-                        <span class="file-upload-text">charger un fichier</span>
-                    </button>
-                    <input type="file" id="fileInput" class="hidden-file-input" accept=".txt">
-					ou collez ici votre texte (au format ".txt"). Les boutons ci-dessus contrôlent le défilement, la vitesse et modifient la taille du texte.
+                    Collez ici votre texte (au format ".txt") ou utilisez le premier bouton "charger un fichier".
+					Les boutons ci-dessus contrôlent le défilement, la vitesse et modifient la taille du texte.
 					Vous pouvez faire défiler manuellement le texte en glissant votre doigt sur l'écran.
                     <svg class="bulb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
@@ -1799,6 +1925,7 @@
                 <p>1. Collez votre texte dans la zone de texte ci-dessous</p>
                 <p>2. Utilisez les boutons de contrôle pour :</p>
                 <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>📁 Charger un fichier texte</li>
                     <li>▶/⏸ Lancer ou arrêter le défilement</li>
                     <li>−/+ Diminuer ou augmenter la vitesse</li>
                     <li>A−/A+ Diminuer ou augmenter la taille du texte</li>
@@ -2260,12 +2387,17 @@
         const globalDropOverlay = document.getElementById('globalDropOverlay');
         const prompterDisplay = document.getElementById('prompterDisplay');
 
-        // NOUVEAUX ÉLÉMENTS POUR LE CHARGEMENT DE FICHIER
-        const fileUploadBtn = document.getElementById('fileUploadBtn');
-        const fileInput = document.getElementById('fileInput');
+        // NOUVEAUX ÉLÉMENTS POUR LE BOUTON DE CHARGEMENT
+        const fileBtn = document.getElementById('fileBtn');
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.txt';
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
 
         // Éléments pour le mode plein écran
         const fullscreenTopMenu = document.getElementById('fullscreenTopMenu');
+        const fullscreenFileBtn = document.getElementById('fullscreenFileBtn');
         const fullscreenPlayPauseBtn = document.getElementById('fullscreenPlayPauseBtn');
         const fullscreenSpeedUpBtn = document.getElementById('fullscreenSpeedUpBtn');
         const fullscreenSpeedDownBtn = document.getElementById('fullscreenSpeedDownBtn');
@@ -2565,7 +2697,7 @@
         // NOUVELLE FONCTION POUR LE CHARGEMENT DE FICHIER
         function setupFileUpload() {
             // Clic sur le bouton déclenche l'input file
-            fileUploadBtn.addEventListener('click', () => {
+            fileBtn.addEventListener('click', () => {
                 fileInput.click();
             });
 
@@ -2578,8 +2710,13 @@
             });
             
             // Gestion du toucher pour mobile
-            fileUploadBtn.addEventListener('touchstart', (e) => {
+            fileBtn.addEventListener('touchstart', (e) => {
                 e.preventDefault();
+                fileInput.click();
+            });
+            
+            // Bouton de fichier en mode plein écran
+            fullscreenFileBtn.addEventListener('click', () => {
                 fileInput.click();
             });
         }
@@ -2893,12 +3030,14 @@
             alert('Paramètres réinitialisés avec succès');
         }
 
-        // Fonction de défilement automatique - CORRECTION 1: Remise au début après la fin
+        // CORRECTION : Fonction de défilement automatique sans sursauts
         function scrollText(timestamp) {
             if (!prompterState.isPlaying) return;
             
             if (!prompterState.lastTimestamp) {
                 prompterState.lastTimestamp = timestamp;
+                prompterState.animationFrame = requestAnimationFrame(scrollText);
+                return;
             }
             
             const deltaTime = timestamp - prompterState.lastTimestamp;
@@ -2914,7 +3053,7 @@
             const targetPosition = textHeight - containerHeight - twoLinesHeight/2 + containerHeight/2;
             
             if (prompterState.currentPosition >= targetPosition) {
-                // CORRECTION 1: Si on est en fin de texte, on arrête le défilement et on remet au début
+                // Si on est en fin de texte, on arrête le défilement et on remet au début
                 pauseScrolling();
                 prompterState.currentPosition = 0; // Remise au début
                 updateTextDisplay();
@@ -2933,7 +3072,7 @@
 
         function startScrolling() {
             if (!prompterState.isPlaying) {
-                // CORRECTION 1: Si on est à la fin, on remet au début
+                // Si on est à la fin, on remet au début
                 const textHeight = prompterText.scrollHeight;
                 const containerHeight = prompterDisplay.clientHeight;
                 const twoLinesHeight = calculateTwoLinesHeight();
@@ -2946,7 +3085,7 @@
                 }
                 
                 prompterState.isPlaying = true;
-                prompterState.lastTimestamp = null;
+                prompterState.lastTimestamp = null; // Réinitialiser le timestamp
                 prompterState.startTime = Date.now();
                 estimateTotalReadingTime();
                 prompterState.animationFrame = requestAnimationFrame(scrollText);
@@ -2961,6 +3100,7 @@
                     cancelAnimationFrame(prompterState.animationFrame);
                     prompterState.animationFrame = null;
                 }
+                // NE PAS réinitialiser lastTimestamp ici pour éviter les sursauts
                 updatePlayPauseButton();
             }
         }
@@ -3228,6 +3368,7 @@
         // Écouteurs d'événements
         function setupEventListeners() {
             // Boutons de contrôle
+            fileBtn.addEventListener('click', () => fileInput.click());
             playPauseBtn.addEventListener('click', togglePlayPause);
             speedUpBtn.addEventListener('click', increaseSpeed);
             speedDownBtn.addEventListener('click', decreaseSpeed);
@@ -3239,6 +3380,7 @@
             menuButton.addEventListener('click', toggleMenu);
             
             // Boutons du menu plein écran
+            fullscreenFileBtn.addEventListener('click', () => fileInput.click());
             fullscreenPlayPauseBtn.addEventListener('click', togglePlayPause);
             fullscreenSpeedUpBtn.addEventListener('click', increaseSpeed);
             fullscreenSpeedDownBtn.addEventListener('click', decreaseSpeed);
