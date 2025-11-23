@@ -1,10 +1,10 @@
-const onglet = "identifier le type de sophisme";
-const title = "identifier le type de sophisme";
-const subtitle = "relier chaque type de sophisme à l'exemple correspondant";
+// Contenu à modifier
 
+window.title = "identifier le type de sophisme";
 
-const argumentsData = [
-    
+window.subtitle = "relier chaque type de sophisme à l'exemple correspondant";
+
+window.argumentsData = [
 /* attention aux virgules ! le dernier argument est le seul à ne pas en comporter !*/
 /* attention aux " que l'on ajouterait dans la définition. A remplacer par '' */
 
@@ -65,15 +65,37 @@ const argumentsData = [
 	{ colonne_de_gauche: "Sophisme de la preuve par assertion", colonne_de_droite:"C'est vrai parce que je le dis, point final."},
 	{ colonne_de_gauche: "Sophisme de l'appel à l'incrédulité" ,colonne_de_droite:"Je ne peux pas croire que l'évolution soit vraie, c'est trop complexe."},
 	{ colonne_de_gauche: "Sophisme de la corrélation implique causalité" ,colonne_de_droite:"Les ventes de crème glacée augmentent en même temps que les noyades, donc la crème glacée cause des noyades."} /* pas de virgule ! */
-
-
-
-
-
-
-
-
-
-	
-
 ];
+
+window.settings = {
+    // MODE CLAIR - Couleurs neumorphiques classiques
+    "titleColor": "#ff0000",              // couleur du titre en mode clair
+    "subtitleColor": "#000000",           // couleur du sous-titre en mode clair
+    "textColor": "#000000",               // couleur du texte en mode clair
+    "backgroundColor": "#f0f0f0",         // couleur de fond en mode clair
+    "cellColor": "#e0e0e0",               // couleur des cellules en mode clair
+    "buttonColor": "#e0e0e0",             // couleur des boutons en mode clair
+    "correctColor": "#008000",            // couleur pour les bonnes réponses en mode clair
+    "incorrectColor": "#ff0000",          // couleur pour les mauvaises réponses en mode clair
+    
+    // MODE SOMBRE - Couleurs neumorphiques classiques
+    "titleColorDark": "#ff6666",          // couleur du titre en mode sombre
+    "subtitleColorDark": "#ffffff",       // couleur du sous-titre en mode sombre
+    "textColorDark": "#ffffff",           // couleur du texte en mode sombre
+    "backgroundColorDark": "#121212",     // couleur de fond en mode sombre
+    "cellColorDark": "#2d2d2d",          // couleur des cellules en mode sombre
+    "buttonColorDark": "#3d3d3d",        // couleur des boutons en mode sombre
+    "correctColorDark": "#4caf50",        // couleur pour les bonnes réponses en mode sombre
+    "incorrectColorDark": "#f44336",      // couleur pour les mauvaises réponses en mode sombre
+    
+    "fontFamily": "'Muli', Arial, sans-serif",
+    "titleSize": "clamp(1.8rem, 5vw, 2.5rem)",
+    "cellSize": "clamp(0.9rem, 2.5vw, 1rem)",
+    "enableAnimations": true,
+    "enableDarkMode": false,
+    "enableColorblindMode": false,
+    "maxPairs": 5,
+    "showScore": true,
+    "randomOrder": true,
+    "baseFontSize": 12                  // taille de base du texte en pixels (16 = 100%)
+};
