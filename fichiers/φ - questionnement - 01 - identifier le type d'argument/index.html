@@ -10,7 +10,6 @@
 	<style>
 		* {
 			box-sizing: border-box;
-			-webkit-tap-highlight-color: transparent; /* Supprime le flash bleu au toucher */
 		}
 
 		body {
@@ -24,8 +23,6 @@
 			transition: background-color 0.3s ease, color 0.3s ease;
 			color: #000000;
 			font-size: 16px;
-			overflow-x: hidden; /* Empêche le défilement horizontal */
-			touch-action: manipulation; /* Améliore la réactivité tactile */
 		}
 
 		/* Toolbar - STYLES CORRIGÉS */
@@ -458,9 +455,6 @@
 			align-items: center;
 			margin-top: 20px;
 			padding: 0 20px;
-			flex: 1;
-			overflow-y: auto; /* Permet le défilement vertical */
-			-webkit-overflow-scrolling: touch; /* Défilement fluide sur iOS */
 		}
 
 		/* Titre et sous-titre pour mobile seulement */
@@ -470,11 +464,14 @@
 			align-items: center;
 			width: 100%;
 			margin-top: 0;
+			/* RÉDUIT: supprimé l'espace au-dessus */
 			padding-top: 0;
+			/* RÉDUIT: supprimé le padding supérieur */
 		}
 
 		.mobile-title {
 			margin: 0;
+			/* RÉDUIT: supprimé les marges verticales */
 			line-height: 1.2;
 			text-align: center;
 			color: red;
@@ -482,6 +479,7 @@
 			font-weight: bold;
 			transition: color 0.3s ease;
 			white-space: nowrap;
+			/* AJOUTÉ: empêche le saut de ligne */
 			overflow: hidden;
 			text-overflow: ellipsis;
 			max-width: 100%;
@@ -489,6 +487,7 @@
 
 		.mobile-subtitle {
 			margin: 2px 0 0 0;
+			/* RÉDUIT: marge supérieure réduite */
 			line-height: 1.2;
 			text-align: center;
 			color: black;
@@ -565,15 +564,12 @@
 			max-width: 1200px;
 			gap: 1.5rem;
 			padding: 0 20px;
-			flex: 1;
-			min-height: 0; /* Important pour le défilement */
 		}
 
 		.column {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			min-height: 0; /* Important pour le défilement */
 		}
 
 		.column.left {
@@ -590,7 +586,6 @@
 		#definitionTable {
 			width: 100%;
 			table-layout: fixed;
-			height: 100%;
 		}
 
 		table {
@@ -600,7 +595,7 @@
 			height: 100%;
 		}
 
-		/* CELLULES AVEC HAUTEURS UNIFORMES - AMÉLIORATIONS TACTILES */
+		/* CELLULES AVEC HAUTEURS UNIFORMES */
 		td {
 			border-radius: 0.5rem;
 			padding: 0.75rem;
@@ -620,11 +615,6 @@
 			align-items: center;
 			justify-content: center;
 			text-align: center;
-			user-select: none; /* Empêche la sélection de texte */
-			-webkit-user-select: none;
-			-moz-user-select: none;
-			-ms-user-select: none;
-			touch-action: manipulation; /* Améliore la réactivité tactile */
 		}
 
 		/* Styles pour les cellules sélectionnées */
@@ -720,7 +710,6 @@
 			transition: all 0.3s ease;
 			box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
 			position: relative;
-			touch-action: manipulation; /* Améliore la réactivité tactile */
 		}
 
 		button:disabled {
@@ -962,12 +951,6 @@
 
 		/* CORRECTION CRITIQUE POUR MOBILE - LES 4 BOUTONS AU-DESSUS DU TITRE */
 		@media (max-width: 768px) {
-			/* Styles pour améliorer le défilement sur mobile */
-			body {
-				overflow-y: auto;
-				height: 100vh;
-				position: relative;
-			}
 
 			/* Cacher la toolbar desktop en mobile */
 			.toolbar-desktop {
@@ -981,8 +964,9 @@
 				align-items: center !important;
 				width: 100% !important;
 				padding: 5px 15px 0px 15px !important;
+				/* RÉDUIT: padding vertical réduit au minimum */
 				margin-bottom: 0 !important;
-				flex-shrink: 0; /* Empêche la réduction de taille */
+				/* RÉDUIT: supprimé margin-bottom */
 			}
 
 			/* Conteneur pour les 4 boutons centrés et rapprochés */
@@ -994,32 +978,40 @@
 				width: 100% !important;
 				gap: 15px !important;
 				margin-bottom: 5px !important;
+				/* RÉDUIT: espace réduit sous les boutons */
 			}
 
 			/* Afficher le titre mobile */
 			.mobile-title-wrapper {
 				display: flex !important;
 				margin-top: 0 !important;
+				/* RÉDUIT: supprimé tout espace au-dessus */
 				padding-top: 0 !important;
+				/* RÉDUIT: supprimé tout padding supérieur */
 				position: relative;
 				z-index: 2;
-				flex-shrink: 0; /* Empêche la réduction de taille */
 			}
 
 			/* Titre sur une seule ligne en mobile */
 			.mobile-title {
 				white-space: nowrap !important;
+				/* FORCÉ: titre sur une ligne */
 				overflow: hidden !important;
 				text-overflow: ellipsis !important;
 				margin: 0 !important;
+				/* RÉDUIT: supprimé toutes les marges */
 				line-height: 1.1 !important;
+				/* RÉDUIT: ligne plus serrée */
 				font-size: clamp(1.4rem, 4vw, 1.8rem) !important;
+				/* RÉDUIT: taille légèrement réduite */
 			}
 
 			.mobile-subtitle {
 				margin: 1px 0 0 0 !important;
+				/* RÉDUIT: espace réduit entre titre et sous-titre */
 				line-height: 1.1 !important;
 				font-size: clamp(0.8rem, 2.5vw, 1rem) !important;
+				/* RÉDUIT: taille légèrement réduite */
 			}
 
 			/* GARANTIR QUE LES BOUTONS RESTENT CIRCULAIRES EN MOBILE */
@@ -1030,33 +1022,17 @@
 				flex-shrink: 0 !important;
 			}
 
-			/* CORRECTIONS CRITIQUES POUR LE DÉFILEMENT ET LE TOUCHER */
-			.main-wrapper {
-				flex: 1;
-				width: 100%;
-				display: flex;
-				flex-direction: column;
-				overflow-y: auto; /* Permet le défilement vertical */
-				-webkit-overflow-scrolling: touch; /* Défilement fluide iOS */
-				padding: 0 10px;
-				margin-top: 10px;
-				position: relative;
-				min-height: 0; /* Important pour le défilement */
-			}
-
+			/* Ajustements du contenu principal */
 			.container {
 				flex-direction: column;
 				gap: 1rem;
 				margin: 0;
 				width: 100%;
 				max-width: 100%;
-				justify-content: flex-start; /* Change pour améliorer le défilement */
+				justify-content: center;
 				align-items: center;
 				padding: 0 10px !important;
 				position: relative;
-				flex: 1;
-				min-height: 0; /* Important pour le défilement */
-				overflow-y: auto; /* Permet le défilement */
 			}
 
 			.column {
@@ -1065,14 +1041,12 @@
 				display: flex;
 				justify-content: center;
 				position: relative;
-				min-height: 0; /* Important pour le défilement */
 			}
 
 			.column.left,
 			.column.right {
 				flex: 1;
 				max-width: 100% !important;
-				min-height: 40vh; /* Hauteur minimale pour assurer le défilement */
 			}
 
 			#repereTable,
@@ -1080,46 +1054,28 @@
 				width: 100%;
 				max-width: 100% !important;
 				margin: 0 5px !important;
-				max-height: none; /* Supprime la limitation de hauteur */
-				height: auto;
-				overflow-y: visible; /* Permet le défilement naturel */
+				max-height: 35vh;
+				overflow-y: auto;
 				position: relative;
-				flex: 1;
 			}
 
 			#definitionTable {
-				max-height: none; /* Supprime la limitation */
+				max-height: 40vh;
 			}
 
 			table {
 				border-spacing: 0.25rem !important;
 				position: relative;
-				width: 100%;
 			}
 
-			/* AMÉLIORATIONS TACTILES POUR LES CELLULES MOBILE */
 			td {
 				padding: 0.4rem 0.5rem !important;
 				margin: 1px;
 				font-size: clamp(0.7rem, 3vw, 0.9rem);
 				min-height: 50px;
 				position: relative;
+				/* CORRECTION MOBILE : z-index réduit pour que les flèches passent devant */
 				z-index: 1;
-				/* Améliorations pour le toucher */
-				min-height: 60px !important; /* Plus grand pour faciliter le toucher */
-				touch-action: manipulation;
-				-webkit-tap-highlight-color: transparent;
-			}
-
-			/* Agrandir la zone cliquable des cellules */
-			td::before {
-				content: '';
-				position: absolute;
-				top: -5px;
-				left: -5px;
-				right: -5px;
-				bottom: -5px;
-				z-index: -1;
 			}
 
 			button {
@@ -1137,16 +1093,17 @@
 				justify-content: center;
 				align-items: center;
 				margin: 0;
-				flex-shrink: 0; /* Empêche la réduction */
 			}
 
 			.mobile-title br {
 				display: none !important;
+				/* CACHÉ: empêche les sauts de ligne forcés */
 			}
 
 			.main-wrapper {
 				padding: 0 10px;
 				margin-top: 10px;
+				/* RÉDUIT: espace réduit en haut du contenu principal */
 				position: relative;
 			}
 
@@ -1167,24 +1124,8 @@
 				width: 100%;
 				height: 100%;
 				pointer-events: none;
+				/* CORRECTION CRITIQUE : z-index élevé pour mobile */
 				z-index: 10 !important;
-			}
-		}
-
-		/* Styles pour très petits écrans */
-		@media (max-width: 360px) {
-			.mobile-buttons-container {
-				gap: 10px !important;
-			}
-
-			.toolbar-btn {
-				width: 45px !important;
-				height: 45px !important;
-			}
-
-			td {
-				min-height: 55px !important;
-				padding: 0.3rem 0.4rem !important;
 			}
 		}
 	</style>
@@ -1387,6 +1328,7 @@
 	</svg>
 
 	<script>
+		// Le code JavaScript reste exactement le même que précédemment
 		// Variables pour la gestion du jeu
 		let drawing = false;
 		const canvas = document.getElementById('lineCanvas');
@@ -2198,12 +2140,8 @@
 		}
 
 		function selectCell(event, type, info) {
-			// Empêcher le comportement par défaut pour les événements tactiles
-			event.preventDefault();
-			event.stopPropagation();
-			
-			const cell = event.target.closest('td');
-			if (!cell || usedCells.has(cell)) return;
+			const cell = event.target;
+			if (usedCells.has(cell)) return;
 			
 			const cellRect = cell.getBoundingClientRect();
 			const containerRect = document.querySelector('.container').getBoundingClientRect();
@@ -2576,18 +2514,19 @@
 			const repCells = document.getElementById("repereTable").getElementsByTagName("td");
 			const defCells = document.getElementById("definitionTable").getElementsByTagName("td");
 			
-			// AMÉLIORATIONS TACTILES - Utiliser click et touchstart
 			Array.from(repCells).forEach((cell) => {
 				cell.addEventListener("click", (event) => selectCell(event, "repere", cell.textContent));
+				// Empêcher le comportement par défaut du touch
 				cell.addEventListener("touchstart", (event) => {
-					selectCell(event, "repere", cell.textContent);
+					event.preventDefault();
 				}, { passive: false });
 			});
 			
 			Array.from(defCells).forEach((cell) => {
 				cell.addEventListener("click", (event) => selectCell(event, "definition", cell.textContent));
+				// Empêcher le comportement par défaut du touch
 				cell.addEventListener("touchstart", (event) => {
-					selectCell(event, "definition", cell.textContent);
+					event.preventDefault();
 				}, { passive: false });
 			});
 			
