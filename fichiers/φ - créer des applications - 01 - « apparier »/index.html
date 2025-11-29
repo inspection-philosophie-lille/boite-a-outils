@@ -3,13 +3,14 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
 	<link rel="icon" href="favicon.ico" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content" />
 	<title id="pageTabTitle">apparier</title>
-
 	<style>
 		* {
 			box-sizing: border-box;
+			touch-action: manipulation;
 		}
 
 		body {
@@ -23,6 +24,9 @@
 			transition: background-color 0.3s ease, color 0.3s ease;
 			color: #000000;
 			font-size: 16px;
+			overflow-x: hidden;
+			overflow-y: scroll;
+			-webkit-overflow-scrolling: touch;
 		}
 
 		/* Toolbar - STYLES CORRIGÉS */
@@ -119,6 +123,9 @@
 			background-color: #e0e5ec;
 			color: #444;
 			box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
+			min-width: 60px;
+			min-height: 60px;
+			touch-action: manipulation;
 		}
 
 		/* Style spécifique pour le lien home */
@@ -130,6 +137,7 @@
 			background-color: #e0e0e0;
 			color: #444;
 			box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
+			touch-action: manipulation;
 		}
 
 		.toolbar-btn:hover {
@@ -275,6 +283,7 @@
 			width: 100%;
 			min-width: 240px;
 			justify-content: flex-start;
+			touch-action: manipulation;
 		}
 
 		.menu-item:hover {
@@ -302,7 +311,7 @@
 
 		body.dark-mode .menu-item:hover {
 			background-color: #2d2d2d;
-			box-shadow: inset 0.2rem 0.2rem 0.3rem #121212, inset -0.2rem -0.2rem 0.3rem #2d2d2d;
+			box-shadow: inset 0.2rem 0.2rem 0.3rem #1a202c, inset -0.2rem -0.2rem 0.3rem #2d2d2d;
 		}
 
 		/* Modale paramètres */
@@ -374,6 +383,7 @@
 			align-items: center;
 			justify-content: center;
 			border-radius: 50%;
+			touch-action: manipulation;
 		}
 
 		body.dark-mode .close-modal {
@@ -464,36 +474,36 @@
 			align-items: center;
 			width: 100%;
 			margin-top: 0;
-			/* RÉDUIT: supprimé l'espace au-dessus */
 			padding-top: 0;
-			/* RÉDUIT: supprimé le padding supérieur */
+			margin-bottom: 15px;
+			/* Espace ajouté sous le titre/sous-titre */
 		}
 
 		.mobile-title {
 			margin: 0;
-			/* RÉDUIT: supprimé les marges verticales */
 			line-height: 1.2;
 			text-align: center;
 			color: red;
-			font-size: clamp(1.5rem, 4vw, 2rem);
+			font-size: clamp(1.4rem, 4vw, 1.8rem);
 			font-weight: bold;
 			transition: color 0.3s ease;
-			white-space: nowrap;
-			/* AJOUTÉ: empêche le saut de ligne */
-			overflow: hidden;
-			text-overflow: ellipsis;
+			white-space: pre-line !important;
+			overflow: visible !important;
 			max-width: 100%;
+			word-break: break-word !important;
+			hyphens: none !important;
 		}
 
 		.mobile-subtitle {
 			margin: 2px 0 0 0;
-			/* RÉDUIT: marge supérieure réduite */
 			line-height: 1.2;
 			text-align: center;
 			color: black;
-			font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+			font-size: clamp(0.8rem, 2.5vw, 1rem) !important;
 			text-transform: none;
 			transition: color 0.3s ease;
+			margin-bottom: 10px;
+			/* Espace ajouté sous le sous-titre */
 		}
 
 		.button-wrapper {
@@ -524,6 +534,7 @@
 			transition: all 0.3s ease;
 			box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
 			position: relative;
+			touch-action: manipulation;
 		}
 
 		#actionButton:disabled,
@@ -595,7 +606,7 @@
 			height: 100%;
 		}
 
-		/* CELLULES AVEC HAUTEURS UNIFORMES */
+		/* CELLULES AVEC HAUTEURS UNIFORMES ET ZONE CLIQUABLE AGRANDIE */
 		td {
 			border-radius: 0.5rem;
 			padding: 0.75rem;
@@ -615,6 +626,7 @@
 			align-items: center;
 			justify-content: center;
 			text-align: center;
+			touch-action: manipulation;
 		}
 
 		/* Styles pour les cellules sélectionnées */
@@ -685,7 +697,7 @@
 			width: 100%;
 			height: 100%;
 			pointer-events: none;
-			z-index: 10; /* Par défaut pour desktop */
+			z-index: 10;
 		}
 
 		/* Style pour garantir que le container a une position relative */
@@ -710,6 +722,7 @@
 			transition: all 0.3s ease;
 			box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
 			position: relative;
+			touch-action: manipulation;
 		}
 
 		button:disabled {
@@ -750,6 +763,7 @@
 			flex: 1;
 			min-width: 120px;
 			text-align: center;
+			touch-action: manipulation;
 		}
 
 		.modal-button.confirm {
@@ -802,22 +816,18 @@
 		/* Mode daltonien - STYLES RÉPARÉS */
 		body.colorblind-mode .correct-mark {
 			color: #0000FF !important;
-			/* Bleu au lieu de vert */
 		}
 
 		body.colorblind-mode .incorrect-mark {
 			color: #FF8C00 !important;
-			/* Orange au lieu de rouge */
 		}
 
 		body.colorblind-mode.dark-mode .correct-mark {
 			color: #87CEEB !important;
-			/* Bleu clair en mode sombre */
 		}
 
 		body.colorblind-mode.dark-mode .incorrect-mark {
 			color: #FFA500 !important;
-			/* Orange en mode sombre */
 		}
 
 		/* Styles pour les marques de validation - UNIQUEMENT en mode daltonien */
@@ -829,12 +839,10 @@
 			font-size: 1.2em;
 			pointer-events: none;
 			display: none;
-			/* Caché par défaut */
 		}
 
 		body.colorblind-mode .validation-mark {
 			display: block;
-			/* Affiché uniquement en mode daltonien */
 		}
 
 		.correct-mark {
@@ -964,9 +972,7 @@
 				align-items: center !important;
 				width: 100% !important;
 				padding: 5px 15px 0px 15px !important;
-				/* RÉDUIT: padding vertical réduit au minimum */
 				margin-bottom: 0 !important;
-				/* RÉDUIT: supprimé margin-bottom */
 			}
 
 			/* Conteneur pour les 4 boutons centrés et rapprochés */
@@ -978,40 +984,45 @@
 				width: 100% !important;
 				gap: 15px !important;
 				margin-bottom: 5px !important;
-				/* RÉDUIT: espace réduit sous les boutons */
 			}
 
 			/* Afficher le titre mobile */
 			.mobile-title-wrapper {
 				display: flex !important;
 				margin-top: 0 !important;
-				/* RÉDUIT: supprimé tout espace au-dessus */
 				padding-top: 0 !important;
-				/* RÉDUIT: supprimé tout padding supérieur */
 				position: relative;
 				z-index: 2;
+				margin-bottom: 15px !important;
+				/* Espace ajouté sous le titre/sous-titre */
 			}
 
-			/* Titre sur une seule ligne en mobile */
+			/* Titre sur une ou deux lignes en mobile selon la place */
 			.mobile-title {
-				white-space: nowrap !important;
-				/* FORCÉ: titre sur une ligne */
-				overflow: hidden !important;
-				text-overflow: ellipsis !important;
 				margin: 0 !important;
-				/* RÉDUIT: supprimé toutes les marges */
-				line-height: 1.1 !important;
-				/* RÉDUIT: ligne plus serrée */
-				font-size: clamp(1.4rem, 4vw, 1.8rem) !important;
-				/* RÉDUIT: taille légèrement réduite */
+				line-height: 1.2;
+				text-align: center;
+				color: red;
+				font-size: clamp(1.3rem, 4vw, 1.6rem) !important;
+				font-weight: bold;
+				transition: color 0.3s ease;
+				white-space: pre-line !important;
+				overflow: visible !important;
+				max-width: 100%;
+				word-break: break-word !important;
+				hyphens: none !important;
 			}
 
 			.mobile-subtitle {
-				margin: 1px 0 0 0 !important;
-				/* RÉDUIT: espace réduit entre titre et sous-titre */
-				line-height: 1.1 !important;
+				margin: 2px 0 0 0 !important;
+				line-height: 1.2;
+				text-align: center;
+				color: black;
 				font-size: clamp(0.8rem, 2.5vw, 1rem) !important;
-				/* RÉDUIT: taille légèrement réduite */
+				text-transform: none;
+				transition: color 0.3s ease;
+				margin-bottom: 10px !important;
+				/* Espace ajouté sous le sous-titre */
 			}
 
 			/* GARANTIR QUE LES BOUTONS RESTENT CIRCULAIRES EN MOBILE */
@@ -1020,6 +1031,8 @@
 				height: 50px !important;
 				border-radius: 50% !important;
 				flex-shrink: 0 !important;
+				min-width: 50px !important;
+				min-height: 50px !important;
 			}
 
 			/* Ajustements du contenu principal */
@@ -1031,7 +1044,7 @@
 				max-width: 100%;
 				justify-content: center;
 				align-items: center;
-				padding: 0 10px !important;
+				padding: 0 20px !important;
 				position: relative;
 			}
 
@@ -1057,6 +1070,7 @@
 				max-height: 35vh;
 				overflow-y: auto;
 				position: relative;
+				-webkit-overflow-scrolling: touch;
 			}
 
 			#definitionTable {
@@ -1074,8 +1088,8 @@
 				font-size: clamp(0.7rem, 3vw, 0.9rem);
 				min-height: 50px;
 				position: relative;
-				/* CORRECTION MOBILE : z-index réduit pour que les flèches passent devant */
 				z-index: 1;
+				touch-action: manipulation;
 			}
 
 			button {
@@ -1084,6 +1098,7 @@
 				height: min(40px, 10vw);
 				padding: 0.15rem 0.3rem;
 				font-size: 12px;
+				touch-action: manipulation;
 			}
 
 			.button-wrapper {
@@ -1096,14 +1111,12 @@
 			}
 
 			.mobile-title br {
-				display: none !important;
-				/* CACHÉ: empêche les sauts de ligne forcés */
+				display: block !important;
 			}
 
 			.main-wrapper {
-				padding: 0 10px;
+				padding: 0 20px !important;
 				margin-top: 10px;
-				/* RÉDUIT: espace réduit en haut du contenu principal */
 				position: relative;
 			}
 
@@ -1124,7 +1137,6 @@
 				width: 100%;
 				height: 100%;
 				pointer-events: none;
-				/* CORRECTION CRITIQUE : z-index élevé pour mobile */
 				z-index: 10 !important;
 			}
 		}
@@ -1150,12 +1162,10 @@
 				<div class="reload-icon">↻</div>
 			</button>
 		</div>
-
 		<div class="toolbar-center">
 			<p class="toolbar-title" id="toolbarTitle">application « apparier »</p>
 			<p class="toolbar-subtitle" id="toolbarSubtitle">associer un élément à un autre</p>
 		</div>
-
 		<div class="toolbar-right">
 			<button class="toolbar-btn fullscreen" id="fullscreenButton" title="Plein écran">
 				<svg class="fullscreen-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -1174,7 +1184,6 @@
 			</button>
 		</div>
 	</div>
-
 	<!-- Version mobile - les 4 boutons sur une ligne au-dessus du titre (cachée en desktop) -->
 	<div class="toolbar-mobile">
 		<div class="mobile-buttons-container">
@@ -1209,7 +1218,6 @@
 			</button>
 		</div>
 	</div>
-
 	<!-- Contenu principal -->
 	<div class="main-wrapper">
 		<!-- Titre et sous-titre pour mobile seulement -->
@@ -1217,7 +1225,6 @@
 			<p class="mobile-title" id="mobileTitle">application « apparier »</p>
 			<p class="mobile-subtitle" id="mobileSubtitle">associer un élément à un autre</p>
 		</div>
-
 		<div class="container">
 			<div class="column left">
 				<table id="repereTable"></table>
@@ -1236,7 +1243,6 @@
 			</button>
 		</div>
 	</div>
-
 	<!-- Menu coulissant -->
 	<div class="menu-overlay" id="menuOverlay"></div>
 	<div class="slide-menu" id="slideMenu">
@@ -1271,7 +1277,6 @@
 			à propos
 		</button>
 	</div>
-
 	<!-- Modal paramètres -->
 	<div class="modal" id="settingsModal">
 		<div class="modal-content">
@@ -1302,7 +1307,6 @@
 			</div>
 		</div>
 	</div>
-
 	<!-- Icônes SVG -->
 	<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
 		<symbol viewBox="0 0 24 24" id="svg-help">
@@ -1322,13 +1326,10 @@
 		</symbol>
 		<symbol viewBox="0 0 24 24" id="svg-settings">
 			<path
-				d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24 0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24 0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6 1.62,3.6 3.6S13.98,15.6,12,15.6z">
-			</path>
+				d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24 0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24 0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6 1.62,3.6 3.6S13.98,15.6,12,15.6z" />
 		</symbol>
 	</svg>
-
 	<script>
-		// Le code JavaScript reste exactement le même que précédemment
 		// Variables pour la gestion du jeu
 		let drawing = false;
 		const canvas = document.getElementById('lineCanvas');
@@ -1343,35 +1344,30 @@
 		let currentDefinition = null;
 		let links = [];
 		let selectedReperes = [];
-
 		// Variables pour la gestion du menu
 		let showMenu = false;
 		let darkMode = false;
 		let colorblindMode = false;
 		let animationsEnabled = true;
-
 		// Variables pour la gestion du scroll
 		let scrollTimeout;
+		let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 
 		// Fonction pour obtenir la couleur des flèches selon le mode
 		function getArrowColor() {
 			if (darkMode) {
-				return "#ffffff"; // Blanc en mode sombre
+				return "#ffffff";
 			} else {
-				return "#000000"; // Noir en mode clair
+				return "#000000";
 			}
 		}
 
 		// Fonction pour réinitialiser le dessin au clic hors des zones
 		function resetDrawingOnClickOutside(event) {
-			// Ne pas réinitialiser pendant le scroll
 			if (event.type === 'scroll') return;
-			
-			// Vérifier si le clic est en dehors des cellules et du canvas
 			const isClickOnCell = event.target.closest('td');
 			const isClickOnCanvas = event.target === canvas;
 			const isClickOnButton = event.target.closest('button');
-
 			if (!isClickOnCell && !isClickOnCanvas && !isClickOnButton && drawing) {
 				resetDrawing();
 			}
@@ -1380,16 +1376,14 @@
 		// Fonction pour redessiner toutes les flèches après scroll
 		function redrawAllLinks() {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			
 			links.forEach(link => {
 				if (link.lineId) {
 					const { startX, startY, endX, endY } = link.lineId;
-					const color = link.isCorrect !== undefined ? 
-						(link.isCorrect ? 
-							(colorblindMode ? (darkMode ? '#87CEEB' : '#0000FF') : (darkMode ? '#4caf50' : '#008000')) : 
+					const color = link.isCorrect !== undefined ?
+						(link.isCorrect ?
+							(colorblindMode ? (darkMode ? '#87CEEB' : '#0000FF') : (darkMode ? '#4caf50' : '#008000')) :
 							(colorblindMode ? (darkMode ? '#FFA500' : '#FF8C00') : (darkMode ? '#f44336' : '#ff0000'))
 						) : getArrowColor();
-					
 					drawLink(startX, startY, endX, endY, color);
 				}
 			});
@@ -1399,7 +1393,6 @@
 		function updateLinkCoordinates() {
 			const canvasRect = canvas.getBoundingClientRect();
 			const isVertical = isVerticalLayout();
-			
 			links.forEach((link, index) => {
 				const repereCell = Array.from(document.querySelectorAll('#repereTable td')).find(
 					cell => cell.textContent === link.repere && !cell.classList.contains('used')
@@ -1407,44 +1400,33 @@
 				const definitionCell = Array.from(document.querySelectorAll('#definitionTable td')).find(
 					cell => cell.textContent === link.definition && !cell.classList.contains('used')
 				);
-				
 				if (repereCell && definitionCell) {
 					const repereRect = repereCell.getBoundingClientRect();
 					const defRect = definitionCell.getBoundingClientRect();
-					
 					let startX, startY, endX, endY;
 					const totalLinks = selectedReperes.length;
-
 					if (isVertical) {
 						const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
 						const horizontalOffset = (index - (totalLinks - 1) / 2) * linkSpacing;
-
 						startX = repereRect.left + repereRect.width / 2 + horizontalOffset - canvasRect.left;
 						startY = repereRect.bottom - 8 - canvasRect.top;
 						endX = defRect.left + defRect.width / 2 + horizontalOffset - canvasRect.left;
 						endY = defRect.top + 8 - canvasRect.top;
 					} else {
-						// Mode desktop : flèches centrées verticalement
 						startX = repereRect.right - 8 - canvasRect.left;
 						startY = repereRect.top + repereRect.height / 2 - canvasRect.top;
 						endX = defRect.left + 8 - canvasRect.left;
 						endY = defRect.top + defRect.height / 2 - canvasRect.top;
 					}
-					
-					// Mettre à jour les coordonnées
 					link.lineId = { startX, startY, endX, endY };
 				}
 			});
-			
 			redrawAllLinks();
 		}
 
 		// Ajouter les écouteurs d'événement pour le scroll
-		window.addEventListener('scroll', function() {
-			// Annuler tout reset pendant le scroll
+		window.addEventListener('scroll', function () {
 			clearTimeout(scrollTimeout);
-			
-			// Redessiner les flèches après le scroll
 			if (links.length > 0) {
 				scrollTimeout = setTimeout(() => {
 					updateLinkCoordinates();
@@ -1463,7 +1445,6 @@
 				animationsEnabled: animationsEnabled
 			};
 			localStorage.setItem('apparierSettings', JSON.stringify(settings));
-			console.log('Paramètres sauvegardés:', settings);
 		}
 
 		// Charger les paramètres
@@ -1472,13 +1453,9 @@
 			if (saved) {
 				try {
 					const settings = JSON.parse(saved);
-					console.log('Paramètres chargés:', settings);
-
 					darkMode = settings.darkMode || false;
 					colorblindMode = settings.colorblindMode || false;
 					animationsEnabled = settings.animationsEnabled !== undefined ? settings.animationsEnabled : true;
-
-					// Appliquer les paramètres chargés
 					if (darkMode) {
 						document.body.classList.add('dark-mode');
 					}
@@ -1488,7 +1465,6 @@
 					if (!animationsEnabled) {
 						toggleAnimations(false);
 					}
-
 					return settings;
 				} catch (e) {
 					console.error('Erreur lors du chargement des paramètres:', e);
@@ -1499,7 +1475,6 @@
 
 		// Fonction pour charger les ressources externes
 		function loadExternalResources() {
-			// Essayer de charger le fichier externe
 			const script = document.createElement('script');
 			script.src = 'fichier_ressource.js';
 			script.onload = function () {
@@ -1508,7 +1483,6 @@
 			};
 			script.onerror = function () {
 				console.log('fichier_ressource.js non trouvé, utilisation des valeurs par défaut');
-				// Variables globales par défaut
 				window.argumentsData = [
 					{ colonne_de_gauche: "Philosophie", colonne_de_droite: "Amour de la sagesse" },
 					{ colonne_de_gauche: "Éthique", colonne_de_droite: "Science de la morale" },
@@ -1516,7 +1490,6 @@
 					{ colonne_de_gauche: "Logique", colonne_de_droite: "Science du raisonnement valide" },
 					{ colonne_de_gauche: "Esthétique", colonne_de_droite: "Philosophie du beau" }
 				];
-
 				window.title = "application « apparier »";
 				window.subtitle = "associer un élément à un autre";
 				window.settings = {
@@ -1557,8 +1530,6 @@
 			const style = document.createElement('style');
 			style.id = 'dynamic-colors';
 			let css = '';
-
-			// ===== MODE CLAIR (styles par défaut) =====
 			if (appSettings.titleColor) {
 				css += `.toolbar-title, .mobile-title { color: ${appSettings.titleColor} !important; }`;
 				css += `.modal-title { color: ${appSettings.titleColor} !important; }`;
@@ -1583,8 +1554,6 @@
 			if (appSettings.buttonColor) {
 				css += `body:not(.dark-mode) button { background-color: ${appSettings.buttonColor} !important; }`;
 			}
-
-			// ===== MODE SOMBRE =====
 			if (appSettings.titleColorDark) {
 				css += `body.dark-mode .toolbar-title, body.dark-mode .mobile-title { color: ${appSettings.titleColorDark} !important; }`;
 				css += `body.dark-mode .modal-title { color: ${appSettings.titleColorDark} !important; }`;
@@ -1609,38 +1578,28 @@
 			if (appSettings.buttonColorDark) {
 				css += `body.dark-mode button { background-color: ${appSettings.buttonColorDark} !important; }`;
 			}
-
-			// Styles communs pour la police et taille
 			if (appSettings.fontFamily) {
 				css += `body { font-family: ${appSettings.fontFamily} !important; }`;
 			}
 			if (appSettings.titleSize) {
 				css += `.toolbar-title { font-size: ${appSettings.titleSize} !important; }`;
-				css += `.mobile-title { font-size: clamp(1.5rem, 4vw, 2rem) !important; }`;
+				css += `.mobile-title { font-size: clamp(1.3rem, 4vw, 1.6rem) !important; }`;
 			}
 			if (appSettings.cellSize) {
 				css += `td { font-size: ${appSettings.cellSize} !important; }`;
 			}
-
-			// Supprimer l'ancien style dynamique s'il existe
 			const oldStyle = document.getElementById('dynamic-colors');
 			if (oldStyle) {
 				oldStyle.remove();
 			}
-
 			style.textContent = css;
 			document.head.appendChild(style);
-
-			// Appliquer les paramètres booléens - MAINTENANT APRÈS le chargement des paramètres sauvegardés
 			const savedSettings = loadSettings();
-
 			if (savedSettings) {
-				// Utiliser les paramètres sauvegardés en priorité
 				darkMode = savedSettings.darkMode;
 				colorblindMode = savedSettings.colorblindMode;
 				animationsEnabled = savedSettings.animationsEnabled;
 			} else {
-				// Sinon utiliser les paramètres par défaut du fichier
 				if (appSettings.enableAnimations !== undefined) {
 					animationsEnabled = appSettings.enableAnimations;
 				}
@@ -1651,13 +1610,9 @@
 					colorblindMode = appSettings.enableColorblindMode;
 				}
 			}
-
-			// Mettre à jour les toggles
 			document.getElementById('animationsToggle').checked = animationsEnabled;
 			document.getElementById('darkModeToggle').checked = darkMode;
 			document.getElementById('colorblindModeToggle').checked = colorblindMode;
-
-			// Appliquer les modes
 			if (darkMode) {
 				document.body.classList.add('dark-mode');
 			}
@@ -1667,12 +1622,9 @@
 			if (!animationsEnabled) {
 				toggleAnimations(false);
 			}
-
 			if (appSettings.showScore !== undefined && !appSettings.showScore) {
 				document.getElementById('scoreButton').style.display = 'none';
 			}
-
-			// Appliquer la taille de police de base
 			if (appSettings.baseFontSize !== undefined) {
 				document.body.style.fontSize = appSettings.baseFontSize + 'px';
 			}
@@ -1684,39 +1636,27 @@
 			const appTitle = window.title;
 			const appSubtitle = window.subtitle;
 			const appSettings = window.settings;
-
 			loadTitleAndSubtitle(appTitle, appSubtitle);
-
-			// Appliquer les couleurs et paramètres
 			applyAllColors(appSettings);
-
 			selectedReperes = loadReperes(argsData);
 			resizeCanvas();
 			addEventListeners();
 			actionButton.disabled = true;
 			scoreButton.disabled = true;
-
 			setupReloadButton();
 			setupMenuListeners();
 			setupSettingsModal();
 			formatTitleForMobile(appTitle);
-
-			// Ajouter l'écouteur d'événement pour le bouton d'action
 			document.getElementById('actionButton').addEventListener('click', performAction);
-
-			// Écouter le redimensionnement pour ajuster le titre et le canvas
-			window.addEventListener('resize', function() {
+			window.addEventListener('resize', function () {
 				resizeCanvas();
 				formatTitleForMobile(window.title);
-				// Mettre à jour les coordonnées après resize
 				if (links.length > 0) {
 					setTimeout(updateLinkCoordinates, 50);
 				}
 			});
-
-			window.addEventListener('load', function() {
+			window.addEventListener('load', function () {
 				resizeCanvas();
-				// Attendre que le layout soit stabilisé
 				setTimeout(() => {
 					if (links.length > 0) {
 						updateLinkCoordinates();
@@ -1735,54 +1675,38 @@
 			const fullscreenButtonMobile = document.getElementById('fullscreenButtonMobile');
 			const reloadButton = document.getElementById('reloadButton');
 			const reloadButtonMobile = document.getElementById('reloadButtonMobile');
-
-			// Boutons du menu
 			const instructionsButton = document.getElementById('instructionsButton');
 			const statsButton = document.getElementById('statsButton');
 			const settingsButton = document.getElementById('settingsButton');
 			const resetButton = document.getElementById('resetButton');
 			const aboutButton = document.getElementById('aboutButton');
-
-			// Ouvrir/fermer le menu
 			menuButton.addEventListener('click', toggleMenu);
 			menuButtonMobile.addEventListener('click', toggleMenu);
 			menuOverlay.addEventListener('click', closeMenu);
-
-			// Bouton plein écran
 			fullscreenButton.addEventListener('click', toggleFullscreen);
 			fullscreenButtonMobile.addEventListener('click', toggleFullscreen);
-
-			// Bouton reload
 			reloadButton.addEventListener('click', reload);
 			reloadButtonMobile.addEventListener('click', reload);
-
-			// Actions des boutons du menu
 			instructionsButton.addEventListener('click', function () {
 				closeMenu();
 				showInstructions();
 			});
-
 			statsButton.addEventListener('click', function () {
 				closeMenu();
 				showStats();
 			});
-
 			settingsButton.addEventListener('click', function () {
 				closeMenu();
 				openSettings();
 			});
-
 			resetButton.addEventListener('click', function () {
 				closeMenu();
 				showResetConfirm();
 			});
-
 			aboutButton.addEventListener('click', function () {
 				closeMenu();
 				showAbout();
 			});
-
-			// Fermer avec la touche Escape
 			document.addEventListener('keydown', function (event) {
 				if (event.key === 'Escape') {
 					if (showMenu) {
@@ -1796,8 +1720,6 @@
 					}
 				}
 			});
-
-			// Écouter les changements de mode plein écran
 			document.addEventListener('fullscreenchange', updateFullscreenButton);
 			document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
 			document.addEventListener('mozfullscreenchange', updateFullscreenButton);
@@ -1819,7 +1741,6 @@
 		// Fonction pour basculer le mode plein écran
 		function toggleFullscreen() {
 			if (!document.fullscreenElement) {
-				// Entrer en mode plein écran
 				const docEl = document.documentElement;
 				if (docEl.requestFullscreen) {
 					docEl.requestFullscreen();
@@ -1831,7 +1752,6 @@
 					docEl.msRequestFullscreen();
 				}
 			} else {
-				// Sortir du mode plein écran
 				if (document.exitFullscreen) {
 					document.exitFullscreen();
 				} else if (document.webkitExitFullscreen) {
@@ -1850,7 +1770,6 @@
 			const menuButtonMobile = document.getElementById('menuButtonMobile');
 			const slideMenu = document.getElementById('slideMenu');
 			const menuOverlay = document.getElementById('menuOverlay');
-
 			if (showMenu) {
 				menuButton.classList.add('active');
 				menuButtonMobile.classList.add('active');
@@ -1879,32 +1798,24 @@
 			const darkModeToggle = document.getElementById('darkModeToggle');
 			const colorblindModeToggle = document.getElementById('colorblindModeToggle');
 			const animationsToggle = document.getElementById('animationsToggle');
-
-			// Fermer la modal
 			closeSettingsBtn.addEventListener('click', closeSettings);
 			settingsModal.addEventListener('click', function (event) {
 				if (event.target === settingsModal) {
 					closeSettings();
 				}
 			});
-
-			// Gestion des toggles
 			darkModeToggle.addEventListener('change', function () {
 				toggleDarkMode(this.checked);
 				saveSettings();
 			});
-
 			colorblindModeToggle.addEventListener('change', function () {
 				toggleColorblindMode(this.checked);
 				saveSettings();
 			});
-
 			animationsToggle.addEventListener('change', function () {
 				toggleAnimations(this.checked);
 				saveSettings();
 			});
-
-			// Initialiser l'état des toggles avec les valeurs actuelles
 			darkModeToggle.checked = darkMode;
 			colorblindModeToggle.checked = colorblindMode;
 			animationsToggle.checked = animationsEnabled;
@@ -1922,14 +1833,11 @@
 		function toggleDarkMode(enable) {
 			darkMode = enable;
 			const body = document.body;
-
 			if (darkMode) {
 				body.classList.add('dark-mode');
 			} else {
 				body.classList.remove('dark-mode');
 			}
-
-			// Mettre à jour le toggle
 			document.getElementById('darkModeToggle').checked = darkMode;
 		}
 
@@ -1937,14 +1845,11 @@
 		function toggleColorblindMode(enable) {
 			colorblindMode = enable;
 			const body = document.body;
-
 			if (colorblindMode) {
 				body.classList.add('colorblind-mode');
 			} else {
 				body.classList.remove('colorblind-mode');
 			}
-
-			// Mettre à jour le toggle
 			document.getElementById('colorblindModeToggle').checked = colorblindMode;
 		}
 
@@ -1952,8 +1857,6 @@
 		function toggleAnimations(enable) {
 			animationsEnabled = enable;
 			document.getElementById('animationsToggle').checked = animationsEnabled;
-
-			// Appliquer ou désactiver les transitions
 			const allElements = document.querySelectorAll('*');
 			if (!animationsEnabled) {
 				allElements.forEach(el => {
@@ -1988,28 +1891,23 @@
 
 		function showResetConfirm() {
 			const modal = createModal('réinitialisation', 'êtes-vous sûr de vouloir réinitialiser les statistiques et recommencer une nouvelle partie ?');
-
 			const buttonContainer = document.createElement('div');
 			buttonContainer.style.display = 'flex';
 			buttonContainer.style.justifyContent = 'space-between';
 			buttonContainer.style.marginTop = '20px';
 			buttonContainer.style.gap = '10px';
 			buttonContainer.style.flexWrap = 'wrap';
-
 			const confirmButton = createModalButton('Confirmer', 'confirm', function () {
 				modal.classList.remove('open');
 				setTimeout(() => modal.remove(), 300);
 				reload();
 			});
-
 			const cancelButton = createModalButton('Annuler', 'cancel', function () {
 				modal.classList.remove('open');
 				setTimeout(() => modal.remove(), 300);
 			});
-
 			buttonContainer.appendChild(confirmButton);
 			buttonContainer.appendChild(cancelButton);
-
 			modal.querySelector('.modal-content').appendChild(buttonContainer);
 			modal.classList.add('open');
 		}
@@ -2022,17 +1920,13 @@
 		function createModal(title, content) {
 			const modal = document.createElement('div');
 			modal.className = 'modal';
-
 			const modalContent = document.createElement('div');
 			modalContent.className = 'modal-content';
-
 			const modalHeader = document.createElement('div');
 			modalHeader.className = 'modal-header';
-
 			const modalTitle = document.createElement('h2');
 			modalTitle.className = 'modal-title';
 			modalTitle.textContent = title;
-
 			const closeButton = document.createElement('button');
 			closeButton.className = 'close-modal';
 			closeButton.innerHTML = '&times;';
@@ -2040,25 +1934,20 @@
 				modal.classList.remove('open');
 				setTimeout(() => modal.remove(), 300);
 			};
-
 			modalHeader.appendChild(modalTitle);
 			modalHeader.appendChild(closeButton);
-
 			const contentDiv = document.createElement('div');
 			contentDiv.innerHTML = content;
 			contentDiv.style.lineHeight = '1.6';
-
 			modalContent.appendChild(modalHeader);
 			modalContent.appendChild(contentDiv);
 			modal.appendChild(modalContent);
-
 			modal.addEventListener('click', function (event) {
 				if (event.target === modal) {
 					modal.classList.remove('open');
 					setTimeout(() => modal.remove(), 300);
 				}
 			});
-
 			document.body.appendChild(modal);
 			return modal;
 		}
@@ -2067,19 +1956,16 @@
 		function formatTitleForMobile(titleText) {
 			const titleElement = document.getElementById('mobileTitle');
 			const screenWidth = window.innerWidth;
-
 			if (screenWidth <= 768) {
-				// Mode mobile - titre sur une seule ligne
-				titleElement.innerHTML = titleText.replace('« ', '«&nbsp;').replace(' »', '&nbsp;»');
+				// Remplacer les guillemets par des sauts de ligne si nécessaire
+				titleElement.innerHTML = titleText.replace('« ', '«<br>').replace(' »', '»');
 			} else {
-				// Mode desktop - titre sur une ligne
 				titleElement.innerHTML = titleText;
 			}
 		}
 
 		// Fonction pour le bouton reload
 		function setupReloadButton() {
-			// Les écouteurs sont maintenant dans setupMenuListeners()
 		}
 
 		function loadTitleAndSubtitle(appTitle, appSubtitle) {
@@ -2105,13 +1991,10 @@
 			const defTable = document.getElementById('definitionTable');
 			repTable.innerHTML = '';
 			defTable.innerHTML = '';
-
 			const maxPairs = window.settings.maxPairs ? Math.min(window.settings.maxPairs, argsData.length) : Math.min(5, argsData.length);
 			const randomParts = getRandomElements(argsData, maxPairs);
 			const shuffledNames = randomParts.map(part => part.colonne_de_gauche).sort(() => 0.5 - Math.random());
 			const shuffledDefinitions = randomParts.map(part => part.colonne_de_droite).sort(() => 0.5 - Math.random());
-
-			// Tableau de gauche
 			shuffledNames.forEach((name, index) => {
 				const repRow = document.createElement('tr');
 				const repCell = document.createElement('td');
@@ -2121,60 +2004,45 @@
 				repRow.appendChild(repCell);
 				repTable.appendChild(repRow);
 			});
-
-			// Tableau de droite
 			shuffledDefinitions.forEach((definition, index) => {
 				const defRow = document.createElement('tr');
-
 				const defCell = document.createElement('td');
 				defCell.textContent = definition;
 				defCell.dataset.index = index;
 				defCell.dataset.definition = definition;
 				defCell.dataset.original = definition;
 				defRow.appendChild(defCell);
-
 				defTable.appendChild(defRow);
 			});
-
 			return randomParts;
 		}
 
 		function selectCell(event, type, info) {
-			const cell = event.target;
-			if (usedCells.has(cell)) return;
-			
+			const cell = event.target.closest('td');
+			if (!cell || usedCells.has(cell)) return;
 			const cellRect = cell.getBoundingClientRect();
 			const containerRect = document.querySelector('.container').getBoundingClientRect();
-			
 			const isVertical = isVerticalLayout();
-
 			if (type === 'repere') {
 				if (drawing && currentDefinition) {
 					const repereRect = cellRect;
 					const defRect = currentDefinition.cell.getBoundingClientRect();
-
 					let startX, startY, endX, endY;
 					const currentIndex = links.length;
 					const totalLinks = selectedReperes.length;
-
 					if (isVertical) {
 						const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
 						const horizontalOffset = (currentIndex - (totalLinks - 1) / 2) * linkSpacing;
-
-						// CORRECTION : Calculer les coordonnées relatives au container
 						startX = repereRect.left - containerRect.left + repereRect.width / 2 + horizontalOffset;
 						startY = repereRect.bottom - containerRect.top - 8;
 						endX = defRect.left - containerRect.left + defRect.width / 2 + horizontalOffset;
 						endY = defRect.top - containerRect.top + 8;
 					} else {
-						// Mode desktop : flèches centrées verticalement sur chaque cellule
 						startX = repereRect.right - containerRect.left - 8;
 						startY = repereRect.top - containerRect.top + repereRect.height / 2;
 						endX = defRect.left - containerRect.left + 8;
 						endY = defRect.top - containerRect.top + defRect.height / 2;
 					}
-
-					// CORRECTION : Vérifier que les coordonnées sont valides
 					if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0) {
 						drawLink(startX, startY, endX, endY, getArrowColor());
 						links.push({
@@ -2186,7 +2054,6 @@
 						usedCells.add(currentDefinition.cell);
 						cell.classList.add('used');
 						currentDefinition.cell.classList.add('used');
-
 						resetDrawing();
 						actionButton.disabled = links.length !== selectedReperes.length;
 					}
@@ -2194,36 +2061,28 @@
 					drawing = true;
 					currentRepere = { info, cell };
 					currentDefinition = null;
-					// Ajouter la classe de sélection visuelle
 					cell.classList.add('selected');
 				}
 			} else if (type === 'definition') {
 				if (drawing && currentRepere) {
 					const repereRect = currentRepere.cell.getBoundingClientRect();
 					const defRect = cellRect;
-
 					let startX, startY, endX, endY;
 					const currentIndex = links.length;
 					const totalLinks = selectedReperes.length;
-
 					if (isVertical) {
 						const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
 						const horizontalOffset = (currentIndex - (totalLinks - 1) / 2) * linkSpacing;
-
-						// CORRECTION : Calculer les coordonnées relatives au container
 						startX = repereRect.left - containerRect.left + repereRect.width / 2 + horizontalOffset;
 						startY = repereRect.bottom - containerRect.top - 8;
 						endX = defRect.left - containerRect.left + defRect.width / 2 + horizontalOffset;
 						endY = defRect.top - containerRect.top + 8;
 					} else {
-						// Mode desktop : flèches centrées verticalement
 						startX = repereRect.right - containerRect.left - 8;
 						startY = repereRect.top - containerRect.top + repereRect.height / 2;
 						endX = defRect.left - containerRect.left + 8;
 						endY = defRect.top - containerRect.top + defRect.height / 2;
 					}
-
-					// CORRECTION : Vérifier que les coordonnées sont valides
 					if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0) {
 						drawLink(startX, startY, endX, endY, getArrowColor());
 						links.push({
@@ -2242,7 +2101,6 @@
 					drawing = true;
 					currentDefinition = { text: cell.textContent, cell };
 					currentRepere = null;
-					// Ajouter la classe de sélection visuelle
 					cell.classList.add('selected');
 				}
 			}
@@ -2270,7 +2128,6 @@
 
 		function resetDrawing() {
 			drawing = false;
-			// Retirer les classes de sélection visuelle
 			if (currentRepere) {
 				currentRepere.cell.classList.remove('selected');
 			}
@@ -2306,7 +2163,6 @@
 			let correctCount = 0;
 			const isVertical = isVerticalLayout();
 			const containerRect = document.querySelector('.container').getBoundingClientRect();
-
 			links.forEach((link, index) => {
 				const correspondingPart = selectedReperes.find(
 					(part) => part.colonne_de_gauche === link.repere
@@ -2314,70 +2170,52 @@
 				const isCorrect = correspondingPart
 					? correspondingPart.colonne_de_droite === link.definition
 					: false;
-
-				// Utiliser les couleurs des paramètres
 				let color;
 				if (colorblindMode) {
-					// Mode daltonien - utiliser bleu/orange
 					color = isCorrect ? '#0000FF' : '#FF8C00';
 				} else {
-					// Mode normal - utiliser vert/rouge
 					color = isCorrect ? '#008000' : '#ff0000';
 				}
-
-				// Ajuster pour le mode sombre si nécessaire
 				if (darkMode && !colorblindMode) {
 					color = isCorrect ? '#4caf50' : '#f44336';
 				} else if (darkMode && colorblindMode) {
 					color = isCorrect ? '#87CEEB' : '#FFA500';
 				}
-
 				const repereCell = Array.from(document.querySelectorAll('#repereTable td')).find(
 					cell => cell.textContent === link.repere
 				);
 				const definitionCell = Array.from(document.querySelectorAll('#definitionTable td')).find(
 					cell => cell.textContent === link.definition
 				);
-
 				if (repereCell && definitionCell) {
 					const repereRect = repereCell.getBoundingClientRect();
 					const defRect = definitionCell.getBoundingClientRect();
-
 					let startX, startY, endX, endY;
 					const totalLinks = selectedReperes.length;
-
 					if (isVertical) {
 						const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
 						const horizontalOffset = (index - (totalLinks - 1) / 2) * linkSpacing;
-
-						// CORRECTION : Calculer les coordonnées relatives au container
 						startX = repereRect.left - containerRect.left + repereRect.width / 2 + horizontalOffset;
 						startY = repereRect.bottom - containerRect.top - 8;
 						endX = defRect.left - containerRect.left + defRect.width / 2 + horizontalOffset;
 						endY = defRect.top - containerRect.top + 8;
 					} else {
-						// Mode desktop : flèches centrées verticalement
 						startX = repereRect.right - containerRect.left - 8;
 						startY = repereRect.top - containerRect.top + repereRect.height / 2;
 						endX = defRect.left - containerRect.left + 8;
 						endY = defRect.top - containerRect.top + defRect.height / 2;
 					}
-
-					// CORRECTION : Vérifier que les coordonnées sont valides
 					if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0) {
 						drawLink(startX, startY, endX, endY, color);
 						link.lineId = { startX, startY, endX, endY };
 						link.isCorrect = isCorrect;
 						if (isCorrect) correctCount++;
-
-						// Afficher les marques de validation UNIQUEMENT en mode daltonien
 						if (colorblindMode) {
 							showValidationMark(link.definition, isCorrect);
 						}
 					}
 				}
 			});
-
 			totalCorrect += correctCount;
 			totalAnswers += selectedReperes.length;
 			scoreButton.innerHTML = `${totalCorrect} / ${totalAnswers}`;
@@ -2393,18 +2231,13 @@
 			const definitionCells = document.querySelectorAll('#definitionTable td');
 			definitionCells.forEach(cell => {
 				if (cell.textContent === definition) {
-					// Supprimer toute marque existante
 					const existingMark = cell.querySelector('.validation-mark');
 					if (existingMark) {
 						existingMark.remove();
 					}
-
-					// Ajouter la nouvelle marque
 					const mark = document.createElement('span');
 					mark.className = `validation-mark ${isCorrect ? 'correct-mark' : 'incorrect-mark'}`;
 					mark.textContent = isCorrect ? '✔' : '❌';
-
-					// Appliquer la couleur selon le mode daltonien
 					if (colorblindMode) {
 						if (darkMode) {
 							mark.style.color = isCorrect ? '#87CEEB' : '#FFA500';
@@ -2418,7 +2251,6 @@
 							mark.style.color = isCorrect ? '#008000' : '#ff0000';
 						}
 					}
-
 					cell.appendChild(mark);
 				}
 			});
@@ -2430,7 +2262,6 @@
 			const definitionTable = document.getElementById("definitionTable");
 			const containerRect = document.querySelector('.container').getBoundingClientRect();
 			const isVertical = isVerticalLayout();
-
 			selectedReperes.forEach((repere, index) => {
 				const repereCell = Array.from(repereTable.querySelectorAll('td')).find(
 					(cell) => cell.dataset.original === repere.colonne_de_gauche
@@ -2438,48 +2269,36 @@
 				const definitionCell = Array.from(definitionTable.querySelectorAll('td')).find(
 					(cell) => cell.dataset.original === repere.colonne_de_droite
 				);
-
 				if (repereCell && definitionCell) {
 					const repereRect = repereCell.getBoundingClientRect();
 					const defRect = definitionCell.getBoundingClientRect();
-
 					let startX, startY, endX, endY;
 					const totalLinks = selectedReperes.length;
-
 					if (isVertical) {
 						const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
 						const horizontalOffset = (index - (totalLinks - 1) / 2) * linkSpacing;
-
-						// CORRECTION : Calculer les coordonnées relatives au container
 						startX = repereRect.left - containerRect.left + repereRect.width / 2 + horizontalOffset;
 						startY = repereRect.bottom - containerRect.top - 8;
 						endX = defRect.left - containerRect.left + defRect.width / 2 + horizontalOffset;
 						endY = defRect.top - containerRect.top + 8;
 					} else {
-						// Mode desktop : flèches centrées verticalement
 						startX = repereRect.right - containerRect.left - 8;
 						startY = repereRect.top - containerRect.top + repereRect.height / 2;
 						endX = defRect.left - containerRect.left + 8;
 						endY = defRect.top - containerRect.top + defRect.height / 2;
 					}
-
-					// Utiliser la couleur correcte selon le mode
-					let color = '#008000'; // Vert par défaut
+					let color = '#008000';
 					if (colorblindMode) {
-						color = darkMode ? '#87CEEB' : '#0000FF'; // Bleu en mode daltonien
+						color = darkMode ? '#87CEEB' : '#0000FF';
 					} else if (darkMode) {
-						color = '#4caf50'; // Vert en mode sombre
+						color = '#4caf50';
 					}
-
-					// CORRECTION : Vérifier que les coordonnées sont valides
 					if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0) {
 						drawLink(startX, startY, endX, endY, color);
 					}
 				}
 			});
-
 			currentAction = "reload";
-			// Appliquer la classe spécifique pour le bouton de rechargement
 			actionButton.classList.add('reload-mode');
 			document.getElementById("actionButton").innerHTML = '<div class="reload-icon">↻</div>';
 			actionButton.disabled = false;
@@ -2494,13 +2313,11 @@
 			Array.from(repCells).forEach((cell) => cell.classList.remove("used"));
 			Array.from(defCells).forEach((cell) => {
 				cell.classList.remove("used");
-				// Supprimer les marques de validation
 				const existingMark = cell.querySelector('.validation-mark');
 				if (existingMark) {
 					existingMark.remove();
 				}
 			});
-
 			document.getElementById("repereTable").innerHTML = "";
 			document.getElementById("definitionTable").innerHTML = "";
 			selectedReperes = loadReperes(window.argumentsData);
@@ -2513,27 +2330,22 @@
 		function addEventListeners() {
 			const repCells = document.getElementById("repereTable").getElementsByTagName("td");
 			const defCells = document.getElementById("definitionTable").getElementsByTagName("td");
-			
 			Array.from(repCells).forEach((cell) => {
 				cell.addEventListener("click", (event) => selectCell(event, "repere", cell.textContent));
-				// Empêcher le comportement par défaut du touch
 				cell.addEventListener("touchstart", (event) => {
 					event.preventDefault();
+					selectCell(event, "repere", cell.textContent);
 				}, { passive: false });
 			});
-			
 			Array.from(defCells).forEach((cell) => {
 				cell.addEventListener("click", (event) => selectCell(event, "definition", cell.textContent));
-				// Empêcher le comportement par défaut du touch
 				cell.addEventListener("touchstart", (event) => {
 					event.preventDefault();
+					selectCell(event, "definition", cell.textContent);
 				}, { passive: false });
 			});
-			
-			// Réduire la sensibilité au scroll
-			document.addEventListener('touchmove', function(event) {
+			document.addEventListener('touchmove', function (event) {
 				if (drawing) {
-					// Permettre le scroll même pendant le dessin
 					return;
 				}
 			}, { passive: true });
@@ -2542,20 +2354,51 @@
 		function resizeCanvas() {
 			const container = document.querySelector('.container');
 			if (container) {
-				// CORRECTION CRITIQUE : Utiliser offsetWidth/offsetHeight plutôt que bounding rect
 				canvas.width = container.offsetWidth;
 				canvas.height = container.offsetHeight;
-				
-				// Redessiner toutes les flèches
 				if (links.length > 0) {
 					updateLinkCoordinates();
 				}
 			}
 		}
 
+		// Gestion améliorée du scroll et des clics sur mobile
+		function setupMobileScroll() {
+			if (isTouchDevice && window.innerWidth <= 768) {
+				let isScrolling = false;
+				let startY;
+				let startX;
+
+				document.addEventListener('touchstart', function (e) {
+					if (e.target.closest('td, button, .toolbar-btn')) {
+						return;
+					}
+					isScrolling = true;
+					startY = e.touches[0].clientY;
+					startX = e.touches[0].clientX;
+				}, { passive: true });
+
+				document.addEventListener('touchmove', function (e) {
+					if (!isScrolling) return;
+					const y = e.touches[0].clientY;
+					const dy = startY - y;
+					if (Math.abs(dy) > 5) {
+						e.preventDefault();
+						window.scrollBy(0, dy);
+						startY = y;
+					}
+				}, { passive: false });
+
+				document.addEventListener('touchend', function () {
+					isScrolling = false;
+				});
+			}
+		}
+
 		// Démarrer l'application
 		document.addEventListener('DOMContentLoaded', function () {
 			loadExternalResources();
+			setupMobileScroll();
 		});
 	</script>
 </body>

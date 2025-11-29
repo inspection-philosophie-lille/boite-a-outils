@@ -13,7 +13,7 @@ window.argumentsData = [
 	{ colonne_de_gauche: "mot 10", colonne_de_droite: "mot 10'" }
 ];
 
-window.title = "application « apparier »";
+window.title = "application «&nbsp;apparier&nbsp;»";
 window.subtitle = "associer un élément à un autre";
 window.settings = {
     // MODE CLAIR - Couleurs neumorphiques classiques
