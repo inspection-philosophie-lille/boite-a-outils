@@ -1,2230 +1,2236 @@
 <!DOCTYPE html>
-<!------------------------------------ Daniel Boulagnon ------------------------------------>
-<!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
-<!------------------------------------- version 2025 --------------------------------------->
-<!----------------- Exploitation à but strictement pédagogique et non lucratif ------------->
-
-<html lang="fr" >
+<html lang="fr">
 <head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-	<link rel="icon" href="../../src/favicon.ico" />
-		<title id="pageTabTitle">apparier</title>
-		<style>
-				* {
-			box-sizing: border-box;
-						touch-action: manipulation;
-				}
-				body {
-						font-family: 'Muli', Arial, sans-serif;
-						display: flex;
-						flex-direction: column;
-						align-items: center;
-						min-height: 100vh;
-						margin: 0;
-						background-color: #f0f0f0;
-						transition: background-color 0.3s ease, color 0.3s ease;
-						color: #000000;
-						font-size: 16px;
-						overflow-x: hidden;
-						overflow-y: scroll;
-						-webkit-overflow-scrolling: touch;
-				}
-				/* Toolbar - STYLES CORRIGÉS */
-				.toolbar {
-						display: flex;
-						justify-content: space-between;
-						align-items: center;
-						position: relative;
-						padding: 10px 15px;
-						flex-shrink: 0;
-						height: 60px;
-						background: transparent;
-						margin: 0;
-						border-radius: 0;
-						width: 100%;
-						margin-top: 15px;
-						margin-bottom: 0px;
-				}
-				.toolbar-left {
-						display: flex;
-						align-items: center;
-						z-index: 1;
-						flex: 1;
-						justify-content: flex-start;
-						gap: 10px;
-						min-height: 60px;
-				}
-				.toolbar-center {
-						position: absolute;
-						left: 0;
-						right: 0;
-						top: 0;
-						bottom: 0;
-						display: flex;
-						flex-direction: column;
-						justify-content: center;
-						align-items: center;
-						pointer-events: none;
-				}
-				.toolbar-right {
-						display: flex;
-						align-items: center;
-						z-index: 1;
-						flex: 1;
-						justify-content: flex-end;
-						position: relative;
-						gap: 10px;
-						min-height: 60px;
-				}
-				/* Titre et sous-titre dans la toolbar desktop */
-				.toolbar-title {
-						margin: 0;
-						line-height: 1.5;
-						text-align: center;
-						color: red;
-						font-size: clamp(1.8rem, 5vw, 2.5rem);
-						font-weight: bold;
-						transition: color 0.3s ease;
-				}
-				.toolbar-subtitle {
-						margin: 5px 0 0 0;
-						line-height: 1.2;
-						text-align: center;
-						color: black;
-						font-size: clamp(1rem, 3vw, 1.2rem);
-						text-transform: none;
-						transition: color 0.3s ease;
-				}
-				/* BOUTONS TOOLBAR CORRIGÉS - TOUS IDENTIQUES */
-				.toolbar-btn {
-						position: relative;
-						z-index: 1;
-						cursor: pointer;
-						border: none;
-						font-size: 18px;
-						border-radius: 50%;
-						width: 60px;
-						height: 60px;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						transition: all 0.2s ease;
-						flex-shrink: 0;
-						text-decoration: none;
-						padding: 0;
-						margin: 0;
-						outline: none;
-						background-color: #e0e5ec;
-						color: #444;
-						box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
-						min-width: 60px;
-						min-height: 60px;
-						touch-action: manipulation;
-				}
-				/* Style spécifique pour le lien home */
-				.toolbar-btn.home {
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						text-decoration: none;
-						background-color: #e0e0e0;
-						color: #444;
-						box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
-						touch-action: manipulation;
-				}
-				.toolbar-btn:hover {
-						background-color: #d1d1d1;
-						color: #333;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
-						transform: translateY(-1px);
-				}
-				.toolbar-btn:active {
-						transform: translateY(1px);
-						box-shadow: inset 0.3rem 0.3rem 0.5rem #bebebe, inset -0.3rem -0.3rem 0.5rem #ffffff;
-				}
-				/* Styles pour TOUS les boutons en mode sombre */
-				body.dark-mode .toolbar-btn {
-						background-color: #3d3d3d;
-						color: #e0e0e0;
-						box-shadow: 0.3rem 0.3rem 0.6rem #1a202c, -0.3rem -0.3rem 0.6rem #4a5568;
-				}
-				body.dark-mode .toolbar-btn:hover {
-						background-color: #4a5568;
-						color: #e0e0e0;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #1a202c, inset -0.2rem -0.2rem 0.3rem #4a5568;
-				}
-				body.dark-mode .toolbar-btn:active {
-						background-color: #1a202c;
-						box-shadow: inset 0.3rem 0.3rem 0.5rem #1a202c, inset -0.3rem -0.3rem 0.5rem #4a5568;
-				}
-				/* Icônes toolbar */
-				.toolbar-btn.home svg {
-						width: 28px;
-						height: 28px;
-						display: block;
-				}
-				.reload-icon {
-						font-size: 32px;
-						font-weight: normal;
-						transition: transform 0.3s ease;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						line-height: 1;
-				}
-				.toolbar-btn.active .hamburger-icon,
-				.toolbar-btn.menu:hover .hamburger-icon {
-						transform: rotate(90deg);
-				}
-				.hamburger-icon {
-						display: flex;
-						flex-direction: column;
-						justify-content: space-between;
-						width: 20px;
-						height: 16px;
-						transition: all 0.3s ease;
-				}
-				.hamburger-icon span {
-						display: block;
-						width: 20px;
-						height: 2px;
-						background-color: currentColor;
-						border-radius: 1px;
-						transition: all 0.3s ease;
-				}
-				.fullscreen-icon,
-				.fullscreen-exit-icon {
-						width: 26px;
-						height: 26px;
-						display: block;
-				}
-				.fullscreen-exit-icon {
-						display: none;
-				}
-				body.fullscreen-mode .fullscreen-icon {
-						display: none;
-				}
-				body.fullscreen-mode .fullscreen-exit-icon {
-						display: block;
-				}
-				/* Menu coulissant */
-				.menu-overlay {
-						position: fixed;
-						top: 0;
-						left: 0;
-						right: 0;
-						bottom: 0;
-						background: rgba(0, 0, 0, 0.5);
-						z-index: 1000;
-						opacity: 0;
-						visibility: hidden;
-						transition: all 0.3s ease;
-				}
-				.menu-overlay.open {
-						opacity: 1;
-						visibility: visible;
-				}
-				.slide-menu {
-						position: fixed;
-						top: 0;
-						right: -300px;
-						width: 280px;
-						height: 100vh;
-						background-color: #e0e5ec;
-						transition: right 0.3s ease;
-						z-index: 1001;
-						padding: 80px 20px 20px;
-						display: flex;
-						flex-direction: column;
-						border-radius: 20px 0 0 20px;
-				}
-				.slide-menu.open {
-						right: 0;
-				}
-				/* Boutons du menu */
-				.menu-item {
-						display: flex;
-						align-items: center;
-						padding: 15px;
-						border: none;
-						background: #e0e5ec;
-						color: #444;
-						font-size: 14px;
-						cursor: pointer;
-						border-radius: 8px;
-						transition: all 0.2s ease;
-						margin-bottom: 5px;
-						width: 100%;
-						min-width: 240px;
-						justify-content: flex-start;
-						touch-action: manipulation;
-				}
-				.menu-item:hover {
-						background-color: #d1d1d1;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
-				}
-				.menu-item .svg-icon {
-						width: 24px;
-						height: 24px;
-						margin-right: 12px;
-						flex-shrink: 0;
-						fill: currentColor;
-				}
-				/* Styles pour le menu en mode sombre */
-				body.dark-mode .slide-menu {
-						background-color: #1a1a1a;
-				}
-				body.dark-mode .menu-item {
-						background: #1a1a1a;
-						color: #e0e0e0;
-				}
-				body.dark-mode .menu-item:hover {
-						background-color: #2d2d2d;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #1a202c, inset -0.2rem -0.2rem 0.3rem #2d2d2d;
-				}
-				/* Modale paramètres */
-				.modal {
-						display: none;
-						position: fixed;
-						top: 0;
-						left: 0;
-						width: 100%;
-						height: 100%;
-						background: rgba(0, 0, 0, 0.5);
-						z-index: 2000;
-						align-items: center;
-						justify-content: center;
-				}
-				.modal.open {
-						display: flex;
-				}
-				.modal-content {
-						background: #e0e5ec;
-						padding: 30px;
-						border-radius: 15px;
-						width: 90%;
-						max-width: 400px;
-						max-height: 80vh;
-						overflow-y: auto;
-				}
-				body.dark-mode .modal-content {
-						background: #1a1a1a;
-						color: #e0e0e0;
-				}
-				.modal-header {
-						display: flex;
-						justify-content: space-between;
-						align-items: center;
-						margin-bottom: 20px;
-						padding-bottom: 15px;
-						border-bottom: 2px solid #ccc;
-				}
-				body.dark-mode .modal-header {
-						border-bottom: 2px solid #2d2d2d;
-				}
-				.modal-title {
-						font-size: 1.5rem;
-						font-weight: bold;
-						color: red !important;
-						margin: 0;
-				}
-				body.dark-mode .modal-title {
-						color: #ff6666 !important;
-				}
-				.close-modal {
-						background: none;
-						border: none;
-						font-size: 1.5rem;
-						cursor: pointer;
-						color: #444;
-						width: 40px;
-						height: 40px;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						border-radius: 50%;
-						touch-action: manipulation;
-				}
-				body.dark-mode .close-modal {
-						color: #e0e0e0;
-				}
-				.close-modal:hover {
-						background-color: rgba(0, 0, 0, 0.1);
-				}
-				.setting-item {
-						display: flex;
-						justify-content: space-between;
-						align-items: center;
-						padding: 15px 0;
-				}
-				.setting-label {
-						font-size: 14px;
-						color: #444;
-				}
-				body.dark-mode .setting-label {
-						color: #e0e0e0;
-				}
-				/* Switch mode sombre */
-				.theme-switch {
-						position: relative;
-						display: inline-block;
-						width: 40px;
-						height: 22px;
-				}
-				.theme-switch input {
-						opacity: 0;
-						width: 0;
-						height: 0;
-				}
-				.slider {
-						position: absolute;
-						cursor: pointer;
-						top: 0;
-						left: 0;
-						right: 0;
-						bottom: 0;
-						background-color: #ccc;
-						transition: .4s;
-						border-radius: 22px;
-				}
-				.slider:before {
-						position: absolute;
-						content: "";
-						height: 16px;
-						width: 16px;
-						left: 3px;
-						bottom: 3px;
-						background-color: white;
-						transition: .4s;
-						border-radius: 50%;
-				}
-				input:checked+.slider {
-						background-color: #2196F3;
-				}
-				input:checked+.slider:before {
-						transform: translateX(18px);
-				}
-				/* Contenu principal */
-				.main-wrapper {
-						width: 100%;
-						margin: 0;
-						display: flex;
-						flex-direction: column;
-						align-items: center;
-						margin-top: 20px;
-						padding: 0 20px;
-				}
-				/* Titre et sous-titre pour mobile seulement */
-				.mobile-title-wrapper {
-						display: none;
-						flex-direction: column;
-						align-items: center;
-						width: 100%;
-						margin-top: 0;
-						padding-top: 0;
-				}
-				.mobile-title {
-						margin: 0;
-						line-height: 1.2;
-						text-align: center;
-						color: red;
-						font-size: clamp(1.5rem, 4vw, 2rem);
-						font-weight: bold;
-						transition: color 0.3s ease;
-						white-space: nowrap;
-						overflow: hidden;
-						text-overflow: ellipsis;
-						max-width: 100%;
-				}
-				.mobile-subtitle {
-						margin: 2px 0 0 0;
-						line-height: 1.2;
-						text-align: center;
-						color: black;
-						font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-						text-transform: none;
-						transition: color 0.3s ease;
-				}
-				.button-wrapper {
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						gap: 1rem;
-						width: 100%;
-						margin: 0;
-				}
-				/* Styles pour les boutons vérifier et score */
-				#actionButton,
-				#scoreButton {
-						margin: 2vh 0;
-						padding: 0.5rem 1rem;
-						font-size: 14px;
-						line-height: 1;
-						cursor: pointer;
-						width: min(120px, 30vw);
-						height: min(50px, 12vw);
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						background-color: #e0e5ec;
-						border: none;
-						border-radius: 0.5rem;
-						transition: all 0.3s ease;
-						box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
-						position: relative;
-						touch-action: manipulation;
-				}
-				#actionButton:disabled,
-				#scoreButton:disabled {
-						background-color: #d0d0d0;
-						cursor: not-allowed;
-						box-shadow: none;
-				}
-				#actionButton:hover:not(:disabled),
-				#scoreButton:hover:not(:disabled) {
-						background-color: #d1d1d1;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
-				}
-				body.dark-mode #actionButton,
-				body.dark-mode #scoreButton {
-						background-color: #3d3d3d;
-						color: #e0e0e0;
-						box-shadow: 0.3rem 0.3rem 0.6rem #1a202c, -0.3rem -0.3rem 0.6rem #4a5568;
-				}
-				body.dark-mode #actionButton:hover:not(:disabled),
-				body.dark-mode #scoreButton:hover:not(:disabled) {
-						background-color: #4a5568;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #1a202c, inset -0.2rem -0.2rem 0.3rem #4a5568;
-				}
-				/* CORRECTION CRITIQUE: Container et colonnes */
-				.container {
-						display: flex;
-						flex-direction: row;
-						justify-content: space-between;
-						align-items: stretch;
-						position: relative;
-						margin: 0 auto;
-						width: 100%;
-						max-width: 1200px;
-						gap: 1.5rem;
-						padding: 0 20px;
-				}
-				.column {
-						display: flex;
-						flex-direction: column;
-						align-items: center;
-				}
-				.column.left {
-						flex: 0 0 35%;
-						max-width: 35%;
-				}
-				.column.right {
-						flex: 1;
-						max-width: 60%;
-				}
-				#repereTable,
-				#definitionTable {
-						width: 100%;
-						table-layout: fixed;
-				}
-				table {
-						border-collapse: separate;
-						border-spacing: 0.5rem;
-						width: 100%;
-						height: 100%;
-				}
-				/* CELLULES AVEC HAUTEURS UNIFORMES ET ZONE CLIQUABLE AGRANDIE */
-				td {
-						border-radius: 0.5rem;
-						padding: 0.75rem;
-						text-align: center;
-						cursor: pointer;
-						background-color: #e0e0e0;
-						box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
-						font-size: clamp(0.8rem, 2vw, 1rem);
-						word-wrap: break-word;
-						transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-						position: relative;
-						word-break: break-word;
-						white-space: normal;
-						width: 100%;
-						min-height: 60px;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						text-align: center;
-						touch-action: manipulation;
-				}
-				/* Styles pour les cellules sélectionnées */
-				td.selected {
-						background-color: #c0c0c0 !important;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #a0a0a0, inset -0.2rem -0.2rem 0.3rem #d0d0d0 !important;
-				}
-				body.dark-mode td.selected {
-						background-color: #4a4a4a !important;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #2d2d2d, inset -0.2rem -0.2rem 0.3rem #5d5d5d !important;
-				}
-				/* Styles du jeu en mode sombre */
-				body.dark-mode td {
-						background-color: #2d2d2d;
-						color: #e0e0e0;
-						box-shadow: 0.3rem 0.3rem 0.6rem #121212, -0.3rem -0.3rem 0.6rem #4a4a4a;
-				}
-				body.dark-mode td:active:not(.used) {
-						background-color: #1a1a1a;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #121212, inset -0.2rem -0.2rem 0.3rem #2d2d2d;
-				}
-				body.dark-mode td.used {
-						background-color: #1a1a1a;
-						color: #a0a0a0;
-				}
-				body.dark-mode td:not(.used):hover {
-						background-color: #3d3d3d;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #121212, inset -0.2rem -0.2rem 0.3rem #2d2d2d;
-				}
-				/* Optimisation desktop pour les cellules */
-				#repereTable td {
-						padding: 0.75rem 1rem;
-						font-size: 0.9rem;
-				}
-				#definitionTable td {
-						padding: 0.75rem 1rem;
-						font-size: 1rem;
-				}
-				td:active:not(.used) {
-						background-color: #c0c0c0;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
-				}
-				td.used {
-						background-color: #d0d0d0;
-						cursor: not-allowed;
-						box-shadow: none;
-				}
-				td:not(.used):hover {
-						background-color: #d1d1d1;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
-				}
-				/* CORRECTION CRITIQUE DU CANVAS - Z-INDEX DIFFÉRENT SELON LE MODE */
-				#lineCanvas {
-						position: absolute;
-						top: 0;
-						left: 0;
-						width: 100%;
-						height: 100%;
-						pointer-events: none;
-						z-index: 10;
-				}
-				/* Style pour garantir que le container a une position relative */
-				.container {
-						position: relative;
-				}
-				button {
-						margin: 2vh 0;
-						padding: 0.5rem 1rem;
-						font-size: 14px;
-						line-height: 1;
-						cursor: pointer;
-						width: min(120px, 30vw);
-						height: min(50px, 12vw);
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						background-color: #e0e0e0;
-						border: none;
-						border-radius: 0.5rem;
-						transition: all 0.3s ease;
-						box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
-						position: relative;
-						touch-action: manipulation;
-				}
-				button:disabled {
-						background-color: #d0d0d0;
-						cursor: not-allowed;
-						box-shadow: none;
-				}
-				button:hover:not(:disabled) {
-						background-color: #d1d1d1;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
-				}
-				body.dark-mode button {
-						background-color: #3d3d3d;
-						color: #e0e0e0;
-						box-shadow: 0.3rem 0.3rem 0.6rem #1a202c, -0.3rem -0.3rem 0.6rem #4a5568;
-				}
-				body.dark-mode button:disabled {
-						background-color: #1a1a1a;
-						color: #a0a0a0;
-				}
-				body.dark-mode button:hover:not(:disabled) {
-						background-color: #4a5568;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #1a202c, inset -0.2rem -0.2rem 0.3rem #4a5568;
-				}
-				/* Styles pour les boutons des modales */
-				.modal-button {
-						padding: 12px 24px;
-						font-size: 14px;
-						border: none;
-						border-radius: 8px;
-						cursor: pointer;
-						transition: all 0.3s ease;
-						flex: 1;
-						min-width: 120px;
-						text-align: center;
-						touch-action: manipulation;
-				}
-				.modal-button.confirm {
-						background-color: #e0e5ec;
-						color: #444;
-						box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
-				}
-				.modal-button.cancel {
-						background-color: #e0e5ec;
-						color: #444;
-						box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
-				}
-				.modal-button:hover {
-						background-color: #d1d1d1;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
-				}
-				/* Mode sombre pour les boutons de modale */
-				body.dark-mode .modal-button.confirm,
-				body.dark-mode .modal-button.cancel {
-						background-color: #3d3d3d;
-						color: #e0e0e0;
-						box-shadow: 0.3rem 0.3rem 0.6rem #1a202c, -0.3rem -0.3rem 0.6rem #4a5568;
-				}
-				body.dark-mode .modal-button:hover {
-						background-color: #4a5568;
-						box-shadow: inset 0.2rem 0.2rem 0.3rem #1a202c, inset -0.2rem -0.2rem 0.3rem #4a5568;
-				}
-				/* Mode sombre général */
-				body.dark-mode {
-						background-color: #121212;
-						color: #e0e0e0;
-				}
-				body.dark-mode .toolbar-title,
-				body.dark-mode .mobile-title {
-						color: inherit !important;
-				}
-				body.dark-mode .toolbar-subtitle,
-				body.dark-mode .mobile-subtitle {
-						color: #b0b0b0;
-				}
-				/* ===== SYSTÈME DE COCHE ET CROIX POUR MODE DALTONIEN ===== */
-				/* Mode daltonien - STYLES RÉPARÉS */
-				body.colorblind-mode .correct-mark {
-						color: #0000FF !important;
-				}
-				body.colorblind-mode .incorrect-mark {
-						color: #FF8C00 !important;
-				}
-				body.colorblind-mode.dark-mode .correct-mark {
-						color: #87CEEB !important;
-				}
-				body.colorblind-mode.dark-mode .incorrect-mark {
-						color: #FFA500 !important;
-				}
-				/* Styles pour les marques de validation - UNIQUEMENT en mode daltonien */
-				.validation-mark {
-						position: absolute;
-						right: 10px;
-						top: 50%;
-						transform: translateY(-50%);
-						font-size: 1.2em;
-						pointer-events: none;
-						display: none;
-				}
-				body.colorblind-mode .validation-mark {
-						display: block;
-				}
-				.correct-mark {
-						color: #008000;
-				}
-				.incorrect-mark {
-						color: #ff0000;
-				}
-				/* Mode sombre pour les marques */
-				body.dark-mode .correct-mark {
-						color: #4caf50;
-				}
-				body.dark-mode .incorrect-mark {
-						color: #f44336;
-				}
-				/* Styles spécifiques pour le bouton reload du bas */
-				#actionButton.reload-mode {
-						font-size: 28px !important;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-				}
-				#actionButton.reload-mode .reload-icon {
-						font-size: 28px !important;
-						font-weight: normal;
-						transition: transform 0.3s ease;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						line-height: 1;
-				}
-				.toolbar-btn.reload:hover .reload-icon {
-						transform: rotate(90deg);
-				}
-				.toolbar-btn.reload:active .reload-icon {
-						transform: rotate(180deg);
-				}
-				/* Media query pour desktop - CORRECTION COMPLÈTE */
-				@media (min-width: 769px) {
-						.container {
-								flex-direction: row !important;
-								justify-content: space-between !important;
-								align-items: stretch !important;
-								width: 100% !important;
-								max-width: 1200px !important;
-								gap: 1.5rem !important;
-								padding: 0 20px !important;
-						}
-						.column {
-								display: flex !important;
-								flex-direction: column;
-								align-items: center;
-						}
-						.column.left {
-								flex: 0 0 35% !important;
-								max-width: 35% !important;
-						}
-						.column.right {
-								flex: 1 !important;
-								max-width: 60% !important;
-						}
-						#repereTable,
-						#definitionTable {
-								width: 100% !important;
-								display: table !important;
-								table-layout: fixed !important;
-						}
-						/* GARANTIR LA MÊME HAUTEUR POUR TOUTES LES CELLULES */
-						td {
-								min-height: 70px !important;
-								display: flex !important;
-								align-items: center !important;
-								justify-content: center !important;
-						}
-						/* Cacher la toolbar mobile en desktop */
-						.toolbar-mobile {
-								display: none !important;
-						}
-						/* Afficher la toolbar desktop normale */
-						.toolbar-desktop {
-								display: flex !important;
-						}
-						/* Cacher le titre mobile en desktop */
-						.mobile-title-wrapper {
-								display: none !important;
-						}
-						/* CANVAS DESKTOP - Z-INDEX POUR ÊTRE DERRIÈRE LES CELLULES */
-						#lineCanvas {
-								z-index: 1 !important;
-						}
-						/* CELLULES DESKTOP - Z-INDEX PLUS ÉLEVÉ */
-						td {
-								z-index: 1 !important;
-						}
-				}
-				/* CORRECTION CRITIQUE POUR MOBILE - LES 4 BOUTONS AU-DESSUS DU TITRE */
-				@media (max-width: 768px) {
-						/* Cacher la toolbar desktop en mobile */
-						.toolbar-desktop {
-								display: none !important;
-						}
-						/* Afficher la toolbar mobile */
-						.toolbar-mobile {
-								display: flex !important;
-								flex-direction: column !important;
-								align-items: center !important;
-								width: 100% !important;
-								padding: 5px 15px 0px 15px !important;
-								margin-bottom: 0 !important;
-						}
-						/* Conteneur pour les 4 boutons centrés et rapprochés */
-						.mobile-buttons-container {
-								display: flex !important;
-								flex-direction: row !important;
-								justify-content: center !important;
-								align-items: center !important;
-								width: 100% !important;
-								gap: 15px !important;
-								margin-bottom: 5px !important;
-						}
-						/* Afficher le titre mobile */
-						.mobile-title-wrapper {
-								display: flex !important;
-								margin-top: 0 !important;
-								padding-top: 0 !important;
-								position: relative;
-								z-index: 2;
-						}
-						/* Titre sur une seule ligne en mobile */
-						.mobile-title {
-								white-space: nowrap !important;
-								overflow: hidden !important;
-								text-overflow: ellipsis !important;
-								margin: 0 !important;
-								line-height: 1.1 !important;
-								font-size: clamp(1.4rem, 4vw, 1.8rem) !important;
-						}
-						.mobile-subtitle {
-								margin: 1px 0 0 0 !important;
-								line-height: 1.1 !important;
-								font-size: clamp(0.8rem, 2.5vw, 1rem) !important;
-						}
-						/* GARANTIR QUE LES BOUTONS RESTENT CIRCULAIRES EN MOBILE */
-						.toolbar-btn {
-								width: 50px !important;
-								height: 50px !important;
-								border-radius: 50% !important;
-								flex-shrink: 0 !important;
-								min-width: 50px !important;
-								min-height: 50px !important;
-						}
-						/* Ajustements du contenu principal */
-						.container {
-								flex-direction: column;
-								gap: 1rem;
-								margin: 0;
-								width: 100%;
-								max-width: 100%;
-								justify-content: center;
-								align-items: center;
-								padding: 0 20px !important;
-								position: relative;
-						}
-						.column {
-								margin: 0;
-								width: 100%;
-								display: flex;
-								justify-content: center;
-								position: relative;
-						}
-						.column.left,
-						.column.right {
-								flex: 1;
-								max-width: 100% !important;
-						}
-						#repereTable,
-						#definitionTable {
-								width: 100%;
-								max-width: 100% !important;
-								margin: 0 5px !important;
-								max-height: 35vh;
-								overflow-y: auto;
-								position: relative;
-								-webkit-overflow-scrolling: touch;
-						}
-						#definitionTable {
-								max-height: 40vh;
-						}
-						table {
-								border-spacing: 0.25rem !important;
-								position: relative;
-						}
-						td {
-								padding: 0.4rem 0.5rem !important;
-								margin: 1px;
-								font-size: clamp(0.7rem, 3vw, 0.9rem);
-								min-height: 50px;
-								position: relative;
-								z-index: 1;
-								touch-action: manipulation;
-						}
-						button {
-								margin: 0.5vh 0;
-								width: min(65px, 22vw);
-								height: min(40px, 10vw);
-								padding: 0.15rem 0.3rem;
-								font-size: 12px;
-								touch-action: manipulation;
-						}
-						.button-wrapper {
-								gap: 1rem;
-								flex-direction: row;
-								flex-wrap: nowrap;
-								justify-content: center;
-								align-items: center;
-								margin: 0;
-						}
-						.mobile-title br {
-								display: none !important;
-						}
-						.main-wrapper {
-								padding: 0 20px !important;
-								margin-top: 10px;
-								position: relative;
-						}
-						/* Styles spécifiques pour le bouton reload du bas en mobile */
-						#actionButton.reload-mode {
-								font-size: 24px !important;
-						}
-						#actionButton.reload-mode .reload-icon {
-								font-size: 24px !important;
-						}
-						/* CORRECTION CANVAS MOBILE - Z-INDEX PLUS ÉLEVÉ POUR PASSER DEVANT LES CELLULES */
-						#lineCanvas {
-								position: absolute;
-								top: 0;
-								left: 0;
-								width: 100%;
-								height: 100%;
-								pointer-events: none;
-								z-index: 10 !important;
-						}
-				}
-		</style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <link rel="icon" href="favicon.ico" />
+    <title id="pageTabTitle">apparier</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            touch-action: manipulation;
+        }
+        body {
+            font-family: 'Muli', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            color: #000000;
+            font-size: 16px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
+        }
+        /* Toolbar - STYLES CORRIGÉS */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            padding: 10px 15px;
+            flex-shrink: 0;
+            height: 60px;
+            background: transparent;
+            margin: 0;
+            border-radius: 0;
+            width: 100%;
+            margin-top: 15px;
+            margin-bottom: 0px;
+        }
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            z-index: 1;
+            flex: 1;
+            justify-content: flex-start;
+            gap: 10px;
+            min-height: 60px;
+        }
+        .toolbar-center {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            z-index: 1;
+            flex: 1;
+            justify-content: flex-end;
+            position: relative;
+            gap: 10px;
+            min-height: 60px;
+        }
+        /* Titre et sous-titre dans la toolbar desktop */
+        .toolbar-title {
+            margin: 0;
+            line-height: 1.5;
+            text-align: center;
+            color: red;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .toolbar-subtitle {
+            margin: 5px 0 0 0;
+            line-height: 1.2;
+            text-align: center;
+            color: black;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            text-transform: none;
+            transition: color 0.3s ease;
+        }
+        /* BOUTONS TOOLBAR CORRIGÉS - TOUS IDENTIQUES */
+        .toolbar-btn {
+            position: relative;
+            z-index: 1;
+            cursor: pointer;
+            border: none;
+            font-size: 18px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            text-decoration: none;
+            padding: 0;
+            margin: 0;
+            outline: none;
+            background-color: #e0e5ec;
+            color: #444;
+            box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
+            min-width: 60px;
+            min-height: 60px;
+            touch-action: manipulation;
+        }
+        /* Style spécifique pour le lien home */
+        .toolbar-btn.home {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            background-color: #e0e0e0;
+            color: #444;
+            box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
+            touch-action: manipulation;
+        }
+        .toolbar-btn:hover {
+            background-color: #d1d1d1;
+            color: #333;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
+            transform: translateY(-1px);
+        }
+        .toolbar-btn:active {
+            transform: translateY(1px);
+            box-shadow: inset 0.3rem 0.3rem 0.5rem #bebebe, inset -0.3rem -0.3rem 0.5rem #ffffff;
+        }
+        /* Styles pour TOUS les boutons en mode sombre */
+        body.dark-mode .toolbar-btn {
+            background-color: #3d3d3d;
+            color: #e0e0e0;
+            box-shadow: 0.3rem 0.3rem 0.6rem #1a202c, -0.3rem -0.3rem 0.6rem #4a5568;
+        }
+        body.dark-mode .toolbar-btn:hover {
+            background-color: #4a5568;
+            color: #e0e0e0;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #1a202c, inset -0.2rem -0.2rem 0.3rem #4a5568;
+        }
+        body.dark-mode .toolbar-btn:active {
+            background-color: #1a202c;
+            box-shadow: inset 0.3rem 0.3rem 0.5rem #1a202c, inset -0.3rem -0.3rem 0.5rem #4a5568;
+        }
+        /* Icônes toolbar */
+        .toolbar-btn.home svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+        .reload-icon {
+            font-size: 32px;
+            font-weight: normal;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+        .toolbar-btn.active .hamburger-icon,
+        .toolbar-btn.menu:hover .hamburger-icon {
+            transform: rotate(90deg);
+        }
+        .hamburger-icon {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 20px;
+            height: 16px;
+            transition: all 0.3s ease;
+        }
+        .hamburger-icon span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background-color: currentColor;
+            border-radius: 1px;
+            transition: all 0.3s ease;
+        }
+        .fullscreen-icon,
+        .fullscreen-exit-icon {
+            width: 26px;
+            height: 26px;
+            display: block;
+        }
+        .fullscreen-exit-icon {
+            display: none;
+        }
+        body.fullscreen-mode .fullscreen-icon {
+            display: none;
+        }
+        body.fullscreen-mode .fullscreen-exit-icon {
+            display: block;
+        }
+        /* Menu coulissant */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .slide-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100vh;
+            background-color: #e0e5ec;
+            transition: right 0.3s ease;
+            z-index: 1001;
+            padding: 80px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            border-radius: 20px 0 0 20px;
+        }
+        .slide-menu.open {
+            right: 0;
+        }
+        /* Boutons du menu */
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: none;
+            background: #e0e5ec;
+            color: #444;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            margin-bottom: 5px;
+            width: 100%;
+            min-width: 240px;
+            justify-content: flex-start;
+            touch-action: manipulation;
+        }
+        .menu-item:hover {
+            background-color: #d1d1d1;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
+        }
+        .menu-item .svg-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            fill: currentColor;
+        }
+        /* Styles pour le menu en mode sombre */
+        body.dark-mode .slide-menu {
+            background-color: #1a1a1a;
+        }
+        body.dark-mode .menu-item {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        body.dark-mode .menu-item:hover {
+            background-color: #2d2d2d;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #1a202c, inset -0.2rem -0.2rem 0.3rem #2d2d2d;
+        }
+        /* Modale paramètres */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.open {
+            display: flex;
+        }
+        .modal-content {
+            background: #e0e5ec;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        body.dark-mode .modal-content {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ccc;
+        }
+        body.dark-mode .modal-header {
+            border-bottom: 2px solid #2d2d2d;
+        }
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: red !important;
+            margin: 0;
+        }
+        body.dark-mode .modal-title {
+            color: #ff6666 !important;
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #444;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            touch-action: manipulation;
+        }
+        body.dark-mode .close-modal {
+            color: #e0e0e0;
+        }
+        .close-modal:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        .setting-label {
+            font-size: 14px;
+            color: #444;
+        }
+        body.dark-mode .setting-label {
+            color: #e0e0e0;
+        }
+        /* Switch mode sombre */
+        .theme-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 22px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+        input:checked+.slider:before {
+            transform: translateX(18px);
+        }
+        /* Contenu principal */
+        .main-wrapper {
+            width: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            padding: 0 20px;
+        }
+        /* Titre et sous-titre pour mobile seulement */
+        .mobile-title-wrapper {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: 0;
+            padding-top: 0;
+        }
+        .mobile-title {
+            margin: 0;
+            line-height: 1.2;
+            text-align: center;
+            color: red;
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
+            font-weight: bold;
+            transition: color 0.3s ease;
+            white-space: normal;
+            overflow: visible;
+            max-width: 100%;
+            word-break: break-word;
+        }
+        .mobile-subtitle {
+            margin: 2px 0 0 0;
+            line-height: 1.2;
+            text-align: center;
+            color: black;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            text-transform: none;
+            transition: color 0.3s ease;
+        }
+        .button-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            margin: 0;
+        }
+        /* Styles pour les boutons vérifier et score */
+        #actionButton,
+        #scoreButton {
+            margin: 2vh 0;
+            padding: 0.5rem 1rem;
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            width: min(120px, 30vw);
+            height: min(50px, 12vw);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e0e5ec;
+            border: none;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
+            position: relative;
+            touch-action: manipulation;
+        }
+        #actionButton:disabled,
+        #scoreButton:disabled {
+            background-color: #d0d0d0;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        #actionButton:hover:not(:disabled),
+        #scoreButton:hover:not(:disabled) {
+            background-color: #d1d1d1;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
+        }
+        body.dark-mode #actionButton,
+        body.dark-mode #scoreButton {
+            background-color: #3d3d3d;
+            color: #e0e0e0;
+            box-shadow: 0.3rem 0.3rem 0.6rem #1a202c, -0.3rem -0.3rem 0.6rem #4a5568;
+        }
+        body.dark-mode #actionButton:hover:not(:disabled),
+        body.dark-mode #scoreButton:hover:not(:disabled) {
+            background-color: #4a5568;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #1a202c, inset -0.2rem -0.2rem 0.3rem #4a5568;
+        }
+        /* CORRECTION CRITIQUE: Container et colonnes */
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: stretch;
+            position: relative;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 1200px;
+            gap: 1.5rem;
+            padding: 0 20px;
+        }
+        .column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .column.left {
+            flex: 0 0 35%;
+            max-width: 35%;
+        }
+        .column.right {
+            flex: 1;
+            max-width: 60%;
+        }
+        #repereTable,
+        #definitionTable {
+            width: 100%;
+            table-layout: fixed;
+        }
+        table {
+            border-collapse: separate;
+            border-spacing: 0.5rem;
+            width: 100%;
+            height: 100%;
+        }
+        /* CELLULES AVEC HAUTEURS UNIFORMES ET ZONE CLIQUABLE AGRANDIE */
+        td {
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            background-color: #e0e0e0;
+            box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            word-wrap: break-word;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            word-break: break-word;
+            white-space: normal;
+            width: 100%;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            touch-action: manipulation;
+        }
+        /* Styles pour les cellules sélectionnées */
+        td.selected {
+            background-color: #c0c0c0 !important;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #a0a0a0, inset -0.2rem -0.2rem 0.3rem #d0d0d0 !important;
+        }
+        body.dark-mode td.selected {
+            background-color: #4a4a4a !important;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #2d2d2d, inset -0.2rem -0.2rem 0.3rem #5d5d5d !important;
+        }
+        /* Styles du jeu en mode sombre */
+        body.dark-mode td {
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+            box-shadow: 0.3rem 0.3rem 0.6rem #121212, -0.3rem -0.3rem 0.6rem #4a4a4a;
+        }
+        body.dark-mode td:active:not(.used) {
+            background-color: #1a1a1a;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #121212, inset -0.2rem -0.2rem 0.3rem #2d2d2d;
+        }
+        body.dark-mode td.used {
+            background-color: #1a1a1a;
+            color: #a0a0a0;
+        }
+        body.dark-mode td:not(.used):hover {
+            background-color: #3d3d3d;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #121212, inset -0.2rem -0.2rem 0.3rem #2d2d2d;
+        }
+        /* Optimisation desktop pour les cellules */
+        #repereTable td {
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+        }
+        #definitionTable td {
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+        }
+        td:active:not(.used) {
+            background-color: #c0c0c0;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
+        }
+        td.used {
+            background-color: #d0d0d0;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        td:not(.used):hover {
+            background-color: #d1d1d1;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
+        }
+        /* CORRECTION CRITIQUE DU CANVAS - Z-INDEX DIFFÉRENT SELON LE MODE */
+        #lineCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        /* Style pour garantir que le container a une position relative */
+        .container {
+            position: relative;
+        }
+        button {
+            margin: 2vh 0;
+            padding: 0.5rem 1rem;
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            width: min(120px, 30vw);
+            height: min(50px, 12vw);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
+            position: relative;
+            touch-action: manipulation;
+        }
+        button:disabled {
+            background-color: #d0d0d0;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        button:hover:not(:disabled) {
+            background-color: #d1d1d1;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
+        }
+        body.dark-mode button {
+            background-color: #3d3d3d;
+            color: #e0e0e0;
+            box-shadow: 0.3rem 0.3rem 0.6rem #1a202c, -0.3rem -0.3rem 0.6rem #4a5568;
+        }
+        body.dark-mode button:disabled {
+            background-color: #1a1a1a;
+            color: #a0a0a0;
+        }
+        body.dark-mode button:hover:not(:disabled) {
+            background-color: #4a5568;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #1a202c, inset -0.2rem -0.2rem 0.3rem #4a5568;
+        }
+        /* Styles pour les boutons des modales */
+        .modal-button {
+            padding: 12px 24px;
+            font-size: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            touch-action: manipulation;
+        }
+        .modal-button.confirm {
+            background-color: #e0e5ec;
+            color: #444;
+            box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
+        }
+        .modal-button.cancel {
+            background-color: #e0e5ec;
+            color: #444;
+            box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
+        }
+        .modal-button:hover {
+            background-color: #d1d1d1;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff;
+        }
+        /* Mode sombre pour les boutons de modale */
+        body.dark-mode .modal-button.confirm,
+        body.dark-mode .modal-button.cancel {
+            background-color: #3d3d3d;
+            color: #e0e0e0;
+            box-shadow: 0.3rem 0.3rem 0.6rem #1a202c, -0.3rem -0.3rem 0.6rem #4a5568;
+        }
+        body.dark-mode .modal-button:hover {
+            background-color: #4a5568;
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #1a202c, inset -0.2rem -0.2rem 0.3rem #4a5568;
+        }
+        /* Mode sombre général */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        body.dark-mode .toolbar-title,
+        body.dark-mode .mobile-title {
+            color: inherit !important;
+        }
+        body.dark-mode .toolbar-subtitle,
+        body.dark-mode .mobile-subtitle {
+            color: #b0b0b0;
+        }
+        /* ===== SYSTÈME DE COCHE ET CROIX POUR MODE DALTONIEN ===== */
+        /* Mode daltonien - STYLES RÉPARÉS */
+        body.colorblind-mode .correct-mark {
+            color: #0000FF !important;
+        }
+        body.colorblind-mode .incorrect-mark {
+            color: #FF8C00 !important;
+        }
+        body.colorblind-mode.dark-mode .correct-mark {
+            color: #87CEEB !important;
+        }
+        body.colorblind-mode.dark-mode .incorrect-mark {
+            color: #FFA500 !important;
+        }
+        /* Styles pour les marques de validation - UNIQUEMENT en mode daltonien */
+        .validation-mark {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            pointer-events: none;
+            display: none;
+        }
+        body.colorblind-mode .validation-mark {
+            display: block;
+        }
+        .correct-mark {
+            color: #008000;
+        }
+        .incorrect-mark {
+            color: #ff0000;
+        }
+        /* Mode sombre pour les marques */
+        body.dark-mode .correct-mark {
+            color: #4caf50;
+        }
+        body.dark-mode .incorrect-mark {
+            color: #f44336;
+        }
+        /* Styles spécifiques pour le bouton reload du bas */
+        #actionButton.reload-mode {
+            font-size: 28px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #actionButton.reload-mode .reload-icon {
+            font-size: 28px !important;
+            font-weight: normal;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+        .toolbar-btn.reload:hover .reload-icon {
+            transform: rotate(90deg);
+        }
+        .toolbar-btn.reload:active .reload-icon {
+            transform: rotate(180deg);
+        }
+        /* Media query pour desktop - CORRECTION COMPLÈTE */
+        @media (min-width: 769px) {
+            .container {
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: stretch !important;
+                width: 100% !important;
+                max-width: 1200px !important;
+                gap: 1.5rem !important;
+                padding: 0 20px !important;
+            }
+            .column {
+                display: flex !important;
+                flex-direction: column;
+                align-items: center;
+            }
+            .column.left {
+                flex: 0 0 35% !important;
+                max-width: 35% !important;
+            }
+            .column.right {
+                flex: 1 !important;
+                max-width: 60% !important;
+            }
+            #repereTable,
+            #definitionTable {
+                width: 100% !important;
+                display: table !important;
+                table-layout: fixed !important;
+            }
+            /* GARANTIR LA MÊME HAUTEUR POUR TOUTES LES CELLULES */
+            td {
+                min-height: 70px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            /* Cacher la toolbar mobile en desktop */
+            .toolbar-mobile {
+                display: none !important;
+            }
+            /* Afficher la toolbar desktop normale */
+            .toolbar-desktop {
+                display: flex !important;
+            }
+            /* Cacher le titre mobile en desktop */
+            .mobile-title-wrapper {
+                display: none !important;
+            }
+            /* CANVAS DESKTOP - Z-INDEX POUR ÊTRE DERRIÈRE LES CELLULES */
+            #lineCanvas {
+                z-index: 1 !important;
+            }
+            /* CELLULES DESKTOP - Z-INDEX PLUS ÉLEVÉ */
+            td {
+                z-index: 1 !important;
+            }
+        }
+        /* CORRECTION CRITIQUE POUR MOBILE - LES 4 BOUTONS AU-DESSUS DU TITRE */
+        @media (max-width: 768px) {
+            /* Cacher la toolbar desktop en mobile */
+            .toolbar-desktop {
+                display: none !important;
+            }
+            /* Afficher la toolbar mobile */
+            .toolbar-mobile {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                width: 100% !important;
+                padding: 5px 15px 0px 15px !important;
+                margin-bottom: 0 !important;
+            }
+            /* Conteneur pour les 4 boutons centrés et rapprochés */
+            .mobile-buttons-container {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: center !important;
+                align-items: center !important;
+                width: 100% !important;
+                gap: 15px !important;
+                margin-bottom: 5px !important;
+            }
+            /* Afficher le titre mobile */
+            .mobile-title-wrapper {
+                display: flex !important;
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+                position: relative;
+                z-index: 2;
+            }
+            /* Titre sur une ou deux lignes en mobile selon la place */
+            .mobile-title {
+                margin: 0 !important;
+                line-height: 1.2;
+                text-align: center;
+                color: red;
+                font-size: clamp(1.3rem, 4vw, 1.6rem) !important;
+                font-weight: bold;
+                transition: color 0.3s ease;
+                white-space: pre-line !important;
+                overflow: visible !important;
+                max-width: 100%;
+                word-break: break-word !important;
+                hyphens: none !important;
+            }
+            .mobile-subtitle {
+                margin: 2px 0 0 0 !important;
+                line-height: 1.2;
+                text-align: center;
+                color: black;
+                font-size: clamp(0.8rem, 2.5vw, 1rem) !important;
+                text-transform: none;
+                transition: color 0.3s ease;
+            }
+            /* GARANTIR QUE LES BOUTONS RESTENT CIRCULAIRES EN MOBILE */
+            .toolbar-btn {
+                width: 50px !important;
+                height: 50px !important;
+                border-radius: 50% !important;
+                flex-shrink: 0 !important;
+                min-width: 50px !important;
+                min-height: 50px !important;
+            }
+            /* Ajustements du contenu principal */
+            .container {
+                flex-direction: column;
+                gap: 1rem;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+                justify-content: center;
+                align-items: center;
+                padding: 0 20px !important;
+                position: relative;
+            }
+            .column {
+                margin: 0;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                position: relative;
+            }
+            .column.left,
+            .column.right {
+                flex: 1;
+                max-width: 100% !important;
+            }
+            #repereTable,
+            #definitionTable {
+                width: 100%;
+                max-width: 100% !important;
+                margin: 0 5px !important;
+                max-height: 35vh;
+                overflow-y: auto;
+                position: relative;
+                -webkit-overflow-scrolling: touch;
+            }
+            #definitionTable {
+                max-height: 40vh;
+            }
+            table {
+                border-spacing: 0.25rem !important;
+                position: relative;
+            }
+            td {
+                padding: 0.4rem 0.5rem !important;
+                margin: 1px;
+                font-size: clamp(0.7rem, 3vw, 0.9rem);
+                min-height: 50px;
+                position: relative;
+                z-index: 1;
+                touch-action: manipulation;
+            }
+            button {
+                margin: 0.5vh 0;
+                width: min(65px, 22vw);
+                height: min(40px, 10vw);
+                padding: 0.15rem 0.3rem;
+                font-size: 12px;
+                touch-action: manipulation;
+            }
+            .button-wrapper {
+                gap: 1rem;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+            }
+            .mobile-title br {
+                display: block !important;
+            }
+            .main-wrapper {
+                padding: 0 20px !important;
+                margin-top: 10px;
+                position: relative;
+            }
+            /* Styles spécifiques pour le bouton reload du bas en mobile */
+            #actionButton.reload-mode {
+                font-size: 24px !important;
+            }
+            #actionButton.reload-mode .reload-icon {
+                font-size: 24px !important;
+            }
+            /* CORRECTION CANVAS MOBILE - Z-INDEX PLUS ÉLEVÉ POUR PASSER DEVANT LES CELLULES */
+            #lineCanvas {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 10 !important;
+            }
+        }
+    </style>
 </head>
 <body>
-		<!-- Version desktop normale (cachée en mobile) -->
-		<div class="toolbar toolbar-desktop">
-				<div class="toolbar-left">
-						<a class="toolbar-btn home" id="homeBtn" title="accueil" href="https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/">
-								<svg width="28" height="28" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
-										<polyline points="130,56 80,26" stroke="currentColor" stroke-width="15" fill="none" stroke-linecap="round" />
-										<polyline points="52,40 30,56" stroke="currentColor" stroke-width="15" fill="none" stroke-linecap="round" />
-										<polyline points="130,56 130,126 30,126 30,56" stroke="currentColor" stroke-width="15" fill="none" stroke-linejoin="round" stroke-linecap="round" />
-								</svg>
-						</a>
-						<button class="toolbar-btn reload" id="reloadButton" title="Nouvelle partie">
-								<div class="reload-icon">↻</div>
-						</button>
-				</div>
-				<div class="toolbar-center">
-						<p class="toolbar-title" id="toolbarTitle">application « apparier »</p>
-						<p class="toolbar-subtitle" id="toolbarSubtitle">associer un élément à un autre</p>
-				</div>
-				<div class="toolbar-right">
-						<button class="toolbar-btn fullscreen" id="fullscreenButton" title="Plein écran">
-								<svg class="fullscreen-icon" viewBox="0 0 24 24" fill="currentColor">
-										<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path>
-								</svg>
-								<svg class="fullscreen-exit-icon" viewBox="0 0 24 24" fill="currentColor">
-										<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path>
-								</svg>
-						</button>
-						<button class="toolbar-btn menu" id="menuButton" title="Menu">
-								<div class="hamburger-icon">
-										<span></span>
-										<span></span>
-										<span></span>
-								</div>
-						</button>
-				</div>
-		</div>
-		<!-- Version mobile - les 4 boutons sur une ligne au-dessus du titre (cachée en desktop) -->
-		<div class="toolbar-mobile">
-				<div class="mobile-buttons-container">
-						<a class="toolbar-btn home" id="homeBtnMobile" title="accueil" href="https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/">
-								<svg width="24" height="24" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
-										<polyline points="130,56 80,26" stroke="currentColor" stroke-width="15" fill="none" stroke-linecap="round" />
-										<polyline points="52,40 30,56" stroke="currentColor" stroke-width="15" fill="none" stroke-linecap="round" />
-										<polyline points="130,56 130,126 30,126 30,56" stroke="currentColor" stroke-width="15" fill="none" stroke-linejoin="round" stroke-linecap="round" />
-								</svg>
-						</a>
-						<button class="toolbar-btn reload" id="reloadButtonMobile" title="Nouvelle partie">
-								<div class="reload-icon">↻</div>
-						</button>
-						<button class="toolbar-btn fullscreen" id="fullscreenButtonMobile" title="Plein écran">
-								<svg class="fullscreen-icon" viewBox="0 0 24 24" fill="currentColor">
-										<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path>
-								</svg>
-								<svg class="fullscreen-exit-icon" viewBox="0 0 24 24" fill="currentColor">
-										<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path>
-								</svg>
-						</button>
-						<button class="toolbar-btn menu" id="menuButtonMobile" title="Menu">
-								<div class="hamburger-icon">
-										<span></span>
-										<span></span>
-										<span></span>
-								</div>
-						</button>
-				</div>
-		</div>
-		<!-- Contenu principal -->
-		<div class="main-wrapper">
-				<!-- Titre et sous-titre pour mobile seulement -->
-				<div class="mobile-title-wrapper">
-						<p class="mobile-title" id="mobileTitle">application « apparier »</p>
-						<p class="mobile-subtitle" id="mobileSubtitle">associer un élément à un autre</p>
-				</div>
-				<div class="container">
-						<div class="column left">
-								<table id="repereTable"></table>
-						</div>
-						<div class="column right">
-								<table id="definitionTable"></table>
-						</div>
-						<canvas id="lineCanvas"></canvas>
-				</div>
-				<div class="button-wrapper">
-						<button id="actionButton" disabled>
-								vérifier
-						</button>
-						<button id="scoreButton" disabled>
-								0 / 0
-						</button>
-				</div>
-		</div>
-		<!-- Menu coulissant -->
-		<div class="menu-overlay" id="menuOverlay"></div>
-		<div class="slide-menu" id="slideMenu">
-				<button class="menu-item" id="instructionsButton" title="voir les règles du jeu">
-						<svg class="svg-icon">
-								<use xlink:href="#svg-help"></use>
-						</svg>
-						règles du jeu
-				</button>
-				<button class="menu-item" id="statsButton" title="voir les statistiques détaillées">
-						<svg class="svg-icon">
-								<use xlink:href="#svg-stats"></use>
-						</svg>
-						statistiques
-				</button>
-				<button class="menu-item" id="settingsButton" title="paramètres de l'application">
-						<svg class="svg-icon">
-								<use xlink:href="#svg-settings"></use>
-						</svg>
-						paramètres
-				</button>
-				<button class="menu-item" id="resetButton" title="réinitialiser les statistiques">
-						<svg class="svg-icon">
-								<use xlink:href="#svg-reset"></use>
-						</svg>
-						réinitialiser
-				</button>
-				<button class="menu-item" id="aboutButton" title="à propos de cette application">
-						<svg class="svg-icon">
-								<use xlink:href="#svg-about"></use>
-						</svg>
-						à propos
-				</button>
-		</div>
-		<!-- Modal paramètres -->
-		<div class="modal" id="settingsModal">
-				<div class="modal-content">
-						<div class="modal-header">
-								<h2 class="modal-title">paramètres</h2>
-								<button class="close-modal" id="closeSettings">&times;</button>
-						</div>
-						<div class="setting-item">
-								<span class="setting-label">mode sombre</span>
-								<label class="theme-switch">
-										<input type="checkbox" id="darkModeToggle">
-										<span class="slider"></span>
-								</label>
-						</div>
-						<div class="setting-item">
-								<span class="setting-label">mode daltonien</span>
-								<label class="theme-switch">
-										<input type="checkbox" id="colorblindModeToggle">
-										<span class="slider"></span>
-								</label>
-						</div>
-						<div class="setting-item">
-								<span class="setting-label">animations</span>
-								<label class="theme-switch">
-										<input type="checkbox" id="animationsToggle" checked>
-										<span class="slider"></span>
-								</label>
-						</div>
-				</div>
-		</div>
-		<!-- Icônes SVG -->
-		<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-				<symbol viewBox="0 0 24 24" id="svg-help">
-						<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
-				</symbol>
-				<symbol viewBox="0 0 24 24" id="svg-stats">
-						<path d="M16,11V3H8v6H2v12h20V11H16z M10,5h4v14h-4V5z M4,11h4v8H4V11z M20,19h-4v-6h4V19z" />
-				</symbol>
-				<symbol viewBox="0 0 24 24" id="svg-reset">
-						<path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
-				</symbol>
-				<symbol viewBox="0 0 24 24" id="svg-about">
-						<path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
-				</symbol>
-				<symbol viewBox="0 0 24 24" id="svg-settings">
-						<path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24 0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24 0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6 1.62,3.6 3.6S13.98,15.6,12,15.6z" />
-				</symbol>
-		</svg>
-		<script>
-				// Variables pour la gestion du jeu
-				let drawing = false;
-				const canvas = document.getElementById('lineCanvas');
-				const ctx = canvas.getContext('2d');
-				const actionButton = document.getElementById('actionButton');
-				const scoreButton = document.getElementById('scoreButton');
-				let totalCorrect = 0;
-				let totalAnswers = 0;
-				const usedCells = new Set();
-				let currentAction = "check";
-				let currentRepere = null;
-				let currentDefinition = null;
-				let links = [];
-				let selectedReperes = [];
-				// Variables pour la gestion du menu
-				let showMenu = false;
-				let darkMode = false;
-				let colorblindMode = false;
-				let animationsEnabled = true;
-				// Variables pour la gestion du scroll
-				let scrollTimeout;
-				let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+    <!-- Version desktop normale (cachée en mobile) -->
+    <div class="toolbar toolbar-desktop">
+        <div class="toolbar-left">
+            <a class="toolbar-btn home" id="homeBtn" title="accueil" href="https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/">
+                <svg width="28" height="28" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="130,56 80,26" stroke="currentColor" stroke-width="15" fill="none" stroke-linecap="round" />
+                    <polyline points="52,40 30,56" stroke="currentColor" stroke-width="15" fill="none" stroke-linecap="round" />
+                    <polyline points="130,56 130,126 30,126 30,56" stroke="currentColor" stroke-width="15" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+                </svg>
+            </a>
+            <button class="toolbar-btn reload" id="reloadButton" title="Nouvelle partie">
+                <div class="reload-icon">↻</div>
+            </button>
+        </div>
+        <div class="toolbar-center">
+            <p class="toolbar-title" id="toolbarTitle">application « apparier »</p>
+            <p class="toolbar-subtitle" id="toolbarSubtitle">associer un élément à un autre</p>
+        </div>
+        <div class="toolbar-right">
+            <button class="toolbar-btn fullscreen" id="fullscreenButton" title="Plein écran">
+                <svg class="fullscreen-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path>
+                </svg>
+                <svg class="fullscreen-exit-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path>
+                </svg>
+            </button>
+            <button class="toolbar-btn menu" id="menuButton" title="Menu">
+                <div class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </div>
+    <!-- Version mobile - les 4 boutons sur une ligne au-dessus du titre (cachée en desktop) -->
+    <div class="toolbar-mobile">
+        <div class="mobile-buttons-container">
+            <a class="toolbar-btn home" id="homeBtnMobile" title="accueil" href="https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/">
+                <svg width="24" height="24" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="130,56 80,26" stroke="currentColor" stroke-width="15" fill="none" stroke-linecap="round" />
+                    <polyline points="52,40 30,56" stroke="currentColor" stroke-width="15" fill="none" stroke-linecap="round" />
+                    <polyline points="130,56 130,126 30,126 30,56" stroke="currentColor" stroke-width="15" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+                </svg>
+            </a>
+            <button class="toolbar-btn reload" id="reloadButtonMobile" title="Nouvelle partie">
+                <div class="reload-icon">↻</div>
+            </button>
+            <button class="toolbar-btn fullscreen" id="fullscreenButtonMobile" title="Plein écran">
+                <svg class="fullscreen-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path>
+                </svg>
+                <svg class="fullscreen-exit-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path>
+                </svg>
+            </button>
+            <button class="toolbar-btn menu" id="menuButtonMobile" title="Menu">
+                <div class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </div>
+    <!-- Contenu principal -->
+    <div class="main-wrapper">
+        <!-- Titre et sous-titre pour mobile seulement -->
+        <div class="mobile-title-wrapper">
+            <p class="mobile-title" id="mobileTitle">application « apparier »</p>
+            <p class="mobile-subtitle" id="mobileSubtitle">associer un élément à un autre</p>
+        </div>
+        <div class="container">
+            <div class="column left">
+                <table id="repereTable"></table>
+            </div>
+            <div class="column right">
+                <table id="definitionTable"></table>
+            </div>
+            <canvas id="lineCanvas"></canvas>
+        </div>
+        <div class="button-wrapper">
+            <button id="actionButton" disabled>
+                vérifier
+            </button>
+            <button id="scoreButton" disabled>
+                0 / 0
+            </button>
+        </div>
+    </div>
+    <!-- Menu coulissant -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="slide-menu" id="slideMenu">
+        <button class="menu-item" id="instructionsButton" title="voir les règles du jeu">
+            <svg class="svg-icon">
+                <use xlink:href="#svg-help"></use>
+            </svg>
+            règles du jeu
+        </button>
+        <button class="menu-item" id="statsButton" title="voir les statistiques détaillées">
+            <svg class="svg-icon">
+                <use xlink:href="#svg-stats"></use>
+            </svg>
+            statistiques
+        </button>
+        <button class="menu-item" id="settingsButton" title="paramètres de l'application">
+            <svg class="svg-icon">
+                <use xlink:href="#svg-settings"></use>
+            </svg>
+            paramètres
+        </button>
+        <button class="menu-item" id="resetButton" title="réinitialiser les statistiques">
+            <svg class="svg-icon">
+                <use xlink:href="#svg-reset"></use>
+            </svg>
+            réinitialiser
+        </button>
+        <button class="menu-item" id="aboutButton" title="à propos de cette application">
+            <svg class="svg-icon">
+                <use xlink:href="#svg-about"></use>
+            </svg>
+            à propos
+        </button>
+    </div>
+    <!-- Modal paramètres -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">paramètres</h2>
+                <button class="close-modal" id="closeSettings">&times;</button>
+            </div>
+            <div class="setting-item">
+                <span class="setting-label">mode sombre</span>
+                <label class="theme-switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <span class="setting-label">mode daltonien</span>
+                <label class="theme-switch">
+                    <input type="checkbox" id="colorblindModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <span class="setting-label">animations</span>
+                <label class="theme-switch">
+                    <input type="checkbox" id="animationsToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <!-- Icônes SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol viewBox="0 0 24 24" id="svg-help">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
+        </symbol>
+        <symbol viewBox="0 0 24 24" id="svg-stats">
+            <path d="M16,11V3H8v6H2v12h20V11H16z M10,5h4v14h-4V5z M4,11h4v8H4V11z M20,19h-4v-6h4V19z" />
+        </symbol>
+        <symbol viewBox="0 0 24 24" id="svg-reset">
+            <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
+        </symbol>
+        <symbol viewBox="0 0 24 24" id="svg-about">
+            <path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+        </symbol>
+        <symbol viewBox="0 0 24 24" id="svg-settings">
+            <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24 0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24 0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6 1.62,3.6 3.6S13.98,15.6,12,15.6z" />
+        </symbol>
+    </svg>
+    <script>
+        // Variables pour la gestion du jeu
+        let drawing = false;
+        const canvas = document.getElementById('lineCanvas');
+        const ctx = canvas.getContext('2d');
+        const actionButton = document.getElementById('actionButton');
+        const scoreButton = document.getElementById('scoreButton');
+        let totalCorrect = 0;
+        let totalAnswers = 0;
+        const usedCells = new Set();
+        let currentAction = "check";
+        let currentRepere = null;
+        let currentDefinition = null;
+        let links = [];
+        let selectedReperes = [];
+        // Variables pour la gestion du menu
+        let showMenu = false;
+        let darkMode = false;
+        let colorblindMode = false;
+        let animationsEnabled = true;
+        // Variables pour la gestion du scroll
+        let scrollTimeout;
+        let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 
-				// Fonction pour obtenir la couleur des flèches selon le mode
-				function getArrowColor() {
-						if (darkMode) {
-								return "#ffffff";
-						} else {
-								return "#000000";
-						}
-				}
+        // Fonction pour obtenir la couleur des flèches selon le mode
+        function getArrowColor() {
+            if (darkMode) {
+                return "#ffffff";
+            } else {
+                return "#000000";
+            }
+        }
 
-				// Fonction pour réinitialiser le dessin au clic hors des zones
-				function resetDrawingOnClickOutside(event) {
-						if (event.type === 'scroll') return;
-						const isClickOnCell = event.target.closest('td');
-						const isClickOnCanvas = event.target === canvas;
-						const isClickOnButton = event.target.closest('button');
-						if (!isClickOnCell && !isClickOnCanvas && !isClickOnButton && drawing) {
-								resetDrawing();
-						}
-				}
+        // Fonction pour réinitialiser le dessin au clic hors des zones
+        function resetDrawingOnClickOutside(event) {
+            if (event.type === 'scroll') return;
+            const isClickOnCell = event.target.closest('td');
+            const isClickOnCanvas = event.target === canvas;
+            const isClickOnButton = event.target.closest('button');
+            if (!isClickOnCell && !isClickOnCanvas && !isClickOnButton && drawing) {
+                resetDrawing();
+            }
+        }
 
-				// Fonction pour redessiner toutes les flèches après scroll
-				function redrawAllLinks() {
-						ctx.clearRect(0, 0, canvas.width, canvas.height);
-						links.forEach(link => {
-								if (link.lineId) {
-										const { startX, startY, endX, endY } = link.lineId;
-										const color = link.isCorrect !== undefined ?
-												(link.isCorrect ?
-														(colorblindMode ? (darkMode ? '#87CEEB' : '#0000FF') : (darkMode ? '#4caf50' : '#008000')) :
-														(colorblindMode ? (darkMode ? '#FFA500' : '#FF8C00') : (darkMode ? '#f44336' : '#ff0000'))
-												) : getArrowColor();
-										drawLink(startX, startY, endX, endY, color);
-								}
-						});
-				}
+        // Fonction pour redessiner toutes les flèches après scroll
+        function redrawAllLinks() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            links.forEach(link => {
+                if (link.lineId) {
+                    const { startX, startY, endX, endY } = link.lineId;
+                    const color = link.isCorrect !== undefined ?
+                        (link.isCorrect ?
+                            (colorblindMode ? (darkMode ? '#87CEEB' : '#0000FF') : (darkMode ? '#4caf50' : '#008000')) :
+                            (colorblindMode ? (darkMode ? '#FFA500' : '#FF8C00') : (darkMode ? '#f44336' : '#ff0000'))
+                        ) : getArrowColor();
+                    drawLink(startX, startY, endX, endY, color);
+                }
+            });
+        }
 
-				// Fonction pour mettre à jour les coordonnées des flèches
-				function updateLinkCoordinates() {
-						const canvasRect = canvas.getBoundingClientRect();
-						const isVertical = isVerticalLayout();
-						links.forEach((link, index) => {
-								const repereCell = Array.from(document.querySelectorAll('#repereTable td')).find(
-										cell => cell.textContent === link.repere && !cell.classList.contains('used')
-								);
-								const definitionCell = Array.from(document.querySelectorAll('#definitionTable td')).find(
-										cell => cell.textContent === link.definition && !cell.classList.contains('used')
-								);
-								if (repereCell && definitionCell) {
-										const repereRect = repereCell.getBoundingClientRect();
-										const defRect = definitionCell.getBoundingClientRect();
-										let startX, startY, endX, endY;
-										const totalLinks = selectedReperes.length;
-										if (isVertical) {
-												const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
-												const horizontalOffset = (index - (totalLinks - 1) / 2) * linkSpacing;
-												startX = repereRect.left + repereRect.width / 2 + horizontalOffset - canvasRect.left;
-												startY = repereRect.bottom - 8 - canvasRect.top;
-												endX = defRect.left + defRect.width / 2 + horizontalOffset - canvasRect.left;
-												endY = defRect.top + 8 - canvasRect.top;
-										} else {
-												startX = repereRect.right - 8 - canvasRect.left;
-												startY = repereRect.top + repereRect.height / 2 - canvasRect.top;
-												endX = defRect.left + 8 - canvasRect.left;
-												endY = defRect.top + defRect.height / 2 - canvasRect.top;
-										}
-										link.lineId = { startX, startY, endX, endY };
-								}
-						});
-						redrawAllLinks();
-				}
+        // Fonction pour mettre à jour les coordonnées des flèches
+        function updateLinkCoordinates() {
+            const canvasRect = canvas.getBoundingClientRect();
+            const isVertical = isVerticalLayout();
+            links.forEach((link, index) => {
+                const repereCell = Array.from(document.querySelectorAll('#repereTable td')).find(
+                    cell => cell.textContent === link.repere && !cell.classList.contains('used')
+                );
+                const definitionCell = Array.from(document.querySelectorAll('#definitionTable td')).find(
+                    cell => cell.textContent === link.definition && !cell.classList.contains('used')
+                );
+                if (repereCell && definitionCell) {
+                    const repereRect = repereCell.getBoundingClientRect();
+                    const defRect = definitionCell.getBoundingClientRect();
+                    let startX, startY, endX, endY;
+                    const totalLinks = selectedReperes.length;
+                    if (isVertical) {
+                        const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
+                        const horizontalOffset = (index - (totalLinks - 1) / 2) * linkSpacing;
+                        startX = repereRect.left + repereRect.width / 2 + horizontalOffset - canvasRect.left;
+                        startY = repereRect.bottom - 8 - canvasRect.top;
+                        endX = defRect.left + defRect.width / 2 + horizontalOffset - canvasRect.left;
+                        endY = defRect.top + 8 - canvasRect.top;
+                    } else {
+                        startX = repereRect.right - 8 - canvasRect.left;
+                        startY = repereRect.top + repereRect.height / 2 - canvasRect.top;
+                        endX = defRect.left + 8 - canvasRect.left;
+                        endY = defRect.top + defRect.height / 2 - canvasRect.top;
+                    }
+                    link.lineId = { startX, startY, endX, endY };
+                }
+            });
+            redrawAllLinks();
+        }
 
-				// Ajouter les écouteurs d'événement pour le scroll
-				window.addEventListener('scroll', function() {
-						clearTimeout(scrollTimeout);
-						if (links.length > 0) {
-								scrollTimeout = setTimeout(() => {
-										updateLinkCoordinates();
-								}, 100);
-						}
-				}, { passive: true });
+        // Ajouter les écouteurs d'événement pour le scroll
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollTimeout);
+            if (links.length > 0) {
+                scrollTimeout = setTimeout(() => {
+                    updateLinkCoordinates();
+                }, 100);
+            }
+        }, { passive: true });
 
-				// Ajouter l'écouteur d'événement pour les clics extérieurs
-				document.addEventListener('click', resetDrawingOnClickOutside);
+        // Ajouter l'écouteur d'événement pour les clics extérieurs
+        document.addEventListener('click', resetDrawingOnClickOutside);
 
-				// Sauvegarder les paramètres
-				function saveSettings() {
-						const settings = {
-								darkMode: darkMode,
-								colorblindMode: colorblindMode,
-								animationsEnabled: animationsEnabled
-						};
-						localStorage.setItem('apparierSettings', JSON.stringify(settings));
-				}
+        // Sauvegarder les paramètres
+        function saveSettings() {
+            const settings = {
+                darkMode: darkMode,
+                colorblindMode: colorblindMode,
+                animationsEnabled: animationsEnabled
+            };
+            localStorage.setItem('apparierSettings', JSON.stringify(settings));
+        }
 
-				// Charger les paramètres
-				function loadSettings() {
-						const saved = localStorage.getItem('apparierSettings');
-						if (saved) {
-								try {
-										const settings = JSON.parse(saved);
-										darkMode = settings.darkMode || false;
-										colorblindMode = settings.colorblindMode || false;
-										animationsEnabled = settings.animationsEnabled !== undefined ? settings.animationsEnabled : true;
-										if (darkMode) {
-												document.body.classList.add('dark-mode');
-										}
-										if (colorblindMode) {
-												document.body.classList.add('colorblind-mode');
-										}
-										if (!animationsEnabled) {
-												toggleAnimations(false);
-										}
-										return settings;
-								} catch (e) {
-										console.error('Erreur lors du chargement des paramètres:', e);
-								}
-						}
-						return null;
-				}
+        // Charger les paramètres
+        function loadSettings() {
+            const saved = localStorage.getItem('apparierSettings');
+            if (saved) {
+                try {
+                    const settings = JSON.parse(saved);
+                    darkMode = settings.darkMode || false;
+                    colorblindMode = settings.colorblindMode || false;
+                    animationsEnabled = settings.animationsEnabled !== undefined ? settings.animationsEnabled : true;
+                    if (darkMode) {
+                        document.body.classList.add('dark-mode');
+                    }
+                    if (colorblindMode) {
+                        document.body.classList.add('colorblind-mode');
+                    }
+                    if (!animationsEnabled) {
+                        toggleAnimations(false);
+                    }
+                    return settings;
+                } catch (e) {
+                    console.error('Erreur lors du chargement des paramètres:', e);
+                }
+            }
+            return null;
+        }
 
-				// Fonction pour charger les ressources externes
-				function loadExternalResources() {
-						const script = document.createElement('script');
-						script.src = 'fichier_ressource.js';
-						script.onload = function () {
-								console.log('fichier_ressource.js chargé avec succès');
-								initializeApp();
-						};
-						script.onerror = function () {
-								console.log('fichier_ressource.js non trouvé, utilisation des valeurs par défaut');
-								window.argumentsData = [
-										{ colonne_de_gauche: "Philosophie", colonne_de_droite: "Amour de la sagesse" },
-										{ colonne_de_gauche: "Éthique", colonne_de_droite: "Science de la morale" },
-										{ colonne_de_gauche: "Métaphysique", colonne_de_droite: "Étude de l'être en tant qu'être" },
-										{ colonne_de_gauche: "Logique", colonne_de_droite: "Science du raisonnement valide" },
-										{ colonne_de_gauche: "Esthétique", colonne_de_droite: "Philosophie du beau" }
-								];
-								window.title = "application « apparier »";
-								window.subtitle = "associer un élément à un autre";
-								window.settings = {
-										"titleColor": "#ff0000",
-										"subtitleColor": "#000000",
-										"textColor": "#000000",
-										"backgroundColor": "#f0f0f0",
-										"cellColor": "#e0e0e0",
-										"buttonColor": "#e0e0e0",
-										"correctColor": "#008000",
-										"incorrectColor": "#ff0000",
-										"titleColorDark": "#ff6666",
-										"subtitleColorDark": "#ffffff",
-										"textColorDark": "#ffffff",
-										"backgroundColorDark": "#121212",
-										"cellColorDark": "#2d2d2d",
-										"buttonColorDark": "#3d3d3d",
-										"correctColorDark": "#4caf50",
-										"incorrectColorDark": "#f44336",
-										"fontFamily": "'Times New Roman', Times, serif",
-										"titleSize": "clamp(1.8rem, 5vw, 2.5rem)",
-										"cellSize": "clamp(0.9rem, 2.5vw, 1rem)",
-										"enableAnimations": true,
-										"enableDarkMode": false,
-										"enableColorblindMode": false,
-										"maxPairs": 5,
-										"showScore": true,
-										"randomOrder": true,
-										"baseFontSize": 12
-								};
-								initializeApp();
-						};
-						document.head.appendChild(script);
-				}
+        // Fonction pour charger les ressources externes
+        function loadExternalResources() {
+            const script = document.createElement('script');
+            script.src = 'fichier_ressource.js';
+            script.onload = function () {
+                console.log('fichier_ressource.js chargé avec succès');
+                initializeApp();
+            };
+            script.onerror = function () {
+                console.log('fichier_ressource.js non trouvé, utilisation des valeurs par défaut');
+                window.argumentsData = [
+                    { colonne_de_gauche: "Philosophie", colonne_de_droite: "Amour de la sagesse" },
+                    { colonne_de_gauche: "Éthique", colonne_de_droite: "Science de la morale" },
+                    { colonne_de_gauche: "Métaphysique", colonne_de_droite: "Étude de l'être en tant qu'être" },
+                    { colonne_de_gauche: "Logique", colonne_de_droite: "Science du raisonnement valide" },
+                    { colonne_de_gauche: "Esthétique", colonne_de_droite: "Philosophie du beau" }
+                ];
+                window.title = "application « apparier »";
+                window.subtitle = "associer un élément à un autre";
+                window.settings = {
+                    "titleColor": "#ff0000",
+                    "subtitleColor": "#000000",
+                    "textColor": "#000000",
+                    "backgroundColor": "#f0f0f0",
+                    "cellColor": "#e0e0e0",
+                    "buttonColor": "#e0e0e0",
+                    "correctColor": "#008000",
+                    "incorrectColor": "#ff0000",
+                    "titleColorDark": "#ff6666",
+                    "subtitleColorDark": "#ffffff",
+                    "textColorDark": "#ffffff",
+                    "backgroundColorDark": "#121212",
+                    "cellColorDark": "#2d2d2d",
+                    "buttonColorDark": "#3d3d3d",
+                    "correctColorDark": "#4caf50",
+                    "incorrectColorDark": "#f44336",
+                    "fontFamily": "'Times New Roman', Times, serif",
+                    "titleSize": "clamp(1.8rem, 5vw, 2.5rem)",
+                    "cellSize": "clamp(0.9rem, 2.5vw, 1rem)",
+                    "enableAnimations": true,
+                    "enableDarkMode": false,
+                    "enableColorblindMode": false,
+                    "maxPairs": 5,
+                    "showScore": true,
+                    "randomOrder": true,
+                    "baseFontSize": 12
+                };
+                initializeApp();
+            };
+            document.head.appendChild(script);
+        }
 
-				// Fonction pour appliquer toutes les couleurs
-				function applyAllColors(appSettings) {
-						const style = document.createElement('style');
-						style.id = 'dynamic-colors';
-						let css = '';
-						if (appSettings.titleColor) {
-								css += `.toolbar-title, .mobile-title { color: ${appSettings.titleColor} !important; }`;
-								css += `.modal-title { color: ${appSettings.titleColor} !important; }`;
-						}
-						if (appSettings.subtitleColor) {
-								css += `.toolbar-subtitle, .mobile-subtitle { color: ${appSettings.subtitleColor} !important; }`;
-						}
-						if (appSettings.textColor) {
-								css += `body:not(.dark-mode) { color: ${appSettings.textColor} !important; }`;
-								css += `body:not(.dark-mode) .menu-item { color: ${appSettings.textColor} !important; }`;
-								css += `body:not(.dark-mode) .setting-label { color: ${appSettings.textColor} !important; }`;
-								css += `body:not(.dark-mode) .modal-title { color: ${appSettings.textColor} !important; }`;
-								css += `body:not(.dark-mode) td { color: ${appSettings.textColor} !important; }`;
-								css += `body:not(.dark-mode) button { color: ${appSettings.textColor} !important; }`;
-						}
-						if (appSettings.backgroundColor) {
-								css += `body:not(.dark-mode) { background-color: ${appSettings.backgroundColor} !important; }`;
-						}
-						if (appSettings.cellColor) {
-								css += `body:not(.dark-mode) td { background-color: ${appSettings.cellColor} !important; }`;
-						}
-						if (appSettings.buttonColor) {
-								css += `body:not(.dark-mode) button { background-color: ${appSettings.buttonColor} !important; }`;
-						}
-						if (appSettings.titleColorDark) {
-								css += `body.dark-mode .toolbar-title, body.dark-mode .mobile-title { color: ${appSettings.titleColorDark} !important; }`;
-								css += `body.dark-mode .modal-title { color: ${appSettings.titleColorDark} !important; }`;
-						}
-						if (appSettings.subtitleColorDark) {
-								css += `body.dark-mode .toolbar-subtitle, body.dark-mode .mobile-subtitle { color: ${appSettings.subtitleColorDark} !important; }`;
-						}
-						if (appSettings.textColorDark) {
-								css += `body.dark-mode { color: ${appSettings.textColorDark} !important; }`;
-								css += `body.dark-mode .menu-item { color: ${appSettings.textColorDark} !important; }`;
-								css += `body.dark-mode .setting-label { color: ${appSettings.textColorDark} !important; }`;
-								css += `body.dark-mode .modal-title { color: ${appSettings.textColorDark} !important; }`;
-								css += `body.dark-mode td { color: ${appSettings.textColorDark} !important; }`;
-								css += `body.dark-mode button { color: ${appSettings.textColorDark} !important; }`;
-						}
-						if (appSettings.backgroundColorDark) {
-								css += `body.dark-mode { background-color: ${appSettings.backgroundColorDark} !important; }`;
-						}
-						if (appSettings.cellColorDark) {
-								css += `body.dark-mode td { background-color: ${appSettings.cellColorDark} !important; }`;
-						}
-						if (appSettings.buttonColorDark) {
-								css += `body.dark-mode button { background-color: ${appSettings.buttonColorDark} !important; }`;
-						}
-						if (appSettings.fontFamily) {
-								css += `body { font-family: ${appSettings.fontFamily} !important; }`;
-						}
-						if (appSettings.titleSize) {
-								css += `.toolbar-title { font-size: ${appSettings.titleSize} !important; }`;
-								css += `.mobile-title { font-size: clamp(1.5rem, 4vw, 2rem) !important; }`;
-						}
-						if (appSettings.cellSize) {
-								css += `td { font-size: ${appSettings.cellSize} !important; }`;
-						}
-						const oldStyle = document.getElementById('dynamic-colors');
-						if (oldStyle) {
-								oldStyle.remove();
-						}
-						style.textContent = css;
-						document.head.appendChild(style);
-						const savedSettings = loadSettings();
-						if (savedSettings) {
-								darkMode = savedSettings.darkMode;
-								colorblindMode = savedSettings.colorblindMode;
-								animationsEnabled = savedSettings.animationsEnabled;
-						} else {
-								if (appSettings.enableAnimations !== undefined) {
-										animationsEnabled = appSettings.enableAnimations;
-								}
-								if (appSettings.enableDarkMode !== undefined) {
-										darkMode = appSettings.enableDarkMode;
-								}
-								if (appSettings.enableColorblindMode !== undefined) {
-										colorblindMode = appSettings.enableColorblindMode;
-								}
-						}
-						document.getElementById('animationsToggle').checked = animationsEnabled;
-						document.getElementById('darkModeToggle').checked = darkMode;
-						document.getElementById('colorblindModeToggle').checked = colorblindMode;
-						if (darkMode) {
-								document.body.classList.add('dark-mode');
-						}
-						if (colorblindMode) {
-								document.body.classList.add('colorblind-mode');
-						}
-						if (!animationsEnabled) {
-								toggleAnimations(false);
-						}
-						if (appSettings.showScore !== undefined && !appSettings.showScore) {
-								document.getElementById('scoreButton').style.display = 'none';
-						}
-						if (appSettings.baseFontSize !== undefined) {
-								document.body.style.fontSize = appSettings.baseFontSize + 'px';
-						}
-				}
+        // Fonction pour appliquer toutes les couleurs
+        function applyAllColors(appSettings) {
+            const style = document.createElement('style');
+            style.id = 'dynamic-colors';
+            let css = '';
+            if (appSettings.titleColor) {
+                css += `.toolbar-title, .mobile-title { color: ${appSettings.titleColor} !important; }`;
+                css += `.modal-title { color: ${appSettings.titleColor} !important; }`;
+            }
+            if (appSettings.subtitleColor) {
+                css += `.toolbar-subtitle, .mobile-subtitle { color: ${appSettings.subtitleColor} !important; }`;
+            }
+            if (appSettings.textColor) {
+                css += `body:not(.dark-mode) { color: ${appSettings.textColor} !important; }`;
+                css += `body:not(.dark-mode) .menu-item { color: ${appSettings.textColor} !important; }`;
+                css += `body:not(.dark-mode) .setting-label { color: ${appSettings.textColor} !important; }`;
+                css += `body:not(.dark-mode) .modal-title { color: ${appSettings.textColor} !important; }`;
+                css += `body:not(.dark-mode) td { color: ${appSettings.textColor} !important; }`;
+                css += `body:not(.dark-mode) button { color: ${appSettings.textColor} !important; }`;
+            }
+            if (appSettings.backgroundColor) {
+                css += `body:not(.dark-mode) { background-color: ${appSettings.backgroundColor} !important; }`;
+            }
+            if (appSettings.cellColor) {
+                css += `body:not(.dark-mode) td { background-color: ${appSettings.cellColor} !important; }`;
+            }
+            if (appSettings.buttonColor) {
+                css += `body:not(.dark-mode) button { background-color: ${appSettings.buttonColor} !important; }`;
+            }
+            if (appSettings.titleColorDark) {
+                css += `body.dark-mode .toolbar-title, body.dark-mode .mobile-title { color: ${appSettings.titleColorDark} !important; }`;
+                css += `body.dark-mode .modal-title { color: ${appSettings.titleColorDark} !important; }`;
+            }
+            if (appSettings.subtitleColorDark) {
+                css += `body.dark-mode .toolbar-subtitle, body.dark-mode .mobile-subtitle { color: ${appSettings.subtitleColorDark} !important; }`;
+            }
+            if (appSettings.textColorDark) {
+                css += `body.dark-mode { color: ${appSettings.textColorDark} !important; }`;
+                css += `body.dark-mode .menu-item { color: ${appSettings.textColorDark} !important; }`;
+                css += `body.dark-mode .setting-label { color: ${appSettings.textColorDark} !important; }`;
+                css += `body.dark-mode .modal-title { color: ${appSettings.textColorDark} !important; }`;
+                css += `body.dark-mode td { color: ${appSettings.textColorDark} !important; }`;
+                css += `body.dark-mode button { color: ${appSettings.textColorDark} !important; }`;
+            }
+            if (appSettings.backgroundColorDark) {
+                css += `body.dark-mode { background-color: ${appSettings.backgroundColorDark} !important; }`;
+            }
+            if (appSettings.cellColorDark) {
+                css += `body.dark-mode td { background-color: ${appSettings.cellColorDark} !important; }`;
+            }
+            if (appSettings.buttonColorDark) {
+                css += `body.dark-mode button { background-color: ${appSettings.buttonColorDark} !important; }`;
+            }
+            if (appSettings.fontFamily) {
+                css += `body { font-family: ${appSettings.fontFamily} !important; }`;
+            }
+            if (appSettings.titleSize) {
+                css += `.toolbar-title { font-size: ${appSettings.titleSize} !important; }`;
+                css += `.mobile-title { font-size: clamp(1.3rem, 4vw, 1.6rem) !important; }`;
+            }
+            if (appSettings.cellSize) {
+                css += `td { font-size: ${appSettings.cellSize} !important; }`;
+            }
+            const oldStyle = document.getElementById('dynamic-colors');
+            if (oldStyle) {
+                oldStyle.remove();
+            }
+            style.textContent = css;
+            document.head.appendChild(style);
+            const savedSettings = loadSettings();
+            if (savedSettings) {
+                darkMode = savedSettings.darkMode;
+                colorblindMode = savedSettings.colorblindMode;
+                animationsEnabled = savedSettings.animationsEnabled;
+            } else {
+                if (appSettings.enableAnimations !== undefined) {
+                    animationsEnabled = appSettings.enableAnimations;
+                }
+                if (appSettings.enableDarkMode !== undefined) {
+                    darkMode = appSettings.enableDarkMode;
+                }
+                if (appSettings.enableColorblindMode !== undefined) {
+                    colorblindMode = appSettings.enableColorblindMode;
+                }
+            }
+            document.getElementById('animationsToggle').checked = animationsEnabled;
+            document.getElementById('darkModeToggle').checked = darkMode;
+            document.getElementById('colorblindModeToggle').checked = colorblindMode;
+            if (darkMode) {
+                document.body.classList.add('dark-mode');
+            }
+            if (colorblindMode) {
+                document.body.classList.add('colorblind-mode');
+            }
+            if (!animationsEnabled) {
+                toggleAnimations(false);
+            }
+            if (appSettings.showScore !== undefined && !appSettings.showScore) {
+                document.getElementById('scoreButton').style.display = 'none';
+            }
+            if (appSettings.baseFontSize !== undefined) {
+                document.body.style.fontSize = appSettings.baseFontSize + 'px';
+            }
+        }
 
-				// Initialiser l'application
-				function initializeApp() {
-						const argsData = window.argumentsData;
-						const appTitle = window.title;
-						const appSubtitle = window.subtitle;
-						const appSettings = window.settings;
-						loadTitleAndSubtitle(appTitle, appSubtitle);
-						applyAllColors(appSettings);
-						selectedReperes = loadReperes(argsData);
-						resizeCanvas();
-						addEventListeners();
-						actionButton.disabled = true;
-						scoreButton.disabled = true;
-						setupReloadButton();
-						setupMenuListeners();
-						setupSettingsModal();
-						formatTitleForMobile(appTitle);
-						document.getElementById('actionButton').addEventListener('click', performAction);
-						window.addEventListener('resize', function() {
-								resizeCanvas();
-								formatTitleForMobile(window.title);
-								if (links.length > 0) {
-										setTimeout(updateLinkCoordinates, 50);
-								}
-						});
-						window.addEventListener('load', function() {
-								resizeCanvas();
-								setTimeout(() => {
-										if (links.length > 0) {
-												updateLinkCoordinates();
-										}
-								}, 100);
-						});
-				}
+        // Initialiser l'application
+        function initializeApp() {
+            const argsData = window.argumentsData;
+            const appTitle = window.title;
+            const appSubtitle = window.subtitle;
+            const appSettings = window.settings;
+            loadTitleAndSubtitle(appTitle, appSubtitle);
+            applyAllColors(appSettings);
+            selectedReperes = loadReperes(argsData);
+            resizeCanvas();
+            addEventListeners();
+            actionButton.disabled = true;
+            scoreButton.disabled = true;
+            setupReloadButton();
+            setupMenuListeners();
+            setupSettingsModal();
+            formatTitleForMobile(appTitle);
+            document.getElementById('actionButton').addEventListener('click', performAction);
+            window.addEventListener('resize', function() {
+                resizeCanvas();
+                formatTitleForMobile(window.title);
+                if (links.length > 0) {
+                    setTimeout(updateLinkCoordinates, 50);
+                }
+            });
+            window.addEventListener('load', function() {
+                resizeCanvas();
+                setTimeout(() => {
+                    if (links.length > 0) {
+                        updateLinkCoordinates();
+                    }
+                }, 100);
+            });
+        }
 
-				// Gestion du menu coulissant
-				function setupMenuListeners() {
-						const menuButton = document.getElementById('menuButton');
-						const menuButtonMobile = document.getElementById('menuButtonMobile');
-						const menuOverlay = document.getElementById('menuOverlay');
-						const slideMenu = document.getElementById('slideMenu');
-						const fullscreenButton = document.getElementById('fullscreenButton');
-						const fullscreenButtonMobile = document.getElementById('fullscreenButtonMobile');
-						const reloadButton = document.getElementById('reloadButton');
-						const reloadButtonMobile = document.getElementById('reloadButtonMobile');
-						const instructionsButton = document.getElementById('instructionsButton');
-						const statsButton = document.getElementById('statsButton');
-						const settingsButton = document.getElementById('settingsButton');
-						const resetButton = document.getElementById('resetButton');
-						const aboutButton = document.getElementById('aboutButton');
-						menuButton.addEventListener('click', toggleMenu);
-						menuButtonMobile.addEventListener('click', toggleMenu);
-						menuOverlay.addEventListener('click', closeMenu);
-						fullscreenButton.addEventListener('click', toggleFullscreen);
-						fullscreenButtonMobile.addEventListener('click', toggleFullscreen);
-						reloadButton.addEventListener('click', reload);
-						reloadButtonMobile.addEventListener('click', reload);
-						instructionsButton.addEventListener('click', function () {
-								closeMenu();
-								showInstructions();
-						});
-						statsButton.addEventListener('click', function () {
-								closeMenu();
-								showStats();
-						});
-						settingsButton.addEventListener('click', function () {
-								closeMenu();
-								openSettings();
-						});
-						resetButton.addEventListener('click', function () {
-								closeMenu();
-								showResetConfirm();
-						});
-						aboutButton.addEventListener('click', function () {
-								closeMenu();
-								showAbout();
-						});
-						document.addEventListener('keydown', function (event) {
-								if (event.key === 'Escape') {
-										if (showMenu) {
-												closeMenu();
-										}
-										if (document.getElementById('settingsModal').classList.contains('open')) {
-												closeSettings();
-										}
-										if (document.fullscreenElement) {
-												document.exitFullscreen();
-										}
-								}
-						});
-						document.addEventListener('fullscreenchange', updateFullscreenButton);
-						document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
-						document.addEventListener('mozfullscreenchange', updateFullscreenButton);
-						document.addEventListener('MSFullscreenChange', updateFullscreenButton);
-				}
+        // Gestion du menu coulissant
+        function setupMenuListeners() {
+            const menuButton = document.getElementById('menuButton');
+            const menuButtonMobile = document.getElementById('menuButtonMobile');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const slideMenu = document.getElementById('slideMenu');
+            const fullscreenButton = document.getElementById('fullscreenButton');
+            const fullscreenButtonMobile = document.getElementById('fullscreenButtonMobile');
+            const reloadButton = document.getElementById('reloadButton');
+            const reloadButtonMobile = document.getElementById('reloadButtonMobile');
+            const instructionsButton = document.getElementById('instructionsButton');
+            const statsButton = document.getElementById('statsButton');
+            const settingsButton = document.getElementById('settingsButton');
+            const resetButton = document.getElementById('resetButton');
+            const aboutButton = document.getElementById('aboutButton');
+            menuButton.addEventListener('click', toggleMenu);
+            menuButtonMobile.addEventListener('click', toggleMenu);
+            menuOverlay.addEventListener('click', closeMenu);
+            fullscreenButton.addEventListener('click', toggleFullscreen);
+            fullscreenButtonMobile.addEventListener('click', toggleFullscreen);
+            reloadButton.addEventListener('click', reload);
+            reloadButtonMobile.addEventListener('click', reload);
+            instructionsButton.addEventListener('click', function () {
+                closeMenu();
+                showInstructions();
+            });
+            statsButton.addEventListener('click', function () {
+                closeMenu();
+                showStats();
+            });
+            settingsButton.addEventListener('click', function () {
+                closeMenu();
+                openSettings();
+            });
+            resetButton.addEventListener('click', function () {
+                closeMenu();
+                showResetConfirm();
+            });
+            aboutButton.addEventListener('click', function () {
+                closeMenu();
+                showAbout();
+            });
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') {
+                    if (showMenu) {
+                        closeMenu();
+                    }
+                    if (document.getElementById('settingsModal').classList.contains('open')) {
+                        closeSettings();
+                    }
+                    if (document.fullscreenElement) {
+                        document.exitFullscreen();
+                    }
+                }
+            });
+            document.addEventListener('fullscreenchange', updateFullscreenButton);
+            document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
+            document.addEventListener('mozfullscreenchange', updateFullscreenButton);
+            document.addEventListener('MSFullscreenChange', updateFullscreenButton);
+        }
 
-				// Mettre à jour l'icône du bouton plein écran
-				function updateFullscreenButton() {
-						if (document.fullscreenElement ||
-								document.webkitFullscreenElement ||
-								document.mozFullScreenElement ||
-								document.msFullscreenElement) {
-								document.body.classList.add('fullscreen-mode');
-						} else {
-								document.body.classList.remove('fullscreen-mode');
-						}
-				}
+        // Mettre à jour l'icône du bouton plein écran
+        function updateFullscreenButton() {
+            if (document.fullscreenElement ||
+                document.webkitFullscreenElement ||
+                document.mozFullScreenElement ||
+                document.msFullscreenElement) {
+                document.body.classList.add('fullscreen-mode');
+            } else {
+                document.body.classList.remove('fullscreen-mode');
+            }
+        }
 
-				// Fonction pour basculer le mode plein écran
-				function toggleFullscreen() {
-						if (!document.fullscreenElement) {
-								const docEl = document.documentElement;
-								if (docEl.requestFullscreen) {
-										docEl.requestFullscreen();
-								} else if (docEl.webkitRequestFullscreen) {
-										docEl.webkitRequestFullscreen();
-								} else if (docEl.mozRequestFullScreen) {
-										docEl.mozRequestFullScreen();
-								} else if (docEl.msRequestFullscreen) {
-										docEl.msRequestFullscreen();
-								}
-						} else {
-								if (document.exitFullscreen) {
-										document.exitFullscreen();
-								} else if (document.webkitExitFullscreen) {
-										document.webkitExitFullscreen();
-								} else if (document.mozCancelFullScreen) {
-										document.mozCancelFullScreen();
-								} else if (document.msExitFullscreen) {
-										document.msExitFullscreen();
-								}
-						}
-				}
+        // Fonction pour basculer le mode plein écran
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                const docEl = document.documentElement;
+                if (docEl.requestFullscreen) {
+                    docEl.requestFullscreen();
+                } else if (docEl.webkitRequestFullscreen) {
+                    docEl.webkitRequestFullscreen();
+                } else if (docEl.mozRequestFullScreen) {
+                    docEl.mozRequestFullScreen();
+                } else if (docEl.msRequestFullscreen) {
+                    docEl.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
 
-				function toggleMenu() {
-						showMenu = !showMenu;
-						const menuButton = document.getElementById('menuButton');
-						const menuButtonMobile = document.getElementById('menuButtonMobile');
-						const slideMenu = document.getElementById('slideMenu');
-						const menuOverlay = document.getElementById('menuOverlay');
-						if (showMenu) {
-								menuButton.classList.add('active');
-								menuButtonMobile.classList.add('active');
-								slideMenu.classList.add('open');
-								menuOverlay.classList.add('open');
-						} else {
-								menuButton.classList.remove('active');
-								menuButtonMobile.classList.remove('active');
-								slideMenu.classList.remove('open');
-								menuOverlay.classList.remove('open');
-						}
-				}
+        function toggleMenu() {
+            showMenu = !showMenu;
+            const menuButton = document.getElementById('menuButton');
+            const menuButtonMobile = document.getElementById('menuButtonMobile');
+            const slideMenu = document.getElementById('slideMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            if (showMenu) {
+                menuButton.classList.add('active');
+                menuButtonMobile.classList.add('active');
+                slideMenu.classList.add('open');
+                menuOverlay.classList.add('open');
+            } else {
+                menuButton.classList.remove('active');
+                menuButtonMobile.classList.remove('active');
+                slideMenu.classList.remove('open');
+                menuOverlay.classList.remove('open');
+            }
+        }
 
-				function closeMenu() {
-						showMenu = false;
-						document.getElementById('menuButton').classList.remove('active');
-						document.getElementById('menuButtonMobile').classList.remove('active');
-						document.getElementById('slideMenu').classList.remove('open');
-						document.getElementById('menuOverlay').classList.remove('open');
-				}
+        function closeMenu() {
+            showMenu = false;
+            document.getElementById('menuButton').classList.remove('active');
+            document.getElementById('menuButtonMobile').classList.remove('active');
+            document.getElementById('slideMenu').classList.remove('open');
+            document.getElementById('menuOverlay').classList.remove('open');
+        }
 
-				// Gestion des paramètres
-				function setupSettingsModal() {
-						const settingsModal = document.getElementById('settingsModal');
-						const closeSettingsBtn = document.getElementById('closeSettings');
-						const darkModeToggle = document.getElementById('darkModeToggle');
-						const colorblindModeToggle = document.getElementById('colorblindModeToggle');
-						const animationsToggle = document.getElementById('animationsToggle');
-						closeSettingsBtn.addEventListener('click', closeSettings);
-						settingsModal.addEventListener('click', function (event) {
-								if (event.target === settingsModal) {
-										closeSettings();
-								}
-						});
-						darkModeToggle.addEventListener('change', function () {
-								toggleDarkMode(this.checked);
-								saveSettings();
-						});
-						colorblindModeToggle.addEventListener('change', function () {
-								toggleColorblindMode(this.checked);
-								saveSettings();
-						});
-						animationsToggle.addEventListener('change', function () {
-								toggleAnimations(this.checked);
-								saveSettings();
-						});
-						darkModeToggle.checked = darkMode;
-						colorblindModeToggle.checked = colorblindMode;
-						animationsToggle.checked = animationsEnabled;
-				}
+        // Gestion des paramètres
+        function setupSettingsModal() {
+            const settingsModal = document.getElementById('settingsModal');
+            const closeSettingsBtn = document.getElementById('closeSettings');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const colorblindModeToggle = document.getElementById('colorblindModeToggle');
+            const animationsToggle = document.getElementById('animationsToggle');
+            closeSettingsBtn.addEventListener('click', closeSettings);
+            settingsModal.addEventListener('click', function (event) {
+                if (event.target === settingsModal) {
+                    closeSettings();
+                }
+            });
+            darkModeToggle.addEventListener('change', function () {
+                toggleDarkMode(this.checked);
+                saveSettings();
+            });
+            colorblindModeToggle.addEventListener('change', function () {
+                toggleColorblindMode(this.checked);
+                saveSettings();
+            });
+            animationsToggle.addEventListener('change', function () {
+                toggleAnimations(this.checked);
+                saveSettings();
+            });
+            darkModeToggle.checked = darkMode;
+            colorblindModeToggle.checked = colorblindMode;
+            animationsToggle.checked = animationsEnabled;
+        }
 
-				function openSettings() {
-						document.getElementById('settingsModal').classList.add('open');
-				}
+        function openSettings() {
+            document.getElementById('settingsModal').classList.add('open');
+        }
 
-				function closeSettings() {
-						document.getElementById('settingsModal').classList.remove('open');
-				}
+        function closeSettings() {
+            document.getElementById('settingsModal').classList.remove('open');
+        }
 
-				// Fonction pour basculer entre mode sombre et clair
-				function toggleDarkMode(enable) {
-						darkMode = enable;
-						const body = document.body;
-						if (darkMode) {
-								body.classList.add('dark-mode');
-						} else {
-								body.classList.remove('dark-mode');
-						}
-						document.getElementById('darkModeToggle').checked = darkMode;
-				}
+        // Fonction pour basculer entre mode sombre et clair
+        function toggleDarkMode(enable) {
+            darkMode = enable;
+            const body = document.body;
+            if (darkMode) {
+                body.classList.add('dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+            }
+            document.getElementById('darkModeToggle').checked = darkMode;
+        }
 
-				// Fonction pour basculer le mode daltonien
-				function toggleColorblindMode(enable) {
-						colorblindMode = enable;
-						const body = document.body;
-						if (colorblindMode) {
-								body.classList.add('colorblind-mode');
-						} else {
-								body.classList.remove('colorblind-mode');
-						}
-						document.getElementById('colorblindModeToggle').checked = colorblindMode;
-				}
+        // Fonction pour basculer le mode daltonien
+        function toggleColorblindMode(enable) {
+            colorblindMode = enable;
+            const body = document.body;
+            if (colorblindMode) {
+                body.classList.add('colorblind-mode');
+            } else {
+                body.classList.remove('colorblind-mode');
+            }
+            document.getElementById('colorblindModeToggle').checked = colorblindMode;
+        }
 
-				// Fonction pour basculer les animations
-				function toggleAnimations(enable) {
-						animationsEnabled = enable;
-						document.getElementById('animationsToggle').checked = animationsEnabled;
-						const allElements = document.querySelectorAll('*');
-						if (!animationsEnabled) {
-								allElements.forEach(el => {
-										el.style.transition = 'none';
-								});
-						} else {
-								allElements.forEach(el => {
-										el.style.transition = '';
-								});
-						}
-				}
+        // Fonction pour basculer les animations
+        function toggleAnimations(enable) {
+            animationsEnabled = enable;
+            document.getElementById('animationsToggle').checked = animationsEnabled;
+            const allElements = document.querySelectorAll('*');
+            if (!animationsEnabled) {
+                allElements.forEach(el => {
+                    el.style.transition = 'none';
+                });
+            } else {
+                allElements.forEach(el => {
+                    el.style.transition = '';
+                });
+            }
+        }
 
-				// Fonction pour créer des boutons de modale adaptés
-				function createModalButton(text, className, onClick) {
-						const button = document.createElement('button');
-						button.textContent = text;
-						button.className = `modal-button ${className}`;
-						button.addEventListener('click', onClick);
-						return button;
-				}
+        // Fonction pour créer des boutons de modale adaptés
+        function createModalButton(text, className, onClick) {
+            const button = document.createElement('button');
+            button.textContent = text;
+            button.className = `modal-button ${className}`;
+            button.addEventListener('click', onClick);
+            return button;
+        }
 
-				// Fonctions pour les modales du menu
-				function showInstructions() {
-						const modal = createModal('règles du jeu', 'associez chaque élément de la colonne de gauche avec son correspondant dans la colonne de droite en cliquant successivement sur un élément de chaque colonne.');
-						modal.classList.add('open');
-				}
+        // Fonctions pour les modales du menu
+        function showInstructions() {
+            const modal = createModal('règles du jeu', 'associez chaque élément de la colonne de gauche avec son correspondant dans la colonne de droite en cliquant successivement sur un élément de chaque colonne.');
+            modal.classList.add('open');
+        }
 
-				function showStats() {
-						const modal = createModal('statistiques', `score actuel : ${totalCorrect} / ${totalAnswers}<br>taux de réussite : ${totalAnswers > 0 ? Math.round((totalCorrect / totalAnswers) * 100) : 0}%`);
-						modal.classList.add('open');
-				}
+        function showStats() {
+            const modal = createModal('statistiques', `score actuel : ${totalCorrect} / ${totalAnswers}<br>taux de réussite : ${totalAnswers > 0 ? Math.round((totalCorrect / totalAnswers) * 100) : 0}%`);
+            modal.classList.add('open');
+        }
 
-				function showResetConfirm() {
-						const modal = createModal('réinitialisation', 'êtes-vous sûr de vouloir réinitialiser les statistiques et recommencer une nouvelle partie ?');
-						const buttonContainer = document.createElement('div');
-						buttonContainer.style.display = 'flex';
-						buttonContainer.style.justifyContent = 'space-between';
-						buttonContainer.style.marginTop = '20px';
-						buttonContainer.style.gap = '10px';
-						buttonContainer.style.flexWrap = 'wrap';
-						const confirmButton = createModalButton('Confirmer', 'confirm', function () {
-								modal.classList.remove('open');
-								setTimeout(() => modal.remove(), 300);
-								reload();
-						});
-						const cancelButton = createModalButton('Annuler', 'cancel', function () {
-								modal.classList.remove('open');
-								setTimeout(() => modal.remove(), 300);
-						});
-						buttonContainer.appendChild(confirmButton);
-						buttonContainer.appendChild(cancelButton);
-						modal.querySelector('.modal-content').appendChild(buttonContainer);
-						modal.classList.add('open');
-				}
+        function showResetConfirm() {
+            const modal = createModal('réinitialisation', 'êtes-vous sûr de vouloir réinitialiser les statistiques et recommencer une nouvelle partie ?');
+            const buttonContainer = document.createElement('div');
+            buttonContainer.style.display = 'flex';
+            buttonContainer.style.justifyContent = 'space-between';
+            buttonContainer.style.marginTop = '20px';
+            buttonContainer.style.gap = '10px';
+            buttonContainer.style.flexWrap = 'wrap';
+            const confirmButton = createModalButton('Confirmer', 'confirm', function () {
+                modal.classList.remove('open');
+                setTimeout(() => modal.remove(), 300);
+                reload();
+            });
+            const cancelButton = createModalButton('Annuler', 'cancel', function () {
+                modal.classList.remove('open');
+                setTimeout(() => modal.remove(), 300);
+            });
+            buttonContainer.appendChild(confirmButton);
+            buttonContainer.appendChild(cancelButton);
+            modal.querySelector('.modal-content').appendChild(buttonContainer);
+            modal.classList.add('open');
+        }
 
-				function showAbout() {
-						const modal = createModal('à propos', 'application « apparier »<br>développée par Daniel Boulagnon<br>daniel.boulagnon@ac-lille.fr<br>version 2025<br>exploitation à but pédagogique et non commercial');
-						modal.classList.add('open');
-				}
+        function showAbout() {
+            const modal = createModal('à propos', 'application « apparier »<br>développée par Daniel Boulagnon<br>daniel.boulagnon@ac-lille.fr<br>version 2025<br>exploitation à but pédagogique et non commercial');
+            modal.classList.add('open');
+        }
 
-				function createModal(title, content) {
-						const modal = document.createElement('div');
-						modal.className = 'modal';
-						const modalContent = document.createElement('div');
-						modalContent.className = 'modal-content';
-						const modalHeader = document.createElement('div');
-						modalHeader.className = 'modal-header';
-						const modalTitle = document.createElement('h2');
-						modalTitle.className = 'modal-title';
-						modalTitle.textContent = title;
-						const closeButton = document.createElement('button');
-						closeButton.className = 'close-modal';
-						closeButton.innerHTML = '&times;';
-						closeButton.onclick = function () {
-								modal.classList.remove('open');
-								setTimeout(() => modal.remove(), 300);
-						};
-						modalHeader.appendChild(modalTitle);
-						modalHeader.appendChild(closeButton);
-						const contentDiv = document.createElement('div');
-						contentDiv.innerHTML = content;
-						contentDiv.style.lineHeight = '1.6';
-						modalContent.appendChild(modalHeader);
-						modalContent.appendChild(contentDiv);
-						modal.appendChild(modalContent);
-						modal.addEventListener('click', function (event) {
-								if (event.target === modal) {
-										modal.classList.remove('open');
-										setTimeout(() => modal.remove(), 300);
-								}
-						});
-						document.body.appendChild(modal);
-						return modal;
-				}
+        function createModal(title, content) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            const modalContent = document.createElement('div');
+            modalContent.className = 'modal-content';
+            const modalHeader = document.createElement('div');
+            modalHeader.className = 'modal-header';
+            const modalTitle = document.createElement('h2');
+            modalTitle.className = 'modal-title';
+            modalTitle.textContent = title;
+            const closeButton = document.createElement('button');
+            closeButton.className = 'close-modal';
+            closeButton.innerHTML = '&times;';
+            closeButton.onclick = function () {
+                modal.classList.remove('open');
+                setTimeout(() => modal.remove(), 300);
+            };
+            modalHeader.appendChild(modalTitle);
+            modalHeader.appendChild(closeButton);
+            const contentDiv = document.createElement('div');
+            contentDiv.innerHTML = content;
+            contentDiv.style.lineHeight = '1.6';
+            modalContent.appendChild(modalHeader);
+            modalContent.appendChild(contentDiv);
+            modal.appendChild(modalContent);
+            modal.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    modal.classList.remove('open');
+                    setTimeout(() => modal.remove(), 300);
+                }
+            });
+            document.body.appendChild(modal);
+            return modal;
+        }
 
-				// Fonction pour formater le titre selon la largeur d'écran
-				function formatTitleForMobile(titleText) {
-						const titleElement = document.getElementById('mobileTitle');
-						const screenWidth = window.innerWidth;
-						if (screenWidth <= 768) {
-								titleElement.innerHTML = titleText.replace('« ', '«&nbsp;').replace(' »', '&nbsp;»');
-						} else {
-								titleElement.innerHTML = titleText;
-						}
-				}
+        // Fonction pour formater le titre selon la largeur d'écran
+        function formatTitleForMobile(titleText) {
+            const titleElement = document.getElementById('mobileTitle');
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 768) {
+                // Remplacer les guillemets par des sauts de ligne si nécessaire
+                titleElement.innerHTML = titleText.replace('« ', '«<br>').replace(' »', '»');
+            } else {
+                titleElement.innerHTML = titleText;
+            }
+        }
 
-				// Fonction pour le bouton reload
-				function setupReloadButton() {
-				}
+        // Fonction pour le bouton reload
+        function setupReloadButton() {
+        }
 
-				function loadTitleAndSubtitle(appTitle, appSubtitle) {
-						document.getElementById('toolbarTitle').textContent = appTitle;
-						document.getElementById('toolbarSubtitle').textContent = appSubtitle;
-						document.getElementById('mobileTitle').textContent = appTitle;
-						document.getElementById('mobileSubtitle').textContent = appSubtitle;
-						document.getElementById('pageTabTitle').textContent = appTitle;
-				}
+        function loadTitleAndSubtitle(appTitle, appSubtitle) {
+            document.getElementById('toolbarTitle').textContent = appTitle;
+            document.getElementById('toolbarSubtitle').textContent = appSubtitle;
+            document.getElementById('mobileTitle').textContent = appTitle;
+            document.getElementById('mobileSubtitle').textContent = appSubtitle;
+            document.getElementById('pageTabTitle').textContent = appTitle;
+        }
 
-				function isVerticalLayout() {
-						return window.innerWidth <= 768;
-				}
+        function isVerticalLayout() {
+            return window.innerWidth <= 768;
+        }
 
-				function getRandomElements(array, count) {
-						const maxPairs = Math.min(count, array.length);
-						const shuffled = array.slice().sort(() => 0.5 - Math.random());
-						return shuffled.slice(0, maxPairs);
-				}
+        function getRandomElements(array, count) {
+            const maxPairs = Math.min(count, array.length);
+            const shuffled = array.slice().sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, maxPairs);
+        }
 
-				function loadReperes(argsData) {
-						const repTable = document.getElementById('repereTable');
-						const defTable = document.getElementById('definitionTable');
-						repTable.innerHTML = '';
-						defTable.innerHTML = '';
-						const maxPairs = window.settings.maxPairs ? Math.min(window.settings.maxPairs, argsData.length) : Math.min(5, argsData.length);
-						const randomParts = getRandomElements(argsData, maxPairs);
-						const shuffledNames = randomParts.map(part => part.colonne_de_gauche).sort(() => 0.5 - Math.random());
-						const shuffledDefinitions = randomParts.map(part => part.colonne_de_droite).sort(() => 0.5 - Math.random());
-						shuffledNames.forEach((name, index) => {
-								const repRow = document.createElement('tr');
-								const repCell = document.createElement('td');
-								repCell.textContent = name;
-								repCell.dataset.index = index;
-								repCell.dataset.original = name;
-								repRow.appendChild(repCell);
-								repTable.appendChild(repRow);
-						});
-						shuffledDefinitions.forEach((definition, index) => {
-								const defRow = document.createElement('tr');
-								const defCell = document.createElement('td');
-								defCell.textContent = definition;
-								defCell.dataset.index = index;
-								defCell.dataset.definition = definition;
-								defCell.dataset.original = definition;
-								defRow.appendChild(defCell);
-								defTable.appendChild(defRow);
-						});
-						return randomParts;
-				}
+        function loadReperes(argsData) {
+            const repTable = document.getElementById('repereTable');
+            const defTable = document.getElementById('definitionTable');
+            repTable.innerHTML = '';
+            defTable.innerHTML = '';
+            const maxPairs = window.settings.maxPairs ? Math.min(window.settings.maxPairs, argsData.length) : Math.min(5, argsData.length);
+            const randomParts = getRandomElements(argsData, maxPairs);
+            const shuffledNames = randomParts.map(part => part.colonne_de_gauche).sort(() => 0.5 - Math.random());
+            const shuffledDefinitions = randomParts.map(part => part.colonne_de_droite).sort(() => 0.5 - Math.random());
+            shuffledNames.forEach((name, index) => {
+                const repRow = document.createElement('tr');
+                const repCell = document.createElement('td');
+                repCell.textContent = name;
+                repCell.dataset.index = index;
+                repCell.dataset.original = name;
+                repRow.appendChild(repCell);
+                repTable.appendChild(repRow);
+            });
+            shuffledDefinitions.forEach((definition, index) => {
+                const defRow = document.createElement('tr');
+                const defCell = document.createElement('td');
+                defCell.textContent = definition;
+                defCell.dataset.index = index;
+                defCell.dataset.definition = definition;
+                defCell.dataset.original = definition;
+                defRow.appendChild(defCell);
+                defTable.appendChild(defRow);
+            });
+            return randomParts;
+        }
 
-				function selectCell(event, type, info) {
-						const cell = event.target.closest('td');
-						if (!cell || usedCells.has(cell)) return;
-						const cellRect = cell.getBoundingClientRect();
-						const containerRect = document.querySelector('.container').getBoundingClientRect();
-						const isVertical = isVerticalLayout();
-						if (type === 'repere') {
-								if (drawing && currentDefinition) {
-										const repereRect = cellRect;
-										const defRect = currentDefinition.cell.getBoundingClientRect();
-										let startX, startY, endX, endY;
-										const currentIndex = links.length;
-										const totalLinks = selectedReperes.length;
-										if (isVertical) {
-												const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
-												const horizontalOffset = (currentIndex - (totalLinks - 1) / 2) * linkSpacing;
-												startX = repereRect.left - containerRect.left + repereRect.width / 2 + horizontalOffset;
-												startY = repereRect.bottom - containerRect.top - 8;
-												endX = defRect.left - containerRect.left + defRect.width / 2 + horizontalOffset;
-												endY = defRect.top - containerRect.top + 8;
-										} else {
-												startX = repereRect.right - containerRect.left - 8;
-												startY = repereRect.top - containerRect.top + repereRect.height / 2;
-												endX = defRect.left - containerRect.left + 8;
-												endY = defRect.top - containerRect.top + defRect.height / 2;
-										}
-										if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0) {
-												drawLink(startX, startY, endX, endY, getArrowColor());
-												links.push({
-														repere: info,
-														definition: currentDefinition.text,
-														lineId: { startX, startY, endX, endY },
-												});
-												usedCells.add(cell);
-												usedCells.add(currentDefinition.cell);
-												cell.classList.add('used');
-												currentDefinition.cell.classList.add('used');
-												resetDrawing();
-												actionButton.disabled = links.length !== selectedReperes.length;
-										}
-								} else {
-										drawing = true;
-										currentRepere = { info, cell };
-										currentDefinition = null;
-										cell.classList.add('selected');
-								}
-						} else if (type === 'definition') {
-								if (drawing && currentRepere) {
-										const repereRect = currentRepere.cell.getBoundingClientRect();
-										const defRect = cellRect;
-										let startX, startY, endX, endY;
-										const currentIndex = links.length;
-										const totalLinks = selectedReperes.length;
-										if (isVertical) {
-												const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
-												const horizontalOffset = (currentIndex - (totalLinks - 1) / 2) * linkSpacing;
-												startX = repereRect.left - containerRect.left + repereRect.width / 2 + horizontalOffset;
-												startY = repereRect.bottom - containerRect.top - 8;
-												endX = defRect.left - containerRect.left + defRect.width / 2 + horizontalOffset;
-												endY = defRect.top - containerRect.top + 8;
-										} else {
-												startX = repereRect.right - containerRect.left - 8;
-												startY = repereRect.top - containerRect.top + repereRect.height / 2;
-												endX = defRect.left - containerRect.left + 8;
-												endY = defRect.top - containerRect.top + defRect.height / 2;
-										}
-										if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0) {
-												drawLink(startX, startY, endX, endY, getArrowColor());
-												links.push({
-														repere: currentRepere.info,
-														definition: cell.textContent,
-														lineId: { startX, startY, endX, endY },
-												});
-												usedCells.add(cell);
-												usedCells.add(currentRepere.cell);
-												cell.classList.add('used');
-												currentRepere.cell.classList.add('used');
-												resetDrawing();
-												actionButton.disabled = links.length !== selectedReperes.length;
-										}
-								} else {
-										drawing = true;
-										currentDefinition = { text: cell.textContent, cell };
-										currentRepere = null;
-										cell.classList.add('selected');
-								}
-						}
-				}
+        function selectCell(event, type, info) {
+            const cell = event.target.closest('td');
+            if (!cell || usedCells.has(cell)) return;
+            const cellRect = cell.getBoundingClientRect();
+            const containerRect = document.querySelector('.container').getBoundingClientRect();
+            const isVertical = isVerticalLayout();
+            if (type === 'repere') {
+                if (drawing && currentDefinition) {
+                    const repereRect = cellRect;
+                    const defRect = currentDefinition.cell.getBoundingClientRect();
+                    let startX, startY, endX, endY;
+                    const currentIndex = links.length;
+                    const totalLinks = selectedReperes.length;
+                    if (isVertical) {
+                        const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
+                        const horizontalOffset = (currentIndex - (totalLinks - 1) / 2) * linkSpacing;
+                        startX = repereRect.left - containerRect.left + repereRect.width / 2 + horizontalOffset;
+                        startY = repereRect.bottom - containerRect.top - 8;
+                        endX = defRect.left - containerRect.left + defRect.width / 2 + horizontalOffset;
+                        endY = defRect.top - containerRect.top + 8;
+                    } else {
+                        startX = repereRect.right - containerRect.left - 8;
+                        startY = repereRect.top - containerRect.top + repereRect.height / 2;
+                        endX = defRect.left - containerRect.left + 8;
+                        endY = defRect.top - containerRect.top + defRect.height / 2;
+                    }
+                    if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0) {
+                        drawLink(startX, startY, endX, endY, getArrowColor());
+                        links.push({
+                            repere: info,
+                            definition: currentDefinition.text,
+                            lineId: { startX, startY, endX, endY },
+                        });
+                        usedCells.add(cell);
+                        usedCells.add(currentDefinition.cell);
+                        cell.classList.add('used');
+                        currentDefinition.cell.classList.add('used');
+                        resetDrawing();
+                        actionButton.disabled = links.length !== selectedReperes.length;
+                    }
+                } else {
+                    drawing = true;
+                    currentRepere = { info, cell };
+                    currentDefinition = null;
+                    cell.classList.add('selected');
+                }
+            } else if (type === 'definition') {
+                if (drawing && currentRepere) {
+                    const repereRect = currentRepere.cell.getBoundingClientRect();
+                    const defRect = cellRect;
+                    let startX, startY, endX, endY;
+                    const currentIndex = links.length;
+                    const totalLinks = selectedReperes.length;
+                    if (isVertical) {
+                        const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
+                        const horizontalOffset = (currentIndex - (totalLinks - 1) / 2) * linkSpacing;
+                        startX = repereRect.left - containerRect.left + repereRect.width / 2 + horizontalOffset;
+                        startY = repereRect.bottom - containerRect.top - 8;
+                        endX = defRect.left - containerRect.left + defRect.width / 2 + horizontalOffset;
+                        endY = defRect.top - containerRect.top + 8;
+                    } else {
+                        startX = repereRect.right - containerRect.left - 8;
+                        startY = repereRect.top - containerRect.top + repereRect.height / 2;
+                        endX = defRect.left - containerRect.left + 8;
+                        endY = defRect.top - containerRect.top + defRect.height / 2;
+                    }
+                    if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0) {
+                        drawLink(startX, startY, endX, endY, getArrowColor());
+                        links.push({
+                            repere: currentRepere.info,
+                            definition: cell.textContent,
+                            lineId: { startX, startY, endX, endY },
+                        });
+                        usedCells.add(cell);
+                        usedCells.add(currentRepere.cell);
+                        cell.classList.add('used');
+                        currentRepere.cell.classList.add('used');
+                        resetDrawing();
+                        actionButton.disabled = links.length !== selectedReperes.length;
+                    }
+                } else {
+                    drawing = true;
+                    currentDefinition = { text: cell.textContent, cell };
+                    currentRepere = null;
+                    cell.classList.add('selected');
+                }
+            }
+        }
 
-				function drawLink(startX, startY, endX, endY, color = "black") {
-						ctx.beginPath();
-						ctx.moveTo(startX, startY);
-						ctx.lineTo(endX, endY);
-						const headlen = 10;
-						const angle = Math.atan2(endY - startY, endX - startX);
-						ctx.lineTo(
-								endX - headlen * Math.cos(angle - Math.PI / 6),
-								endY - headlen * Math.sin(angle - Math.PI / 6)
-						);
-						ctx.moveTo(endX, endY);
-						ctx.lineTo(
-								endX - headlen * Math.cos(angle + Math.PI / 6),
-								endY - headlen * Math.sin(angle + Math.PI / 6)
-						);
-						ctx.strokeStyle = color;
-						ctx.lineWidth = 2;
-						ctx.stroke();
-				}
+        function drawLink(startX, startY, endX, endY, color = "black") {
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            const headlen = 10;
+            const angle = Math.atan2(endY - startY, endX - startX);
+            ctx.lineTo(
+                endX - headlen * Math.cos(angle - Math.PI / 6),
+                endY - headlen * Math.sin(angle - Math.PI / 6)
+            );
+            ctx.moveTo(endX, endY);
+            ctx.lineTo(
+                endX - headlen * Math.cos(angle + Math.PI / 6),
+                endY - headlen * Math.sin(angle + Math.PI / 6)
+            );
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
 
-				function resetDrawing() {
-						drawing = false;
-						if (currentRepere) {
-								currentRepere.cell.classList.remove('selected');
-						}
-						if (currentDefinition) {
-								currentDefinition.cell.classList.remove('selected');
-						}
-						currentRepere = null;
-						currentDefinition = null;
-						currentAction = "check";
-						actionButton.classList.remove('reload-mode');
-						actionButton.style.fontSize = '';
-						document.getElementById("actionButton").innerHTML = 'vérifier';
-						actionButton.disabled = links.length !== selectedReperes.length;
-				}
+        function resetDrawing() {
+            drawing = false;
+            if (currentRepere) {
+                currentRepere.cell.classList.remove('selected');
+            }
+            if (currentDefinition) {
+                currentDefinition.cell.classList.remove('selected');
+            }
+            currentRepere = null;
+            currentDefinition = null;
+            currentAction = "check";
+            actionButton.classList.remove('reload-mode');
+            actionButton.style.fontSize = '';
+            document.getElementById("actionButton").innerHTML = 'vérifier';
+            actionButton.disabled = links.length !== selectedReperes.length;
+        }
 
-				function performAction() {
-						if (actionButton.disabled) return;
-						switch (currentAction) {
-								case "check":
-										checkLinks();
-										break;
-								case "correct":
-										correctLinks();
-										break;
-								case "reload":
-										reload();
-										break;
-						}
-				}
+        function performAction() {
+            if (actionButton.disabled) return;
+            switch (currentAction) {
+                case "check":
+                    checkLinks();
+                    break;
+                case "correct":
+                    correctLinks();
+                    break;
+                case "reload":
+                    reload();
+                    break;
+            }
+        }
 
-				function checkLinks() {
-						ctx.clearRect(0, 0, canvas.width, canvas.height);
-						let correctCount = 0;
-						const isVertical = isVerticalLayout();
-						const containerRect = document.querySelector('.container').getBoundingClientRect();
-						links.forEach((link, index) => {
-								const correspondingPart = selectedReperes.find(
-										(part) => part.colonne_de_gauche === link.repere
-								);
-								const isCorrect = correspondingPart
-										? correspondingPart.colonne_de_droite === link.definition
-										: false;
-								let color;
-								if (colorblindMode) {
-										color = isCorrect ? '#0000FF' : '#FF8C00';
-								} else {
-										color = isCorrect ? '#008000' : '#ff0000';
-								}
-								if (darkMode && !colorblindMode) {
-										color = isCorrect ? '#4caf50' : '#f44336';
-								} else if (darkMode && colorblindMode) {
-										color = isCorrect ? '#87CEEB' : '#FFA500';
-								}
-								const repereCell = Array.from(document.querySelectorAll('#repereTable td')).find(
-										cell => cell.textContent === link.repere
-								);
-								const definitionCell = Array.from(document.querySelectorAll('#definitionTable td')).find(
-										cell => cell.textContent === link.definition
-								);
-								if (repereCell && definitionCell) {
-										const repereRect = repereCell.getBoundingClientRect();
-										const defRect = definitionCell.getBoundingClientRect();
-										let startX, startY, endX, endY;
-										const totalLinks = selectedReperes.length;
-										if (isVertical) {
-												const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
-												const horizontalOffset = (index - (totalLinks - 1) / 2) * linkSpacing;
-												startX = repereRect.left - containerRect.left + repereRect.width / 2 + horizontalOffset;
-												startY = repereRect.bottom - containerRect.top - 8;
-												endX = defRect.left - containerRect.left + defRect.width / 2 + horizontalOffset;
-												endY = defRect.top - containerRect.top + 8;
-										} else {
-												startX = repereRect.right - containerRect.left - 8;
-												startY = repereRect.top - containerRect.top + repereRect.height / 2;
-												endX = defRect.left - containerRect.left + 8;
-												endY = defRect.top - containerRect.top + defRect.height / 2;
-										}
-										if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0) {
-												drawLink(startX, startY, endX, endY, color);
-												link.lineId = { startX, startY, endX, endY };
-												link.isCorrect = isCorrect;
-												if (isCorrect) correctCount++;
-												if (colorblindMode) {
-														showValidationMark(link.definition, isCorrect);
-												}
-										}
-								}
-						});
-						totalCorrect += correctCount;
-						totalAnswers += selectedReperes.length;
-						scoreButton.innerHTML = `${totalCorrect} / ${totalAnswers}`;
-						scoreButton.disabled = false;
-						currentAction = "correct";
-						actionButton.style.fontSize = '';
-						document.getElementById("actionButton").innerHTML = 'corriger';
-						actionButton.disabled = false;
-				}
+        function checkLinks() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let correctCount = 0;
+            const isVertical = isVerticalLayout();
+            const containerRect = document.querySelector('.container').getBoundingClientRect();
+            links.forEach((link, index) => {
+                const correspondingPart = selectedReperes.find(
+                    (part) => part.colonne_de_gauche === link.repere
+                );
+                const isCorrect = correspondingPart
+                    ? correspondingPart.colonne_de_droite === link.definition
+                    : false;
+                let color;
+                if (colorblindMode) {
+                    color = isCorrect ? '#0000FF' : '#FF8C00';
+                } else {
+                    color = isCorrect ? '#008000' : '#ff0000';
+                }
+                if (darkMode && !colorblindMode) {
+                    color = isCorrect ? '#4caf50' : '#f44336';
+                } else if (darkMode && colorblindMode) {
+                    color = isCorrect ? '#87CEEB' : '#FFA500';
+                }
+                const repereCell = Array.from(document.querySelectorAll('#repereTable td')).find(
+                    cell => cell.textContent === link.repere
+                );
+                const definitionCell = Array.from(document.querySelectorAll('#definitionTable td')).find(
+                    cell => cell.textContent === link.definition
+                );
+                if (repereCell && definitionCell) {
+                    const repereRect = repereCell.getBoundingClientRect();
+                    const defRect = definitionCell.getBoundingClientRect();
+                    let startX, startY, endX, endY;
+                    const totalLinks = selectedReperes.length;
+                    if (isVertical) {
+                        const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
+                        const horizontalOffset = (index - (totalLinks - 1) / 2) * linkSpacing;
+                        startX = repereRect.left - containerRect.left + repereRect.width / 2 + horizontalOffset;
+                        startY = repereRect.bottom - containerRect.top - 8;
+                        endX = defRect.left - containerRect.left + defRect.width / 2 + horizontalOffset;
+                        endY = defRect.top - containerRect.top + 8;
+                    } else {
+                        startX = repereRect.right - containerRect.left - 8;
+                        startY = repereRect.top - containerRect.top + repereRect.height / 2;
+                        endX = defRect.left - containerRect.left + 8;
+                        endY = defRect.top - containerRect.top + defRect.height / 2;
+                    }
+                    if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0) {
+                        drawLink(startX, startY, endX, endY, color);
+                        link.lineId = { startX, startY, endX, endY };
+                        link.isCorrect = isCorrect;
+                        if (isCorrect) correctCount++;
+                        if (colorblindMode) {
+                            showValidationMark(link.definition, isCorrect);
+                        }
+                    }
+                }
+            });
+            totalCorrect += correctCount;
+            totalAnswers += selectedReperes.length;
+            scoreButton.innerHTML = `${totalCorrect} / ${totalAnswers}`;
+            scoreButton.disabled = false;
+            currentAction = "correct";
+            actionButton.style.fontSize = '';
+            document.getElementById("actionButton").innerHTML = 'corriger';
+            actionButton.disabled = false;
+        }
 
-				// Fonction pour afficher les marques de validation dans la 2e colonne
-				function showValidationMark(definition, isCorrect) {
-						const definitionCells = document.querySelectorAll('#definitionTable td');
-						definitionCells.forEach(cell => {
-								if (cell.textContent === definition) {
-										const existingMark = cell.querySelector('.validation-mark');
-										if (existingMark) {
-												existingMark.remove();
-										}
-										const mark = document.createElement('span');
-										mark.className = `validation-mark ${isCorrect ? 'correct-mark' : 'incorrect-mark'}`;
-										mark.textContent = isCorrect ? '✔' : '❌';
-										if (colorblindMode) {
-												if (darkMode) {
-														mark.style.color = isCorrect ? '#87CEEB' : '#FFA500';
-												} else {
-														mark.style.color = isCorrect ? '#0000FF' : '#FF8C00';
-												}
-										} else {
-												if (darkMode) {
-														mark.style.color = isCorrect ? '#4caf50' : '#f44336';
-												} else {
-														mark.style.color = isCorrect ? '#008000' : '#ff0000';
-												}
-										}
-										cell.appendChild(mark);
-								}
-						});
-				}
+        // Fonction pour afficher les marques de validation dans la 2e colonne
+        function showValidationMark(definition, isCorrect) {
+            const definitionCells = document.querySelectorAll('#definitionTable td');
+            definitionCells.forEach(cell => {
+                if (cell.textContent === definition) {
+                    const existingMark = cell.querySelector('.validation-mark');
+                    if (existingMark) {
+                        existingMark.remove();
+                    }
+                    const mark = document.createElement('span');
+                    mark.className = `validation-mark ${isCorrect ? 'correct-mark' : 'incorrect-mark'}`;
+                    mark.textContent = isCorrect ? '✔' : '❌';
+                    if (colorblindMode) {
+                        if (darkMode) {
+                            mark.style.color = isCorrect ? '#87CEEB' : '#FFA500';
+                        } else {
+                            mark.style.color = isCorrect ? '#0000FF' : '#FF8C00';
+                        }
+                    } else {
+                        if (darkMode) {
+                            mark.style.color = isCorrect ? '#4caf50' : '#f44336';
+                        } else {
+                            mark.style.color = isCorrect ? '#008000' : '#ff0000';
+                        }
+                    }
+                    cell.appendChild(mark);
+                }
+            });
+        }
 
-				function correctLinks() {
-						ctx.clearRect(0, 0, canvas.width, canvas.height);
-						const repereTable = document.getElementById("repereTable");
-						const definitionTable = document.getElementById("definitionTable");
-						const containerRect = document.querySelector('.container').getBoundingClientRect();
-						const isVertical = isVerticalLayout();
-						selectedReperes.forEach((repere, index) => {
-								const repereCell = Array.from(repereTable.querySelectorAll('td')).find(
-										(cell) => cell.dataset.original === repere.colonne_de_gauche
-								);
-								const definitionCell = Array.from(definitionTable.querySelectorAll('td')).find(
-										(cell) => cell.dataset.original === repere.colonne_de_droite
-								);
-								if (repereCell && definitionCell) {
-										const repereRect = repereCell.getBoundingClientRect();
-										const defRect = definitionCell.getBoundingClientRect();
-										let startX, startY, endX, endY;
-										const totalLinks = selectedReperes.length;
-										if (isVertical) {
-												const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
-												const horizontalOffset = (index - (totalLinks - 1) / 2) * linkSpacing;
-												startX = repereRect.left - containerRect.left + repereRect.width / 2 + horizontalOffset;
-												startY = repereRect.bottom - containerRect.top - 8;
-												endX = defRect.left - containerRect.left + defRect.width / 2 + horizontalOffset;
-												endY = defRect.top - containerRect.top + 8;
-										} else {
-												startX = repereRect.right - containerRect.left - 8;
-												startY = repereRect.top - containerRect.top + repereRect.height / 2;
-												endX = defRect.left - containerRect.left + 8;
-												endY = defRect.top - containerRect.top + defRect.height / 2;
-										}
-										let color = '#008000';
-										if (colorblindMode) {
-												color = darkMode ? '#87CEEB' : '#0000FF';
-										} else if (darkMode) {
-												color = '#4caf50';
-										}
-										if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0) {
-												drawLink(startX, startY, endX, endY, color);
-										}
-								}
-						});
-						currentAction = "reload";
-						actionButton.classList.add('reload-mode');
-						document.getElementById("actionButton").innerHTML = '<div class="reload-icon">↻</div>';
-						actionButton.disabled = false;
-				}
+        function correctLinks() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const repereTable = document.getElementById("repereTable");
+            const definitionTable = document.getElementById("definitionTable");
+            const containerRect = document.querySelector('.container').getBoundingClientRect();
+            const isVertical = isVerticalLayout();
+            selectedReperes.forEach((repere, index) => {
+                const repereCell = Array.from(repereTable.querySelectorAll('td')).find(
+                    (cell) => cell.dataset.original === repere.colonne_de_gauche
+                );
+                const definitionCell = Array.from(definitionTable.querySelectorAll('td')).find(
+                    (cell) => cell.dataset.original === repere.colonne_de_droite
+                );
+                if (repereCell && definitionCell) {
+                    const repereRect = repereCell.getBoundingClientRect();
+                    const defRect = definitionCell.getBoundingClientRect();
+                    let startX, startY, endX, endY;
+                    const totalLinks = selectedReperes.length;
+                    if (isVertical) {
+                        const linkSpacing = Math.min(40, repereRect.width / (totalLinks + 1));
+                        const horizontalOffset = (index - (totalLinks - 1) / 2) * linkSpacing;
+                        startX = repereRect.left - containerRect.left + repereRect.width / 2 + horizontalOffset;
+                        startY = repereRect.bottom - containerRect.top - 8;
+                        endX = defRect.left - containerRect.left + defRect.width / 2 + horizontalOffset;
+                        endY = defRect.top - containerRect.top + 8;
+                    } else {
+                        startX = repereRect.right - containerRect.left - 8;
+                        startY = repereRect.top - containerRect.top + repereRect.height / 2;
+                        endX = defRect.left - containerRect.left + 8;
+                        endY = defRect.top - containerRect.top + defRect.height / 2;
+                    }
+                    let color = '#008000';
+                    if (colorblindMode) {
+                        color = darkMode ? '#87CEEB' : '#0000FF';
+                    } else if (darkMode) {
+                        color = '#4caf50';
+                    }
+                    if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0) {
+                        drawLink(startX, startY, endX, endY, color);
+                    }
+                }
+            });
+            currentAction = "reload";
+            actionButton.classList.add('reload-mode');
+            document.getElementById("actionButton").innerHTML = '<div class="reload-icon">↻</div>';
+            actionButton.disabled = false;
+        }
 
-				function reload() {
-						links.length = 0;
-						ctx.clearRect(0, 0, canvas.width, canvas.height);
-						usedCells.clear();
-						const repCells = document.getElementById("repereTable").getElementsByTagName("td");
-						const defCells = document.getElementById("definitionTable").getElementsByTagName("td");
-						Array.from(repCells).forEach((cell) => cell.classList.remove("used"));
-						Array.from(defCells).forEach((cell) => {
-								cell.classList.remove("used");
-								const existingMark = cell.querySelector('.validation-mark');
-								if (existingMark) {
-										existingMark.remove();
-								}
-						});
-						document.getElementById("repereTable").innerHTML = "";
-						document.getElementById("definitionTable").innerHTML = "";
-						selectedReperes = loadReperes(window.argumentsData);
-						resetDrawing();
-						addEventListeners();
-						resizeCanvas();
-						actionButton.disabled = true;
-				}
+        function reload() {
+            links.length = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            usedCells.clear();
+            const repCells = document.getElementById("repereTable").getElementsByTagName("td");
+            const defCells = document.getElementById("definitionTable").getElementsByTagName("td");
+            Array.from(repCells).forEach((cell) => cell.classList.remove("used"));
+            Array.from(defCells).forEach((cell) => {
+                cell.classList.remove("used");
+                const existingMark = cell.querySelector('.validation-mark');
+                if (existingMark) {
+                    existingMark.remove();
+                }
+            });
+            document.getElementById("repereTable").innerHTML = "";
+            document.getElementById("definitionTable").innerHTML = "";
+            selectedReperes = loadReperes(window.argumentsData);
+            resetDrawing();
+            addEventListeners();
+            resizeCanvas();
+            actionButton.disabled = true;
+        }
 
-				function addEventListeners() {
-						const repCells = document.getElementById("repereTable").getElementsByTagName("td");
-						const defCells = document.getElementById("definitionTable").getElementsByTagName("td");
-						Array.from(repCells).forEach((cell) => {
-								cell.addEventListener("click", (event) => selectCell(event, "repere", cell.textContent));
-								cell.addEventListener("touchstart", (event) => {
-										event.preventDefault();
-										selectCell(event, "repere", cell.textContent);
-								}, { passive: false });
-						});
-						Array.from(defCells).forEach((cell) => {
-								cell.addEventListener("click", (event) => selectCell(event, "definition", cell.textContent));
-								cell.addEventListener("touchstart", (event) => {
-										event.preventDefault();
-										selectCell(event, "definition", cell.textContent);
-								}, { passive: false });
-						});
-						document.addEventListener('touchmove', function(event) {
-								if (drawing) {
-										return;
-								}
-						}, { passive: true });
-				}
+        function addEventListeners() {
+            const repCells = document.getElementById("repereTable").getElementsByTagName("td");
+            const defCells = document.getElementById("definitionTable").getElementsByTagName("td");
+            Array.from(repCells).forEach((cell) => {
+                cell.addEventListener("click", (event) => selectCell(event, "repere", cell.textContent));
+                cell.addEventListener("touchstart", (event) => {
+                    event.preventDefault();
+                    selectCell(event, "repere", cell.textContent);
+                }, { passive: false });
+            });
+            Array.from(defCells).forEach((cell) => {
+                cell.addEventListener("click", (event) => selectCell(event, "definition", cell.textContent));
+                cell.addEventListener("touchstart", (event) => {
+                    event.preventDefault();
+                    selectCell(event, "definition", cell.textContent);
+                }, { passive: false });
+            });
+            document.addEventListener('touchmove', function(event) {
+                if (drawing) {
+                    return;
+                }
+            }, { passive: true });
+        }
 
-				function resizeCanvas() {
-						const container = document.querySelector('.container');
-						if (container) {
-								canvas.width = container.offsetWidth;
-								canvas.height = container.offsetHeight;
-								if (links.length > 0) {
-										updateLinkCoordinates();
-								}
-						}
-				}
+        function resizeCanvas() {
+            const container = document.querySelector('.container');
+            if (container) {
+                canvas.width = container.offsetWidth;
+                canvas.height = container.offsetHeight;
+                if (links.length > 0) {
+                    updateLinkCoordinates();
+                }
+            }
+        }
 
-				// Gestion améliorée du scroll et des clics sur mobile
-				function setupMobileScroll() {
-						if (isTouchDevice && window.innerWidth <= 768) {
-								let isScrolling = false;
-								let startY;
-								let startX;
+        // Gestion améliorée du scroll et des clics sur mobile
+        function setupMobileScroll() {
+            if (isTouchDevice && window.innerWidth <= 768) {
+                let isScrolling = false;
+                let startY;
+                let startX;
 
-								document.addEventListener('touchstart', function(e) {
-										if (e.target.closest('td, button, .toolbar-btn')) {
-												return;
-										}
-										isScrolling = true;
-										startY = e.touches[0].clientY;
-										startX = e.touches[0].clientX;
-								}, { passive: true });
+                document.addEventListener('touchstart', function(e) {
+                    if (e.target.closest('td, button, .toolbar-btn')) {
+                        return;
+                    }
+                    isScrolling = true;
+                    startY = e.touches[0].clientY;
+                    startX = e.touches[0].clientX;
+                }, { passive: true });
 
-								document.addEventListener('touchmove', function(e) {
-										if (!isScrolling) return;
-										const y = e.touches[0].clientY;
-										const dy = startY - y;
-										if (Math.abs(dy) > 5) {
-												e.preventDefault();
-												window.scrollBy(0, dy);
-												startY = y;
-										}
-								}, { passive: false });
+                document.addEventListener('touchmove', function(e) {
+                    if (!isScrolling) return;
+                    const y = e.touches[0].clientY;
+                    const dy = startY - y;
+                    if (Math.abs(dy) > 5) {
+                        e.preventDefault();
+                        window.scrollBy(0, dy);
+                        startY = y;
+                    }
+                }, { passive: false });
 
-								document.addEventListener('touchend', function() {
-										isScrolling = false;
-								});
-						}
-				}
+                document.addEventListener('touchend', function() {
+                    isScrolling = false;
+                });
+            }
+        }
 
-				// Démarrer l'application
-				document.addEventListener('DOMContentLoaded', function () {
-						loadExternalResources();
-						setupMobileScroll();
-				});
-		</script>
+        // Démarrer l'application
+        document.addEventListener('DOMContentLoaded', function () {
+            loadExternalResources();
+            setupMobileScroll();
+        });
+    </script>
 </body>
 </html>
