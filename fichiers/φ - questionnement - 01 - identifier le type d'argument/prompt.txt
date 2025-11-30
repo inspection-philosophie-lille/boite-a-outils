@@ -1,0 +1,136 @@
+Crée un fichier JavaScript complet pour un exercice d'association "drag & drop" en philosophie niveau Terminale. Le fichier doit reproduire EXACTEMENT la structure technique du code fourni, incluant tous les paramètres window.settings et la configuration d'affichage.
+
+STRUCTURE TECHNIQUE OBLIGATOIRE :
+javascript
+
+window.argumentsData = [
+    { colonne_de_gauche: "Type d'argument", colonne_de_droite: "Exemple concret d'argument" },
+    // ... 15 à 25 paires
+];
+
+window.title = "identifier le type d'argument";
+window.subtitle = "associer chaque type d'argument à l'exemple correspondant";
+window.settings = {
+    // MODE CLAIR - Couleurs neumorphiques classiques
+    "titleColor": "#ff0000",              // couleur du titre en mode clair
+    "subtitleColor": "#000000",           // couleur du sous-titre en mode clair
+    "textColor": "#000000",               // couleur du texte en mode clair
+    "backgroundColor": "#f0f0f0",         // couleur de fond en mode clair
+    "cellColor": "#e0e0e0",               // couleur des cellules en mode clair
+    "buttonColor": "#e0e0e0",             // couleur des boutons en mode clair
+    "correctColor": "#008000",            // couleur pour les bonnes réponses en mode clair
+    "incorrectColor": "#ff0000",          // couleur pour les mauvaises réponses en mode clair
+    
+    // MODE SOMBRE - Couleurs neumorphiques classiques
+    "titleColorDark": "#ff6666",          // couleur du titre en mode sombre
+    "subtitleColorDark": "#ffffff",       // couleur du sous-titre en mode sombre
+    "textColorDark": "#ffffff",           // couleur du texte en mode sombre
+    "backgroundColorDark": "#121212",     // couleur de fond en mode sombre
+    "cellColorDark": "#2d2d2d",          // couleur des cellules en mode sombre
+    "buttonColorDark": "#3d3d3d",        // couleur des boutons en mode sombre
+    "correctColorDark": "#4caf50",        // couleur pour les bonnes réponses en mode sombre
+    "incorrectColorDark": "#f44336",      // couleur pour les mauvaises réponses en mode sombre
+    
+    "fontFamily": "Arial, sans-serif",
+    "titleSize": "clamp(1.8rem, 5vw, 2.5rem)",
+    "cellSize": "clamp(0.9rem, 2.5vw, 1rem)",
+    "enableAnimations": true,
+    "enableDarkMode": false,
+    "enableColorblindMode": false,
+    "maxPairs": 5,
+    "showScore": true,
+    "randomOrder": true,
+    "baseFontSize": 12                  // taille de base du texte en pixels (16 = 100%)
+};
+
+CONTENU PÉDAGOGIQUE :
+
+Génère 20 paires d'arguments couvrant :
+
+Raisonnements valides (40%) :
+
+    Syllogisme déductif
+
+    Raisonnement par l'absurde
+
+    Raisonnement inductif
+
+    Raisonnement par analogie valide
+
+    Raisonnement par élimination
+
+    Syllogisme hypothétique
+
+Sophismes (60%) :
+
+    Homme de paille
+
+    Pente glissante
+
+    Faux dilemme
+
+    Appel à la nature
+
+    Appel à la tradition
+
+    Appel à l'émotion
+
+    Argument d'autorité
+
+    Généralisation hâtive
+
+    Post hoc ergo propter hoc
+
+    Raisonnement circulaire
+
+    Ad hominem
+
+    Appel à l'ignorance
+
+THÈMES PHILOSOPHIQUES :
+
+    Liberté et déterminisme
+
+    Bonheur et morale
+
+    Société et justice
+
+    Connaissance et vérité
+
+    Art et beauté
+
+    Religion et croyance
+
+EXIGENCES TECHNIQUES :
+
+    Format JSON strict identique à l'exemple
+
+    20 entrées exactement dans window.argumentsData
+
+    Même ordre des propriétés dans window.settings
+
+    Mêmes valeurs par défaut pour les couleurs
+
+    Mêmes paramètres de typographie et responsive
+
+    Commentaires identiques dans le code
+
+VALIDATION :
+
+    Chaque paire doit être unique et clairement identifiable
+
+    Les exemples doivent être compréhensibles pour des Terminales
+
+    Équilibre entre raisonnements valides et sophismes
+
+    Vocabulaire philosophiquement correct mais accessible
+
+    Aucun exemple trop technique ou spécialisé
+
+EXEMPLE DE SORTIE ATTENDUE :
+javascript
+
+{ colonne_de_gauche: "Syllogisme déductif", colonne_de_droite: "Tous les hommes recherchent le bonheur. Or je suis un homme. Donc je recherche le bonheur." },
+{ colonne_de_gauche: "Pente glissante", colonne_de_droite: "Si on autorise l'avortement, bientôt on autorisera l'euthanasie des personnes âgées." }
+
+Le fichier final doit être immédiatement utilisable dans une application d'apprentissage sans modification technique.

@@ -1,0 +1,118 @@
+Crée un fichier JavaScript complet nommé "fichier_ressource" pour un exercice d'association "drag & drop" sur la problématisation en philosophie niveau Terminale. Le fichier doit reproduire EXACTEMENT la structure technique et le formatage du code fourni.
+
+STRUCTURE TECHNIQUE OBLIGATOIRE :
+javascript
+
+// Contenu à modifier
+
+window.title = "de l'intitulé au problème";
+window.subtitle = "transformer une question en problème";
+
+window.argumentsData = [
+	/* attention aux virgules ! le dernier argument est le seul à ne pas en comporter !*/
+	/* attention aux " dans la définition. A remplacer par '' */
+
+	{colonne_de_gauche: "Question philosophique", colonne_de_droite: "Alternative problématisant la question"},
+	// ... autres paires
+
+/* pas de virgule ! */
+];
+
+window.settings = {
+    // MODE CLAIR - Couleurs neumorphiques classiques
+    "titleColor": "#ff0000",              // couleur du titre en mode clair
+    "subtitleColor": "#000000",           // couleur du sous-titre en mode clair
+    "textColor": "#000000",               // couleur du texte en mode clair
+    "backgroundColor": "#f0f0f0",         // couleur de fond en mode clair
+    "cellColor": "#e0e0e0",               // couleur des cellules en mode clair
+    "buttonColor": "#e0e0e0",             // couleur des boutons en mode clair
+    "correctColor": "#008000",            // couleur pour les bonnes réponses en mode clair
+    "incorrectColor": "#ff0000",          // couleur pour les mauvaises réponses en mode clair
+    
+    // MODE SOMBRE - Couleurs neumorphiques classiques
+    "titleColorDark": "#ff6666",          // couleur du titre en mode sombre
+    "subtitleColorDark": "#ffffff",       // couleur du sous-titre en mode sombre
+    "textColorDark": "#ffffff",           // couleur du texte en mode sombre
+    "backgroundColorDark": "#121212",     // couleur de fond en mode sombre
+    "cellColorDark": "#2d2d2d",          // couleur des cellules en mode sombre
+    "buttonColorDark": "#3d3d3d",        // couleur des boutons en mode sombre
+    "correctColorDark": "#4caf50",        // couleur pour les bonnes réponses en mode sombre
+    "incorrectColorDark": "#f44336",      // couleur pour les mauvaises réponses en mode sombre
+    
+    "fontFamily": "'Muli', Arial, sans-serif",
+    "titleSize": "clamp(1.8rem, 5vw, 2.5rem)",
+    "cellSize": "clamp(0.9rem, 2.5vw, 1rem)",
+    "enableAnimations": true,
+    "enableDarkMode": false,
+    "enableColorblindMode": false,
+    "maxPairs": 5,
+    "showScore": true,
+    "randomOrder": true,
+    "baseFontSize": 12                  // taille de base du texte en pixels (16 = 100%)
+};
+
+CONTENU PÉDAGOGIQUE - PROBLÉMATISATION :
+Génère 25-30 paires couvrant les grands thèmes du programme de philosophie de Terminale :
+
+THÈMES OBLIGATOIRES :
+    La conscience
+    L'inconscient
+    Le désir
+    La liberté
+    Le bonheur
+    La morale
+    La justice
+    L'État
+    Le travail
+    L'art
+    La religion
+    La science
+    La technique
+    La vérité
+    Le langage
+
+STRUCTURE DES PAIRES :
+    Colonne de gauche : Question philosophique directe se terminant par "?"
+    Colonne de droite : Alternative qui problématise la question, introduite par "ou" et présentant une opposition conceptuelle
+
+EXIGENCES DE PROBLÉMATISATION :
+    Chaque paire doit créer une tension dialectique
+    Les alternatives doivent être philosophiquement pertinentes
+    Éviter les oppositions trop simplistes
+    Privilégier les nuances conceptuelles
+    Varier les types d'oppositions (conceptuelle, pratique, théorique, éthique)
+
+EXEMPLES DE STRUCTURES ATTENDUES :
+javascript
+
+	{colonne_de_gauche: "La conscience nous rend-elle libres ?", colonne_de_droite: "ou nous enferme-t-elle dans nos propres représentations ?"},
+	{colonne_de_gauche: "Le désir est-il un manque ?", colonne_de_droite: "ou une force créatrice qui nous pousse à agir ?"},
+	{colonne_de_gauche: "La technique nous asservit-elle ?", colonne_de_droite: "ou nous libère-t-elle des contraintes naturelles ?"}
+
+EXIGENCES TECHNIQUES STRICTES :
+    Commentaires identiques avec les mêmes avertissements sur les virgules
+    Formatage avec tabulations doubles et sauts de ligne identiques
+    Dernière entrée sans virgule avec commentaire "/* pas de virgule ! */" en dehors du tableau
+    Police 'Muli' spécifiée dans fontFamily
+    Même ordre des propriétés dans window.settings
+    Mêmes valeurs de couleurs exactes
+    25 à 30 entrées dans window.argumentsData
+    Structure syntaxique identique pour toutes les paires
+
+VALIDATION PÉDAGOGIQUE :
+    Chaque question doit être une problématique classique de philosophie
+    Les alternatives doivent être cohérentes avec la question
+    Langage accessible mais philosophiquement rigoureux
+    Équilibre entre les différents champs philosophique
+    Respect du programme officiel de Terminale
+    Capacité à susciter la réflexion critique
+
+CRITÈRES DE QUALITÉ :
+    Problématiques authentiquement philosophiques
+    Alternatives qui ouvrent sur des débats réels
+    Formulations précises et non ambiguës
+    Respect de la structure interrogative
+    Cohérence entre la question et son alternative
+    Actualité et pertinence pour des élèves de Terminale
+
+Le fichier final doit permettre aux élèves de s'exercer à la problématisation, compétence essentielle en philosophie, tout en étant parfaitement compatible avec l'application d'apprentissage existante.
