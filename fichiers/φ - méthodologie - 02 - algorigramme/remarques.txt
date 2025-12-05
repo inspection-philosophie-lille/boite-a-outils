@@ -1,2 +1,0 @@
-Pour le diagramme, drag and drop flowchart builder
-https://gojs.net/latest/samples/flowchart.html
