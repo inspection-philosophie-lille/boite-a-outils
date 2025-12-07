@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>créateur de fichier JS pour « compléter »</title>
+    <title>créateur de fichier JS</title>
     <style>
         /* STYLES IDENTIQUES - GARDÉS POUR GAGNER DE LA PLACE */
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -94,18 +94,86 @@
             box-shadow: 4px 4px 8px rgba(139, 92, 246, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.8);
             margin-top: 20px; margin-bottom: 20px; }
         .btn-add:hover { background: linear-gradient(145deg, #7c3aed, #6d28d9); }
-        .file-input-container { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
+        
+        /* MODIFICATION : Conteneur principal pour aligner les 4 éléments sur une ligne */
+        .file-inputs-container {
+            display: flex;
+            align-items: stretch;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
         .file-input-label {
-            display: inline-block; padding: 15px 30px; background: linear-gradient(145deg, var(--accent-light), var(--accent-color));
-            color: white; border-radius: 15px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;
-            box-shadow: 4px 4px 8px rgba(79, 70, 229, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.8); }
-        .file-input-label:hover { transform: translateY(-2px); box-shadow: 
-            6px 6px 12px rgba(79, 70, 229, 0.4), -6px -6px 12px rgba(255, 255, 255, 0.9); }
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 25px;
+            background: linear-gradient(145deg, var(--accent-light), var(--accent-color));
+            color: white;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 4px 4px 8px rgba(79, 70, 229, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.8);
+            height: 52px;
+            min-height: 52px;
+            box-sizing: border-box;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .file-input-label:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 
+                6px 6px 12px rgba(79, 70, 229, 0.4), -6px -6px 12px rgba(255, 255, 255, 0.9); 
+        }
+        
         .file-input-label:active { transform: translateY(0); }
         .file-input { display: none; }
-        .file-name { color: var(--text-color); font-style: italic; padding: 10px 20px; background: var(--bg-color);
-            border-radius: 15px; box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
-            min-width: 200px; }
+        
+        .file-name { 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color); 
+            font-style: italic; 
+            padding: 15px 20px;
+            background: var(--bg-color);
+            border-radius: 15px; 
+            box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+            height: 52px;
+            min-height: 52px;
+            box-sizing: border-box;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* MODIFICATION : Les boutons dans le button-group auront aussi la même largeur */
+        .button-group {
+            display: flex;
+            align-items: stretch;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .button-group button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 25px;
+            height: 52px;
+            box-sizing: border-box;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+        
         .counter { display: inline-block; background: linear-gradient(145deg, var(--accent-light), var(--accent-color));
             color: white; border-radius: 50%; width: 28px; height: 28px; text-align: center; line-height: 28px;
             margin-right: 10px; font-size: 0.9rem; font-weight: 600; box-shadow: 
@@ -171,40 +239,111 @@
         @media (max-width: 768px) { 
             .container { gap: 20px; } 
             .panel { padding: 20px; border-radius: 20px; }
-            .button-group { flex-direction: column; gap: 15px; } 
-            button { width: 100%; }
-            .file-input-container { flex-direction: column; align-items: stretch; gap: 15px; }
-            .file-name { text-align: center; min-width: auto; } 
+            
+            /* MODIFICATION : En mobile, les éléments passent en colonne */
+            .file-inputs-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .button-group { 
+                flex-direction: column; 
+                gap: 15px; 
+            } 
+            
+            /* MODIFICATION : Assurer que tous les éléments ont la même largeur */
+            .file-input-label, 
+            .file-name, 
+            .button-group button { 
+                width: 100%; 
+                max-width: none; 
+                flex: 1 1 100%;
+            }
+            
+            .file-name { 
+                text-align: center; 
+                min-width: auto; 
+            } 
+            
+            /* MODIFICATION : S'assurer que le bouton de chargement a la même largeur */
+            #parseFileBtn {
+                width: 100%;
+            }
+            
             .trou-inputs { flex-direction: column; }
             .trou-input { min-width: 100%; } 
             h1 { font-size: 1.8rem; } 
             .panel h2 { font-size: 1.3rem; } 
             .source-header { flex-direction: column; align-items: flex-start; }
         }
+        
+        @media (min-width: 769px) {
+            /* MODIFICATION : En desktop, les 4 éléments sont sur une ligne avec dimensions égales */
+            .file-inputs-container {
+                flex-direction: row;
+                flex-wrap: nowrap;
+                align-items: stretch;
+            }
+            
+            .file-input-label, 
+            .file-name,
+            .button-group button {
+                flex: 1;
+                min-width: 0; /* Permet aux éléments de rétrécir si nécessaire */
+                width: auto;
+            }
+            
+            .button-group {
+                flex-direction: row;
+                flex-wrap: nowrap;
+            }
+            
+            /* Assurer que tous les éléments ont la même hauteur */
+            .file-input-label, 
+            .file-name,
+            .button-group button {
+                height: 52px;
+                min-height: 52px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        
         @media (max-width: 480px) { 
             body { padding: 15px; } 
             header { padding: 20px 15px; margin-bottom: 30px; }
             h1 { font-size: 1.5rem; } 
             .subtitle { font-size: 1rem; } 
+            
+            /* MODIFICATION : S'assurer de la cohérence sur très petits écrans */
+            .file-input-label, 
+            .file-name, 
+            .button-group button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Créateur de fichier JS pour « compléter »</h1>
-        <p class="subtitle">Créez ou modifiez des fichiers JavaScript de citations avec sources</p>
+        <h1>créateur de fichier JS</h1>
+        <p class="subtitle">de citations avec sources</p>
     </header>
     
     <div class="container">
         <div class="panel">
             <h2>charger un fichier existant</h2>
-            <div class="file-input-container">
+            
+            <!-- MODIFICATION : Nouveau conteneur pour les 4 éléments -->
+            <div class="file-inputs-container">
                 <label class="file-input-label">
                     <input type="file" id="jsFileInput" class="file-input" accept=".js">
                     choisir un fichier JS
                 </label>
                 <span id="fileName" class="file-name">aucun fichier sélectionné</span>
             </div>
+            
             <div class="button-group">
                 <button type="button" class="btn-warning" id="parseFileBtn">charger et analyser le fichier</button>
                 <button type="button" class="btn-secondary" id="newFileBtn">créer un nouveau fichier</button>
@@ -322,14 +461,19 @@
 
         // Ajouter un trou
         function addTrou(index) {
+            if (!citations[index].trous) {
+                citations[index].trous = [];
+            }
             citations[index].trous.push('');
             renderCitations();
         }
 
         // Supprimer un trou
         function deleteTrou(citationIndex, trouIndex) {
-            citations[citationIndex].trous.splice(trouIndex, 1);
-            renderCitations();
+            if (citations[citationIndex] && citations[citationIndex].trous) {
+                citations[citationIndex].trous.splice(trouIndex, 1);
+                renderCitations();
+            }
         }
 
         // Configurer le bouton italique
@@ -366,7 +510,7 @@
             });
         }
 
-        // Afficher les citations
+        // Afficher les citations - CORRIGÉ POUR ÉVITER citation.trous UNDEFINED
         function renderCitations() {
             citationsContainer.innerHTML = '';
             
@@ -376,6 +520,11 @@
             }
             
             citations.forEach((citation, index) => {
+                // CORRECTION : S'assurer que citation.trous existe
+                if (!citation.trous) {
+                    citation.trous = [];
+                }
+                
                 const citationElement = document.createElement('div');
                 citationElement.className = 'citation-container';
                 citationElement.innerHTML = `
@@ -390,7 +539,7 @@
                     </div>
                     <div class="form-group">
                         <label for="citation${index}">Citation</label>
-                        <textarea id="citation${index}" data-index="${index}" data-type="citation">${citation.texte}</textarea>
+                        <textarea id="citation${index}" data-index="${index}" data-type="citation">${citation.texte || ''}</textarea>
                     </div>
                     <div class="form-group source-group">
                         <div class="source-header">
@@ -416,7 +565,7 @@
                                     <input type="text" 
                                            data-citation-index="${index}" 
                                            data-trou-index="${trouIndex}"
-                                           value="${trou}"
+                                           value="${trou || ''}"
                                            placeholder="Mot ${trouIndex + 1}">
                                     <button type="button" class="btn-danger delete-trou-btn" 
                                             data-citation-index="${index}" 
@@ -442,12 +591,18 @@
                 // Ajouter les écouteurs d'événements
                 const citationTextarea = citationElement.querySelector(`textarea[data-type="citation"]`);
                 citationTextarea.addEventListener('input', (e) => {
-                    citations[parseInt(e.target.dataset.index)].texte = e.target.value;
+                    const idx = parseInt(e.target.dataset.index);
+                    if (citations[idx]) {
+                        citations[idx].texte = e.target.value;
+                    }
                 });
                 
                 const sourceInput = citationElement.querySelector(`input[data-index]`);
                 sourceInput.addEventListener('input', (e) => {
-                    citations[parseInt(e.target.dataset.index)].source = e.target.value;
+                    const idx = parseInt(e.target.dataset.index);
+                    if (citations[idx]) {
+                        citations[idx].source = e.target.value;
+                    }
                 });
                 
                 const trouInputs = citationElement.querySelectorAll('input[data-citation-index]');
@@ -455,7 +610,9 @@
                     input.addEventListener('input', (e) => {
                         const citationIdx = parseInt(e.target.dataset.citationIndex);
                         const trouIdx = parseInt(e.target.dataset.trouIndex);
-                        citations[citationIdx].trous[trouIdx] = e.target.value;
+                        if (citations[citationIdx] && citations[citationIdx].trous) {
+                            citations[citationIdx].trous[trouIdx] = e.target.value;
+                        }
                     });
                 });
                 
@@ -680,6 +837,11 @@
             const trous = extractArrayProperty(objStr, 'trous');
             if (trous !== null) obj.trous = trous;
             
+            // CORRECTION : S'assurer que les propriétés essentielles existent
+            if (!obj.texte) obj.texte = '';
+            if (!obj.source) obj.source = '';
+            if (!obj.trous) obj.trous = [];
+            
             return obj;
         }
 
@@ -827,7 +989,7 @@
             const title = appTitleInput.value || 'citations à trous';
             const subtitle = appSubtitleInput.value || 'réviser le cours';
             
-            const filteredCitations = citations.filter(c => c.texte.trim() !== '');
+            const filteredCitations = citations.filter(c => c.texte && c.texte.trim() !== '');
             
             if (filteredCitations.length === 0) {
                 showAlert('Aucune citation à sauvegarder. Ajoutez au moins une citation.', 'error');
@@ -843,10 +1005,11 @@ const textesAvecTrous = [
 `;
 
             filteredCitations.forEach((citation, index) => {
-                const cleanTrous = citation.trous.filter(t => t.trim() !== '');
+                // CORRECTION : S'assurer que citation.trous existe
+                const cleanTrous = citation.trous ? citation.trous.filter(t => t && t.trim() !== '') : [];
                 
                 jsContent += `    {
-        texte: "${encodeForJS(citation.texte)}",
+        texte: "${encodeForJS(citation.texte || '')}",
         source: "${encodeForJS(citation.source || '')}",
         trous: [${cleanTrous.map(t => `"${encodeForJS(t)}"`).join(', ')}]
     }`;
