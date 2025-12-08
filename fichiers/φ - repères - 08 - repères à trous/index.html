@@ -1,483 +1,1775 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
+<!-- Daniel Boulagnon -->
+<!-- daniel.boulagnon@ac-lille.fr -->
+<!-- version 2025 -->
+<!-- Exploitation à but strictement pédagogique et non lucratif -->
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>texte à trous</title>
-    <link rel="icon" href="../../src/favicon.ico">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #e0e5ec;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 2vw 2vw 6rem;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-        .title {
-            color: red;
-            margin-bottom: 0.5rem;
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            text-align: center;
-        }
-        .subtitle {
-            color: black;
-            margin-bottom: 2rem;
-            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-            text-align: center;
-        }
-        .container {
-            background-color: #e0e5ec;
-            border-radius: 20px;
-            padding: clamp(1.5rem, 3vw, 2.5rem);
-            box-shadow: 
-                8px 8px 15px #a3b1c6,
-                -8px -8px 15px #ffffff;
-            max-width: 98vw;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .text-container {
-            display: block;
-            margin: 0;
-            padding-top: clamp(1rem, 2vw, 1.5rem);
-            padding-bottom: clamp(1rem, 2vw, 1.5rem);
-            padding-left: clamp(0.5rem, 1vw, 1rem);
-            padding-right: clamp(0.5rem, 1vw, 1rem);
-            line-height: 3.4;
-            font-size: clamp(1rem, 2vw, 1.4rem);
-            text-align: justify;
-            box-sizing: border-box;
-        }
-        .hole {
-            display: inline-block;
-            justify-content: center;
-            align-items: center;
-            min-width: clamp(50px, 12vw, 80px);
-            height: calc(clamp(1rem, 2vw, 1.4rem) * 3.4 * 0.8);
-            line-height: 3.4;
-            border-radius: 15px;
-            background-color: #e0e5ec;
-            box-shadow:
-                inset 5px 5px 10px #a3b1c6,
-                inset -5px -5px 10px #ffffff;
-            margin: 0 6px;
-            font-size: clamp(0.9rem, 2vw, 1.2rem);
-            vertical-align: middle;
-            box-sizing: border-box;
-            text-align: center;
-            transition: border 0.2s ease; /* Transition fluide pour .hovered */
-        }
-        .hole.correct {
-            background-color: #a8e6cf;
-        }
-        .hole.incorrect {
-            background-color: #ffaaa5;
-        }
-        .hole.hovered {
-            border: 2px solid #333; /* Surbrillance pour le trou ciblé */
-        }
-        .word-bank {
-            display: flex;
-            flex-wrap: wrap;
-            gap: clamp(10px, 2vw, 15px);
-            margin-bottom: 2rem;
-            justify-content: center;
-            padding: 0 clamp(0.5rem, 1vw, 1rem);
-        }
-        .word {
-            padding: clamp(6px, 1.5vw, 10px) clamp(10px, 2.5vw, 15px);
-            background-color: #e0e5ec;
-            border-radius: 10px;
-            box-shadow:
-                5px 5px 10px #a3b1c6,
-                -5px -5px 10px #ffffff;
-            cursor: move;
-            user-select: none;
-            font-size: clamp(0.9rem, 2vw, 1.2rem);
-            touch-action: none; /* Empêche le défilement lors du toucher */
-            transition: opacity 0.2s ease; /* Transition fluide pour .dragging */
-        }
-        .word.dragging {
-            opacity: 0.7; /* Feedback visuel pour le mot déplacé */
-        }
-        button {
-            padding: clamp(10px, 2.5vw, 15px) clamp(20px, 4vw, 30px);
-            background-color: #e0e5ec;
-            border: none;
-            border-radius: 10px;
-            box-shadow:
-                5px 5px 10px #a3b1c6,
-                -5px -5px 10px #ffffff;
-            cursor: pointer;
-            font-size: clamp(1rem, 2.5vw, 1.3rem);
-            text-transform: lowercase;
-            margin-top: 2rem;
-        }
-        button:hover {
-            box-shadow:
-                3px 3px 6px #a3b1c6,
-                -3px -3px 6px #ffffff;
-        }
-        button:active {
-            box-shadow:
-                inset 3px 3px 6px #a3b1c6,
-                inset -3px -3px 6px #ffffff;
-        }
-
-        /* Media Queries pour petits écrans */
-        @media (max-width: 600px) {
-            body {
-                padding: 10px 10px 4rem;
-            }
-            .container {
-                padding: 1rem;
-                max-width: 98vw;
-            }
-            .text-container {
-                line-height: 3.0;
-                font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-                padding-top: clamp(0.8rem, 2vw, 1rem);
-                padding-bottom: clamp(0.8rem, 2vw, 1rem);
-                padding-left: clamp(0.3rem, 1vw, 0.8rem);
-                padding-right: clamp(0.3rem, 1vw, 0.8rem);
-            }
-            .hole {
-                min-width: clamp(40px, 10vw, 60px);
-                height: calc(clamp(0.9rem, 2.5vw, 1.1rem) * 3.0 * 0.8);
-                line-height: 3.0;
-                margin: 0 4px;
-                font-size: clamp(0.8rem, 2vw, 1rem);
-                vertical-align: middle;
-            }
-            .word-bank {
-                gap: 8px;
-                padding: 0 clamp(0.3rem, 1vw, 0.8rem);
-            }
-            .word {
-                padding: 5px 8px;
-                font-size: clamp(0.8rem, 2vw, 1rem);
-            }
-            button {
-                padding: 8px 15px;
-                font-size: clamp(0.8rem, 2vw, 1rem);
-            }
-            .title {
-                margin-bottom: 0.3rem;
-            }
-        }
-
-        /* Media Queries pour grands écrans (desktop) */
-        @media (min-width: 1200px) {
-            .container {
-                max-width: 98vw;
-            }
-            .title {
-                font-size: 2.5rem;
-                margin-bottom: 0.5rem;
-            }
-            .subtitle {
-                font-size: 1.8rem;
-            }
-            .text-container {
-                font-size: 1.4rem;
-                line-height: 3.4;
-                padding-top: 1.5rem;
-                padding-bottom: 1.5rem;
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-            .hole {
-                min-width: 80px;
-                height: calc(1.4rem * 3.4 * 0.8);
-                line-height: 3.4;
-                font-size: 1.2rem;
-                vertical-align: middle;
-            }
-            .word {
-                font-size: 1.2rem;
-                padding: 8px 12px;
-            }
-            button {
-                font-size: 1.3rem;
-                padding: 12px 25px;
-            }
-        }
-    </style>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" href="../../src/favicon.ico" />
+		<title id="htmlTitle">Repères philosophiques à trous</title>
+		<style>
+				:root {
+						--bg: #e0e0e0;
+						--btn: #e0e0e0;
+						--font-color: #444;
+						--shadow-out: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff;
+						--shadow-in: inset 0.2rem 0.2rem 0.4rem #bebebe, inset -0.2rem -0.2rem 0.4rem #ffffff;
+				}
+				body {
+						font-family: Arial, sans-serif;
+						background-color: var(--bg);
+						margin: 0;
+						padding: 10px;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						min-height: 100vh;
+						touch-action: manipulation;
+						transition: background-color 0.4s, color 0.4s;
+						color: var(--font-color);
+						font-size: calc(14px + 0.5vw);
+				}
+				/* Toolbar */
+				.toolbar {
+						width: 100%;
+						padding: 10px 15px;
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+						margin-bottom: 10px;
+						position: relative;
+				}
+				.toolbar-left,
+				.toolbar-right {
+						display: flex;
+						gap: 12px;
+						align-items: center;
+						flex-shrink: 0;
+						min-width: 80px;
+				}
+				.toolbar-center {
+						flex: 1;
+						min-width: 0;
+						text-align: center;
+						padding: 0 15px;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+				}
+				.toolbar-btn {
+						width: 60px;
+						height: 60px;
+						border-radius: 50%;
+						background: var(--btn);
+						border: none;
+						color: var(--font-color);
+						cursor: pointer;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						box-shadow: var(--shadow-out);
+						transition: all 0.2s ease;
+						flex-shrink: 0;
+				}
+				.toolbar-btn:hover {
+						box-shadow: var(--shadow-in);
+						transform: translateY(-2px);
+				}
+				.toolbar-btn:active {
+						transform: translateY(1px);
+				}
+				.rotate-icon {
+						display: block;
+						transition: transform 0.3s ease;
+				}
+				.toolbar-btn.reload:hover .rotate-icon {
+						transform: rotate(90deg);
+				}
+				.toolbar-btn.menu:hover .rotate-icon {
+						transform: rotate(90deg);
+				}
+				.toolbar-btn.reload .rotate-icon {
+						font-size: 36px;
+				}
+				.toolbar-btn.menu .rotate-icon {
+						display: flex;
+						flex-direction: column;
+						gap: 4px;
+						width: 22px;
+				}
+				.toolbar-btn.menu .rotate-icon span {
+						width: 100%;
+						height: 2px;
+						background: currentColor;
+						border-radius: 2px;
+				}
+				.toolbar-btn svg {
+						width: 28px;
+						height: 28px;
+						fill: currentColor;
+				}
+				/* Menu coulissant */
+				.menu-overlay {
+						position: fixed;
+						inset: 0;
+						background: rgba(0, 0, 0, 0.5);
+						z-index: 1000;
+						opacity: 0;
+						visibility: hidden;
+						transition: opacity 0.3s;
+				}
+				.menu-overlay.open {
+						opacity: 1;
+						visibility: visible;
+				}
+				.slide-menu {
+						position: fixed;
+						top: 0;
+						bottom: 0;
+						right: -320px;
+						width: 280px;
+						background: #e0e5ec;
+						z-index: 1001;
+						box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+						transition: right 0.3s ease;
+						overflow: hidden;
+						border-radius: 20px 0 0 20px;
+						transform: translateZ(0);
+				}
+				.slide-menu.open {
+						right: 0;
+				}
+				.menu-content {
+						height: 100%;
+						overflow-y: auto;
+						padding: 90px 20px 20px;
+						box-sizing: border-box;
+						-webkit-overflow-scrolling: touch;
+				}
+				.menu-item {
+						background: #e0e5ec;
+						padding: 15px;
+						margin-bottom: 8px;
+						border-radius: 10px;
+						text-align: left;
+						cursor: pointer;
+						display: flex;
+						align-items: center;
+						gap: 12px;
+						box-shadow: var(--shadow-out);
+						width: 100%;
+						box-sizing: border-box;
+						color: var(--font-color);
+						font-size: 1em;
+						border: none;
+				}
+				.menu-item:hover {
+						box-shadow: var(--shadow-in);
+				}
+				/* Styles pour les titres soulignés dans les modales */
+				.modal-title {
+						border-bottom: 2px solid #ccc;
+						padding-bottom: 10px;
+						margin-bottom: 20px;
+				}
+				/* Modales */
+				.modal {
+						display: none;
+						position: fixed;
+						inset: 0;
+						background: rgba(0, 0, 0, 0.5);
+						z-index: 2000;
+						align-items: center;
+						justify-content: center;
+						opacity: 0;
+						transition: opacity 0.3s ease;
+				}
+				.modal.open {
+						display: flex;
+						opacity: 1;
+				}
+				.modal-content {
+						background: #e0e5ec;
+						padding: 30px;
+						border-radius: 15px;
+						width: 90%;
+						max-width: 500px;
+						transform: translateY(-20px);
+						transition: transform 0.3s ease;
+				}
+				.modal.open .modal-content {
+						transform: translateY(0);
+				}
+				.theme-switch {
+						position: relative;
+						display: inline-block;
+						width: 44px;
+						height: 24px;
+				}
+				.theme-switch input {
+						opacity: 0;
+						width: 0;
+						height: 0;
+				}
+				.slider {
+						position: absolute;
+						inset: 0;
+						background: #ccc;
+						border-radius: 24px;
+						transition: .4s;
+				}
+				.slider:before {
+						content: "";
+						position: absolute;
+						width: 18px;
+						height: 18px;
+						left: 3px;
+						top: 3px;
+						background: white;
+						border-radius: 50%;
+						transition: .4s;
+				}
+				input:checked+.slider {
+						background: #2196F3;
+				}
+				input:checked+.slider:before {
+						transform: translateX(20px);
+				}
+				/* Mode sombre */
+				body.dark-mode {
+						--bg: #121212;
+						--btn: #1e1e1e;
+						--font-color: #e0e0e0;
+						background: #121212;
+						color: #e0e0e0;
+				}
+				body.dark-mode .toolbar-btn,
+				body.dark-mode .slide-menu,
+				body.dark-mode .menu-item,
+				body.dark-mode .modal-content {
+						background: #1e1e1e;
+						box-shadow: 0.3rem 0.3rem 0.6rem #0d0d0d, -0.3rem -0.3rem 0.6rem #2d2d2d;
+				}
+				body.dark-mode .main-title,
+				body.dark-mode .mobile-title {
+						color: #ff4444;
+				}
+				/* Icônes validation mode daltonien */
+				.dropzone::after {
+						content: "";
+						position: absolute;
+						opacity: 0;
+						transition: opacity 0.3s;
+						top: 50%;
+						right: 8px;
+						transform: translateY(-50%);
+						width: 16px;
+						height: 16px;
+						background-size: contain;
+						background-repeat: no-repeat;
+						pointer-events: none;
+				}
+				body.colorblind-mode .dropzone.correct::after,
+				body.colorblind-mode .dropzone.incorrect::after {
+						opacity: 1;
+				}
+				body.colorblind-mode .dropzone.correct::after {
+						background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>');
+				}
+				body.colorblind-mode .dropzone.incorrect::after {
+						background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>');
+				}
+				/* Mode daltonien */
+				body.colorblind-mode:not(.dark-mode) .dropzone.correct {
+						background: linear-gradient(90deg, #003300 4px, #006600 4px) !important;
+						color: white !important;
+						padding-right: 35px !important;
+						position: relative;
+				}
+				body.colorblind-mode:not(.dark-mode) .dropzone.incorrect {
+						background: linear-gradient(90deg, #660000 4px, #990000 4px) !important;
+						color: white !important;
+						padding-right: 35px !important;
+						position: relative;
+				}
+				body.dark-mode.colorblind-mode .dropzone.correct {
+						background: linear-gradient(90deg, #002200 0px, #004400 0px) !important;
+						color: white !important;
+						padding-right: 35px !important;
+						position: relative;
+				}
+				body.dark-mode.colorblind-mode .dropzone.incorrect {
+						background: linear-gradient(90deg, #550000 0px, #770000 0px) !important;
+						color: white !important;
+						padding-right: 35px !important;
+						position: relative;
+				}
+				/* Styles spécifiques de l'application */
+				.main-container {
+						width: 100%;
+						max-width: 1200px;
+						flex-grow: 1;
+						display: flex;
+						margin-top: 5px;
+						flex-direction: column;
+						align-items: center;
+				}
+				.main-title {
+						color: red;
+						font-size: calc(24px + 2vw);
+						font-weight: bold;
+						line-height: 1.2;
+						margin: 0.3rem 0;
+						text-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.1);
+						text-transform: lowercase;
+						word-break: normal;
+						hyphens: none;
+						overflow-wrap: normal;
+						white-space: normal;
+						width: 100%;
+				}
+				.main-title.multiline {
+						font-size: calc(20px + 1.5vw);
+						line-height: 1.3;
+				}
+				.title-container {
+						display: inline-block;
+						max-width: 100%;
+						text-align: center;
+				}
+				.title-line {
+						display: block;
+						white-space: nowrap;
+				}
+				.subtitle {
+						color: #555;
+						font-size: clamp(1rem, 3vw, 1.2rem);
+						line-height: 1;
+						margin: 0 0 10px 0;
+						padding-bottom: 2px;
+						text-transform: lowercase;
+						white-space: nowrap;
+						max-width: 100%;
+						overflow: hidden;
+						text-overflow: ellipsis;
+				}
+				#text-container {
+						background-color: var(--bg);
+						padding: 1.5rem;
+						border-radius: 0.5rem;
+						margin-bottom: 0.5rem;
+						margin-top: -10px;
+						line-height: 1.8;
+						box-shadow: 0.3rem 0.3rem 0.9rem rgba(163, 177, 198, 0.6), -0.3rem -0.3rem 0.9rem rgba(255, 255, 255, 0.5);
+						min-height: 4rem;
+						height: auto;
+						font-size: calc(12px + 0.5vw);
+						width: 90%;
+						max-width: 900px;
+				}
+				/* Styles pour le repère */
+				.repere-nom {
+						font-weight: bold;
+						display: inline;
+						color: var(--font-color);
+				}
+				/* Styles pour la source de la citation */
+				.citation-source {
+						text-align: right;
+						margin-top: 1rem;
+						padding-top: 0.5rem;
+						color: var(--font-color);
+						font-size: calc(12px + 0.5vw);
+						font-family: Arial, sans-serif;
+						font-style: normal;
+						width: 100%;
+				}
+				.citation-source em {
+						font-style: italic;
+				}
+				/* Styles pour les séquences de lettres avec espaces */
+				.dropzone {
+						display: inline-flex;
+						justify-content: center;
+						align-items: center;
+						min-width: clamp(90px, 18vw, 130px);
+						max-width: clamp(150px, 30vw, 250px);
+						height: clamp(24px, 5vw, 28px);
+						border: none;
+						background-color: var(--bg);
+						margin: 0 0.2rem;
+						border-radius: 0.3rem;
+						vertical-align: middle;
+						box-shadow: inset 0.1rem 0.1rem 0.3rem #babecc, inset -0.3rem -0.3rem 0.6rem #ffffff;
+						font-size: calc(10px + 0.5vw);
+						line-height: clamp(24px, 5vw, 28px);
+						text-align: center;
+						touch-action: none;
+						position: relative;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+				}
+				.dropzone.filled {
+						width: auto !important;
+						min-width: clamp(70px, 14vw, 100px);
+						max-width: clamp(200px, 40vw, 300px);
+						height: clamp(24px, 5vw, 28px);
+						padding: 0 0.8rem;
+						background-color: var(--bg);
+						cursor: move;
+						box-shadow: inset 0.1rem 0.1rem 0.3rem #babecc, inset -0.3rem -0.3rem 0.6rem #ffffff;
+						font-size: calc(10px + 0.5vw);
+						line-height: clamp(24px, 5vw, 28px);
+						text-align: center;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+				}
+				/* Pour les séquences très longues */
+				.dropzone.filled.long-sequence {
+						font-size: calc(9px + 0.5vw);
+						padding: 0 0.6rem;
+				}
+				.dropzone.dragging-over {
+						background-color: #e0e0e0;
+				}
+				#words-container {
+						display: flex;
+						flex-wrap: wrap;
+						justify-content: center;
+						margin-top: 0.5rem;
+						gap: 0.5rem;
+						width: 90%;
+						max-width: 900px;
+						row-gap: 0.5rem;
+				}
+				/* Style compact quand les mots sont sur plusieurs lignes */
+				#words-container.compact {
+						row-gap: 0.25rem;
+				}
+				/* Style pour les mots déplaçables (peuvent être des séquences) */
+				.draggable-word {
+						padding: 0.4rem 0.8rem;
+						margin: 0.3rem;
+						background-color: var(--bg);
+						border: none;
+						cursor: move;
+						user-select: none;
+						border-radius: 0.3rem;
+						box-shadow: 0.3rem 0.3rem 0.6rem #babecc, -0.3rem -0.3rem 0.6rem #ffffff;
+						transition: transform 0.1s ease-in-out;
+						font-size: calc(10px + 0.5vw);
+						touch-action: none;
+						z-index: 10;
+						max-width: clamp(150px, 30vw, 250px);
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+				}
+				.draggable-word.touched,
+				.dropzone.filled.touched {
+						transform: scale(1.1);
+						box-shadow: 0.2rem 0.2rem 0.4rem #babecc, -0.2rem -0.2rem 0.4rem #ffffff;
+				}
+				.score-button-container {
+						display: flex;
+						justify-content: center;
+						gap: 1rem;
+						margin: 1rem auto;
+						flex-wrap: wrap;
+						align-items: center;
+				}
+				#action-button {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						width: clamp(150px, 30vw, 200px);
+						height: clamp(40px, 8vw, 50px);
+						background-color: var(--btn);
+						color: var(--font-color);
+						border: none;
+						border-radius: 0.3rem;
+						cursor: pointer;
+						box-shadow: 0.3rem 0.3rem 0.6rem #babecc, -0.3rem -0.3rem 0.6rem #ffffff;
+						transition: all 0.2s ease-in-out;
+						font-size: calc(12px + 0.5vw);
+						text-transform: lowercase;
+						min-width: 0;
+				}
+				#action-button:disabled {
+						opacity: 0.5;
+						cursor: not-allowed;
+				}
+				#action-button:hover:not(:disabled) {
+						box-shadow: 0.1rem 0.1rem 0.3rem #babecc, -0.1rem -0.1rem 0.3rem #ffffff;
+				}
+				#action-button:active:not(:disabled) {
+						box-shadow: inset 0.1rem 0.1rem 0.2rem #babecc, inset -0.1rem -0.1rem 0.2rem #ffffff;
+				}
+				#score-button {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						width: clamp(150px, 30vw, 200px);
+						height: clamp(40px, 8vw, 50px);
+						background-color: var(--btn);
+						color: var(--font-color);
+						border: none;
+						border-radius: 0.3rem;
+						box-shadow: 0.3rem 0.3rem 0.6rem #babecc, -0.3rem -0.3rem 0.6rem #ffffff;
+						font-size: calc(12px + 0.5vw);
+						text-transform: lowercase;
+						min-width: 0;
+						cursor: default;
+						pointer-events: none;
+				}
+				.reload-symbol {
+						color: red;
+						font-size: clamp(24px, 6vw, 36px);
+						line-height: 1;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						transform: translateY(-0.1em);
+				}
+				/* Mobile */
+				.toolbar-mobile {
+						display: none;
+				}
+				.mobile-title-wrapper {
+						display: none;
+				}
+				@media (max-width: 600px) {
+						.toolbar-desktop {
+								display: none;
+						}
+						.toolbar-mobile {
+								display: flex;
+								flex-direction: column;
+								align-items: center;
+						}
+						.mobile-buttons-container {
+								display: flex;
+								gap: 15px;
+								margin: 10px 0;
+						}
+						.toolbar-btn {
+								width: 52px;
+								height: 52px;
+						}
+						.toolbar-btn.reload .rotate-icon {
+								font-size: 32px;
+						}
+						.toolbar-btn svg {
+								width: 24px;
+								height: 24px;
+						}
+						.mobile-title-wrapper {
+								display: block;
+								text-align: center;
+								margin: 10px 0 5px;
+						}
+						.mobile-title {
+								font-size: 1.4em;
+								color: red;
+								margin: 0;
+								text-transform: lowercase;
+						}
+						.mobile-subtitle {
+								font-size: 0.9em;
+								color: #555;
+								margin: 0;
+								margin-bottom: 10px;
+								text-transform: lowercase;
+						}
+						.slide-menu {
+								width: 260px;
+						}
+						body {
+								padding: 0.5rem;
+								font-size: calc(12px + 0.5vw);
+						}
+						.main-title {
+								font-size: calc(18px + 2vw);
+						}
+						.subtitle {
+								font-size: calc(10px + 0.8vw);
+								margin-bottom: 8px;
+						}
+						#text-container {
+								padding: 0.8rem;
+								min-height: 3rem;
+								line-height: 1.8;
+								margin-bottom: 0.4rem;
+						}
+						.citation-source {
+								font-size: calc(12px + 0.5vw);
+								margin-top: 0.8rem;
+								padding-top: 0.5rem;
+						}
+						.dropzone {
+								min-width: clamp(70px, 20vw, 110px);
+								max-width: clamp(120px, 40vw, 180px);
+								height: clamp(20px, 5.5vw, 24px);
+								font-size: calc(8px + 0.5vw);
+								margin: 0 0.2rem;
+								line-height: clamp(20px, 5.5vw, 24px);
+						}
+						.dropzone.filled {
+								min-width: clamp(60px, 16vw, 90px);
+								max-width: clamp(150px, 50vw, 200px);
+								height: clamp(20px, 5.5vw, 24px);
+								padding: 0 0.6rem;
+								font-size: calc(8px + 0.5vw);
+								line-height: clamp(20px, 5.5vw, 24px);
+						}
+						.dropzone.filled.long-sequence {
+								font-size: calc(7px + 0.5vw);
+								padding: 0 0.4rem;
+						}
+						.draggable-word {
+								padding: 0.3rem 0.6rem;
+								font-size: calc(8px + 0.5vw);
+								max-width: clamp(120px, 40vw, 180px);
+						}
+						.score-button-container {
+								flex-direction: row;
+								gap: 0.5rem;
+								margin: 0.8rem auto;
+						}
+						#action-button,
+						#score-button {
+								width: clamp(120px, 40vw, 160px);
+								height: clamp(35px, 10vw, 45px);
+								font-size: calc(10px + 0.5vw);
+						}
+						.dropzone::after {
+								width: 14px;
+								height: 14px;
+								right: 6px;
+						}
+						body.colorblind-mode:not(.dark-mode) .dropzone.correct,
+						body.colorblind-mode:not(.dark-mode) .dropzone.incorrect,
+						body.dark-mode.colorblind-mode .dropzone.correct,
+						body.dark-mode.colorblind-mode .dropzone.incorrect {
+								padding-right: 30px !important;
+						}
+						.main-container {
+								margin-top: 5px;
+						}
+						#words-container {
+								row-gap: 0.4rem;
+								margin-top: 0.4rem;
+						}
+						#words-container.compact {
+								row-gap: 0.2rem;
+						}
+				}
+				@media (min-width: 601px) {
+						.toolbar-mobile,
+						.mobile-title-wrapper {
+								display: none;
+						}
+				}
+		</style>
 </head>
 <body>
-    <h1 class="title">repères philosophiques à trous</h1>
-    <h2 class="subtitle">réviser les repères</h2>
-    <div class="container">
-        <div class="text-container" id="textContainer"></div>
-        <div class="word-bank" id="wordBank"></div>
-    </div>
-    <button id="actionButton">vérifier</button>
-
-    <script src="../../src/reperes.js"></script>
-    <script>
-        let currentRepere = null;
-        let missingWords = [];
-
-        function cleanWord(word) {
-            return word.replace(/[.,;!?]/g, '').toLowerCase().trim();
-        }
-
-        function initializeExercise() {
-            currentRepere = reperes[Math.floor(Math.random() * reperes.length)].parts[Math.floor(Math.random() * reperes[0].parts.length)];
-            const words = currentRepere.definition.split(' ').filter(word => word.length > 0);
-            
-            missingWords = [];
-
-            function isNounOrVerb(word) {
-                const cleanedWord = cleanWord(word);
-                return cleanedWord.length > 3 && !['le', 'la', 'les', 'un', 'une', 'des', 'de', 'du', 'et', 'ou', 'à', 'au'].includes(cleanedWord);
-            }
-
-            words.forEach(word => {
-                if (isNounOrVerb(word)) { 
-                    missingWords.push(cleanWord(word));
-                }
-            });
-
-            let textWithHoles = `${currentRepere.name}&nbsp;: ${currentRepere.definition.charAt(0).toLowerCase() + currentRepere.definition.slice(1).replace(/\.$/, '')}`;
-
-            const maxLength = missingWords.length > 0 ? Math.max(...missingWords.map(word => word.length)) * 10 : 80;
-
-            missingWords.forEach(word => { 
-                const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                const regex = new RegExp(`\\b${escapedWord}\\b`, 'gi');
-                textWithHoles = textWithHoles.replace(regex, `<span class="hole" data-word="${word}" style="min-width: ${maxLength}px;"></span>`);
-            });
-
-            document.getElementById('textContainer').innerHTML = textWithHoles;
-
-            const wordBank = document.getElementById('wordBank');
-            wordBank.innerHTML = '';
-            
-            const uniqueWords = [...new Set(missingWords)];
-
-            uniqueWords.sort(() => Math.random() - 0.5).forEach(word => { 
-                const wordElement = document.createElement('div');
-                wordElement.className = 'word';
-                wordElement.textContent = word;
-                wordElement.draggable = true;
-
-                // Événements pour desktop
-                wordElement.addEventListener('dragstart', drag);
-                // Événements pour mobile
-                wordElement.addEventListener('touchstart', touchStart);
-                wordElement.addEventListener('touchmove', touchMove);
-                wordElement.addEventListener('touchend', touchEnd);
-
-                wordBank.appendChild(wordElement);
-            });
-
-            document.querySelectorAll('.hole').forEach(hole => {
-                // Événements pour desktop
-                hole.addEventListener('dragover', allowDrop);
-                hole.addEventListener('drop', drop);
-                // Événements pour mobile
-                hole.addEventListener('touchmove', touchMoveOverHole);
-                hole.addEventListener('touchend', touchEndOnHole);
-            });
-        }
-
-        // Gestion du glisser-déposer pour desktop
-        function drag(event) {
-            event.dataTransfer.setData("text", event.target.textContent);
-            event.target.classList.add('dragging');
-        }
-
-        function allowDrop(event) {
-            event.preventDefault();
-        }
-
-        function drop(event) {
-            event.preventDefault();
-            const data = event.dataTransfer.getData("text");
-            const draggedElement = Array.from(document.querySelectorAll('.word')).find(wordEl => wordEl.textContent === data);
-            
-            if (event.target.classList.contains('hole')) {
-                if (event.target.textContent) { 
-                    const existingTagText = event.target.textContent;
-                    const wordInBank = document.createElement('div');
-                    wordInBank.className = 'word';
-                    wordInBank.textContent = existingTagText;
-                    wordInBank.draggable = true;
-                    wordInBank.addEventListener('dragstart', drag);
-                    wordInBank.addEventListener('touchstart', touchStart);
-                    wordInBank.addEventListener('touchmove', touchMove);
-                    wordInBank.addEventListener('touchend', touchEnd);
-                    document.getElementById('wordBank').appendChild(wordInBank);
-                }
-
-                event.target.textContent = data;
-                if (draggedElement) draggedElement.remove();
-                
-                event.target.addEventListener('dragover', allowDrop);
-                event.target.addEventListener('drop', drop);
-                event.target.addEventListener('touchmove', touchMoveOverHole);
-                event.target.addEventListener('touchend', touchEndOnHole);
-            }
-            document.querySelectorAll('.word').forEach(word => word.classList.remove('dragging'));
-        }
-
-        // Gestion du glisser-déposer pour mobile
-        let draggedWord = null;
-
-        function touchStart(event) {
-            event.preventDefault();
-            draggedWord = event.target;
-            draggedWord.classList.add('dragging');
-        }
-
-        function touchMove(event) {
-            event.preventDefault();
-            const touch = event.touches[0];
-            const element = document.elementFromPoint(touch.clientX, touch.clientY);
-            
-            // Supprimer la surbrillance des autres trous
-            document.querySelectorAll('.hole').forEach(hole => hole.classList.remove('hovered'));
-            
-            // Ajouter la surbrillance au trou survolé
-            if (element && element.classList.contains('hole')) {
-                element.classList.add('hovered');
-            }
-        }
-
-        function touchEnd(event) {
-            event.preventDefault();
-            const touch = event.changedTouches[0];
-            const element = document.elementFromPoint(touch.clientX, touch.clientY);
-            
-            document.querySelectorAll('.hole').forEach(hole => hole.classList.remove('hovered'));
-            
-            if (element && element.classList.contains('hole')) {
-                if (element.textContent) {
-                    const existingTagText = element.textContent;
-                    const wordInBank = document.createElement('div');
-                    wordInBank.className = 'word';
-                    wordInBank.textContent = existingTagText;
-                    wordInBank.draggable = true;
-                    wordInBank.addEventListener('dragstart', drag);
-                    wordInBank.addEventListener('touchstart', touchStart);
-                    wordInBank.addEventListener('touchmove', touchMove);
-                    wordInBank.addEventListener('touchend', touchEnd);
-                    document.getElementById('wordBank').appendChild(wordInBank);
-                }
-                
-                element.textContent = draggedWord.textContent;
-                draggedWord.remove();
-                
-                element.addEventListener('touchmove', touchMoveOverHole);
-                element.addEventListener('touchend', touchEndOnHole);
-            }
-            
-            draggedWord.classList.remove('dragging');
-            draggedWord = null;
-        }
-
-        function touchMoveOverHole(event) {
-            event.preventDefault();
-            document.querySelectorAll('.hole').forEach(hole => hole.classList.remove('hovered'));
-            event.target.classList.add('hovered');
-        }
-
-        function touchEndOnHole(event) {
-            event.preventDefault();
-            document.querySelectorAll('.hole').forEach(hole => hole.classList.remove('hovered'));
-        }
-
-        function verifyAnswers() {
-            let allCorrect = true;
-
-            document.querySelectorAll('.hole').forEach(hole => {
-                if (hole.textContent === hole.dataset.word) {
-                    hole.classList.add('correct');
-                    hole.classList.remove('incorrect');
-                } else if (hole.textContent) {
-                    hole.classList.add('incorrect');
-                    allCorrect = false;
-                    hole.setAttribute("draggable", true);
-                    hole.addEventListener('dragstart', drag);
-                    hole.addEventListener('dragover', allowDrop);
-                    hole.addEventListener('drop', drop);
-                    hole.addEventListener('touchstart', touchStart);
-                    hole.addEventListener('touchmove', touchMove);
-                    hole.addEventListener('touchend', touchEnd);
-                }
-            });
-            
-            return allCorrect;
-        }
-
-        function correctAnswers() {
-            document.querySelectorAll('.hole').forEach(hole => {
-                hole.textContent = hole.dataset.word;
-                hole.classList.remove('incorrect');
-                hole.classList.add('correct');
-            });
-        }
-
-        document.getElementById('actionButton').addEventListener('click', function() {
-            if (this.textContent === 'vérifier') {
-                verifyAnswers();
-                this.textContent = 'corriger';
-            } else if (this.textContent === 'corriger') {
-                correctAnswers();
-                this.textContent = 'recommencer';
-            } else {
-                initializeExercise();
-                this.textContent = 'vérifier';
-            }
-        });
-
-        initializeExercise();
-    </script>
+		<!-- TOOLBAR DESKTOP -->
+		<div class="toolbar toolbar-desktop">
+				<div class="toolbar-left">
+						<a class="toolbar-btn home" id="homeBtn" title="accueil"
+								href="https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/">
+								<svg width="28" height="28" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+										<polyline points="130,56 80,26" stroke="currentColor" stroke-width="15" fill="none"
+												stroke-linecap="round" />
+										<polyline points="52,40 30,56" stroke="currentColor" stroke-width="15" fill="none"
+												stroke-linecap="round" />
+										<polyline points="130,56 130,126 30,126 30,56" stroke="currentColor" stroke-width="15" fill="none"
+												stroke-linejoin="round" stroke-linecap="round" />
+								</svg>
+						</a>
+						<button class="toolbar-btn reload" id="reloadButton" title="Nouvelle partie"><span
+										class="rotate-icon">↻</span></button>
+				</div>
+				<div class="toolbar-center">
+						<div class="title-container" id="titleContainer">
+								<h1 class="main-title" id="appTitle">repères philosophiques à trous</h1>
+						</div>
+						<p class="subtitle" id="appSubtitle">réviser les repères</p>
+				</div>
+				<div class="toolbar-right">
+						<button class="toolbar-btn fullscreen" id="fullscreenButton" title="Plein écran">
+								<svg viewBox="0 0 24 24" fill="currentColor">
+										<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path>
+								</svg>
+						</button>
+						<button class="toolbar-btn menu" id="menuButton" title="Menu">
+								<div class="rotate-icon"><span></span><span></span><span></span></div>
+						</button>
+				</div>
+		</div>
+		<!-- TOOLBAR MOBILE -->
+		<div class="toolbar-mobile">
+				<div class="mobile-buttons-container">
+						<a href="https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/" class="toolbar-btn" title="Accueil">
+								<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+										<polyline points="130,56 80,26" stroke="currentColor" stroke-width="15" fill="none"
+												stroke-linecap="round" />
+										<polyline points="52,40 30,56" stroke="currentColor" stroke-width="15" fill="none"
+												stroke-linecap="round" />
+										<polyline points="130,56 130,126 30,126 30,56" stroke="currentColor" stroke-width="15" fill="none"
+												stroke-linejoin="round" stroke-linecap="round" />
+								</svg>
+						</a>
+						<button class="toolbar-btn reload" id="reloadButtonMobile" title="Nouvelle partie"><span
+										class="rotate-icon">↻</span></button>
+						<button class="toolbar-btn fullscreen" id="fullscreenButtonMobile" title="Plein écran">
+								<svg viewBox="0 0 24 24" fill="currentColor">
+										<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" />
+								</svg>
+						</button>
+						<button class="toolbar-btn menu" id="menuButtonMobile" title="Menu">
+								<div class="rotate-icon"><span></span><span></span><span></span></div>
+						</button>
+				</div>
+		</div>
+		<div class="mobile-title-wrapper">
+				<p class="mobile-title" id="mobileTitle">repères philosophiques à trous</p>
+				<p class="mobile-subtitle" id="mobileSubtitle">réviser les repères</p>
+		</div>
+		<main class="main-container">
+				<div id="text-container"></div>
+				<div id="words-container"></div>
+				<div class="score-button-container">
+						<button id="action-button" disabled>vérifier</button>
+						<div id="score-button">score : 0 / 0</div>
+				</div>
+		</main>
+		<!-- MENU COULISSANT -->
+		<div class="menu-overlay" id="menuOverlay"></div>
+		<div class="slide-menu" id="slideMenu">
+				<div class="menu-content">
+						<button class="menu-item" id="instructionsButton">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+										stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"></circle>
+										<line x1="12" y1="16" x2="12" y2="12"></line>
+										<line x1="12" y1="8" x2="12.01" y2="8"></line>
+								</svg>
+								règles du jeu
+						</button>
+						<button class="menu-item" id="statsButton">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+										stroke-linecap="round" stroke-linejoin="round">
+										<line x1="18" y1="20" x2="18" y2="10"></line>
+										<line x1="12" y1="20" x2="12" y2="4"></line>
+										<line x1="6" y1="20" x2="6" y2="14"></line>
+								</svg>
+								statistiques
+						</button>
+						<button class="menu-item" id="settingsButton">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+										stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="3"></circle>
+										<path
+												d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-.33 1.82l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+										</path>
+								</svg>
+								paramètres
+						</button>
+						<button class="menu-item" id="resetButton">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+										stroke-linecap="round" stroke-linejoin="round">
+										<path d="M3 2v6h6"></path>
+										<path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
+										<path d="M21 22v-6h-6"></path>
+										<path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path>
+								</svg>
+								réinitialiser
+						</button>
+						<button class="menu-item" id="aboutButton">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+										stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+										<line x1="12" y1="17" x2="12.01" y2="17"></line>
+								</svg>
+								à propos
+						</button>
+				</div>
+		</div>
+		<!-- MODALES -->
+		<div class="modal" id="instructionsModal">
+				<div class="modal-content">
+						<div
+								style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid #ccc;">
+								<h2 style="margin:0;color:red;">règles du jeu</h2>
+								<button class="close-modal" data-modal="instructionsModal"
+										style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--font-color);">×</button>
+						</div>
+						<div style="text-align: left; line-height: 1.6;">
+								<p>Le jeu propose un repère philosophique à définir. La définition comporte des mots manquants qui sont affichés en dessous dans
+										un ordre aléatoire.
+										<strong>Glissez-déposez</strong> les mots dans les zones vides de la définition. Vous pouvez aussi
+										<strong>déplacer</strong> les mots d'une zone à une autre.
+										<br>Cliquez sur « vérifier » pour évaluer vos réponses.
+										Les mots corrects deviennent verts, les incorrects deviennent rouges. Si tous les mots sont
+										corrects, vous pouvez passer à un nouveau repère.
+										Sinon, cliquez sur « correction » pour voir les bonnes réponses.
+								</p>
+						</div>
+				</div>
+		</div>
+		<div class="modal" id="statsModal">
+				<div class="modal-content">
+						<div
+								style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid #ccc;">
+								<h2 style="margin:0;color:red;">statistiques</h2>
+								<button class="close-modal" data-modal="statsModal"
+										style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--font-color);">×</button>
+						</div>
+						<div style="text-align: center;">
+								<div style="font-size: 2em; font-weight: bold; margin: 20px 0;">
+										<span id="statsCorrectCount">0</span> / <span id="statsTotalCount">0</span>
+								</div>
+								<div style="margin: 20px 0;">
+										<strong>Taux de réussite :</strong> <span id="statsPercentage">0%</span>
+								</div>
+								<div style="margin: 20px 0;">
+										<strong>Parties jouées :</strong> <span id="gamesPlayed">0</span>
+								</div>
+						</div>
+				</div>
+		</div>
+		<div class="modal" id="settingsModal">
+				<div class="modal-content">
+						<div
+								style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid #ccc;">
+								<h2 style="margin:0;color:red;">paramètres</h2>
+								<button class="close-modal" data-modal="settingsModal"
+										style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--font-color);">×</button>
+						</div>
+						<div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0;">
+								<span>mode sombre</span>
+								<label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span
+												class="slider"></span></label>
+						</div>
+						<div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0;">
+								<span>mode daltonien</span>
+								<label class="theme-switch"><input type="checkbox" id="colorblindModeToggle"><span
+												class="slider"></span></label>
+						</div>
+						<div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0;">
+								<span>animations</span>
+								<label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span
+												class="slider"></span></label>
+						</div>
+				</div>
+		</div>
+		
+		<!-- SCRIPT PRINCIPAL -->
+		<script>
+				// ===================================================================
+				// VARIABLES GLOBALES
+				// ===================================================================
+				let currentState = "verify";
+				let correctAnswers = 0;
+				let totalAnswers = 0;
+				let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
+				const textContainer = document.getElementById("text-container");
+				const wordsContainer = document.getElementById("words-container");
+				const actionButton = document.getElementById("action-button");
+				const scoreButton = document.getElementById("score-button");
+				let draggedElement = null;
+				let currentSource = "";
+				
+				// Variables pour stocker les données des repères
+				let textesAvecTrous = [];
+				const title = "repères philosophiques à trous";
+				const subtitle = "réviser les repères";
+				
+				// ===================================================================
+				// FONCTIONS UTILITAIRES
+				// ===================================================================
+				function getRandomIndex(max) {
+						return Math.floor(Math.random() * max);
+				}
+				
+				function escapeHTML(text) {
+						return text
+								.replace(/&/g, '&amp;')
+								.replace(/</g, '&lt;')
+								.replace(/>/g, '&gt;')
+								.replace(/"/g, '&quot;')
+								.replace(/'/g, '&#039;');
+				}
+				
+				function melangerTableau(tableau) {
+						const resultat = [...tableau];
+						for (let i = resultat.length - 1; i > 0; i--) {
+								const j = Math.floor(Math.random() * (i + 1));
+								[resultat[i], resultat[j]] = [resultat[j], resultat[i]];
+						}
+						return resultat;
+				}
+				
+				// Fonction pour remplacer une séquence dans une chaîne
+				function remplacerSequence(texte, sequence, remplacement) {
+						const sequenceEchappee = sequence.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+						return texte.replace(new RegExp(sequenceEchappee, 'g'), remplacement);
+				}
+				
+				// Fonction pour extraire les mots significatifs d'une définition
+				function extraireMotsSignificatifs(definition) {
+						// Liste des mots outils à exclure
+						const motsOutils = [
+								'le', 'la', 'les', 'un', 'une', 'des', 'du', 'de', 'dans', 'pour', 'avec', 'sans', 
+								'sous', 'sur', 'chez', 'dont', 'que', 'qui', 'quoi', 'où', 'quand', 'comment', 
+								'pourquoi', 'combien', 'ce', 'cet', 'cette', 'ces', 'mon', 'ton', 'son', 'notre', 
+								'votre', 'leur', 'ma', 'ta', 'sa', 'mes', 'tes', 'ses', 'nos', 'vos', 'leurs', 
+								'au', 'aux', 'par', 'pas', 'plus', 'moins', 'très', 'trop', 'si', 'comme', 'et', 
+								'ou', 'ni', 'car', 'donc', 'or', 'mais', 'est', 'sont', 'était', 'étaient', 'sera', 
+								'seront', 'avoir', 'être', 'faire', 'dire', 'voir', 'savoir', 'pouvoir', 'vouloir', 
+								'devoir', 'aller', 'venir', 'tout', 'tous', 'toute', 'toutes', 'rien', 'personne', 
+								'quelque', 'certains', 'aucun', 'aucune', 'plusieurs', 'chaque', 'même', 'autre', 
+								'autres', 'tel', 'telle', 'tels', 'telles', 'peu', 'beaucoup', 'assez', 'trop', 
+								'très', 'moins', 'plus', 'aussi', 'également', 'seulement', 'juste', 'presque', 
+								'environ', 'à', 'dès', 'depuis', 'pendant', 'jusque', 'entre', 'parmi', 'vers', 
+								'contre', 'selon', 'malgré', 'sauf', 'excepté', 'hormis', 'outre', 'ainsi', 'donc', 
+								'alors', 'ensuite', 'puis', 'finalement', 'bref', 'enfin', 'certes', 'toutefois', 
+								'néanmoins', 'pourtant', 'cependant', 'par', 'contre', 'dailleurs', 'de', 'plus'
+						];
+						
+						// Enlever la ponctuation et diviser en mots
+						const mots = definition
+								.replace(/[.,;:!?()]/g, ' ')
+								.split(/\s+/)
+								.filter(mot => mot.length >= 4) // Filtrer les mots de 4 lettres ou plus
+								.filter(mot => !motsOutils.includes(mot.toLowerCase())); // Enlever les mots outils
+						
+						// Retourner les mots uniques
+						return [...new Set(mots)];
+				}
+				
+				// Fonction pour créer des trous intelligents dans une définition
+				function creerTrousIntelligents(definition) {
+						// Extraire les mots significatifs
+						const motsSignificatifs = extraireMotsSignificatifs(definition);
+						
+						if (motsSignificatifs.length === 0) {
+								return [];
+						}
+						
+						// Sélectionner 3-5 mots au hasard (ou moins s'il n'y en a pas assez)
+						const nombreDeTrous = Math.min(5, Math.max(2, motsSignificatifs.length));
+						const motsSelectionnes = [];
+						const indicesUtilises = new Set();
+						
+						// Essayer de sélectionner des mots qui existent dans la définition
+						const motsExistants = [];
+						motsSignificatifs.forEach(mot => {
+								if (definition.includes(mot)) {
+										motsExistants.push(mot);
+								}
+						});
+						
+						// Utiliser d'abord les mots qui existent dans la définition
+						const motsSource = motsExistants.length >= 2 ? motsExistants : motsSignificatifs;
+						
+						while (motsSelectionnes.length < nombreDeTrous && indicesUtilises.size < motsSource.length) {
+								const index = Math.floor(Math.random() * motsSource.length);
+								if (!indicesUtilises.has(index)) {
+										indicesUtilises.add(index);
+										motsSelectionnes.push(motsSource[index]);
+								}
+						}
+						
+						return motsSelectionnes;
+				}
+				
+				// Fonction pour séparer un repère composé (ex: "absolu/relatif" en "absolu" et "relatif")
+				function separerRepereCompose(repereDefinition) {
+						// Séparer par "/" et prendre un élément au hasard
+						const parties = repereDefinition.split('/');
+						if (parties.length > 1) {
+								// Prendre un élément au hasard
+								const index = Math.floor(Math.random() * parties.length);
+								return parties[index].trim();
+						}
+						return repereDefinition.trim();
+				}
+				
+				// ===================================================================
+				// CONVERSION D'UN SEUL REPÈRE EN TEXTE AVEC TROUS
+				// ===================================================================
+				function convertirRepereEnTexte(repere) {
+						// Sélectionner un seul repère (pas deux comme "absolu/relatif")
+						const repèreComplet = repere.definition;
+						const repèreUnique = separerRepereCompose(repèreComplet);
+						
+						// Trouver la partie correspondant au repère unique
+						let definition = "";
+						if (repere.parts && repere.parts.length > 0) {
+								// Chercher la partie qui correspond au repère unique
+								const partieCorrespondante = repere.parts.find(part => 
+										part.name.toLowerCase() === repèreUnique.toLowerCase()
+								);
+								
+								if (partieCorrespondante) {
+										definition = partieCorrespondante.definition;
+								} else {
+										// Si pas trouvé, prendre une partie au hasard
+										const partieIndex = Math.floor(Math.random() * repere.parts.length);
+										definition = repere.parts[partieIndex].definition;
+								}
+						}
+						
+						if (!definition || definition.trim() === "") {
+								console.warn(`Pas de définition pour le repère: ${repèreUnique}`);
+								return null;
+						}
+						
+						// Créer les trous dans la définition
+						const motsPourTrous = creerTrousIntelligents(definition);
+						
+						if (motsPourTrous.length === 0) {
+								console.warn(`Aucun mot significatif pour créer des trous: ${repèreUnique}`);
+								return null;
+						}
+						
+						// Créer le texte avec les trous
+						let texteAvecTrous = definition;
+						
+						// Remplacer chaque mot sélectionné par un trou dans la définition
+						motsPourTrous.forEach(mot => {
+								// Vérifier si le mot existe dans le texte
+								if (texteAvecTrous.includes(mot)) {
+										const zoneDepot = `<span class="dropzone" data-answer="${escapeHTML(mot)}"></span>`;
+										texteAvecTrous = remplacerSequence(texteAvecTrous, mot, zoneDepot);
+								}
+						});
+						
+						// Vérifier qu'il reste au moins un trou
+						const aDesTrous = texteAvecTrous.includes('dropzone');
+						
+						if (!aDesTrous) {
+								console.warn(`Aucun trou créé pour le repère: ${repèreUnique}`);
+								return null;
+						}
+						
+						return {
+								nomRepère: repèreUnique,
+								texte: texteAvecTrous,
+								trous: motsPourTrous.filter(mot => texteAvecTrous.includes(`data-answer="${escapeHTML(mot)}"`)),
+								source: ""
+						};
+				}
+				
+				// ===================================================================
+				// FONCTION PRINCIPALE POUR GÉNÉRER LE JEU
+				// ===================================================================
+				function genererJeu() {
+						// Si aucun texte n'est disponible, retourner un texte par défaut
+						if (textesAvecTrous.length === 0) {
+								console.error("Erreur : Aucune texte définie");
+								return {
+										nomRepère: "Erreur",
+										texte: "Erreur : Veuillez vérifier le fichier de ressources",
+										mots: ["erreur", "configuration"],
+										reponses: ["erreur", "configuration"],
+										source: ""
+								};
+						}
+						
+						// Sélectionner une texte au hasard
+						const texteConfig = textesAvecTrous[getRandomIndex(textesAvecTrous.length)];
+						const nomRepère = texteConfig.nomRepère;
+						const texteOriginale = texteConfig.texte;
+						const sourceCitation = texteConfig.source || "";
+						let sequencesTrous = texteConfig.trous;
+						
+						// Stocker la source pour l'utiliser plus tard
+						currentSource = sourceCitation;
+						
+						// VÉRIFICATION : S'assurer que tous les trous existent dans la texte
+						sequencesTrous = sequencesTrous.filter(sequence => {
+								const existe = texteOriginale.includes(`data-answer="${escapeHTML(sequence)}"`);
+								if (!existe) {
+										console.warn(`Avertissement : La séquence "${sequence}" n'existe pas dans la texte. Elle sera ignorée.`);
+								}
+								return existe;
+						});
+						
+						// Vérifier qu'il reste au moins un trou
+						if (sequencesTrous.length === 0) {
+								console.error("Erreur : Aucun trou valide trouvé dans la texte");
+								return {
+										nomRepère: nomRepère,
+										texte: texteOriginale,
+										mots: [],
+										reponses: [],
+										source: sourceCitation
+								};
+						}
+						
+						// LES MOTS À PLACER SONT EXACTEMENT LES SÉQUENCES DES TROUS, MÉLANGÉES
+						const motsPourJeu = melangerTableau([...sequencesTrous]);
+						
+						return {
+								nomRepère: nomRepère,
+								texte: texteOriginale,
+								mots: motsPourJeu,
+								reponses: sequencesTrous,
+								source: sourceCitation
+						};
+				}
+				
+				// ===================================================================
+				// INITIALISATION
+				// ===================================================================
+				document.addEventListener("DOMContentLoaded", () => {
+						// Attendre que le fichier reperes.js soit chargé
+						setTimeout(() => {
+								// Vérifier si window.reperes est disponible
+								if (window.reperes && Array.isArray(window.reperes)) {
+										// Convertir chaque repère en texte avec trous
+										window.reperes.forEach(repere => {
+												const texte = convertirRepereEnTexte(repere);
+												if (texte) {
+														textesAvecTrous.push(texte);
+												}
+										});
+										
+										console.log(`${textesAvecTrous.length} textes chargées depuis reperes.js`);
+										
+										// Titres
+										document.title = title;
+										const appTitle = document.getElementById("appTitle");
+										const mobileTitle = document.getElementById("mobileTitle");
+										appTitle.textContent = title;
+										mobileTitle.textContent = title;
+										
+										const appSubtitle = document.getElementById("appSubtitle");
+										const mobileSubtitle = document.getElementById("mobileSubtitle");
+										appSubtitle.textContent = subtitle;
+										mobileSubtitle.textContent = subtitle;
+										
+										// Afficher la première texte
+										afficherNouvelletexte();
+										
+										// Initialiser les événements
+										initialiserEvenements();
+								} else {
+										console.error("Erreur : window.reperes n'est pas disponible ou n'est pas un tableau");
+										// Afficher un message d'erreur
+										textContainer.innerHTML = "<p style='color:red;'>Erreur : Impossible de charger les repères philosophiques. Vérifiez que le fichier reperes.js est correctement chargé.</p>";
+										actionButton.disabled = true;
+								}
+						}, 100); // Petit délai pour s'assurer que le script est chargé
+				});
+				
+				// ===================================================================
+				// FONCTIONS DU JEU
+				// ===================================================================
+				function afficherNouvelletexte() {
+						const jeu = genererJeu();
+						
+						// Construire le contenu avec le repère et sa définition trouée dans la même police et couleur
+						let contenuHTML = `<span class="repere-nom">${jeu.nomRepère} :</span> `;
+						contenuHTML += jeu.texte;
+						
+						if (jeu.source) {
+								contenuHTML += `<div class="citation-source">${jeu.source}</div>`;
+						}
+						
+						textContainer.innerHTML = contenuHTML;
+						
+						// Afficher les mots à placer
+						if (jeu.mots && jeu.mots.length > 0) {
+								wordsContainer.innerHTML = jeu.mots
+										.map(mot => `<span class="draggable-word" draggable="true">${escapeHTML(mot)}</span>`)
+										.join("");
+						} else {
+								wordsContainer.innerHTML = "<p>Aucun mot à placer dans cette définition.</p>";
+						}
+						
+						ajouterListenersDragDrop();
+						updateButtonState();
+						updateDropzoneState();
+						
+						// Incrémenter le compteur de parties
+						gamesPlayed++;
+						localStorage.setItem('gamesPlayed', gamesPlayed);
+				}
+				
+				function updateButtonState() {
+						const dropzones = textContainer.querySelectorAll(".dropzone");
+						const allFilled = Array.from(dropzones).every(zone => zone.textContent.trim() !== "");
+						actionButton.disabled = !allFilled;
+				}
+				
+				function updateDropzoneState() {
+						const dropzones = textContainer.querySelectorAll(".dropzone");
+						dropzones.forEach(zone => {
+								const contenu = zone.textContent.trim();
+								if (contenu !== "") {
+										zone.classList.add("filled");
+										zone.setAttribute("draggable", "true");
+										// Ajouter une classe pour les séquences longues
+										if (contenu.length > 15) {
+												zone.classList.add("long-sequence");
+										} else {
+												zone.classList.remove("long-sequence");
+										}
+								} else {
+										zone.classList.remove("filled", "long-sequence");
+										zone.removeAttribute("draggable");
+								}
+						});
+				}
+				
+				function ajouterListenersDragDrop() {
+						// Écouteurs pour les mots déplaçables
+						document.querySelectorAll('.draggable-word').forEach(word => {
+								word.addEventListener('dragstart', dragStart);
+								word.addEventListener('dragend', dragEnd);
+								word.addEventListener('touchstart', touchStart, { passive: false });
+								word.addEventListener('touchmove', touchMove, { passive: false });
+								word.addEventListener('touchend', touchEnd, { passive: false });
+						});
+						
+						// Écouteurs pour les zones de dépôt
+						document.querySelectorAll('.dropzone').forEach(zone => {
+								zone.addEventListener('dragover', dragOver);
+								zone.addEventListener('dragenter', dragEnter);
+								zone.addEventListener('dragleave', dragLeave);
+								zone.addEventListener('drop', drop);
+								if (zone.textContent.trim() !== "") {
+										zone.addEventListener('dragstart', dragStart);
+										zone.addEventListener('dragend', dragEnd);
+										zone.addEventListener('touchstart', touchStart, { passive: false });
+										zone.addEventListener('touchmove', touchMove, { passive: false });
+										zone.addEventListener('touchend', touchEnd, { passive: false });
+								}
+						});
+						
+						// Écouteur pour le conteneur de mots
+						wordsContainer.addEventListener('dragover', dragOver);
+						wordsContainer.addEventListener('dragenter', dragEnter);
+						wordsContainer.addEventListener('dragleave', dragLeave);
+						wordsContainer.addEventListener('drop', dropWordsContainer);
+				}
+				
+				// ===================================================================
+				// FONCTIONS DRAG & DROP (inchangées)
+				// ===================================================================
+				function dragStart(e) {
+						if (e.target.classList.contains('draggable-word') || e.target.classList.contains('dropzone')) {
+								e.dataTransfer.setData('text/plain', e.target.textContent);
+								e.dataTransfer.setData('source', e.target.classList.contains('dropzone') ? 'dropzone' : 'words-container');
+								e.target.classList.add('touched');
+								draggedElement = e.target;
+						}
+				}
+				
+				function dragEnd(e) {
+						e.target.classList.remove('touched');
+						draggedElement = null;
+						document.querySelectorAll('.dropzone').forEach(zone => zone.classList.remove('dragging-over'));
+						wordsContainer.classList.remove('dragging-over');
+						updateButtonState();
+						updateDropzoneState();
+						ajouterListenersDragDrop();
+				}
+				
+				function dragOver(e) {
+						e.preventDefault();
+				}
+				
+				function dragEnter(e) {
+						if (e.target.classList.contains('dropzone') || e.target === wordsContainer) {
+								e.target.classList.add('dragging-over');
+						}
+				}
+				
+				function dragLeave(e) {
+						if (e.target.classList.contains('dropzone') || e.target === wordsContainer) {
+								e.target.classList.remove('dragging-over');
+						}
+				}
+				
+				function drop(e) {
+						if (e.target.classList.contains('dropzone')) {
+								e.preventDefault();
+								const newWord = e.dataTransfer.getData('text/plain');
+								const source = e.dataTransfer.getData('source');
+								const oldWord = e.target.textContent;
+								
+								if (oldWord) {
+										const oldWordElement = document.createElement('span');
+										oldWordElement.className = 'draggable-word';
+										oldWordElement.draggable = true;
+										oldWordElement.textContent = oldWord;
+										wordsContainer.appendChild(oldWordElement);
+								}
+								
+								e.target.textContent = newWord;
+								e.target.title = newWord;
+								e.target.classList.remove('dragging-over');
+								
+								if (draggedElement && source === 'dropzone') {
+										draggedElement.textContent = "";
+										draggedElement.removeAttribute('title');
+								} else if (draggedElement && source === 'words-container') {
+										draggedElement.remove();
+								}
+								
+								updateButtonState();
+								updateDropzoneState();
+								ajouterListenersDragDrop();
+						}
+				}
+				
+				function dropWordsContainer(e) {
+						e.preventDefault();
+						const newWord = e.dataTransfer.getData('text/plain');
+						const source = e.dataTransfer.getData('source');
+						
+						if (source === 'dropzone') {
+								const newWordElement = document.createElement('span');
+								newWordElement.className = 'draggable-word';
+								newWordElement.draggable = true;
+								newWordElement.textContent = newWord;
+								wordsContainer.appendChild(newWordElement);
+						}
+						
+						if (draggedElement && source === 'dropzone') {
+								draggedElement.textContent = "";
+								draggedElement.removeAttribute('title');
+						}
+						
+						wordsContainer.classList.remove('dragging-over');
+						updateButtonState();
+						updateDropzoneState();
+						ajouterListenersDragDrop();
+				}
+				
+				// Fonctions tactiles
+				function touchStart(e) {
+						if (e.target.classList.contains('draggable-word') || e.target.classList.contains('dropzone')) {
+								e.preventDefault();
+								e.target.classList.add('touched');
+								draggedElement = e.target;
+								draggedElement.dataset.word = e.target.textContent;
+								draggedElement.dataset.source = e.target.classList.contains('dropzone') ? 'dropzone' : 'words-container';
+						}
+				}
+				
+				function touchMove(e) {
+						if (!draggedElement) return;
+						e.preventDefault();
+						const touch = e.touches[0];
+						requestAnimationFrame(() => {
+								draggedElement.style.position = 'fixed';
+								draggedElement.style.left = `${touch.clientX - draggedElement.offsetWidth / 2}px`;
+								draggedElement.style.top = `${touch.clientY - draggedElement.offsetHeight / 2}px`;
+								draggedElement.style.visibility = 'hidden';
+								const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+								draggedElement.style.visibility = 'visible';
+								
+								document.querySelectorAll('.dropzone').forEach(zone => zone.classList.remove('dragging-over'));
+								wordsContainer.classList.remove('dragging-over');
+								
+								if (elementBelow && (elementBelow.classList.contains('dropzone') || elementBelow === wordsContainer)) {
+										elementBelow.classList.add('dragging-over');
+								}
+						});
+				}
+				
+				function touchEnd(e) {
+						if (!draggedElement) return;
+						e.preventDefault();
+						const touch = e.changedTouches[0];
+						draggedElement.style.visibility = 'hidden';
+						const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+						draggedElement.style.visibility = 'visible';
+						draggedElement.style.position = '';
+						draggedElement.style.left = '';
+						draggedElement.style.top = '';
+						draggedElement.classList.remove('touched');
+						
+						if (elementBelow && elementBelow.classList.contains('dropzone')) {
+								const newWord = draggedElement.dataset.word;
+								const source = draggedElement.dataset.source;
+								const oldWord = elementBelow.textContent;
+								
+								if (oldWord) {
+										const oldWordElement = document.createElement('span');
+										oldWordElement.className = 'draggable-word';
+										oldWordElement.draggable = true;
+										oldWordElement.textContent = oldWord;
+										wordsContainer.appendChild(oldWordElement);
+								}
+								
+								elementBelow.textContent = newWord;
+								elementBelow.title = newWord;
+								elementBelow.classList.remove('dragging-over');
+								
+								if (source === 'dropzone') {
+										draggedElement.textContent = "";
+										draggedElement.removeAttribute('title');
+								} else if (source === 'words-container') {
+										draggedElement.remove();
+								}
+						} else if (elementBelow && (elementBelow === wordsContainer || elementBelow.closest('#words-container'))) {
+								const newWord = draggedElement.dataset.word;
+								const source = draggedElement.dataset.source;
+								
+								if (source === 'dropzone') {
+										const newWordElement = document.createElement('span');
+										newWordElement.className = 'draggable-word';
+										newWordElement.draggable = true;
+										newWordElement.textContent = newWord;
+										wordsContainer.appendChild(newWordElement);
+										draggedElement.textContent = "";
+										draggedElement.removeAttribute('title');
+								}
+						}
+						
+						draggedElement = null;
+						document.querySelectorAll('.dropzone').forEach(zone => zone.classList.remove('dragging-over'));
+						wordsContainer.classList.remove('dragging-over');
+						updateButtonState();
+						updateDropzoneState();
+						ajouterListenersDragDrop();
+				}
+				
+				// ===================================================================
+				// VÉRIFICATION DES RÉPONSES
+				// ===================================================================
+				function verifierReponses() {
+						const dropzones = textContainer.querySelectorAll(".dropzone");
+						let correctCount = 0;
+						
+						dropzones.forEach(zone => {
+								zone.classList.remove("correct", "incorrect");
+								// Normaliser les réponses (enlever espaces multiples au début/fin)
+								const reponseUtilisateur = zone.textContent.trim();
+								const reponseCorrecte = zone.dataset.answer;
+								
+								// Comparaison exacte (sensible à la casse et aux espaces internes)
+								if (reponseUtilisateur === reponseCorrecte) {
+										zone.style.backgroundColor = "#90EE90";
+										zone.classList.add("correct");
+										correctCount++;
+								} else {
+										zone.style.backgroundColor = "#FFB6C1";
+										zone.classList.add("incorrect");
+								}
+						});
+						
+						correctAnswers += correctCount;
+						totalAnswers += dropzones.length;
+						scoreButton.textContent = `score : ${correctAnswers} / ${totalAnswers}`;
+						
+						return correctCount === dropzones.length;
+				}
+				
+				function montrerCorrections() {
+						const dropzones = textContainer.querySelectorAll(".dropzone");
+						const words = document.querySelectorAll(".draggable-word");
+						
+						dropzones.forEach((zone) => {
+								const correctWord = zone.dataset.answer;
+								const currentWord = zone.textContent;
+								
+								// Normaliser pour la comparaison
+								const reponseUtilisateur = currentWord.trim();
+								const reponseCorrecte = correctWord;
+								
+								if (reponseUtilisateur !== reponseCorrecte) {
+										zone.textContent = correctWord;
+										zone.title = correctWord;
+										zone.style.backgroundColor = "#90EE90";
+										zone.classList.add("correct");
+										zone.classList.remove("incorrect");
+								}
+								
+								zone.classList.remove("filled", "long-sequence");
+								zone.removeAttribute("draggable");
+						});
+						
+						setTimeout(() => {
+								words.forEach(word => word.remove());
+						}, 500);
+				}
+				
+				function reinitialiserDropzones() {
+						const dropzones = textContainer.querySelectorAll(".dropzone");
+						dropzones.forEach(zone => {
+								zone.textContent = "";
+								zone.style.backgroundColor = "var(--bg)";
+								zone.classList.remove("filled", "correct", "incorrect", "long-sequence");
+								zone.removeAttribute("draggable");
+								zone.removeAttribute("title");
+						});
+						updateButtonState();
+						updateDropzoneState();
+				}
+				
+				// ===================================================================
+				// ÉVÉNEMENTS DU MENU ET DES BOUTONS
+				// ===================================================================
+				function initialiserEvenements() {
+						// Bouton action principal
+						actionButton.addEventListener("click", () => {
+								switch (currentState) {
+										case "verify":
+												if (verifierReponses()) {
+														actionButton.innerHTML = "<span class='reload-symbol'>&#8635;</span>";
+														currentState = "change";
+												} else {
+														actionButton.textContent = "correction";
+														currentState = "correct";
+												}
+												break;
+										case "correct":
+												montrerCorrections();
+												actionButton.innerHTML = "<span class='reload-symbol'>&#8635;</span>";
+												currentState = "change";
+												break;
+										case "change":
+												afficherNouvelletexte();
+												reinitialiserDropzones();
+												actionButton.textContent = "vérifier";
+												currentState = "verify";
+												break;
+								}
+						});
+						
+						// Boutons recharger
+						const rotateElement = el => {
+								el.style.transform = "rotate(360deg)";
+								setTimeout(() => el.style.transform = "", 600);
+						};
+						
+						const reloadButtons = [document.getElementById("reloadButton"), document.getElementById("reloadButtonMobile")];
+						reloadButtons.forEach(btn => {
+								if (btn) {
+										btn.addEventListener("click", () => {
+												rotateElement(btn.querySelector(".rotate-icon"));
+												correctAnswers = totalAnswers = 0;
+												scoreButton.textContent = "score : 0 / 0";
+												document.querySelectorAll(".dropzone").forEach(el => {
+														el.style.backgroundColor = "var(--bg)";
+														el.classList.remove("correct", "incorrect");
+												});
+												actionButton.textContent = "vérifier";
+												currentState = "verify";
+												afficherNouvelletexte();
+												reinitialiserDropzones();
+										});
+								}
+						});
+						
+						// Menu coulissant
+						const overlay = document.getElementById("menuOverlay");
+						const slide = document.getElementById("slideMenu");
+						const menuButtons = [document.getElementById("menuButton"), document.getElementById("menuButtonMobile")];
+						
+						const toggleMenu = () => {
+								overlay.classList.toggle("open");
+								slide.classList.toggle("open");
+								menuButtons.forEach(b => {
+										if (b && b.querySelector(".rotate-icon")) {
+												rotateElement(b.querySelector(".rotate-icon"));
+										}
+								});
+						};
+						
+						menuButtons.forEach(btn => {
+								if (btn) btn.onclick = toggleMenu;
+						});
+						
+						overlay.onclick = () => {
+								overlay.classList.remove("open");
+								slide.classList.remove("open");
+						};
+						
+						// Boutons du menu
+						document.getElementById("instructionsButton").onclick = () => {
+								toggleMenu();
+								setTimeout(() => ouvrirModal('instructionsModal'), 300);
+						};
+						
+						document.getElementById("statsButton").onclick = () => {
+								toggleMenu();
+								setTimeout(() => {
+										document.getElementById('statsCorrectCount').textContent = correctAnswers;
+										document.getElementById('statsTotalCount').textContent = totalAnswers;
+										const percentage = totalAnswers ? Math.round(correctAnswers / totalAnswers * 100) : 0;
+										document.getElementById('statsPercentage').textContent = percentage + '%';
+										document.getElementById('gamesPlayed').textContent = gamesPlayed;
+										ouvrirModal('statsModal');
+								}, 300);
+						};
+						
+						document.getElementById("settingsButton").onclick = () => {
+								toggleMenu();
+								setTimeout(() => ouvrirModal('settingsModal'), 300);
+						};
+						
+						// Boutons de fermeture des modales
+						document.querySelectorAll('.close-modal').forEach(btn => {
+								btn.addEventListener('click', () => {
+										const modalId = btn.getAttribute('data-modal');
+										fermerModal(modalId);
+								});
+						});
+						
+						document.getElementById("resetButton").onclick = () => {
+								localStorage.clear();
+								location.reload();
+						};
+						
+						// Bouton "À propos"
+						document.getElementById("aboutButton").onclick = () => {
+								toggleMenu();
+								const modal = document.createElement('div');
+								modal.className = 'modal';
+								const modalContent = document.createElement('div');
+								modalContent.className = 'modal-content';
+								modalContent.style.maxWidth = '500px';
+								
+								const modalHeader = document.createElement('div');
+								modalHeader.style.display = 'flex';
+								modalHeader.style.justifyContent = 'space-between';
+								modalHeader.style.alignItems = 'center';
+								modalHeader.style.marginBottom = '20px';
+								modalHeader.style.paddingBottom = '15px';
+								modalHeader.style.borderBottom = '2px solid #ccc';
+								
+								const modalTitle = document.createElement('h2');
+								modalTitle.className = 'modal-title';
+								modalTitle.textContent = 'à propos';
+								modalTitle.style.margin = '0';
+								modalTitle.style.color = 'red';
+								
+								const closeButton = document.createElement('button');
+								closeButton.innerHTML = '×';
+								closeButton.style.background = 'none';
+								closeButton.style.border = 'none';
+								closeButton.style.fontSize = '28px';
+								closeButton.style.cursor = 'pointer';
+								closeButton.style.color = 'var(--font-color)';
+								closeButton.onclick = function () {
+										modal.classList.remove('open');
+										setTimeout(() => modal.remove(), 300);
+								};
+								
+								modalHeader.appendChild(modalTitle);
+								modalHeader.appendChild(closeButton);
+								
+								const contentDiv = document.createElement('div');
+								contentDiv.innerHTML = `
+										<p style="text-align: center; line-height: 1.6; margin: 20px 0;">
+												<strong>application « repères philosophiques à trous »</strong><br><br>
+												développée par Daniel Boulagnon<br>
+												daniel.boulagnon@ac-lille.fr<br><br>
+												version 2025<br><br>
+												exploitation à but pédagogique et non commercial
+										</p>
+								`;
+								
+								modalContent.appendChild(modalHeader);
+								modalContent.appendChild(contentDiv);
+								modal.appendChild(modalContent);
+								
+								modal.addEventListener('click', function (event) {
+										if (event.target === modal) {
+												modal.classList.remove('open');
+												setTimeout(() => modal.remove(), 300);
+										}
+								});
+								
+								document.body.appendChild(modal);
+								setTimeout(() => modal.classList.add('open'), 10);
+						};
+						
+						// Gestion des modes
+						const darkToggle = document.getElementById("darkModeToggle");
+						if (localStorage.getItem("darkMode") === "true") {
+								document.body.classList.add("dark-mode");
+								darkToggle.checked = true;
+						}
+						darkToggle.onchange = e => {
+								document.body.classList.toggle("dark-mode", e.target.checked);
+								localStorage.setItem("darkMode", e.target.checked);
+						};
+						
+						const colorblindToggle = document.getElementById("colorblindModeToggle");
+						if (localStorage.getItem("colorblindMode") === "true") {
+								document.body.classList.add("colorblind-mode");
+								colorblindToggle.checked = true;
+						}
+						colorblindToggle.onchange = e => {
+								document.body.classList.toggle("colorblind-mode", e.target.checked);
+								localStorage.setItem("colorblindMode", e.target.checked);
+						};
+						
+						// Plein écran
+						const updateFullscreenIcon = () => {
+								const isFullscreen = !!document.fullscreenElement;
+								document.querySelectorAll('.fullscreen').forEach(btn => {
+										btn.innerHTML = isFullscreen
+												? `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path></svg>`
+												: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path></svg>`;
+								});
+						};
+						
+						document.querySelectorAll('.fullscreen').forEach(btn => {
+								if (btn) {
+										btn.onclick = () => {
+												document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+										};
+								}
+						});
+						
+						document.addEventListener('fullscreenchange', updateFullscreenIcon);
+						updateFullscreenIcon();
+				}
+				
+				// ===================================================================
+				// FONCTIONS MODALES
+				// ===================================================================
+				function ouvrirModal(modalId) {
+						const modal = document.getElementById(modalId);
+						if (modal) {
+								modal.classList.add('open');
+						}
+				}
+				
+				function fermerModal(modalId) {
+						const modal = document.getElementById(modalId);
+						if (modal) {
+								modal.classList.remove('open');
+						}
+				}
+				
+				// Fermer les modales en cliquant à l'extérieur
+				document.querySelectorAll('.modal').forEach(modal => {
+						modal.addEventListener('click', (e) => {
+								if (e.target === modal) {
+										modal.classList.remove('open');
+								}
+						});
+		});
+		</script>
+		
+		<!-- CHARGEMENT DU FICHIER REPERES.JS -->
+	<script src="../../src/reperes.js"></script>
 </body>
 </html>
