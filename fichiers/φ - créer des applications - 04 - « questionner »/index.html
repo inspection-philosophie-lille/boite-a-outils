@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<!-- Daniel Boulagnon -->
+<!-- daniel.boulagnon@ac-lille.fr -->
+<!-- version 2025 -->
+<!-- Exploitation à but strictement pédagogique et non lucratif -->
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3.0">
+	<link rel="icon" type="image/svg+xml" href__="src/favicon.ico" />
+	<title>quiz φ</title>
+	<style>
+		/* Reset minimaliste */
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			background: #f5f5f5;
+			transition: background-color 0.4s, color 0.4s;
+			min-height: 100vh;
+			overflow-x: hidden;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.hidden {
+			display: none !important;
+		}
+
+		img {
+			object-fit: cover;
+		}
+
+		button {
+			background: none;
+			border: none;
+			cursor: pointer;
+			font-family: inherit;
+		}
+
+		a {
+			text-decoration: none;
+			color: inherit;
+		}
+
+		ul {
+			list-style: none;
+			padding: 0;
+		}
+
+		/* Variables pour les thèmes */
+		:root {
+			--bg: #f3f3f3;
+			--btn: #fff;
+			--font-color: #444;
+			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.9);
+			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.9);
+			/* Couleurs pour réponses */
+			--color-correct: #28a745;
+			--color-incorrect: #dc3545;
+			--border-correct: #71e8ab;
+			--border-incorrect: #ff878c;
+		}
+
+		/* Mode sombre */
+		body.dark-mode {
+			--bg: #1e1e1e;
+			--btn: #1e1e1e;
+			--font-color: #e0e0e0;
+			background: #1e1e1e;
+			color: #e0e0e0;
+			--color-correct: #2ecc71;
+			--color-incorrect: #e74c3c;
+			--border-correct: #27ae60;
+			--border-incorrect: #c0392b;
+		}
+
+		/* Mode daltonien - utilise des couleurs distinctes */
+		body.colorblind-mode {
+			--color-correct: #3498db;
+			--color-incorrect: #e74c3c;
+			--border-correct: #2980b9;
+			--border-incorrect: #c0392b;
+		}
+
+		/* Combinaison mode sombre + daltonien */
+		body.dark-mode.colorblind-mode {
+			--color-correct: #3498db;
+			--color-incorrect: #e74c3c;
+			--border-correct: #2980b9;
+			--border-incorrect: #c0392b;
+		}
+
+		/* Indicateurs pour mode daltonien */
+		.colorblind-indicator {
+			display: none;
+		}
+
+		body.colorblind-mode .colorblind-indicator {
+			display: inline-block;
+			margin-left: 8px;
+			font-weight: bold;
+		}
+
+		body.colorblind-mode .correct .colorblind-indicator {
+			content: "✓";
+			color: white;
+		}
+
+		body.colorblind-mode .incorrect .colorblind-indicator {
+			content: "✗";
+			color: white;
+		}
+
+		/* TOOLBAR */
+		.toolbar {
+			width: 100%;
+			padding: 10px 15px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 20px;
+			background: var(--bg);
+			flex-shrink: 0;
+		}
+
+		.toolbar-left,
+		.toolbar-right {
+			display: flex;
+			gap: 12px;
+			align-items: center;
+		}
+
+		.toolbar-center {
+			position: absolute;
+			left: 0;
+			right: 0;
+			pointer-events: none;
+			text-align: center;
+		}
+
+		.toolbar-btn {
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			background: var(--btn);
+			border: none;
+			color: var(--font-color);
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+		}
+
+		.toolbar-btn:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+
+		.toolbar-btn:active {
+			transform: translateY(1px);
+		}
+
+		.rotate-icon {
+			display: block;
+			transition: transform 0.3s ease;
+		}
+
+		.toolbar-btn.reload:hover .rotate-icon {
+			transform: rotate(90deg);
+		}
+
+		.toolbar-btn.menu:hover .rotate-icon {
+			transform: rotate(90deg);
+		}
+
+		.toolbar-btn.reload .rotate-icon {
+			font-size: 36px;
+		}
+
+		.toolbar-btn.menu .rotate-icon {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			width: 22px;
+		}
+
+		.toolbar-btn.menu .rotate-icon span {
+			width: 100%;
+			height: 2px;
+			background: currentColor;
+			border-radius: 2px;
+		}
+
+		.toolbar-btn svg {
+			width: 28px;
+			height: 28px;
+			fill: currentColor;
+		}
+
+		/* Titres - QUIZ en rouge dans la toolbar */
+		h1 {
+			color: red !important;
+			font-size: 1.8em;
+			font-weight: bold;
+			margin: 0 0 8px 0;
+			text-transform: uppercase;
+		}
+
+		.subtitle {
+			margin: 0;
+			color: #555;
+			font-size: clamp(1rem, 3vw, 1.2rem);
+			text-transform: lowercase;
+		}
+
+		body.dark-mode h1 {
+			color: red !important;
+		}
+
+		/* QUIZ dans la barre de progression en NOIR */
+		#quizTitle {
+			color: var(--font-color) !important;
+		}
+
+		/* MENU COULISSANT */
+		.menu-overlay {
+			position: fixed;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.5);
+			z-index: 1000;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.3s;
+		}
+
+		.menu-overlay.open {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.slide-menu {
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			right: -320px;
+			width: 280px;
+			background: var(--bg);
+			z-index: 1001;
+			box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+			transition: right 0.3s ease;
+			overflow: hidden;
+			border-radius: 20px 0 0 20px;
+			transform: translateZ(0);
+		}
+
+		.slide-menu.open {
+			right: 0;
+		}
+
+		.menu-content {
+			height: 100%;
+			overflow-y: auto;
+			padding: 90px 20px 20px;
+			box-sizing: border-box;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		.menu-item {
+			background: var(--btn);
+			padding: 15px;
+			margin-bottom: 8px;
+			border-radius: 10px;
+			text-align: left;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			box-shadow: var(--shadow-out);
+			width: 100%;
+			box-sizing: border-box;
+			color: var(--font-color);
+			font-size: 1em;
+			border: none;
+		}
+
+		.menu-item:hover {
+			box-shadow: var(--shadow-in);
+		}
+
+		/* MODALE & SWITCH */
+		.modal {
+			display: none;
+			position: fixed;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.5);
+			z-index: 2000;
+			align-items: center;
+			justify-content: center;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
+
+		.modal.open {
+			display: flex;
+			opacity: 1;
+		}
+
+		.modal-content {
+			background: var(--bg);
+			padding: 30px;
+			border-radius: 15px;
+			width: 90%;
+			max-width: 500px;
+			transform: translateY(-20px);
+			transition: transform 0.3s ease;
+		}
+
+		.modal.open .modal-content {
+			transform: translateY(0);
+		}
+
+		.theme-switch {
+			position: relative;
+			display: inline-block;
+			width: 44px;
+			height: 24px;
+		}
+
+		.theme-switch input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
+
+		.slider {
+			position: absolute;
+			inset: 0;
+			background: #ccc;
+			border-radius: 24px;
+			transition: .4s;
+		}
+
+		.slider:before {
+			content: "";
+			position: absolute;
+			width: 18px;
+			height: 18px;
+			left: 3px;
+			top: 3px;
+			background: white;
+			border-radius: 50%;
+			transition: .4s;
+		}
+
+		input:checked+.slider {
+			background: #2196F3;
+		}
+
+		input:checked+.slider:before {
+			transform: translateX(20px);
+		}
+
+		/* Layout principal responsive */
+		.content--v2 {
+			padding: 5px 10px;
+			width: 100%;
+			max-width: 100vw;
+			overflow-x: hidden;
+			background: var(--bg);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			flex: 1;
+			box-sizing: border-box;
+			min-height: 0;
+		}
+
+		.wrapper--with-menu {
+			padding: 0;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			flex: 1;
+			min-height: 0;
+		}
+
+		.wrapper--with-menu>div {
+			max-width: 100%;
+			width: 100%;
+			margin: 0 auto;
+			display: flex;
+			justify-content: center;
+			flex: 1;
+			min-height: 0;
+		}
+
+		.wrapper--grid-playlist {
+			display: block;
+			margin-top: -10px;
+			width: 100%;
+			max-width: 1200px;
+			overflow: hidden;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			min-height: 0;
+		}
+
+		.grid-area--player {
+			width: 100%;
+			margin-bottom: 20px;
+			display: flex;
+			justify-content: center;
+			overflow: hidden;
+			flex: 1;
+			min-height: 0;
+		}
+
+		.grid-area--playlist {
+			display: none;
+		}
+
+		/* Conteneur quiz uniforme */
+		.container--quiz {
+			background: #f3f3f3;
+			border: 15px solid #fff;
+			box-shadow: var(--shadow-out);
+			width: 95%;
+			max-width: 500px;
+			height: 500px;
+			min-height: 500px;
+			overflow: hidden;
+			border-radius: 20px;
+			margin: 0 auto;
+			position: relative;
+			color: var(--font-color);
+			display: flex;
+			flex-direction: column;
+		}
+
+		body.dark-mode .container--quiz {
+			border-color: #2d2d2d;
+			background: #1e1e1e;
+		}
+
+		/* Écran de démarrage - OCCUPE 100% DE LA HAUTEUR */
+		.container--quiz-start {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			overflow: hidden;
+			border-radius: 5px;
+			display: flex;
+			flex-direction: column;
+		}
+
+		/* Image d'accueil - OCCUPE TOUTE LA HAUTEUR */
+		.quiz-start__img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+		}
+
+		.quiz-start__img img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			object-position: center;
+			display: block;
+		}
+
+		/* Overlay sombre */
+		.quiz-start__opacity {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.3);
+			z-index: 2;
+		}
+
+		/* Contenu au-dessus de l'image */
+		.quiz-start__content {
+			position: relative;
+			z-index: 3;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			align-items: center;
+			padding: 20px;
+		}
+
+		/* SUPPRESSION du titre QUIZ sur la page d'accueil */
+		.quiz-start__title {
+			display: none !important;
+		}
+
+		/* Bouton positionné */
+		.quiz-start__button {
+			width: 100%;
+			text-align: center;
+			padding-bottom: 40px;
+			display: flex;
+			justify-content: center;
+		}
+
+		/* Boutons responsive */
+		.quiz-btn {
+			border: 1px solid var(--font-color);
+			color: var(--font-color);
+			cursor: pointer;
+			font-family: Arial;
+			font-size: 14px;
+			padding: 12px 20px;
+			text-align: center;
+			width: auto;
+			min-width: 140px;
+			background: var(--btn);
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+		}
+
+		.quiz-btn:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+
+		.quiz-btn--default {
+			border-radius: 27px;
+			font-size: 15px;
+			line-height: 22px;
+			padding: 12px 25px;
+		}
+
+		/* Bouton large ajusté */
+		.quiz-btn--large {
+			border-radius: 33px;
+			font-size: 16px;
+			line-height: 25px;
+			padding: 16px 40px;
+			background: rgba(0, 0, 0, 0.6);
+			color: white;
+			box-shadow: 0 0.125rem 0 black, 0 0.375rem 0 rgba(0, 0, 0, 0.12), inset 0 -0.0625rem 0.25rem black;
+			width: auto;
+			max-width: 100%;
+			white-space: nowrap;
+			min-width: 260px;
+		}
+
+		.quiz-btn--fill {
+			background: #fff;
+			border: 1px solid #ddd;
+			color: var(--font-color);
+			box-shadow: var(--shadow-out);
+		}
+
+		/* CORRECTION : Style pour le bouton en mode sombre */
+		body.dark-mode .quiz-btn--fill {
+			background: #2d2d2d;
+			border: 1px solid #444;
+			color: #e0e0e0;
+			box-shadow: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.3), -0.3rem -0.3rem 0.6rem rgba(40, 40, 40, 0.5);
+		}
+
+		body.dark-mode .quiz-btn--fill:hover {
+			box-shadow: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.3), inset -0.2rem -0.2rem 0.4rem rgba(40, 40, 40, 0.5);
+		}
+
+		/* Barre de progression responsive */
+		.progress-bar {
+			align-items: center;
+			width: 100%;
+			background-color: var(--bg);
+			padding: 10px 15px;
+			flex-shrink: 0;
+		}
+
+		.progress-bar__info {
+			align-items: center;
+			display: flex;
+			justify-content: space-between;
+			font-size: 12px;
+			letter-spacing: 0.5px;
+			line-height: 26px;
+			text-transform: uppercase;
+			padding: 0 0 10px 0;
+			flex-wrap: wrap;
+		}
+
+		.progress-bar__title {
+			display: flex;
+			align-items: center;
+			flex: 1;
+			min-width: 120px;
+		}
+
+		.progress-bar__title img {
+			margin-right: 8px;
+			width: 28px;
+			height: 28px;
+		}
+
+		.progress-bar__title h1 {
+			font-size: 14px;
+			white-space: nowrap;
+		}
+
+		.progress-bar__count {
+			display: flex;
+			font-size: 14px;
+			font-weight: bold;
+		}
+
+		.progress-bar__cursor {
+			background: hsla(0, 0%, 50.2%, 0.39);
+			border-radius: 18.5625px;
+			height: 8px;
+			position: relative;
+			width: 100%;
+		}
+
+		.progress-bar__cursor--dynamic {
+			position: absolute;
+			border-radius: 18.5625px;
+			height: 8px;
+			background: red;
+			transition: width 0.3s ease;
+		}
+
+		/* Conteneur principal des questions */
+		#quizQuestions {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			min-height: 0;
+			overflow: hidden;
+		}
+
+		/* Questions et réponses responsive */
+		.container--question {
+			padding: 10px 15px;
+			text-align: center;
+			width: 100%;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			overflow-y: auto;
+			min-height: 0;
+			position: relative;
+			/* MODIFICATION : Supprimer l'espace en bas */
+			padding-bottom: 0;
+		}
+
+		.quiz__question {
+			margin-bottom: 15px;
+			font-size: 16px;
+			line-height: 24px;
+			text-align: center;
+			font-weight: bold;
+			padding: 0 10px;
+			flex-shrink: 0;
+		}
+
+		fieldset {
+			margin-bottom: 0;
+			padding: 0;
+			border: none;
+			width: 100%;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			min-height: 0;
+			/* MODIFICATION : Compenser l'espace résiduel */
+			margin-bottom: -5px;
+		}
+
+		legend p {
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			font-weight: bold;
+			font-size: 16px;
+			line-height: 1.4;
+			margin-bottom: 15px;
+			flex-shrink: 0;
+		}
+
+		/* MODIFICATION : Espacement uniforme des réponses */
+		.quiz-answer {
+			text-align: left;
+			display: flex;
+			align-items: center;
+			background: var(--btn);
+			box-shadow: var(--shadow-out);
+			border-radius: 10px;
+			/* MODIFICATION : Marge uniforme de 10px */
+			margin-bottom: 10px;
+			padding: 12px 15px;
+			border: 0;
+			width: 95%;
+			margin-left: auto;
+			margin-right: auto;
+			position: relative;
+			cursor: pointer;
+			min-height: 45px;
+			font-size: 14px;
+			line-height: 1.4;
+			transition: all 0.2s ease;
+			flex-shrink: 0;
+		}
+
+		/* MODIFICATION : Dernière réponse sans marge inférieure */
+		.quiz-answer:last-child {
+			margin-bottom: 10px;
+		}
+
+		.quiz-answer:hover {
+			box-shadow: var(--shadow-in);
+		}
+
+		.correct {
+			border: 2px solid var(--border-correct);
+			background: var(--color-correct) !important;
+			color: white !important;
+		}
+
+		.incorrect {
+			border: 2px solid var(--border-incorrect);
+			background: var(--color-incorrect) !important;
+			color: white !important;
+		}
+
+		/* Style pour mode non-daltonien - pas d'icônes */
+		.quiz-answer .answer-icon {
+			position: absolute;
+			right: 15px;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 20px;
+			height: 20px;
+			display: none;
+		}
+
+		/* Style pour mode daltonien - afficher les icônes */
+		body.colorblind-mode .quiz-answer .answer-icon {
+			display: block;
+		}
+
+		body.colorblind-mode .quiz-answer .answer-icon.hidden {
+			display: none;
+		}
+
+		/* Espace après les réponses - SUPPRIMÉ */
+		/*
+		.answers-spacing {
+			height: 10px;
+			width: 100%;
+			flex-shrink: 0;
+		}
+		*/
+
+		/* Explications responsive */
+		.quiz-explanation {
+			position: relative;
+			/* MODIFICATION : Marge uniforme de 10px en haut et en bas */
+			margin: 10px auto 10px;
+			background: var(--btn);
+			border: 1px solid #ddd;
+			border-radius: 0.75rem;
+			font-size: 14px;
+			line-height: 1.5;
+			text-align: left;
+			padding: 15px;
+			width: 95%;
+			max-width: 95%;
+			box-shadow: var(--shadow-out);
+			flex-shrink: 0;
+			max-height: 30vh;
+			overflow-y: auto;
+		}
+
+		.quiz-explanation__label {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
+
+		.emoji {
+			width: 20px;
+			height: 20px;
+			vertical-align: middle;
+		}
+
+		/* Zone pour le bouton "question suivante" */
+		.next-button-container {
+			text-align: center;
+			/* MODIFICATION : Padding réduit pour espacement uniforme */
+			padding: 10px 0 20px;
+			flex-shrink: 0;
+			background: var(--bg);
+			margin-top: auto;
+			width: 100%;
+		}
+
+		.next-button-container .quiz-btn {
+			margin: 0 auto;
+			display: block;
+			min-width: 180px;
+		}
+
+		/* Résultats responsive */
+		.container--quiz-end {
+			min-height: 300px;
+			height: 100%;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 20px;
+			overflow: auto;
+			flex: 1;
+		}
+
+		.container--quiz-results {
+			color: var(--font-color);
+			font-family: Arial;
+			padding: 20px;
+			text-align: center;
+			width: 100%;
+			max-height: 100%;
+			overflow: auto;
+		}
+
+		.container--quiz-btn {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+			margin: 20px 0;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+
+		/* MOBILE */
+		.mobile-title-wrapper {
+			text-align: center;
+			margin: 10px 0 20px;
+			display: none;
+			flex-shrink: 0;
+		}
+
+		.mobile-title {
+			font-size: 1.4em;
+			font-weight: bold;
+			color: red !important;
+			margin: 0;
+			text-transform: uppercase;
+		}
+
+		.mobile-subtitle {
+			font-size: 0.9em;
+			color: #555;
+			margin: 0;
+			text-transform: lowercase;
+		}
+
+		body.dark-mode .mobile-title {
+			color: red !important;
+		}
+
+		body.dark-mode .mobile-subtitle {
+			color: #aaa;
+		}
+
+		.toolbar-mobile {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-bottom: 10px;
+			flex-shrink: 0;
+		}
+
+		.mobile-buttons-container {
+			display: flex;
+			gap: 15px;
+			margin: 10px 0;
+		}
+
+		/* Animations */
+		@keyframes shakeX {
+
+			0%,
+			100% {
+				transform: translateX(0);
+			}
+
+			25% {
+				transform: translateX(-5px);
+			}
+
+			75% {
+				transform: translateX(5px);
+			}
+		}
+
+		@keyframes shakeY {
+
+			0%,
+			100% {
+				transform: translateY(0);
+			}
+
+			25% {
+				transform: translateY(-5px);
+			}
+
+			75% {
+				transform: translateY(5px);
+			}
+		}
+
+		.shake-x {
+			animation: shakeX 0.5s;
+		}
+
+		.shake-y {
+			animation: shakeY 0.5s;
+		}
+
+		/* Responsive pour tablettes et desktop */
+		@media (min-width: 768px) {
+			.container--quiz {
+				width: 90%;
+				max-width: 600px;
+				height: 450px;
+				min-height: 450px;
+			}
+
+			.quiz-btn--large {
+				width: auto;
+				padding: 16px 50px;
+				min-width: 280px;
+			}
+
+			.quiz-answer {
+				padding: 15px 20px;
+				font-size: 15px;
+				min-height: 50px;
+			}
+
+			.quiz__question {
+				font-size: 18px;
+				line-height: 28px;
+			}
+
+			.next-button-container {
+				padding: 15px 0 25px;
+			}
+
+			.quiz-start__button {
+				padding-bottom: 60px;
+			}
+		}
+
+		@media (min-width: 1200px) {
+			.wrapper--grid-playlist {
+				display: grid;
+				grid-template-columns: 1fr 340px;
+				grid-template-areas: "player playlist";
+				gap: 2rem;
+				max-width: 1200px;
+				margin: 0 auto;
+			}
+
+			.grid-area--player {
+				grid-area: player;
+			}
+
+			.grid-area--playlist {
+				display: block;
+				grid-area: playlist;
+				padding: 35px 0 0 0;
+			}
+
+			.container--quiz {
+				margin: 0;
+				width: 100%;
+				max-width: none;
+				height: 500px;
+				min-height: 500px;
+			}
+
+			.quiz-answer {
+				margin-bottom: 10px;
+				padding: 18px 25px;
+				min-height: 55px;
+			}
+
+			.next-button-container {
+				padding: 15px 0 30px;
+			}
+
+			.quiz-start__button {
+				padding-bottom: 80px;
+			}
+		}
+
+		/* Mobile */
+		@media (max-width: 600px) {
+			.toolbar-desktop {
+				display: none;
+			}
+
+			.toolbar-mobile {
+				display: flex;
+			}
+
+			.mobile-title-wrapper {
+				display: block;
+			}
+
+			.toolbar-btn {
+				width: 48px;
+				height: 48px;
+			}
+
+			.toolbar-btn.reload .rotate-icon {
+				font-size: 32px;
+			}
+
+			.toolbar-btn svg {
+				width: 24px;
+				height: 24px;
+			}
+
+			.slide-menu {
+				width: 260px;
+			}
+
+			.content--v2 {
+				padding: 5px;
+			}
+
+			.container--quiz {
+				width: 100%;
+				margin: 5px auto;
+				border-width: 10px;
+				height: 400px;
+				min-height: 400px;
+			}
+
+			.quiz-btn--large {
+				font-size: 15px;
+				padding: 12px 25px;
+				min-width: 200px;
+			}
+
+			.quiz-start__content {
+				padding: 15px;
+			}
+
+			.quiz-start__button {
+				padding-bottom: 30px;
+			}
+
+			.quiz-answer {
+				padding: 10px 12px;
+				font-size: 13px;
+				min-height: 40px;
+				margin-bottom: 10px;
+			}
+
+			.progress-bar {
+				padding: 8px 12px;
+			}
+
+			.container--question {
+				padding: 8px 12px;
+			}
+
+			.quiz__question {
+				font-size: 15px;
+				line-height: 1.4;
+				margin-bottom: 15px;
+				padding: 0 5px;
+			}
+
+			.quiz-explanation {
+				font-size: 13px;
+				padding: 12px;
+				margin: 10px auto 10px;
+				max-height: 25vh;
+			}
+
+			.next-button-container {
+				padding: 10px 0 15px;
+			}
+		}
+
+		/* Ajustements très petits écrans */
+		@media (max-width: 400px) {
+			.container--quiz {
+				height: 350px;
+				min-height: 350px;
+				border-width: 8px;
+			}
+
+			.quiz-answer {
+				min-height: 35px;
+				padding: 8px 10px;
+				font-size: 12px;
+				margin-bottom: 10px;
+			}
+
+			.quiz__question {
+				font-size: 14px;
+			}
+
+			.quiz-btn--large {
+				padding: 10px 20px;
+				min-width: 180px;
+				font-size: 14px;
+			}
+
+			.next-button-container {
+				padding: 10px 0 12px;
+			}
+		}
+
+		@media (min-width: 601px) {
+
+			.toolbar-mobile,
+			.mobile-title-wrapper {
+				display: none;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<!-- TOOLBAR DESKTOP -->
+	<div class="toolbar toolbar-desktop">
+		<div class="toolbar-left">
+			<a href__="https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/" class="toolbar-btn" title="Accueil">
+				<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+					<polyline points="130,56 80,26" stroke="currentColor" stroke-width="15" fill="none"
+						stroke-linecap="round" />
+					<polyline points="52,40 30,56" stroke="currentColor" stroke-width="15" fill="none"
+						stroke-linecap="round" />
+					<polyline points="130,56 130,126 30,126 30,56" stroke="currentColor" stroke-width="15" fill="none"
+						stroke-linejoin="round" stroke-linecap="round" />
+				</svg>
+			</a>
+			<button class="toolbar-btn reload" id="reloadButton" title="Nouvelle partie">
+				<span class="rotate-icon">↻</span>
+			</button>
+		</div>
+		<div class="toolbar-center">
+			<h1 id="appTitle" style="color: red !important;">QUIZ</h1>
+			<p id="appSubtitle" class="subtitle">testez vos connaissances</p>
+		</div>
+		<div class="toolbar-right">
+			<button class="toolbar-btn fullscreen" id="fullscreenButton" title="Plein écran">
+				<svg viewBox="0 0 24 24" fill="currentColor">
+					<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path>
+				</svg>
+			</button>
+			<button class="toolbar-btn menu" id="menuButton" title="Menu">
+				<div class="rotate-icon"><span></span><span></span><span></span></div>
+			</button>
+		</div>
+	</div>
+
+	<!-- TOOLBAR MOBILE -->
+	<div class="toolbar-mobile">
+		<div class="mobile-buttons-container">
+			<a href__="https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/" class="toolbar-btn" title="Accueil">
+				<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+					<polyline points="130,56 80,26" stroke="currentColor" stroke-width="15" fill="none"
+						stroke-linecap="round" />
+					<polyline points="52,40 30,56" stroke="currentColor" stroke-width="15" fill="none"
+						stroke-linecap="round" />
+					<polyline points="130,56 130,126 30,126 30,56" stroke="currentColor" stroke-width="15" fill="none"
+						stroke-linejoin="round" stroke-linecap="round" />
+				</svg>
+			</a>
+			<button class="toolbar-btn reload" id="reloadButtonMobile" title="Nouvelle partie">
+				<span class="rotate-icon">↻</span>
+			</button>
+			<button class="toolbar-btn fullscreen" id="fullscreenButtonMobile" title="Plein écran">
+				<svg viewBox="0 0 24 24" fill="currentColor">
+					<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" />
+				</svg>
+			</button>
+			<button class="toolbar-btn menu" id="menuButtonMobile" title="Menu">
+				<div class="rotate-icon"><span></span><span></span><span></span></div>
+			</button>
+		</div>
+	</div>
+
+	<div class="mobile-title-wrapper">
+		<p class="mobile-title" id="mobileTitle" style="color: red !important;">QUIZ</p>
+		<p class="mobile-subtitle" id="mobileSubtitle">testez vos connaissances</p>
+	</div>
+
+	<main id="content" class="content--v2" role="main" data-template-id="quiz">
+		<div class="wrapper--with-menu content--v2--header">
+			<div class="wrapper--grid-playlist">
+				<div class="grid-area--player grid-area--player-relative">
+					<div id="quiz" class="container--quiz" data-slug="quiz">
+						<!-- ÉCRAN D'ACCUEIL -->
+						<div id="quizStart">
+							<div class="container--quiz-start">
+								<div class="quiz-start__img">
+									<img alt="Quiz" src="src/couverture.png" />
+								</div>
+								<div class="quiz-start__opacity"></div>
+								<div class="quiz-start__content">
+									<div class="quiz-start__button">
+										<button id="quizStartBtn" class="quiz-btn quiz-btn--large quiz-btn--fill"
+											type="button" tabindex="0" aria-label="Commencer le quiz">
+											commencer le quiz
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div id="quizQuestions" class="hidden" data-reviewing="false">
+							<div class="progress-bar">
+								<div class="progress-bar__info">
+									<div class="progress-bar__title">
+										<img src="src/phi.png" alt="philosophie">
+										<h1 id="quizTitle">QUIZ</h1>
+									</div>
+									<div class="progress-bar__count" aria-hidden="true">
+										<span id="currentQuestion">1</span> /
+										<span id="totalQuestions" data-value="10">10</span>
+									</div>
+								</div>
+								<div class="progress-bar__cursor">
+									<span class="progress-bar__cursor--dynamic" style="width: 0%"></span>
+								</div>
+							</div>
+
+							<div id="questionsContainer"></div>
+						</div>
+
+						<div id="quizEnd" class="hidden">
+							<div class="container--quiz-end" data-result="loose">
+								<div class="container--quiz-results">
+									<div class="container--quiz-message">
+										<p class="quiz-end__results">
+											<span class="quiz-end__message-failure">Votre score :</span>
+											<br><br>
+											<span class="quiz-end__score">0</span> bonne(s) réponse(s) sur 10.
+										</p>
+										<br>
+									</div>
+									<br><br>
+									<div class="container--quiz-btn">
+										<button id="quizRetry"
+											class="quiz-btn quiz-btn--default quiz-btn--fill quiz-btn-retry"
+											type="button" tabindex="0" aria-label="Rejouer">Réessayer</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="grid-area--playlist" id="playlistQuiz"></div>
+			</div>
+		</div>
+	</main>
+
+	<!-- MENU COULISSANT -->
+	<div class="menu-overlay" id="menuOverlay"></div>
+	<div class="slide-menu" id="slideMenu">
+		<div class="menu-content">
+			<button class="menu-item" id="instructionsButton">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<line x1="12" y1="16" x2="12" y2="12"></line>
+					<line x1="12" y1="8" x2="12.01" y2="8"></line>
+				</svg>
+				règles du jeu
+			</button>
+			<button class="menu-item" id="statsButton">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="round" stroke-linejoin="round">
+					<line x1="18" y1="20" x2="18" y2="10"></line>
+					<line x1="12" y1="20" x2="12" y2="4"></line>
+					<line x1="6" y1="20" x2="6" y2="14"></line>
+				</svg>
+				statistiques
+			</button>
+			<button class="menu-item" id="settingsButton">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="3"></circle>
+					<path
+						d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+					</path>
+				</svg>
+				paramètres
+			</button>
+			<button class="menu-item" id="resetButton">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="round" stroke-linejoin="round">
+					<path d="M3 2v6h6"></path>
+					<path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
+					<path d="M21 22v-6h-6"></path>
+					<path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path>
+				</svg>
+				réinitialiser
+			</button>
+			<button class="menu-item" id="aboutButton">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+					<line x1="12" y1="17" x2="12.01" y2="17"></line>
+				</svg>
+				à propos
+			</button>
+		</div>
+	</div>
+
+	<!-- MODALES -->
+	<div class="modal" id="instructionsModal">
+		<div class="modal-content">
+			<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+				<h2 style="margin:0;color:red;">règles du jeu</h2>
+				<button class="close-modal" data-modal="instructionsModal"
+					style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--font-color);">×</button>
+			</div>
+			<div style="text-align: left; line-height: 1.6;">
+				<p>1. répondez aux questions de philosophie.</p>
+				<p>2. chaque question a 3 réponses possibles.</p>
+				<p>3. <strong>cliquez</strong> sur la réponse que vous pensez correcte.</p>
+				<p>4. la bonne réponse devient verte, les mauvaises deviennent rouges.</p>
+				<p>5. une explication est fournie pour chaque réponse.</p>
+				<p>6. cliquez sur « question suivante » pour continuer.</p>
+				<p>7. à la fin, votre score s'affiche et vous pouvez recommencer.</p>
+				<p><em>mode daltonien : utilise des icônes</em> ✓ / ✗ <em>et des couleurs bleu / rouge.</em></p>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal" id="statsModal">
+		<div class="modal-content">
+			<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+				<h2 style="margin:0;color:red;">statistiques</h2>
+				<button class="close-modal" data-modal="statsModal"
+					style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--font-color);">×</button>
+			</div>
+			<div style="text-align: center;">
+				<div style="font-size: 2em; font-weight: bold; margin: 20px 0;">
+					<span id="statsCorrectCount">0</span> / <span id="statsTotalCount">0</span>
+				</div>
+				<div style="margin: 20px 0;">
+					<strong>taux de réussite :</strong> <span id="statsPercentage">0%</span>
+				</div>
+				<div style="margin: 20px 0;">
+					<strong>parties jouées :</strong> <span id="gamesPlayed">0</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal" id="settingsModal">
+		<div class="modal-content">
+			<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+				<h2 style="margin:0;color:red;">paramètres</h2>
+				<button class="close-modal" data-modal="settingsModal"
+					style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--font-color);">×</button>
+			</div>
+			<div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0;">
+				<span>mode sombre</span>
+				<label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span
+						class="slider"></span></label>
+			</div>
+			<div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0;">
+				<span>animations</span>
+				<label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span
+						class="slider"></span></label>
+			</div>
+			<div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0;">
+				<span>mode daltonien</span>
+				<label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span
+						class="slider"></span></label>
+			</div>
+			<div style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.05); border-radius: 10px;">
+				<p style="margin: 0; font-size: 0.9em; color: var(--font-color);">
+					<strong>mode daltonien :</strong> affiche des icônes ✓ / ✗ et utilise des couleurs bleu / rouge au lieu de vert / rouge.
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<script src="quiz-questions.js"></script>
+	<script>
+		let currentQuestionIndex = 0;
+		let score = 0;
+		let shuffledQuestions = [];
+		const TOTAL_QUESTIONS = 10;
+		let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
+		let totalCorrectAnswers = parseInt(localStorage.getItem('totalCorrectAnswers') || '0');
+		let totalQuestionsAnswered = parseInt(localStorage.getItem('totalQuestionsAnswered') || '0');
+
+		const quizStartBtn = document.getElementById('quizStartBtn');
+		const quizRetryBtn = document.getElementById('quizRetry');
+		const reloadButtons = [document.getElementById('reloadButton'), document.getElementById('reloadButtonMobile')];
+		const fullscreenButtons = [document.getElementById('fullscreenButton'), document.getElementById('fullscreenButtonMobile')];
+		const menuButtons = [document.getElementById('menuButton'), document.getElementById('menuButtonMobile')];
+		const menuOverlay = document.getElementById('menuOverlay');
+		const slideMenu = document.getElementById('slideMenu');
+		const darkModeToggle = document.getElementById('darkModeToggle');
+		const animationsToggle = document.getElementById('animationsToggle');
+		const colorblindToggle = document.getElementById('colorblindToggle');
+
+		document.addEventListener('DOMContentLoaded', () => {
+			document.getElementById('appTitle').textContent = 'QUIZ';
+			document.getElementById('appSubtitle').textContent = 'testez vos connaissances';
+			document.getElementById('mobileTitle').textContent = 'QUIZ';
+			document.getElementById('mobileSubtitle').textContent = 'testez vos connaissances';
+
+			if (localStorage.getItem('darkMode') === 'true') {
+				document.body.classList.add('dark-mode');
+				darkModeToggle.checked = true;
+			}
+
+			if (localStorage.getItem('animations') === 'false') {
+				animationsToggle.checked = false;
+			}
+
+			if (localStorage.getItem('colorblindMode') === 'true') {
+				document.body.classList.add('colorblind-mode');
+				colorblindToggle.checked = true;
+			}
+
+			quizStartBtn.addEventListener('click', startQuiz);
+			quizRetryBtn.addEventListener('click', startQuiz);
+
+			reloadButtons.forEach(btn => {
+				if (btn) {
+					btn.addEventListener('click', () => {
+						const icon = btn.querySelector('.rotate-icon');
+						if (icon) {
+							icon.style.transform = 'rotate(360deg)';
+							setTimeout(() => { icon.style.transform = ''; }, 600);
+						}
+						startQuiz();
+					});
+				}
+			});
+
+			fullscreenButtons.forEach(btn => {
+				if (btn) {
+					btn.addEventListener('click', () => {
+						if (!document.fullscreenElement) {
+							document.documentElement.requestFullscreen();
+						} else {
+							document.exitFullscreen();
+						}
+						updateFullscreenIcon();
+					});
+				}
+			});
+
+			menuButtons.forEach(btn => {
+				if (btn) btn.addEventListener('click', toggleMenu);
+			});
+
+			menuOverlay.addEventListener('click', () => {
+				menuOverlay.classList.remove('open');
+				slideMenu.classList.remove('open');
+			});
+
+			darkModeToggle.addEventListener('change', (e) => {
+				document.body.classList.toggle('dark-mode', e.target.checked);
+				localStorage.setItem('darkMode', e.target.checked);
+			});
+
+			animationsToggle.addEventListener('change', (e) => {
+				localStorage.setItem('animations', e.target.checked);
+			});
+
+			colorblindToggle.addEventListener('change', (e) => {
+				document.body.classList.toggle('colorblind-mode', e.target.checked);
+				localStorage.setItem('colorblindMode', e.target.checked);
+			});
+
+			document.getElementById('instructionsButton').addEventListener('click', () => {
+				closeMenu();
+				setTimeout(() => openModal('instructionsModal'), 300);
+			});
+
+			document.getElementById('statsButton').addEventListener('click', () => {
+				closeMenu();
+				setTimeout(() => {
+					updateStats();
+					openModal('statsModal');
+				}, 300);
+			});
+
+			document.getElementById('settingsButton').addEventListener('click', () => {
+				closeMenu();
+				setTimeout(() => openModal('settingsModal'), 300);
+			});
+
+			document.getElementById('aboutButton').addEventListener('click', () => {
+				closeMenu();
+				showAboutModal();
+			});
+
+			document.getElementById('resetButton').addEventListener('click', () => {
+				if (confirm('voulez-vous vraiment réinitialiser toutes les statistiques ?')) {
+					localStorage.clear();
+					location.reload();
+				}
+			});
+
+			document.querySelectorAll('.close-modal').forEach(btn => {
+				btn.addEventListener('click', () => {
+					const modalId = btn.getAttribute('data-modal');
+					closeModal(modalId);
+				});
+			});
+
+			document.querySelectorAll('.modal').forEach(modal => {
+				modal.addEventListener('click', (e) => {
+					if (e.target === modal) modal.classList.remove('open');
+				});
+			});
+
+			document.addEventListener('fullscreenchange', updateFullscreenIcon);
+			updateFullscreenIcon();
+		});
+
+		function startQuiz() {
+			shuffledQuestions = [...questions];
+			shuffleArray(shuffledQuestions);
+			shuffledQuestions = shuffledQuestions.slice(0, TOTAL_QUESTIONS);
+			currentQuestionIndex = 0;
+			score = 0;
+			document.getElementById('quizStart').classList.add('hidden');
+			document.getElementById('quizEnd').classList.add('hidden');
+			document.getElementById('quizQuestions').classList.remove('hidden');
+			displayNextQuestion();
+			gamesPlayed++;
+			localStorage.setItem('gamesPlayed', gamesPlayed);
+		}
+
+		function displayNextQuestion() {
+			const questionsContainer = document.getElementById('questionsContainer');
+			questionsContainer.innerHTML = '';
+
+			if (currentQuestionIndex < TOTAL_QUESTIONS) {
+				const q = shuffledQuestions[currentQuestionIndex];
+				const shuffledAnswers = [...q.answers];
+				shuffleArray(shuffledAnswers);
+
+				const questionElement = document.createElement('div');
+				questionElement.innerHTML = `
+					<div class="container--question">
+						<fieldset>
+							<legend><p>${q.question}</p></legend>
+							<ul>${shuffledAnswers.map((answer, i) => `
+								<li class='quiz-answer' data-index='${i}'>
+									${answer}
+									<img src="src/false.svg" alt="false" class="answer-icon hidden">
+								</li>`).join('')}
+							</ul>
+						</fieldset>
+						<div class='quiz-explanation hidden'>
+							<div class='quiz-explanation__label'><span></span></div>
+							<p class='quiz-explanation__detail'>${q.explanation}</p>
+						</div>
+						<div class='next-button-container'></div>
+					</div>`;
+
+				questionsContainer.appendChild(questionElement);
+
+				questionElement.querySelectorAll('.quiz-answer').forEach((answerElement, index) => {
+					answerElement.addEventListener('click', () => {
+						if (!questionElement.querySelector('.quiz-answer.correct') && !questionElement.querySelector('.quiz-answer.incorrect')) {
+							checkAnswer(answerElement, shuffledAnswers[index], q.answers[q.correct]);
+						}
+					});
+				});
+
+				document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+				updateProgressBar();
+			} else {
+				endQuiz();
+			}
+		}
+
+		function checkAnswer(selectedAnswer, selectedAnswerText, correctAnswerText) {
+			const answers = selectedAnswer.parentNode.children;
+			const explanationLabel = selectedAnswer.closest('.container--question').querySelector('.quiz-explanation__label span');
+
+			totalQuestionsAnswered++;
+			localStorage.setItem('totalQuestionsAnswered', totalQuestionsAnswered);
+
+			if (selectedAnswerText === correctAnswerText) {
+				selectedAnswer.classList.add('correct');
+				selectedAnswer.querySelector('.answer-icon').src = 'src/true.svg';
+				selectedAnswer.querySelector('.answer-icon').classList.remove('hidden');
+				score++;
+				totalCorrectAnswers++;
+				localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
+				explanationLabel.innerHTML = '<img src="src/emoji-happy.gif" alt="emoji" class="emoji"> bonne réponse !';
+
+				if (animationsToggle.checked) selectedAnswer.classList.add('shake-y');
+
+				Array.from(answers).forEach(answer => {
+					if (answer !== selectedAnswer && answer.textContent.trim() !== correctAnswerText) {
+						answer.classList.add('incorrect');
+						answer.querySelector('.answer-icon').classList.remove('hidden');
+					}
+				});
+			} else {
+				selectedAnswer.classList.add('incorrect');
+				selectedAnswer.querySelector('.answer-icon').classList.remove('hidden');
+				explanationLabel.innerHTML = '<img src="src/emoji-sad.gif" alt="emoji" class="emoji"> mauvaise réponse !';
+
+				if (animationsToggle.checked) selectedAnswer.classList.add('shake-x');
+
+				Array.from(answers).forEach(answer => {
+					if (answer.textContent.trim() === correctAnswerText) {
+						answer.classList.add('correct');
+						answer.querySelector('.answer-icon').src = 'src/true.svg';
+						answer.querySelector('.answer-icon').classList.remove('hidden');
+					}
+				});
+
+				Array.from(answers).forEach(answer => {
+					if (answer.textContent.trim() !== correctAnswerText && answer !== selectedAnswer) {
+						answer.classList.add('incorrect');
+						answer.querySelector('.answer-icon').classList.remove('hidden');
+					}
+				});
+			}
+
+			const explanation = selectedAnswer.closest('.container--question').querySelector('.quiz-explanation');
+			explanation.classList.remove('hidden');
+
+			const nextButton = document.createElement('button');
+			nextButton.textContent = 'question suivante';
+			nextButton.classList.add('quiz-btn', 'quiz-btn--default', 'quiz-btn--fill');
+			nextButton.addEventListener('click', () => {
+				currentQuestionIndex++;
+				displayNextQuestion();
+			});
+
+			const nextButtonContainer = selectedAnswer.closest('.container--question').querySelector('.next-button-container');
+			nextButtonContainer.innerHTML = '';
+			nextButtonContainer.appendChild(nextButton);
+
+			setTimeout(() => {
+				nextButtonContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+			}, 300);
+		}
+
+		function endQuiz() {
+			document.getElementById('quizQuestions').classList.add('hidden');
+			document.getElementById('quizEnd').classList.remove('hidden');
+			document.querySelector('.quiz-end__score').textContent = score;
+			updateStats();
+		}
+
+		function shuffleArray(array) {
+			for (let i = array.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[array[i], array[j]] = [array[j], array[i]];
+			}
+		}
+
+		function updateProgressBar() {
+			const progressBar = document.querySelector('.progress-bar__cursor--dynamic');
+			const progress = ((currentQuestionIndex + 1) / TOTAL_QUESTIONS) * 100;
+			progressBar.style.width = `${progress}%`;
+		}
+
+		function toggleMenu() {
+			menuOverlay.classList.toggle('open');
+			slideMenu.classList.toggle('open');
+			menuButtons.forEach(btn => {
+				if (btn && btn.querySelector('.rotate-icon')) {
+					const icon = btn.querySelector('.rotate-icon');
+					icon.style.transform = 'rotate(90deg)';
+					setTimeout(() => { icon.style.transform = ''; }, 300);
+				}
+			});
+		}
+
+		function closeMenu() {
+			menuOverlay.classList.remove('open');
+			slideMenu.classList.remove('open');
+		}
+
+		function openModal(modalId) {
+			const modal = document.getElementById(modalId);
+			if (modal) modal.classList.add('open');
+		}
+
+		function closeModal(modalId) {
+			const modal = document.getElementById(modalId);
+			if (modal) modal.classList.remove('open');
+		}
+
+		function updateStats() {
+			document.getElementById('statsCorrectCount').textContent = totalCorrectAnswers;
+			document.getElementById('statsTotalCount').textContent = totalQuestionsAnswered;
+			const percentage = totalQuestionsAnswered ? Math.round(totalCorrectAnswers / totalQuestionsAnswered * 100) : 0;
+			document.getElementById('statsPercentage').textContent = percentage + '%';
+			document.getElementById('gamesPlayed').textContent = gamesPlayed;
+		}
+
+		function showAboutModal() {
+			const modal = document.createElement('div');
+			modal.className = 'modal';
+
+			const modalContent = document.createElement('div');
+			modalContent.className = 'modal-content';
+			modalContent.style.maxWidth = '500px';
+
+			const modalHeader = document.createElement('div');
+			modalHeader.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;';
+
+			const modalTitle = document.createElement('h2');
+			modalTitle.textContent = 'à propos';
+			modalTitle.style.cssText = 'margin:0;color:red';
+
+			const closeButton = document.createElement('button');
+			closeButton.innerHTML = '×';
+			closeButton.style.cssText = 'background:none;border:none;font-size:28px;cursor:pointer;color:var(--font-color)';
+			closeButton.onclick = () => {
+				modal.classList.remove('open');
+				setTimeout(() => modal.remove(), 300);
+			};
+
+			modalHeader.appendChild(modalTitle);
+			modalHeader.appendChild(closeButton);
+
+			const contentDiv = document.createElement('div');
+			contentDiv.innerHTML = `
+				<p style="text-align: center; line-height: 1.6; margin: 20px 0;">
+					<strong>QUIZ</strong><br><br>
+					développé par Daniel Boulagnon<br>
+					daniel.boulagnon@ac-lille.fr<br><br>
+					version 2025<br><br>
+					exploitation à but pédagogique et non commercial<br><br>
+					<small>accessibilité : mode daltonien disponible dans les paramètres</small>
+				</p>
+			`;
+
+			modalContent.appendChild(modalHeader);
+			modalContent.appendChild(contentDiv);
+			modal.appendChild(modalContent);
+
+			modal.addEventListener('click', (event) => {
+				if (event.target === modal) {
+					modal.classList.remove('open');
+					setTimeout(() => modal.remove(), 300);
+				}
+			});
+
+			document.body.appendChild(modal);
+			setTimeout(() => modal.classList.add('open'), 10);
+		}
+
+		function updateFullscreenIcon() {
+			const isFullscreen = !!document.fullscreenElement;
+			fullscreenButtons.forEach(btn => {
+				if (btn) {
+					btn.innerHTML = isFullscreen
+						? `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path></svg>`
+						: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path></svg>`;
+				}
+			});
+		}
+	</script>
+</body>
+
+</html>
