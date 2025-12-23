@@ -1,0 +1,2209 @@
+<!DOCTYPE html>
+<!-- Daniel Boulagnon -->
+<!-- daniel.boulagnon@ac-lille.fr -->
+<!-- version 2025 -->
+<!-- Exploitation à but strictement pédagogique et non lucratif -->
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3.0">
+<link rel="icon" type="image/svg+xml" href="src/favicon.ico" />
+    <title>éditeur de quiz</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        h1 {
+            color: red;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .description {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .workflow-step {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .workflow-step:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .workflow-step.active {
+            border-left-color: #3498db;
+            background-color: #f8f9fa;
+        }
+        
+        h2 {
+            color: #3498db;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2 .step-number {
+            background-color: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+        
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        
+        input[type="text"]:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .answers-container {
+            margin-top: 15px;
+        }
+        
+        .answer-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .answer-input input[type="text"] {
+            flex: 1;
+        }
+        
+        .correct-answer {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        
+        .correct-answer select {
+            flex: 1;
+            max-width: 200px;
+            padding: 8px 12px;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: white;
+        }
+        
+        .btn-success {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .btn-warning {
+            background-color: #f39c12;
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .btn-import {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .question-list-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #f8f9fa;
+        }
+        
+        .question-item {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            background-color: white;
+        }
+        
+        .question-item:hover {
+            background-color: #f1f8ff;
+            border-left: 3px solid #3498db;
+        }
+        
+        .question-item.active {
+            background-color: #e8f4fc;
+            border-left: 3px solid #3498db;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .question-content {
+            flex: 1;
+        }
+        
+        .question-text-preview {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .question-meta {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+        }
+        
+        .question-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .action-btn {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .edit-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .save-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #2ecc71;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            max-width: 400px;
+        }
+        
+        .notification.show {
+            opacity: 1;
+        }
+
+        .notification.error {
+            background-color: #e74c3c;
+        }
+
+        .notification.warning {
+            background-color: #f39c12;
+        }
+
+        .stats {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 100px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .file-input-label {
+            display: block;
+            padding: 15px;
+            background-color: #f8f9fa;
+            color: #9b59b6;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            border: 2px dashed #9b59b6;
+        }
+        
+        .file-input-label:hover {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .file-name {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #7f8c8d;
+            text-align: center;
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+        }
+        
+        .add-answer-btn {
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            color: #3498db;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .add-answer-btn:hover {
+            background-color: #e8f4fc;
+            border-color: #3498db;
+        }
+        
+        .remove-answer-btn {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            color: #e74c3c;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .remove-answer-btn:hover {
+            background-color: #ffeaea;
+            border-color: #e74c3c;
+        }
+        
+        .export-section {
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .export-section h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .export-info {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        
+        .workflow-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .workflow-progress:before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #e0e0e0;
+            z-index: 1;
+        }
+        
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            width: 20%;
+        }
+        
+        .progress-step .step-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            color: #7f8c8d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .progress-step.active .step-icon {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .progress-step.completed .step-icon {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .progress-step .step-label {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .progress-step.active .step-label {
+            color: #3498db;
+            font-weight: 600;
+        }
+        
+        .progress-step.completed .step-label {
+            color: #2ecc71;
+            font-weight: 600;
+        }
+        
+        .text-preview {
+            background-color: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            line-height: 1.8;
+            font-family: Georgia, serif;
+            white-space: pre-wrap;
+        }
+        
+        .text-source {
+            background-color: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        
+        .tab-button {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: #7f8c8d;
+            transition: all 0.3s;
+        }
+        
+        .tab-button.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .textarea-tall {
+            min-height: 250px;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+        
+        .answer-preview-item {
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .answer-preview-text {
+            flex: 1;
+        }
+        
+        .answer-preview-status {
+            margin-left: 15px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .workflow-progress {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .progress-step {
+                width: 45%;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .tab-buttons {
+                flex-direction: column;
+            }
+            
+            .answer-preview-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .answer-preview-status {
+                margin-left: 0;
+                margin-top: 5px;
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>éditeur de quiz</h1>
+            <p class="description">importer, éditer et exporter le fichier « .js » en suivant les étapes</p>
+        </header>
+        
+        <div class="workflow-progress">
+            <div class="progress-step active" id="step-1">
+                <div class="step-icon">1</div>
+                <div class="step-label">importer</div>
+            </div>
+            <div class="progress-step" id="step-2">
+                <div class="step-icon">2</div>
+                <div class="step-label">éditer</div>
+            </div>
+            <div class="progress-step" id="step-3">
+                <div class="step-icon">3</div>
+                <div class="step-label">vérifier</div>
+            </div>
+            <div class="progress-step" id="step-4">
+                <div class="step-icon">4</div>
+                <div class="step-label">exporter</div>
+            </div>
+        </div>
+        
+        <!-- ÉTAPE 1 : IMPORTATION -->
+        <div class="workflow-step active" id="import-step">
+            <h2>
+                <span class="step-number">1</span>
+                importer le fichier
+            </h2>
+            
+            <!-- Configuration du titre et description -->
+            <div class="form-group" id="title-config">
+                <h3>configuration du fichier</h3>
+                
+                <div class="form-group">
+                    <label for="file-title">titre du fichier :</label>
+                    <input type="text" id="file-title" placeholder="ex: titre du fichier">
+                </div>
+                
+                <div class="form-group">
+                    <label for="file-subtitle">sous-titre :</label>
+                    <textarea id="file-subtitle" placeholder="Description du contenu du fichier...">sous-titre du fichier</textarea>
+                </div>
+                
+                <div class="buttons">
+                    <button id="save-config" class="btn-success">
+                        💾 sauvegarder la configuration
+                    </button>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <p>importer le fichier <strong>« .js »</strong> existant pour commencer à éditer.</p>
+                
+                <div class="file-input-wrapper">
+                    <input type="file" id="import-file" accept=".js">
+                    <button class="file-input-label">
+                        📁 cliquer ici pour sélectionner le fichier « .js »
+                    </button>
+                </div>
+                <div class="file-name" id="file-name">aucun fichier sélectionné</div>
+                
+                <div class="buttons">
+                    <!-- NOUVEAU BOUTON EN HAUT -->
+                    <button id="clear-all-top" class="btn-danger">
+                        🗑️ tout effacer et recommencer
+                    </button>
+                </div>
+                
+                <div class="stats" id="import-stats" style="display: none;">
+                    <div class="stat-item">
+                        <div class="stat-value" id="imported-questions-count">0</div>
+                        <div class="stat-label">questions importées</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="imported-file-size">0 kb</div>
+                        <div class="stat-label">taille du fichier</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ÉTAPE 2 : ÉDITION -->
+        <div class="workflow-step" id="edit-step">
+            <h2>
+                <span class="step-number">2</span>
+                éditer le contenu du quiz
+            </h2>
+            
+            <!-- Onglets pour naviguer entre texte et questions -->
+            <div class="tab-buttons">
+                <button class="tab-button active" id="tab-text">texte</button>
+                <button class="tab-button" id="tab-questions">questions</button>
+            </div>
+            
+            <!-- Onglet Questions -->
+            <div class="tab-content active" id="tab-questions-content">
+                <div class="stats" id="stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="questions-count">0</div>
+                        <div class="stat-label">questions totales</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="current-question-number">-</div>
+                        <div class="stat-label">question active</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="answers-count">0</div>
+                        <div class="stat-label">réponses</div>
+                    </div>
+                </div>
+                
+                <div class="question-list-container" id="question-list">
+                    <p style="padding: 20px; text-align: center; color: #7f8c8d;">
+                        importer un fichier pour voir les questions ici.
+                    </p>
+                </div>
+                
+                <div class="form-group">
+                    <h3>éditeur de questions</h3>
+                    
+                    <div class="form-group">
+                        <label for="question-text">question :</label>
+                        <textarea id="question-text" placeholder="entrer la question ici..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>réponses :</label>
+                        <div class="answers-container" id="answers-container">
+                            <div class="answer-input">
+                                <span style="min-width: 30px; font-weight: bold;">1</span>
+                                <input type="text" placeholder="réponse 1" class="answer-input-field">
+                                <button class="remove-answer-btn" style="display: none;">×</button>
+                            </div>
+                            <div class="answer-input">
+                                <span style="min-width: 30px; font-weight: bold;">2</span>
+                                <input type="text" placeholder="réponse 2" class="answer-input-field">
+                                <button class="remove-answer-btn" style="display: none;">×</button>
+                            </div>
+                            <div class="answer-input">
+                                <span style="min-width: 30px; font-weight: bold;">3</span>
+                                <input type="text" placeholder="réponse 3" class="answer-input-field">
+                                <button class="remove-answer-btn" style="display: none;">×</button>
+                            </div>
+                        </div>
+                        
+                        <button id="add-answer" class="add-answer-btn">+ ajouter une réponse</button>
+                        
+                        <div class="correct-answer">
+                            <label>réponse correcte :</label>
+                            <select id="correct-answer">
+                                <option value="0">réponse 1</option>
+                                <option value="1">réponse 2</option>
+                                <option value="2">réponse 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="explanation">expliquer :</label>
+                        <textarea id="explanation" placeholder="expliquer pourquoi cette réponse est correcte..."></textarea>
+                    </div>
+                    
+                    <div class="buttons">
+                        <button id="save-question" class="btn-success" disabled>
+                            💾 sauvegarder la question
+                        </button>
+                        <button id="new-question" class="btn-secondary">
+                            ＋ nouvelle question
+                        </button>
+                        <button id="cancel-edit" class="btn-secondary" disabled>
+                            ✕ annuler
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Onglet Texte -->
+            <div class="tab-content" id="tab-text-content">
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="text-length">0</div>
+                        <div class="stat-label">caractères</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="source-modified">-</div>
+                        <div class="stat-label">source modifiée</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="text-modified">-</div>
+                        <div class="stat-label">texte modifié</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h3>éditeur du texte philosophique</h3>
+                    
+                    <div class="form-group">
+                        <label for="philosophy-text">texte :</label>
+                        <p class="description-small">utiliser des retours à la ligne (\n) pour créer des paragraphes dans le texte</p>
+                        <textarea id="philosophy-text" class="textarea-tall" placeholder="entrer le texte philosophique ici, le cas échéant..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="source-text">source :</label>
+                        <input type="text" id="source-text" placeholder="ex: ALAIN, Propos sur les pouvoirs, éléments d'une doctrine radicale (1925)">
+                    </div>
+                    
+                    <div class="buttons">
+                        <button id="save-text" class="btn-success" disabled>
+                            💾 sauvegarder le texte
+                        </button>
+                        <button id="preview-text" class="btn-primary">
+                            👁️ prévisualiser
+                        </button>
+                        <button id="reset-text" class="btn-secondary">
+                            ↩️ restaurer l'original
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="text-preview-container" style="display: none;">
+                    <h3>prévisualisation du texte</h3>
+                    <div class="text-preview" id="text-preview">
+                        Le texte s'affichera ici avec les paragraphes formatés.
+                    </div>
+                    <div class="text-source" id="source-preview">
+                        La source s'affichera ici.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ÉTAPE 3 : VÉRIFICATION -->
+        <div class="workflow-step" id="verify-step">
+            <h2>
+                <span class="step-number">3</span>
+                vérifier
+            </h2>
+            
+            <div class="form-group">
+                <h3>prévisualiser la question sélectionnée</h3>
+                <div class="question-preview" id="question-preview">
+                    <p style="padding: 20px; text-align: center; color: #7f8c8d;">
+                        sélectionner une question dans la liste pour la prévisualiser ici.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="total-questions">0</div>
+                    <div class="stat-label">questions totales</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="complete-questions">0</div>
+                    <div class="stat-label">questions complètes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="incomplete-questions">0</div>
+                    <div class="stat-label">à compléter</div>
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button id="check-all" class="btn-warning">
+                    🔍 vérifier toutes les questions
+                </button>
+                <button id="preview-all" class="btn-primary">
+                    📄 prévisualiser le texte complet
+                </button>
+            </div>
+        </div>
+        
+        <!-- ÉTAPE 4 : EXPORTATION -->
+        <div class="workflow-step" id="export-step">
+            <h2>
+                <span class="step-number">4</span>
+                exporter
+            </h2>
+            
+            <div class="export-section">
+                <h3>exporter le quiz modifié</h3>
+                
+                <div class="export-info">
+                    <p><strong>le fichier est prêt à être exporté !</strong></p>
+                    <p>titre : <span id="export-file-title">titre du fichier</span></p>
+                    <p>sous-titre : <span id="export-file-subtitle">sous-titre du fichier</span></p>
+                    <p>vous avez modifié <span id="export-modified-count">0</span> questions sur un total de <span id="export-total-count">0</span>.</p>
+                    <p>le texte philosophique a été <span id="text-modified-status">conservé tel quel</span>.</p>
+                </div>
+                
+                <div class="buttons">
+                    <button id="export-file" class="btn-success" disabled>
+                        📥 exporter le fichier « .js »
+                    </button>
+                    <button id="clear-all" class="btn-danger">
+                        🗑️ tout effacer et recommencer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">action effectuée avec succès !</div>
+
+    <script>
+        // Données initiales
+        let questions = [];
+        let currentQuestionIndex = -1;
+        let originalQuestions = [];
+        let originalPhilosophyData = null;
+        let philosophyData = {
+            texte: '',
+            source: ''
+        };
+        let modifiedQuestions = new Set();
+        let isTextModified = false;
+        let isSourceModified = false;
+        let currentWorkflowStep = 1; // 1: import, 2: edit, 3: verify, 4: export
+        
+        // Configuration du fichier
+        let fileTitle = 'titre du fichier';
+        let fileSubtitle = 'sous-titre du fichier';
+
+        // Éléments DOM
+        const questionText = document.getElementById('question-text');
+        const answersContainer = document.getElementById('answers-container');
+        const correctAnswer = document.getElementById('correct-answer');
+        const explanation = document.getElementById('explanation');
+        const saveQuestionBtn = document.getElementById('save-question');
+        const newQuestionBtn = document.getElementById('new-question');
+        const cancelEditBtn = document.getElementById('cancel-edit');
+        const questionList = document.getElementById('question-list');
+        const questionPreview = document.getElementById('question-preview');
+        const exportFileBtn = document.getElementById('export-file');
+        const clearAllBtn = document.getElementById('clear-all');
+        const importFileBtn = document.getElementById('import-file');
+        const fileNameDisplay = document.getElementById('file-name');
+        const notification = document.getElementById('notification');
+        const questionsCount = document.getElementById('questions-count');
+        const currentQuestionNumber = document.getElementById('current-question-number');
+        const answersCount = document.getElementById('answers-count');
+        const addAnswerBtn = document.getElementById('add-answer');
+        const importStats = document.getElementById('import-stats');
+        const importedQuestionsCount = document.getElementById('imported-questions-count');
+        const importedFileSize = document.getElementById('imported-file-size');
+        const totalQuestions = document.getElementById('total-questions');
+        const completeQuestions = document.getElementById('complete-questions');
+        const incompleteQuestions = document.getElementById('incomplete-questions');
+        const exportModifiedCount = document.getElementById('export-modified-count');
+        const exportTotalCount = document.getElementById('export-total-count');
+        const checkAllBtn = document.getElementById('check-all');
+        const textModifiedStatus = document.getElementById('text-modified-status');
+        const exportFileTitle = document.getElementById('export-file-title');
+        const exportFileSubtitle = document.getElementById('export-file-subtitle');
+        
+        // Éléments pour l'éditeur de texte
+        const tabQuestions = document.getElementById('tab-questions');
+        const tabText = document.getElementById('tab-text');
+        const tabQuestionsContent = document.getElementById('tab-questions-content');
+        const tabTextContent = document.getElementById('tab-text-content');
+        const philosophyText = document.getElementById('philosophy-text');
+        const sourceText = document.getElementById('source-text');
+        const saveTextBtn = document.getElementById('save-text');
+        const previewTextBtn = document.getElementById('preview-text');
+        const resetTextBtn = document.getElementById('reset-text');
+        const textPreviewContainer = document.getElementById('text-preview-container');
+        const textPreview = document.getElementById('text-preview');
+        const sourcePreview = document.getElementById('source-preview');
+        const textLength = document.getElementById('text-length');
+        const sourceModified = document.getElementById('source-modified');
+        const textModified = document.getElementById('text-modified');
+        const previewAllBtn = document.getElementById('preview-all');
+        
+        // Éléments pour la configuration
+        const fileTitleInput = document.getElementById('file-title');
+        const fileSubtitleInput = document.getElementById('file-subtitle');
+        const saveConfigBtn = document.getElementById('save-config');
+        const clearAllTopBtn = document.getElementById('clear-all-top');
+
+        // Initialisation
+        function init() {
+            // Initialiser la configuration
+            fileTitleInput.value = fileTitle;
+            fileSubtitleInput.value = fileSubtitle;
+            exportFileTitle.textContent = fileTitle;
+            exportFileSubtitle.textContent = fileSubtitle;
+            
+            // Événements pour les onglets
+            tabQuestions.addEventListener('click', () => switchTab('questions'));
+            tabText.addEventListener('click', () => switchTab('text'));
+            
+            // Événements pour l'import/export
+            importFileBtn.addEventListener('change', handleFileSelect);
+            saveQuestionBtn.addEventListener('click', saveQuestion);
+            newQuestionBtn.addEventListener('click', createNewQuestion);
+            cancelEditBtn.addEventListener('click', cancelEdit);
+            exportFileBtn.addEventListener('click', exportQuestions);
+            clearAllBtn.addEventListener('click', clearAll);
+            clearAllTopBtn.addEventListener('click', clearAll);
+            addAnswerBtn.addEventListener('click', addAnswerField);
+            checkAllBtn.addEventListener('click', checkAllQuestions);
+            
+            // Événements pour l'éditeur de texte
+            philosophyText.addEventListener('input', function() {
+                updateTextStats();
+                enableTextSaveButton();
+            });
+            sourceText.addEventListener('input', function() {
+                updateTextStats();
+                enableTextSaveButton();
+            });
+            saveTextBtn.addEventListener('click', saveText);
+            previewTextBtn.addEventListener('click', previewText);
+            resetTextBtn.addEventListener('click', resetText);
+            previewAllBtn.addEventListener('click', previewAllText);
+            
+            // Événements pour la configuration
+            fileTitleInput.addEventListener('input', function() {
+                exportFileTitle.textContent = fileTitleInput.value || 'titre du fichier';
+                enableConfigSaveButton();
+            });
+            fileSubtitleInput.addEventListener('input', enableConfigSaveButton);
+            saveConfigBtn.addEventListener('click', saveConfig);
+            
+            // Écouteurs pour les champs de formulaire de questions
+            questionText.addEventListener('input', enableSaveButton);
+            explanation.addEventListener('input', enableSaveButton);
+            
+            // Initialiser les étapes du workflow
+            updateWorkflowProgress();
+            
+            // Vérifier s'il y a des données sauvegardées dans le localStorage
+            loadFromLocalStorage();
+        }
+
+        // Basculer entre les onglets
+        function switchTab(tab) {
+            // Mettre à jour les boutons d'onglets
+            tabQuestions.classList.remove('active');
+            tabText.classList.remove('active');
+            tabQuestionsContent.classList.remove('active');
+            tabTextContent.classList.remove('active');
+            
+            if (tab === 'questions') {
+                tabQuestions.classList.add('active');
+                tabQuestionsContent.classList.add('active');
+            } else {
+                tabText.classList.add('active');
+                tabTextContent.classList.add('active');
+            }
+        }
+
+        // Mettre à jour la progression du workflow - FONCTION SIMPLIFIÉE
+        function updateWorkflowProgress() {
+            const steps = document.querySelectorAll('.progress-step');
+            const workflowSteps = document.querySelectorAll('.workflow-step');
+            
+            // Réinitialiser toutes les étapes
+            steps.forEach(step => {
+                step.classList.remove('active', 'completed');
+            });
+            workflowSteps.forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            // Déterminer l'étape actuelle
+            if (questions.length === 0 && philosophyData.texte === '') {
+                // Étape 1 : Importation
+                currentWorkflowStep = 1;
+            } else if (currentWorkflowStep < 3) {
+                // Étape 2 : Édition (par défaut après import)
+                currentWorkflowStep = 2;
+            }
+            // L'étape 3 et 4 sont activées manuellement
+            
+            // Appliquer les classes en fonction de l'étape actuelle
+            for (let i = 1; i <= 4; i++) {
+                const stepElement = document.getElementById(`step-${i}`);
+                const workflowElement = document.getElementById(`${i === 1 ? 'import' : i === 2 ? 'edit' : i === 3 ? 'verify' : 'export'}-step`);
+                
+                if (i < currentWorkflowStep) {
+                    // Étapes précédentes terminées (vert)
+                    stepElement.classList.add('completed');
+                } else if (i === currentWorkflowStep) {
+                    // Étape actuelle (bleu)
+                    stepElement.classList.add('active');
+                    workflowElement.classList.add('active');
+                }
+                // Étapes futures restent grises
+            }
+        }
+
+        // Passer à l'étape suivante
+        function goToNextStep() {
+            if (currentWorkflowStep < 4) {
+                currentWorkflowStep++;
+                updateWorkflowProgress();
+            }
+        }
+
+        // Passer à une étape spécifique
+        function goToStep(stepNumber) {
+            if (stepNumber >= 1 && stepNumber <= 4) {
+                currentWorkflowStep = stepNumber;
+                updateWorkflowProgress();
+            }
+        }
+
+        // Sauvegarder la configuration
+        function saveConfig() {
+            fileTitle = fileTitleInput.value.trim() || 'titre du fichier';
+            fileSubtitle = fileSubtitleInput.value.trim() || 'sous-titre du fichier';
+            
+            exportFileTitle.textContent = fileTitle;
+            exportFileSubtitle.textContent = fileSubtitle;
+            
+            // Sauvegarder dans le localStorage
+            localStorage.setItem('fileTitle', fileTitle);
+            localStorage.setItem('fileSubtitle', fileSubtitle);
+            
+            showNotification('Configuration sauvegardée avec succès !');
+            saveConfigBtn.disabled = true;
+        }
+
+        // Activer le bouton de sauvegarde de la configuration
+        function enableConfigSaveButton() {
+            saveConfigBtn.disabled = false;
+        }
+
+        // Mettre à jour les statistiques
+        function updateStats() {
+            questionsCount.textContent = questions.length;
+            exportTotalCount.textContent = questions.length;
+            exportModifiedCount.textContent = modifiedQuestions.size;
+            totalQuestions.textContent = questions.length;
+            
+            if (currentQuestionIndex >= 0) {
+                currentQuestionNumber.textContent = currentQuestionIndex + 1;
+            } else {
+                currentQuestionNumber.textContent = '-';
+            }
+            
+            // Compter les questions complètes
+            const completeCount = questions.filter(q => 
+                q.question && 
+                q.question.trim() !== '' && 
+                q.answers && 
+                q.answers.length >= 2 && 
+                q.answers.every(a => a && a.trim() !== '') &&
+                q.explanation && 
+                q.explanation.trim() !== ''
+            ).length;
+            
+            completeQuestions.textContent = completeCount;
+            incompleteQuestions.textContent = questions.length - completeCount;
+            
+            // Mettre à jour le statut du texte
+            if (isTextModified || isSourceModified) {
+                textModifiedStatus.textContent = 'modifié';
+                textModifiedStatus.style.color = '#f39c12';
+            } else {
+                textModifiedStatus.textContent = 'conservé tel quel';
+                textModifiedStatus.style.color = '#2ecc71';
+            }
+            
+            // Activer/désactiver le bouton d'export
+            exportFileBtn.disabled = questions.length === 0;
+        }
+
+        // Mettre à jour les statistiques du texte
+        function updateTextStats() {
+            textLength.textContent = philosophyText.value.length;
+            sourceModified.textContent = isSourceModified ? '✓ modifié' : '✓ original';
+            textModified.textContent = isTextModified ? '✓ modifié' : '✓ original';
+        }
+
+        // Gérer la sélection de fichier
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                fileNameDisplay.textContent = `Fichier sélectionné : ${file.name}`;
+                importedFileSize.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+                importQuestions(file);
+            } else {
+                fileNameDisplay.textContent = 'Aucun fichier sélectionné';
+            }
+        }
+
+        // Importer les questions depuis un fichier JS
+        function importQuestions(file) {
+            if (!file) {
+                showNotification('Veuillez sélectionner un fichier', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const fileContent = e.target.result;
+                    
+                    // Extraire le texte philosophique et les questions
+                    const extractedData = extractDataFromJS(fileContent);
+                    
+                    if (extractedData) {
+                        philosophyData = extractedData.philosophyData;
+                        originalPhilosophyData = JSON.parse(JSON.stringify(philosophyData));
+                        questions = extractedData.questions;
+                        originalQuestions = JSON.parse(JSON.stringify(extractedData.questions));
+                        modifiedQuestions.clear();
+                        isTextModified = false;
+                        isSourceModified = false;
+                        
+                        // Extraire le titre et le sous-titre si présents
+                        extractTitleAndSubtitle(fileContent);
+                        
+                        // Mettre à jour l'interface
+                        philosophyText.value = philosophyData.texte;
+                        sourceText.value = philosophyData.source;
+                        
+                        // Sauvegarder dans le localStorage
+                        saveToLocalStorage();
+                        
+                        renderQuestionList();
+                        updateStats();
+                        updateTextStats();
+                        resetEditor();
+                        showNotification(`${questions.length} questions et le texte importés avec succès !`);
+                        
+                        // Afficher les statistiques d'importation
+                        importedQuestionsCount.textContent = questions.length;
+                        importStats.style.display = 'flex';
+                        
+                        // Passer à l'étape 2 (édition)
+                        goToStep(2);
+                    } else {
+                        throw new Error('Aucune donnée valide trouvée dans le fichier');
+                    }
+                } catch (error) {
+                    console.error('Erreur lors de l\'importation:', error);
+                    showNotification('Erreur lors de l\'importation : ' + error.message, 'error');
+                }
+            };
+            reader.onerror = function() {
+                showNotification('Erreur lors de la lecture du fichier', 'error');
+            };
+            reader.readAsText(file);
+        }
+
+        // Extraire le titre et le sous-titre du fichier JS
+        function extractTitleAndSubtitle(content) {
+            // Chercher le titre comme variable (const titre = "...")
+            const titleMatch = content.match(/const\s+titre\s*=\s*"([^"]+)"/);
+            if (titleMatch && titleMatch[1]) {
+                fileTitle = titleMatch[1].trim();
+                fileTitleInput.value = fileTitle;
+            }
+            
+            // Chercher le sous-titre comme variable (const sousTitre = "...")
+            const subtitleMatch = content.match(/const\s+sousTitre\s*=\s*"([^"]+)"/);
+            if (subtitleMatch && subtitleMatch[1]) {
+                fileSubtitle = subtitleMatch[1].trim();
+                fileSubtitleInput.value = fileSubtitle;
+            }
+            
+            // Si pas trouvé comme variable, chercher comme commentaire
+            if (!titleMatch) {
+                const titleCommentMatch = content.match(/\/\/ titre\s*:\s*(.+)/);
+                if (titleCommentMatch && titleCommentMatch[1]) {
+                    fileTitle = titleCommentMatch[1].trim();
+                    fileTitleInput.value = fileTitle;
+                }
+            }
+            
+            if (!subtitleMatch) {
+                const subtitleCommentMatch = content.match(/\/\/ sous-titre\s*:\s*([\s\S]*?)(?=\n\/\/|\nconst|$)/);
+                if (subtitleCommentMatch && subtitleCommentMatch[1]) {
+                    fileSubtitle = subtitleCommentMatch[1].trim();
+                    fileSubtitleInput.value = fileSubtitle;
+                }
+            }
+            
+            exportFileTitle.textContent = fileTitle;
+            exportFileSubtitle.textContent = fileSubtitle;
+        }
+
+        // Extraire les données d'un fichier JS - FONCTION CORRIGÉE
+        function extractDataFromJS(content) {
+            let philosophyData = null;
+            let questions = [];
+            
+            try {
+                // Supprimer les commentaires multilignes
+                let cleanedContent = content.replace(/\/\*[\s\S]*?\*\//g, '');
+                
+                // Chercher le texte philosophique avec backticks
+                const philosophyMatch = cleanedContent.match(/const philosophyData\s*=\s*{[\s\S]*?texte:\s*`([\s\S]*?)`[\s\S]*?source:\s*"([\s\S]*?)"[\s\S]*?}/);
+                
+                if (philosophyMatch) {
+                    philosophyData = {
+                        texte: philosophyMatch[1] || '',
+                        source: philosophyMatch[2] || ''
+                    };
+                } else {
+                    // Essayer un autre pattern si le premier ne fonctionne pas
+                    const altMatch = cleanedContent.match(/const philosophyData\s*=\s*{([\s\S]*?)}/);
+                    if (altMatch) {
+                        const dataString = altMatch[1];
+                        // Extraire manuellement les propriétés
+                        const texteMatch = dataString.match(/texte:\s*`([\s\S]*?)`/);
+                        const sourceMatch = dataString.match(/source:\s*"([\s\S]*?)"/);
+                        
+                        philosophyData = {
+                            texte: texteMatch ? texteMatch[1] : '',
+                            source: sourceMatch ? sourceMatch[1] : ''
+                        };
+                    }
+                }
+                
+                if (!philosophyData) {
+                    philosophyData = { texte: '', source: '' };
+                }
+                
+                // Chercher le tableau questions - version améliorée
+                const questionsMatch = cleanedContent.match(/const questions\s*=\s*(\[[\s\S]*?\])\s*;/);
+                
+                if (questionsMatch) {
+                    try {
+                        // Nettoyer le contenu pour l'évaluation
+                        let questionsString = questionsMatch[1];
+                        
+                        // Remplacer les backticks dans les chaînes
+                        questionsString = questionsString.replace(/`([^`]*)`/g, '"$1"');
+                        
+                        // Évaluer le tableau
+                        questions = eval('(' + questionsString + ')');
+                        
+                        if (!Array.isArray(questions)) {
+                            questions = [];
+                        }
+                        
+                        // IMPORTANT : appliquer le décalage inverse lors de l'importation
+                        // Puisque l'export ajoute +1, l'import doit soustraire -1
+                        questions = questions.map(q => {
+                            // Si correct est 1, 2, ou 3, le ramener à 0, 1, 2
+                            if (q.correct !== undefined) {
+                                // Appliquer le décalage inverse : 1→0, 2→1, 3→2
+                                return {
+                                    ...q,
+                                    correct: q.correct - 1
+                                };
+                            }
+                            return q;
+                        });
+                        
+                    } catch (error) {
+                        console.error('Erreur d\'extraction des questions:', error);
+                        questions = [];
+                    }
+                }
+            } catch (error) {
+                console.error('Erreur générale d\'extraction:', error);
+                philosophyData = { texte: '', source: '' };
+                questions = [];
+            }
+            
+            return {
+                philosophyData: philosophyData || { texte: '', source: '' },
+                questions: questions
+            };
+        }
+
+        // Ajouter un champ de réponse
+        function addAnswerField() {
+            const answerCount = answersContainer.children.length;
+            const answerDiv = document.createElement('div');
+            answerDiv.className = 'answer-input';
+            answerDiv.innerHTML = `
+                <span style="min-width: 30px; font-weight: bold;">${answerCount + 1}</span>
+                <input type="text" placeholder="Réponse ${answerCount + 1}" class="answer-input-field">
+                <button class="remove-answer-btn" onclick="removeAnswerField(this)">×</button>
+            `;
+            answersContainer.appendChild(answerDiv);
+            updateCorrectAnswerOptions();
+            enableSaveButton();
+        }
+
+        // Supprimer un champ de réponse
+        function removeAnswerField(button) {
+            const answerInput = button.closest('.answer-input');
+            if (answersContainer.children.length > 2) {
+                answerInput.remove();
+                updateCorrectAnswerOptions();
+                enableSaveButton();
+            } else {
+                showNotification('Il doit y avoir au moins 2 réponses', 'warning');
+            }
+        }
+
+        // Mettre à jour les options de réponse correcte
+        function updateCorrectAnswerOptions() {
+            const answerCount = answersContainer.children.length;
+            correctAnswer.innerHTML = '';
+            
+            for (let i = 0; i < answerCount; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `Réponse ${i + 1}`;
+                correctAnswer.appendChild(option);
+            }
+            
+            answersCount.textContent = answerCount;
+        }
+
+        // Activer le bouton de sauvegarde
+        function enableSaveButton() {
+            if (currentQuestionIndex !== -1) {
+                saveQuestionBtn.disabled = false;
+                cancelEditBtn.disabled = false;
+            }
+        }
+
+        // Activer le bouton de sauvegarde du texte
+        function enableTextSaveButton() {
+            saveTextBtn.disabled = false;
+        }
+
+        // Sauvegarder la question éditée
+        function saveQuestion() {
+            if (currentQuestionIndex === -1) return;
+            
+            const question = questionText.value.trim();
+            const answers = Array.from(answersContainer.querySelectorAll('.answer-input-field'))
+                .map(input => input.value.trim())
+                .filter(answer => answer !== '');
+            
+            const correct = parseInt(correctAnswer.value);
+            const expl = explanation.value.trim();
+            
+            // Validation
+            if (!question) {
+                showNotification('Veuillez entrer une question', 'error');
+                return;
+            }
+            
+            if (answers.length < 2) {
+                showNotification('Veuillez entrer au moins 2 réponses', 'error');
+                return;
+            }
+            
+            if (correct >= answers.length) {
+                showNotification('La réponse correcte doit correspondre à une réponse existante', 'error');
+                return;
+            }
+            
+            if (!expl) {
+                showNotification('Veuillez entrer une explication', 'error');
+                return;
+            }
+            
+            // Sauvegarder la question
+            questions[currentQuestionIndex] = {
+                question,
+                answers,
+                correct,
+                explanation: expl
+            };
+            
+            // Marquer comme modifié
+            modifiedQuestions.add(currentQuestionIndex);
+            
+            // Sauvegarder dans le localStorage
+            saveToLocalStorage();
+            
+            // Mettre à jour l'affichage
+            renderQuestionList();
+            updateStats();
+            showNotification('question sauvegardée avec succès !');
+            
+            // Désactiver le bouton de sauvegarde
+            saveQuestionBtn.disabled = true;
+            cancelEditBtn.disabled = true;
+            
+            // Passer à l'étape 3 (vérification) et afficher la prévisualisation
+            goToStep(3);
+            updatePreview(questions[currentQuestionIndex]);
+        }
+
+        // Sauvegarder le texte philosophique
+        function saveText() {
+            const texte = philosophyText.value.trim();
+            const source = sourceText.value.trim();
+            
+            // Validation
+            if (!texte) {
+                showNotification('Veuillez entrer un texte', 'error');
+                return;
+            }
+            
+            if (!source) {
+                showNotification('Veuillez entrer une source', 'error');
+                return;
+            }
+            
+            // Vérifier si le texte a été modifié
+            if (originalPhilosophyData) {
+                if (texte !== originalPhilosophyData.texte) {
+                    isTextModified = true;
+                }
+                if (source !== originalPhilosophyData.source) {
+                    isSourceModified = true;
+                }
+            }
+            
+            // Sauvegarder le texte
+            philosophyData.texte = texte;
+            philosophyData.source = source;
+            
+            // Sauvegarder dans le localStorage
+            saveToLocalStorage();
+            
+            // Mettre à jour les statistiques
+            updateTextStats();
+            
+            showNotification('texte philosophique sauvegardé avec succès !');
+            saveTextBtn.disabled = true;
+            
+            // Passer à l'étape 3 (vérification) si on a fait des modifications
+            goToStep(3);
+        }
+
+        // Créer une nouvelle question
+        function createNewQuestion() {
+            currentQuestionIndex = questions.length;
+            
+            const newQuestion = {
+                question: '',
+                answers: ['', '', ''],
+                correct: 0,
+                explanation: ''
+            };
+            
+            questions.push(newQuestion);
+            modifiedQuestions.add(currentQuestionIndex);
+            
+            // Charger la nouvelle question dans l'éditeur
+            loadQuestion(currentQuestionIndex);
+            
+            // Activer l'édition
+            saveQuestionBtn.disabled = false;
+            cancelEditBtn.disabled = false;
+            
+            // Mettre à jour l'affichage
+            renderQuestionList();
+            updateStats();
+            showNotification('Nouvelle question créée. Remplissez les champs et sauvegardez.');
+        }
+
+        // Annuler l'édition
+        function cancelEdit() {
+            if (currentQuestionIndex === -1) return;
+            
+            // Recharger la question originale
+            if (originalQuestions[currentQuestionIndex]) {
+                loadQuestion(currentQuestionIndex);
+            } else {
+                // Si c'est une nouvelle question, la supprimer
+                if (questions[currentQuestionIndex].question === '') {
+                    questions.splice(currentQuestionIndex, 1);
+                    modifiedQuestions.delete(currentQuestionIndex);
+                    currentQuestionIndex = -1;
+                    resetEditor();
+                    renderQuestionList();
+                    updateStats();
+                } else {
+                    loadQuestion(currentQuestionIndex);
+                }
+            }
+            
+            // Désactiver les boutons
+            saveQuestionBtn.disabled = true;
+            cancelEditBtn.disabled = true;
+            
+            showNotification('Modifications annulées');
+        }
+
+        // Réinitialiser l'éditeur
+        function resetEditor() {
+            questionText.value = '';
+            
+            // Réinitialiser les réponses à 3 champs par défaut
+            answersContainer.innerHTML = '';
+            for (let i = 0; i < 3; i++) {
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'answer-input';
+                answerDiv.innerHTML = `
+                    <span style="min-width: 30px; font-weight: bold;">${i + 1}</span>
+                    <input type="text" placeholder="Réponse ${i + 1}" class="answer-input-field">
+                    <button class="remove-answer-btn" ${i < 2 ? 'style="display: none;"' : ''} onclick="removeAnswerField(this)">×</button>
+                `;
+                answersContainer.appendChild(answerDiv);
+            }
+            
+            correctAnswer.value = '0';
+            explanation.value = '';
+            
+            updateCorrectAnswerOptions();
+            
+            // Désactiver les boutons
+            saveQuestionBtn.disabled = true;
+            cancelEditBtn.disabled = true;
+            
+            // Réinitialiser la prévisualisation
+            updatePreview(null);
+        }
+
+        // Réinitialiser le texte à l'original
+        function resetText() {
+            if (originalPhilosophyData) {
+                if (confirm('Voulez-vous vraiment restaurer le texte original ? Les modifications non sauvegardées seront perdues.')) {
+                    philosophyText.value = originalPhilosophyData.texte;
+                    sourceText.value = originalPhilosophyData.source;
+                    isTextModified = false;
+                    isSourceModified = false;
+                    saveTextBtn.disabled = true;
+                    updateTextStats();
+                    updateStats();
+                    showNotification('Texte restauré à la version originale');
+                }
+            } else {
+                showNotification('Aucune version originale disponible', 'warning');
+            }
+        }
+
+        // Prévisualiser le texte
+        function previewText() {
+            const texte = philosophyText.value.trim();
+            const source = sourceText.value.trim();
+            
+            if (!texte) {
+                showNotification('Veuillez entrer un texte à prévisualiser', 'warning');
+                return;
+            }
+            
+            // Formater le texte avec des paragraphes
+            const formattedText = texte.replace(/\n/g, '</p><p>');
+            
+            // Afficher la prévisualisation
+            textPreview.innerHTML = `<p>${formattedText}</p>`;
+            sourcePreview.textContent = source || 'Aucune source spécifiée';
+            
+            textPreviewContainer.style.display = 'block';
+            showNotification('Prévisualisation générée');
+        }
+
+        // Prévisualiser tout le texte - FONCTION CORRIGÉE
+        function previewAllText() {
+            // Vérifier qu'il y a du texte à prévisualiser
+            const texte = philosophyText.value.trim();
+            const source = sourceText.value.trim();
+            
+            if (!texte) {
+                showNotification('Veuillez entrer un texte à prévisualiser', 'warning');
+                return;
+            }
+            
+            // Basculer vers l'onglet texte
+            switchTab('text');
+            
+            // Attendre un peu pour que le changement d'onglet s'effectue
+            setTimeout(() => {
+                // Afficher le conteneur de prévisualisation
+                textPreviewContainer.style.display = 'block';
+                
+                // Formater le texte avec des paragraphes
+                const formattedText = texte.replace(/\n/g, '</p><p>');
+                
+                // Afficher la prévisualisation
+                textPreview.innerHTML = `<p>${formattedText}</p>`;
+                sourcePreview.textContent = source || 'Aucune source spécifiée';
+                
+                showNotification('Prévisualisation du texte complet générée');
+            }, 100);
+        }
+
+        // Effacer toutes les questions
+        function clearAll() {
+            if (questions.length === 0 && philosophyData.texte === '') {
+                showNotification('Aucune donnée à effacer', 'error');
+                return;
+            }
+            
+            if (confirm(`Voulez-vous vraiment tout effacer et recommencer ?`)) {
+                questions = [];
+                originalQuestions = [];
+                philosophyData = { texte: '', source: '' };
+                originalPhilosophyData = null;
+                modifiedQuestions.clear();
+                isTextModified = false;
+                isSourceModified = false;
+                
+                // Réinitialiser la configuration
+                fileTitle = 'titre du fichier';
+                fileSubtitle = 'sous-titre du fichier';
+                fileTitleInput.value = fileTitle;
+                fileSubtitleInput.value = fileSubtitle;
+                exportFileTitle.textContent = fileTitle;
+                exportFileSubtitle.textContent = fileSubtitle;
+                
+                localStorage.removeItem('quizQuestions');
+                localStorage.removeItem('philosophyData');
+                localStorage.removeItem('fileTitle');
+                localStorage.removeItem('fileSubtitle');
+                
+                renderQuestionList();
+                updateStats();
+                updateTextStats();
+                resetEditor();
+                
+                // Réinitialiser le texte
+                philosophyText.value = '';
+                sourceText.value = '';
+                textPreviewContainer.style.display = 'none';
+                saveTextBtn.disabled = true;
+                saveConfigBtn.disabled = true;
+                
+                // Réinitialiser l'import
+                importFileBtn.value = '';
+                fileNameDisplay.textContent = 'aucun fichier sélectionné';
+                importStats.style.display = 'none';
+                
+                // Retourner à l'étape 1
+                goToStep(1);
+                showNotification('Toutes les données ont été effacées');
+            }
+        }
+
+        // Afficher la liste des questions
+        function renderQuestionList() {
+            questionList.innerHTML = '';
+            
+            if (questions.length === 0) {
+                questionList.innerHTML = '<p style="padding: 20px; text-align: center; color: #7f8c8d;">aucune question. importer un fichier ou créez une nouvelle question.</p>';
+                return;
+            }
+            
+            questions.forEach((q, index) => {
+                const questionItem = document.createElement('div');
+                questionItem.className = 'question-item';
+                if (index === currentQuestionIndex) {
+                    questionItem.classList.add('active');
+                }
+                
+                const isModified = modifiedQuestions.has(index);
+                const isComplete = q.question && q.question.trim() !== '' && 
+                                  q.answers && q.answers.length >= 2 && 
+                                  q.explanation && q.explanation.trim() !== '';
+                
+                questionItem.innerHTML = `
+                    <div class="question-content">
+                        <div class="question-text-preview">
+                            ${q.question || '<em style="color: #95a5a6;">[Question non définie]</em>'}
+                        </div>
+                        <div class="question-meta">
+                            ${q.answers ? q.answers.length + ' réponses' : '0 réponse'} • 
+                            réponse correcte : ${q.correct !== undefined ? q.correct + 1 : '?'} • 
+                            ${isModified ? '<span style="color: #f39c12;">● modifié</span>' : '<span style="color: #2ecc71;">✓ original</span>'} • 
+                            ${isComplete ? '<span style="color: #2ecc71;">✓ complet</span>' : '<span style="color: #e74c3c;">⚠ incomplet</span>'}
+                        </div>
+                    </div>
+                    <div class="question-actions">
+                        <button class="action-btn edit-btn" onclick="editQuestion(${index})">
+                            ${index === currentQuestionIndex ? '📝 éditer' : '✏️ éditer'}
+                        </button>
+                        ${index === currentQuestionIndex ? '' : `<button class="action-btn delete-btn" onclick="deleteQuestion(${index})">🗑️</button>`}
+                    </div>
+                `;
+                
+                questionList.appendChild(questionItem);
+            });
+        }
+
+        // Éditer une question
+        function editQuestion(index) {
+            loadQuestion(index);
+            saveQuestionBtn.disabled = true;
+            cancelEditBtn.disabled = true;
+            showNotification(`Question ${index + 1} chargée pour édition. modifier les champs et sauvegardez.`);
+            
+            // Revenir à l'étape 2 (édition) pour permettre les modifications
+            goToStep(2);
+        }
+
+        // Supprimer une question
+        function deleteQuestion(index) {
+            if (confirm(`voulez-vous vraiment supprimer la question ${index + 1} ?`)) {
+                questions.splice(index, 1);
+                modifiedQuestions.delete(index);
+                
+                // Ajuster les indices des questions modifiées
+                const newModifiedQuestions = new Set();
+                modifiedQuestions.forEach(oldIndex => {
+                    if (oldIndex > index) {
+                        newModifiedQuestions.add(oldIndex - 1);
+                    } else if (oldIndex < index) {
+                        newModifiedQuestions.add(oldIndex);
+                    }
+                });
+                modifiedQuestions = newModifiedQuestions;
+                
+                // Ajuster l'index courant
+                if (currentQuestionIndex === index) {
+                    currentQuestionIndex = -1;
+                    resetEditor();
+                } else if (currentQuestionIndex > index) {
+                    currentQuestionIndex--;
+                }
+                
+                saveToLocalStorage();
+                renderQuestionList();
+                updateStats();
+                showNotification('question supprimée avec succès !');
+            }
+        }
+
+        // Charger une question dans l'éditeur
+        function loadQuestion(index) {
+            const q = questions[index];
+            
+            questionText.value = q.question || '';
+            
+            // Vider le conteneur de réponses
+            answersContainer.innerHTML = '';
+            
+            // Ajouter les réponses de la question
+            const answers = q.answers || ['', '', ''];
+            answers.forEach((answer, i) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'answer-input';
+                answerDiv.innerHTML = `
+                    <span style="min-width: 30px; font-weight: bold;">${i + 1}</span>
+                    <input type="text" value="${answer}" class="answer-input-field">
+                    <button class="remove-answer-btn" ${answers.length <= 2 ? 'style="display: none;"' : ''} onclick="removeAnswerField(this)">×</button>
+                `;
+                answersContainer.appendChild(answerDiv);
+            });
+            
+            correctAnswer.value = (q.correct || 0).toString();
+            explanation.value = q.explanation || '';
+            
+            currentQuestionIndex = index;
+            updateCorrectAnswerOptions();
+            updateStats();
+            
+            // Mettre à jour la prévisualisation de la question sélectionnée
+            updatePreview(q);
+            
+            // Faire défiler jusqu'à la question
+            const questionElement = document.querySelector(`.question-item:nth-child(${index + 1})`);
+            if (questionElement) {
+                questionElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            
+            // Passer automatiquement à l'étape 3 (vérification) pour voir la prévisualisation
+            goToStep(3);
+        }
+
+        // Mettre à jour la prévisualisation de la question
+        function updatePreview(q) {
+            if (!q || !q.question) {
+                questionPreview.innerHTML = `
+                    <div style="padding: 20px; text-align: center; color: #7f8c8d;">
+                        <p>sélectionner une question dans la liste pour la prévisualiser ici.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const answers = q.answers || [];
+            const correct = q.correct || 0;
+            const explanationText = q.explanation || 'aucune explication fournie';
+            
+            let answersHTML = '';
+            answers.forEach((answer, index) => {
+                if (answer && answer.trim() !== '') {
+                    const isCorrect = index === correct;
+                    const bgColor = isCorrect ? '#d4edda' : '#f8f9fa';
+                    const borderColor = isCorrect ? '#28a745' : '#6c757d';
+                    const statusText = isCorrect ? '✓ correcte' : '';
+                    const statusColor = isCorrect ? '#28a745' : '';
+                    
+                    answersHTML += `
+                        <div class="answer-preview-item" style="background-color: ${bgColor}; border-left: 4px solid ${borderColor};">
+                            <div class="answer-preview-text">
+                                <strong>réponse ${index + 1} :</strong> ${answer}
+                            </div>
+                            ${statusText ? `<div class="answer-preview-status" style="color: ${statusColor};">${statusText}</div>` : ''}
+                        </div>
+                    `;
+                }
+            });
+            
+            questionPreview.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: #2c3e50; margin-bottom: 10px;">question ${currentQuestionIndex + 1} :</h4>
+                    <div style="padding: 15px; background-color: #f8f9fa; border-radius: 6px; border: 1px solid #e0e0e0;">
+                        ${q.question}
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: #2c3e50; margin-bottom: 10px;">réponses :</h4>
+                    ${answersHTML || '<p style="color: #95a5a6; font-style: italic;">aucune réponse définie</p>'}
+                </div>
+                
+                <div>
+                    <h4 style="color: #2c3e50; margin-bottom: 10px;">explication :</h4>
+                    <div style="padding: 15px; background-color: #f8f9fa; border-radius: 6px; border: 1px solid #e0e0e0;">
+                        ${explanationText}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Vérifier toutes les questions
+        function checkAllQuestions() {
+            let incompleteList = [];
+            
+            questions.forEach((q, index) => {
+                if (!q.question || q.question.trim() === '' || 
+                    !q.answers || q.answers.length < 2 || 
+                    q.answers.some(a => !a || a.trim() === '') ||
+                    !q.explanation || q.explanation.trim() === '') {
+                    incompleteList.push(index + 1);
+                }
+            });
+            
+            if (incompleteList.length === 0) {
+                showNotification('✅ toutes les questions sont complètes !');
+                // Passer à l'étape 4 (exportation) si tout est complet
+                goToStep(4);
+            } else {
+                showNotification(`⚠ ${incompleteList.length} question(s) incomplète(s) : ${incompleteList.join(', ')}`, 'warning');
+            }
+            
+            updateStats();
+        }
+
+        // Exporter les questions - MODIFIÉ POUR EXPORTER LE TITRE ET SOUS-TITRE COMME VARIABLES
+        function exportQuestions() {
+            if (questions.length === 0) {
+                showNotification('aucune question à exporter', 'erreur');
+                return;
+            }
+
+            // Demander le nom du fichier
+            const defaultName = `texte_${new Date().toISOString().split('T')[0]}.js`;
+            const fileName = prompt('Nom du fichier à exporter :', defaultName) || defaultName;
+            
+            if (!fileName) {
+                showNotification('Export annulé', 'warning');
+                return;
+            }
+
+            // Générer le code JavaScript complet avec titre et sous-titre comme variables
+            let code = '// ============================================\n';
+            code += '// DONNÉES GÉNÉRALES\n';
+            code += '// ============================================\n\n';
+            
+            code += '// Titre et description du fichier\n';
+            code += 'const titre = "' + escapeString(fileTitle) + '";\n';
+            code += 'const sousTitre = "' + escapeString(fileSubtitle) + '";\n\n';
+            
+            code += '// ============================================\n';
+            code += '// DONNÉES DU TEXTE PHILOSOPHIQUE\n';
+            code += '// ============================================\n\n';
+            
+            code += 'const philosophyData = {\n';
+            code += '    texte: `' + philosophyData.texte + '`,\n';
+            code += '    \n';
+            code += '    source: "' + escapeString(philosophyData.source) + '"\n';
+            code += '};\n\n';
+            
+            code += '// ============================================\n';
+            code += '// QUESTIONS DU QUIZ\n';
+            code += '// ============================================\n\n';
+            
+            code += 'const questions = [\n\n';
+            
+            questions.forEach((q, index) => {
+                const isModified = modifiedQuestions.has(index);
+                code += `    // Question n°${index + 1} ${isModified ? '(modifiée)' : ''}\n`;
+                code += `    { \n`;
+                code += `        question: "${escapeString(q.question)}",\n`;
+                code += `        answers: [${(q.answers || []).map(a => `"${escapeString(a)}"`).join(', ')}], \n`;
+                // MODIFICATION : DÉCALAGE D'UNE UNITÉ (0→1, 1→2, 2→3)
+                code += `        correct: ${(q.correct || 0) + 1},\n`;
+                code += `        explanation: "${escapeString(q.explanation || '')}"\n`;
+                code += `    }${index < questions.length - 1 ? ',' : ''}\n\n`;
+            });
+            
+            code += '];\n\n';
+            
+            code += '// ============================================\n';
+            code += '// NOTES IMPORTANTES POUR LA COMPATIBILITÉ\n';
+            code += '// ============================================\n\n';
+            code += '/*\n';
+            code += 'IMPORTANT : Ce fichier est compatible avec le HTML fourni qui contient :\n\n';
+            code += '1. Une fonction formatPhilosophyText() qui convertit les retours chariot en paragraphes\n';
+            code += '2. Une fonction formatSource() qui met en italique seulement la partie après la première virgule\n';
+            code += '3. Un système de quiz qui pioche aléatoirement 10 questions parmi les ' + questions.length + ' disponibles\n\n';
+            code += 'Le texte philosophique utilise des retours chariot (\\n) qui seront automatiquement \n';
+            code += 'convertis en paragraphes distincts dans l\'affichage.\n\n';
+            code += 'Chaque question a exactement 3 réponses (comme attendu par le code HTML).\n';
+            code += '*/\n';
+            
+            // Exporter le fichier
+            const blob = new Blob([code], { type: 'application/javascript' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName.endsWith('.js') ? fileName : fileName + '.js';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            const textMod = isTextModified || isSourceModified ? ' (texte modifié)' : '';
+            showNotification(`Fichier "${a.download}" exporté avec ${questions.length} questions (${modifiedQuestions.size} modifiées)${textMod} !`);
+            
+            // Marquer l'étape 4 comme terminée (verte)
+            const step4Element = document.getElementById('step-4');
+            step4Element.classList.remove('active');
+            step4Element.classList.add('completed');
+            
+            // Désactiver le bouton d'export
+            exportFileBtn.disabled = true;
+            exportFileBtn.innerHTML = '✅ exportation terminée';
+            exportFileBtn.style.backgroundColor = '#2ecc71';
+            
+            // Marquer l'étape 4 comme terminée dans notre logique
+            currentWorkflowStep = 5; // Étape fictive après l'export
+            updateWorkflowProgress();
+        }
+
+        // Échapper les caractères spéciaux dans les chaînes
+        function escapeString(str) {
+            if (!str) return '';
+            return str.replace(/"/g, '\\"').replace(/\n/g, '\\n');
+        }
+
+        // Sauvegarder dans le localStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('quizQuestions', JSON.stringify(questions));
+            localStorage.setItem('philosophyData', JSON.stringify(philosophyData));
+            localStorage.setItem('modifiedQuestions', JSON.stringify(Array.from(modifiedQuestions)));
+            localStorage.setItem('textModified', JSON.stringify(isTextModified));
+            localStorage.setItem('sourceModified', JSON.stringify(isSourceModified));
+            localStorage.setItem('fileTitle', fileTitle);
+            localStorage.setItem('fileSubtitle', fileSubtitle);
+        }
+
+        // Charger depuis le localStorage
+        function loadFromLocalStorage() {
+            try {
+                const savedQuestions = localStorage.getItem('quizQuestions');
+                const savedPhilosophyData = localStorage.getItem('philosophyData');
+                const savedModifiedQuestions = localStorage.getItem('modifiedQuestions');
+                const savedTextModified = localStorage.getItem('textModified');
+                const savedSourceModified = localStorage.getItem('sourceModified');
+                const savedFileTitle = localStorage.getItem('fileTitle');
+                const savedFileSubtitle = localStorage.getItem('fileSubtitle');
+                
+                if (savedQuestions) {
+                    questions = JSON.parse(savedQuestions);
+                    originalQuestions = JSON.parse(JSON.stringify(questions));
+                }
+                
+                if (savedPhilosophyData) {
+                    philosophyData = JSON.parse(savedPhilosophyData);
+                    originalPhilosophyData = JSON.parse(JSON.stringify(philosophyData));
+                    philosophyText.value = philosophyData.texte;
+                    sourceText.value = philosophyData.source;
+                }
+                
+                if (savedModifiedQuestions) {
+                    modifiedQuestions = new Set(JSON.parse(savedModifiedQuestions));
+                }
+                
+                if (savedTextModified) {
+                    isTextModified = JSON.parse(savedTextModified);
+                }
+                
+                if (savedSourceModified) {
+                    isSourceModified = JSON.parse(savedSourceModified);
+                }
+                
+                if (savedFileTitle) {
+                    fileTitle = savedFileTitle;
+                    fileTitleInput.value = fileTitle;
+                }
+                
+                if (savedFileSubtitle) {
+                    fileSubtitle = savedFileSubtitle;
+                    fileSubtitleInput.value = fileSubtitle;
+                }
+                
+                exportFileTitle.textContent = fileTitle;
+                exportFileSubtitle.textContent = fileSubtitle;
+                
+                if (questions.length > 0 || philosophyData.texte) {
+                    renderQuestionList();
+                    updateStats();
+                    updateTextStats();
+                    // Déterminer l'étape appropriée
+                    if (modifiedQuestions.size > 0 || isTextModified || isSourceModified) {
+                        goToStep(3); // Vérification si modifications
+                    } else {
+                        goToStep(2); // Édition sinon
+                    }
+                    showNotification('Données précédentes chargées', 'warning');
+                }
+            } catch (error) {
+                console.error('Erreur lors du chargement depuis le localStorage:', error);
+            }
+        }
+
+        // Afficher une notification
+        function showNotification(message, type = 'success') {
+            notification.textContent = message;
+            notification.className = 'notification';
+            if (type === 'error') {
+                notification.classList.add('error');
+            } else if (type === 'warning') {
+                notification.classList.add('warning');
+            } else {
+                notification.classList.remove('error', 'warning');
+            }
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        // Initialiser l'application
+        init();
+        
+        // Exposer les fonctions nécessaires pour les événements onclick
+        window.removeAnswerField = removeAnswerField;
+        window.editQuestion = editQuestion;
+        window.deleteQuestion = deleteQuestion;
+        window.goToStep = goToStep;
+    </script>
+</body>
+</html>
