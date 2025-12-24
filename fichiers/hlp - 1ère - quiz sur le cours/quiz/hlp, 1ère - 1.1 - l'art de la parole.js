@@ -1,7 +1,7 @@
 // ============================================
 // DONNÉES GÉNÉRALES
 // ============================================
-const titre = "QUIZ HLP 1ère - l'art de la parole";
+const titre = "QUIZ HLP 1ère";
 const sousTitre = "100 questions";
 
 // ============================================
@@ -25,7 +25,7 @@ const questions = [
       "Pouvoir individuel et pouvoir collectif"
     ],
     correct: 2,
-    explanation: `La distinction centrale est entre la "potentia" (possibilité, "pouvoir de") et la "potestas" (puissance, "pouvoir sur"). La "potentia" désigne la capacité naturelle de l'homme à user de la parole comme moyen de communication et de défense. La "potestas" renvoie à l'exercice d'une force ou d'une autorité par la parole, permettant d'influencer ou de dominer autrui. Cette distinction permet de comprendre que la parole est à la fois une faculté humaine fondamentale et un instrument de pouvoir social et politique.\nExemple : Aristote voit dans la "potentia" de la parole un "contre-pouvoir" permettant à l'individu de résister à la "potestas" d'autrui.`
+    explanation: `La distinction centrale est entre la <em>potentia</em> (possibilité, "pouvoir de") et la <em>postestas</em> (puissance, "pouvoir sur"). La "potentia" désigne la capacité naturelle de l'homme à user de la parole comme moyen de communication et de défense. La "potestas" renvoie à l'exercice d'une force ou d'une autorité par la parole, permettant d'influencer ou de dominer autrui. Cette distinction permet de comprendre que la parole est à la fois une faculté humaine fondamentale et un instrument de pouvoir social et politique.\nExemple : Aristote voit dans la "potentia" de la parole un "contre-pouvoir" permettant à l'individu de résister à la "potestas" d'autrui.`
   },
   // Question n°2
   {
