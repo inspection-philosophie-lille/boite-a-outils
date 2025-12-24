@@ -199,6 +199,35 @@ body.dark-mode h1 {
 #quizTitle {
     color: var(--font-color) !important;
 }
+/* Styles spécifiques pour le titre dans la barre de progression */
+.progress-bar__title h1 {
+    white-space: nowrap !important;
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: none;
+}
+/* Classe pour forcer le retour à la ligne si nécessaire */
+.progress-bar__title h1.force-wrap {
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+}
+/* Style spécial pour le titre principal (toolbar) - supprime le tiret de fin de ligne */
+.toolbar-center h1::first-line {
+    position: relative;
+}
+.toolbar-center h1::first-line::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 10px;
+    height: 2px;
+    background: transparent;
+}
 /* MENU COULISSANT */
 .menu-overlay {
     position: fixed;
@@ -665,6 +694,7 @@ body.dark-mode .file-status {
     flex: 1;
     min-width: 120px;
     gap: 4px;
+    position: relative;
 }
 .progress-bar__title .phi-symbol {
     margin-right: 4px;
@@ -678,19 +708,25 @@ body.dark-mode .file-status {
     justify-content: center;
     color: var(--font-color);
     line-height: 1;
+    flex-shrink: 0;
 }
 .progress-bar__title h1 {
     font-size: 14px;
-    white-space: nowrap;
+    white-space: nowrap !important;
     color: var(--font-color);
     margin: 0;
-    line-height: 1;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
 }
 .progress-bar__count {
     display: flex;
     font-size: 14px;
     font-weight: bold;
 	margin-top: 10px;
+    flex-shrink: 0;
 }
 .progress-bar__cursor {
     background: hsla(0, 0%, 50.2%, 0.39);
@@ -1087,6 +1123,10 @@ body.dark-mode .philosophy-text-source {
     .toolbar-btn:hover::after {
         display: none; /* Cacher les tooltips sur mobile */
     }
+    /* Titre dans la barre de progression - mobile */
+    .progress-bar__title h1 {
+        font-size: 12px !important;
+    }
 }
 @media (max-width: 600px) {
     .toolbar-desktop { display: none; }
@@ -1104,6 +1144,14 @@ body.dark-mode .philosophy-text-source {
     }
     .philosophy-paragraph:first-child {
         text-indent: 1em;
+    }
+    /* Titre dans la barre de progression - très petit écran */
+    .progress-bar__title h1 {
+        font-size: 11px !important;
+    }
+    /* Sur mobile, le titre principal n'a pas de tiret à supprimer car il est en une seule ligne */
+    .toolbar-center h1::first-line::after {
+        display: none;
     }
 }
 @media (min-width: 601px) {
@@ -1454,20 +1502,111 @@ const loadFromGithubBtn = document.getElementById('loadFromGithubBtn');
 // Stocker la liste des fichiers GitHub
 let githubFiles = [];
 
+function checkTitleFitsInProgressBar(titleElement) {
+    if (!titleElement) return false;
+    
+    // Récupérer l'élément parent qui contient le titre et le φ
+    const progressTitleContainer = titleElement.closest('.progress-bar__title');
+    if (!progressTitleContainer) return false;
+    
+    // Récupérer l'élément qui contient le compteur (à droite)
+    const progressCount = progressTitleContainer.nextElementSibling;
+    if (!progressCount || !progressCount.classList.contains('progress-bar__count')) return false;
+    
+    // Calculer l'espace disponible
+    const containerWidth = progressTitleContainer.parentElement.offsetWidth;
+    const countWidth = progressCount.offsetWidth;
+    const phiSymbolWidth = 40; // Largeur fixe du φ
+    const paddingGap = 16; // Espacement entre les éléments
+    
+    // Espace disponible pour le titre
+    const availableWidth = containerWidth - countWidth - phiSymbolWidth - paddingGap;
+    
+    // Mesurer la largeur réelle du titre
+    const temp = document.createElement('span');
+    temp.style.fontSize = window.getComputedStyle(titleElement).fontSize;
+    temp.style.fontFamily = window.getComputedStyle(titleElement).fontFamily;
+    temp.style.fontWeight = window.getComputedStyle(titleElement).fontWeight;
+    temp.style.visibility = 'hidden';
+    temp.style.position = 'absolute';
+    temp.style.whiteSpace = 'nowrap';
+    temp.textContent = titleElement.textContent || titleElement.innerText;
+    document.body.appendChild(temp);
+    const titleWidth = temp.offsetWidth;
+    document.body.removeChild(temp);
+    
+    // Vérifier si le titre passe
+    return titleWidth <= availableWidth;
+}
+
+function removeLastDashFromFirstLine(text) {
+    // Fonction pour supprimer le tiret à la fin de la première ligne
+    // Exemple: "Philosophie -<br>La morale kantienne" devient "Philosophie<br>La morale kantienne"
+    if (!text || text.indexOf(' -<br>') === -1) return text;
+    
+    // Remplacer " -<br>" par "<br>"
+    return text.replace(' -<br>', '<br>');
+}
+
 function updateQuizTitles(titre, sousTitre) {
     const appTitle = document.getElementById('appTitle');
-    if (appTitle && titre) appTitle.textContent = titre;
-
     const appSubtitle = document.getElementById('appSubtitle');
-    if (appSubtitle && sousTitre) appSubtitle.textContent = sousTitre;
-
     const quizTitle = document.getElementById('quizTitle');
-    if (quizTitle && titre) quizTitle.textContent = titre;
-
     const mobileTitle = document.getElementById('mobileTitle');
-    if (mobileTitle && titre) mobileTitle.textContent = titre;
-
     const mobileSubtitle = document.getElementById('mobileSubtitle');
+    
+    // TITRE PRINCIPAL (toolbar) : Couper après le tiret MAIS supprimer le tiret de fin de ligne
+    let formattedTitreMain = titre || "";
+    const dashIndexMain = formattedTitreMain.indexOf(' - ');
+    
+    if (dashIndexMain !== -1) {
+        // Pour le titre principal : couper après le tiret
+        formattedTitreMain = formattedTitreMain.replace(' - ', ' -<br>');
+        // Supprimer le tiret à la fin de la première ligne
+        formattedTitreMain = removeLastDashFromFirstLine(formattedTitreMain);
+    }
+    
+    // TITRE BARRE DE PROGRESSION : D'abord essayer sans couper
+    let formattedTitreProgress = titre || "";
+    let needsWrap = false;
+    
+    // Mettre à jour le titre temporairement pour vérifier s'il passe
+    if (quizTitle && titre) {
+        quizTitle.textContent = formattedTitreProgress;
+        quizTitle.classList.remove('force-wrap');
+        
+        // Vérifier si le titre passe dans l'espace disponible
+        if (!checkTitleFitsInProgressBar(quizTitle)) {
+            // Ne passe pas, on essaie de couper après le tiret
+            const dashIndex = formattedTitreProgress.indexOf(' - ');
+            if (dashIndex !== -1) {
+                formattedTitreProgress = formattedTitreProgress.replace(' - ', ' -<br>');
+                needsWrap = true;
+            }
+        }
+        
+        // Appliquer le format final
+        quizTitle.innerHTML = formattedTitreProgress;
+        if (needsWrap) {
+            quizTitle.classList.add('force-wrap');
+        }
+    }
+    
+    // TITRE MOBILE : Même traitement que le titre principal
+    let formattedMobileTitle = titre || "";
+    const dashIndexMobile = formattedMobileTitle.indexOf(' - ');
+    
+    if (dashIndexMobile !== -1) {
+        // Pour le titre mobile : couper après le tiret
+        formattedMobileTitle = formattedMobileTitle.replace(' - ', ' -<br>');
+        // Supprimer le tiret à la fin de la première ligne
+        formattedMobileTitle = removeLastDashFromFirstLine(formattedMobileTitle);
+    }
+    
+    // Mettre à jour les autres titres
+    if (appTitle && titre) appTitle.innerHTML = formattedTitreMain;
+    if (appSubtitle && sousTitre) appSubtitle.textContent = sousTitre;
+    if (mobileTitle && titre) mobileTitle.innerHTML = formattedMobileTitle;
     if (mobileSubtitle && sousTitre) mobileSubtitle.textContent = sousTitre;
 }
 
@@ -1712,6 +1851,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('toggleTextBtn')?.addEventListener('click', togglePhilosophyText);
+
+    // Réappliquer le calcul du titre après le chargement complet
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            updateQuizTitles(currentTitre, currentSousTitre);
+        }, 100);
+    });
+    
+    // Réappliquer aussi lors du redimensionnement
+    window.addEventListener('resize', () => {
+        setTimeout(() => {
+            updateQuizTitles(currentTitre, currentSousTitre);
+        }, 100);
+    });
 
     updateFullscreenIcon();
 });
