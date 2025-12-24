@@ -1329,7 +1329,7 @@ body.dark-mode .philosophy-text-source {
             <button class="close-modal" data-modal="instructionsModal" style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--font-color);">×</button>
         </div>
         <div style="text-align: left; line-height: 1.6;">
-            <p>1. répondre aux questions.</p>
+            <p>1. réponder aux questions.</p>
             <p>2. <strong>cliquer</strong> sur la réponse correcte.</p>
             <p>3. la bonne réponse devient verte, les mauvaises deviennent rouges.</p>
             <p>4. une explication est fournie pour chaque bonne réponse.</p>
@@ -1850,7 +1850,7 @@ function displayNextQuestion() {
                 </fieldset>
                 <div class="quiz-explanation hidden">
                     <div class="quiz-explanation__label"><span></span></div>
-                    <p class="quiz-explanation__detail">${q.explanation}</p>
+                    <p class="quiz-explanation__detail">${q.explanation.replace('Exemple :', '<br><br>Exemple :')}</p>
                 </div>
                 <div class="next-button-container">
                     <button class="quiz-btn quiz-btn--default quiz-btn--fill next-question-btn">
@@ -2082,7 +2082,7 @@ function showDetailedReview() {
                 <ul style="margin-left: 20px; margin-bottom: 12px;">${answersList}</ul>
                 <p style="margin-bottom: 8px;"><strong>Réponse correcte :</strong> ${adjustedCorrectText}</p>
                 <p style="margin-bottom: 8px;"><strong>Votre réponse :</strong> ${answer.userAnswer || 'Non répondue'}</p>
-                <p style="margin-top: 10px; font-size: 0.9em;"><strong>Explication :</strong> ${answer.explanation}</p>
+                <p style="margin-top: 10px; font-size: 0.9em;"><strong>Explication :</strong> ${answer.explanation.replace('Exemple :', '<br><br>Exemple :')}</p>
             `;
 
             reviewContainer.appendChild(questionDiv);
