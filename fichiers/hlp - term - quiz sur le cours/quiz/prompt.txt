@@ -1,0 +1,73 @@
+Tu es un expert en conception pédagogique et en philosophie, spécialisé dans le programme de Humanités, Littérature et Philosophie (HLP) de Première.
+
+**TÂCHE :** Créer un quiz de révision complet et exigeant de 100 questions à choix multiples sur la séquence "L'art de la parole".
+Le quiz doit couvrir l'intégralité du cours fourni, des concepts fondamentaux aux analyses d'exemples concrets.
+
+**STRUCTURE DU FICHIER DE SORTIE :**
+Je veux un code JavaScript/JSON parfaitement formaté, prêt à être intégré dans une application de quiz. La structure doit être EXACTEMENT comme suit :
+
+// ============================================
+// DONNÉES GÉNÉRALES
+// ============================================
+const titre = "QUIZ HLP - L'art de la parole";
+const sousTitre = "100 questions pour maîtriser la rhétorique, des sophistes à la parole performative.";
+
+// ============================================
+// DONNÉES DU TEXTE PHILOSOPHIQUE (Synthèse)
+// ============================================
+const philosophyData = {
+  texte: `[Ici, une synthèse fluide et élégante de 5-6 lignes reprenant les grands enjeux de la séquence]`,
+  source: "Synthèse des enjeux philosophiques de la séquence 'L'art de la parole'."
+};
+
+// ============================================
+// QUESTIONS DU QUIZ (1 à 100)
+// ============================================
+const questions = [
+  // Question n°1
+  {
+    question: "[Phrase interrogative précise et engageante]",
+    answers: [
+      "[Première Réponse plausible mais fausse]",
+      "[Deuxième réponse plausible mais fausse]",
+      "[La réponse correcte]"
+    ],
+    correct: 3, // L'indice de la réponse correcte (1, 2 ou 3)
+    explanation: `[Une explication en 4 parties :
+        1. Identifier la réponse correcte et la situer dans le texte/le cours.
+        2. Expliquer l'importance philosophique de cette réponse ou son lien avec la pensée de l'auteur.
+        3. Montrer les implications ou conséquences de cette réponse.
+        4. Développer le lien avec l'art de la parole de manière générale.
+        Exemple : [Fournir un exemple concret, historique ou contemporain, qui illustre parfaitement le concept ou la réponse].
+        L'explication doit être fluide, sans saut de ligne artificiel entre les parties. Utiliser \n pour le saut de ligne avant "Exemple :".]`
+  },
+  // ... Répéter pour les 99 autres questions
+];
+
+**CONTRAINTES STRICTES :**
+
+1.  **Sources :** Base-toi EXCLUSIVEMENT sur le contenu du document de cours que je vais te fournir. N'ajoute pas de concepts extérieurs non présents dans le texte.
+2.  **Format des Réponses :** Pour chaque question, propose 3 réponses plausibles. L'indice de la réponse correcte (`correct:`) doit commencer à 1 (pour la première réponse) et non à 0.
+3.  **Terminologie Grecque :** Quand un mot grec est essentiel, écris-le d'abord en alphabet grec, puis, entre parenthèses, sa translittération en alphabet latin et sa traduction française.
+    *Exemple : "Le pathos (πάθος)" ou "la doxa (δόξα, l'opinion)".*
+4.  **Style des Explications :**
+    *   Important : Évite TOUTES les formules du type "selon le cours", "Dans le texte", "Le cours dit que". Assume les réponses comme des connaissances établies.
+    *   L'explication doit être **pédagogique, profonde et illustrative**. Chaque explication DOIT se terminer par un "Exemple :" suivi d'un exemple concret, pertinent et tiré du cours ou de la culture générale (histoire, politique, littérature, vie quotidienne).
+    *   Fais des paragraphes fluides. Utilise `\n` uniquement pour séparer l'explication générale de la partie "Exemple :".
+5.  **Couvre l'ensemble du cours :** Les 100 questions doivent balayer tous les thèmes majeurs du document :
+    *   Définitions (rhétorique, sophistique, performativité, etc.)
+    *   Figures et auteurs (Platon, Aristote, Cicéron, Gorgias, Isocrate, etc.)
+    *   Concepts clés (pathos/ethos/logos, potentia/potestas, genres du discours, parties du discours, psychagogie, etc.)
+    *   Analyses de discours (Hitler, Marc-Antoine, discours politiques contemporains)
+    *   Critiques (Platon vs sophistes, Ellul sur la parole anonyme, critique de l'écriture)
+    *   Enjeux contemporains (propagande, publicité, réseaux sociaux)
+    *   Distinctions fondamentales (convaincre/persuader, langue/parole/langage, silence/parole)
+6.  **Niveau :** Adopte un ton exigeant mais accessible pour des élèves de Première. Les questions doivent tester la compréhension fine, pas seulement la mémorisation.
+7.  **Variété :** Assure une grande variété dans la formulation des questions (définition, citation à identifier, analyse de cas, conséquence d'une thèse, etc.).
+
+**DOCUMENT DE COURS :**
+[Coller ici l'intégralité du document du cours.]
+
+Commence maintenant à générer le code complet, avec les 100 questions et pas moins!!!!!!!!!!, en respectant scrupuleusement toutes les consignes ci-dessus.
+Il faut numéro les questions comme suit :
+  // Question n°X
