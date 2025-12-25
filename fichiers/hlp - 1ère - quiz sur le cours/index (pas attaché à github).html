@@ -545,103 +545,40 @@ body.dark-mode .quiz-btn--fill {
 body.dark-mode .quiz-btn--fill:hover {
     box-shadow: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.3), inset -0.2rem -0.2rem 0.4rem rgba(40, 40, 40, 0.5);
 }
-/* Menu déroulant GitHub */
-.github-select-container {
-    width: 100%;
-    text-align: center;
-    margin-top: 10px;
-}
-.github-select-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: var(--font-color);
-    font-size: 14px;
-}
-.github-select {
-    width: 80%;
-    max-width: 320px;
-    padding: 12px 15px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.95);
-    border: 2px solid #666;
-    color: #333;
-    font-size: 15px;
-    cursor: pointer;
-    margin-bottom: 15px;
-    text-align: left;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    font-family: Arial, sans-serif;
-    transition: all 0.3s ease;
-}
-.github-select:hover {
-    border-color: red;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-body.dark-mode .github-select {
-    background: rgba(40, 40, 40, 0.95);
-    color: #e0e0e0;
-    border-color: #888;
-}
-.github-select option {
-    background: white;
-    color: #333;
-    padding: 8px;
-}
-body.dark-mode .github-select option {
-    background: #2d2d2d;
-    color: #e0e0e0;
-}
-.github-load-btn {
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    padding: 12px 25px;
-    border-radius: 27px;
-    border: none;
-    cursor: pointer;
-    font-size: 15px;
-    margin-top: 5px;
-    min-width: 200px;
-    transition: all 0.3s ease;
-}
-.github-load-btn:hover:not(:disabled) {
-    background: rgba(0, 0, 0, 0.8);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-.github-load-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-/* Bouton de chargement de fichier local */
+/* Bouton de chargement de fichier local - STYLE AMÉLIORÉ */
 .file-load-container {
     width: 100%;
     text-align: center;
     margin-top: 15px;
 }
+.file-input-wrapper {
+    display: inline-block;
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+}
 .file-load-btn {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     color: #333;
-    border: 2px dashed #666;
-    padding: 14px 20px;
+    border: 2px solid #666;
+    padding: 16px 25px;
     border-radius: 12px;
-    font-size: 15px;
+    font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 80%;
-    max-width: 320px;
-    display: inline-block;
+    width: 100%;
+    display: block;
+    text-align: center;
+    font-weight: bold;
 }
 .file-load-btn:hover {
     background: #fff;
     border-color: red;
     transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 body.dark-mode .file-load-btn {
-    background: rgba(40, 40, 40, 0.9);
+    background: rgba(40, 40, 40, 0.95);
     color: #e0e0e0;
     border-color: #888;
 }
@@ -650,17 +587,63 @@ body.dark-mode .file-load-btn:hover {
     border-color: red;
 }
 #fileInput {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
 }
 .file-status {
-    margin-top: 10px;
+    margin-top: 15px;
     font-size: 14px;
-    font-style: italic;
     min-height: 20px;
     color: #666;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.03);
+    width: 90%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
 }
 body.dark-mode .file-status {
     color: #aaa;
+    background: rgba(255, 255, 255, 0.03);
+}
+.file-status.success {
+    color: #28a745;
+    background: rgba(40, 167, 69, 0.1);
+}
+.file-status.error {
+    color: #dc3545;
+    background: rgba(220, 53, 69, 0.1);
+}
+.file-status.info {
+    color: #17a2b8;
+    background: rgba(23, 162, 184, 0.1);
+}
+.instructions-text {
+    margin-top: 25px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+    text-align: left;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+body.dark-mode .instructions-text {
+    background: rgba(255, 255, 255, 0.05);
+    color: #aaa;
+}
+.instructions-text strong {
+    color: red;
 }
 /* Barre de progression responsive */
 .progress-bar {
@@ -1111,21 +1094,19 @@ body.dark-mode .philosophy-text-source {
         word-wrap: break-word !important;
         overflow-wrap: break-word !important;
     }
-    .github-select {
-        width: 90%;
-        font-size: 14px;
-        padding: 10px 12px;
-    }
-    .github-load-btn {
-        min-width: 180px;
-        padding: 10px 20px;
-    }
     .toolbar-btn:hover::after {
         display: none; /* Cacher les tooltips sur mobile */
     }
     /* Titre dans la barre de progression - mobile */
     .progress-bar__title h1 {
         font-size: 12px !important;
+    }
+    .file-input-wrapper {
+        width: 95%;
+    }
+    .file-load-btn {
+        padding: 14px 20px;
+        font-size: 15px;
     }
 }
 @media (max-width: 600px) {
@@ -1137,8 +1118,6 @@ body.dark-mode .philosophy-text-source {
     .container--quiz { width: 100%; margin: 5px auto 20px; border-width: 10px; min-height: 400px; max-width: 95%; }
     .quiz-btn--large { font-size: 15px; padding: 12px 25px; min-width: 200px; }
     .quiz-start__button { padding-bottom: 30px; gap: 15px; }
-    .file-load-btn { font-size: 14px; padding: 12px 18px; }
-    .github-select { width: 95%; max-width: 95%; }
     .philosophy-paragraph {
         text-indent: 1em;
     }
@@ -1230,22 +1209,17 @@ body.dark-mode .philosophy-text-source {
                             <div class="quiz-start__opacity"></div>
                             <div class="quiz-start__content">
                                 <div class="quiz-start__button">
-                                    <!-- Menu déroulant GitHub -->
-                                    <div class="github-select-container">
-                                        <select id="githubFileSelect" class="github-select">
-                                            <option value="">-- Sélectionner un quiz --</option>
-                                            <option value="loading">Chargement de la liste...</option>
-                                        </select>
-                                        <button id="loadFromGithubBtn" class="github-load-btn" disabled>
-                                            Charger le quiz sélectionné
-                                        </button>
-                                    </div>
-                                    <!-- Bouton de chargement local -->
-                                    <div class="file-load-container" style="margin-top: 20px;">
-                                        <input type="file" id="fileInput" accept=".js" />
-                                    </div>
-                                    <div id="fileStatus" class="file-status">
-                                        <em>Sélectionner un quiz pour commencer</em>
+                                    <!-- Bouton de chargement local amélioré -->
+                                    <div class="file-load-container">
+                                        <div class="file-input-wrapper">
+                                            <input type="file" id="fileInput" accept=".js" />
+                                            <button class="file-load-btn">
+                                                📁 Choisir un fichier de quiz (.js)
+                                            </button>
+                                        </div>
+                                        <div id="fileStatus" class="file-status info">
+                                            <em>Sélectionnez un fichier .js contenant les questions du quiz</em>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1451,9 +1425,9 @@ let philosophyData = {
 };
 let questions = Array(10).fill({
   question: "Aucun fichier de questions chargé",
-  answers: ["Utilisez le bouton sur l'accueil", "Ouvrez le dossier /quiz", "Sélectionnez un fichier .js"],
-  correct: 0,
-  explanation: "Chargez votre fichier .js depuis le dossier /quiz pour jouer avec vos propres questions."
+  answers: ["Utilisez le bouton sur l'accueil", "Sélectionnez un fichier .js", "Le quiz se chargera automatiquement"],
+  correct: 1,
+  explanation: "Chargez votre fichier .js contenant vos questions pour jouer avec vos propres quiz."
 });
 
 let currentQuestionIndex = 0;
@@ -1465,11 +1439,6 @@ let totalCorrectAnswers = parseInt(localStorage.getItem('totalCorrectAnswers') |
 let totalQuestionsAnswered = parseInt(localStorage.getItem('totalQuestionsAnswered') || '0');
 let userAnswers = [];
 let isDeferredEvaluation = localStorage.getItem('deferredEvaluation') === 'true';
-
-// ======= VALEURS CORRIGÉES =======
-const GITHUB_REPO = 'inspection-philosophie-lille/boite-a-outils';
-const GITHUB_PATH = 'fichiers/hlp - 1ère - quiz sur le cours/quiz';
-const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/contents/${encodeURIComponent(GITHUB_PATH)}`;
 
 // Stocker les indices originaux des questions
 let originalQuestionIndices = [];
@@ -1494,13 +1463,6 @@ const darkModeToggle = document.getElementById('darkModeToggle');
 const animationsToggle = document.getElementById('animationsToggle');
 const colorblindToggle = document.getElementById('colorblindToggle');
 const deferredEvaluationToggle = document.getElementById('deferredEvaluationToggle');
-
-// Éléments du menu GitHub
-const githubFileSelect = document.getElementById('githubFileSelect');
-const loadFromGithubBtn = document.getElementById('loadFromGithubBtn');
-
-// Stocker la liste des fichiers GitHub
-let githubFiles = [];
 
 function checkTitleFitsInProgressBar(titleElement) {
     if (!titleElement) return false;
@@ -1609,265 +1571,6 @@ function updateQuizTitles(titre, sousTitre) {
     if (mobileTitle && titre) mobileTitle.innerHTML = formattedMobileTitle;
     if (mobileSubtitle && sousTitre) mobileSubtitle.textContent = sousTitre;
 }
-
-async function fetchGitHubFiles() {
-    try {
-        fileStatus.textContent = 'Connexion à GitHub...';
-        fileStatus.style.color = '#666';
-
-        const response = await fetch(GITHUB_API_URL);
-        if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
-
-        const files = await response.json();
-        const jsFiles = files.filter(file => file.type === 'file' && file.name.endsWith('.js'));
-
-        if (jsFiles.length === 0) throw new Error('Aucun fichier .js trouvé');
-
-        githubFiles = jsFiles;
-        updateGitHubSelect(jsFiles);
-
-        fileStatus.textContent = `${jsFiles.length} quiz disponible(s)`;
-        fileStatus.style.color = '#28a745';
-    } catch (error) {
-        console.error('Erreur lors de la récupération des fichiers GitHub:', error);
-        fileStatus.textContent = `Erreur: ${error.message}`;
-        fileStatus.style.color = '#dc3545';
-        githubFileSelect.innerHTML = `<option value="">-- Erreur de connexion --</option><option value="error">Impossible de charger la liste</option>`;
-    }
-}
-
-function updateGitHubSelect(files) {
-    githubFileSelect.innerHTML = '<option value="">-- Sélectionner un quiz --</option>';
-    files.sort((a, b) => a.name.localeCompare(b.name));
-    files.forEach(file => {
-        const option = document.createElement('option');
-        option.value = file.download_url;
-        option.textContent = file.name.replace('.js', '');
-        githubFileSelect.appendChild(option);
-    });
-}
-
-async function loadFromGitHub(url) {
-    try {
-        fileStatus.textContent = 'Téléchargement en cours...';
-        fileStatus.style.color = '#666';
-        loadFromGithubBtn.disabled = true;
-
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
-
-        const code = await response.text();
-        const func = new Function(code + '\nreturn {titre, sousTitre, philosophyData, questions};');
-        const result = func();
-
-        if (result.philosophyData && Array.isArray(result.questions) && result.questions.length >= TOTAL_QUESTIONS) {
-            philosophyData = result.philosophyData;
-            questions = result.questions;
-
-            if (result.titre) {
-                currentTitre = result.titre;
-                currentSousTitre = result.sousTitre || currentSousTitre;
-                updateQuizTitles(currentTitre, currentSousTitre);
-            }
-
-            const fileName = url.split('/').pop().replace('.js', '');
-            fileStatus.textContent = `Quiz "${fileName}" chargé avec succès ! Démarrage...`;
-            fileStatus.style.color = '#28a745';
-            setTimeout(startQuiz, 1200);
-        } else {
-            throw new Error('Données incomplètes dans le fichier');
-        }
-    } catch (err) {
-        fileStatus.textContent = `Erreur: ${err.message}`;
-        fileStatus.style.color = '#dc3545';
-        loadFromGithubBtn.disabled = false;
-        console.error('Erreur lors du chargement depuis GitHub:', err);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    updateQuizTitles(currentTitre, currentSousTitre);
-
-    if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-        darkModeToggle.checked = true;
-    }
-    if (localStorage.getItem('animations') === 'false') {
-        animationsToggle.checked = false;
-    }
-    if (localStorage.getItem('colorblindMode') === 'true') {
-        document.body.classList.add('colorblind-mode');
-        colorblindToggle.checked = true;
-    }
-    if (isDeferredEvaluation) {
-        deferredEvaluationToggle.checked = true;
-    }
-
-    fetchGitHubFiles();
-
-    githubFileSelect.addEventListener('change', () => {
-        const selectedUrl = githubFileSelect.value;
-        loadFromGithubBtn.disabled = !selectedUrl;
-    });
-
-    loadFromGithubBtn.addEventListener('click', () => {
-        const selectedUrl = githubFileSelect.value;
-        if (selectedUrl) loadFromGitHub(selectedUrl);
-    });
-
-    fileInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        if (!file.name.endsWith('.js')) {
-            fileStatus.textContent = '❌ Veuillez sélectionner un fichier .js';
-            fileStatus.style.color = '#dc3545';
-            fileStatus.classList.remove('hidden');
-            return;
-        }
-
-        fileStatus.textContent = `Chargement de ${file.name}...`;
-        fileStatus.classList.remove('hidden');
-
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            try {
-                const code = event.target.result + '\nreturn {titre, sousTitre, philosophyData, questions};';
-                const func = new Function(code);
-                const result = func();
-                if (result.philosophyData && Array.isArray(result.questions) && result.questions.length >= TOTAL_QUESTIONS) {
-                    philosophyData = result.philosophyData;
-                    questions = result.questions;
-
-                    if (result.titre) {
-                        currentTitre = result.titre;
-                        currentSousTitre = result.sousTitre || currentSousTitre;
-                        updateQuizTitles(currentTitre, currentSousTitre);
-                    }
-
-                    fileStatus.textContent = `${file.name} chargé avec succès ! Démarrage du quiz...`;
-                    fileStatus.style.color = '#28a745';
-                    setTimeout(startQuiz, 1200);
-                } else {
-                    throw new Error('Données incomplètes');
-                }
-            } catch (err) {
-                fileStatus.textContent = 'Erreur : fichier invalide ou variables manquantes';
-                fileStatus.style.color = '#dc3545';
-                console.error(err);
-            }
-        };
-        reader.onerror = () => {
-            fileStatus.textContent = 'Erreur de lecture du fichier';
-            fileStatus.style.color = '#dc3545';
-        };
-        reader.readAsText(file);
-    });
-
-    if (quizRetry) quizRetry.addEventListener('click', startQuiz);
-    if (showReview) showReview.addEventListener('click', showDetailedReview);
-
-    if (reloadButton) reloadButton.addEventListener('click', startQuiz);
-    if (reloadButtonMobile) reloadButtonMobile.addEventListener('click', startQuiz);
-
-    if (fullscreenButton) fullscreenButton.addEventListener('click', () => {
-        if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-        else document.exitFullscreen();
-        updateFullscreenIcon();
-    });
-
-    if (fullscreenButtonMobile) fullscreenButtonMobile.addEventListener('click', () => {
-        if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-        else document.exitFullscreen();
-        updateFullscreenIcon();
-    });
-
-    if (menuButton) menuButton.addEventListener('click', toggleMenu);
-    if (menuButtonMobile) menuButtonMobile.addEventListener('click', toggleMenu);
-
-    if (menuOverlay) menuOverlay.addEventListener('click', () => {
-        menuOverlay.classList.remove('open');
-        slideMenu.classList.remove('open');
-    });
-
-    if (darkModeToggle) darkModeToggle.addEventListener('change', (e) => {
-        document.body.classList.toggle('dark-mode', e.target.checked);
-        localStorage.setItem('darkMode', e.target.checked);
-    });
-
-    if (animationsToggle) animationsToggle.addEventListener('change', (e) => {
-        localStorage.setItem('animations', e.target.checked);
-    });
-
-    if (colorblindToggle) colorblindToggle.addEventListener('change', (e) => {
-        document.body.classList.toggle('colorblind-mode', e.target.checked);
-        localStorage.setItem('colorblindMode', e.target.checked);
-    });
-
-    if (deferredEvaluationToggle) deferredEvaluationToggle.addEventListener('change', (e) => {
-        isDeferredEvaluation = e.target.checked;
-        localStorage.setItem('deferredEvaluation', e.target.checked);
-    });
-
-    document.getElementById('instructionsButton')?.addEventListener('click', () => {
-        closeMenu();
-        openModal('instructionsModal');
-    });
-
-    document.getElementById('statsButton')?.addEventListener('click', () => {
-        closeMenu();
-        updateStats();
-        openModal('statsModal');
-    });
-
-    document.getElementById('settingsButton')?.addEventListener('click', () => {
-        closeMenu();
-        openModal('settingsModal');
-    });
-
-    document.getElementById('resetButton')?.addEventListener('click', () => {
-        if (confirm('Réinitialiser toutes les statistiques ?')) {
-            localStorage.clear();
-            location.reload();
-        }
-    });
-
-    document.getElementById('aboutButton')?.addEventListener('click', () => {
-        closeMenu();
-        showAboutModal();
-    });
-
-    document.querySelectorAll('.close-modal').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const modalId = btn.dataset.modal;
-            closeModal(modalId);
-        });
-    });
-
-    document.querySelectorAll('.modal').forEach(modal => {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) modal.classList.remove('open');
-        });
-    });
-
-    document.getElementById('toggleTextBtn')?.addEventListener('click', togglePhilosophyText);
-
-    // Réappliquer le calcul du titre après le chargement complet
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            updateQuizTitles(currentTitre, currentSousTitre);
-        }, 100);
-    });
-    
-    // Réappliquer aussi lors du redimensionnement
-    window.addEventListener('resize', () => {
-        setTimeout(() => {
-            updateQuizTitles(currentTitre, currentSousTitre);
-        }, 100);
-    });
-
-    updateFullscreenIcon();
-});
 
 function formatSource(source) {
     const commaIndex = source.indexOf(',');
@@ -2003,8 +1706,8 @@ function displayNextQuestion() {
                 </fieldset>
                 <div class="quiz-explanation hidden">
                     <div class="quiz-explanation__label"><span></span></div>
-					<p class="quiz-explanation__detail"><strong>Explication : </strong>${q.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>')}</p>
-                </div>
+                    <p class="quiz-explanation__detail"><strong>Explication : </strong>${q.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>')}</p>
+				</div>
                 <div class="next-button-container">
                     <button class="quiz-btn quiz-btn--default quiz-btn--fill next-question-btn">
                         question suivante
@@ -2235,8 +1938,7 @@ function showDetailedReview() {
                 <ul style="margin-left: 20px; margin-bottom: 12px;">${answersList}</ul>
 				<p style="margin-bottom: 8px;"><strong>Votre réponse :</strong> ${answer.userAnswer || 'Non répondue'}</p>
                 <p style="margin-bottom: 8px;"><strong>Réponse correcte :</strong> ${adjustedCorrectText}</p>
-                <p style="margin-top: 10px; font-size: 0.9em;"><strong>Explication :</strong>${answer.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>')}
-</p>
+                <p style="margin-top: 10px; font-size: 0.9em;"><strong>Explication :</strong> ${answer.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>')}</p>
             `;
 
             reviewContainer.appendChild(questionDiv);
@@ -2333,6 +2035,185 @@ function updateFullscreenIcon() {
         if (btn) btn.innerHTML = document.fullscreenElement ? svgFull : svgNormal;
     });
 }
+
+// Fonction pour charger un fichier local
+function loadLocalFile(file) {
+    if (!file) return;
+
+    if (!file.name.endsWith('.js')) {
+        fileStatus.textContent = '❌ Veuillez sélectionner un fichier .js';
+        fileStatus.className = 'file-status error';
+        return;
+    }
+
+    fileStatus.textContent = `Chargement de ${file.name}...`;
+    fileStatus.className = 'file-status info';
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        try {
+            const code = event.target.result + '\nreturn {titre, sousTitre, philosophyData, questions};';
+            const func = new Function(code);
+            const result = func();
+            if (result.philosophyData && Array.isArray(result.questions) && result.questions.length >= TOTAL_QUESTIONS) {
+                philosophyData = result.philosophyData;
+                questions = result.questions;
+
+                if (result.titre) {
+                    currentTitre = result.titre;
+                    currentSousTitre = result.sousTitre || currentSousTitre;
+                    updateQuizTitles(currentTitre, currentSousTitre);
+                }
+
+                fileStatus.textContent = `${file.name} chargé avec succès ! Démarrage du quiz...`;
+                fileStatus.className = 'file-status success';
+                setTimeout(startQuiz, 1200);
+            } else {
+                throw new Error('Données incomplètes');
+            }
+        } catch (err) {
+            fileStatus.textContent = '❌ Erreur : fichier invalide ou variables manquantes';
+            fileStatus.className = 'file-status error';
+            console.error(err);
+        }
+    };
+    reader.onerror = () => {
+        fileStatus.textContent = '❌ Erreur de lecture du fichier';
+        fileStatus.className = 'file-status error';
+    };
+    reader.readAsText(file);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateQuizTitles(currentTitre, currentSousTitre);
+
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.checked = true;
+    }
+    if (localStorage.getItem('animations') === 'false') {
+        animationsToggle.checked = false;
+    }
+    if (localStorage.getItem('colorblindMode') === 'true') {
+        document.body.classList.add('colorblind-mode');
+        colorblindToggle.checked = true;
+    }
+    if (isDeferredEvaluation) {
+        deferredEvaluationToggle.checked = true;
+    }
+
+    if (quizRetry) quizRetry.addEventListener('click', startQuiz);
+    if (showReview) showReview.addEventListener('click', showDetailedReview);
+
+    if (reloadButton) reloadButton.addEventListener('click', startQuiz);
+    if (reloadButtonMobile) reloadButtonMobile.addEventListener('click', startQuiz);
+
+    if (fullscreenButton) fullscreenButton.addEventListener('click', () => {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+        else document.exitFullscreen();
+        updateFullscreenIcon();
+    });
+
+    if (fullscreenButtonMobile) fullscreenButtonMobile.addEventListener('click', () => {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+        else document.exitFullscreen();
+        updateFullscreenIcon();
+    });
+
+    if (menuButton) menuButton.addEventListener('click', toggleMenu);
+    if (menuButtonMobile) menuButtonMobile.addEventListener('click', toggleMenu);
+
+    if (menuOverlay) menuOverlay.addEventListener('click', () => {
+        menuOverlay.classList.remove('open');
+        slideMenu.classList.remove('open');
+    });
+
+    if (darkModeToggle) darkModeToggle.addEventListener('change', (e) => {
+        document.body.classList.toggle('dark-mode', e.target.checked);
+        localStorage.setItem('darkMode', e.target.checked);
+    });
+
+    if (animationsToggle) animationsToggle.addEventListener('change', (e) => {
+        localStorage.setItem('animations', e.target.checked);
+    });
+
+    if (colorblindToggle) colorblindToggle.addEventListener('change', (e) => {
+        document.body.classList.toggle('colorblind-mode', e.target.checked);
+        localStorage.setItem('colorblindMode', e.target.checked);
+    });
+
+    if (deferredEvaluationToggle) deferredEvaluationToggle.addEventListener('change', (e) => {
+        isDeferredEvaluation = e.target.checked;
+        localStorage.setItem('deferredEvaluation', e.target.checked);
+    });
+
+    document.getElementById('instructionsButton')?.addEventListener('click', () => {
+        closeMenu();
+        openModal('instructionsModal');
+    });
+
+    document.getElementById('statsButton')?.addEventListener('click', () => {
+        closeMenu();
+        updateStats();
+        openModal('statsModal');
+    });
+
+    document.getElementById('settingsButton')?.addEventListener('click', () => {
+        closeMenu();
+        openModal('settingsModal');
+    });
+
+    document.getElementById('resetButton')?.addEventListener('click', () => {
+        if (confirm('Réinitialiser toutes les statistiques ?')) {
+            localStorage.clear();
+            location.reload();
+        }
+    });
+
+    document.getElementById('aboutButton')?.addEventListener('click', () => {
+        closeMenu();
+        showAboutModal();
+    });
+
+    document.querySelectorAll('.close-modal').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const modalId = btn.dataset.modal;
+            closeModal(modalId);
+        });
+    });
+
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('open');
+        });
+    });
+
+    document.getElementById('toggleTextBtn')?.addEventListener('click', togglePhilosophyText);
+
+    // Gestion du fichier local
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            loadLocalFile(file);
+        }
+    });
+
+    // Réappliquer le calcul du titre après le chargement complet
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            updateQuizTitles(currentTitre, currentSousTitre);
+        }, 100);
+    });
+    
+    // Réappliquer aussi lors du redimensionnement
+    window.addEventListener('resize', () => {
+        setTimeout(() => {
+            updateQuizTitles(currentTitre, currentSousTitre);
+        }, 100);
+    });
+
+    updateFullscreenIcon();
+});
 
 document.addEventListener('fullscreenchange', updateFullscreenIcon);
 </script>

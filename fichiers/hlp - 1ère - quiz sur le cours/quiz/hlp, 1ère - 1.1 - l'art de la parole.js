@@ -1,15 +1,15 @@
 // ============================================
 // DONNÉES GÉNÉRALES
 // ============================================
-const titre = "QUIZ HLP 1ère - l'art de la parole";
-const sousTitre = "100 questions";
+const titre = "QUIZ HLP - L'art de la parole";
+const sousTitre = "100 questions pour maîtriser la rhétorique, des sophistes à la parole performative.";
 
 // ============================================
 // DONNÉES DU TEXTE PHILOSOPHIQUE (Synthèse)
 // ============================================
 const philosophyData = {
-  texte: `La parole, loin d'être une simple émission de son, est un pouvoir complexe qui oscille entre la "potentia" (possibilité) et la "potestas" (puissance). Elle peut être un outil pour agir sur le réel, comme dans la parole performative, ou une fin en soi, comme dans le dialogue philosophique. De la rhétorique antique, art de bien dire pour convaincre, à la critique moderne de la parole anonyme, ce parcours interroge les conditions d'une parole authentique : celle qui incarne une pensée, rompt avec la doxa et vise la vérité plutôt que la simple persuasion.`,
-  source: "synthèse des enjeux de la séquence « l'art de la parole »"
+  texte: `De l'Antiquité à nos jours, l'art de la parole constitue un enjeu politique et éthique majeur. Face aux sophistes qui faisaient de la persuasion un pouvoir neutre, Platon oppose l'idéal d'une parole dialectique visant la vérité. Aristote, dans sa <em>Rhétorique</em>, en systématise les moyens (logos, pathos, ethos) et les genres (délibératif, judiciaire, épidictique). La pensée contemporaine, avec Austin et Butler, explore la dimension performative du langage, où dire c'est faire. Cette séquence interroge ainsi les fondements de l'autorité discursive, des techniques de manipulation aux conditions d'une parole authentique et transformatrice.`,
+  source: "Synthèse des enjeux philosophiques de la séquence <em>L'art de la parole</em>."
 };
 
 // ============================================
@@ -18,1103 +18,1102 @@ const philosophyData = {
 const questions = [
   // Question n°1
   {
-    question: "Quelle distinction fondamentale permet d'analyser le 'pouvoir de la parole' ?",
+    question: "Quel est l'enjeu principal soulevé par la formule de Gorgias <em>La parole est un grand souverain</em> ?",
     answers: [
-      "Pouvoir de conviction et pouvoir de persuasion",
-      "Potentia (possibilité, pouvoir de) et Potestas (puissance, pouvoir sur)",
-      "Pouvoir individuel et pouvoir collectif"
+      "Elle affirme que la parole doit être réservée aux rois et aux dirigeants politiques.",
+      "Elle réduit la parole à un simple outil de communication dépourvu de tout pouvoir réel.",
+      "Elle souligne le pouvoir immense de la parole pour agir sur les âmes et les opinions."
     ],
-    correct: 2,
-    explanation: `La distinction centrale est entre la <em>potentia</em> (possibilité, "pouvoir de") et la <em>postestas</em> (puissance, "pouvoir sur"). La "potentia" désigne la capacité naturelle de l'homme à user de la parole comme moyen de communication et de défense. La "potestas" renvoie à l'exercice d'une force ou d'une autorité par la parole, permettant d'influencer ou de dominer autrui. Cette distinction permet de comprendre que la parole est à la fois une faculté humaine fondamentale et un instrument de pouvoir social et politique.\nExemple : Aristote voit dans la "potentia" de la parole un "contre-pouvoir" permettant à l'individu de résister à la "potestas" d'autrui.`
+    correct: 3,
+    explanation: `La réponse correcte saisit l'essence de la pensée sophistique. Pour Gorgias, la parole (λόγος) n'est pas un reflet passif de la réalité, mais une force active capable de modeler les perceptions, les émotions et les convictions. Ce pouvoir quasi magique fait d'elle un <em>souverain</em> qui peut produire les effets les plus puissants, comme la persuasion en politique ou la catharsis en tragédie. Cette vision fonde la rhétorique comme <em>technè</em> (art) du discours persuasif, indépendante de la vérité du contenu.\nExemple : Un avocat plaidant pour son client utilise cet art pour créer chez les juges la conviction de son innocence, agissant directement sur leur âme (psychagogie) par la seule puissance de son discours, indépendamment des faits bruts.`
   },
   // Question n°2
   {
-    question: "Quel rôle essentiel Aristote attribue-t-il à la parole dans 'La Rhétorique' ?",
+    question: "Comment définir la <em>doxa</em> (δόξα) dans le contexte du débat entre Platon et les sophistes ?",
     answers: [
-      "Un moyen de domination sociale",
-      "Une capacité naturelle de défense qu'il serait absurde de ne pas utiliser",
-      "Le propre d'une élite cultivée"
+      "La connaissance certaine et démontrée, fondée sur la raison pure et les Idées.",
+      "L'opinion commune, instable et changeante, qui sert de matière première à la persuasion rhétorique.",
+      "La parole divine ou inspirée, transmise par les oracles et les poètes."
     ],
     correct: 2,
-    explanation: `Aristote fait de la puissance (δύναμις) de la parole une capacité naturelle, un moyen de défense, "qu'il serait absurde de ne pas utiliser". Il compare cette incapacité à ne pas pouvoir s'aider de ses membres. Cette conception inscrit la parole comme une propriété essentielle de l'être humain, plus propre à sa nature que l'usage physique. Elle fonde la parole comme un "contre-pouvoir" rationnel face à la force brute.\nExemple : Un justiciable utilisant sa parole pour se défendre face à une accusation illustre cette "potentia" défensive.`
+    explanation: `La <em>doxa</em> désigne le domaine de l'opinion, du semblant et de l'apparence, par opposition à l'<em>epistémè</em> (ἐπιστήμη), la science vraie. Pour les sophistes, c'est le terrain de jeu naturel de la rhétorique, qui vise à flatter et orienter les opinions de la foule. Pour Platon, c'est un monde trompeur dont il faut se libérer par la dialectique. La critique platonicienne de la rhétorique sophistique repose sur ce refus de prendre la <em>doxa</em> pour cible, lui préférant la quête d'une vérité absolue.\nExemple : Un homme politique promettant la prospérité pendant une campagne électorale s'adresse à la <em>doxa</em> de l'électorat, à ses désirs et ses craintes immédiats, sans nécessairement fonder son discours sur une analyse économique rigoureuse (épistémè).`
   },
   // Question n°3
   {
-    question: "Quelle typologie structure l'art oratoire en fonction de la finalité et de la temporalité du discours ?",
+    question: "Que signifie l'expression <em>faire croire</em> par opposition à <em>faire savoir</em> dans l'art de la persuasion ?",
     answers: [
-      "Poétique, épique, dramatique",
-      "Délibératif, judiciaire, démonstratif (ou épidictique)",
-      "Narratif, descriptif, argumentatif"
+      "<em>Faire croire</em> relève de la démonstration scientifique, tandis que <em>faire savoir</em> relève de la croyance religieuse.",
+      "<em>Faire croire</em> vise à produire une conviction intime et affective, souvent par des moyens non rationnels, alors que <em>faire savoir</em> implique une démonstration logique et vérifiable.",
+      "Il s'agit de deux synonymes parfaits désignant la transmission d'une information quelconque."
     ],
     correct: 2,
-    explanation: `La distinction entre discours délibératif, judiciaire et démonstratif fonde les trois genres rhétoriques. Le discours délibératif vise à exhorter ou dissuader (futur, utile/nuisible). Le discours judiciaire vise à accuser ou défendre (passé, juste/injuste). Le discours démonstratif ou épidictique vise à louer ou blâmer (présent, admirable/détestable). Cette typologie structure l'art oratoire en fonction de l'action recherchée sur l'auditoire et du type de valeur mobilisée.\nExemple : Un discours politique cherchant à faire voter une loi relève du genre délibératif.`
+    explanation: `Cette distinction est au cœur de la différence entre persuader et convaincre. <em>Faire croire</em> opère sur le registre de l'adhésion psychologique et émotionnelle ; il s'agit d'installer une certitude subjective. <em>Faire savoir</em> implique au contraire de fournir des preuves, des raisons objectives qui peuvent être examinées et critiquées. La rhétorique sophistique, et souvent politique, privilégie le premier versant, utilisant le pathos et l'ethos pour créer la croyance, parfois au détriment de la vérité.\nExemple : Une publicité pour une voiture de luxe ne cherche pas à <em>faire savoir</em> des caractéristiques techniques (logos), mais à <em>faire croire</em> qu'elle confèrera à son possesseur un statut social supérieur et du succès, jouant sur les désirs et l'image de soi (pathos/ethos).`
   },
   // Question n°4
   {
-    question: "Quelle critique fondamentale Platon adresse-t-il à l'écriture dans le 'Phèdre' ?",
+    question: "Quelle est la fonction première de la <em>parole performative</em> telle que théorisée par John L. Austin ?",
     answers: [
-      "Elle fixe la parole et la tue, favorisant l'oubli plus que la vraie mémoire",
-      "Elle est incapable de transmettre des émotions",
-      "Elle est l'outil préféré des sophistes pour tromper"
+      "Décrire un état de fait ou rapporter une information de manière neutre et objective.",
+      "Accomplir une action par le fait même de son énonciation dans des conditions appropriées.",
+      "Exprimer les sentiments profonds et authentiques de celui qui parle."
     ],
-    correct: 1,
-    explanation: `À travers le mythe de Theuth, Platon présente l'écriture comme un φάρμακον (remède/poison). Le roi Thamous refuse l'invention car elle ne donnera aux hommes que "la présomption qu'ils ont la science, non la science elle-même". L'écriture objective la connaissance mais ne rend pas savant, contrairement au dialogue vivant qui permet une appropriation intérieure.\nExemple : Maurice Blanchot résume cette pensée : "Parole écrite : parole morte, parole de l'oubli".`
+    correct: 2,
+    explanation: `Austin opère une rupture en distinguant les énoncés constatifs (qui décrivent) des énoncés performatifs. Un performatif ne décrit pas une action, il <em>est</em> l'action. Dire <em>Je te promets</em> ou <em>Je déclare la séance ouverte</em>, dans le contexte adéquat, c'est instantanément promettre ou ouvrir la séance. L'efficacité de la parole réside alors dans son énonciation même, selon des règles conventionnelles (loi, rituel). Cela élargit considérablement le pouvoir de la parole au-delà de la simple persuasion.\nExemple : Lorsqu'un maire dit <em>Je vous déclare unis par les liens du mariage</em>, il ne décrit pas un mariage, il le réalise institutionnellement par l'autorité de sa parole, pourvu que les conditions légales soient remplies.`
   },
   // Question n°5
   {
-    question: "Quelle notion, développée par John Austin, désigne les énoncés qui accomplissent l'action qu'ils décrivent ?",
+    question: "Quelle critique fondamentale Platon adresse-t-il aux sophistes dans des dialogues comme le <em>Gorgias</em> ?",
     answers: [
-      "Parole théâtrale",
-      "Parole constative",
-      "Parole performative"
+      "Ils sont de mauvais orateurs techniques, incapables de structurer un discours.",
+      "Ils pratiquent une rhétorique immorale, flattant la foule pour le pouvoir et l'argent, sans souci de la vérité ni de la justice.",
+      "Ils méprisent totalement la parole et préfèrent l'action violente pour imposer leurs vues."
     ],
-    correct: 3,
-    explanation: `La parole performative est un concept développé par John Austin dans "Quand dire, c'est faire". Elle désigne les énoncés qui accomplissent l'action qu'ils désignent par le simple fait d'être prononcés dans les conditions appropriées. Cette notion met en évidence le pouvoir d'action concret de la parole, son efficacité pragmatique.\nExemple : "Je vous déclare mari et femme" prononcé par un maire est un énoncé performatif.`
+    correct: 2,
+    explanation: `Pour Platon, la rhétorique sophistique est une <em>contrefaçon</em> de la vraie politique et de la vraie justice. C'est un art de la cuisine (<em>psopologie</em>) qui flatte les appétits de l'âme (la <em>doxa</em>) comme le cuisinier flatte les appétits du corps, sans se soucier de sa santé. En séparant la persuasion de la recherche du vrai et du bien, les sophistes corrompent la cité. Socrate leur oppose la dialectique, dialogue visant à accoucher les âmes de la vérité (maïeutique).\nExemple : Un sophiste défendant un client riche et coupable en manipulant l'émotion des juges incarne cette critique : il utilise son art pour une victoire personnelle et lucrative, détournant la justice de sa fin qui est de dire le droit.`
   },
   // Question n°6
   {
-    question: "Que signifie le terme 'psychagogie' (ψυχαγωγία) dans le contexte de la rhétorique ?",
+    question: "À quels éléments correspond la triade aristotélicienne des preuves techniques du discours (pistis) ?",
     answers: [
-      "L'étude scientifique du comportement humain",
-      "La formation ou la conduite des âmes par la parole",
-      "L'art de lire dans les pensées d'autrui"
+      "Le locuteur, l'auditeur et le sujet traité.",
+      "L'ethos (caractère de l'orateur), le pathos (émotions de l'auditoire) et le logos (argumentation du discours).",
+      "L'introduction, la narration et la péroraison."
     ],
     correct: 2,
-    explanation: `La psychagogie, littéralement "conduite des âmes", désigne le pouvoir de la parole d'influencer, de former ou d'orienter l'âme de l'auditeur. Dans le "Phèdre", Platon l'associe à la "bonne" rhétorique, celle qui est au service de la vérité et de la philosophie.\nExemple : Le dialogue socratique est une forme de psychagogie.`
+    explanation: `Aristote, dans sa <em>Rhétorique</em>, systématise l'art de persuader autour de trois leviers essentiels. L'<em>ethos</em> (ἦθος) est la preuve tirée du caractère moral que l'orateur manifeste dans son discours (sagesse, vertu, bienveillance). Le <em>pathos</em> (πάθος) est la preuve par les émotions que l'orateur sait susciter chez son auditoire (pitié, colère, crainte). Le <em>logos</em> (λόγος) est la preuve contenue dans le discours lui-même, par l'argumentation logique (enthymèmes, exemples). Une persuasion efficace combine ces trois registres.\nExemple : Dans un discours écologique, l'<em>ethos</em> sera l'image d'intégrité et d'expertise du militant ; le <em>pathos</em>, l'émotion provoquée par des images d'animaux souffrants ; le <em>logos</em>, les données scientifiques sur le réchauffement climatique.`
   },
   // Question n°7
   {
-    question: "Quel rôle fondateur Isocrate attribue-t-il à la parole dans la constitution des sociétés humaines ?",
+    question: "Que désigne précisément le terme de <em>psychagogie</em> (ψυχαγωγία) ?",
     answers: [
-      "Un simple outil de coordination pratique",
-      "L'origine des lois, des villes, des arts et de la vie sociale",
-      "Principalement l'établissement de hiérarchies de pouvoir"
+      "L'étude scientifique du fonctionnement du cerveau humain.",
+      "L'art de <em>conduire les âmes</em>, c'est-à-dire de guider les esprits et les émotions des auditeurs par la parole.",
+      "Une technique de méditation visant à atteindre la paix intérieure par le silence."
     ],
     correct: 2,
-    explanation: `Dans le discours "De la permutation", Isocrate développe une véritable apologie de la parole comme faculté distinctive et fondatrice de l'humanité. Il affirme que c'est "par la puissance qui nous est donnée de nous persuader mutuellement" que les hommes ont pu sortir de la vie sauvage, fonder des villes, établir des lois et inventer les arts.\nExemple : Isocrate écrit : "Rien de ce qui a été fait avec sagesse ne l'a été sans le secours de la parole".`
+    explanation: `La psychagogie est la finalité même de la rhétorique entendue comme pouvoir d'influence. Littéralement <em>conduite de l'âme</em>, elle décrit la capacité du discours à orienter, séduire, entraîner l'auditeur. C'est un concept central chez Gorgias et les sophistes, pour qui la parole est une force quasi physique agissant sur l'âme comme un médicament ou un poison. Cette conception fait de l'orateur un guide, mais aussi un manipulateur potentiel, d'où les craintes éthiques qu'elle suscite.\nExemple : Un grand orateur politique, lors d'un meeting, pratique la psychagogie : par son débit, ses silences, ses images, il <em>conduit</em> l'émotion collective de la foule, de la curiosité à l'enthousiasme, puis à l'adhésion fervente.`
   },
   // Question n°8
   {
-    question: "Quel phénomène Jacques Ellul dénonce-t-il sous le nom de 'parole anonyme' ?",
+    question: "Comment Hannah Arendt distingue-t-elle la <em>violence</em> et le <em>pouvoir</em> dans le champ politique ?",
     answers: [
-      "Les discours prononcés par des orateurs inconnus",
-      "La rupture entre le parlant et sa parole, qui devient un simple bruit ou un instrument",
-      "L'utilisation de langues étrangères dans le discours public"
+      "La violence est l'essence du politique, le pouvoir n'en étant qu'une forme dérivée et affaiblie.",
+      "Le pouvoir correspond à la capacité d'agir de concert, soutenue par la parole et la persuasion, tandis que la violence est un moyen non politique de contraindre par la force.",
+      "Le pouvoir et la violence sont deux termes synonymes désignant l'imposition d'une volonté par n'importe quel moyen."
     ],
     correct: 2,
-    explanation: `Jacques Ellul diagnostique une cassure décisive dans la parole contemporaine : la rupture entre le parlant et sa parole. La parole devient anonyme, elle n'engage plus celui qui la profère, n'incarne plus sa vie ou sa pensée. Vidée de son poids existentiel, elle se réduit à un "bruit" ou à un instrument.\nExemple : Le slogan publicitaire répété mécaniquement est une parole anonyme.`
+    explanation: `Pour Arendt, le pouvoir (Macht) naît de la capacité des hommes à agir et parler ensemble. Il est de l'ordre du commun et du consensus. La violence (Gewalt) apparaît là où le pouvoir est en défaillance ; elle est instrumentale, solitaire et détruit l'espace politique. Le vrai politique repose donc sur la puissance de la parole et de la persuasion pour créer du lien et de l'action commune, non sur la menace ou la force physique. Cette distinction réhabilite la parole comme fondement de la cité.\nExemple : Un mouvement de grève qui obtient gain de cause par la négociation et la force de son discours public exerce un <em>pouvoir</em>. Si le gouvernement répond par la répression policière (matraques, gaz), il a recours à la <em>violence</em>, signe qu'il a perdu le pouvoir de persuader.`
   },
   // Question n°9
   {
-    question: "Quelle différence de nature Platon établit-il entre rhétorique et sophistique dans le 'Gorgias' ?",
+    question: "Quelle est la caractéristique principale du <em>genre épidictique</em> (ou démonstratif) du discours selon Aristote ?",
     answers: [
-      "La rhétorique est grecque, la sophistique est étrangère",
-      "La rhétorique vise la justice, la sophistique vise le mensonge",
-      "La rhétorique est un art, la sophistique n'en est pas un"
+      "Il vise à délibérer sur l'avenir, à conseiller ou dissuader (comme au parlement).",
+      "Il vise à juger le passé, à accuser ou défendre (comme au tribunal).",
+      "Il vise à faire l'éloge ou le blâme de quelqu'un ou quelque chose dans le présent, pour amplifier des valeurs communes."
     ],
-    correct: 2,
-    explanation: `Dans une analogie célèbre, Platon compare la rhétorique à la cuisine et la sophistique à l'esthétique. La cuisine est à la médecine ce que la rhétorique est à la justice. La sophistique est intrinsèquement liée au faux et à l'apparence, tandis qu'une rhétorique légitime pourrait exister si elle se mettait au service du vrai.\nExemple : Un avocat utilisant des arguments fallacieux pratique une rhétorique proche de la sophistique.`
+    correct: 3,
+    explanation: `Le genre épidictique concerne le présent et a une fonction de célébration ou de condamnation morale. Il ne vise pas directement une décision (comme le délibératif) ou un jugement (comme le judiciaire), mais à renforcer la cohésion sociale en magnifiant ce que la communauté admire (le courage, la patrie) ou en fustigeant ce qu'elle réprouve. Son temps est le présent éternel des valeurs, et son auditoire est avant tout spectateur. Il est crucial pour l'éducation et la fabrique du lien social.\nExemple : Un discours de commémoration du 11 Novembre relève du genre épidictique : il fait l'éloge des soldats morts pour la France, célèbre les valeurs de sacrifice et de patriotisme, et renforce ainsi l'identité nationale partagée par l'assistance.`
   },
   // Question n°10
   {
-    question: "À quels registres de persuasion correspondent respectivement pathos (πάθος), ethos (ἦθος) et logos (λόγος) ?",
+    question: "Que signifie l'<em>auctoritas</em> dans la Rome antique, par opposition à la <em>potestas</em> ?",
     answers: [
-      "L'imaginaire, la tradition, la science",
-      "L'émotion, la crédibilité de l'orateur, l'argumentation rationnelle",
-      "La forme, le fond, le contexte"
+      "L'<em>auctoritas</em> est le pouvoir de commandement légal et coercitif, tandis que la <em>potestas</em> est l'influence morale et le prestige.",
+      "La <em>potestas</em> est le pouvoir de commandement légal et coercitif, tandis que l'<em>auctoritas</em> est l'influence morale, le prestige et la capacité à fonder et à conseiller.",
+      "Ces deux termes sont des équivalents latins parfaits du mot grec <em>dunamis</em> (force)."
     ],
     correct: 2,
-    explanation: `Aristote identifie trois "preuves techniques" (pistels) que l'orateur doit maîtriser. Le pathos vise l'émotion de l'auditoire. L'ethos concerne le caractère moral que l'orateur doit montrer pour inspirer confiance. Le logos est l'argumentation rationnelle proprement dite. Cette tripartition est fondamentale pour analyser tout discours.\nExemple : Un discours politique peut jouer sur la peur (pathos), s'appuyer sur la réputation (ethos) et présenter un programme chiffré (logos).`
+    explanation: `Cette distinction est fondamentale pour comprendre les sources de l'autorité. La <em>potestas</em> est le pouvoir institutionnel, délégué, qui permet d'ordonner et de contraindre (celui du magistrat). L'<em>auctoritas</em> est une autorité informelle, fondée sur le prestige personnel, la sagesse, l'expérience ; elle ne commande pas, mais son avis (<em>auctor</em> signifie aussi garant, fondateur) fait autorité et est suivi volontairement. C'est l'autorité du Sénat ou d'un père de la patrie comme Cicéron.\nExemple : Un professeur a la <em>potestas</em> de noter ses élèves et d'exiger le silence. Mais il a de l'<em>auctoritas</em> si les élèves respectent ses conseils et admirent son savoir au-delà de ses pouvoirs officiels, par libre conviction.`
   },
   // Question n°11
   {
-    question: "Quelle est l'origine historique concrète de la rhétorique ?",
+    question: "Quelle est l'idée centrale du mythe de <em>l'anneau de Gygès</em> raconté par Platon dans la <em>République</em> ?",
     answers: [
-      "Athènes avec les premiers philosophes",
-      "La Sicile grecque au Ve siècle av. J.-C., dans un contexte judiciaire, avec Corax",
-      "Rome avec Cicéron"
+      "Il montre que la justice est un bien en soi, précieux pour l'âme, même si on peut être injuste en toute impunité.",
+      "Il prouve que tout homme, dès qu'il peut être injuste sans en subir les conséquences, choisit naturellement l'injustice pour son profit.",
+      "Il démontre que les dieux punissent toujours les injustes, même lorsqu'ils se croient invisibles."
     ],
     correct: 2,
-    explanation: `La rhétorique naît historiquement en Sicile grecque au Ve siècle av. J.-C., après la chute des tyrans. Les propriétaires spoliés doivent faire valoir leurs droits devant des tribunaux populaires. Corax met alors au point une technique pour aider les justiciables.\nExemple : Le traité de Corax contenait des préceptes pour construire un discours judiciaire efficace.`
+    explanation: `Le mythe est une expérience de pensée radicale : un berger, Gygès, trouve un anneau qui le rend invisible. Il en profite pour séduire la reine, tuer le roi et s'emparer du pouvoir. Glaucon, qui raconte ce mythe, en tire la conclusion que personne n'est juste par nature, mais seulement par contrainte et par crainte du châtiment. L'enjeu pour Socrate sera de réfuter cette thèse en montrant que la justice est un bien intérieur, préférable à l'injustice même dans l'ombre.\nExemple : L'idée de Gygès est reprise dans l'univers des super-héros : que ferait un homme ordinaire doté d'un pouvoir le mettant à l'abri de toute sanction ? Le mythe interroge les fondements de la morale : est-elle sociale ou intrinsèque à l'âme ?`
   },
   // Question n°12
   {
-    question: "Quelle distinction fondamentale la linguistique moderne établit-elle entre 'langue', 'langage' et 'parole' ?",
+    question: "Que désigne le concept de <em>parole anonyme</em> critiqué par le philosophe Jacques Ellul ?",
     answers: [
-      "La langue est écrite, le langage est parlé, la parole est pensée",
-      "La langue est un système social de signes, le langage une faculté innée, la parole un acte individuel",
-      "La langue est universelle, le langage est culturel, la parole est situationnelle"
+      "La parole écrite, jugée froide et impersonnelle par rapport à la parole vivante.",
+      "La parole des médias de masse et de la propagande, qui ne semble venir de personne en particulier et s'impose ainsi comme une évidence indiscutable.",
+      "La parole des experts scientifiques, qui doit être neutre et objective pour être crédible."
     ],
     correct: 2,
-    explanation: `Le langage est la faculté humaine générale et innée de communiquer. La langue est le système particulier, conventionnel et social de signes que l'individu acquiert. La parole est l'acte individuel et concret par lequel un locuteur utilise la langue pour exprimer sa pensée.\nExemple : Un enfant naît avec la faculté de langage, apprend la langue française, et produit un acte de parole unique.`
+    explanation: `Ellul analyse dans la société technicienne l'émergence d'une parole dépersonnalisée, produite par des appareils (médias, publicité, propagande d'État). Cette parole ne porte plus la marque d'un locuteur responsable ; elle est omniprésente, diffuse, et crée un environnement d'évidences qui formate les esprits. Elle est d'autant plus efficace qu'elle ne semble pas chercher à persuader, mais simplement à informer ou décrire un monde présenté comme naturel. C'est une forme insidieuse de manipulation.\nExemple : Les spots publicitaires qui affirment <em>Tout le monde passe à cette marque de lessive</em> ou les slogans politiques répétés en boucle créent une parole anonyme. Elle ne dit pas <em>Je te persuade que...</em> mais <em>C'est un fait que...</em>, s'imposant comme le simple reflet de la réalité sociale.`
   },
   // Question n°13
   {
-    question: "Quel procédé rhétorique Marc-Antoine utilise-t-il massivement dans son discours sur César (Shakespeare) ?",
+    question: "Comment Judith Butler étend-elle la notion de performativité à la construction des identités de genre ?",
     answers: [
-      "L'hyperbole",
-      "Le diasyrme (blâme déguisé en éloge)",
-      "La métaphore filée"
+      "Elle affirme que le genre est une essence biologique fixe, simplement exprimée par la parole.",
+      "Elle soutient que le genre est une performance répétée, un <em>faire</em> stylisé et contraint par des normes sociales, que la parole et les gestes accomplissent en permanence.",
+      "Elle pense que la parole n'a aucune influence sur le genre, qui relève uniquement de choix personnels privés."
     ],
     correct: 2,
-    explanation: `Marc-Antoine utilise avec une ironie tragique le diasyrme. Il répète inlassablement que "Brutus est un homme honorable" alors même qu'il énumère les actes de César qui rendent absurde l'assassinat. Ce blâme déguisé en éloge lui permet de retourner l'opinion du peuple.\nExemple : "Brutus dit qu'il était ambitieux ; et Brutus est un homme honorable".`
+    explanation: `Butler radicalise la performativité d'Austin. Le genre n'est pas un être mais un faire, un effet produit par la répétition ritualisée d'actes, de discours et de styles corporels, dans le cadre de normes sociales hégémoniques. Dire <em>C'est une fille</em> à la naissance est un énoncé performatif qui lance l'individu dans un devenir-fille, orienté par un ensemble d'attentes et de pratiques. La parole et les performances quotidiennes ne font pas qu'exprimer un genre préexistant, elles le constituent activement.\nExemple : Le fait de s'habiller, de marcher, de parler d'une manière socialement codée <em>féminine</em> ou <em>masculine</em> n'est pas l'expression d'une identité intérieure, mais l'acte même qui, répété, produit et stabilise l'effet de cette identité aux yeux de tous et pour soi-même.`
   },
   // Question n°14
   {
-    question: "Quel paradoxe logique illustre l'énoncé 'Épiménide le Crétois déclare que tous les Crétois sont des menteurs' ?",
+    question: "Quelle distinction fondamentale Saussure établit-il entre la <em>langue</em> et la <em>parole</em> ?",
     answers: [
-      "Un paradoxe temporel",
-      "Le paradoxe du menteur (autoréférentiel)",
-      "Un paradoxe sur l'identité"
+      "La <em>langue</em> est l'acte individuel de communication, la <em>parole</em> est le système social de signes.",
+      "La <em>langue</em> est le système social, abstrait et collectif (le code), tandis que la <em>parole</em> est l'acte individuel et concret d'utilisation de ce système.",
+      "La <em>langue</em> relève de l'écrit, la <em>parole</em> de l'oral, sans autre différence significative."
     ],
     correct: 2,
-    explanation: `C'est le célèbre "paradoxe du menteur". Si Épiménide dit vrai, alors l'affirmation est vraie, donc lui-même est un menteur, et son affirmation est fausse. Si Épiménide ment, alors son affirmation est fausse... Le raisonnement s'enferme dans une boucle autoréférentielle.\nExemple : Aristote sort de ce paradoxe en remarquant que le menteur ne ment pas nécessairement toujours.`
+    explanation: `Cette distinction est le fondement de la linguistique moderne. La <em>langue</em> est un trésor commun, une institution sociale avec ses règles (grammaire, syntaxe, vocabulaire). Elle existe indépendamment des individus. La <em>parole</em> est l'actualisation individuelle et volontaire de ce système dans un acte de communication singulier. On ne peut avoir de parole sans langue (pour se faire comprendre), et la langue n'existe que par et pour la parole (elle évolue par l'usage).\nExemple : Le français est une <em>langue</em> : un ensemble de règles que partagent ses locuteurs. Lorsque vous prononcez une phrase pour demander l'heure, vous effectuez un acte de <em>parole</em>, utilisant ce système commun de manière personnelle et contextuelle.`
   },
   // Question n°15
   {
-    question: "Quelle est la fonction principale de l''inventio' dans les cinq parties de la rhétorique latine ?",
+    question: "À quelle partie du discours classique correspond la <em>narratio</em> ?",
     answers: [
-      "Orner le discours par les figures de style",
-      "Décider de ce que l'on va dire, trouver les arguments",
-      "Mettre en scène le discours par la voix et le geste"
+      "À l'exorde, qui vise à capter l'attention et la bienveillance de l'auditoire.",
+      "À la narration, qui expose les faits de manière claire et ordonnée, en préparation aux arguments.",
+      "À la péroraison, qui vise à émouvoir une dernière fois et à résumer les arguments."
     ],
     correct: 2,
-    explanation: `L'inventio (invention) est la première des cinq parties de la rhétorique selon Cicéron. Elle consiste à "décider de ce que l'on va dire", c'est-à-dire à trouver et sélectionner les arguments, les preuves, les exemples qui vont soutenir la thèse.\nExemple : Pour un avocat, l'inventio consiste à rassembler tous les faits et témoignages.`
+    explanation: `La <em>narratio</em> est la deuxième partie canonique du discours rhétorique après l'exorde. Son but est de présenter les faits du cas de manière objective, claire et plausible. Elle n'est pas neutre : en choisissant l'ordre, les détails et le ton, l'orateur commence déjà à orienter l'interprétation des événements en sa faveur. Une bonne narration rend l'argumentation qui suit (la confirmation) non seulement compréhensible, mais presque attendue.\nExemple : Dans une plaidoirie pour un accident de la route, l'avocat de la défense, dans sa <em>narratio</em>, insistera sur la mauvaise visibilité et la soudaineté de l'événement, préparant ainsi l'idée que son client n'est pas fautif, avant même de le démontrer juridiquement.`
   },
   // Question n°16
   {
-    question: "Quelle notion, mise en avant par Edward T. Hall, étudie l'usage de l'espace dans la communication ?",
+    question: "Qu'est-ce qu'un <em>enthymème</em> (ἐνθύμημα) dans la théorie rhétorique d'Aristote ?",
     answers: [
-      "La kinésique",
-      "La proxémique (ou proxémie)",
-      "La chronémique"
+      "Une métaphore particulièrement frappante et émouvante, destinée à toucher le pathos.",
+      "Un syllogisme rhétorique, c'est-à-dire un raisonnement dont une des prémisses (souvent la majeure) est implicite, car tirée de l'opinion commune (doxa) de l'auditoire.",
+      "L'exemple concret et historique utilisé pour illustrer un argument général."
     ],
     correct: 2,
-    explanation: `La proxémique est l'étude de la distance physique que les êtres humains établissent entre eux dans différentes situations sociales. Hall a cartographié ces distances : zone intime, personnelle, sociale et publique. La maîtrise de cette dimension non verbale est cruciale en rhétorique.\nExemple : Un orateur qui "prend de la place" sur une estrade exerce une forme de potestas par la proxémique.`
+    explanation: `L'enthymème est la pierre angulaire de la preuve logique (logos) en rhétorique. Contrairement au syllogisme scientifique qui part de prémisses vraies, l'enthymème part d'une prémisse vraisemblable ou admise par l'auditoire. Par exemple : <em>Cet homme a fui le lieu du crime (prémisse mineure), or un coupable fuit souvent (prémisse majeure, souvent sous-entendue), donc il est probablement coupable (conclusion)</em>. Son efficacité vient de ce qu'il active une croyance partagée, faisant participer l'auditeur au raisonnement.\nExemple : Un discours politique disant <em>Il faut baisser les impôts pour relancer l'économie</em> sous-entend l'enthymème : <em>Or, baisser les impôts relance toujours l'économie (prémisse majeure doxale)</em>. L'auditeur qui partage cette opinion admise conclut naturellement à la validité de la proposition.`
   },
   // Question n°17
   {
-    question: "Dans la parabole de Kierkegaard, que symbolise le 'taureau d'airain de Phalaris' par rapport au poète ?",
+    question: "Quelle est la fonction principale de l'<em>exorde</em> dans la structure classique du discours ?",
     answers: [
-      "La critique littéraire impitoyable",
-      "Le public qui transforme la souffrance du poète en plaisir esthétique",
-      "L'inspiration douloureuse de la création"
+      "Développer les preuves et arguments de façon détaillée et ordonnée.",
+      "Exposer les faits de l'affaire de manière neutre et chronologique.",
+      "Captiver l'attention de l'auditoire, s'attirer sa bienveillance (captatio benevolentiae) et annoncer le sujet."
     ],
-    correct: 2,
-    explanation: `Kierkegaard compare le sort de l'artiste à celui des victimes du tyran Phalaris, brûlées vives dans un taureau d'airain. Leurs cris, déformés par le métal, parvenaient au tyran "ainsi qu'une douce musique". De même, la souffrance du poète, transformée par l'art en beauté, devient pour le public un divertissement charmant.\nExemple : Le public admirant un poème sur la mélancolie sans comprendre qu'il est le cri d'une âme en détresse.`
+    correct: 3,
+    explanation: `L'exorde est la première impression, cruciale pour la suite du discours. Il doit rendre l'auditeur attentif (attentum), bienveillant (benevolum) et docile (docilem). Pour cela, l'orateur peut user de modestie feinte, flatter l'auditoire, souligner l'importance du sujet, ou créer un lien de sympathie. Un mauvais exorde risque de braquer l'auditoire et de rendre vaine toute l'argumentation qui suit. C'est donc un moment stratégique de mise en condition psychologique.\nExemple : Cicéron, dans son exorde du <em>Pro Archia</em>, commence par s'excuser de son éloquence supposée médiocre, flattant ainsi l'humilité supposée des juges, avant de défendre les lettres et la culture que représente son client.`
   },
   // Question n°18
   {
-    question: "Quelle est la principale caractéristique d'un 'sophisme' ?",
+    question: "Comment Platon, dans le <em>Phèdre</em>, critique-t-il l'écriture par rapport à la parole vivante ?",
     answers: [
-      "Un argument trop complexe pour être compris",
-      "Un discours qui n'a que l'apparence de la vérité ou de la logique",
-      "Une argumentation exclusivement basée sur l'émotion"
+      "Il la loue comme un progrès décisif permettant la diffusion exacte et durable de la connaissance.",
+      "Il la considère comme un pharmakon (remède/poison) qui affaiblit la mémoire vivante et donne une fausse impression de sagesse, car le texte écrit est orphelin, incapable de répondre aux questions.",
+      "Il estime qu'elle est réservée aux scribes et n'a aucune valeur philosophique, étant purement utilitaire."
     ],
     correct: 2,
-    explanation: `Un sophisme est un raisonnement fallacieux, qui présente une apparence de validité logique mais qui est en réalité erroné. Le sophisme vise à persuader plutôt qu'à convaincre, en exploitant les failles du raisonnement ou les préjugés de l'auditoire.\nExemple : Le sophisme de la pente glissante : "Si on autorise cela, alors on autorisera tout".`
+    explanation: `Dans le mythe de Theuth, Platon fait dire à Thamous (le roi) que l'écriture est un remède pour la mémoire, mais un poison pour le vrai savoir. Un texte écrit circule sans son auteur, se fait interpréter par n'importe qui, et ne peut se défendre ni s'expliquer. Il donne l'illusion de la sagesse sans la réalité de la pensée vivante. À l'opposé, le dialogue dialectique (la parole vive) permet une co-construction de la vérité par questions et réponses, adaptée à l'interlocuteur.\nExemple : Lire un manuel de philosophie (texte écrit) peut donner l'impression de savoir, mais c'est seulement dans la discussion, la confrontation d'arguments et les questions d'un professeur (parole vivante) que la compréhension réelle et personnelle s'anime et se vérifie.`
   },
   // Question n°19
   {
-    question: "Que désigne le terme 'doxa' (δόξα) dans le contexte de la critique philosophique de la parole ?",
+    question: "Que signifie l'expression <em>parole vide</em> souvent associée à la critique de la communication politique contemporaine ?",
     answers: [
-      "La science certaine et démontrée",
-      "L'opinion courante, non fondée, souvent préjugée",
-      "La parole divine ou inspirée"
+      "Une parole qui utilise un vocabulaire technique et précis, incompréhensible au grand public.",
+      "Une parole qui promet des actions mais n'engage à rien de concret, se contentant de formules creuses et de slogans sans substance.",
+      "Une parole chuchotée ou murmurée, délibérément peu audible pour créer du mystère."
     ],
     correct: 2,
-    explanation: `La doxa désigne l'opinion, la croyance non fondée sur une connaissance rationnelle. En philosophie, elle s'oppose à l'épistémè (la science vraie). La doxa est le terrain de jeu de la rhétorique sophistique et de la parole démagogique.\nExemple : Un discours politique qui reprend des stéréotypes nationaux sans les interroger s'appuie sur la doxa.`
+    description: `La <em>parole vide</em> désigne un discours qui a perdu son lien avec l'action et la vérité. Elle se nourrit de mots-valises (<em>changement</em>, <em>progrès</em>, <em>rupture</em>), de promesses non tenables et d'un flou artistique calculé. Son but n'est pas d'informer ou de programmer une action vérifiable, mais de maintenir une image, de occuper l'espace médiatique et de créer un sentiment d'adhésion affective sans contenu précis. C'est une parole purement auto-référentielle.\nExemple : Des slogans politiques comme <em>La force du vrai</em> ou <em>Ensemble, tout devient possible</em> sont des paroles vides : ils sonnent bien, évoquent des valeurs positives, mais ne disent rien sur les mesures concrètes à prendre, les choix à opérer ou les moyens à mobiliser.`
   },
   // Question n°20
   {
-    question: "Comment Quintilien justifie-t-il l'importance capitale de l''actio' (prononciation) ?",
+    question: "Quelle est la différence entre <em>parole authentique</em> et <em>parole inauthentique</em> dans l'analyse du <em>on</em> par Heidegger ?",
     answers: [
-      "Elle permet de cacher les faiblesses du discours",
-      "C'est par elle que les émotions et convictions passent vers l'auditoire",
-      "Elle est plus importante que le contenu lui-même"
+      "La parole authentique est celle des grands auteurs, la parole inauthentique est celle de la conversation quotidienne.",
+      "La parole authentique est celle qui engage l'existence propre de celui qui parle, tandis que la parole inauthentique répète les lieux communs anonymes du <em>on</em> (<em>on dit que...</em>).",
+      "La parole authentique est toujours vraie, la parole inauthentique est toujours mensongère."
     ],
     correct: 2,
-    explanation: `Quintilien affirme que "de toutes les preuves que l'orateur tire de sa conviction, il n'en est pas une qui ne paraisse faible, si elle n'est soutenue d'un certain ton affirmatif". L'actio (voix, geste, visage) est ce qui donne vie et force persuasive au discours.\nExemple : Un acteur peut rendre passionnante une pièce médiocre par sa seule interprétation.`
+    explanation: `Heidegger analyse la quotidienneté où l'individu est pris dans le <em>On</em> (das Man), une instance anonyme et impersonnelle qui pense et parle à sa place. La parole inauthentique est bavardage (Gerede) : elle ne fait que répéter, commenter sans fondement, diffuser des idées reçues. La parole authentique advient lorsque le Dasein (l'être-là) assume son existence propre, sa finitude, et parle en son propre nom, souvent dans des situations limites (angoisse, décision).\nExemple : Discuter de la dernière série à la mode en répétant les critiques lues partout (<em>On a trouvé la fin nulle</em>) relève du bavardage inauthentique. En revanche, exprimer un choix de vie difficile, assumé contre l'opinion commune, engage une parole plus authentique, car elle engage l'être même de celui qui parle.`
   },
   // Question n°21
   {
-    question: "Quelle est la définition de la 'propagande' retenue dans l'analyse des discours ?",
+    question: "Que permet de comprendre l'analyse du discours de Marc Antoine dans <em>Jules César</em> de Shakespeare ?",
     answers: [
-      "La diffusion d'informations objectives",
-      "L'action exercée sur l'opinion publique pour la faire adopter certaines idées",
-      "Un art littéraire visant à embellir la réalité"
+      "Elle montre la supériorité de l'argumentation logique sur l'appel aux émotions.",
+      "Elle illustre la puissance de la parole pour retourner l'opinion publique en jouant subtilement sur le pathos et en feignant de respecter les convenances.",
+      "Elle prouve que les masses sont naturellement rationnelles et ne se laissent pas manipuler par les émotions."
     ],
     correct: 2,
-    explanation: `La propagande est une action systématique exercée sur l'opinion publique pour l'amener à adhérer à certaines idées, souvent au service d'un pouvoir ou d'une idéologie. Elle utilise massivement les techniques de la rhétorique mais dans un but de manipulation et de contrôle.\nExemple : Les affiches et discours du régime nazi sont des archétypes de la propagande.`
+    explanation: `Après l'assassinat de César, Brutus justifie son acte par un discours froid et raisonné (logos, ethos républicain). Marc Antoine, lui, feint d'approuver les assassins (<em>Brutus est un homme honorable...</em>) tout en présentant successivement le testament de César, son manteau troué, et son cadavre, suscitant progressivement la pitié, puis la colère de la foule. Son discours est un chef-d'œuvre de manipulation rhétorique : il respecte formellement sa promesse de ne pas critiquer Brutus, mais il utilise les émotions (pathos) et sa propre crédibilité (ethos d'ami fidèle) pour retourner complètement l'opinion.\nExemple : C'est l'archétype de la parole qui, sous couvert de modération et de respect des règles, utilise les apparences pour servir une intention cachée (venger César), démontrant que la forme du discours peut être plus puissante que son contenu explicite.`
   },
   // Question n°22
   {
-    question: "Que signifie l'expression 'parole paradoxale' ?",
+    question: "Quel rôle joue le <em>silence</em> dans l'art de la parole, notamment dans la rhétorique ?",
     answers: [
-      "Une parole qui se contient elle-même",
-      "Une parole qui va à l'encontre (παρά) de l'opinion (δόξα) reçue",
-      "Une parole dont le sens est impossible à déterminer"
+      "Le silence est toujours un échec de la parole, un vide à combler à tout prix.",
+      "Le silence peut être un moment de respiration, mais il n'a aucune valeur persuasive en lui-même.",
+      "Le silence est un outil rhétorique puissant : il peut marquer l'émotion, laisser réfléchir l'auditoire, souligner un mot ou créer un suspense."
     ],
-    correct: 2,
-    explanation: `La parole paradoxale est celle qui contredit l'opinion commune, la doxa établie. Le paradoxe a une fonction critique et libératrice : il brise les évidences non questionnées, force à penser en dehors des cadres préétablis.\nExemple : La déclaration socratique "Je sais que je ne sais rien" est un paradoxe.`
+    correct: 3,
+    explanation: `Le silence n'est pas l'absence de parole, mais un élément constitutif du discours. Un orateur maîtrise les silences autant que les mots. Un silence bien placé après une déclaration forte lui donne du poids et du temps pour imprégner les esprits. Un silence peut marquer l'émotion (fausse ou vraie), l'indignation, ou laisser l'auditeur combler le vide par sa propre imagination. Dans la conversation, le silence peut être une arme de pression ou un signe de désaccord.\nExemple : Dans un procès, l'avocat peut marquer un long silence après avoir révélé une pièce à conviction accablante, laissant le jury méditer son importance avant de poursuivre. Ce silence dramatise et amplifie l'effet de la révélation.`
   },
   // Question n°23
   {
-    question: "Quelle analogie Platon utilise-t-il dans le 'Gorgias' pour disqualifier la rhétorique ?",
+    question: "Qu'est-ce que la <em>captatio benevolentiae</em>, technique souvent utilisée dans l'exorde ?",
     answers: [
-      "La rhétorique est à la justice ce que la cuisine est à la médecine",
-      "La rhétorique est à la philosophie ce que l'ombre est à la lumière",
-      "La rhétorique est à la parole ce que le simulacre est à la réalité"
+      "Une technique pour discréditer l'adversaire en exposant ses fautes passées.",
+      "Une technique pour résumer de manière percutante tous les arguments à la fin du discours.",
+      "Une technique pour s'attirer la bienveillance de l'auditoire par la modestie, la flatterie ou la mise en avant d'un intérêt commun."
     ],
-    correct: 1,
-    explanation: `Dans une analogie structurante, Platon compare la rhétorique à la cuisine et la sophistique à l'esthétique. La cuisine flatte le goût sans soigner le corps, tout comme la rhétorique flatte l'âme sans la soigner véritablement.\nExemple : Un avocat qui utiliserait uniquement des effets oratoires pour émouvoir le jury pratiquerait cette "cuisine" de l'âme.`
+    correct: 3,
+    explanation: `Littéralement <em>captation de la bienveillance</em>, c'est une stratégie initiale visant à désarmer les préventions de l'auditoire et à créer un lien de sympathie. L'orateur peut s'y prendre en se présentant comme modeste, inexpérimenté, en flattant la sagesse ou la vertu des juges/auditeurs, ou en soulignant qu'il défend une cause qui les concerne tous. L'objectif est de rendre l'auditoire réceptif, <em>docile</em>, avant d'aborder le fond du sujet.\nExemple : Un étudiant commençant un oral par <em>Je vais tâcher de vous présenter ce modeste travail, en espérant qu'il pourra, malgré ses limites, vous intéresser</em> pratique une captatio benevolentiae. Il baisse les attentes, se montre humble, et cherche ainsi l'indulgence du jury.`
   },
   // Question n°24
   {
-    question: "Quel concept-clé désigne la capacité d'un mot à évoquer une réalité absente ou abstraite ?",
+    question: "Comment la publicité utilise-t-elle typiquement les ressorts de la rhétorique aristotélicienne ?",
     answers: [
-      "La référence",
-      "L'évocation",
-      "La dénotation"
+      "Elle se limite à fournir des informations techniques et objectives sur le produit (logos pur).",
+      "Elle ignore délibérément l'ethos et le pathos pour se concentrer sur le prix, argument purement rationnel.",
+      "Elle combine un ethos de marque (confiance, prestige), un pathos (désir, peur, envie) et un logos souvent minimal (un slogan, une pseudo-démonstration) pour créer l'envie d'acheter."
     ],
-    correct: 2,
-    explanation: `L'évocation est le pouvoir du langage de faire surgir dans l'esprit des réalités qui ne sont pas présentes dans le contexte immédiat de l'énonciation. Cette capacité est à la fois la force et la faiblesse du langage : elle permet la pensée conceptuelle, mais ouvre aussi la porte à la tromperie.\nExemple : Parler de "l'infini" ou d'un "bouc-cerf" évoque des entités que personne n'a jamais perçues directement.`
+    correct: 3,
+    explanation: `La publicité est une rhétorique appliquée au commerce. L'<em>ethos</em> est construit par l'image de marque (sérieux, innovation, tradition). Le <em>pathos</em> est massivement sollicité : on vend un rêve (voiture=liberté), une peur (assurance=sécurité), un désir social (parfum=séduction). Le <em>logos</em> est souvent réduit à un argument simple voire fallacieux (<em>9 dentistes sur 10 recommandent...</em>) ou à une accroche pseudo-logique. Le but n'est pas de convaincre par la raison, mais de persuader par l'affect et l'identification.\nExemple : Une pub pour une crème anti-âge : <em>ethos</em> (laboratoire scientifique réputé), <em>pathos</em> (peur de vieillir, désir de beauté), <em>logos</em> (chiffre sur la réduction des rides). L'association des trois vise à créer une conviction bien plus forte qu'une simple fiche technique.`
   },
   // Question n°25
   {
-    question: "Quelle est la fonction du 'silence' dans l'économie générale de la parole ?",
+    question: "Quelle est la thèse de Gorgias dans son traité <em>Sur le non-être</em> concernant la communication ?",
     answers: [
-      "Il est une simple absence de parole, un vide à combler",
-      "Il est premier et constitue l'espace de résonance nécessaire d'où émerge la parole",
-      "Il est toujours un signe de faiblesse ou de soumission"
+      "La parole transmet parfaitement la pensée et la réalité telle qu'elle est.",
+      "Rien n'existe ; si quelque chose existait, on ne pourrait le connaître ; si on pouvait le connaître, on ne pourrait le communiquer aux autres.",
+      "La parole est l'outil unique et suffisant pour atteindre une vérité universelle et partagée."
     ],
     correct: 2,
-    explanation: `Le silence n'est pas un simple manque de parole, mais une condition positive de son émergence et de sa signification. Comme le papier blanc est nécessaire à l'apparition du trait, le silence constitue l'arrière-plan à partir duquel la parole se détache et prend sens.\nExemple : La "minute de silence" n'est pas une absence de communication, mais une parole collective non verbale.`
+    explanation: `Ce fragment célèbre de Gorgias est un manifeste de scepticisme radical. Il coupe tout lien nécessaire entre la réalité, la pensée et la parole. La parole (λόγος) est une réalité distincte, qui ne fait qu'<em>signaler</em> des choses à l'âme, sans garantir qu'elle corresponde au monde extérieur ou même à la pensée de l'autre. Cette thèse justifie la rhétorique comme art autonome : si la vérité est incommunicable, seule importe l'efficacité persuasive du discours, son pouvoir d'agir sur les âmes.\nExemple : Lorsque je décris un coucher de soleil, les mots <em>rougeoiement</em> ou <em>majestueux</em> ne transmettent pas la perception elle-même, mais éveillent chez l'auditeur ses propres souvenirs et émotions associés à ces mots. La communication est donc toujours une traduction et une recréation, jamais une copie conforme.`
   },
   // Question n°26
   {
-    question: "Quelle est la différence entre 'convaincre' et 'persuader' selon la définition rhétorique classique ?",
+    question: "Que signifie la formule de La Boétie sur la servitude volontaire : <em>Soyez résolus à ne plus servir, et vous voilà libres</em> ?",
     answers: [
-      "Convaincre s'adresse à la raison, persuader s'adresse à l'émotion",
-      "Convaincre est réservé aux scientifiques, persuader aux politiques",
-      "Convaincre utilise des preuves, persuader utilise des mensonges"
+      "Elle affirme que la liberté est un don des dieux ou des rois, qu'on ne peut acquérir par soi-même.",
+      "Elle souligne que l'asservissement politique repose sur le consentement actif des dominés, et que la première libération est un acte de parole et de volonté qui refuse ce consentement.",
+      "Elle conseille de servir un maître plus juste pour être plus libre individuellement."
     ],
-    correct: 1,
-    explanation: `Convaincre consiste à obtenir l'adhésion par des arguments rationnels, en faisant appel au logos. Persuader consiste à obtenir l'adhésion par des moyens émotionnels ou affectifs, en faisant appel au pathos. Cette distinction est essentielle pour évaluer la valeur éthique d'un discours : la conviction vise la vérité, la persuasion peut viser la simple efficacité.\nExemple : Une démonstration mathématique convainc ; un discours politique émouvant persuade.`
+    correct: 2,
+    explanation: `Pour La Boétie, le pouvoir du tyran ne tient pas à sa propre force, mais à l'habitude et à la résignation du peuple. Les hommes <em>se laissent aller</em> à être dominés. La liberté se conquiert d'abord par une décision intérieure, une <em>résolution</em> de l'âme qui se traduit par le refus de collaborer. Cette parole intérieure (<em>soyez résolus</em>) est le premier acte de désobéissance, le fondement de toute émancipation politique. Le pouvoir est ainsi un rapport qui s'effondre quand les dominés retirent leur parole d'assentiment.\nExemple : Un mouvement de grève générale est l'actualisation collective de cette résolution : en disant <em>Non</em> et en cessant le travail, les dominés dévoilent que le pouvoir économique dépend de leur coopération quotidienne, qu'ils peuvent suspendre.`
   },
   // Question n°27
   {
-    question: "Quel auteur romain est le principal représentant de la rhétorique latine et a systématisé les cinq parties de l'art oratoire ?",
+    question: "Quel est le rôle de la <em>métaphore</em> dans un discours persuasif selon la rhétorique classique ?",
     answers: [
-      "Sénèque",
-      "Cicéron",
-      "Quintilien"
+      "Elle est déconseillée car elle obscurcit le sens et nuit à la clarté logique du discours.",
+      "Elle permet d'habiller une idée abstraite dans une image concrète et frappante, facilitant la compréhension et la mémorisation, et touchant souvent l'émotion.",
+      "Elle sert uniquement à faire de l'esprit et à divertir un auditoire cultivé."
     ],
     correct: 2,
-    explanation: `Cicéron est le principal théoricien et praticien de la rhétorique latine. Dans des œuvres comme "De l'orateur" et "L'orateur", il systématise les cinq parties de la rhétorique (inventio, dispositio, elocutio, memoria, actio) et développe une conception de l'éloquence comme union de la sagesse et de l'expression. Son influence sur la tradition rhétorique occidentale est immense.\nExemple : Cicéron insiste sur le fait que le style (elocutio) est la marque distinctive de l'orateur parfait.`
+    explanation: `La métaphore (transport de sens) est une figure maîtresse de l'elocutio (style). En établissant une analogie inattendue entre deux domaines, elle rend une idée plus vive et plus saisissable. Elle peut aussi orienter subtilement le jugement : qualifier un chef d'État de <em>père de la nation</em> ou de <em>pilote dans la tempête</em> n'est pas neutre, cela implique protection, autorité bienveillante ou compétence salvatrice. Elle agit donc à la fois sur la cognition (elle fait voir) et sur l'affect (elle fait sentir).\nExemple : Winston Churchill décrivant le <em>rideau de fer</em> tombé sur l'Europe a créé une métaphore puissante : elle rendait tangible la division idéologique et géopolitique de la Guerre froide, évoquant à la fois l'opacité, l'isolement et la menace, bien plus efficacement qu'un long discours géostratégique.`
   },
   // Question n°28
   {
-    question: "Que signifie le terme 'elocutio' dans la rhétorique cicéronienne ?",
+    question: "Comment définir la notion de <em>violence symbolique</em> développée par Pierre Bourdieu ?",
     answers: [
-      "L'art de trouver les arguments",
-      "L'art d'orner le discours par le style, le vocabulaire et les figures",
-      "L'art de mémoriser son discours"
+      "Une violence physique déguisée en rituel ou en cérémonie traditionnelle.",
+      "Une violence exercée à travers des symboles culturels, comme les drapeaux ou les hymnes, lors de conflits ouverts.",
+      "Une violence douce et invisible qui s'exerce par la parole, les classements, les jugements de goût, et qui impose comme naturelles des distinctions sociales arbitraires."
     ],
-    correct: 2,
-    explanation: `L'elocutio est la troisième partie de la rhétorique selon Cicéron, consacrée à l'expression stylistique. Elle concerne le choix des mots, la construction des phrases, l'usage des figures de style (métaphores, comparaisons, antithèses...). Cicéron considère que c'est par l'elocutio que l'orateur se distingue véritablement, car elle donne beauté et force au contenu du discours.\nExemple : Cicéron écrit : "C'est par cette seule chose, c'est-à-dire par le style, qu'il [l'orateur] l'emporte".`
+    correct: 3,
+    explanation: `La violence symbolique est la capacité d'imposer des significations (des visions du monde, des hiérarchies) comme légitimes, en masquant les rapports de force qui les sous-tendent. Elle s'exerce par le langage ordinaire, l'éducation, les médias. Par exemple, qualifier certains accents ou manières de <em>vulgaires</em> ou de <em>distingués</em> naturalise une domination sociale (classe) en la transformant en différence de goût ou de mérite. C'est une violence car elle contraint, mais elle est symbolique car elle passe par l'adhésion inconsciente des dominés.\nExemple : Le système scolaire qui valorise systématiquement la culture légitime (littérature classique, art savant) et dévalue les cultures populaires exerce une violence symbolique. Il inculque aux enfants des classes dominées l'idée que leurs propres références sont inférieures, les amenant à intérioriser leur propre domination.`
   },
   // Question n°29
   {
-    question: "Quelle est la fonction de la 'dispositio' dans la construction d'un discours ?",
+    question: "À quelle situation correspond le <em>genre judiciaire</em> du discours selon la classification d'Aristote ?",
     answers: [
-      "Trouver les arguments",
-      "Ordonner les arguments selon un plan efficace",
-      "Mettre en scène la délivrance du discours"
+      "Il vise à délibérer sur les avantages et inconvénients d'une future décision (assemblée).",
+      "Il vise à établir la justice en accusant ou en défendant concernant des actes passés (tribunal).",
+      "Il vise à louer ou blâmer une personne ou une valeur dans le présent (cérémonie)."
     ],
     correct: 2,
-    explanation: `La dispositio (disposition) est la seconde partie de la rhétorique. Elle consiste à organiser les arguments trouvés lors de l'inventio selon un ordre logique et persuasif. La structure classique comprend : l'exorde (introduction), la narration (exposé des faits), la confirmation (argumentation), et la péroraison (conclusion). Une bonne dispositio rend le discours clair, cohérent et progressif.\nExemple : Un discours bien disposé guide l'auditeur pas à pas vers la conclusion souhaitée.`
+    explanation: `Le genre judiciaire (ou forensic) a pour objet le passé et pour fin le juste et l'injuste. Il s'agit de déterminer si un acte a été commis, par qui, et comment le qualifier juridiquement (crime, délit). L'orateur est soit l'accusateur, soit le défenseur. L'auditoire est un juge ou un jury qui doit rendre un verdict. Les preuves concernent les faits passés, et les passions mobilisées sont souvent la pitié pour la défense, l'indignation pour l'accusation.\nExemple : Une plaidoirie d'avocat lors d'un procès pénal est le paradigme du genre judiciaire : l'avocat reconstitue les faits passés, les interprète à la lumière de la loi, et cherche à convaincre les juges de l'innocence ou de la culpabilité de son client, ou à les persuader de la modération de la peine.`
   },
   // Question n°30
   {
-    question: "Que signifie l'expression 'captatio benevolentiae' ?",
+    question: "Quel est le sens de l'expression <em>faire autorité</em> appliquée à une parole ou à un texte ?",
     answers: [
-      "La capture de l'attention de l'auditoire au début du discours",
-      "La démonstration de sa bienveillance envers l'adversaire",
-      "L'appel à la clémence des juges"
+      "Être écrit par une personne occupant un poste de pouvoir officiel.",
+      "Être considéré comme source légitime et digne de foi, imposant le respect et l'obéissance sans recours à la contrainte physique.",
+      "Êmerger du vote démocratique de la majorité, indépendamment de sa pertinence."
     ],
-    correct: 1,
-    explanation: `La "captatio benevolentiae" (capture de la bienveillance) est une technique rhétorique utilisée dans l'exorde (introduction) d'un discours. Elle vise à s'attirer la sympathie, l'attention et la bonne disposition de l'auditoire dès le début. On peut y parvenir par une référence humble à soi-même, un compliment à l'auditoire, l'annonce d'un sujet important, ou même une anecdote humoristique.\nExemple : Les orateurs américains commencent souvent leurs discours par une plaisanterie pour détendre l'atmosphère.`
+    correct: 2,
+    explanation: `Une parole fait autorité lorsque sa légitimité est reconnue par ceux qui l'écoutent, non parce qu'elle est accompagnée d'une menace (potestas), mais en raison de la crédibilité, du prestige ou du savoir reconnu à son auteur (auctoritas). Cette autorité peut venir de l'institution (un professeur, un juge), de la compétence (un expert), de la tradition (un texte sacré) ou du charisme personnel. On <em>fait</em> autorité, c'est une relation établie dans l'acte même de la reconnaissance.\nExemple : Les travaux d'Albert Einstein sur la relativité <em>font autorité</em> en physique : les scientifiques les citent, s'y réfèrent et les tiennent pour vrais, non parce qu'Einstein les imposerait, mais en raison de la démonstration et de la vérification qui leur sont reconnues.`
   },
   // Question n°31
   {
-    question: "Quel sophiste célèbre est l'interlocuteur de Socrate dans le dialogue de Platon qui donne son nom au 'Gorgias' ?",
+    question: "Que désigne le concept de <em>parole située</em> par opposition à une prétendue neutralité du discours ?",
     answers: [
-      "Protagoras",
-      "Gorgias",
-      "Hippias"
+      "Une parole prononcée dans un lieu géographique précis, comme une place publique.",
+      "Une parole qui reconnaît et assume la position sociale, historique et culturelle particulière de celui qui parle, influençant son point de vue.",
+      "Une parole technique et spécialisée, incompréhensible hors de son contexte professionnel."
     ],
     correct: 2,
-    explanation: `Gorgias de Léontinoi (v. 483 - v. 375 av. J.-C.) est un sophiste et rhéteur célèbre, connu pour son style oratoire flamboyant et son relativisme. Dans le dialogue platonicien qui porte son nom, Socrate discute avec lui de la nature de la rhétorique. Gorgias défend l'idée que la rhétorique est l'art de persuader, capable de rendre convaincant n'importe quel sujet, indépendamment de sa vérité.\nExemple : Gorgias disait pouvoir parler sur n'importe quel sujet, même s'il n'y connaissait rien.`
+    explanation: `La notion de <em>parole située</em>, développée par des penseuses féministes comme Donna Haraway, s'oppose à l'idéal d'une objectivité neutre et détachée (le <em>point de vue de nulle part</em>). Toute connaissance et tout discours sont produits depuis une position spécifique : un genre, une classe, une race, une histoire. Assumer cette situation ne discrédite pas la parole, au contraire : elle la rend plus responsable, plus modeste et plus consciente de ses limites. La prétention à l'universel abstrait est souvent le masque du point de vue dominant.\nExemple : Un homme blanc parlant des discriminations raciales doit reconnaître que sa parole est <em>située</em> : il ne parle pas depuis l'expérience vécue du racisme. Cela ne l'empêche pas d'en parler, mais cela l'oblige à une écoute particulière et à un effort d'objectivation de son propre point de vue.`
   },
   // Question n°32
   {
-    question: "Que signifie l'affirmation d'Aristote selon laquelle la rhétorique est 'la capacité de discerner dans chaque cas ce qui est potentiellement persuasif' ?",
+    question: "Comment Cicéron définit-il l'orateur idéal dans le <em>De Oratore</em> ?",
     answers: [
-      "La rhétorique est un art spécifique comme la médecine",
-      "La rhétorique est transversale et peut s'appliquer à tout domaine",
-      "La rhétorique ne s'intéresse qu'à la forme, pas au fond"
+      "Un technicien spécialisé maîtrisant seulement les règles de l'éloquence.",
+      "Un philosophe qui méprise les techniques de persuasion et ne cherche que la vérité abstraite.",
+      "<em>Un homme de bien, habile à parler</em> (vir bonus dicendi peritus), alliant vertu morale, culture encyclopédique et maîtrise technique de la rhétorique."
     ],
-    correct: 2,
-    explanation: `Aristote définit la rhétorique comme une technique (technè) transversale, contrairement à des arts spécialisés comme la médecine ou la géométrie. Elle n'a pas de domaine propre mais peut "discerner le persuasif sur tout ce qui est donné". Cette définition fait de la rhétorique un art général de l'argumentation, applicable à n'importe quel sujet de débat, ce qui explique son importance en politique, en droit et en philosophie.\nExemple : Un même principe rhétorique peut être utilisé pour défendre une cause médicale, politique ou judiciaire.`
+    correct: 3,
+    explanation: `Face à la critique platonicienne, Cicéron cherche à réconcilier rhétorique et philosophie, éloquence et vertu. L'orateur idéal n'est pas un sophiste amoral, mais le <em>vir bonus</em>, l'homme de bien, dont l'éloquence est au service du bien commun. Il doit posséder une vaste culture (droit, histoire, philosophie) pour traiter de tous les sujets. Cette figure incarne l'idéal humaniste de l'homme d'État éloquent et vertueux, dont la parole guide la République.\nExemple : Cicéron lui-même a tenté d'incarner cet idéal : homme politique, avocat brillant, philosophe, il voyait dans l'éloquence l'outil essentiel pour défendre la loi, la justice et les institutions de Rome contre les démagogues et les tyrans.`
   },
   // Question n°33
   {
-    question: "Quelle est la caractéristique principale du 'discours judiciaire' selon Aristote ?",
+    question: "Qu'est-ce qu'un <em>lieu commun</em> (topos) en rhétorique ?",
     answers: [
-      "Il vise l'utile ou le nuisible",
-      "Il vise le juste ou l'injuste",
-      "Il vise l'admirable ou le détestable"
+      "Un endroit géographique souvent cité dans les discours, comme Rome ou Athènes.",
+      "Un argument banal et éculé, dépourvu de toute originalité et donc à éviter absolument.",
+      "Un schéma d'argumentation standard, une <em>case</em> à partir de laquelle on peut construire des arguments sur un sujet donné (ex: le topos de l'âge d'or, du progrès)."
     ],
-    correct: 2,
-    explanation: `Le discours judiciaire a pour objet le jugement sur des actions passées, en distinguant ce qui est juste de ce qui est injuste. Sa temporalité est le passé (on juge ce qui s'est déjà produit) et il se divise en accusation et défense. Il est typique des tribunaux, où l'on cherche à établir la culpabilité ou l'innocence.\nExemple : Le plaidoyer d'un avocat lors d'un procès est un discours judiciaire.`
+    correct: 3,
+    explanation: `Les <em>lieux</em> (topoi) sont, dans la rhétorique antique, des réservoirs d'arguments, des cadres généraux de raisonnement. Ils sont <em>communs</em> car ils peuvent s'appliquer à de nombreux sujets différents. Par exemple, le topos du <em>plus et du moins</em> (si on loue une vertu mineure, on doit louer davantage une vertu majeure) ou celui de la <em>cause et des effets</em>. L'orateur puise dans ces lieux pour construire ses preuves logiques (logos). Ce ne sont pas des clichés, mais des matrices d'argumentation.\nExemple : Pour défendre l'importance de protéger la forêt amazonienne, un orateur pourra utiliser le topos de la <em>cause finale</em> (son rôle pour l'équilibre climatique mondial, donc pour l'avenir de l'humanité) et le topos de la <em>comparaison</em> (c'est un patrimoine commun plus précieux que toutes les richesses matérielles qu'on en tire).`
   },
   // Question n°34
   {
-    question: "Quelle est la caractéristique principale du 'discours délibératif' selon Aristote ?",
+    question: "Quelle est la fonction de la <em>péroraison</em> dans la structure d'un discours classique ?",
     answers: [
-      "Il vise l'utile ou le nuisible",
-      "Il vise le juste ou l'injuste",
-      "Il vise l'admirable ou le détestable"
+      "Exposer les faits de manière claire et ordonnée pour préparer l'auditoire.",
+      "Développer les preuves et les arguments principaux de manière détaillée.",
+      "Résumer les arguments, amplifier les émotions (pathos) et laisser une forte impression finale."
     ],
-    correct: 1,
-    explanation: `Le discours délibératif a pour objet la décision à prendre concernant l'avenir, en distinguant ce qui est utile de ce qui est nuisible. Sa temporalité est le futur et il se divise en exhortation (pousser à faire) et dissuasion (pousser à ne pas faire). Il est typique des assemblées politiques où l'on débat des lois et des orientations à prendre.\nExemple : Un discours parlementaire pour ou contre un projet de loi est délibératif.`
+    correct: 3,
+    explanation: `La péroraison est la conclusion du discours, son coup final. Elle a trois fonctions : la <em>récapitulation</em> (rapide rappel des arguments forts), l'<em>amplification</em> (emportement pathétique pour émouvoir une dernière fois) et l'<em>excitation</em> (appel à l'action ou au jugement). C'est le moment où l'orateur cherche à graver son plaidoyer dans les mémoires et dans les cœurs, souvent par des procédés stylistiques frappants (exclamations, apostrophes). Une bonne péroraison peut retourner une impression mitigée.\nExemple : Dans <em>J'accuse…!</em>, Zola conclut sa lettre ouverte par une péroraison foudroyante : il résume les charges, s'adresse directement aux institutions et aux personnes, et lance son célèbre <em>J'accuse</em> répété, créant un moment d'une intensité dramatique et morale inoubliable qui a marqué l'affaire Dreyfus.`
   },
   // Question n°35
   {
-    question: "Quelle est la caractéristique principale du 'discours démonstratif' selon Aristote ?",
+    question: "En quoi consiste la <em>parole prophétique</em> telle qu'analysée dans les traditions religieuses ?",
     answers: [
-      "Il vise l'utile ou le nuisible",
-      "Il vise le juste ou l'injuste",
-      "Il vise l'admirable ou le détestable"
+      "Une parole qui prédit l'avenir avec une précision scientifique infaillible.",
+      "Une parole qui dénonce les injustices présentes au nom d'une Loi ou d'une Vérité transcendante, et qui appelle à une conversion.",
+      "Une parole magique qui, une fois prononcée, réalise automatiquement ce qu'elle annonce."
     ],
-    correct: 3,
-    explanation: `Le discours démonstratif (ou épidictique) a pour objet la louange ou le blâme de personnes ou d'actions présentes, en distinguant ce qui est admirable de ce qui est détestable. Sa temporalité est le présent. Il vise moins à faire agir ou juger qu'à renforcer des valeurs communes au sein d'une communauté.\nExemple : Un éloge funèbre, un discours de remise de prix, ou un panégyrique sont des discours démonstratifs.`
+    correct: 2,
+    explanation: `Le prophète (en grec : celui qui parle à la place de, ou devant) n'est pas principalement un devin, mais un porte-parole. Il parle au nom de Dieu ou d'un idéal supérieur pour interpeller la communauté sur son infidélité à l'Alliance ou à la justice. Sa parole est disruptive, elle rompt le consensus et dérange les puissants. Elle n'agit pas par la persuasion sophistiquée, mais par la force de la conviction et l'autorité de celui dont il se réclame. C'est une parole qui juge le présent pour ouvrir un avenir différent.\nExemple : Les discours de Martin Luther King, s'appuyant sur la tradition biblique et l'idéal américain, étaient de nature prophétique : ils dénonçaient la ségrégation raciale comme une trahison des principes fondateurs et appelaient à une conversion des cœurs et des lois, au nom d'une justice divine et humaine.`
   },
   // Question n°36
   {
-    question: "Que signifie l'expression 'doxosophoi' utilisée par Platon pour critiquer les prétendus savants ?",
+    question: "Comment le philosophe Jürgen Habermas conçoit-il l'idéal d'une <em>situation de parole idéale</em> ?",
     answers: [
-      "Les vrais sages",
-      "Les savants imaginaires (ceux qui ont l'apparence de la sagesse)",
-      "Les enseignants populaires"
+      "Une situation où seul un expert détenteur du savoir a le droit de parler, les autres écoutant passivement.",
+      "Une situation de communication libre de toute contrainte, où chacun peut prendre la parole, où seuls comptent la force du meilleur argument et la volonté de coopération.",
+      "Une situation où la parole est remplacée par des gestes et des signes pour éviter les malentendus linguistiques."
     ],
     correct: 2,
-    explanation: `Le terme "doxosophoi" (δόξα + σοφία) signifie littéralement "ceux qui ont l'apparence (doxa) de la sagesse (sophia)". Platon l'utilise dans le "Phèdre" pour critiquer ceux qui, grâce à l'écriture, auront "beaucoup appris sans maître" et s'imagineront "devenus très savants", alors qu'ils ne seront en réalité que des "ignorants de commerce incommode". C'est une critique de la connaissance livresque non assimilée et du pédantisme.\nExemple : Quelqu'un qui cite des auteurs sans les comprendre est un doxosophos.`
+    explanation: `Pour Habermas, l'activité communicationnelle vise l'entente (Verständigung). La <em>situation idéale de parole</em> est un modèle régulateur où les participants sont motivés par la coopération, où ils peuvent affirmer, nier, interroger librement, et où aucune violence ou asymétrie de pouvoir ne fausse l'échange. La validité d'une affirmation y est établie par la reconnaissance intersubjective de sa justesse, sa vérité et sa sincérité. Cet idéal fonde une éthique de la discussion et une conception délibérative de la démocratie.\nExemple : Un débat citoyen organisé avec un modérateur garantissant un temps de parole égal, où les participants s'engagent à écouter et à répondre par des arguments plutôt que par des invectives, tente d'approcher (imparfaitement) cette situation idéale de parole.`
   },
   // Question n°37
   {
-    question: "Quel est le sens étymologique du mot 'rhétorique' ?",
+    question: "Que signifie l'expression <em>agir en paroles</em> dans le vocabulaire d'Hannah Arendt ?",
     answers: [
-      "Art de bien penser",
-      "Art de bien dire",
-      "Art de persuader"
+      "Mentir ou tromper par des promesses qu'on ne tiendra pas.",
+      "Réaliser l'action politique par excellence, qui est de se révéler aux autres, débattre, délibérer et inaugurer du nouveau dans l'espace public.",
+      "Remplacer l'action concrète par du bavardage stérile et des discours creux."
     ],
     correct: 2,
-    explanation: `Le mot "rhétorique" vient du grec "rhētorikē (technē)", dérivé de "rhētōr" qui signifie "orateur". Étymologiquement, il désigne donc "l'art de l'orateur" ou "l'art de bien dire". Cette origine souligne le lien premier de la rhétorique avec la pratique oratoire et la prise de parole publique, avant qu'elle ne devienne aussi une théorie de l'argumentation.\nExemple : En grec, un "rhêteur" (rhētōr) est celui qui parle en public, à l'assemblée ou au tribunal.`
+    explanation: `Pour Arendt, l'action (praxis) est la capacité humaine à initier de l'inédit, à interrompre les processus automatiques. Dans la sphère politique, cette action s'accomplit essentiellement <em>en paroles</em> : par le discours et la persuasion, les hommes se présentent les uns aux autres, débattent des affaires communes, prennent des décisions et fondent des institutions. La parole est ainsi l'essence de la liberté politique, ce qui distingue l'agir humain du simple comportement ou du travail. Sans parole, pas d'espace public.\nExemple : Les assemblées révolutionnaires (comme les États Généraux de 1789 devenant Assemblée nationale) sont des moments par excellence d'<em>agir en paroles</em> : par des discours, des débats, des serments (Jeu de Paume), des déclarations, des hommes ont instauré un ordre politique nouveau.`
   },
   // Question n°38
   {
-    question: "Quelle est la signification de l'expression 'parole de communication' dans la critique d'Ellul ?",
+    question: "Quelle est la différence entre un <em>dialogue</em> philosophique (comme chez Platon) et un <em>débat</em> rhétorique ?",
     answers: [
-      "Une parole qui informe clairement",
-      "Une parole vidée de sens, qui parle pour ne rien dire",
-      "Une parole technique réservée aux spécialistes"
+      "Le dialogue vise à faire triompher une opinion par tous les moyens, le débat vise à trouver la vérité ensemble.",
+      "Le dialogue vise la victoire d'un interlocuteur sur l'autre par la persuasion et l'éloquence.",
+      "Le dialogue vise une recherche commune de la vérité par questions et réponses (dialectique), tandis que le débat oppose des thèses pour faire adhérer un auditoire (par la persuasion)."
     ],
-    correct: 2,
-    explanation: `La "parole de communication" est, selon Jacques Ellul, une parole réduite à sa fonction utilitaire d'échange d'informations, vidée de toute dimension personnelle, existentielle ou véritative. C'est une parole qui "parle pour ne rien dire", qui pourrait être dite par n'importe qui, et qui ne vise que l'efficacité pragmatique immédiate. Elle s'oppose à la parole authentique qui engage celui qui la prononce.\nExemple : Le langage administratif standardisé ou le discours publicitaire stéréotypé sont des paroles de communication.`
+    correct: 3,
+    explanation: `Le dialogue socratique (ou dialectique) est une pratique de co-recherche. Les interlocuteurs sont partenaires dans un effort commun pour examiner une définition, dépasser les contradictions et progresser vers une idée plus juste. Le débat rhétorique (ou la joute oratoire) est un affrontement : chaque orateur cherche à convaincre un auditoire (ou à réfuter l'adversaire) de la supériorité de sa thèse, en utilisant toutes les ressources de la persuasion. Le premier privilégie la vérité, le second l'efficacité.\nExemple : Dans un dialogue platonicien, Socrate et son interlocuteur s'allient contre l'opinion fausse. Dans un débat politique télévisé, chaque candidat cherche à marquer des points face à l'autre et à séduire les téléspectateurs, bien plus qu'à approfondir un problème commun.`
   },
   // Question n°39
   {
-    question: "Que signifie l'expression 'parole utopique' au sens étymologique ?",
+    question: "Que désigne le concept de <em>double contrainte</em> (double bind) dans la communication, analysé par l'école de Palo Alto ?",
     answers: [
-      "Une parole idéaliste et irréaliste",
-      "Une parole sans lieu propre (οὐ-τόπος), non assignable à un espace institutionnel",
-      "Une parole qui décrit une société parfaite"
+      "Une situation où deux interlocuteurs se contredisent mutuellement de manière constructive.",
+      "Une situation où un même message transmet deux ordres ou significations contradictoires et impossibles à satisfaire simultanément, générant une impasse psychologique.",
+      "L'obligation de répondre à la fois à une question et à une contre-question dans un débat."
     ],
     correct: 2,
-    explanation: `Une parole "utopique" (du grec "ou-topos", "non-lieu") est, au sens fort, une parole qui n'a pas de lieu institutionnel assigné. Elle échappe aux cadres préétablis du discours (tribunal, assemblée, école, média). Dans cette perspective, la parole authentique, philosophique ou poétique, est par nature utopique : elle surgit hors des lieux prévus pour la parole et les défie par sa liberté et sa singularité.\nExemple : La parole d'un poète ou d'un philosophe qui parle en dehors des institutions établies est une parole utopique.`
+    explanation: `La double contrainte est un message paradoxal qui place le récepteur dans une situation intenable, quelle que soit sa réponse. Par exemple, un parent dit à son enfant : <em>Sois spontané !</em> – l'ordre de spontanéité détruit la spontanéité. Ces communications pathogènes, souvent non verbales (ton, geste), peuvent, si elles sont répétées, engendrer des troubles. Cela montre que la communication ne se réduit pas au contenu explicite, mais inclut des niveaux relationnels et des injonctions cachées.\nExemple : Un manager qui dit à son équipe <em>Je veux que vous soyez autonomes et créatifs, mais vous devez suivre cette procédure à la lettre</em> émet une double contrainte. L'équipe ne peut pas être à la fois libre de créer et entièrement soumise à une procédure rigide, ce qui crée de la confusion et de l'impuissance.`
   },
   // Question n°40
   {
-    question: "Quelle est la définition d'un 'astéisme' ?",
+    question: "Comment la notion de <em>parole donnée</em> fonde-t-elle un engagement moral particulier ?",
     answers: [
-      "Un éloge déguisé en blâme",
-      "Un blâme déguisé en éloge",
-      "Une comparaison élogieuse"
+      "La parole donnée est un simple signal de bonne intention, sans valeur contraignante si les circonstances changent.",
+      "La parole donnée est un acte performatif qui crée une obligation morale envers autrui, engageant l'honneur et la fiabilité de celui qui parle.",
+      "La parole donnée n'a de valeur que si elle est écrite et signée, transformée en contrat légal."
     ],
-    correct: 1,
-    explanation: `L'astéisme est une figure de style qui consiste à faire un éloge sous l'apparence d'un blâme, par ironie ou modestie affectée. C'est l'inverse du diasyrme (blâme déguisé en éloge). L'astéisme permet de faire un compliment tout en gardant une distance ironique, ou de souligner une qualité en feignant de la critiquer.\nExemple : Dire à un élève qui a 20/20 : "Aucun progrès n'est envisageable, c'est désespérant" est un astéisme.`
+    correct: 2,
+    explanation: `Donner sa parole, c'est effectuer un acte qui lie celui qui parle. C'est un engagement qui fait de la fidélité à sa promesse une question d'honneur et de responsabilité envers celui à qui elle est adressée. Rompre sa parole, c'est plus que manquer à un accord ; c'est trahir la confiance de l'autre et se renier soi-même en tant qu'être digne de foi. Dans des sociétés traditionnelles ou des contextes de forte solidarité, la parole donnée vaut souvent plus qu'un contrat écrit.\nExemple : Deux chefs d'entreprise peuvent sceller un accord important par une simple poignée de main et une parole donnée. Cette pratique, bien que risquée, témoigne d'une confiance mutuelle et d'un code d'honneur où la réputation de fiabilité est un capital essentiel.`
   },
   // Question n°41
   {
-    question: "Quelle est la fonction de la 'péroraison' dans la structure classique d'un discours ?",
+    question: "Quel est le sens de la distinction entre <em>langage</em>, <em>langue</em> et <em>parole</em> dans une approche intégrée ?",
     answers: [
-      "Introduire le sujet et capter l'attention",
-      "Exposer les faits de manière neutre",
-      "Résumer les arguments et émouvoir l'auditoire pour conclure"
+      "Le <em>langage</em> est la faculté humaine universelle, la <em>langue</em> est sa réalisation historique (français, anglais), la <em>parole</em> est son usage individuel et concret.",
+      "La <em>langue</em> est le style personnel, la <em>parole</em> est la grammaire, le <em>langage</em> est le vocabulaire.",
+      "Le <em>langage</em> est l'écrit, la <em>langue</em> est l'oral, la <em>parole</em> est le geste."
     ],
-    correct: 3,
-    explanation: `La péroraison (ou conclusion) est la dernière partie d'un discours selon le plan classique. Elle a deux fonctions principales : récapituler brièvement les arguments principaux (pour les fixer dans l'esprit de l'auditoire) et faire un appel final aux émotions (pathos) pour impressionner durablement et orienter la décision ou le jugement. C'est souvent la partie la plus travaillée stylistiquement.\nExemple : La célèbre conclusion du discours de Martin Luther King "I have a dream" est une péroraison émouvante et mémorable.`
+    correct: 1,
+    explanation: `Cette distinction hiérarchique permet de penser les différents niveaux d'abstraction. Le <em>langage</em> est la capacité biologique et cognitive propre à l'espèce humaine d'utiliser un système de signes. La <em>langue</em> est l'institution sociale particulière qui actualise cette faculté (le français, le chinois), avec ses règles propres. La <em>parole</em> est l'acte psychophysique individuel par lequel un locuteur utilise le code de la langue pour s'exprimer. Toute parole présuppose une langue, qui présuppose la faculté de langage.\nExemple : Un enfant naît avec la faculté de <em>langage</em>. Il apprend une <em>langue</em> spécifique, l'anglais. Quand il dit <em>I want water</em>, il produit un acte de <em>parole</em>.`
   },
   // Question n°42
   {
-    question: "Quel concept désigne le fait qu'un mot n'a de sens que par convention sociale et non par un lien naturel avec la chose ?",
+    question: "Que signifie l'idée que la parole peut être un <em>acte</em> et non seulement une description ?",
     answers: [
-      "L'arbitraire du signe",
-      "La motivation du signe",
-      "La naturalité du langage"
+      "Que parler demande un effort physique (bouger la langue, les cordes vocales) comparable à un travail manuel.",
+      "Que certaines paroles, dites dans les bonnes conditions, réalisent immédiatement ce qu'elles disent (comme promettre, ordonner, baptiser).",
+      "Que toute parole décrit nécessairement une action passée, présente ou future."
     ],
-    correct: 1,
-    explanation: `L'arbitraire du signe est un principe fondamental de la linguistique : il n'y a pas de lien nécessaire, naturel ou logique entre le signifiant (l'image acoustique "c-h-e-v-a-l") et le signifié (le concept de cheval). Le lien est purement conventionnel, établi par l'usage social d'une communauté linguistique. C'est ce qui explique la diversité des langues et la possibilité d'évoquer par des mots des réalités abstraites ou imaginaires.\nExemple : Le mot "chien" n'a aucun rapport naturel avec l'animal qu'il désigne ; en anglais on dit "dog", en espagnol "perro".`
+    correct: 2,
+    explanation: `C'est le cœur de la théorie des actes de parole (Austin, Searle). Certains énoncés ne sont pas des constats sur le monde, mais des interventions dans le monde. Leur sens est inséparable de leur force illocutoire (l'intention d'agir par la parole : ordonner, conseiller, s'excuser) et de leur effet perlocutoire (l'effet produit sur l'auditeur : le convaincre, l'émouvoir). Dire, c'est déjà faire. Cette perspective renouvelle la compréhension du pouvoir du langage : il ne se contente pas de représenter, il agit.\nExemple : Lors d'une cérémonie, la phrase <em>Je te baptise</em> prononcée par le prêtre n'est pas une description, c'est l'acte même de baptiser. L'énonciation, dans son contexte rituel, accomplit la transformation (l'entrée dans la communauté chrétienne).`
   },
   // Question n°43
   {
-    question: "Quel est l'objet principal de la 'sémiologie' selon Ferdinand de Saussure ?",
+    question: "Quel est le rôle de l'<em>aposiopèse</em> comme figure de rhétorique ?",
     answers: [
-      "L'étude des sons du langage",
-      "L'étude de la vie des signes au sein de la vie sociale",
-      "L'étude de l'histoire des langues"
+      "Répéter un mot ou une phrase pour insister et renforcer l'argument.",
+      "Interrompre brusquement son discours, laissant une phrase inachevée pour suggérer une émotion trop forte ou une idée qu'on ne peut/veut dire.",
+      "Feindre de refuser de parler d'un sujet pour finalement en parler longuement."
     ],
     correct: 2,
-    explanation: `Saussure définit la sémiologie comme "la science qui étudie la vie des signes au sein de la vie sociale". Elle a pour objet non seulement les signes linguistiques, mais tous les systèmes de signes (codes vestimentaires, routiers, rituels...). La linguistique n'est alors qu'une branche particulière de la sémiologie. Cette perspective ouvre la voie à l'analyse structurale de tous les phénomènes culturels comme systèmes de signification.\nExemple : Analyser la mode vestimentaire comme un langage qui communique des statuts sociaux relève de la sémiologie.`
+    explanation: `L'aposiopèse (ou réticence) est une figure de l'interruption. En laissant une phrase en suspens (<em>Si tu savais... Mais non, je ne dirai rien</em>), l'orateur produit plusieurs effets. Il peut simuler une émotion qui l'étouffe (colère, chagrin). Il peut laisser entendre une menace ou une révélation trop terrible pour être dite, stimulant ainsi l'imagination et l'inquiétude de l'auditeur. C'est une manière de dire en ne disant pas, souvent plus efficace qu'un développement explicite.\nExemple : Dans une dispute, un personnage peut lancer : <em>Toi, tu as osé...! Enfin, passons.</em> L'aposiopèse suggère une faute si grave qu'elle est indicible, tout en l'ayant clairement évoquée, jetant le discrédit sur l'adversaire sans avoir à fournir de preuve.`
   },
   // Question n°44
   {
-    question: "Que signifie l'affirmation selon laquelle la parole est un 'événement' tandis que l'écriture est un 'fait' ?",
+    question: "Comment le philosophe Paul Ricœur analyse-t-il le rapport entre <em>parole</em> et <em>confiance</em> ?",
     answers: [
-      "La parole est éphémère, l'écriture est durable",
-      "La parole est unique et présente, l'écriture est fixée et passée",
-      "La parole est spontanée, l'écriture est réfléchie"
+      "La parole est par essence mensongère, elle détruit nécessairement la confiance.",
+      "La confiance est un préalable nécessaire à tout échange de paroles : on entre en communication en présumant que l'autre dit la vérité, jusqu'à preuve du contraire.",
+      "La confiance ne s'établit que lorsque la parole est remplacée par des actes concrets et vérifiables."
     ],
     correct: 2,
-    explanation: `La parole est un événement : elle advient dans un moment unique de rencontre entre un locuteur et un auditeur, dans un contexte spécifique. Elle est vivante, présente, capable de s'adapter et de répondre. L'écriture, une fois tracée, est un fait : elle est fixée, objectivée, détachée de son auteur et de son contexte d'origine. Elle "roule partout" et "ne sait pas à qui il faut parler". Cette distinction souligne la supériorité ontologique de la parole dialogique.\nExemple : Une conversation en direct est un événement ; un livre est un fait culturel disponible.`
+    explanation: `Ricœur souligne que la communication repose sur un acte de foi originaire. Avant même de vérifier une information, nous faisons crédit à la parole de l'autre, nous le tenons pour digne de foi. Cette <em>confiance première</em> est le socle de tout lien social et de tout langage. Le mensonge ou le soupçon sont des attitudes dérivées, qui parasitent cette relation de crédit initiale. L'éthique de la parole consiste à être digne de cette confiance présumée.\nExemple : Lorsqu'un professeur explique un théorème, les élèves font d'abord confiance à sa parole. S'ils devaient vérifier chaque affirmation par eux-mêmes avant d'écouter la suivante, l'enseignement serait impossible. La relation pédagogique, comme toute communication, commence par un crédit accordé.`
   },
   // Question n°45
   {
-    question: "Quelle est la critique adressée à la parole 'porte-parole' (comme celle de la Pythie ou du prophète) ?",
+    question: "Quelle est la caractéristique d'un <em>discours délibératif</em> selon Aristote ?",
     answers: [
-      "Elle est trop mystérieuse",
-      "Elle n'est pas à l'origine de ce qu'elle dit, elle ne parle pas vraiment",
-      "Elle utilise un langage trop simple"
+      "Il vise à juger des actions passées, pour attribuer un blâme ou une louange.",
+      "Il vise à délibérer sur l'avenir, à conseiller (exhorter) ou dissuader (détourner) une assemblée sur une décision à prendre.",
+      "Il vise à célébrer ou critiquer une personne ou une valeur dans le présent, pour renforcer la cohésion sociale."
     ],
     correct: 2,
-    explanation: `Selon Platon, le porte-parole (comme la Pythie à Delphes, le prophète inspiré, ou même le poète sous l'effet de la muse) ne "parle" pas véritablement, car il n'est pas à l'origine de sa parole. Il est le simple véhicule d'un message dont il n'est pas l'auteur et qu'il ne comprend pas forcément. Cette parole n'engage pas sa pensée personnelle et ne peut donc pas être interrogée ni dialoguée. Elle est du même ordre que l'écriture : une parole morte, détachée de son énonciateur.\nExemple : L'oracle de Delphes délivre des messages obscurs dont il n'assume pas la signification.`
+    explanation: `Le genre délibératif est celui de l'assemblée politique (Parlement, conseil municipal). Son objet est l'avenir : faut-il faire la guerre ou la paix ? voter cette loi ? Son but est l'utile (ou le nuisible) pour la communauté. L'orateur cherche à démontrer que la proposition qu'il soutient est avantageuse. Les passions typiques qu'il mobilise sont l'espoir et la crainte (espoir des bénéfices, crainte des dangers). C'est le discours de la décision collective.\nExemple : Un discours d'un député à l'Assemblée nationale pour défendre un projet de loi sur la transition écologique relève du genre délibératif. Il argumente sur les conséquences futures (utilité pour la planète, coût économique, création d'emplois) pour convaincre ses collègues de voter pour.`
   },
   // Question n°46
   {
-    question: "Quelle est la signification de l'expression 'homo loquax' employée par Bergson ?",
+    question: "Que signifie l'expression <em>perte d'autorité de la parole</em> dans le monde contemporain ?",
     answers: [
-      "L'homme pensant",
-      "L'homme bavard",
-      "L'homme dont la pensée n'est qu'une réflexion sur sa parole"
+      "Le fait que les gens parlent moins qu'avant, par manque de temps ou d'intérêt.",
+      "La diminution du crédit accordé aux paroles des institutions (politiques, médiatiques, scientifiques) et des experts, perçues comme intéressées, mensongères ou incompétentes.",
+      "La disparition progressive des langues régionales et des parlers locaux au profit d'une langue globale."
     ],
-    correct: 3,
-    explanation: `L'expression "homo loquax" (l'homme parlant) est utilisée par Henri Bergson pour désigner l'être humain comme essentiellement défini par la parole. Mais Bergson ajoute une nuance critique : pour l'homo loquax, "la pensée n'est qu'une réflexion sur sa parole". Cela signifie que l'homme moderne a tendance à croire qu'il pense alors qu'il ne fait que manipuler des mots et des formules apprises, sans contact avec l'intuition ou l'expérience vive. C'est une critique du verbalisme et du bavardage intellectuel.\nExemple : Un philosophe scolastique qui discute à l'infini sur les définitions des mots sans se confronter au réel est un homo loquax.`
+    correct: 2,
+    explanation: `On observe une crise de confiance généralisée envers les <em>paroles autorisées</em>. Les promesses politiques non tenues, les scandales, la défiance envers les médias accusés de partialité, les controverses scientifiques instrumentalisées, ont érodé l'<em>auctoritas</em> traditionnelle. Cette perte d'autorité ouvre un espace à la parole de contre-experts, aux rumeurs, aux théories du complot et aux populismes qui prétendent dire la <em>vraie parole</em> du peuple contre les élites discréditées.\nExemple : La défiance envers les discours officiels sur la sécurité des vaccins, conduisant à une baisse de la vaccination, est un symptôme de cette perte d'autorité. Une partie de la population préfère croire les témoignages sur les réseaux sociaux ou les sites alternatifs plutôt que les institutions de santé.`
   },
   // Question n°47
   {
-    question: "Quelle est la différence entre 'langue sifflée' et 'langue des signes' ?",
+    question: "Comment la <em>propagande</em> moderne utilise-t-elle systématiquement les ressorts de la persuasion ?",
     answers: [
-      "La première est vocale, la seconde non",
-      "La première est non vocale, la seconde aussi",
-      "Les deux sont des langues écrites"
+      "Elle présente des arguments complexes et contradictoires pour forcer à la réflexion critique.",
+      "Elle repose sur la simplification à l'extrême (manichéisme), la répétition de slogans, la mobilisation des émotions primaires (peur, haine) et la création d'un ennemi unique.",
+      "Elle encourage le débat public et la confrontation libre des idées pour que la meilleure l'emporte."
     ],
     correct: 2,
-    explanation: `La langue sifflée (comme le silbo gomero aux Canaries) et la langue des signes (LSF, ASL...) sont deux exemples de langues non vocales. La première utilise des sifflements modulés pour reproduire les caractéristiques phonologiques d'une langue parlée. La seconde utilise un système de signes manuels, d'expressions faciales et de postures corporelles. Ces exemples montrent que la "parole" ne se réduit pas à l'émission de sons vocaux, mais à tout système de signes permettant la communication linguistique.\nExemple : Le silbo gomero permet de communiquer à plusieurs kilomètres de distance dans les montagnes.`
+    explanation: `La propagande est une rhétorique dévoyée et systématisée, visant non à persuader par le dialogue, mais à conditionner les esprits. Elle simplifie la réalité en oppositions binaires (nous/eux, bien/mal). Elle use de la répétition massive pour imprégner les consciences (lavage de cerveau). Elle mobilise le pathos le plus bas (peur de l'étranger, orgueil national) et s'appuie sur des <em>mots-pièges</em> chargés d'affect. Elle vise à court-circuiter la réflexion critique pour obtenir une adhésion automatique.\nExemple : La propagande nazie utilisait constamment ces procédés : simplification (<em>les Juifs sont notre malheur</em>), répétition (affiches, discours, films), mobilisation de la peur (communisme, décadence) et de la fierté (race aryenne, grandeur de l'Allemagne), création d'un bouc émissaire unique.`
   },
   // Question n°48
   {
-    question: "Que signifie l'affirmation d'Aristote : 'Le mot 'bouc-cerf' signifie bien quelque chose, mais il n'est encore ni vrai, ni faux' ?",
+    question: "Quelle est la signification de la formule <em>La parole est moitié à celui qui parle, moitié à celui qui l'écoute</em> (Montaigne) ?",
     answers: [
-      "Les mots n'ont de sens que dans une phrase",
-      "Les mots désignent toujours des réalités existantes",
-      "La vérité ou la fausseté n'appartient qu'à l'énoncé complet, pas au mot isolé"
+      "Le sens d'une parole est entièrement déterminé par l'intention de celui qui la prononce.",
+      "Le sens d'une parole se construit dans l'interaction : il dépend autant de l'intention de l'émetteur que de l'interprétation et de la réception de l'auditeur.",
+      "Dans une conversation équitable, chacun doit parler exactement la moitié du temps."
     ],
-    correct: 3,
-    explanation: `Aristote montre qu'un mot isolé (comme "bouc-cerf", créature imaginaire) a une signification (un signifié), mais n'est pas encore susceptible d'être vrai ou faux. C'est seulement lorsqu'on en fait un énoncé (une proposition) en le combinant avec d'autres mots (par exemple : "Le bouc-cerf existe" ou "Le bouc-cerf est un herbivore") qu'on peut dire que cet énoncé est vrai ou faux. Cette distinction est fondamentale en logique et en philosophie du langage.\nExemple : "Arbre" n'est ni vrai ni faux ; "L'arbre est vert" peut être vrai ou faux selon les cas.`
+    correct: 2,
+    explanation: `Montaigne pointe ici le caractère essentiellement dialogique et intersubjectif de la communication. Une parole n'est pas un paquet de sens déposé par un émetteur dans la tête d'un récepteur passif. Elle est un signal ambigu qui prend son sens complet dans l'acte d'écoute, de compréhension et éventuellement de réponse. L'auditeur participe activement à la création du sens, avec sa culture, son humeur, ses préjugés. Un malentendu n'est donc pas un accident, mais une possibilité structurelle de la parole.\nExemple : Un compliment peut être perçu comme sincère ou ironique selon la relation entre les personnes, le ton utilisé, et la susceptibilité de celui qui l'entend. Le sens n'est pas dans les mots seuls, mais dans la rencontre entre celui qui les dit et celui qui les reçoit.`
   },
   // Question n°49
   {
-    question: "Quelle est la caractéristique d'une 'parole inspirée' selon la tradition poétique ?",
+    question: "Que permet de comprendre l'analyse des discours d'Adolf Hitler par les chercheurs ?",
     answers: [
-      "Elle est soigneusement calculée",
-      "Elle procède d'un don divin ou d'une fureur créatrice",
-      "Elle suit strictement les règles de la rhétorique"
+      "Qu'il était un orateur médiocre, dont le succès tenait uniquement à la contrainte policière.",
+      "Qu'il maîtrisait parfaitement les techniques de la rhétorique et de la psychologie des foules pour canaliser les frustrations et les peurs vers un projet totalitaire.",
+      "Que ses discours étaient purement rationnels et factuels, fondés sur une analyse économique précise."
     ],
     correct: 2,
-    explanation: `Dans la tradition grecque, la parole poétique est considérée comme "inspirée" par les Muses ou par une forme de délire divin (mania). Le poète n'est pas un technicien du langage, mais un médium à travers lequel parle une puissance supérieure. Cette conception s'oppose à la vision de la parole comme technique (rhétorique) et explique pourquoi Platon, tout en critiquant les poètes, les reconnaît comme possédés par une force divine.\nExemple : Dans l'"Iliade", Homère commence par invoquer la Muse : "Chante, déesse, la colère d'Achille..."`
+    explanation: `L'analyse rhétorique des discours hitlériens révèle une technique très élaborée. Il utilisait une gestuelle et un débit calculés, des répétitions hypnotiques, une progression crescendo vers l'hystérie. Son contoire reposait sur des simplifications grossières, la désignation d'ennemis intérieurs et extérieurs, la promesse d'un renouveau national et racial. Il savait transformer le ressentiment, la honte de la défaite et la crise économique en adhésion fanatique. C'est l'exemple paroxystique du pouvoir démoniaque de la parole dévoyée.\nExemple : Dans ses discours au Reichstag ou aux grands rassemblements de Nuremberg, Hitler construisait une communion émotionnelle avec la foule, utilisant les mythes germaniques, la liturgie politique (drapeaux, marches) et un langage apocalyptique pour faire du nazisme non une opinion, mais une foi collective.`
   },
   // Question n°50
   {
-    question: "Que signifie le concept de 'parole incarnée' ?",
+    question: "Qu'est-ce que la <em>parole indirecte</em> ou le <em>langage oblique</em> dans des contextes de censure ou de domination ?",
     answers: [
-      "Une parole prononcée avec le corps",
-      "Une parole où celui qui parle est présent tout entier dans ce qu'il dit",
-      "Une parole religieuse sur l'incarnation du Christ"
+      "Une parole qui utilise des métaphores, des allusions, des sous-entendus pour dire ce qui ne peut être dit ouvertement sans danger.",
+      "Une parole prononcée dans une langue étrangère que les dominants ne comprennent pas.",
+      "Une parole écrite plutôt que prononcée, pour éviter d'être repéré."
     ],
-    correct: 2,
-    explanation: `Une parole est "incarnée" lorsqu'il y a adéquation parfaite entre l'être de celui qui parle et ce qu'il dit. Il n'y a pas de distance, d'hypocrisie ou de décalage. La parole incarnée engage toute la personne, son expérience, ses convictions, sa vie. Elle s'oppose à la parole anonyme, désincarnée, qui circule sans auteur identifiable. La parole philosophique authentique et la parole poétique véritable aspirent à cette incarnation.\nExemple : Les "Confessions" de Rousseau tentent d'incarner dans l'écriture la parole d'un homme se dévoilant totalement.`
+    correct: 1,
+    explanation: `Face à la censure, à la répression ou simplement à des tabous sociaux, les locuteurs développent des stratégies d'expression détournée. Le langage devient codé, allusif, ironique. La fable, la parabole, la chanson, la plaisanterie permettent de critiquer le pouvoir ou d'exprimer des idées subversives tout en gardant une plausible dénégation (<em>Je ne parlais pas de cela</em>). C'est une parole qui résiste en rusant avec les contraintes imposées.\nExemple : Sous les dictatures, les blagues politiques sont une forme de parole indirecte. Elles permettent de dénoncer l'absurdité du régime, la corruption des dirigeants, en partageant un rire complice qui renforce la solidarité des opposants, tout en étant difficile à réprimer directement car présenté comme une simple plaisanterie.`
   },
   // Question n°51
   {
-    question: "Quelle est la fonction de la 'mémoire' (memoria) dans la rhétorique antique ?",
+    question: "Comment la <em>parole poétique</em> se distingue-t-elle de la parole utilitaire ou informative ?",
     answers: [
-      "Se souvenir des grands discours du passé",
-      "Mémoriser son propre discours pour le délivrer sans notes",
-      "Faire appel aux souvenirs de l'auditoire"
+      "La parole poétique vise uniquement à transmettre une information factuelle avec la plus grande précision possible.",
+      "La parole poétique travaille le langage pour lui-même (sonorités, rythmes, images), créant un sens qui excède la communication pratique et touche à la dimension sensible et symbolique de l'existence.",
+      "La parole poétique est par nature incompréhensible, car elle refuse toute logique et toute grammaire."
     ],
     correct: 2,
-    explanation: `La memoria est la quatrième partie de la rhétorique. Elle consiste à mémoriser le discours que l'on a composé, afin de pouvoir le prononcer sans avoir le "nez planté dans ses feuilles". Cette maîtrise permet à l'orateur de maintenir un contact visuel avec son auditoire, de moduler son débit en fonction des réactions, et de donner l'impression d'une parole spontanée et maîtrisée. La memoria était entraînée par des techniques spécifiques (méthode des loci).\nExemple : Cicéron pouvait prononcer des discours de plusieurs heures de mémoire.`
+    explanation: `Le poète, selon des formulations de Mallarmé ou de Valéry, <em>donne un sens plus pur aux mots de la tribu</em>. Il ne se sert pas du langage comme d'un outil transparent, il le prend pour matière. En jouant sur les sonorités, les rythmes, les images et les ambiguïtés, il crée un objet verbal autonome qui suscite une expérience esthétique et une résonance intime. Sa parole ne décrit pas le monde, elle en propose une recréation sensible et métaphorique.\nExemple : Le vers de Verlaine, <em>Il pleure dans mon cœur / Comme il pleut sur la ville</em>, n'informe pas sur la météo. Il crée, par l'analogie entre la pluie extérieure et les larmes intérieures, une atmosphère de mélancolie diffuse qui <em>fait sentir</em> un état d'âme, bien au-delà de ce qu'une phrase explicative pourrait dire.`
   },
   // Question n°52
   {
-    question: "Quelle est la différence entre la 'rhétorique grecque' et la 'rhétorique latine' ?",
+    question: "Quel est l'enjeu du concept de <em>parole juste</em> dans la philosophie morale et politique ?",
     answers: [
-      "La grecque est théorique, la latine est pratique",
-      "La grecque met la forme au service du fond, la latine fait de la forme une fin en soi",
-      "La grecque vise la persuasion, la latine vise la conviction"
+      "Trouver les mots exacts et techniques pour désigner une réalité sans équivoque.",
+      "Prononcer des paroles qui soient à la fois vraies (correspondant aux faits), sincères (exprimant une conviction intérieure) et ajustées au contexte et aux personnes (bienveillantes, constructives).",
+      "Parler avec un accent parisien et un vocabulaire châtié, signes d'une éducation supérieure."
     ],
     correct: 2,
-    explanation: `La conception grecque (principalement aristotélicienne) de la rhétorique la conçoit comme un instrument au service de la vérité et de la justice : la forme (l'éloquence) est mise au service du fond (l'argumentation). La conception latine (cicéronienne) tend à faire de la forme, de l'élocution brillante, une fin en soi, valorisant la virtuosité oratoire pour elle-même. Cette différence explique en partie pourquoi le mot "rhétorique" peut prendre un sens péjoratif (discours creux).\nExemple : Pour Aristote, on apprend la rhétorique pour pouvoir l'oublier ; pour Cicéron, le style est ce qui distingue l'orateur parfait.`
+    explanation: `La parole juste est une exigence éthique qui va au-delà de la simple correction grammaticale. Elle engage la relation à autrui. Une parole juste est d'abord vraie (elle ne ment pas, ne trompe pas). Elle est aussi sincère (elle n'est pas pure convenance, elle engage celui qui parle). Enfin, elle est appropriée : elle tient compte de la situation, de la vulnérabilité de l'autre, et vise un effet positif (apaiser, éclairer, réconcilier). C'est l'idéal d'une parole responsable.\nExemple : Dire à un ami qui a échoué à un examen <em>Je sais que tu as beaucoup travaillé, c'est injuste. Veux-tu qu'on en parle ?</em> est une parole juste. Elle reconnaît la réalité (l'échec), la sincérité de l'effort, et se met à l'écoute de l'autre, contrairement à un mensonge (<em>C'est pas grave</em>) ou à une parole dure (<em>Tu n'as pas assez révisé</em>).`
   },
   // Question n°53
   {
-    question: "Que signifie l'expression 'parole gratuite' dans le contexte de la poésie ?",
+    question: "Que signifie l'idée d'une <em>éloquence du silence</em> ?",
     answers: [
-      "Une parole qui ne coûte rien",
-      "Une parole qui n'a d'autre fin qu'elle-même",
-      "Une parole improvisée"
+      "Le fait que les silencieux sont toujours plus éloquents que les bavards, car ils réfléchissent avant de parler.",
+      "La capacité du silence, dans certaines situations, à communiquer plus intensément qu'un flot de paroles (émotion, désapprobation, recueillement).",
+      "Une technique d'éloquence qui consiste à marquer de longues pauses pour reprendre son souffle."
     ],
     correct: 2,
-    explanation: `Une parole est "gratuite" lorsqu'elle n'est pas utilitaire, qu'elle ne vise aucun pouvoir, aucune efficacité, aucun profit. Elle est à son propre service. C'est la caractéristique de la parole poétique ou philosophique authentique : elle ne cherche ni à persuader, ni à convaincre pour dominer, mais simplement à être, à témoigner, à créer du sens pour le plaisir du sens. Cette gratuité est la marque de sa liberté et de sa pureté.\nExemple : Un poème qui n'a d'autre but que d'exprimer une émotion ou une vision du monde est une parole gratuite.`
+    explanation: `Le silence n'est pas seulement une absence ; il est un signe à part entière, chargé de sens. Un silence partagé dans l'amitié peut exprimer une complicité profonde. Un silence face à une atrocité peut signifier une horreur sans mots. Un silence après une question peut être un refus de répondre, plus éloquent qu'un démenti. L'éloquence du silence réside dans ce qu'il suggère, dans la tension qu'il crée, et dans ce qu'il oblige l'interlocuteur à projeter ou à ressentir.\nExemple : Lors d'une cérémonie à la mémoire des victimes d'une catastrophe, la minute de silence est une éloquence collective : elle unit les participants dans un hommage solennel et recueilli, bien plus fort qu'un discours qui risquerait d'être maladroit ou insuffisant.`
   },
   // Question n°54
   {
-    question: "Quel est le sens de l'expression 'réduction de la parole à un art' ?",
+    question: "Comment la <em>parole juridique</em> (droit, verdict) se caractérise-t-elle par rapport à la parole ordinaire ?",
     answers: [
-      "Faire de la parole un objet d'étude esthétique",
-      "Considérer la parole uniquement comme une technique à maîtriser",
-      "Enseigner la parole dans les écoles d'art"
+      "C'est une parole libre, créative, qui invente les règles au fur et à mesure des cas.",
+      "C'est une parole ritualisée, fortement contrainte par des textes (lois, codes), des formes procédurales et une autorité institutionnelle, visant à dire le droit de manière définitive et contraignante.",
+      "C'est une parole purement émotionnelle, où le juge suit son sentiment intime de justice."
     ],
     correct: 2,
-    explanation: `"Réduire la parole à un art" signifie la considérer uniquement comme une technique (un "art" au sens d'artisanat), c'est-à-dire comme un ensemble de procédés à acquérir pour être efficace. Cette réduction oublie que la parole est d'abord l'expression d'une personne, d'une pensée, d'une existence. Elle la "réifie" (la chosifie), la transforme en objet manipulable indépendamment de celui qui parle. C'est ce contre quoi s'élèvent les critiques de la parole anonyme et de la rhétorique purement technique.\nExemple : Former quelqu'un uniquement aux "trucs" pour avoir de l'aisance à l'oral, sans travailler la profondeur de sa pensée.`
+    explanation: `La parole juridique est performative par excellence (elle condamne, acquitte, légalise), mais son efficacité est entièrement suspendue à son inscription dans un cadre institutionnel rigoureux. Elle doit respecter des formes précises (rédaction, prononciation), se fonder sur des textes de loi, et être émise par une personne habilitée (juge, officier d'état civil). Cette rigidité formelle est ce qui lui confère son autorité et sa légitimité, en la distinguant de l'arbitraire ou de la simple opinion.\nExemple : La sentence <em>La cour vous condamne à cinq ans de prison</em> n'a d'effet que si elle est prononcée par un juge siégeant dans un tribunal, après un procès respectant les règles, et fondée sur des articles précis du code pénal. La même phrase dite dans la rue par un passant n'aurait aucun effet.`
   },
   // Question n°55
   {
-    question: "Que signifie l'affirmation de Gorgias : 'Ce n'est pas le discours qui commémore le dehors, c'est le dehors qui devient révélateur du discours' ?",
+    question: "Quelle est la fonction du <em>mythe</em> comme récit fondateur dans une communauté ?",
     answers: [
-      "Le monde est créé par le langage",
-      "La réalité objective prime sur les mots",
-      "Le langage structure notre perception de la réalité"
+      "Rapporter avec exactitude scientifique les origines historiques d'un peuple.",
+      "Donner, sous forme narrative et symbolique, une explication de l'origine du monde, des dieux, des règles sociales, et ainsi fonder une identité collective et une cohésion.",
+      "Divertir les enfants et les adultes par des histoires fantastiques sans rapport avec la réalité sociale."
     ],
-    correct: 3,
-    explanation: `Cette formule de Gorgias exprime une conception relativiste et constructiviste du langage. Elle signifie que ce n'est pas notre parole qui décrit passivement une réalité extérieure préexistante. Au contraire, c'est à travers le prisme de nos discours que le monde extérieur nous apparaît et prend sens. Le langage n'est pas un miroir du réel, mais un filtre actif qui organise et constitue notre expérience. Cette thèse radicale souligne le pouvoir créateur et non simplement représentatif de la parole.\nExemple : Les concepts politiques ("liberté", "justice") ne décrivent pas des réalités objectives, mais structurent notre manière de voir le monde social.`
+    correct: 2,
+    explanation: `Le mythe (μῦθος) est une parole sacrée, opposée au logos rationnel. Il ne prétend pas à l'exactitude historique, mais à la vérité symbolique. En racontant comment les dieux ont créé le monde, institué le mariage ou la guerre, il répond aux questions ultimes et donne un sens partagé à l'existence collective. Il légitime l'ordre social (la royauté, les castes) en le présentant comme voulu par les dieux ou les ancêtres. C'est une parole qui fonde.\nExemple : Le mythe de Romulus et Rémus fondant Rome après avoir été allaités par une louve n'est pas une chronique, mais un récit qui donne à la cité une origine héroïque et miraculeuse, expliquant son caractère guerrier et sa vocation à dominer.`
   },
   // Question n°56
   {
-    question: "Quelle est la définition d'une 'parole démagogique' ?",
+    question: "Que permet d'analyser le concept de <em>parole aliénée</em> chez Marx et les théoriciens critiques ?",
     answers: [
-      "Un discours savant et complexe",
-      "Un discours qui flatte les passions et les préjugés du peuple pour le manipuler",
-      "Un discours prononcé par un leader populaire"
+      "Le fait de parler une langue étrangère que l'on maîtrise mal, conduisant à des malentendus.",
+      "Le fait que, dans une société dominée par les rapports marchands, la parole devient un instrument de domination, de publicité ou de fausse conscience, masquant les rapports d'exploitation réels.",
+      "La perte de la voix due à une maladie ou à un accident, rendant la parole physiquement impossible."
     ],
     correct: 2,
-    explanation: `La parole démagogique (du grec "démos", peuple, et "agogos", qui conduit) est une parole qui cherche à séduire la foule en flattant ses désirs, ses peurs ou ses préjugés, plutôt qu'en faisant appel à sa raison. Elle utilise massivement le pathos, simplifie à outrance les problèmes, désigne des boucs émissaires, et promet des solutions faciles. Son but est la prise ou la conservation du pouvoir, non le bien commun ou la vérité.\nExemple : Les discours d'Hitler désignant les Juifs comme responsables de tous les maux de l'Allemagne étaient démagogiques.`
+    explanation: `Dans la société capitaliste, la parole est elle-même mise en marché (publicité, communication d'entreprise) ou instrumentalisée (idéologie). L'idéologie est une parole aliénée : elle présente les rapports sociaux historiques (l'exploitation salariale) comme des lois naturelles et éternelles. La <em>langue de bois</em> politique ou managériale est une autre forme : elle vide les mots de leur sens pour empêcher la pensée critique et l'expression des conflits réels.\nExemple : L'expression <em>plan social</em> pour désigner des licenciements massifs est une parole aliénée : elle utilise un terme neutre et technique pour masquer la violence sociale et humaine de la décision, et pour présenter celle-ci comme une nécessité économique incontournable, évacuant ainsi la responsabilité et le conflit.`
   },
   // Question n°57
   {
-    question: "Que signifie l'expression 'langage descriptif' ?",
+    question: "Comment définir l'<em>ironie socratique</em> ?",
     answers: [
-      "Un langage qui décrit objectivement la réalité",
-      "Un langage qui utilise beaucoup d'adjectifs",
-      "Un langage qui raconte des histoires"
+      "Une moquerie méchante et blessante destinée à humilier l'interlocuteur.",
+      "Une figure où l'on dit le contraire de ce que l'on pense, pour se moquer ou critiquer de manière indirecte.",
+      "Une attitude de feinte ignorance, où Socrate prétend ne pas savoir pour amener son interlocuteur à exposer son propre savoir et à en révéler les contradictions."
     ],
-    correct: 1,
-    explanation: `Un langage descriptif prétend représenter ou "décrire" un état de fait du monde, de manière aussi fidèle et objective que possible. C'est la fonction représentative ou référentielle du langage. Les énoncés descriptifs sont susceptibles d'être vrais ou faux (vérifiables). Cette fonction est importante dans le discours scientifique, historique ou journalistique (en théorie), mais elle n'épuise pas les fonctions du langage (il y a aussi les fonctions performative, expressive, etc.).\nExemple : "La température est de 20°C" ou "La bataille de Waterloo a eu lieu en 1815" sont des énoncés descriptifs.`
+    correct: 3,
+    explanation: `L'ironie socratique (eirôneia) est une stratégie dialectique. Socrate commence par se déclarer ignorant et demande à l'expert (le sophiste, le politique) de l'éclairer. Par des questions apparemment naïves, il conduit l'interlocuteur à approfondir ses affirmations, jusqu'à ce qu'elles deviennent incohérentes ou qu'elles mènent à une aporie (impasse). Cette feinte modestie est une arme redoutable : elle démasque la fausse science et ouvre la voie à une recherche authentique de la vérité.\nExemple : Dans le <em>Ménon</em>, Socrate demande à Ménon de définir la vertu. Ménon donne des exemples. Socrate, feignant de ne pas comprendre, lui fait remarquer qu'il a donné <em>un essaim de vertus</em> mais non la vertu une qui les unit tous. L'ironie consiste à faire comme si on acceptait la réponse, pour mieux en montrer l'insuffisance.`
   },
   // Question n°58
   {
-    question: "Quel est le sens de l'expression 'parole séductrice' dans le contexte du programme HLP ?",
+    question: "Quelle est la thèse de Walter Benjamin dans <em>Le Narrateur</em> concernant la modernité ?",
     answers: [
-      "Une parole romantique",
-      "Une parole qui utilise son charme pour obtenir ce qu'elle veut",
-      "Une parole poétique et belle"
+      "La modernité invente de nouvelles formes de narration bien supérieures aux anciennes.",
+      "La modernité, avec le règne de l'information (presse) et du roman, voit le déclin de l'art de narrer, c'est-à-dire de transmettre une expérience vécue et une sagesse pratique par la parole vivante et partagée.",
+      "La modernité permet à chacun de devenir un narrateur grâce aux blogs et aux réseaux sociaux."
     ],
     correct: 2,
-    explanation: `La parole séductrice est envisagée comme un type de parole utilitaire, un "moyen" pour parvenir à ses fins (comme la séduction amoureuse chez Dom Juan). Elle utilise le charme, la flatterie, la promesse, l'ambiguïté pour séduire l'autre et l'amener à faire ce que l'on souhaite. En tant que moyen, elle peut être manipulatrice et s'oppose à la parole authentique qui est une fin en soi. C'est l'un des trois axes de réduction de la parole analysé dans le programme (avec l'art et l'autorité).\nExemple : Les discours de séduction de Dom Juan dans la pièce de Molière.`
+    explanation: `Benjamin oppose la narration, qui puise dans l'expérience personnelle ou transmise (le voyageur, le paysan) et vise à donner un conseil de vie, à l'information, qui apporte un fait brut, décontextualisé et vite obsolète. Le roman, lui, est l'expression de l'individu isolé. Avec la Première Guerre mondiale et l'effondrement de l'expérience, l'art de raconter des histoires qui font sens se perd. La parole narrative, communautaire et sage, cède la place à un flux de données anonymes.\nExemple : Les récits des anciens autour du feu, transmettant les traditions, les histoires du village, les façons de cultiver ou de se soigner, relevaient de la narration. Les dépêches d'agence de presse ou les tweets sur l'actualité fournissent de l'information, mais sans la profondeur, la contextualisation et la sagesse pratique de la narration traditionnelle.`
   },
   // Question n°59
   {
-    question: "Que signifie l'expression 'parole d'autorité' ?",
+    question: "Que signifie l'expression <em>prendre la parole</em> dans un contexte politique ou militant ?",
     answers: [
-      "Une parole prononcée par une personne en position de pouvoir",
-      "Une parole qui fait autorité par la compétence reconnue de celui qui parle",
-      "Une parole qui s'impose par la force"
+      "Attendre poliment que l'on vous donne la permission de parler lors d'une réunion officielle.",
+      "S'emparer activement du droit de s'exprimer, souvent pour contester un ordre établi, faire entendre une voix minoritaire ou opprimée, et se constituer en sujet politique.",
+      "Apprendre à bien articuler et à projeter sa voix pour être entendu dans un grand amphithéâtre."
     ],
     correct: 2,
-    explanation: `Une parole d'autorité est une parole qui est crue et suivie non pas à cause de la force des arguments (logos) ou de l'émotion (pathos), mais à cause de la crédibilité, du statut ou de la compétence reconnue de celui qui parle (ethos). C'est la parole de l'expert, du maître, du savant. Dans sa forme dévoyée, elle peut devenir un argument d'autorité fallacieux ("c'est vrai parce que X le dit").\nExemple : On croit le diagnostic du médecin non parce qu'on comprend la pathologie, mais parce qu'on fait confiance à son expertise.`
+    explanation: `<em>Prendre la parole</em> est un acte qui suppose qu'elle n'est pas naturellement donnée à tous. C'est un geste d'émancipation, de revendication d'une existence et d'un point de vue dans l'espace public. Pour les groupes dominés (ouvriers, femmes, colonisés), prendre la parole c'est briser le silence imposé, contester la parole légitime des dominants, et commencer à écrire sa propre histoire. C'est un acte fondateur de subjectivité politique.\nExemple : Le mouvement des Gilets jaunes, en occupant des ronds-points et en parlant directement aux médias sans passer par les syndicats ou partis traditionnels, a été perçu comme un acte de <em>prise de parole</em> par des citoyens qui estimaient ne plus être représentés ni écoutés par les institutions.`
   },
   // Question n°60
   {
-    question: "Quelle est la fonction de la 'narration' (narratio) dans la structure classique du discours ?",
+    question: "Comment la <em>parole amoureuse</em> se distingue-t-elle des autres formes de discours ?",
     answers: [
-      "Raconter une histoire pour divertir",
-      "Exposer clairement et brièvement les faits en jeu",
-      "Développer les arguments principaux"
+      "Elle est purement utilitaire et vise à obtenir des faveurs sexuelles de l'autre.",
+      "Elle est souvent redondante, répétitive, et vise moins à informer qu'à créer et entretenir un lien unique, à travers des formules ritualisées, des surnoms, des confidences.",
+      "Elle doit être parfaitement originale et éviter tout cliché ou phrase toute faite pour être authentique."
     ],
     correct: 2,
-    explanation: `La narratio est la seconde partie du discours après l'exorde. Elle consiste à exposer les faits, les circonstances, l'historique de l'affaire dont on va débattre. Elle doit être "brève, claire et vraisemblable". Son but est d'informer l'auditoire et de poser les bases factuelles sur lesquelles va reposer l'argumentation (confirmatio) qui suivra. Une bonne narration est essentielle pour que tout le monde parte des mêmes informations.\nExemple : Dans un plaidoyer, l'avocat commence par rappeler les faits reprochés à son client avant de les discuter.`
+    explanation: `La parole amoureuse crée un monde à deux. Elle invente un langage privé (surnoms, mots codés). Elle est souvent pauvre en information (<em>Je t'aime</em> dit mille fois) mais riche en performativité : elle réaffirme constamment le lien. Elle mélange les genres : promesse, serment, louange (épidictique), confidence. Son but est moins de communiquer un contenu que de maintenir la présence de l'autre par la voix, de ritualiser l'attachement. C'est une parole qui fait exister la relation.\nExemple : Les conversations téléphoniques interminables des premiers temps d'une relation, où l'on se dit <em>Tu me manques</em> sans rien ajouter de concret, illustrent cette fonction : la parole comble l'absence, elle est la relation elle-même en acte, bien plus qu'un échange d'informations.`
   },
   // Question n°61
   {
-    question: "Quel est le sens de l'expression 'parole de l'art' évoquée à la fin de la séance 2 ?",
+    question: "Quel est le rôle des <em>connecteurs logiques</em> dans l'argumentation d'un discours ?",
     answers: [
-      "La parole des artistes",
-      "La parole la plus aboutie, probablement la meilleure, celle de la création",
-      "La parole qui parle de l'art"
+      "Ils servent uniquement à embellir le style et à montrer la culture de l'orateur.",
+      "Ils sont superflus et alourdissent le discours, il vaut mieux s'en passer pour être direct.",
+      "Ils structurent le raisonnement, marquent les relations entre les idées (cause, conséquence, opposition) et guident la compréhension de l'auditeur."
     ],
-    correct: 2,
-    explanation: `L'expression "parole de l'art" désigne une parole qui atteint un tel degré de perfection, de justesse et de vérité qu'elle devient elle-même une œuvre d'art. C'est "probablement la première des paroles", celle qui manifeste le pouvoir créateur du langage à son plus haut point. Elle s'oppose à la "parole vulgaire et grossière". Elle renvoie à la parole poétique ou philosophique authentique, qui n'est pas un moyen mais une fin, une manifestation de la beauté et de la vérité.\nExemple : Les dialogues de Platon ou les poèmes de Rilke sont des "paroles de l'art".`
+    correct: 3,
+    explanation: `Les connecteurs (<em>car</em>, <em>donc</em>, <em>cependant</em>, <em>ainsi</em>, <em>en effet</em>) sont les articulations du discours logique. Ils rendent explicite l'enchaînement des pensées, permettant à l'auditeur de suivre la démonstration. <em>Car</em> introduit une raison, <em>donc</em> une conclusion, <em>cependant</em> une objection. Leur usage maîtrisé donne de la clarté et de la rigueur au discours, renforçant l'effet de logos. Un discours sans connecteurs peut paraître décousu et peu convaincant.\nExemple : <em>Il faut voter cette loi (1) car elle répond à une urgence écologique (2). En effet, les scientifiques sont unanimes (3). Cependant, certains craignent son coût (4). Mais ce coût est négligeable face aux dégâts prévus (5). Donc, je vous exhorte à l'adopter (6).</em> Les connecteurs structurent chaque étape de l'argumentation.`
   },
   // Question n°62
   {
-    question: "Que signifie l'affirmation : 'La parole peut être une fin en soi' ?",
+    question: "Que signifie l'idée d'une <em>crise de la parole</em> dans la société contemporaine ?",
     answers: [
-      "Il faut parler pour ne rien faire",
-      "Parler peut avoir sa propre valeur, indépendamment de tout but utilitaire",
-      "La parole doit toujours viser un objectif"
+      "Une pénurie physique de mots nouveaux dans la langue française.",
+      "Un sentiment que la parole publique est devenue impuissante, mensongère ou vide, et que le lien social qu'elle tissait se défait, au profit de la violence ou du silence.",
+      "Le fait que les jeunes ne savent plus parler correctement à cause des SMS et des réseaux sociaux."
     ],
     correct: 2,
-    explanation: `Affirmer que la parole peut être une fin en soi, c'est reconnaître qu'elle n'est pas toujours un simple "moyen" pour agir, convaincre ou persuader. Elle peut avoir une valeur intrinsèque : le plaisir de la conversation, l'expression de soi, la recherche commune de la vérité dans le dialogue, la création poétique. Dans ce cas, parler n'est pas "agir" au sens instrumental, mais c'est "être" pleinement humain. C'est la conception philosophique et poétique de la parole.\nExemple : Une conversation entre amis qui n'a d'autre but que le plaisir d'échanger est une parole fin en soi.`
+    explanation: `La crise de la parole désigne une perte de confiance dans la capacité du langage à dire le vrai, à fonder des accords et à orienter l'action collective. Elle se manifeste par la défiance politique, la prolifération des <em>fake news</em>, le sentiment que les mots sont galvaudés par le marketing et la communication. Cette crise menace le pacte social, car une société où les paroles ne lient plus, où l'on ne croit plus ce qu'on entend, est une société qui risque de basculer dans la violence ou l'indifférence généralisée.\nExemple : La défiance envers les journalistes (<em>tous pourris</em>), les hommes politiques (<em>tous des menteurs</em>) et même les scientifiques (<em>ils nous cachent la vérité</em>) est un symptôme de cette crise. Le discours public n'est plus cru, il est systématiquement soupçonné de cacher des intérêts inavoués.`
   },
   // Question n°63
   {
-    question: "Quel est le paradoxe soulevé par la phrase 'Je mens' ?",
+    question: "Comment l'<em>apologie</em> (discours de défense) se distingue-t-elle de la simple justification ?",
     answers: [
-      "Si c'est vrai, c'est faux ; si c'est faux, c'est vrai",
-      "Elle est toujours fausse",
-      "Elle est toujours vraie"
+      "L'apologie est une justification écrite, tandis que la justification est orale.",
+      "L'apologie est un discours public et structuré, souvent devant un tribunal ou l'opinion, pour défendre non seulement des actes mais une personne, une vie, une œuvre ou des idées menacées.",
+      "La justification utilise des arguments logiques, l'apologie n'utilise que des appels à l'émotion."
     ],
-    correct: 1,
-    explanation: `L'énoncé "Je mens" (ou "Cette phrase est fausse") est une version pure du paradoxe du menteur. S'il est vrai que je mens, alors l'énoncé "Je mens" est un mensonge, donc il est faux. S'il est faux que je mens, alors je dis la vérité en disant "Je mens", donc l'énoncé est vrai. On aboutit à une contradiction logique : l'énoncé est vrai si et seulement s'il est faux. Ce paradoxe montre les limites de l'auto-référence en logique.\nExemple : Ce paradoxe a inspiré de nombreuses réflexions en logique mathématique (théorème d'incomplétude de Gödel).`
+    correct: 2,
+    explanation: `L'apologie (du grec <em>apologia</em>, défense) est un genre rhétorique spécifique. Il ne s'agit pas seulement d'expliquer un acte ponctuel, mais de répondre à une accusation globale portant sur l'essence même d'une personne ou d'une doctrine. L'apologiste doit reconstruire une image positive, montrer la cohérence et la valeur de ce qui est attaqué, et retourner souvent l'accusation contre les accusateurs. C'est un discours de légitimation et parfois de contre-offensive.\nExemple : Le <em>Discours sur la dignité de l'homme</em> de Pic de la Mirandole est une apologie de la condition humaine face à ceux qui la dévaloriseraient. L'<em>Apologie de Socrate</em> de Platon est le modèle du genre : Socrate y défend non pas ses actes, mais sa mission philosophique et sa façon de vivre, face à ceux qui l'accusent de corrompre la jeunesse.`
   },
   // Question n°64
   {
-    question: "Quelle est la définition d'une 'parole manipulatrice' ?",
+    question: "Quelle est la fonction de la <em>rhétorique des chiffres</em> dans le discours politique ou médiatique ?",
     answers: [
-      "Une parole qui utilise des techniques de prestidigitation",
-      "Une parole qui cherche à influencer autrui à son insu, pour servir les intérêts de celui qui parle",
-      "Une parole qui explique clairement ses intentions"
+      "Les chiffres permettent d'impressionner l'auditoire par leur complexité et de le décourager de réfléchir.",
+      "Les chiffres donnent une apparence d'objectivité scientifique et de neutralité au discours, masquant souvent les choix politiques et les valeurs sous-jacentes.",
+      "Les chiffges sont inutiles en rhétorique, car seuls les arguments qualitatifs et les émotions comptent."
     ],
     correct: 2,
-    explanation: `Une parole manipulatrice est une parole qui utilise des procédés rhétoriques, psychologiques ou affectifs pour amener l'autre à penser ou agir dans le sens souhaité, sans qu'il en ait pleinement conscience et sans respecter sa liberté de jugement. Elle s'appuie souvent sur les faiblesses, les désirs ou les peurs de l'interlocuteur. C'est une parole qui exerce une "potestas" cachée et illégitime.\nExemple : Les techniques de vente agressive ou la propagande politique sont des formes de parole manipulatrice.`
+    explanation: `Les statistiques et les données chiffrées sont présentées comme des faits indiscutables, au-dessus de la mêlée des opinions. En réalité, un chiffre est toujours le résultat d'un découpage, d'une définition, d'une méthode de collecte qui implique des choix. La rhétorique des chiffres consiste à sélectionner, présenter et interpréter les nombres de manière à étayer sa thèse, en faisant oublier cette construction. Un même phénomène peut être présenté comme <em>seulement 2%</em> ou <em>pas moins de 200 000 personnes</em>.\nExemple : Un gouvernement voulant minimiser la pauvreté parlera d'une <em>baisse de 0,5 point du taux de pauvreté</em>. L'opposition, pour la maximiser, parlera du <em>nombre record de 9 millions de pauvres</em>. Les deux chiffres peuvent être vrais, mais leur présentation sert des narratives opposées.`
   },
   // Question n°65
   {
-    question: "Que signifie l'expression 'langage impératif' ?",
+    question: "Comment la <em>parole testimonial</em> (témoignage) acquiert-elle une autorité particulière ?",
     answers: [
-      "Un langage très important",
-      "Un langage qui donne des ordres",
-      "Un langage qui exprime des nécessités"
+      "Par la beauté de son style et la maîtrise de l'art oratoire de celui qui témoigne.",
+      "Par la position institutionnelle prestigieuse du témoin (expert, ministre).",
+      "Par le fait qu'elle relate une expérience vécue, singulière et souvent extrême, donnant une voix à une vérité humaine que les discours généraux ne peuvent capturer."
     ],
-    correct: 2,
-    explanation: `Le langage impératif est celui de l'ordre, du commandement. Il ne discute pas, ne négocie pas : il exige l'obéissance. C'est la parole de celui qui a le pouvoir (potestas) et qui l'exerce directement par la parole. Il se caractérise par l'usage du mode impératif ("Fais ceci !", "Tais-toi !") ou de formulations équivalentes. C'est la forme la plus brute de l'exercice du pouvoir par la parole.\nExemple : Les ordres militaires ou les injonctions parentales sont des énoncés impératifs.`
+    correct: 3,
+    explanation: `Le témoin dit <em>J'y étais, je l'ai vu, je l'ai vécu</em>. Son autorité vient de cette présence supposée à l'événement. Le témoignage n'a pas la généralité de la loi ni la systématicité de la science, mais il a la force de l'expérience incarnée. Il est crucial pour dire l'indicible (Shoah, torture) et pour contester les versions officielles. Son pouvoir repose sur la crédibilité de la parole donnée et sur l'émotion de l'authenticité présumée.\nExemple : Les témoignages des survivants des camps de concentration ont une autorité morale et historique irremplaçable. Face aux théories négationnistes qui manipulent les archives, la parole du survivant qui dit <em>J'y étais, cela s'est passé ainsi</em> a une force de vérité qui transcende l'argumentation.`
   },
   // Question n°66
   {
-    question: "Quelle est la différence entre 'signifiant' et 'signifié' dans la théorie saussurienne du signe ?",
+    question: "Que désigne l'expression <em>parole d'ordre</em> dans le vocabulaire politique et militant ?",
     answers: [
-      "Le signifiant est le concept, le signifié est le son",
-      "Le signifiant est l'image acoustique, le signifié est le concept",
-      "Le signifiant est la chose réelle, le signifié est le mot"
+      "Un ordre militaire donné à voix haute sur un champ de bataille.",
+      "Un slogan synthétique et incisif qui résume une revendication, une identité ou un objectif, et qui sert à mobiliser et unifier un groupe.",
+      "La hiérarchie des prises de parole dans une assemblée, du plus important au moins important."
     ],
     correct: 2,
-    explanation: `Pour Saussure, le signe linguistique est une entité psychique à deux faces inséparables. Le signifiant est l'image acoustique (le son ou la suite de sons, ou leur représentation mentale). Le signifié est le concept (la représentation mentale de la chose). Par exemple, pour le signe "arbre", le signifiant est la suite de sons /aʁbʁ/, le signifié est le concept mental d'arbre. Cette distinction est fondamentale pour comprendre l'arbitraire du signe.\nExemple : Pour "chat", le signifiant est /ʃa/, le signifié est le concept de petit félin domestique.`
+    explanation: `La parole d'ordre est un énoncé bref, facile à mémoriser et à répéter, qui cristallise une position politique. Elle n'est pas faite pour argumenter, mais pour rassembler, donner un cap, et marquer une opposition (<em>Le privé n'est pas une solution !</em>, <em>Tout le pouvoir aux soviets !</em>). Elle fonctionne comme un signe de reconnaissance à l'intérieur du groupe et comme un défi lancé à l'extérieur. Son efficacité tient à sa simplicité et à sa charge émotionnelle ou symbolique.\nExemple : <em>Yes we can</em> de Barack Obama ou <em>Make America Great Again</em> de Donald Trump sont des paroles d'ordre. Elles condensent en quelques mots un programme, un état d'esprit et une promesse, devenant le cri de ralliement de toute une campagne.`
   },
   // Question n°67
   {
-    question: "Quelle est la caractéristique d'une 'langue morte' ?",
+    question: "Comment le philosophe Emmanuel Levinas conçoit-il la parole dans la relation éthique à autrui ?",
     answers: [
-      "Une langue difficile à apprendre",
-      "Une langue qui n'a plus de locuteurs natifs",
-      "Une langue sans écriture"
+      "La parole est d'abord un outil pour imposer sa volonté à l'autre et affirmer son moi.",
+      "La parole est la réponse à l'appel muet du visage d'autrui, elle est accueil, responsabilité et engagement avant d'être échange d'informations.",
+      "La parole est inutile dans la relation éthique, seule compte l'action silencieuse et désintéressée."
     ],
     correct: 2,
-    correct: 2,
-    explanation: `Une langue morte est une langue qui n'est plus parlée comme langue maternelle par aucune communauté. Elle peut cependant continuer à être étudiée, utilisée dans certains contextes religieux, scientifiques ou liturgiques (comme le latin ou le sanskrit), mais elle n'évolue plus de manière vivante et naturelle. Le fait qu'une langue puisse "mourir" montre que la langue est un phénomène social vivant, dépendant de ses locuteurs.\nExemple : Le latin classique, l'akkadien ou l'ougaritique sont des langues mortes.`
+    explanation: `Pour Levinas, autrui se présente d'abord par son visage, qui est une épiphanie éthique, une demande muette : <em>Tu ne me tueras point</em>. La parole authentique est la réponse à cette demande, elle est dire <em>me voici</em>, se rendre disponible et responsable. Avant d'être un outil de communication ou de savoir, la parole est ainsi le lieu de l'éthique, de la relation asymétrique où je suis pris en otage par autrui. Parler, c'est déjà répondre de l'autre.\nExemple : Lorsque je croise un sans-abri et que je lui adresse la parole (<em>Bonjour, ça va ?</em>), même si c'est banal, je reconnais son humanité, je réponds à son existence. Ce geste de parole, avant tout contenu, est un acte éthique de reconnaissance, par opposition à l'indifférence du regard qui évite.`
   },
   // Question n°68
   {
-    question: "Que signifie l'expression 'parole testimonial' ?",
+    question: "Qu'est-ce qu'un <em>paradoxe</em> dans un discours, et quel effet peut-il produire ?",
     answers: [
-      "Une parole prononcée devant un tribunal",
-      "Une parole qui témoigne d'une expérience vécue et engage celui qui parle",
-      "Une parole qui atteste un fait objectif"
+      "Une affirmation manifestement fausse et absurde, qui discrédite immédiatement celui qui la prononce.",
+      "Une affirmation qui semble contredire l'opinion commune ou la logique immédiate, mais qui contient une vérité profonde, visant à surprendre et à faire réfléchir.",
+      "Une répétition inutile de la même idée sous des formes légèrement différentes."
     ],
     correct: 2,
-    explanation: `Une parole testimoniale est une parole qui fait acte de témoignage. Celui qui parle témoigne de ce qu'il a vu, vécu, ressenti. Cette parole engage sa subjectivité, sa crédibilité, son intégrité. Elle a une force particière parce qu'elle est incarnée : on ne peut la séparer de la personne qui la prononce. Elle s'oppose à la parole anonyme ou purement informative.\nExemple : Le témoignage d'un rescapé de la Shoah a une puissance que n'a pas un livre d'histoire.`
+    explanation: `Le paradoxe (contre l'opinion) est une figure de pensée qui choque pour éveiller l'esprit. En énonçant une contradiction apparente (<em>La première vertu est la civilité</em> ; <em>La liberté est la reconnaissance de la nécessité</em>), il force l'auditeur à dépasser les évidences superficielles et à chercher un sens plus profond. Il est souvent utilisé dans la littérature morale, philosophique ou mystique. Son efficacité tient au décalage qu'il crée, ouvrant un espace pour une pensée nouvelle.\nExemple : La phrase de La Rochefoucauld, <em>On n'est jamais si heureux ni si malheureux qu'on s'imagine</em>, est un paradoxe. Elle va contre l'expérience immédiate (on croit être très heureux ou très malheureux), mais invite à une réflexion sur l'illusion des passions et la relativité des états d'âme.`
   },
   // Question n°69
   {
-    question: "Quelle est la fonction du 'registre épidictique' ?",
+    question: "Comment la <em>parole proverbiale</em> ou la maxime transmet-elle une sagesse pratique ?",
     answers: [
-      "Prendre des décisions pour l'avenir",
-      "Juger des actions passées",
-      "Célébrer ou stigmatiser des valeurs dans le présent"
+      "Elle donne une règle de conduite universelle et absolue, valable en tout temps et en tout lieu.",
+      "Elle condense en une formule concise, souvent imagée, une observation générale sur la vie humaine, offrant un guide pour l'action dans des situations typiques.",
+      "Elle fournit une information scientifique exacte sur le fonctionnement du monde naturel."
     ],
-    correct: 3,
-    explanation: `Le registre épidictique (ou discours démonstratif) a pour fonction de louer ou de blâmer, de célébrer ou de stigmatiser. Il ne vise pas directement l'action (comme le délibératif) ou le jugement (comme le judiciaire), mais la consolidation des valeurs partagées par une communauté. Il renforce le lien social en mettant en scène ce qui est admirable ou détestable aux yeux de tous.\nExemple : Un discours de remise de la Légion d'honneur ou un discours critique lors d'une manifestation sont épidictiques.`
+    correct: 2,
+    explanation: `Les proverbes et les maximes sont le fruit d'une longue expérience collective cristallisée. Ils offrent des <em>recettes</em> pour naviguer dans la vie sociale (<em>Il ne faut pas vendre la peau de l'ours avant de l'avoir tué</em>), des mises en garde (<em>L'habit ne fait pas le moine</em>), ou des constats désabusés (<em>Chacun voit midi à sa porte</em>). Leur forme brève et mémorable les rend faciles à transmettre et à appliquer. Ils constituent une sagesse populaire, non systématique, mais opératoire.\nExemple : Le proverbe <em>Qui vole un œuf vole un bœuf</em> ne donne pas une leçon de droit pénal, mais une règle de vigilance éducative : il faut réprimer les petites fautes pour éviter les grandes. C'est une parole qui guide l'action éducative par une image simple et frappante.`
   },
   // Question n°70
   {
-    question: "Que signifie l'expression 'parole dialogique' ?",
+    question: "Quelle est la différence entre <em>débattre</em> et <em>dialoguer</em> selon une conception exigeante de la parole ?",
     answers: [
-      "Un dialogue théâtral",
-      "Une parole qui s'adresse à un autre et attend une réponse",
-      "Une parole à deux voix"
+      "Débattre, c'est chercher à avoir raison ; dialoguer, c'est chercher à comprendre l'autre et à trouver une vérité commune.",
+      "Débattre est une pratique pacifique, le dialogue est une forme de combat verbal violent.",
+      "On débat à l'oral, on dialogue à l'écrit (par lettres, par exemple)."
     ],
-    correct: 2,
-    explanation: `Une parole dialogique est une parole qui suppose et appelle la parole de l'autre. Elle n'est pas monologue, mais s'inscrit dans un échange, une relation. C'est la parole de la conversation, du débat, de la discussion philosophique. Pour des penseurs comme Platon ou Merleau-Ponty, c'est dans le dialogue que la pensée naît véritablement, dans la "réciprocité parfaite" où "les perspectives glissent l'une dans l'autre".\nExemple : Les dialogues de Platon, où Socrate interroge ses interlocuteurs, sont le modèle de la parole dialogique.`
+    correct: 1,
+    explanation: `Le débat est souvent structuré comme une opposition où chaque camp défend sa position et cherche à marquer des points face à l'autre et à un public. Le dialogue, au sens fort (socratique, philosophique), est une co-recherche où les interlocuteurs sont partenaires contre l'ignorance. Dans le dialogue, on écoute pour comprendre et faire progresser la pensée, on accepte de se laisser transformer par l'échange. Le débat vise la victoire, le dialogue vise la vérité ou la compréhension mutuelle.\nExemple : Un débat télévisé entre deux candidats est un affrontement : interruptions, phrases choc, pièges rhétoriques. Une conversation philosophique en petit groupe, où l'on examine patiemment une question en se corrigeant mutuellement, est un dialogue. Les finalités et l'esprit sont radicalement différents.`
   },
   // Question n°71
   {
-    question: "Quelle est la critique adressée au 'beau parleur' ?",
+    question: "Que signifie l'idée d'une <em>parole libératrice</em> ou <em>émancipatrice</em> ?",
     answers: [
-      "Il parle trop lentement",
-      "Il parle bien mais sans substance, c'est un bavard",
-      "Il a un bel accent"
+      "Une parole qui libère de l'obligation d'écouter les autres, permettant de ne faire que ce qu'on veut.",
+      "Une parole qui, en nommant l'oppression, en partageant l'expérience de la domination, permet de prendre conscience de sa situation et d'imaginer un autre possible, constituant ainsi un premier pas vers la liberté.",
+      "Une parole prononcée en prison qui parvient à faire ouvrir les portes par magie."
     ],
     correct: 2,
-    explanation: `Le "beau parleur" est celui qui maîtrise la forme oratoire (il "parle bien") mais dont la parole est creuse, sans contenu véritable, sans pensée profonde. C'est un bavard qui parle pour parler, pour briller, sans se soucier de la vérité ou de la justesse de ce qu'il dit. Il incarne la rhétorique dévoyée, réduite à l'élocution et à la séduction verbale, détachée de tout engagement intellectuel ou moral.\nExemple : Un politicien qui fait de grands discours creux remplis de promesses vides est un beau parleur.`
+    explanation: `La parole émancipatrice brise le silence imposé par la domination. Pour les esclaves, les colonisés, les ouvriers, les femmes, dire <em>Nous existons, nous souffrons de cela, nous voulons autre chose</em> est un acte fondateur. Cette parole fait passer de la soumission subie à la révolte assumée, de l'isolement à la solidarité. Elle transforme une condition subie en une cause défendue. Nommer, c'est déjà commencer à se libérer de l'emprise de l'oppresseur.\nExemple : Le titre du livre de Simone de Beauvoir, <em>Le Deuxième Sexe</em>, et sa fameuse phrase <em>On ne naît pas femme, on le devient</em>, ont été des paroles libératrices. En analysant la condition féminine comme une construction sociale et non un destin biologique, elles ont offert aux femmes un outil pour comprendre et contester leur oppression, ouvrant la voie au féminisme moderne.`
   },
   // Question n°72
   {
-    question: "Que signifie l'expression 'technique de la rhétorique' ?",
+    question: "Comment l'<em>humour</em> et l'<em>ironie</em> peuvent-ils être des armes critiques dans un discours ?",
     answers: [
-      "Les outils concrets pour construire et délivrer un discours efficace",
-      "L'étude historique des grands orateurs",
-      "L'art de bien écrire"
+      "Ils discréditent toujours celui qui les utilise, le faisant passer pour frivole ou peu sérieux.",
+      "Ils permettent de désarmer les défenses de l'auditoire, de faire passer une critique de manière indirecte et plus acceptable, en ridiculisant l'adversaire ou en exposant l'absurdité d'une situation.",
+      "Ils sont réservés au domaine du divertissement et n'ont aucune portée politique ou philosophique."
     ],
-    correct: 1,
-    explanation: `La "technique de la rhétorique" renvoie à l'ensemble des procédés, méthodes et savoir-faire que l'on peut apprendre et appliquer pour construire un discours persuasif ou convaincant. Cela inclut les cinq parties (inventio, dispositio...), les figures de style, les techniques de mémorisation, les règles de l'action oratoire. En tant que technique (technè), la rhétorique est enseignable et transmissible, ce qui la distingue d'un don naturel.\nExemple : Apprendre à structurer un argument, à utiliser une métaphore appropriée, ou à moduler sa voix sont des aspects de la technique rhétorique.`
+    correct: 2,
+    explanation: `L'humour et l'ironie sont des formes de distanciation. En faisant rire ou sourire, ils créent une complicité avec l'auditoire et désamorcent l'agressivité. En présentant une idée ou une situation sous un jour ridicule ou exagéré (par l'hyperbole, la parodie), ils en révèlent les faiblesses ou les contradictions de manière plus percutante qu'un long réquisitoire sérieux. C'est une stratégie de critique élégante et souvent redoutable.\nExemple : Les dessins de presse utilisent constamment l'humour et l'ironie comme armes critiques. En caricaturant un homme politique en animal ou en le mettant dans une situation absurde, le dessinateur transmet une critique politique acerbe qui serait moins bien acceptée sous forme d'article sérieux, et qui marque souvent plus les esprits.`
   },
   // Question n°73
   {
-    question: "Quelle est la différence entre 'parole' et 'écrit' du point de vue de la présence ?",
+    question: "Quelle est la fonction de la <em>prétermission</em> (ou prétérition) comme figure de rhétorique ?",
     answers: [
-      "La parole est toujours présente, l'écrit est toujours absent",
-      "La parole suppose la présence simultanée du locuteur et de l'auditeur, l'écrit les sépare",
-      "Il n'y a pas de différence"
+      "Affirmer que l'on va passer sous silence un point, pour en fait le mentionner et lui donner ainsi plus d'importance.",
+      "Commettre volontairement une faute de grammaire pour montrer son naturel et sa spontanéité.",
+      "Répéter le même argument plusieurs fois sous des formes différentes pour l'enfoncer dans les têtes."
     ],
-    correct: 2,
-    explanation: `La parole, dans sa forme paradigmatique (le dialogue face à face), suppose la co-présence dans le même espace et le même temps du locuteur et de l'auditeur. Cette présence permet l'ajustement immédiat, la réponse, le dialogue. L'écrit, au contraire, sépare dans le temps et l'espace celui qui écrit et celui qui lit. L'auteur est absent au moment de la lecture. Cette absence est ce qui rend l'écrit "muet", incapable de répondre aux questions du lecteur.\nExemple : Dans une conversation, je peux demander une explication ; face à un livre, je ne peux interroger l'auteur.`
+    correct: 1,
+    explanation: `La prétermission est une feinte. L'orateur déclare qu'il ne parlera pas de quelque chose (<em>Je ne dirai rien de ses frasques passées, de sa gestion désastreuse...</em>), mais en le nommant, il en parle bel et bien, et même il attire l'attention dessus. C'est une façon de contourner une interdiction (de diffamation, de bienséance) ou de faire preuve d'une fausse modération, tout en assénant le coup. L'auditeur comprend parfaitement que le sujet est évoqué, et avec une charge négative.\nExemple : Dans un débat, un candidat peut dire : <em>Je ne rappellerai pas les condamnations judiciaires de mon adversaire, ce n'est pas mon genre.</em> En disant cela, il les rappelle à l'esprit de tous les électeurs, tout en se donnant le beau rôle de celui qui est <em>au-dessus de ça</em>.`
   },
   // Question n°74
   {
-    question: "Que signifie l'expression 'parole vivante' ?",
+    question: "Comment la <em>parole sacrée</em> (texte religieux, serment) se distingue-t-elle de la parole profane ?",
     answers: [
-      "Une parole prononcée avec enthousiasme",
-      "Une parole qui évolue et s'adapte dans le dialogue",
-      "Une parole sur des êtres vivants"
+      "Elle est toujours prononcée dans une langue ancienne et incompréhensible pour les fidèles.",
+      "Elle est considérée comme d'origine divine ou transcendante, investie d'une autorité absolue, et son énonciation est soumise à des rites stricts.",
+      "Elle est réservée aux prêtres et aux chefs religieux, les laïcs n'ayant pas le droit de la prononcer."
     ],
     correct: 2,
-    explanation: `La parole est "vivante" lorsqu'elle est actuelle, présente, capable de s'adapter à son auditoire et aux circonstances, ouverte à la réponse et à la transformation. Elle s'oppose à la parole "morte" de l'écrit fixé, qui répète toujours la même chose. La parole vivante est celle du dialogue, de l'enseignement oral, de la conversation où la pensée se forme dans l'échange. C'est la parole que valorise Platon contre l'écriture.\nExemple : Un cours magistral interactif où le professeur adapte son propos aux questions est une parole vivante.`
+    explanation: `La parole sacrée est performative à un degré suprême : elle crée le monde ( <em>Dieu dit : Que la lumière soit ! Et la lumière fut</em> ), elle lie irrévocablement (serment sur la Bible), elle transforme l'essence (formules sacramentelles). Son pouvoir ne vient pas de l'art de l'orateur, mais de son origine supposée divine et de la croyance collective en cette origine. Elle est souvent figée, répétée à l'identique, et son énonciation requiert un cadre rituel (lieu, temps, gestes).\nExemple : La récitation de la sourate d'ouverture (Al-Fatiha) dans la prière musulmane est une parole sacrée. Le fidèle ne l'invente pas, il la répète en arabe, dans une posture précise, convaincu que ces mots viennent de Dieu et ont une efficacité spirituelle.`
   },
   // Question n°75
   {
-    question: "Quel est le sens de l'expression 'art de bien dire' ?",
+    question: "Que signifie l'expression <em>la parole est d'argent, le silence est d'or</em> dans une perspective éthique ?",
     answers: [
-      "Bien prononcer les mots",
-      "S'exprimer de manière juste, claire et efficace",
-      "Parler avec un beau style"
+      "Il faut toujours se taire, car parler coûte de l'argent et peut rapporter des ennuis.",
+      "Il est souvent préférable de se taire que de parler à tort et à travers, car une parole irréfléchie peut faire du mal, alors que le silence préserve et respecte.",
+      "Le silence permet d'économiser sa salive, alors que la parole permet de gagner de l'argent (avocats, commerciaux)."
     ],
     correct: 2,
-    explanation: `L'"art de bien dire" est une définition classique de la rhétorique. "Bien dire" ne signifie pas seulement parler de manière élégante ou correcte, mais surtout dire la chose juste, de la manière appropriée, au moment opportun, à la personne concernée. Cela implique à la fois la justesse de la pensée (le fond) et l'efficacité de l'expression (la forme). C'est un art qui unit la sagesse et l'éloquence.\nExemple : Un bon enseignant sait "bien dire" : expliquer clairement un concept complexe à ses élèves.`
+    explanation: `Ce proverbe souligne la valeur et la dangerosité de la parole. Parler, c'est s'engager, prendre le risque de blesser, de mentir, de se tromper, de commettre des indiscrétions. Le silence, lorsqu'il est choisi, peut être une marque de sagesse, de discrétion, de respect pour la parole d'autrui ou pour la complexité d'une situation. Il ne s'agit pas de prôner le mutisme, mais la retenue et la réflexion avant de parler. La parole a un prix (elle engage), le silence a une valeur (il protège).\nExemple : Face à une confidence douloureuse d'un ami, parfois le silence respectueux et une écoute attentive valent mieux qu'un flot de conseils ou de paroles de consolation maladroites. Se taire, dans ce cas, c'est reconnaître la gravité de la situation et laisser à l'autre l'espace pour exprimer sa peine.`
   },
   // Question n°76
   {
-    question: "Quelle est la caractéristique d'une 'parole institutionnelle' ?",
+    question: "Comment le concept de <em>parole plurielle</em> s'oppose-t-il à celui de parole unique et autoritaire ?",
     answers: [
-      "Une parole prononcée dans une institution",
-      "Une parole qui obéit aux codes et règles d'une institution",
-      "Une parole qui fonde une institution"
+      "Il désigne le fait de parler plusieurs langues couramment, ce qui est un signe d'ouverture d'esprit.",
+      "Il valorise la coexistence et le dialogue de paroles différentes, issues de points de vue multiples, contre l'imposition d'une seule parole officielle ou dogmatique.",
+      "Il décrit une pathologie psychiatrique où le patient entend plusieurs voix qui lui parlent en même temps."
     ],
     correct: 2,
-    explanation: `Une parole institutionnelle est une parole qui est produite dans le cadre et selon les règles d'une institution (tribunal, école, assemblée, Église...). Elle suit des protocoles, utilise un langage spécialisé, et a une autorité dérivée de l'institution elle-même. Elle s'oppose à la parole "utopique" ou "paradoxale" qui échappe aux cadres établis. La parole institutionnelle peut être nécessaire (pour la justice, l'enseignement), mais risque aussi de devenir rigide et anonyme.\nExemple : Le verdict d'un juge ou le sermon d'un prêtre sont des paroles institutionnelles.`
+    explanation: `La parole plurielle est un idéal démocratique et dialogique. Elle reconnaît que la vérité ou le bien commun ne peuvent être le monopole d'une seule instance (État, parti, chef, expert). Ils se construisent dans la confrontation et la complémentarité de perspectives diverses. Une société saine est celle où une pluralité de paroles peut s'exprimer, débattre, se corriger mutuellement. S'oppose à cela la parole unique de la propagande, du dogme ou du despotisme, qui étouffe la pensée et la liberté.\nExemple : Une presse libre et diversifiée, où s'expriment des éditorialistes de différents bords politiques, incarne cette parole plurielle. À l'inverse, dans un régime totalitaire, il n'y a qu'un seul journal, une seule radio, diffusant la parole officielle du parti unique.`
   },
   // Question n°77
   {
-    question: "Que signifie l'expression 'pouvoir évocateur du langage' ?",
+    question: "Quel est le rôle de l'<em>exemple</em> (paradeigma) dans l'argumentation rhétorique selon Aristote ?",
     answers: [
-      "Le pouvoir d'appeler les esprits",
-      "Le pouvoir de faire surgir des images, des émotions, des idées dans l'esprit",
-      "Le pouvoir de convaincre par la logique"
+      "Il sert uniquement à divertir l'auditoire et à le détendre entre deux arguments sérieux.",
+      "Il illustre et concrétise un argument général, le rendant plus compréhensible et plus frappant ; il peut aussi servir d'induction rhétorique (passer d'un cas particulier à une conclusion générale).",
+      "Il remplace complètement l'argumentation logique, car une bonne histoire vaut tous les raisonnements."
     ],
     correct: 2,
-    explanation: `Le pouvoir évocateur du langage est sa capacité à faire naître dans l'imagination de l'auditeur ou du lecteur des représentations, des émotions, des souvenirs, même en l'absence des choses évoquées. C'est ce qui permet la fiction, la poésie, le récit historique, mais aussi la manipulation par des promesses ou des menaces imaginaires. C'est une des sources majeures de la puissance (potestas) de la parole.\nExemple : La simple phrase "Il faisait nuit noire" peut évoquer en nous une sensation de peur ou de mystère.`
+    explanation: `L'exemple est une preuve par induction. En citant un cas particulier (historique, mythologique, fictif), l'orateur cherche à en tirer une leçon générale. Par exemple, pour montrer que l'ambition mène à la chute, on citera l'exemple de Macbeth ou de Napoléon. L'exemple a une force pédagogique et mémorielle puissante : il ancre une idée abstraite dans un récit concret. Il fait aussi appel à l'émotion et à l'imagination, renforçant le pathos.\nExemple : Pour défendre la nécessité de la résistance à l'oppression, un orateur peut citer l'exemple du Chancelier allemand Willy Brandt s'agenouillant à Varsovie en 1970. Cet acte singulier et puissant illustre et valide mieux l'idée générale de repentance et de réconciliation que de longs développements théoriques.`
   },
   // Question n°78
   {
-    question: "Quelle est la fonction de la 'confirmation' (confirmatio) dans le discours ?",
+    question: "Que signifie l'expression <em>perdre la parole</em> (aphasie, sidération) dans une perspective existentielle ?",
     answers: [
-      "Annoncer le plan",
-      "Développer les arguments pour prouver sa thèse",
-      "Conclure de manière émouvante"
+      "Ne plus savoir parler une langue étrangère qu'on avait apprise.",
+      "Être privé, temporairement ou définitivement, de la capacité de parler, que ce soit par un choc émotionnel, une maladie ou une oppression, ce qui est une atteinte majeure à l'identité et à la relation au monde.",
+      "Avoir un trou de mémoire pendant un discours, ce qui est gênant mais sans gravité."
     ],
     correct: 2,
-    explanation: `La confirmatio est la partie centrale et la plus substantielle du discours. C'est là que l'orateur développe son argumentation, apporte ses preuves, ses exemples, ses raisonnements pour établir sa thèse. Elle suit la narration des faits et précède la péroraison. Une bonne confirmatio est logiquement structurée, progressive, et anticipe et réfute les objections possibles (refutatio).\nExemple : Dans une dissertation, le développement correspond à la confirmatio.`
+    explanation: `Perdre la parole, ce n'est pas seulement perdre un outil de communication ; c'est perdre un des fondements de l'être-au-monde humain. L'aphasique (après un AVC) est enfermé dans un monde de sens qu'il ne peut plus partager. La sidération (face à un traumatisme) est un effondrement de la capacité à symboliser l'horreur. L'opprimé à qui l'on interdit de parler est nié dans son humanité même. Ces expériences révèlent à quel point la parole est constitutive de notre identité et de notre lien aux autres.\nExemple : Les témoignages de rescapés de camps qui disent avoir été <em>rendus muets</em> par l'horreur, incapables de raconter ce qu'ils avaient vécu, montrent que certains événements excèdent les capacités du langage. Perdre la parole, ici, c'est être confronté à l'indicible, à une rupture dans l'expérience humaine.`
   },
   // Question n°79
   {
-    question: "Que signifie l'expression 'parole libératrice' ?",
+    question: "Comment la <em>parole diplomatique</em> utilise-t-elle le sous-entendu et la litote ?",
     answers: [
-      "Une parole qui libère de prison",
-      "Une parole qui affranchit des préjugés, de l'ignorance ou de l'oppression",
-      "Une parole prononcée en liberté"
+      "Elle dit toujours exactement ce qu'elle pense, avec une franchise totale, car la confiance est essentielle en diplomatie.",
+      "Elle est souvent allusive, mesurée, et utilise la litote (dire moins pour suggérer plus) pour exprimer un désaccord ou une menace sans rupture ouverte, laissant une porte de sortie à l'interlocuteur.",
+      "Elle consiste à parler le plus possible pour noyer le poisson et éviter d'avoir à prendre des décisions claires."
     ],
     correct: 2,
-    explanation: `Une parole est libératrice lorsqu'elle permet à celui qui l'entend (ou parfois à celui qui la prononce) de se libérer d'une illusion, d'un préjugé, d'une peur, ou d'une situation d'oppression. La parole philosophique, par le questionnement et la critique, vise à libérer de la doxa. La parole poétique peut libérer l'imaginaire. La parole juridique peut libérer un innocent. C'est l'envers positif du pouvoir de la parole.\nExemple : La parole de Socrate, qui par le questionnement libère ses interlocuteurs de leurs certitudes illusoires.`
+    explanation: `La parole diplomatique est un art de la nuance et de l'ambiguïté calculée. Dire <em>Les pourparlers se sont déroulés dans un climat de franchise</em> signifie souvent qu'ils ont été houleux. Une <em>note verbale exprimant de vives préoccupations</em> est une mise en garde sérieuse. La litote (<em>Ce n'est pas inadéquat</em> pour dire <em>C'est très bien</em>) permet de louer sans excès. Ces procédés maintiennent le dialogue même en cas de conflit, préservent la face des interlocuteurs et évitent les escalades verbales.\nExemple : Après une crise internationale, un communiqué peut dire : <em>Les deux parties ont convenu de la nécessité de poursuivre les consultations.</em> Cela signifie qu'elles ne sont pas du tout d'accord, mais qu'elles ne veulent pas rompre les négociations. La parole diplomatique est celle qui dit le conflit sans le nommer, pour le gérer.`
   },
   // Question n°80
   {
-    question: "Quelle est la caractéristique d'un 'discours de propagande' ?",
+    question: "Quel est l'enjeu de la <em>citation</em> et de la <em>référence</em> dans un discours savant ou politique ?",
     answers: [
-      "Il informe objectivement",
-      "Il simplifie, répète, et utilise massivement l'émotion pour formater l'opinion",
-      "Il présente tous les points de vue"
+      "Elles servent uniquement à montrer l'érudition de l'orateur et à impressionner un public ignorant.",
+      "Elles permettent de s'appuyer sur une autorité reconnue (un auteur, un texte sacré, un précédent historique) pour renforcer la légitimité et la force persuasive de son propre argument.",
+      "Elles sont inutiles et alourdissent le discours, il vaut mieux toujours parler en son nom propre."
     ],
     correct: 2,
-    explanation: `Un discours de propagande est caractérisé par la simplification manichéenne (bons vs méchants), la répétition obsessionnelle de slogans, l'exploitation des émotions primaires (peur, haine, enthousiasme), et le mépris de la complexité et de la vérité factuelle. Il vise à créer une adhésion automatique, non critique, en court-circuitant la réflexion personnelle. C'est la forme la plus systématique de la parole manipulatrice à l'échelle d'une société.\nExemple : La propagande nazie utilisait des affiches simples, des slogans répétés, et des films émouvants pour diaboliser les Juifs et glorifier Hitler.`
+    explanation: `Citer, c'est convoquer une autorité extérieure à l'appui de sa thèse. En invoquant les Pères fondateurs, un homme politique américain s'inscrit dans une tradition légitime. En citant une étude scientifique, un expert renforce l'objectivité de son propos. La référence construit un lien entre le locuteur et un héritage, une communauté de savoir ou de valeurs, crédibilisant ainsi sa parole. Mais c'est aussi un acte d'interprétation : on cite toujours dans un but, en sélectionnant et en contextualisant.\nExemple : Martin Luther King ouvrait souvent ses discours par <em>Il y a cinq ans, un grand Américain... signait la Proclamation d'émancipation</em>. En citant Lincoln, il ancrait son combat pour les droits civiques dans l'histoire et les principes fondateurs des États-Unis, rendant sa revendication irréfutable d'un point de vue patriotique.`
   },
   // Question n°81
   {
-    question: "Que signifie l'expression 'parole politique' au sens large ?",
+    question: "Comment la <em>parole médiatique</em> (journalistique) est-elle contrainte par ses formats et ses impératifs ?",
     answers: [
-      "La parole des politiciens",
-      "Toute parole qui concerne la vie de la cité (polis) et le vivre-ensemble",
-      "La parole prononcée à l'Assemblée"
+      "Elle est totalement libre et créative, les journalistes disent exactement ce qu'ils pensent sans pression.",
+      "Elle est soumise à des contraintes de temps (durée des journaux télévisés), d'audience (le spectaculaire, le clash), de ligne éditoriale, et à la recherche de l'immédiateté, ce qui peut nuire à la complexité et à la profondeur de l'analyse.",
+      "Elle se conforme toujours scrupuleusement à la vérité objective des faits, sans aucune déformation."
     ],
     correct: 2,
-    explanation: `La parole politique, au sens grec du terme, n'est pas réservée aux professionnels de la politique. C'est toute parole qui porte sur les affaires communes, qui délibère sur ce qui est juste, utile ou bon pour la communauté. Elle est au cœur de la démocratie comme gouvernement par la discussion. Dans cette perspective, participer à un débat public, exprimer son opinion sur une loi, c'est exercer une parole politique.\nExemple : Les citoyens athéniens qui débattaient à l'ecclésia exerçaient la parole politique.`
+    explanation: `La parole médiatique n'est pas neutre ; elle est fabriquée. Le formatage (titres chocs, interviews courtes, débats polémiques) privilégie l'émotion et la simplification au détriment de la nuance. La recherche de l'audience peut pousser au sensationnalisme. La pression du direct favorise les approximations. Cela ne signifie pas que les médias mentent systématiquement, mais que leur parole est le produit d'un système qui la modèle, souvent vers plus de superficialité et de dramatisation.\nExemple : Un débat politique de 3 minutes entre deux candidats sur un plateau télévisé ne permet pas d'aborder un sujet complexe comme la réforme des retraites. Il favorise les slogans, les attaques personnelles et les réponses courtes, au détriment d'une argumentation construite et nuancée. La parole médiatique est une parole contrainte par la logique du spectacle.`
   },
   // Question n°82
   {
-    question: "Quelle est la différence entre 'argument' et 'figure de style' ?",
+    question: "Qu'est-ce que la <em>maïeutique</em> (μαιευτικὴ τέχνη) socratique ?",
     answers: [
-      "L'argument concerne le fond, la figure concerne la forme",
-      "L'argument est logique, la figure est illogique",
-      "Il n'y a pas de différence"
+      "L'art d'accoucher les esprits, c'est-à-dire d'aider l'interlocuteur à découvrir par lui-même les vérités qu'il porte en lui, par le questionnement.",
+      "L'art de séduire par la parole, en utilisant des métaphores flatteuses et des arguments émotionnels.",
+      "Une technique médicale de l'Antiquité pour faciliter les accouchements, sans rapport avec la parole."
     ],
     correct: 1,
-    explanation: `Un argument est un élément de raisonnement visant à prouver ou à justifier une affirmation. Il relève de la logique et du contenu (inventio). Une figure de style (ou figure de rhétorique) est un procédé d'expression qui s'écarte de l'usage ordinaire pour produire un effet (beauté, insistance, émotion...). Elle relève du style et de la forme (elocutio). Les deux sont complémentaires dans un discours efficace : les arguments convainquent, les figures persuadent et embellissent.\nExemple : "Tous les hommes sont mortels, or Socrate est un homme, donc Socrate est mortel" est un argument. "Le temps est un grand maître" est une métaphore (figure de style).`
+    explanation: `Socrate, fils de sage-femme, compare son activité à celle de sa mère : il n'enseigne pas un savoir extérieur, mais aide son interlocuteur à <em>accoucher</em> de ses propres idées, à les clarifier, à les mettre à l'épreuve. Par des questions insistantes, il fait passer l'autre de l'opinion confuse (doxa) à une connaissance plus ferme. La maïeutique est donc une parole qui se fait discrète (elle questionne plus qu'elle n'affirme) mais essentielle, car elle permet la naissance de la pensée autonome.\nExemple : Dans le <em>Ménon</em>, Socrate questionne un jeune esclave ignorant de la géométrie et l'amène, par une série de questions simples, à découvrir par lui-même le théorème qui double la surface d'un carré. Il ne lui a rien appris, il a fait émerger une connaissance que l'esclave portait en puissance.`
   },
   // Question n°83
   {
-    question: "Que signifie l'expression 'parole juste' ?",
+    question: "Comment la <em>parole artistique</em> (d'un metteur en scène, d'un chorégraphe) se distingue-t-elle d'un simple mode d'emploi ?",
     answers: [
-      "Une parole prononcée au bon moment",
-      "Une parole qui dit ce qui doit être dit, avec justesse et vérité",
-      "Une parole qui respecte la loi"
+      "Elle donne des instructions techniques précises et impersonnelles aux interprètes, comme un manuel d'assemblage.",
+      "Elle est souvent métaphorique, suggestive, et vise à éveiller la créativité et l'interprétation personnelle de l'artiste-interprète, plutôt qu'à imposer un geste unique.",
+      "Elle n'existe pas, l'artiste travaille toujours dans le silence complet."
     ],
     correct: 2,
-    explanation: `Une parole est "juste" lorsqu'elle atteint une forme de perfection éthique et linguistique. Elle est juste dans son contenu (elle dit vrai, elle est moralement droite) et juste dans sa forme (elle est adaptée à la situation, à l'interlocuteur, exprimée avec clarté et pertinence). La recherche de la parole juste est l'idéal de la rhétorique philosophique et de la communication authentique.\nExemple : La réponse de Socrate à ses juges, dans l'"Apologie", cherche à être une parole juste.`
+    explanation: `Le créateur (metteur en scène, chorégraphe, chef d'orchestre) ne peut pas décrire intégralement l'œuvre à réaliser. Sa parole est une direction, une inspiration. Il utilisera des images (<em>Jouez cette scène comme si vous étiez sur un bateau en pleine tempête</em>), des métaphores, des références, pour guider l'interprète vers un état, une qualité de présence, sans le figer dans un geste mécanique. Cette parole est ouverte, elle appelle à une collaboration créative.\nExemple : Un chorégraphe ne dira pas <em>Lève la jambe droite à 45 degrés</em>. Il dira plutôt <em>Imagine que tu es une flamme qui danse avec le vent</em>. Cette parole poétique laisse à la danseuse la liberté et la responsabilité de traduire cette image dans son corps d'une manière personnelle et vivante.`
   },
   // Question n°84
   {
-    question: "Quelle est la caractéristique d'une 'parole mensongère' ?",
+    question: "Que signifie l'expression <em>faire taire</em> ou <em>réduire au silence</em> dans un rapport de pouvoir ?",
     answers: [
-      "Elle est toujours mal intentionnée",
-      "Elle dit le contraire de ce que pense celui qui parle",
-      "Elle est toujours repérable"
+      "Empêcher physiquement ou psychologiquement quelqu'un de s'exprimer, ce qui est une violence fondamentale niant son humanité et sa dignité.",
+      "Écouter poliment quelqu'un sans l'interrompre, par respect pour sa parole.",
+      "Laisser une pause dans une conversation pour mieux réfléchir avant de reprendre la parole."
     ],
-    correct: 2,
-    explanation: `Une parole mensongère est, au sens strict, une parole qui énonce comme vrai ce que celui qui parle sait ou croit être faux. Elle implique donc une intention de tromper. Dans le "Hippias mineur", Platon (par la voix de Socrate) fait l'éloge paradoxal du menteur, qui est "capable, intelligent, savant et habile" puisqu'il doit connaître la vérité pour pouvoir la contrefaire habilement. Le mensonge est ainsi une manifestation perverse du pouvoir de la parole.\nExemple : Ulysse, le héros menteur et rusé, est plus habile qu'Achille, le héros sincère mais brutal.`
+    correct: 1,
+    explanation: `Réduire au silence est un acte de domination extrême. Cela peut être physique (coup, meurtre), juridique (censure, emprisonnement), psychologique (intimidation, humiliation), ou symbolique (dévalorisation systématique de la parole de certains groupes : <em>Ce ne sont que des femmes qui parlent</em>, <em>Ce ne sont que des plaintes d'ouvriers</em>). Faire taire, c'est nier à l'autre le statut de sujet parlant, l'exclure de la communauté humaine définie par le langage.\nExemple : Les régimes totalitaires emprisonnent, torturent ou assassinent les dissidents et les journalistes pour faire taire toute parole critique. C'est une tentative d'annihiler non seulement une opinion, mais l'humanité même de celui qui la porte, en le réduisant à un corps muet et soumis.`
   },
   // Question n°85
   {
-    question: "Que signifie l'expression 'langage magique' ?",
+    question: "Comment le concept de <em>parole vraie</em> (alètheia) chez les Grecs diffère-t-il d'une simple exactitude factuelle ?",
     answers: [
-      "Un langage qui utilise des tours de magie",
-      "Un langage auquel on prête un pouvoir d'invocation sur le réel",
-      "Un langage très beau"
+      "La parole vraie est celle qui flatte l'auditoire et lui procure du plaisir, indépendamment des faits.",
+      "La parole vraie est un dévoilement, une manifestation de l'être même des choses, par opposition à l'apparence trompeuse (doxa) ; elle engage toute l'existence de celui qui parle.",
+      "La parole vraie est simplement celle qui correspond à la réalité matérielle et vérifiable, point final."
     ],
     correct: 2,
-    explanation: `Le "langage magique" est l'illusion selon laquelle les mots auraient par eux-mêmes un pouvoir de transformation directe sur le monde physique, comme dans les incantations ou les sorts. En réalité, le langage n'a pas de pouvoir magique d'invocation, mais seulement un pouvoir d'évocation (dans l'esprit) et un pouvoir social (quand il est prononcé par quelqu'un qui a autorité). Distinguer entre magie et efficacité sociale est crucial pour une conception rationnelle de la parole.\nExemple : Croire qu'une malédiction verbale peut physiquement nuire à quelqu'un relève du langage magique.`
+    explanation: `Pour les Grecs, et notamment Heidegger qui reprend ce terme, l'alètheia (ἀλήθεια) signifie <em>dé-cellement</em>, <em>non-occultation</em>. La vérité n'est pas une adéquation entre un énoncé et un fait, mais un événement de dévoilement où l'être de quelque chose se montre. Une parole vraie est donc une parole qui fait advenir ce dévoilement, qui arrache à l'oubli. Elle engage celui qui parle dans un rapport authentique à ce dont il parle. C'est une parole qui montre, pas seulement qui informe.\nExemple : Lorsqu'un poète décrit un paysage, il ne se contente pas de lister des éléments (arbres, rivière). Il cherche, par les mots, à faire <em>advenir</em> l'essence de ce paysage, son atmosphère, ce qu'il révèle du monde. Sa parole cherche la vérité comme dévoilement, non comme inventaire.`
   },
   // Question n°86
   {
-    question: "Quelle est la fonction de l''exorde' dans un discours ?",
+    question: "Quelle est la fonction de l'<em>apostrophe</em> dans un discours ?",
     answers: [
-      "Développer les arguments",
-      "Introduire le sujet et capter la bienveillance de l'auditoire",
-      "Raconter les faits"
+      "Introduire une citation longue d'un auteur célèbre pour étayer son argument.",
+      "Interpeller directement une personne (réelle ou fictive), un groupe ou même une abstraction, pour créer un effet de proximité, d'accusation ou de solennité.",
+      "Résumer de manière percutante tous les arguments en une seule phrase finale."
     ],
     correct: 2,
-    explanation: `L'exorde (introduction) est la première partie d'un discours. Sa fonction double est d'introduire le sujet (annoncer de quoi on va parler) et de capter l'attention et la bienveillance (captatio benevolentiae) de l'auditoire. Un bon exorde donne envie d'écouter la suite, établit un contact positif avec l'auditoire, et peut annoncer la division (le plan) du discours. C'est une étape cruciale pour la réussite de l'ensemble.\nExemple : "Mesdames, Messieurs, je vais vous parler aujourd'hui d'un enjeu qui concerne notre avenir à tous..." est le début d'un exorde.`
+    explanation: `L'apostrophe (se tourner vers) rompt le cours du discours pour s'adresser directement à un destinataire spécifique. Elle peut servir à interpeller l'adversaire (<em>Et toi, Brutus ?</em>), à invoquer les dieux ou la patrie, à s'adresser à un absent ou à un concept personnifié (<em>Ô Liberté, que de crimes on commet en ton nom !</em>). Elle dramatise le discours, crée une tension, et implique émotionnellement l'auditoire qui se sent concerné par cette adresse soudaine.\nExemple : Dans son célèbre discours <em>J'ai fait un rêve</em>, Martin Luther King utilise l'apostrophe : <em>Je vous le dis aujourd'hui, mes amis...</em>. Ce <em>mes amis</em> crée une intimité immédiate avec la foule immense, l'inclut dans son rêve et renforce le sentiment de communauté et de lutte partagée.`
   },
   // Question n°87
   {
-    question: "Que signifie l'expression 'parole autoréférentielle' ?",
+    question: "Comment la <em>parole judiciaire du verdict</em> produit-elle ses effets sociaux ?",
     answers: [
-      "Une parole qui parle d'elle-même",
-      "Une parole prononcée avec autorité",
-      "Une parole qui fait référence à une autorité"
+      "Elle se contente de constater un état de fait sans rien changer à la réalité.",
+      "Elle transforme le statut social de l'accusé (en coupable, en condamné), répare symboliquement un tort, et réaffirme la loi comme norme collective.",
+      "Elle a pour seul but de venger la victime ou sa famille par la souffrance infligée au coupable."
     ],
-    correct: 1,
-    explanation: `Une parole est autoréférentielle lorsqu'elle a elle-même pour objet. Elle parle du langage, ou plus spécifiquement, elle se prend elle-même comme objet de son énoncé. C'est le cas des paradoxes comme "Je mens", ou des énoncés métalinguistiques comme "Le mot 'chien' a cinq lettres". L'auto-référence peut créer des problèmes logiques (paradoxes) mais est aussi une capacité réflexive fondamentale du langage humain.\nExemple : "Cette phrase est écrite en français" est un énoncé autoréférentiel.`
+    correct: 2,
+    explanation: `Le verdict est l'acte de parole par excellence de la justice. <em>Le tribunal vous déclare coupable</em> ne décrit pas une culpabilité préexistante ; il la crée institutionnellement. Cette parole performative a des conséquences immédiates et lourdes (prison, amende, casier judiciaire). Elle produit aussi des effets symboliques : elle nomme le mal, donne une réponse sociale au crime, restaure (en théorie) la confiance dans l'ordre légal, et réinscrit l'événement singulier dans le cadre universel de la loi.\nExemple : Lors du procès de Nuremberg, la déclaration des accusés <em>coupables</em> de crimes contre l'humanité n'était pas un constat, mais un acte fondateur d'une nouvelle norme internationale. Elle a transformé ces hauts dirigeants nazis en criminels devant l'histoire, et a établi juridiquement la notion de crime contre l'humanité.`
   },
   // Question n°88
   {
-    question: "Quelle est la caractéristique d'une 'parole poétique' au sens large ?",
+    question: "Que signifie l'idée d'une <em>parole qui engage</em> au-delà de l'instant où elle est prononcée ?",
     answers: [
-      "Une parole en vers",
-      "Une parole qui crée du sens et de la beauté par le travail sur le langage",
-      "Une parole qui parle de la nature"
+      "Une parole dont on se souvient longtemps parce qu'elle était drôle ou surprenante.",
+      "Une parole (promesse, serment, contrat) qui crée une obligation durable pour celui qui l'a émise, et sur laquelle on pourra le tenir pour responsable dans l'avenir.",
+      "Une parole écrite qui peut être relue, contrairement à une parole orale qui s'évapore."
     ],
     correct: 2,
-    explanation: `La parole poétique (du grec "poiein", créer) est une parole qui a une fonction créatrice. Elle ne se contente pas de décrire ou de communiquer, mais elle invente, elle donne forme à une expérience, une émotion, une vision du monde à travers un travail spécifique sur le langage (rythme, images, sons, syntaxe...). Elle peut être en vers ou en prose. Elle est souvent considérée comme la parole la plus pure, car elle est à elle-même sa propre fin.\nExemple : Un poème de Baudelaire ou un texte en prose poétique de Rimbaud.`
+    explanation: `Certaines paroles sont des actes qui tracent une ligne dans le temps. En disant <em>Je promets</em>, <em>Je jure</em>, <em>Je m'engage à</em>, le locuteur se lie pour l'avenir. Il crée une attente légitime chez l'autre et s'oblige lui-même. La force de cette parole ne tient pas à sa beauté, mais à la fiabilité de celui qui parle. Une société où les paroles n'engagent plus est une société où la confiance et la coopération deviennent impossibles. L'honneur est souvent lié à cette fidélité à sa parole donnée.\nExemple : Le serment d'Hippocrate que prêtent les médecins (<em>Je jure par Apollon... de respecter la vie</em>) est une parole qui engage toute une carrière. Il n'est pas un simple rite, mais un acte moral par lequel le médecin se lie à des principes éthiques fondamentaux, devant ses pairs et la société.`
   },
   // Question n°89
   {
-    question: "Que signifie l'expression 'parole sacrée' ?",
+    question: "Comment la <em>parole de l'enseignant</em> se distingue-t-elle d'autres formes de parole ?",
     answers: [
-      "Une parole prononcée dans un lieu saint",
-      "Une parole qui a une autorité absolue et intangible",
-      "Une parole très importante"
+      "Elle est une parole d'autorité qui ne doit jamais être contestée ou questionnée par les élèves.",
+      "Elle est une parole magistrale qui vise à transmettre un savoir, mais aussi à éveiller l'esprit critique, à former le jugement, et dont l'autorité repose sur la compétence reconnue et le souci de l'émancipation de l'élève.",
+      "C'est une parole purement transactionnelle : l'enseignant donne des informations en échange du salaire qu'il reçoit."
     ],
     correct: 2,
-    explanation: `Une parole sacrée est une parole à laquelle on attribue une origine divine ou une autorité transcendante, et qui de ce fait ne peut être discutée, modifiée ou contredite. C'est la parole des textes religieux considérés comme révélés, des dogmes, ou des paroles attribuées à un fondateur. Elle s'oppose à la parole profane, humaine et faillible. Le problème philosophique est de savoir si une parole peut être à la fois sacrée (incontestable) et vraie (rationnellement justifiable).\nExemple : La parole de la Bible pour les croyants, ou celle du Coran.`
+    explanation: `La parole enseignante a une double finalité : instruire (transmettre des connaissances) et éduquer (former une personne). Son autorité (auctoritas) ne doit pas reposer sur la contrainte (potestas), mais sur la crédibilité du savoir et la capacité à guider. Une bonne parole pédagogique sait être claire, structurée, mais aussi ouverte, dialogique, capable de susciter des questions et d'accompagner l'élève vers l'autonomie de la pensée. C'est une parole qui se retire progressivement pour laisser place à la parole propre de l'élève.\nExemple : Un professeur de philosophie n'enseigne pas seulement des doctrines ; par ses questions, ses analyses de textes, il apprend aux élèves à problématiser, à argumenter, à conceptualiser. Sa parole vise à rendre les élèves capables de penser par eux-mêmes, ultimement à se passer de lui.`
   },
   // Question n°90
   {
-    question: "Quelle est la fonction de la 'réfutation' (refutatio) dans l'argumentation ?",
+    question: "Qu'est-ce que la <em>parole intérieure</em> ou le <em>monologue intérieur</em> en littérature et en philosophie ?",
     answers: [
-      "Présenter ses propres arguments",
-      "Anticiper et répondre aux objections de l'adversaire",
-      "Conclure le discours"
+      "Une parole prononcée à voix basse pour ne pas être entendu des autres.",
+      "La représentation du flux de pensées et d'impressions d'un personnage, tel qu'il se déroulerait dans sa conscience, avec ses associations libres, ses ruptures, sa syntaxe souvent disloquée.",
+      "Un discours que l'on se répète mentalement pour mémoriser une leçon ou un texte."
     ],
     correct: 2,
-    explanation: `La réfutation est une partie souvent incluse dans la confirmatio. Elle consiste à anticiper les arguments que pourrait avancer l'adversaire ou les objections que pourrait faire l'auditoire, et à les démonter par avance. Cette stratégie montre la force de la position défendue (elle peut répondre à tout) et affaiblit la position adverse. Une bonne réfutation est proactive et fait partie intégrante de la construction de sa propre argumentation.\nExemple : "Certains pourraient objecter que... mais en réalité..." est une structure de réfutation.`
+    explanation: `Le monologue intérieur est une technique littéraire (Joyce, Woolf, Dujardin) qui cherche à capter la conscience à l'état naissant, avant qu'elle ne soit organisée en discours socialisé. Il montre la pensée dans sa spontanéité, son chaos, sa sensualité. Philosophiquement, il interroge : y a-t-il une pensée sans langage ? Le monologue intérieur suggère que même la pensée la plus intime est déjà structurée par la langue, mais une langue moins contrôlée, plus proche des sensations et des émotions.\nExemple : Dans <em>Les Vagues</em> de Virginia Woolf, la narration est entièrement constituée de monologues intérieurs de six personnages. Le lecteur a l'impression de plonger directement dans le flot de leurs perceptions, souvenirs et émotions, sans la médiation d'un narrateur extérieur qui ordonnerait et expliquerait.`
   },
   // Question n°91
   {
-    question: "Que signifie l'expression 'parole fondatrice' ?",
+    question: "Comment la <em>parole d'excuse</em> peut-elle être un acte de réparation symbolique ?",
     answers: [
-      "Une parole qui jette les bases d'une institution, d'une communauté, d'une tradition",
-      "Une parole prononcée à la fondation d'une ville",
-      "Une parole solennelle"
+      "Elle ne répare rien, c'est juste des mots qui coûtent moins cher qu'une réparation matérielle.",
+      "En reconnaissant la faute et la souffrance de l'autre, elle restaure la dignité de la victime, reconnaît la rupture de la relation, et peut ouvrir la voie à un pardon et à une réconciliation.",
+      "Elle est une obligation sociale gênante qu'il faut expédier au plus vite pour tourner la page."
     ],
-    correct: 1,
-    explanation: `Une parole est fondatrice lorsqu'elle institue quelque chose de nouveau : une loi, une institution, une communauté, une tradition. Par elle, quelque chose commence à exister dans l'ordre symbolique. La déclaration d'indépendance des États-Unis, le "Je vous déclare mari et femme" du maire, ou le "Fiat lux" biblique sont des paroles fondatrices. Elles ont un caractère performatif très fort et engagent l'avenir.\nExemple : Le discours de Simone de Beauvoir ouvrant la voie au féminisme moderne est une parole fondatrice.`
+    correct: 2,
+    explanation: `S'excuser, c'est faire plus que dire <em>désolé</em>. C'est un acte de parole performatif qui accomplit plusieurs choses : il nomme le tort ( <em>J'ai eu tort de...</em> ), il reconnaît la responsabilité de l'offenseur, il valide l'expérience de l'offensé (<em>Je comprends que tu aies été blessé</em>). Ce faisant, il répare symboliquement l'atteinte à la dignité de la victime. Une excuse sincère peut transformer une relation brisée. Son pouvoir réparateur dépend de sa sincérité et de sa réception.\nExemple : Les excuses publiques d'un État pour des crimes historiques (comme les excuses de la France pour son rôle dans la déportation des Juifs) ont une portée symbolique immense. Elles ne réparent pas matériellement, mais elles reconnaissent officiellement la faute et la souffrance, permettant une réécriture partagée de l'histoire et une forme de pacification mémorielle.`
   },
   // Question n°92
   {
-    question: "Quelle est la caractéristique d'un 'nuage de mots' (word cloud) comme outil d'analyse de discours ?",
+    question: "Que signifie l'expression <em>rendre la parole</em> à quelqu'un ou à un groupe ?",
     answers: [
-      "Il restitue la linéarité du texte",
-      "Il donne une représentation visuelle des termes les plus fréquents",
-      "Il analyse la syntaxe des phrases"
+      "Lui donner la réplique dans une pièce de théâtre.",
+      "Créer les conditions pour qu'une personne ou un groupe social, précédemment réduit au silence (par l'oppression, la marginalisation), puisse s'exprimer et être écouté dans l'espace public.",
+      "Répéter mot pour mot ce que quelqu'un vient de dire, pour vérifier qu'on a bien compris."
     ],
     correct: 2,
-    explanation: `Un nuage de mots est une représentation graphique qui met en valeur les termes les plus fréquents dans un texte, leur taille étant proportionnelle à leur fréquence. C'est un outil sémiologique qui permet une lecture "verticale" et quantitative du discours, révélant ses thèmes obsessionnels, ses mots-clés, ses absences. Il brise la linéarité du texte pour en donner une image synoptique, mais ne dit rien sur le sens, l'argumentation ou le contexte.\nExemple : Analyser le discours d'un politicien via un nuage de mots peut révéler qu'il utilise très souvent les termes "travail", "France", "avenir".`
+    explanation: `<em>Rendre la parole</em> est un acte politique et éthique. Cela suppose d'abord de cesser de parler à la place de l'autre, de reconnaître sa capacité à dire son propre vécu. Ensuite, cela implique de créer des espaces d'écoute et de visibilité (médias, institutions, tribunes) où cette parole pourra être entendue. C'est une démarche de décentrement et de réparation, qui vise à corriger une injustice discursive. C'est souvent le travail de l'anthropologue, du journaliste, ou du militant.\nExemple : Un documentariste qui va filmer une communauté indigène menacée, en leur laissant longuement la parole pour exprimer leur rapport à la terre et leur lutte, <em>rend la parole</em> à ce groupe habituellement invisible ou représenté de l'extérieur par d'autres. Il ne parle pas pour eux, il leur donne les moyens de se faire entendre.`
   },
   // Question n°93
   {
-    question: "Que signifie l'expression 'parole de résistance' ?",
+    question: "Comment le concept de <em>dialogisme</em> chez Bakhtine éclaire-t-il la nature de toute parole ?",
     answers: [
-      "Une parole difficile à prononcer",
-      "Une parole qui s'oppose à un pouvoir établi ou à une oppression",
-      "Une parole prononcée par un résistant"
+      "Toute parole est un monologue pur, émanant d'une conscience souveraine et autonome.",
+      "Toute parole est fondamentalement dialogique : elle est réponse à des paroles antérieures, anticipation de réponses futures, et elle porte en elle les traces d'autres voix sociales (hétéroglossie).",
+      "Le dialogisme est une maladie de la parole qui fait que l'on répond toujours à côté de la question."
     ],
     correct: 2,
-    explanation: `Une parole de résistance est une parole qui dit "non" à un pouvoir injuste, à une oppression, à une propagande. Elle utilise la "potentia" de la parole comme "contre-pouvoir". Elle peut prendre la forme d'un pamphlet, d'un discours public, d'un article clandestin, d'un graffiti. Elle témoigne que la parole, même face à la violence, reste une arme possible pour défendre la liberté et la dignité.\nExemple : Les tracts et journaux clandestins de la Résistance pendant l'Occupation étaient des paroles de résistance.`
+    explanation: `Pour Bakhtine, parler, c'est toujours entrer dans un dialogue déjà commencé. Nos mots sont chargés des significations, des accents, des intentions des autres qui les ont utilisés avant nous. Même un monologue est adressé à un auditeur, réel ou imaginaire. La langue est un champ de bataille de voix sociales (celles des différentes classes, professions, générations). Toute parole authentique est donc un travail de réappropriation et de réorientation de ces voix multiples.\nExemple : Lorsqu'un adolescent utilise un argot ou des expressions propres à son groupe, il ne fait pas qu'utiliser des mots ; il s'inscrit dans une voix sociale (celle de sa génération) et se distingue de la voix des adultes ou de l'école. Sa parole est le lieu d'un dialogue (ou d'un conflit) entre ces différentes voix sociales.`
   },
   // Question n°94
   {
-    question: "Quelle est la différence entre 'éloquence' et 'rhétorique' ?",
+    question: "Quelle est la fonction de l'<em>hyperbole</em> dans un discours persuasif ?",
     answers: [
-      "L'éloquence est la pratique, la rhétorique est la théorie",
-      "L'éloquence est naturelle, la rhétorique est artificielle",
-      "L'éloquence est le talent de bien dire, la rhétorique en est l'art ou la technique"
+      "Minimiser une chose pour paraître modeste et raisonnable.",
+      "Exagérer démesurément une idée ou un fait pour en frapper l'imagination, susciter l'admiration ou l'indignation, et marquer fortement les esprits.",
+      "Corriger une erreur factuelle commise précédemment dans le discours."
     ],
-    correct: 3,
-    explanation: `L'éloquence désigne le talent, la capacité naturelle ou acquise à s'exprimer avec aisance, force et persuasion en public. C'est une qualité de la performance oratoire. La rhétorique est l'art (la technè) qui étudie et enseigne les principes et les techniques pour produire un discours efficace. On peut donc dire que l'éloquence est le but que vise la rhétorique, ou que la rhétorique est la théorie dont l'éloquence est la pratique.\nExemple : Cicéron avait une grande éloquence et a écrit des traités de rhétorique.`
+    correct: 2,
+    explanation: `L'hyperbole (excès) est une figure d'amplification. Elle ne cherche pas à être prise à la lettre, mais à produire un effet d'intensité. En disant <em>Je me suis retourné mille fois dans mon lit</em> ou <em>C'est un crime contre l'humanité</em> pour une faute politique, l'orateur cherche à communiquer l'ampleur d'un sentiment ou d'une situation. Elle est particulièrement efficace dans la dénonciation (pour noircir le tableau) ou dans l'éloge (pour porter aux nues). Elle agit principalement sur le pathos.\nExemple : Dans <em>Les Châtiments</em>, Victor Hugo utilise constamment l'hyperbole pour dénoncer Napoléon III : <em>Ô complices hideux d'un lâche parricide ! / Noirs ouvriers de nuit dont l'impur suicide / Prend pour suaire un drap d'argent !</em>. Ces exagérations poétiques visent à créer une image monstrueuse et repoussante du régime, bien au-delà d'une critique politique rationnelle.`
   },
   // Question n°95
   {
-    question: "Que signifie l'expression 'parole théâtrale' ?",
+    question: "Que signifie l'idée de <em>parole fondatrice</em> dans l'histoire d'une communauté ou d'une institution ?",
     answers: [
-      "Une parole exagérée",
-      "Une parole destinée à être représentée sur scène",
-      "Une parole qui raconte une histoire"
+      "Une parole qui, à un moment inaugural, établit par déclaration les principes, les lois ou l'identité d'un groupe (ex : Déclaration d'Indépendance, Serment du Jeu de Paume).",
+      "Le premier mot prononcé par le fondateur d'une entreprise lors de son assemblée générale constitutive.",
+      "Une parole magique qui fait apparaître un bâtiment ou une ville de rien."
     ],
-    correct: 2,
-    explanation: `La parole théâtrale est une parole qui a été écrite pour être prononcée par des acteurs sur une scène, devant un public. Elle a des caractéristiques spéciques : elle est dialoguée, elle doit être compréhensible à l'oral, elle caractérise les personnages, et elle fait avancer l'action. Le théâtre est ainsi le lieu par excellence où la parole est mise en scène, où l'actio (le jeu de l'acteur) donne vie à des mots écrits.\nExemple : Les répliques de Phèdre dans la tragédie de Racine sont une parole théâtrale.`
+    correct: 1,
+    explanation: `La parole fondatrice est un acte performatif à l'échelle collective. Elle fait exister une réalité politique nouvelle en la nommant et en la voulant. Elle est souvent prononcée dans un moment d'urgence ou de rupture, et devient ensuite un texte de référence, un mythe d'origine. Sa force tient à ce qu'elle est à la fois un constat (<em>Nous déclarons que...</em>) et un acte créateur (<em>...par la présente, les États-Unis sont et ont droit d'être libres et indépendants</em>).\nExemple : Le <em>Serment du Jeu de Paume</em> du 20 juin 1789 (<em>Nous jurons de ne jamais nous séparer [...] jusqu'à ce que la Constitution du royaume soit établie</em>) est une parole fondatrice. Par cet acte d'union et de volonté, les députés du Tiers État se sont constitués en Assemblée nationale, créant de facto un nouveau pouvoir souverain et ouvrant la Révolution française.`
   },
   // Question n°96
   {
-    question: "Quelle est la caractéristique d'une 'parole d'expert' ?",
+    question: "Comment la <em>parole chantée</em> (chant, opéra) diffère-t-elle de la parole parlée ?",
     answers: [
-      "Une parole complexe et incompréhensible",
-      "Une parole fondée sur un savoir spécialisé et faisant autorité dans son domaine",
-      "Une parole prononcée avec assurance"
+      "Elle est identique, sauf qu'elle est faite sur des notes de musique.",
+      "Elle soumet le texte à une autre logique (mélodique, rythmique, harmonique), qui peut en renforcer le sens émotionnel, le magnifier, ou parfois entrer en tension avec lui.",
+      "Elle a pour unique but de cacher la pauvreté du texte par la beauté de la musique."
     ],
     correct: 2,
-    explanation: `Une parole d'expert est une parole qui tire sa force persuasive non de l'émotion (pathos) ni de l'argumentation accessible à tous (logos), mais de la compétence reconnue de celui qui parle (ethos). On fait confiance au médecin, à l'ingénieur, au juriste parce qu'ils maîtrisent un savoir que nous n'avons pas. Cette parole est nécessaire dans les sociétés complexes, mais elle peut aussi devenir un argument d'autorité qui décourage le questionnement citoyen.\nExemple : Le rapport d'un scientifique du GIEC sur le changement climatique est une parole d'expert.`
+    explanation: `La mise en musique transforme la parole. Le rythme peut la scander, la précipiter ou la suspendre. La mélodie peut souligner un mot, exprimer une émotion que le texte seul ne dit pas (la tristesse dans une mineur, la joie dans une tonalité majeure). Dans l'opéra, le chant permet de dire l'indicible des passions. La parole chantée est donc une parole augmentée, où le sens passe par le corps (la voix) et l'émotion musicale autant que par le signifié linguistique.\nExemple : Dans le <em>Requiem</em> de Mozart, le texte liturgique <em>Dies irae</em> (Jour de colère) est mis en musique par des roulements de timbales, des cuivres stridents, un chœur impétueux. La musique ne fait pas que porter les mots, elle incarne la terreur du Jugement dernier bien plus viscéralement qu'une simple lecture du texte.`
   },
   // Question n°97
   {
-    question: "Que signifie l'expression 'parole publicitaire' ?",
+    question: "Quel est l'enjeu de la <em>traduction</em> comme acte de parole entre les cultures ?",
     answers: [
-      "Une parole diffusée publiquement",
-      "Une parole qui vise à vendre un produit ou une marque en créant du désir",
-      "Une parole honnête sur un produit"
+      "C'est une opération mécanique et neutre de substitution mot à mot d'une langue à une autre.",
+      "C'est un acte d'interprétation et de recréation, qui fait passer un sens d'un univers linguistique et culturel à un autre, avec des pertes, des gains et des transformations inévitables.",
+      "C'est une trahison nécessaire du texte original, qu'il faut éviter en apprenant toutes les langues."
     ],
     correct: 2,
-    explanation: `La parole publicitaire est une parole utilitaire dont la finalité est commerciale : faire acheter. Pour cela, elle utilise toutes les ressources de la rhétorique (slogans accrocheurs, images séduisantes, promesses, appel à l'émotion, ethos de la marque) mais en les mettant au service de la création d'un désir artificiel. Elle est souvent citée comme exemple de parole manipulatrice, sophistique, qui associe des valeurs positives (bonheur, liberté, réussite) à des objets de consommation.\nExemple : Une publicité pour une voiture qui associe le véhicule à l'image de la liberté et de l'aventure.`
+    explanation: `Traduire, c'est faire un choix. Faut-il privilégier la lettre (traduction littérale) ou l'esprit (traduction libre) ? Comment rendre un jeu de mots, une référence culturelle obscure ? Le traducteur est un médiateur qui doit comprendre le texte source dans sa profondeur et trouver des équivalents dans la langue cible qui produisent un effet similaire. C'est un travail herméneutique et créatif. Une bonne traduction est une nouvelle parole, fidèle et vivante.\nExemple : Traduire les poèmes de Baudelaire en anglais est un défi immense. Le traducteur doit trouver comment rendre à la fois le sens, les rimes, le rythme et l'atmosphère <em>maudite</em>. Chaque traduction sera une interprétation différente, une nouvelle version du poème, témoignant que la parole n'est jamais entièrement transposable sans reste.`
   },
   // Question n°98
   {
-    question: "Quelle est la fonction de la 'division' (partitio) annoncée dans l'exorde ?",
+    question: "Comment la <em>parole d'aveu</em> (dans le cadre religieux, psychanalytique, judiciaire) fonctionne-t-elle ?",
     answers: [
-      "Diviser l'auditoire",
-      "Annoncer le plan du discours pour guider l'écoute",
-      "Séparer les arguments des objections"
+      "Elle est une simple narration d'un fait passé, sans conséquence pour celui qui parle.",
+      "Elle est un acte de vérité sur soi, qui, en se disant à un autre (prêtre, analyste, juge), opère une transformation de la relation à soi-même et peut avoir un effet de libération ou de sanction.",
+      "C'est une parole mensongère destinée à manipuler l'interlocuteur en lui faisant croire à une fausse culpabilité."
     ],
     correct: 2,
-    explanation: `La division (ou partition) est le moment, généralement à la fin de l'exorde, où l'orateur annonce le plan de son discours. "Je traiterai ce sujet en trois points : premièrement... deuxièmement... troisièmement..." Cette annonce a une double fonction : elle rassure l'auditoire en montrant que le discours est structuré et maîtrisé, et elle guide son écoute en lui donnant des repères. C'est une marque de clarté et de pédagogie.\nExemple : "J'examinerai d'abord les causes de ce phénomène, puis ses conséquences, enfin les solutions possibles."`
+    explanation: `L'aveu n'est pas un constat objectif ; c'est un acte subjectif qui engage celui qui parle. Dans la confession, avouer un péché, c'est le reconnaître comme tel et en demander le pardon, ce qui purifie l'âme. En psychanalyse, dire un souvenir refoulé, c'est le réintégrer dans son histoire et diminuer son pouvoir pathogène. Au tribunal, l'aveu est la preuve reine qui entraîne la condamnation. Dans tous les cas, c'est une parole qui fait advenir une nouvelle vérité sur le sujet.\nExemple : Dans le processus de réconciliation post-apartheid en Afrique du Sud, la Commission Vérité et Réconciliation a accordé une amnistie aux bourreaux en échange d'un aveu public et complet de leurs crimes. Cet aveu n'était pas seulement un moyen d'établir les faits, mais un acte de reconnaissance de l'humanité des victimes, nécessaire à la guérison du pays.`
   },
   // Question n°99
   {
-    question: "Que signifie l'expression 'parole philosophique' ?",
+    question: "Quelle est la différence entre <em>convaincre</em> et <em>persuader</em> selon une distinction classique ?",
     answers: [
-      "Une parole compliquée",
-      "Une parole qui cherche la vérité par le dialogue et la raison, et qui s'incarne dans celui qui parle",
-      "Une parole prononcée par un philosophe"
+      "Convaincre fait appel à la raison et aux arguments (logos), persuader fait appel aux émotions et aux passions (pathos).",
+      "Convaincre s'adresse à un individu, persuader s'adresse à une foule.",
+      "On persuade avec des images, on convainc avec des chiffres ; les deux sont strictement équivalents par ailleurs."
     ],
-    correct: 2,
-    explanation: `La parole philosophique est une parole qui a pour fin la recherche de la vérité. Elle utilise l'argumentation rationnelle (logos) mais aussi, idéalement, l'engagement personnel de celui qui parle (incarnation). Elle se pratique essentiellement dans le dialogue (réel ou écrit), où les positions sont mises à l'épreuve de la critique. Elle se distingue de la sophistique (qui vise la persuasion) et de la doxa (opinion non fondée). Son modèle est la parole socratique.\nExemple : Les dialogues de Platon, où Socrate interroge ses interlocuteurs pour chercher avec eux la définition de la justice ou du courage.`
+    correct: 1,
+    explanation: `Cette distinction, bien que schématique (car un bon discours combine les deux), est utile. Convaincre, c'est amener l'interlocuteur à adhérer à une proposition parce qu'il en reconnaît la validité logique, la cohérence, la vérité. C'est le domaine de la démonstration, du logos. Persuader, c'est obtenir l'adhésion par d'autres moyens : le charisme de l'orateur (ethos), l'émotion suscitée (pathos), la séduction du style. La persuasion peut agir même sur quelqu'un qui n'est pas intellectuellement convaincu.\nExemple : Un scientifique qui présente les preuves du réchauffement climatique cherche à <em>convaincre</em>. Un militant écologiste qui montre des images d'ours polaires affamés sur la banquise fondue cherche à <em>persuader</em>, en éveillant l'émotion et la compassion pour pousser à l'action.`
   },
   // Question n°100
   {
-    question: "Quel est l'enjeu ultime de la séquence 'L'art de la parole' selon la synthèse proposée ?",
+    question: "Quel enseignement principal peut-on tirer de l'étude de <em>L'art de la parole</em> sur le pouvoir et la responsabilité de celui qui parle ?",
     answers: [
-      "Apprendre des techniques pour bien parler en public",
-      "Distinguer les différents genres de discours",
-      "Comprendre les conditions d'une parole authentique qui incarne une pensée et vise la vérité"
+      "La parole est un outil neutre, son usage ne pose aucun problème moral, seul compte le résultat.",
+      "La parole est un pouvoir immense, qui peut construire ou détruire, libérer ou asservir. Celui qui prend la parole a donc une responsabilité éthique et politique : responsabilité de la vérité, de la sincérité, et de l'effet de ses mots sur autrui et sur le lien social.",
+      "Seuls les grands orateurs et les politiciens ont un vrai pouvoir de parole, les autres n'ont pas à s'en soucier."
     ],
-    correct: 3,
-    explanation: `L'enjeu ultime de cette séquence est de dépasser l'idée de la parole comme simple technique (art oratoire) ou instrument de pouvoir (potestas) pour penser les conditions d'une parole authentique. Une parole authentique est celle qui est incarnée (celui qui parle est dans sa parole), qui rompt avec la doxa (l'opinion reçue) par le paradoxe ou la critique, et qui vise la vérité plutôt que la simple persuasion. C'est la parole du philosophe, du poète, ou de tout être qui assume pleinement sa pensée et sa parole.\nExemple : La parole de Socrate face à ses juges, qui préfère mourir en disant vrai que vivre en reniant sa pensée, est l'archétype de la parole authentique.`
+    correct: 2,
+    explanation: `La séquence tout entière montre que la parole n'est jamais innocente. Des sophistes à la propagande moderne, on a vu son pouvoir de manipulation. De Socrate à Arendt, on a vu sa puissance constitutive de vérité et de communauté. Apprendre l'art de la parole, ce n'est pas seulement acquérir une technique, c'est apprendre à exercer ce pouvoir avec discernement et vertu. C'est comprendre que chaque fois que nous parlons, nous participons à la construction du monde commun, pour le meilleur ou pour le pire. La parole est notre dignité et notre risque.\nExemple : L'affaire Dreyfus a été une gigantesque bataille de paroles : d'un côté, la parole calomnieuse de l'État-Major et de la presse antisémite ; de l'autre, la parole courageuse de Zola (<em>J'accuse</em>) et des intellectuels dreyfusards. Cette bataille a montré que la vérité et la justice dépendaient du courage de ceux qui osaient prendre la parole juste, au risque de leur carrière et de leur vie.`
   }
 ];
