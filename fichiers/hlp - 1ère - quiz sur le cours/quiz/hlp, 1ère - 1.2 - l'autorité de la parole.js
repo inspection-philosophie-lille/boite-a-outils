@@ -8,7 +8,7 @@ const sousTitre = "100 questions";
 // DONNÉES DU TEXTE PHILOSOPHIQUE (Synthèse)
 // ============================================
 const philosophyData = {
-  texte: `L'autorité de la parole ne se réduit pas au pouvoir de la force. Elle oscille entre l'auctoritas (autorité fondée sur la tradition et l'origine) et la potestas (puissance de contrainte). Des paroles patriarcales aux discours charismatiques, des mythes fondateurs aux énoncés performatifs, cette séquence explore comment la parole peut fonder, légitimer ou subvertir l'ordre social. Elle interroge ce qui fait qu'une parole "fait autorité" : est-ce la personne qui la profère, la tradition qui la porte, ou la vérité qu'elle énonce ?`,
+  texte: `L'autorité de la parole ne se réduit pas au pouvoir de la force. Elle oscille entre l'<em>auctoritas</em> (autorité fondée sur la tradition et l'origine) et la <em>potestas</em> (puissance de contrainte). Des paroles patriarcales aux discours charismatiques, des mythes fondateurs aux énoncés performatifs, cette séquence explore comment la parole peut fonder, légitimer ou subvertir l'ordre social. Elle interroge ce qui fait qu'une parole "fait autorité" : est-ce la personne qui la profère, la tradition qui la porte, ou la vérité qu'elle énonce ?`,
   source: "synthèse des enjeux de la séquence"
 };
 
