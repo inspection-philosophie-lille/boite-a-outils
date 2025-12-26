@@ -271,7 +271,7 @@ const questions = [
   },
   // Question n°24
   {
-    question: "Que signifie le concept d''internalité' dans l'analyse de la soumission à l'autorité (expériences type Milgram) ?",
+    question: "Que signifie le concept d'« internalité » dans l'analyse de la soumission à l'autorité (expériences type Milgram) ?",
     answers: [
       "Le fait de garder ses pensées pour soi",
       "L'obéissance due à une conviction intime",
@@ -289,7 +289,7 @@ const questions = [
       "Elle repose sur la dévotion envers la sainteté, la valeur héroïque ou le caractère exemplaire d'une personne"
     ],
     correct: 1,
-    explanation: `L'autorité traditionnelle, selon Weber, trouve sa légitimité dans "la croyance en la sainteté des ordres et des pouvoirs de commandement existant de tout temps". On obéit au chef, au roi, au père parce que "cela a toujours été ainsi", parce que la coutume et la tradition ont sanctifié cette position. L'autorité est héréditaire ou transmise selon des règles immémoriales. Son modèle est la monarchie de droit divin ou le patriarcat familial.\nExemple : L'autorité du roi Louis XIV découlait de la tradition monarchique et du sacre religieux, bien plus que de ses qualités personnelles ou d'une constitution.`
+    explanation: `L'autorité traditionnelle, selon Weber, trouve sa légitimité dans « la croyance en la sainteté des ordres et des pouvoirs de commandement existant de tout temps ». On obéit au chef, au roi, au père parce que "cela a toujours été ainsi", parce que la coutume et la tradition ont sanctifié cette position. L'autorité est héréditaire ou transmise selon des règles immémoriales. Son modèle est la monarchie de droit divin ou le patriarcat familial.\nExemple : L'autorité du roi Louis XIV découlait de la tradition monarchique et du sacre religieux, bien plus que de ses qualités personnelles ou d'une constitution.`
   },
   // Question n°26
   {
