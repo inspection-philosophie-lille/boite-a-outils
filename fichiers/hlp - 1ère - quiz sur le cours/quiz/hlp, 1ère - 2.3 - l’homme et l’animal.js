@@ -31,7 +31,7 @@ const questions = [
   {
     question: "Quelle distinction Aristote établit-il entre les types d'âmes ?",
     answers: [
-      "L'âme végétative (mouvement dans l'être), l'âme sensitive (mouvement dans l'être et l'espace) et l'âme intellective (pensée).",
+      "L'âme végétative, l'âme sensitive  et l'âme intellective.",
       "L'âme immortelle (humaine) et l'âme mortelle (animale et végétale).",
       "Seul l'homme a une âme ; le végétal et l'animal sont animés par des principes mécaniques."
     ],
@@ -43,7 +43,7 @@ const questions = [
     question: "Dans la tradition théologique (d'après Paul), quelle opposition recoupe celle entre homme et animal ?",
     answers: [
       "L'opposition entre le savant et l'ignorant.",
-      "L'opposition entre l'homme spirituel (chrétien) et l'homme animal (non-chrétien).",
+      "L'opposition entre l'homme spirituel et l'homme animal.",
       "L'opposition entre le riche et le pauvre."
     ],
     correct: 2,
@@ -54,7 +54,7 @@ const questions = [
     question: "Que signifie le terme <em>bestialité</em> appliqué à l'homme au Moyen Âge ?",
     answers: [
       "La capacité spécifique des animaux sauvages à survivre.",
-      "L'ensemble des pulsions et des actes que l'homme ne parvient pas à maîtriser par sa raison, ce qui échappe à son contrôle.",
+      "L'ensemble des actes qui échappe au contrôle de l'homme.",
       "Uniquement les relations sexuelles avec des animaux."
     ],
     correct: 2,
@@ -64,7 +64,7 @@ const questions = [
   {
     question: "Selon Aristote dans les <em>Politiques</em>, qu'est-ce qui fait de l'homme un 'animal politique' (zoon politikon) ?",
     answers: [
-      "Sa possession du logos, c'est-à-dire du langage articulé lui permettant de discuter du juste et de l'injuste.",
+      "Sa capacité à discuter du juste et de l'injuste.",
       "Son instinct naturel pour la domination et la hiérarchie.",
       "Sa capacité à vivre en meute comme certains animaux sociaux."
     ],
@@ -76,7 +76,7 @@ const questions = [
     question: "Quelle idée Pascal illustre-t-il en comparant les ruches des abeilles d'il y a mille ans à celles d'aujourd'hui ?",
     answers: [
       "La supériorité technique des animaux sur les hommes primitifs.",
-      "La perfection immuable de l'instinct animal, qui contraste avec la perfectibilité de la raison humaine.",
+      "La perfection immuable de l'instinct animal comparée à la perfectibilité de la raison humaine.",
       "La décadence de l'industrie humaine comparée à la constance de la nature."
     ],
     correct: 2,
@@ -86,7 +86,7 @@ const questions = [
   {
     question: "Que signifie l'expression 'le propre de l'homme' ?",
     answers: [
-      "La caractéristique fondamentale, spécifique et distinctive de l'être humain par rapport aux autres êtres.",
+      "La caractéristique distinctive de l'être humain.",
       "Ce qui appartient en propre à un individu humain.",
       "Les biens matériels que l'homme possède légitimement."
     ],
@@ -98,7 +98,7 @@ const questions = [
     question: "Qu'est-ce que l'anthropocentrisme ?",
     answers: [
       "Une méthode scientifique qui étudie tout du point de vue de l'anatomie humaine.",
-      "L'idée que l'homme (anthropos) est le centre (kentron) et le but de toutes choses, la mesure de toute valeur.",
+      "L'idée que l'homme est la mesure de toute chose.",
       "La croyance que l'homme est le centre géographique de l'univers."
     ],
     correct: 2,
@@ -109,7 +109,7 @@ const questions = [
     question: "Quelle est la position de Montaigne, dans l'<em>Apologie de Raimond Sebond</em>, concernant la différence homme-animal ?",
     answers: [
       "Il pense que l'animal est supérieur à l'homme car il vit en harmonie avec la nature.",
-      "Il défend l'idée d'une différence de degré seulement, l'homme n'étant qu'un animal parmi d'autres, souvent plus présomptueux.",
+      "Il défend l'idée que l'homme n'est qu'un animal, quoique souvent plus présomptueux.",
       "Il affirme une différence de nature absolue, l'homme étant un être de raison."
     ],
     correct: 2,
@@ -117,10 +117,10 @@ const questions = [
   },
   // Question n°10
   {
-    question: "Que signifie la formule 'Homo homini lupus' (L'homme est un loup pour l'homme) reprise par Hobbes ?",
+    question: "Que signifie la formule <em>Homo homini lupus</em>' (L'homme est un loup pour l'homme) reprise par Hobbes ?",
     answers: [
       "Elle affirme que l'homme descend biologiquement du loup.",
-      "Elle exprime que, dans l'état de nature (sans loi commune), les hommes sont des ennemis potentiels, mus par la peur et la défiance.",
+      "Elle exprime que, dans l'état de nature, les hommes sont mus par la défiance.",
       "Elle décrit l'état de paix et d'entraide naturelle entre les hommes."
     ],
     correct: 2,
@@ -130,7 +130,7 @@ const questions = [
   {
     question: "Selon Hobbes, comment l'homme acquiert-il le droit de dominer les animaux ?",
     answers: [
-      "Par le droit commun de la nature, c'est-à-dire par sa force et sa puissance, dans une lutte où l'animal peut aussi l'attaquer.",
+      "Par sa force et sa puissance.",
       "Par un privilège divin spécial.",
       "Par un contrat moral passé avec les espèces."
     ],
@@ -142,7 +142,7 @@ const questions = [
     question: "Pour Machiavel, pourquoi un prince doit-il savoir 'agir à propos, et en bête et en homme' ?",
     answers: [
       "Parce que gouverner nécessite à la fois la force physique et l'intelligence.",
-      "Parce que la sphère politique est le lieu où les rapports de force (la « bête ») sont inévitables, et qu'il faut parfois y recourir quand les lois (« l'homme ») sont insuffisantes.",
+      "Parce que la sphère politique est le lieu des rapports de force.",
       "Pour impressionner son peuple par des spectacles de domptage."
     ],
     correct: 2,
@@ -153,7 +153,7 @@ const questions = [
     question: "Quelle est la position de Descartes sur la nature du corps ?",
     answers: [
       "Le corps est animé par une âme sensitive qui lui donne vie.",
-      "Le corps est une machine complexe, une substance étendue (res extensa) dont le fonctionnement obéit aux lois de la mécanique.",
+      "Le corps est une substance étendue (res extensa) et mécanique.",
       "Le corps est une substance spirituelle unie à l'âme."
     ],
     correct: 2,
@@ -164,7 +164,7 @@ const questions = [
     question: "Selon Descartes, quelle est la différence essentielle entre l'homme et l'animal ?",
     answers: [
       "L'animal possède un instinct parfait, l'homme doit tout apprendre.",
-      "L'homme possède une âme immatérielle et pensante (res cogitans), tandis que l'animal n'est qu'un automate sans pensée.",
+      "L'homme a une âme pensante, l'animal est un automate sans pensée.",
       "L'homme a un corps plus parfait."
     ],
     correct: 2,
@@ -174,7 +174,7 @@ const questions = [
   {
     question: "Que signifie la théorie de l'« animal-machine » chez Descartes ?",
     answers: [
-      "La thèse selon laquelle les animaux sont des automates naturels, dépourvus de conscience et de sensibilité, leurs actions s'expliquant par des mécanismes corporels.",
+      "La thèse selon laquelle les animaux sont des automates dépourvus de conscience et de sensibilité.",
       "L'idée que l'on peut construire des machines imitant les animaux.",
       "La métaphore selon laquelle les hommes dans la société se comportent comme des machines."
     ],
@@ -186,7 +186,7 @@ const questions = [
     question: "Dans la sixième <em>Méditation métaphysique</em>, comment Descartes décrit-il l'union de l'âme et du corps ?",
     answers: [
       "Comme une illusion de la perception.",
-      "Comme une union étroite, intime et confuse, où l'âme et le corps ne font qu'un seul tout, notamment à travers les sentiments (douleur, faim).",
+      "Comme une union étroite où l'âme et le corps ne font qu'un.",
       "Comme un pilote dans son navire : l'âme dirige le corps de l'extérieur."
     ],
     correct: 2,
@@ -197,7 +197,7 @@ const questions = [
     question: "Sur quoi Rousseau fonde-t-il l'interdiction de faire souffrir inutilement les animaux ?",
     answers: [
       "Sur leur capacité à raisonner et à conclure un contrat.",
-      "Sur leur sensibilité, qualité qu'ils partagent avec l'homme, et qui doit leur conférer un droit à ne pas être maltraités sans nécessité.",
+      "Sur leur sensibilité, qualité partagée avec l'homme.",
       "Sur leur appartenance au même règne biologique."
     ],
     correct: 2,
@@ -208,7 +208,7 @@ const questions = [
     question: "Selon Rousseau, quelle est la caractéristique qui distingue spécifiquement l'homme de l'animal ?",
     answers: [
       "La perfectibilité, la capacité à progresser au fil des générations.",
-      "La liberté, ou « qualité d'agent libre », la conscience de pouvoir acquiescer ou résister aux impulsions de la nature.",
+      "La conscience de pouvoir acquiescer ou résister aux impulsions naturelles.",
       "L'entendement, car l'animal n'a pas d'idées."
     ],
     correct: 2,
@@ -218,7 +218,7 @@ const questions = [
   {
     question: "Que signifie la théorie darwinienne de l'évolution appliquée à la question de l'homme ?",
     answers: [
-      "Elle établit que l'homme et les autres animaux partagent une origine commune et que l'homme est le produit d'une évolution biologique sous la pression de la sélection naturelle.",
+      "Elle établit que l'homme et les autres animaux partagent une origine commune.",
       "Elle prouve que l'homme descend directement du singe actuel.",
       "Elle affirme que l'évolution a un but : la production de l'espèce humaine."
     ],
@@ -230,7 +230,7 @@ const questions = [
     question: "Qu'est-ce que le 'darwinisme social', et en quoi est-il une déformation de la pensée de Darwin ?",
     answers: [
       "Le nom donné par Darwin à sa théorie de l'évolution des comportements sociaux.",
-      "Une doctrine qui applique abusivement le principe de 'lutte pour la vie' aux sociétés humaines pour justifier les inégalités et l'absence d'intervention de l'État.",
+      "Une doctrine qui justifie les inégalités et l'absence d'intervention de l'État.",
       "L'application des lois de la génétique mendélienne à l'évolution humaine."
     ],
     correct: 2,
@@ -240,7 +240,7 @@ const questions = [
   {
     question: "Quel est l'objectif principal de l'eugénisme tel que défini par Francis Galton ?",
     answers: [
-      "Contrôler socialement la reproduction humaine pour améliorer les qualités physiques et mentales des générations futures.",
+      "Améliorer les qualités des générations futures.",
       "Améliorer l'hygiène et la médecine pour tous.",
       "Protéger la diversité génétique."
     ],
@@ -251,7 +251,7 @@ const questions = [
   {
     question: "Que critique Jacques Derrida avec le terme <em>animot</em> ?",
     answers: [
-      "La fausse unité du concept d'« Animal » qui, au singulier, masque la multiplicité des vivants et n'est qu'un mot forgé par l'homme pour s'opposer à lui-même.",
+      "La fausse unité du concept d'« Animal ».",
       "Le manque de vocabulaire précis pour désigner les espèces.",
       "La tendance des animaux à imiter les mots humains."
     ],
@@ -273,7 +273,7 @@ const questions = [
   {
     question: "Quel concept Kant associe-t-il à l'éducation pour distinguer l'homme de l'animal ?",
     answers: [
-      "La discipline, qui arrache l'homme à son animalité en réprimant sa tendance à vouloir soumettre les autres.",
+      "La discipline, qui arrache l'homme à son animalité.",
       "Le jeu, qui est le propre de l'enfance humaine.",
       "La mémorisation, dont les animaux sont incapables."
     ],
@@ -284,7 +284,7 @@ const questions = [
   {
     question: "Quelle distinction biblique fonde une vision dualiste de l'homme ?",
     answers: [
-      "Les deux réponses précédentes sont correctes et liées.",
+      "Aucune distinction biblique ne vient fonder d'opposition dualiste en l'homme.",
       "L'opposition entre le corps (associé à l'animalité) et l'esprit (le souffle divin).",
       "L'opposition entre l'homme spirituel et l'homme animal."
     ],
@@ -296,7 +296,7 @@ const questions = [
     question: "Quelle est la signification de l'expression 'Ecce animot' de Jacques Derrida ?",
     answers: [
       "« Voici l'animal-mot », une invitation à considérer l'animal comme un être de langage.",
-      "« Voici l'animot », une présentation ironique et critique de ce concept monstrueux et construit qu'est l'« Animal ».",
+      "« Voici l'animot », une présentation ironique et critique du concept d'« Animal ».",
       "« Voici l'animal mort », une réflexion sur la mise à mort des animaux."
     ],
     correct: 2,
@@ -307,7 +307,7 @@ const questions = [
     question: "Quelle critique Montaigne adresse-t-il à l'anthropocentrisme ?",
     answers: [
       "Il le juge moralement condamnable car il conduit à la cruauté.",
-      "Il le considère comme une présomption orgueilleuse et injustifiée, fruit de l'ignorance humaine sur sa place dans le cosmos.",
+      "Il le considère comme une présomption orgueilleuse et injustifiée.",
       "Il le trouve scientifiquement erroné car la Terre n'est pas au centre."
     ],
     correct: 2,
@@ -317,7 +317,7 @@ const questions = [
   {
     question: "En quoi la position de Hobbes sur le droit sur l'animal est-elle 'naturaliste' ?",
     answers: [
-      "Elle le fonde non sur un décret divin, mais sur le pur rapport de forces et le droit de tous à survivre dans l'état de nature.",
+      "Elle le fonde sur le droit de tous à survivre dans l'état de nature.",
       "Elle s'appuie sur des observations scientifiques précises.",
       "Elle justifie ce droit par la supériorité intellectuelle naturelle."
     ],
@@ -329,7 +329,7 @@ const questions = [
     question: "Quelle est la fonction de la glande pinéale dans le modèle cartésien de l'union corps-âme ?",
     answers: [
       "C'est une glande sans fonction, un vestige.",
-      "C'est le siège de l'âme rationnelle, le point unique où elle interagit avec le corps-machine.",
+      "C'est le siège de l'âme rationnelle.",
       "C'est l'organe qui produit les esprits animaux."
     ],
     correct: 2,
@@ -339,7 +339,7 @@ const questions = [
   {
     question: "Pourquoi Rousseau parle-t-il d'un 'instant heureux' qui arracha l'homme à l'état de nature ?",
     answers: [
-      "Parce que le passage à l'état civil, bien qu'il introduise l'inégalité, fait de l'homme un être moral, intelligent et perfectible, réalisant ainsi sa véritable humanité.",
+      "Parce que le passage à l'état civil fait de l'homme un être moral.",
       "Parce que l'état de nature était un enfer de violence.",
       "Parce que cet instant marque l'invention de l'agriculture."
     ],
@@ -350,7 +350,7 @@ const questions = [
   {
     question: "Quel est le statut de la sensibilité animale selon Descartes ?",
     answers: [
-      "Il l'admet, mais seulement comme un épiphénomène de la machine corporelle, sans conscience associée.",
+      "Il l'admet, mais seulement sans conscience associée.",
       "Il la nie totalement : l'animal ne sent rien.",
       "Il l'admet pleinement et en fait le fondement d'un droit."
     ],
@@ -362,8 +362,8 @@ const questions = [
     question: "Quelle distinction établir entre 'animalité' et 'bestialité' appliquées à l'homme ?",
     answers: [
       "Les deux termes sont synonymes.",
-      "La bestialité est un terme médiéval désignant ce qui échappe au contrôle de la raison, l'animalité est un concept plus tardif (Rousseau) désignant notre condition naturelle partagée.",
-      "L'animalité désigne notre part biologique, la bestialité nos comportements cruels."
+      "L'animalité désigne notre condition naturelle partagée, la bestialité : ce qui échappe à la raison.",
+      "L'animalité désigne notre part biologique, la bestialité : nos comportements cruels."
     ],
     correct: 2,
     explanation: `On peut souligner une évolution sémantique. « Bestialité » apparaît au Moyen Âge et a une connotation morale négative. Elle désigne les passions, les pulsions incontrôlées. « Animalité », appliqué à l'homme au XVIIIe siècle avec Rousseau, est plus neutre. Il désigne la part naturelle de l'homme, ce qu'il partage avec les autres animaux (la sensibilité, les besoins), et qui peut fonder une éthique de la pitié.\nExemple : Un accès de rage meurtrière serait « bestial ». Le besoin de manger relève de notre « animalité » au sens de Rousseau.`
@@ -372,7 +372,7 @@ const questions = [
   {
     question: "Comment Pascal utilise-t-il la métaphore de l'horloge pour penser l'animal ?",
     answers: [
-      "Pour illustrer le fait que les animaux agissent avec une perfection immuable et machinale, sans progrès, contrairement à l'homme perfectible.",
+      "Pour dire que les animaux agissent avec une perfection machinale.",
       "Pour dire que les animaux sont des machines divines plus parfaites.",
       "Pour critiquer la théorie cartésienne."
     ],
@@ -383,7 +383,7 @@ const questions = [
   {
     question: "Quelle est la principale conséquence éthique de la théorie cartésienne de l'animal-machine ?",
     answers: [
-      "Elle lève tout scrupule moral quant à leur utilisation, leur souffrance étant considérée comme une illusion.",
+      "Elle lève tout scrupule moral quant à leur utilisation, leur souffrance étant illusoire.",
       "Elle impose de traiter les animaux avec respect, car ce sont des machines divines.",
       "Elle fonde l'obligation de ne pas faire souffrir les machines."
     ],
@@ -394,7 +394,7 @@ const questions = [
   {
     question: "En quoi la pensée de Montaigne préfigure-t-elle les théories évolutionnistes ?",
     answers: [
-      "Il défend l'idée d'une continuité et d'une ressemblance entre l'homme et l'animal, niant une différence de nature absolue.",
+      "Il nie une différence de nature entre l'homme et l'animal.",
       "Il affirme que l'homme descend du singe.",
       "Il évoque l'idée de sélection naturelle."
     ],
@@ -405,8 +405,8 @@ const questions = [
   {
     question: "Comment Machiavel justifie-t-il la nécessité pour le prince d'être à la fois lion et renard ?",
     answers: [
-      "Le lion chasse le jour, le renard la nuit.",
-      "La force du lion est nécessaire pour effrayer les ennemis puissants, et la ruse du renard pour déjouer les pièges.",
+      "Le lion chasse le jour alors que le renard chasse la nuit.",
+      "La force du lion effraye les ennemis et la ruse du renard déjoue les pièges.",
       "Le lion symbolise la noblesse, le renard l'intelligence du peuple."
     ],
     correct: 2,
@@ -416,7 +416,7 @@ const questions = [
   {
     question: "Que signifie l'idée de 'perfectibilité' chez Rousseau ?",
     answers: [
-      "La faculté, propre à l'espèce humaine, de se développer, de se transformer et de progresser au fil des générations, contrairement aux espèces figées.",
+      "La faculté de se développer contrairement aux espèces figées.",
       "La capacité de l'homme à atteindre un jour la perfection.",
       "La possibilité pour chaque individu de s'améliorer par l'éducation."
     ],
@@ -428,7 +428,7 @@ const questions = [
     question: "Comment le mythe du Déluge (Genèse 9:2) modifie-t-il le rapport entre l'homme et l'animal ?",
     answers: [
       "Il donne aux animaux un droit égal à la vie.",
-      "Il place l'animal dans la crainte de l'homme, instituant un rapport de domination et de conflit potentiel.",
+      "Il place l'animal dans la crainte de l'homme.",
       "Il instaure une alliance de paix éternelle."
     ],
     correct: 2,
@@ -438,7 +438,7 @@ const questions = [
   {
     question: "Quelle est la critique implicite que Montaigne adresse à l'argument du langage comme propre de l'homme ?",
     answers: [
-      "Il rétorque que les animaux parlent entre eux, mais que nous ne les comprenons pas, et qu'ils pourraient aussi bien nous estimer bêtes.",
+      "Il rétorque que les animaux parlent dans leur langue.",
       "Il nie que les hommes aient un langage.",
       "Il affirme que le langage est un instinct partagé."
     ],
@@ -450,7 +450,7 @@ const questions = [
     question: "En quoi la vision de l'homme chez Pic de la Mirandole et Ficin est-elle caractéristique de l'humanisme ?",
     answers: [
       "Elle identifie l'homme à un animal évolué.",
-      "Elle met l'homme au centre de l'univers, en faisant un être admirable, un « miracle », au statut exceptionnel.",
+      "Elle met l'homme au centre de l'univers.",
       "Elle insiste sur l'humilité de l'homme face à Dieu."
     ],
     correct: 2,
@@ -461,7 +461,7 @@ const questions = [
     question: "Quelle distinction fondamentale Aristote fait-il entre le cri de l'animal et la parole de l'homme ?",
     answers: [
       "Le cri est inné, la parole apprise.",
-      "Le cri manifeste subjectivement ce qui est bon ou mauvais, la parole permet de juger objectivement du bien et du mal, du juste et de l'injuste.",
+      "Le cri renvoie au bon et au mauvais, la parole au bien et au mal.",
       "Le cri exprime la douleur, la parole la joie."
     ],
     correct: 2,
@@ -472,7 +472,7 @@ const questions = [
     question: "Que signifie l'expression 'état de nature' chez Hobbes et Rousseau ?",
     answers: [
       "Une période historique précise comme la préhistoire.",
-      "Un concept théorique qui permet de penser l'homme en l'absence de société civile, pour comprendre son caractère et les fondements du contrat social.",
+      "Un concept théorique qui permet de penser l'homme.",
       "Un état de paix et d'harmonie originelle à retrouver."
     ],
     correct: 2,
@@ -483,7 +483,7 @@ const questions = [
     question: "Pourquoi Descartes considère-t-il que le doute prouve l'existence de l'âme ?",
     answers: [
       "Parce que les animaux ne doutent jamais.",
-      "Parce que, même en doutant de tout, je ne peux douter que moi, qui doute, j'existe en tant que chose pensante (res cogitans).",
+      "Parce que, je ne peux douter que j'existe.",
       "Parce que douter nécessite un grand courage."
     ],
     correct: 2,
@@ -491,10 +491,10 @@ const questions = [
   },
   // Question n°44
   {
-    question: "Comment Bergson interprète-t-il les deux maximes 'Homo homini deus' et 'Homo homini lupus' ?",
+    question: "Comment Bergson interprète-t-il les deux maximes <em>Homo homini deus</em> et <em>Homo homini lupus</em> ?",
     answers: [
       "La première s'applique à l'état civil, la seconde à l'état de nature.",
-      "La première concerne les compatriotes (ceux du même groupe), la seconde les étrangers (ceux de l'extérieur).",
+      "La première vise ceux du même groupe, la seconde ceux de l'extérieur.",
       "Elles sont contradictoires et montrent l'inconsistance humaine."
     ],
     correct: 2,
@@ -504,7 +504,7 @@ const questions = [
   {
     question: "Quelle est la fonction de la discipline dans l'éducation selon Kant ?",
     answers: [
-      "Briser la sauvagerie de l'enfant, sa tendance à vouloir tout faire selon son bon plaisir, pour le préparer à obéir à la loi et respecter autrui.",
+      "Briser la sauvagerie de l'enfant.",
       "Apprendre par cœur des connaissances.",
       "Dresser l'enfant à obéir aveuglément."
     ],
@@ -516,7 +516,7 @@ const questions = [
     question: "Que montre l'exemple des 'ruches des abeilles' chez Pascal concernant la perfectibilité ?",
     answers: [
       "Que la nature est fondamentalement stable.",
-      "Que l'homme, parce qu'il n'est pas régi par un instinct parfait, est capable de progrès et d'histoire, contrairement à l'animal.",
+      "Que l'homme est capable de progrès et d'histoire.",
       "Que les animaux sont plus parfaits que les hommes."
     ],
     correct: 2,
@@ -527,7 +527,7 @@ const questions = [
     question: "Comment la pensée de Derrida sur l'<em>animot</em> s'oppose-t-elle au geste cartésien ?",
     answers: [
       "Derrida affirme que seul l'homme est un « animot ».",
-      "Alors que Descartes unifie tous les animaux sous le concept négatif de « machine sans pensée », Derrida dénonce ce singulier « Animal » qui efface la multiplicité des vivants.",
+      "Derrida dénonce ce qui efface la multiplicité des vivants.",
       "Derrida défend que les animaux sont des machines parlantes."
     ],
     correct: 2,
@@ -538,7 +538,7 @@ const questions = [
     question: "Quel lien établir entre la critique de l'anthropocentrisme et celle de l'ethnocentrisme chez Montaigne ?",
     answers: [
       "L'ethnocentrisme consiste à traiter les autres hommes comme des animaux.",
-      "C'est le même argument : on méprise ce que l'on ne comprend pas (animaux, cultures étrangères).",
+      "On méprise ce que l'on ne comprend pas (animaux, cultures étrangères).",
       "Montaigne est anthropocentriste mais critique l'ethnocentrisme."
     ],
     correct: 2,
@@ -549,7 +549,7 @@ const questions = [
     question: "Quelle est la signification du mythe de la Genèse (2:7) concernant le souffle de vie ?",
     answers: [
       "Le souffle représente l'âme immortelle, que seuls les chrétiens possèdent.",
-      "Le souffle (rouah, pneuma) est ce qui distingue l'homme de l'animal, faisant de lui un être vivant et spirituel.",
+      "Le souffle fait de l'homme un être vivant et spirituel.",
       "Le souffle est simplement l'air qui permet la respiration."
     ],
     correct: 2,
@@ -560,7 +560,7 @@ const questions = [
     question: "Pourquoi la théorie de l'évolution de Darwin s'oppose-t-elle à la conception aristotélicienne des espèces ?",
     answers: [
       "Aristote croyait à l'évolution, Darwin non.",
-      "Aristote considérait les espèces comme des essences fixes et éternelles, Darwin montre qu'elles se transforment à partir d'ancêtres communs.",
+      "Darwin montre que les espèces se transforment à partir d'ancêtres communs.",
       "Aristote pensait que les espèces apparaissaient spontanément."
     ],
     correct: 2,
@@ -571,7 +571,7 @@ const questions = [
     question: "Comment Descartes explique-t-il les passions (amour, haine, joie) chez l'homme ?",
     answers: [
       "Comme des jugements erronés de la raison.",
-      "Comme des états de l'âme causés par des mouvements des esprits animaux dans le corps, résultant de l'union de l'âme et du corps.",
+      "Comme des états de l'âme résultant de l'union de l'âme et du corps.",
       "Comme des mouvements purement spirituels de l'âme."
     ],
     correct: 2,
@@ -582,7 +582,7 @@ const questions = [
     question: "Quel est l'argument central de Rousseau pour étendre la pitié aux animaux ?",
     answers: [
       "Ils sont nos frères dans l'évolution.",
-      "Ils sont sensibles, capables de souffrir physiquement, et cette sensibilité commune doit éveiller en nous un sentiment naturel de pitié.",
+      "Ils sont capables de souffrir.",
       "Ils sont doués de raison."
     ],
     correct: 2,
@@ -601,20 +601,20 @@ const questions = [
   },
   // Question n°54
   {
-    question: "Quelle est la conception médiévale du corps humain par rapport à l'âme, d'après la prédication citée ?",
+    question: "Quelle est la conception médiévale du corps humain par rapport à l'âme ?",
     answers: [
       "Le corps et l'âme sont identiques.",
-      "Le corps est associé à l'animalité ; lui accorder trop d'importance au détriment de l'âme spirituelle est une inversion monstrueuse.",
+      "Le corps est associé à l'animalité.",
       "Le corps est le temple de l'âme."
     ],
     correct: 2,
-    explanation: `L'anecdote du prêcheur est édifiante : comparer l'homme qui soigne son corps et néglige son âme à un homme qui dormirait dans l'étable et mettrait l'âne dans son lit. Le corps (l'âne) est la part inférieure, animale. L'âme (l'homme) est la part supérieure, spirituelle. Inverser l'ordre, privilégier le corps, est considéré comme une folie, une bestialisation de l'homme.\nExemple : Les pratiques ascétiques médiévales (jeûnes) visaient à « mater » le corps pour mieux élever l'âme vers Dieu.`
+    explanation: `Comparer l'homme qui soigne son corps et néglige son âme à un homme qui dormirait dans l'étable et mettrait l'âne dans son lit. Le corps (l'âne) est la part inférieure, animale. L'âme (l'homme) est la part supérieure, spirituelle. Inverser l'ordre, privilégier le corps, est considéré comme une folie, une bestialisation de l'homme.\nExemple : Les pratiques ascétiques médiévales (jeûnes) visaient à « mater » le corps pour mieux élever l'âme vers Dieu.`
   },
   // Question n°55
   {
     question: "En quoi l'argument de Montaigne sur la communication animale est-il un argument sceptique ?",
     answers: [
-      "Il montre que nous n'avons pas de critère fiable pour juger de l'intelligence d'autrui (humain ou animal), et invite à suspendre notre jugement.",
+      "Il montre que l'on ne peut juger de l'intelligence d'autrui.",
       "Il prouve que les animaux ont un langage égal au nôtre.",
       "Il affirme que toute communication est impossible."
     ],
@@ -623,11 +623,11 @@ const questions = [
   },
   // Question n°56
   {
-    question: "Pourquoi la citation 'Homo homini lupus' est-elle souvent mal interprétée ?",
+    question: "Pourquoi la citation <em>Homo homini lupus</em> est-elle souvent mal interprétée ?",
     answers: [
       "Les loups sont en réalité pacifiques.",
-      "Elle ne signifie pas que l'homme est intrinsèquement mauvais, mais que, dans une situation spécifique (état de nature), la défiance conduit à des comportements de prédation.",
-      "Elle prétend que l'homme est physiquement un loup."
+      "La défiance conduit, à état naturel, à la prédation.",
+      "La citation montre que l'homme est physiquement un loup."
     ],
     correct: 2,
     explanation: `« Homo homini lupus » n'est pas une affirmation sur la nature immuable de l'homme comme être mauvais. C'est une thèse politique conditionnelle. Pour Hobbes, l'homme n'est pas un loup par essence. Mais dans l'état de nature, la crainte rationnelle de la mort violente l'incite à attaquer le premier par précaution. La « loupité » est le produit d'une situation d'insécurité, non d'un vice originel.\nExemple : Dans une foule paniquée, des gens peuvent se comporter en « loups » (bousculer) par peur pour leur vie, alors qu'en temps normal ils seraient courtois.`
@@ -637,7 +637,7 @@ const questions = [
     question: "Que signifie la perfectibilité pour Rousseau dans le <em>Discours sur l'inégalité</em> ?",
     answers: [
       "La tendance naturelle à s'améliorer moralement.",
-      "La capacité presque illimitée de l'espèce humaine à développer de nouvelles facultés et à changer de mode de vie.",
+      "La capacité à développer de nouvelles facultés.",
       "La possibilité pour chaque homme de devenir parfait."
     ],
     correct: 2,
@@ -645,9 +645,9 @@ const questions = [
   },
   // Question n°58
   {
-    question: "Quelle est la différence entre la 'force' et la 'ruse' dans l'allégorie machiavélienne du lion et du renard ?",
+    question: "Quelle est la différence entre la force et la ruse dans l'allégorie machiavélienne du lion et du renard ?",
     answers: [
-      "La force est l'action ouverte et directe, la ruse est l'action indirecte, dissimulée et trompeuse.",
+      "La force est directe, la ruse est trompeuse.",
       "La force est morale, la ruse immorale.",
       "La force sert à construire, la ruse à détruire."
     ],
@@ -658,8 +658,8 @@ const questions = [
   {
     question: "Comment Descartes justifie-t-il finalement l'existence du corps après en avoir douté ?",
     answers: [
-      "Par la certitude des sens.",
-      "Par la bonté et la véracité de Dieu, qui ne peut m'avoir créé avec des facultés qui me tromperaient systématiquement.",
+      "Par les sens qui ne peuvent pas me tromper.",
+      "Par Dieu qui ne peut m'avoir attribué des facultés qui me trompent systématiquement.",
       "Par la foi en la révélation."
     ],
     correct: 2,
@@ -670,7 +670,7 @@ const questions = [
     question: "Quelle est la position de Malebranche rapportée dans l'anecdote sur la sensibilité animale ?",
     answers: [
       "Il pense que seuls les animaux supérieurs sont sensibles.",
-      "Il la nie absolument, suivant une interprétation extrême de l'animal-machine.",
+      "Il la nie absolument.",
       "Il l'affirme avec force."
     ],
     correct: 2,
@@ -681,7 +681,7 @@ const questions = [
     question: "Quel est le sens de la citation de Rousseau sur le passage de l'état de nature à l'état civil ?",
     answers: [
       "Il marque le début de la décadence.",
-      "Il transforme l'homme d'un 'animal stupide et borné' en un 'être intelligent', lui faisant acquérir moralité et raison, au prix de la perte de sa liberté naturelle.",
+      "L'homme passe d'un animal bête à un être intelligent.",
       "Il met fin à la violence et instaure la paix."
     ],
     correct: 2,
@@ -689,11 +689,11 @@ const questions = [
   },
   // Question n°62
   {
-    question: "Pourquoi le terme 'animal' est-il ambigu selon la note sur Aristote ?",
+    question: "Pourquoi le terme <em>animal</em> est-il ambigu selon Aristote ?",
     answers: [
-      "Les deux réponses sont correctes.",
-      "En français courant, dire d'un homme qu'il est un 'animal' ne renvoie pas à sa capacité de mouvement, mais à un comportement bestial.",
-      "Il désigne à la fois l'homme et la bête, alors qu'Aristote les distingue."
+      "L'homme comme l'animal est animé, mais, contrairement à l'animal, il est rationnel",
+      "Dire d'un homme qu'il est un 'animal' ne renvoie pas à sa capacité de mouvement, mais à un comportement bestial.",
+      "Le terme <em>animal</em> désigne à la fois l'homme et la bête, alors qu'Aristote les distingue."
     ],
     correct: 1,
     explanation: `L'ambiguïté est double. 1) Pour Aristote, « animal » (zoon) désigne tout être doué d'âme sensitive. L'homme est donc un animal, mais l'animal rationnel. 2) Dans le langage courant, l'opposition homme/animal est devenue si forte que « animal » désigne exclusivement la bête non-humaine. Et traiter un homme d'« animal » souligne sa bestialité, ce qui n'a plus rien à voir avec la définition aristotélicienne.\nExemple : « Arrête de manger comme un animal ! » signifie « sois civilisé », pas « utilise ta capacité locomotrice ».`
@@ -703,7 +703,7 @@ const questions = [
     question: "Quelle est la conception de l'instinct chez Pascal et Descartes ?",
     answers: [
       "C'est une capacité d'apprentissage présente aussi chez l'homme.",
-      "C'est un programme naturel fixe et parfait qui guide le comportement animal de manière immuable, par opposition à la raison perfectible.",
+      "C'est un programme naturel fixe et parfait qui guide l'animal.",
       "C'est une forme inférieure de raison."
     ],
     correct: 2,
@@ -711,10 +711,10 @@ const questions = [
   },
   // Question n°64
   {
-    question: "Comment l'humanisme de la Renaissance se distingue-t-il d'un 'animalisme' ?",
+    question: "Comment l'humanisme de la Renaissance se distingue-t-il d'un animalisme ?",
     answers: [
-      "Il n'y a pas de différence.",
-      "L'humanisme accorde un statut exceptionnel à l'homme, l'animalisme considérerait l'homme comme un animal parmi d'autres.",
+      "Il n'y a pas de différence entre l'humanisme et l'animalisme.",
+      "L'humanisme accorde un statut exceptionnel à l'homme, contrairement à l'animalisme.",
       "L'humanisme étudie les animaux, l'animalisme les hommes."
     ],
     correct: 2,
@@ -722,21 +722,22 @@ const questions = [
   },
   // Question n°65
   {
-    question: "Quelle est la fonction de l'exemple du somnambule utilisé par Descartes ?",
+    question: "Quel est l'intérêt de la lecture mécaniste de Descartes du comportement animal, à l'image du comportement du somnambule ?",
     answers: [
       "Illustrer la puissance de l'inconscient.",
-      "Montrer que le corps peut accomplir des actions complexes sans pensée consciente, ce qui prouve que des comportements animaux pourraient être mécaniques.",
+      "Un comportement complexe ne prouve pas la présence de la pensée",
       "Prouver que l'âme quitte le corps pendant le sommeil."
     ],
     correct: 2,
-    explanation: `Descartes utilise cet exemple pour étayer sa thèse de l'animal-machine. Si un somnambule peut accomplir des actions périlleuses sans en avoir conscience, cela montre qu'un corps humain peut être piloté par des mécanismes physiologiques. Cet argument par analogie sert à dire : même chez l'homme, le corps peut agir « en automate ». Alors, l'animal pourrait bien n'être qu'un automate complet.\nExemple : Un somnambule évite des meubles sans en avoir le souvenir. De même, un chien qui évite un obstacle pourrait le faire par réflexe, sans « penser ».`
+    explanation: `Si un corps humain peut être piloté par des mécanismes physiologiques, comme c'est le cas pour un somnanbule qui peut agir « en automate », alors, l'animal pourrait bien n'être qu'un automate complet.\nExemple : « ceux qui marchent en
+dormant, passent quelquefois des rivières à la nage, où ils se noieraient étant éveillés » (<em>Lettre au marquis de Newcastle</em>). De même, un chien qui évite un obstacle pourrait le faire par réflexe, sans « penser ».`
   },
   // Question n°66
   {
     question: "Comment interpréter l'émergence du concept d'<em>animalité</em> au XVIIIe siècle ?",
     answers: [
       "Comme une simple conséquence des découvertes zoologiques.",
-      "Comme une avancée permettant de penser la continuité de l'homme avec la nature et de fonder une éthique sur la sensibilité partagée.",
+      "Comme une avancée permettant de fonder une éthique sur la sensibilité partagée.",
       "Comme une régression."
     ],
     correct: 2,
@@ -747,7 +748,7 @@ const questions = [
     question: "Quelle est la distinction entre un 'animal domestiqué' et une 'bête' dans la conception biblique et médiévale ?",
     answers: [
       "Le domestique a une âme, la bête non.",
-      "Le domestique est soumis et familier, la bête est sauvage, inquiétante, représentant une menace ou un monde hostile.",
+      "Le domestique est soumis et familier, la bête est sauvage et hostile.",
       "Le domestique est utile, la bête nuisible."
     ],
     correct: 2,
@@ -758,7 +759,7 @@ const questions = [
     question: "Quel est le statut de la raison dans la distinction homme/animal chez les classiques (Aristote, Descartes, Kant) ?",
     answers: [
       "C'est une illusion humaine.",
-      "C'est le propre de l'homme, la caractéristique essentielle qui le sépare de l'animal régi par l'instinct.",
+      "C'est ce qui sépare l'homme de l'animal régi par l'instinct.",
       "C'est une faculté que les animaux possèdent à un degré moindre."
     ],
     correct: 2,
@@ -766,9 +767,9 @@ const questions = [
   },
   // Question n°69
   {
-    question: "Comment l'exemple des éléphants au Kenya illustre-t-il une nouvelle approche des conflits homme-animal ?",
+    question: "Comment l'exemple du respect des éléphants au Kenya illustre-t-il une nouvelle approche des conflits homme-animal ?",
     answers: [
-      "Il propose une solution technique et écologique (ruches) qui respecte les besoins des hommes et le comportement des animaux, évitant une guerre d'extermination.",
+      "Il propose d'éviter une guerre d'extermination.",
       "Il montre qu'il faut exterminer les animaux gênants.",
       "Il prouve que les éléphants peuvent être domestiqués."
     ],
@@ -777,10 +778,10 @@ const questions = [
   },
   // Question n°70
   {
-    question: "Que signifie l'expression 'le propre de l'homme est le sale de l'homme' dans le contexte médiéval ?",
+    question: "Que signifie l'expression « le propre de l'homme est le sale de l'homme » dans le contexte médiéval ?",
     answers: [
       "L'homme est sale par nature.",
-      "Ce qui caractérise l'homme (sa supériorité) est fondé sur le rejet de ce qu'il y a en lui de 'sale' (pulsions, corps), attribué à l'animalité.",
+      "La supériorité humaine repose sur le rejet de son animalité.",
       "Ce qui rend l'homme propre le salit moralement."
     ],
     correct: 2,
@@ -791,7 +792,7 @@ const questions = [
     question: "Que signifie l'idée d'<em>arrachement</em> à l'animalité chez Rousseau et Kant ?",
     answers: [
       "La nécessité de fuir le contact avec les animaux.",
-      "Le passage de l'état de nature à l'état civil ou moral, grâce à l'éducation et la raison, qui nous font accéder à notre humanité pleine.",
+      "L'accession à l'état civil signe notre pleine humanité.",
       "Un processus violent d'extirpation."
     ],
     correct: 2,
@@ -801,7 +802,7 @@ const questions = [
   {
     question: "Quelle est la position de Montaigne sur la technique animale ?",
     answers: [
-      "Il l'affirme, donnant des exemples d'animaux qui utilisent des outils et font preuve d'ingéniosité, remettant en cause l'exclusivité humaine.",
+      "Il l'affirme, l'ingéniosité n'est pas un privilège humain.",
       "Il la nie, les animaux n'agissent que par instinct.",
       "Il pense que les animaux ont une technique supérieure."
     ],
@@ -813,7 +814,7 @@ const questions = [
     question: "Comment Hobbes conçoit-il le droit sur l'animal dans le <em>Citoyen</em> ?",
     answers: [
       "Comme un devoir de protection.",
-      "Comme un droit acquis par la force, dans un rapport de lutte où l'animal peut aussi attaquer.",
+      "Comme un droit acquis par la force.",
       "Comme un privilège divin positif."
     ],
     correct: 2,
@@ -824,7 +825,7 @@ const questions = [
     question: "Que signifie l'expression 'psychagogie' (ψυχαγωγία) chez les sophistes ?",
     answers: [
       "L'étude scientifique de l'âme.",
-      "La « conduite des âmes », l'art de persuader en orientant les passions et croyances de l'auditeur.",
+      "La « conduite des âmes ».",
       "La guérison des maladies de l'âme."
     ],
     correct: 2,
@@ -832,9 +833,9 @@ const questions = [
   },
   // Question n°75
   {
-    question: "Quelle distinction Platon établit-il entre 'convaincre' et 'persuader' ?",
+    question: "Quelle distinction Platon établit-il entre « convaincre » et « persuader » ?",
     answers: [
-      "Il n'y a pas de différence.",
+      "Il n'y a pas de différence entre « convaincre » et « persuader ».",
       "Convaincre s'adresse à la raison, persuader aux passions.",
       "Convaincre est l'art des sophistes, persuader celui des philosophes."
     ],
@@ -854,9 +855,9 @@ const questions = [
   },
   // Question n°77
   {
-    question: "Que sont le pathos, l'ethos et le logos chez Aristote ?",
+    question: "Que sont le <em>pathos</em>, <em>l'ethos et le <em>logos chez Aristote ?",
     answers: [
-      "Les trois moyens de persuasion : l'émotion (pathos), le caractère de l'orateur (ethos), l'argumentation (logos).",
+      "Les trois moyens de persuasion.",
       "Les trois parties d'un discours.",
       "Trois styles littéraires."
     ],
@@ -869,7 +870,7 @@ const questions = [
     answers: [
       "La parole est faible.",
       "Seule la vérité a du pouvoir.",
-      "La parole (logos) est un « grand dynaste » qui peut ensorceler l'âme, la contraindre à croire et à agir."
+      "La parole peut contraindre l'âme."
     ],
     correct: 3,
     explanation: `Gorgias développe une théorie extrême de la puissance du logos. La parole a une force quasi magique, comparable à un sortilège. Elle peut « ensorceler l'âme », produire la persuasion contre toute évidence, et pousser à l'action. Si Hélène a suivi Pâris, c'est parce qu'elle a été victime de la puissance contraignante de la persuasion. Gorgias célèbre ainsi le pouvoir de la rhétorique, capable de créer la réalité par le discours.\nExemple : Pour Gorgias, un bon orateur peut faire croire à une foule qu'un innocent est coupable, et les pousser à agir, tel un magicien.`
@@ -878,7 +879,7 @@ const questions = [
   {
     question: "Que critique Platon dans le <em>Gorgias</em> à propos de la rhétorique des sophistes ?",
     answers: [
-      "Son caractère immoral : c'est une « flatterie », un art de l'apparence qui vise à plaire sans se soucier du vrai et du bien.",
+      "Son caractère immoral.",
       "Son inefficacité.",
       "Son manque de beauté."
     ],
@@ -889,7 +890,7 @@ const questions = [
   {
     question: "Quelle est la position d'Isocrate sur la relation rhétorique/philosophie ?",
     answers: [
-      "Il identifie la vraie philosophie à la formation de l'orateur citoyen : une culture générale unissant l'art de parler à la pensée politique et morale.",
+      "Il identifie la philosophie à la formation de l'orateur citoyen.",
       "Il les oppose comme Platon.",
       "Il pense que la philosophie est inutile."
     ],
@@ -900,9 +901,9 @@ const questions = [
   {
     question: "Que signifie le concept de 'performativité' du langage (Austin) ?",
     answers: [
-      "La capacité du langage à bien représenter.",
-      "Le fait que certains énoncés (« je te promets ») accomplissent l'action même qu'ils énoncent, sous conditions conventionnelles.",
-      "La qualité théâtrale d'un orateur."
+      "La capacité du langage lui-même à pouvoir représenter.",
+      "Certains énoncés accomplissent l'action qu'ils énoncent.",
+      "La qualité théâtrale éventuelle de certains orateurs."
     ],
     correct: 2,
     explanation: `Austin distingue les énoncés constatatifs (décrivent un état de fait, vrai/faux) et les énoncés performatifs (accomplissent une action). Dire « Je promets » n'est pas décrire une promesse, c'est faire la promesse. L'énoncé est l'acte. Pour réussir, il faut des conditions de félicité : contexte conventionnel approprié, procédures correctes, intention sérieuse. Le langage n'est pas seulement représentatif, il est actif et créateur de réalités sociales.\nExemple : Quand un juge dit « Je vous condamne », il ne décrit pas, il prononce la condamnation. Les mots créent une réalité juridique.`
@@ -911,7 +912,7 @@ const questions = [
   {
     question: "Quelle est la critique de Platon contre l'écriture dans le <em>Phèdre</em> (mythe de Theuth) ?",
     answers: [
-      "L'écriture affaiblit la mémoire et donne une illusion de sagesse ; elle est morte, incapable de répondre, contrairement à la parole vive du dialogue.",
+      "L'écriture affaiblit la mémoire.",
       "L'écriture est trop chère.",
       "L'écriture est réservée aux prêtres."
     ],
@@ -922,20 +923,20 @@ const questions = [
   {
     question: "Comment Cicéron définit-il l'idéal de l'orateur parfait ?",
     answers: [
-      "Le « vir bonus dicendi peritus » : l'homme de bien, habile à parler, doté d'une vaste culture, pour servir la République.",
+      "L'homme de bien habile à parler.",
       "Un technicien des figures de style.",
       "Un philosophe qui évite de parler."
     ],
     correct: 1,
-    explanation: `Cicéron réagit contre une conception purement technique. Un bon orateur doit d'abord être un « homme de bien », d'une haute moralité et d'un sens civique. Ensuite, il doit être « habile à parler ». Enfin, il doit posséder une culture encyclopédique, notamment en philosophie et en droit. Seul ce triple talent permet de discerner le vrai et le juste, et de persuader pour de bonnes causes. L'éloquence est un art civique au service de la res publica.\nExemple : Cicéron lui-même incarnait cet idéal : homme politique, avocat brillant, philosophe, utilisant son éloquence pour défendre la République.`
+    explanation: `Cicéron réagit contre une conception purement technique. « <em>Vir bonus dicendi peritus</em> » : un bon orateur doit d'abord être un « homme de bien », d'une haute moralité et d'un sens civique. Ensuite, il doit être « habile à parler ». Enfin, il doit posséder une culture encyclopédique, notamment en philosophie et en droit. Seul ce triple talent permet de discerner le vrai et le juste, et de persuader pour de bonnes causes. L'éloquence est un art civique au service de la res publica.\nExemple : Cicéron lui-même incarnait cet idéal : homme politique, avocat brillant, philosophe, utilisant son éloquence pour défendre la République.`
   },
   // Question n°84
   {
     question: "Quelle distinction Quintilien établit-il entre l'orateur et le déclamateur ?",
     answers: [
-      "L'orateur vise l'efficacité réelle dans la cité, le déclamateur s'exerce sur des sujets fictifs et outranciers, risquant de déformer l'art en un art vide.",
+      "L'orateur vise l'efficacité, le déclamateur s'exerce sur des sujets fictifs.",
       "L'orateur parle en public, le déclamateur dans sa chambre.",
-      "L'orateur utilise le latin, le déclamateur le grec."
+      "L'orateur utilise la langue du latin, le déclamateur utilise celle du grec."
     ],
     correct: 1,
     explanation: `Quintilien déplore la dégénérescence de l'enseignement rhétorique. La déclamation était un exercice scolaire sur des sujets fictifs et souvent extravagants. Quintilien critique cet exercice lorsqu'il devient une fin en soi, coupé des réalités du forum. Le déclamateur recherche alors les effets faciles, le pathos outrancier. Le véritable orateur doit se former en vue de l'action civique réelle. Son éloquence doit être adaptée, claire et ancrée dans le réel.\nExemple : Un avocat qui plaiderait au tribunal comme dans un exercice d'école, avec des arguments tirés par les cheveux, serait un déclamateur, pas un orateur efficace.`
@@ -945,7 +946,7 @@ const questions = [
     question: "Que signifie l'idée de 'violence symbolique' (Bourdieu) ?",
     answers: [
       "La violence physique au nom d'idées.",
-      "Une violence douce, invisible, qui s'exerce par le langage et la culture, imposant comme légitimes des visions du monde servant les dominants.",
+      "Une violence douce et invisible.",
       "La violence des symboles religieux."
     ],
     correct: 2,
@@ -955,7 +956,7 @@ const questions = [
   {
     question: "Comment la notion de 'parole vide' est-elle analysée (notamment avec Ellul) ?",
     answers: [
-      "Comme une parole déconnectée de l'action et de la responsabilité, médiatique ou publicitaire, qui circule pour elle-même, crée du bruit sans engagement réel.",
+      "Comme une parole sans lien à l'action.",
       "Comme un discours sans arguments.",
       "Comme le silence."
     ],
@@ -966,9 +967,9 @@ const questions = [
   {
     question: "Quelle est la distinction saussurienne entre 'langue', 'langage' et 'parole' ?",
     answers: [
-      "La langue est le système partagé (code). La parole est l'acte individuel d'utilisation. Le langage est la faculté humaine générale.",
-      "Ce sont des synonymes.",
-      "La langue est parlée, le langage écrit, la parole pensée."
+      "La langue est un système partagé, la parole est l'acte individuel d'utilisation, le langage est la faculté humaine générale.",
+      "Il n'y a aucune distinction à faire. Les trois mots sont en fait des synonymes.",
+      "Les trois termes se distinguent par les modalités qu'ils impliquent: la langue est parlée, le langage est écrit et la parole est pensée."
     ],
     correct: 1,
     explanation: `La distinction est fondamentale. 1) Le langage est la capacité biologique et psychique générale de communiquer par des signes. 2) La langue est un système particulier, conventionnel et social que partage une communauté (le français). C'est un code. 3) La parole est l'acte individuel et momentané par lequel un locuteur utilise la langue. La langue existe à travers la parole, et la parole présuppose la langue.\nExemple : Quand je dis « Bonjour », j'utilise ma faculté de langage, le code de la langue française, et je produis un acte de parole.`
@@ -978,7 +979,7 @@ const questions = [
     question: "Que signifie la 'double articulation' du langage humain (Martinet) ?",
     answers: [
       "La capacité de parler deux langues.",
-      "Le fait que le langage se compose de deux niveaux : unités significatives (mots) et unités non significatives mais distinctives (sons), permettant une créativité infinie.",
+      "Le langage se compose de mots et de sons.",
       "La distinction entre langue et parole."
     ],
     correct: 2,
@@ -989,7 +990,7 @@ const questions = [
     question: "Comment analyser le discours de Marc Antoine dans <em>Jules César</em> de Shakespeare ?",
     answers: [
       "Comme un exemple d'éloquence purement rationnelle.",
-      "Comme une démonstration magistrale de persuasion par le pathos : feignant la modération, il retourne la foule en jouant sur ses émotions (chagrin, indignation, cupidité).",
+      "Comme une démonstration magistrale de persuasion.",
       "Comme un échec."
     ],
     correct: 2,
@@ -999,7 +1000,7 @@ const questions = [
   {
     question: "Quelle est la fonction sociale du 'bagou' ou de la 'tchatche' ?",
     answers: [
-      "Elle peut être une compétence sociale valorisée, un art de la parole vive et de la répartie, permettant d'affirmer son identité, créer du lien ou négocier.",
+      "Elle peut être une compétence valorisée.",
       "Elle est toujours vue comme un mensonge.",
       "Elle n'a aucune fonction."
     ],
@@ -1011,7 +1012,7 @@ const questions = [
     question: "Quel est le rapport entre parole et silence ?",
     answers: [
       "Le silence est un vide à combler.",
-      "Le silence est souvent le cadre nécessaire de la parole, il peut être éloquent, signifiant, et une parole authentique sait aussi se taire.",
+      "Le silence est le cadre de la parole.",
       "La parole doit toujours chasser le silence."
     ],
     correct: 2,
@@ -1021,9 +1022,9 @@ const questions = [
   {
     question: "Comment la publicité utilise-t-elle les ressorts de la rhétorique ?",
     answers: [
-      "Elle utilise massivement le pathos (émotions), construit un ethos de marque et emploie un logos souvent fallacieux, visant à persuader et créer un besoin.",
-      "Elle se contente d'informer.",
-      "Elle ignore la rhétorique."
+      "Elle utilise l'émotion pour persuader.",
+      "Elle se contente d'informer comme le fait la réclame.",
+      "Elle ignore en fait la rhétorique et ses ressorts."
     ],
     correct: 1,
     explanation: `La publicité applique de manière systématique l'art de la persuasion. 1) Pathos : elle fait appel aux émotions profondes (désir, peur, rêve). 2) Ethos : elle construit une image de marque (sérieuse, innovante, « cool ») pour inspirer confiance. 3) Logos : elle utilise des arguments simplistes, des slogans, des raisonnements implicites. Son but n'est pas d'informer objectivement, mais de créer une association mentale positive et d'inciter à l'achat.\nExemple : Une pub pour une voiture montrera des paysages magnifiques (rêve - pathos), une personne élégante (prestige - ethos), avec une voix off assurant « la sécurité avant tout » (argument - logos).`
@@ -1032,7 +1033,7 @@ const questions = [
   {
     question: "Quelle est la spécificité de la parole politique dans une démocratie ?",
     answers: [
-      "Elle est au cœur du pouvoir : elle permet la délibération, la justification des décisions, la confrontation des idées, et légitime l'autorité. Son dévoiement est une menace.",
+      "Son dévoiement est une menace.",
       "Elle doit être réservée aux experts.",
       "Elle est essentiellement propagande."
     ],
@@ -1044,7 +1045,7 @@ const questions = [
     question: "Qu'est-ce que la 'langue de bois' en politique ?",
     answers: [
       "Un langage populaire et imagé.",
-      "Un discours stéréotypé, vague, qui évite de nommer les choses, utilise des formules creuses et vise à ne pas prendre de risques ou à masquer la réalité.",
+      "Un discours stéréotypé et vague.",
       "Un langage technique et précis."
     ],
     correct: 2,
@@ -1055,7 +1056,7 @@ const questions = [
     question: "Comment les réseaux sociaux transforment-ils la parole publique ?",
     answers: [
       "Ils la rendent plus lente et réfléchie.",
-      "Ils la démocratisent mais la fragilisent : parole instantanée, émotionnelle, fragmentée, propice aux polémiques et fake news, remettant en cause les médiations traditionnelles.",
+      "Ils la démocratisent mais la fragilisent.",
       "Ils ont mis fin à toute conversation."
     ],
     correct: 2,
@@ -1066,7 +1067,7 @@ const questions = [
     question: "Quel est l'enjeu éthique de la parole selon Levinas ?",
     answers: [
       "Il faut se taire pour écouter sa conscience.",
-      "La parole, avant d'être un échange, est une relation éthique fondamentale : le visage de l'autre m'appelle et m'oblige à répondre. Parler, c'est reconnaître l'autre comme digne de réponse.",
+      "La parole est une relation éthique fondamentale.",
       "La parole doit servir à dominer."
     ],
     correct: 2,
@@ -1076,9 +1077,9 @@ const questions = [
   {
     question: "Quelle est la fonction de la parole dans les commissions 'Vérité et Réconciliation' ?",
     answers: [
-      "Dire la vérité sur les violences, permettre aux victimes de témoigner et d'être reconnues, est essentiel pour tourner la page et reconstruire un lien social brisé.",
-      "Aucune, le silence est préférable.",
-      "Elle sert uniquement à punir."
+      "Permettre aux victimes d'être reconnues comme telles.",
+      "Aucune, le silence est bien plus préférable.",
+      "Elle sert uniquement à punir les coupables."
     ],
     correct: 1,
     explanation: `Dans des situations de traumatisme collectif, la parole publique joue un rôle thérapeutique et politique crucial. Ces commissions créent un espace où les victimes peuvent raconter leur souffrance, brisant le silence. Leurs récits établissent une vérité historique officielle. Parfois, les auteurs peuvent aussi parler sous condition de vérité. Cette parole ritualisée vise à restaurer la dignité des victimes et à poser les bases d'une paix future.\nExemple : Le témoignage public de victimes de l'apartheid devant la commission Tutu a permis à toute une nation de prendre conscience de l'horreur et a été essentiel dans la transition démocratique.`
@@ -1087,7 +1088,7 @@ const questions = [
   {
     question: "Comment la parole artistique se distingue-t-elle de la parole utilitaire ?",
     answers: [
-      "Elle n'a pas d'autre but qu'elle-même, elle travaille la langue pour créer du beau, du sens, de l'émotion, sans visée pratique immédiate.",
+      "Elle n'a pas d'autre but qu'elle-même.",
       "Elle n'a aucun sens.",
       "Elle est toujours plus vraie."
     ],
@@ -1099,7 +1100,7 @@ const questions = [
     question: "Quel est le rôle de la parole dans la construction de l'identité personnelle ?",
     answers: [
       "Aucun, l'identité est biologique.",
-      "La parole, à travers le récit de soi, les conversations, est essentielle pour se construire une identité, se comprendre et être reconnu.",
+      "La parole permet de se construire une identité.",
       "La parole empêche d'être soi-même."
     ],
     correct: 2,
@@ -1110,7 +1111,7 @@ const questions = [
     question: "Pourquoi peut-on dire que 'la parole est un pouvoir' ?",
     answers: [
       "Parce que les gens qui parlent beaucoup sont plus forts.",
-      "Parce qu'elle permet d'agir sur les autres (persuader, commander), de construire des réalités sociales (lois) et de définir ce qui est vrai. Celui qui maîtrise la parole détient un pouvoir considérable.",
+      "Parce qu'elle permet d'agir.",
       "Parce qu'il faut de l'énergie pour parler."
     ],
     correct: 2,

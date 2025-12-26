@@ -1,7 +1,7 @@
 // ============================================
 // DONNÉES GÉNÉRALES
 // ============================================
-const titre = "QUIZ HLP - Les séductions de la parole";
+const titre = "QUIZ HLP 1ère - les séductions de la parole";
 const sousTitre = "100 questions";
 
 // ============================================
@@ -9,7 +9,7 @@ const sousTitre = "100 questions";
 // ============================================
 const philosophyData = {
   texte: `La parole séductrice oscille entre un art du lien et une technique de manipulation. Elle peut élever en créant de l'émotion partagée ou asservir en court-circuitant la raison. Des sirènes homériques à la publicité contemporaine, elle révèle la puissance ambivalente du langage, à la fois fondateur de communauté et instrument de domination.`,
-  source: "Synthèse des enjeux de la séquence <em>Les séductions de la parole</em>."
+  source: "synthèse des enjeux de la séquence"
 };
 
 // ============================================
@@ -21,7 +21,7 @@ const questions = [
     question: "Que signifie étymologiquement le verbe latin <em>se-ducere</em>, à l'origine du terme <em>séduction</em> ?",
     answers: [
       "Parler avec grâce et élégance pour captiver un auditoire",
-      "Détourner, emmener à l'écart de son chemin par la puissance des mots",
+      "Emmener à l'écart de son chemin par la puissance des mots",
       "Instruire et éduquer par un discours pédagogique et rigoureux"
     ],
     correct: 2,
@@ -87,7 +87,7 @@ const questions = [
     question: "Quelle distinction classique en rhétorique oppose-t-on généralement entre <em>convaincre</em> et <em>persuader</em> ?",
     answers: [
       "Convaincre s'adresse aux émotions, persuader à la raison logique",
-      "Convaincre vise l'adhésion rationnelle par des preuves, persuader vise l'adhésion affective par des émotions",
+      "Convaincre vise l'adhésion rationnelle, persuader vise l'adhésion affective",
       "Convaincre est réservé à la philosophie, persuader à la politique"
     ],
     correct: 2,
@@ -109,7 +109,7 @@ const questions = [
     question: "Quel conseil cynique Ovide donne-t-il concernant les promesses dans l'art de la séduction amoureuse ?",
     answers: [
       "Il faut toujours tenir ses promesses pour établir une confiance inébranlable",
-      "Il faut promettre sans cesse, car l'espérance fait gagner du temps, sans nécessairement donner tout de suite",
+      "Il faut promettre sans cesse, car l'espérance fait gagner du temps",
       "Il ne faut jamais promettre, pour éviter toute déception et tout engagement futur"
     ],
     correct: 2,
@@ -120,7 +120,7 @@ const questions = [
     question: "Quel concept Aristote utilise-t-il pour décrire l'effet purificateur de la tragédie sur les passions du spectateur ?",
     answers: [
       "La mimésis (μίμησις), c'est-à-dire l'imitation de l'action",
-      "La catharsis (κάθαρσις), soit la purgation ou purification des passions",
+      "La catharsis (κάθαρσις), soit la purification des passions",
       "L'enthousiasme (ἐνθουσιασμός), l'état d'inspiration divine du poète"
     ],
     correct: 2,
@@ -132,7 +132,7 @@ const questions = [
     answers: [
       "Qu'elles sont particulièrement bien écrites et déclamées avec art",
       "Qu'elles imitent le langage théâtral et sont destinées à la scène",
-      "Qu'elles accomplissent l'acte qu'elles décrivent par le fait même d'être prononcées"
+      "Qu'elles accomplissent l'acte qu'elles décrivent en étant prononcées"
     ],
     correct: 3,
     explanation: `Une parole performative (selon J.L. Austin) n'est pas une description, mais une action. La dire, c'est la faire, sous certaines conditions (locuteur habilité, contexte approprié, intention sérieuse). Dans la séduction, des formules comme « Je te promets », « Je te jure » ou « Je t'aime » créent une réalité nouvelle entre les personnes. Leur puissance réside dans ce pouvoir de lier, d'engager et de transformer la relation par la seule énonciation.\nExemple : Lors d'un mariage, dire « Oui, je le veux » devant l'officier d'état civil n'exprime pas un sentiment, c'est l'acte juridique de se marier.`
@@ -142,7 +142,7 @@ const questions = [
     question: "Quel est le principal grief que Platon adresse aux poètes, et notamment à Homère, dans <em>La République</em> ?",
     answers: [
       "Ils coûtent trop cher à la cité et sont réservés à une élite oisive",
-      "Ils corrompent l'âme en nourrissant sa partie irrationnelle et émotive au détriment de la raison",
+      "Ils corrompent l'âme en nourrissant sa partie irrationnelle",
       "Ils inventent des histoires mensongères et immorales sur les dieux"
     ],
     correct: 2,
@@ -154,7 +154,7 @@ const questions = [
     answers: [
       "L'autorité fondée sur des règles écrites et une bureaucratie rationnelle et impersonnelle",
       "L'autorité fondée sur la tradition, la coutume et le caractère héréditaire du pouvoir",
-      "L'autorité fondée sur les qualités personnelles extraordinaires d'un individu, provoquant une obéissance émotionnelle"
+      "L'autorité fondée sur les qualités personnelles extraordinaires d'un individu"
     ],
     correct: 3,
     explanation: `Pour Weber, la domination charismatique repose sur la soumission à la force personnelle et exceptionnelle (le charisme) d'un individu, perçu comme doté de qualités surnaturelles, héroïques ou exemplaires. Cette autorité est instable, révolutionnaire et irrationnelle, car elle s'oppose aux ordres traditionnel et légal-rationnel. La parole du leader charismatique séduit en créant une « communauté d'émotion » et en incarnant l'espoir d'un renouveau radical.\nExemple : Des figures comme Jeanne d'Arc, Napoléon ou, dans sa version terrible, Hitler, ont exercé une autorité charismatique, captant les aspirations d'un peuple en crise par la puissance de leur parole et de leur persona.`
@@ -175,7 +175,7 @@ const questions = [
     question: "Selon Jean Baudrillard, quelle est la caractéristique essentielle de la parole publicitaire dans la société de consommation ?",
     answers: [
       "Elle informe objectivement et en détail sur les qualités intrinsèques des produits",
-      "Elle simule la parole significative mais ne signifie rien, se contentant d'un mode opératoire séductif et consensuel",
+      "Elle simule la parole significative mais ne signifie rien, se contentant d'un mode séductif",
       "Elle constitue le dernier refuge d'un discours authentique et critique face à la marchandisation"
     ],
     correct: 2,
@@ -187,7 +187,7 @@ const questions = [
     answers: [
       "La force est légitime, la puissance est toujours illégitime et oppressive",
       "La force est physique et individuelle, la puissance est psychologique et collective",
-      "La puissance naît de l'action et de la parole communes et se dissout quand les hommes se dispersent"
+      "La puissance naît de l'action et se dissout quand les hommes se dispersent"
     ],
     correct: 3,
     explanation: `Arendt distingue soigneusement la violence (ou force), attribut de l'individu ou de l'outil, et le pouvoir (puissance), qui émerge uniquement lorsque les hommes agissent de concert et parlent ensemble. Ce pouvoir n'est pas une possession, mais un phénomène relationnel qui existe tant que le groupe reste uni. La parole politique authentique est celle qui crée et entretient cette « puissance » collective.\nExemple : Un dictateur peut régner par la force (police, armée), mais son pouvoir populaire (sa puissance) s'effondre le jour où la population cesse de croire en lui et d'agir en son nom, comme lors d'une révolution.`
@@ -197,7 +197,7 @@ const questions = [
     question: "Dans le fragment 31 de Sappho, quel est l'effet physiologique décrit de la vue de l'être aimé sur la poétesse ?",
     answers: [
       "Une sensation de force invincible et d'exaltation joyeuse",
-      "Une série de symptômes de sidération amoureuse : langue paralysée, sueur, pâleur extrême",
+      "Une série de symptômes corporels de sidération amoureuse",
       "Un sentiment de paix profonde et de sérénité absolue"
     ],
     correct: 2,
@@ -219,7 +219,7 @@ const questions = [
     question: "Quelle promesse envoûtante et dangereuse les Sirènes font-elles aux marins dans l'<em>Odyssée</em> ?",
     answers: [
       "La promesse de richesses matérielles et de trésors inimaginables",
-      "La promesse d'une connaissance absolue de tout ce qui est arrivé sur terre",
+      "La promesse d'une connaissance absolue de tout ce qui est arrivé",
       "La promesse d'un plaisir charnel éternel et sans limite"
     ],
     correct: 2,
@@ -241,7 +241,7 @@ const questions = [
     question: "Quel reproche moral majeur est traditionnellement adressé à la parole de séduction ?",
     answers: [
       "Elle est trop longue, compliquée et finalement ennuyeuse pour l'auditeur",
-      "Elle constitue une manipulation qui perturbe l'exercice du libre-arbitre et de la raison",
+      "Elle constitue une manipulation qui perturbe le libre-arbitre et de la raison",
       "Elle n'utilise jamais d'arguments logiques et se fonde uniquement sur l'illusion"
     ],
     correct: 2,
@@ -296,18 +296,18 @@ const questions = [
     question: "Que signifie le terme <em>enthousiasme</em> (ἐνθουσιασμός) dans son sens étymologique et premier, appliqué au poète inspiré ?",
     answers: [
       "Avoir un talent naturel exceptionnel pour l'écriture et la versification",
-      "Être inspiré, habité par un dieu (ἔνθεος), être le porte-parole d'une puissance divine",
+      "Être inspiré, habité par un dieu, être le porte-parole d'une puissance divine",
       "Être très passionné et émotionnellement investi dans un sujet particulier"
     ],
     correct: 2,
-    explanation: `L'enthousiasme, au sens fort, n'est pas une simple exaltation subjective. Étymologiquement, cela signifie « être possédé par le dieu » (<em>en-theos</em>). Le poète inspiré n'est pas l'auteur de ses paroles ; il est le réceptacle, le porte-parole (<em>prophètès</em>) des Muses ou d'Apollon. Sa parole séduit parce qu'elle vient d'ailleurs et porte une vérité qui dépasse l'individu. C'est cette transcendance qui donne à la poésie sa puissance de fascination.\nExemple : La Pythie de Delphes, rendant les oracles d'Apollon, était en état d'enthousiasme : son discours incohérent était ensuite interprété par les prêtres comme une parole divine à décrypter.`
+    explanation: `L'enthousiasme, au sens fort, n'est pas une simple exaltation subjective. Étymologiquement, cela signifie « être possédé par le dieu » (ἔνθεος,<em>en-theos</em>). Le poète inspiré n'est pas l'auteur de ses paroles ; il est le réceptacle, le porte-parole (<em>prophètès</em>) des Muses ou d'Apollon. Sa parole séduit parce qu'elle vient d'ailleurs et porte une vérité qui dépasse l'individu. C'est cette transcendance qui donne à la poésie sa puissance de fascination.\nExemple : La Pythie de Delphes, rendant les oracles d'Apollon, était en état d'enthousiasme : son discours incohérent était ensuite interprété par les prêtres comme une parole divine à décrypter.`
   },
   // Question n°27
   {
     question: "Quelle différence essentielle existe-t-il entre le « pouvoir d'injonction » et le « pouvoir d'influence » ?",
     answers: [
       "L'injonction est douce et persuasive, l'influence est violente et contraignante",
-      "L'injonction repose sur l'ordre direct et la menace de sanction, l'influence sur la suggestion et l'espoir d'un bénéfice",
+      "L'injonction repose sur l'ordre et la menace, l'influence sur la suggestion et l'espoir",
       "L'injonction est horizontale et égalitaire, l'influence est verticale et hiérarchique"
     ],
     correct: 2,
@@ -319,10 +319,10 @@ const questions = [
     answers: [
       "Dédale, le grand architecte et inventeur du Labyrinthe",
       "Prométhée, le titan qui vola le feu technique aux dieux",
-      "L'Amour (Éros), poussé par le désir de fixer l'image de l'être aimé absent"
+      "L'Amour, qui désire fixer l'image de l'être aimé absent"
     ],
     correct: 3,
-    explanation: `Rousseau rapporte l'idée que « l'amour fut l'inventeur du dessin ». Cette affirmation poétique suggère que le besoin de représenter, de fixer l'image de l'être aimé absent, est à l'origine des arts visuels. Avant même la parole articulée, le geste (tracer une silhouette) serait une première tentative de séduction, de communication et de lutte contre la séparation. Cela place le désir amoureux à la racine de l'expression artistique.\nExemple : La jeune fille qui trace l'ombre de son amant sur un mur, dans le mythe rapporté, ne dit pas, elle montre : son geste est une parole muette et éloquente de désir et de mémoire.`
+    explanation: `Rousseau rapporte l'idée que « l'amour [Éros] fut l'inventeur du dessin ». Cette affirmation poétique suggère que le besoin de représenter, de fixer l'image de l'être aimé absent, est à l'origine des arts visuels. Avant même la parole articulée, le geste (tracer une silhouette) serait une première tentative de séduction, de communication et de lutte contre la séparation. Cela place le désir amoureux à la racine de l'expression artistique.\nExemple : La jeune fille qui trace l'ombre de son amant sur un mur, dans le mythe rapporté, ne dit pas, elle montre : son geste est une parole muette et éloquente de désir et de mémoire.`
   },
   // Question n°29
   {
@@ -341,10 +341,10 @@ const questions = [
     answers: [
       "Un simple déguisement visant à cacher l'identité de l'acteur",
       "Un accessoire technique destiné uniquement à projeter la voix plus loin dans l'espace",
-      "L'incarnation d'un personnage, le lieu d'où « perce le son » (<em>per-sona</em>) d'un autre"
+      "L'incarnation d'un personnage, le lieu d'où « perce le son » d'un autre"
     ],
     correct: 3,
-    explanation: `Le masque théâtral n'est pas un cache, mais un medium, un visage artificiel qui permet à la parole d'un personnage (souvent mythique ou divin) de se manifester. Étymologiquement, « persona » signifie « à travers le son ». Le masque est ce qui permet à la voix de l'acteur de devenir celle d'Agamemnon ou de Clytemnestre. Il ritualise et amplifie la parole, la détachant de l'individu qui la profère pour en faire une parole collective, symbolique et surhumaine.\nExemple : Le masque tragique aux traits exagérés et à la bouche ouverte fixait l'émotion du personnage (terreur, douleur) et transformait la voix de l'acteur, lui donnant une résonance particulière et une portée symbolique pour le public.`
+    explanation: `Le masque théâtral n'est pas un cache, mais un medium, un visage artificiel qui permet à la parole d'un personnage (souvent mythique ou divin) de se manifester. Étymologiquement, <em>per-sona</em> signifie « à travers le son ». Le masque est ce qui permet à la voix de l'acteur de devenir celle d'Agamemnon ou de Clytemnestre. Il ritualise et amplifie la parole, la détachant de l'individu qui la profère pour en faire une parole collective, symbolique et surhumaine.\nExemple : Le masque tragique aux traits exagérés et à la bouche ouverte fixait l'émotion du personnage (terreur, douleur) et transformait la voix de l'acteur, lui donnant une résonance particulière et une portée symbolique pour le public.`
   },
   // Question n°31
   {
@@ -362,8 +362,8 @@ const questions = [
     question: "Quelle est la spécificité de l'« autorité éducative » par rapport aux modèles autoritariste et charismatique ?",
     answers: [
       "C'est une autorité faible qui refuse tout conflit et toute exigence",
-      "C'est une synthèse qui combine un statut, une compétence et la capacité à faire grandir l'autonomie de l'autre",
-      "C'est une autorité purement affective, basée sur la séduction et le plaisir immédiat sans cadre"
+      "C'est une autorité capable de faire grandir l'autonomie de l'autre",
+      "C'est une autorité purement affective fondée sur la séduction"
     ],
     correct: 2,
     explanation: `L'autorité éducative est un équilibre complexe. Elle possède la <em>potestas</em> (le pouvoir statutaire, comme celui du professeur), mais elle doit aussi faire autorité par ses compétences et, surtout, être un <em>auctor</em> – celui qui augmente, qui fait grandir l'autonomie de l'élève. Elle séduit non pour dominer, mais pour permettre l'émancipation. Cette forme d'autorité est la plus exigeante car elle vise à se rendre inutile.\nExemple : Socrate est une figure d'autorité éducative paradoxale : il n'a pas de statut officiel, mais son questionnement (sa maïeutique) « accouche » les esprits et les fait accéder à leurs propres vérités, les rendant plus autonomes.`
@@ -373,7 +373,7 @@ const questions = [
     question: "Selon Ferdinand de Saussure, quelle distinction fondamentale établit-il entre « langue », « langage » et « parole » ?",
     answers: [
       "La langue est individuelle, le langage est social, la parole est biologique",
-      "La langue est le système abstrait et social, la parole est l'usage individuel et concret, le langage est la faculté humaine générale",
+      "La langue est sociale, la parole est individuelle, le langage est générale",
       "Le langage est l'écrit codifié, la parole est l'oral spontané, la langue est la traduction"
     ],
     correct: 2,
@@ -429,7 +429,7 @@ const questions = [
     answers: [
       "Comme un art mineur mais utile, qui informe sur les produits de consommation",
       "Comme un discours qui signifie profondément les désirs inconscients de la société",
-      "Comme un « simulacre », une forme qui simule la parole mais ne signifie rien, créant un consensus vide"
+      "Comme un « simulacre », une forme qui simule la parole mais ne signifie rien"
     ],
     correct: 3,
     explanation: `Pour Baudrillard, la publicité est l'exemple parfait du simulacre de l'ère post-moderne. Elle ne renvoie à aucune réalité du produit, mais à un système de signes qui ne renvoient qu'à eux-mêmes. Son langage est « vaguement séductif, vaguement consensuel » ; il crée un monde hyperréel où l'image du bonheur est vendue avec l'objet. La séduction publicitaire est donc une séduction du vide, une promesse sans contenu, purement formelle et opérationnelle.\nExemple : Une publicité pour un parfum montre un paysage onirique et un couple idéal, sans jamais décrire l'odeur. Le produit est devenu un prétexte pour vendre un rêve visuel et une émotion standardisée.`
@@ -450,7 +450,7 @@ const questions = [
     question: "Que signifie le terme <em>psychagogie</em> (ψυχαγωγία), pratiquée par les sophistes comme Gorgias ?",
     answers: [
       "L'étude scientifique et rationnelle des phénomènes de l'esprit",
-      "La « conduite des âmes », l'art de persuader en guidant les émotions et les croyances de l'auditeur",
+      "La « conduite des âmes », l'art de persuader en guidant les croyances de l'auditeur",
       "La thérapie par la parole visant à soigner les maladies mentales et les traumatismes"
     ],
     correct: 2,
@@ -462,7 +462,7 @@ const questions = [
     answers: [
       "Informer objectivement et complètement la population sur les événements",
       "Ouvrir un débat démocratique riche et contradictoire sur les enjeux de société",
-      "Influencer et modeler l'opinion en simplifiant la réalité et en créant des ennemis"
+      "Influencer l'opinion en simplifiant la réalité et en créant des ennemis"
     ],
     correct: 3,
     explanation: `La propagande ne cherche pas le dialogue ou la vérité, mais l'adhésion inconditionnelle. Pour cela, elle utilise une parole simplificatrice, manichéenne, qui divise le monde entre « nous » (les bons) et « eux » (les mauvais). Elle recourt à des slogans, des images chocs, des répétitions et exploite les peurs et les espoirs primaires. Sa séduction est celle de la clarté illusoire et de l'appartenance à une communauté soudée contre un adversaire désigné.\nExemple : La propagande de guerre réduit souvent l'ennemi à une caricature monstrueuse (« le Boche », « le Jap ») pour simplifier le conflit, mobiliser les passions et étouffer les doutes.`
@@ -473,7 +473,7 @@ const questions = [
     answers: [
       "Une parole authentique et créatrice, propre à l'existence quotidienne",
       "La parole poétique par excellence, qui révèle l'être des choses",
-      "Une parole inauthentique qui répète des idées reçues sans rapport personnel à ce qui est dit"
+      "Une parole inauthentique qui répète des idées reçues sans rapport à ce qui est dit"
     ],
     correct: 3,
     explanation: `Le bavardage, pour Heidegger, est le mode déchu de la parole quotidienne. C'est un parler qui « se parle tout seul », où les mots circulent sans que personne n'assume vraiment leur sens. On répète des opinions, des nouvelles, des commérages sans les avoir soi-même éprouvés ou pensés. Paradoxalement, ce bavardage n'est pas inutile : il est le ciment de la vie sociale, le « on » (<em>das Man</em>) par lequel nous partageons un monde commun. Sa séduction réside dans son confort et son absence d'engagement.\nExemple : Les conversations sur la météo ou les discussions autour d'un fait divers dont on ne connaît que les versions médiatiques sont des formes de bavardage qui créent du lien social superficiel mais rassurant.`
@@ -482,9 +482,9 @@ const questions = [
   {
     question: "Qu'est-ce qu'un énoncé « performatif », selon la théorie du langage de J.L. Austin ?",
     answers: [
-      "Un énoncé qui décrit un état de fait objectif (ex: « Il pleut »)",
-      "Un énoncé qui, par le fait même d'être prononcé dans des conditions appropriées, accomplit l'action qu'il décrit",
-      "Un énoncé particulièrement élégant, bien tourné et mémorable"
+      "Un énoncé qui décrit un état de fait objectif",
+      "Un énoncé qui accomplit l'action qu'il décrit",
+      "Un énoncé particulièrement élégant et mémorable"
     ],
     correct: 2,
     explanation: `Un performatif est un type d'énoncé qui ne décrit pas le monde, mais le modifie par son énonciation même. Pour réussir (être « heureux »), il doit être prononcé par la personne habilitée, dans le contexte adéquat, avec l'intention sérieuse correspondante. Dans la séduction, de nombreuses paroles sont performatives : elles créent des réalités relationnelles nouvelles (engagements, promesses).\nExemple : Lors d'une vente aux enchères, dire « Adjugé ! » en frappant le marteau n'est pas une description, c'est l'acte de clore la vente et d'attribuer le bien.`
@@ -549,7 +549,7 @@ const questions = [
     question: "Quelle distinction Blaise Pascal établit-il entre « persuader » et « convaincre » dans ses <em>Pensées</em> ?",
     answers: [
       "Convaincre les esprits forts par la raison, persuader les esprits faibles par la foi",
-      "« Persuader » est l'art d'agréer, qui passe par les « raisons du cœur » ; « convaincre » est l'art de démontrer par la raison géométrique",
+      "« Convaincre » est l'art de démontrer, « persuader » est l'art d'agréer",
       "Aucune, il les utilise comme parfait synonymes dans son apologétique chrétienne"
     ],
     correct: 2,
@@ -560,7 +560,7 @@ const questions = [
     question: "Quelle est la différence entre la parole du « conseiller » et celle du « chef » dans l'exercice de l'autorité ?",
     answers: [
       "Le conseiller séduit par la flatterie, le chef commande par la peur",
-      "Le conseiller propose des options et use de la persuasion, le chef décide et use de l'injonction",
+      "Le conseiller propose et use de la persuasion, le chef décide et use de l'injonction",
       "Le conseiller parle toujours en privé, le chef s'exprime nécessairement en public"
     ],
     correct: 2,
@@ -571,7 +571,7 @@ const questions = [
     question: "Comment l'humour et l'ironie peuvent-ils être des outils de séduction efficaces ?",
     answers: [
       "Ils montrent une supériorité intellectuelle écrasante et humilient l'autre",
-      "Ils désarçonnent, créent une complicité par le sous-entendu, et évitent la lourdeur solennelle",
+      "Ils créent une complicité par le sous-entendu, et évitent la lourdeur solennelle",
       "Ils sont perçus comme des marques d'irrespect et éloignent définitivement l'autre"
     ],
     correct: 2,
@@ -582,7 +582,7 @@ const questions = [
     question: "Comment Aristote justifie-t-il la poésie (et son « mensonge ») face à la critique platonicienne ?",
     answers: [
       "Il affirme que les poètes sont inspirés par les dieux et donc incontestables",
-      "Il soutient que la poésie, par l'imitation, peut atteindre une vérité universelle sur l'humain",
+      "Il soutient que la poésie, par l'imitation, peut atteindre une vérité universelle",
       "Il reconnaît que la poésie est un pur mensonge, mais divertissant et sans danger"
     ],
     correct: 2,
@@ -604,7 +604,7 @@ const questions = [
     question: "Dans l'analyse de Sartre, que cherche la « coquette » à travers le jeu de la séduction ?",
     answers: [
       "Un mariage avantageux sur le plan social et économique",
-      "À se faire désirer pour exister dans le regard et le désir de l'autre",
+      "À se faire désirer pour exister dans le regard de l'autre",
       "À humilier ses prétendants pour affirmer sa supériorité féminine"
     ],
     correct: 2,
@@ -626,7 +626,7 @@ const questions = [
     question: "Comment la courtoisie amoureuse du Moyen Âge codifie-t-elle la parole de séduction ?",
     answers: [
       "Elle l'interdit purement et simplement, la considérant comme un péché",
-      "Elle en fait un « jeu » social raffiné, réglé par des codes stricts de service et de discours",
+      "Elle en fait un « jeu » social raffiné, réglé par des codes stricts de discours",
       "Elle encourage la parole directe, passionnée et sans détour de l'amant à sa dame"
     ],
     correct: 2,
@@ -637,7 +637,7 @@ const questions = [
     question: "Quelle est la différence entre une parole politique qui « divise » et une parole qui « rassemble » ?",
     answers: [
       "La parole qui divise est toujours mensongère, celle qui rassemble est toujours vraie",
-      "La parole qui divise identifie des ennemis et creuse les différences ; celle qui rassemble cherche des dénominateurs communs",
+      "La parole qui divise identifie des ennemis ; celle qui rassemble cherche des dénominateurs communs",
       "Il n'y a pas de différence, toute parole politique est par essence divisive et conflictuelle"
     ],
     correct: 2,
@@ -648,7 +648,7 @@ const questions = [
     question: "Sur quel point précis Platon fonde-t-il sa critique la plus radicale contre les sophistes ?",
     answers: [
       "Ils sont trop chers et réservent leur enseignement à une élite riche",
-      "Ils prétendent enseigner la vertu mais ne vendent qu'une technique de persuasion sans souci de la vérité",
+      "Ils ne vendent qu'une technique de persuasion sans souci de la vérité",
       "Ils ne sont pas de bons orateurs et leurs discours sont ennuyeux"
     ],
     correct: 2,
@@ -660,7 +660,7 @@ const questions = [
     answers: [
       "Non, la séduction est contraire à la rigueur et à la neutralité scientifique requise",
       "Oui, mais d'une séduction spécifique : capter l'attention et éveiller le désir de savoir",
-      "Oui, et il doit utiliser toutes les techniques des publicitaires pour rendre son cours « vendeur »"
+      "Oui, et il doit utiliser toutes les techniques pour rendre son cours « vendeur »"
     ],
     correct: 2,
     explanation: `L'autorité éducative idéale intègre une forme de séduction noble. Il s'agit de séduire l'élève non vers la personne du professeur, mais vers la connaissance elle-même. Cela passe par une parole claire, passionnée, qui sait rendre la matière vivante et désirable, qui crée un lien de confiance permettant à l'élève d'oser se tromper et questionner. Cette séduction est au service de l'émancipation.\nExemple : Un professeur d'histoire qui raconte le passé comme une grande épopée, ou un professeur de sciences qui émerveille par une expérience spectaculaire, utilisent une parole séductrice pour ouvrir l'appétit de savoir et faciliter les apprentissages.`
@@ -670,7 +670,7 @@ const questions = [
     question: "Dans les légendes de Mélusine ou d'Ondine, quelle est la puissance et la limite de la parole séductrice ?",
     answers: [
       "Elle permet de transformer les hommes en animaux par un simple sortilège verbal",
-      "Elle lie les êtres par un pacte dont la rupture entraîne une malédiction irréversible",
+      "Elle lie les êtres par un pacte dont la rupture entraîne une malédiction",
       "Elle rend immortel celui qui prononce les paroles magiques au moment exact"
     ],
     correct: 2,
@@ -703,7 +703,7 @@ const questions = [
     question: "Qu'est-ce qu'un « double bind » (double contrainte) dans une communication manipulatrice ?",
     answers: [
       "Deux arguments solides qui se renforcent mutuellement pour convaincre",
-      "Une situation où deux messages contradictoires sont émis, empêchant toute réponse adéquate",
+      "Deux messages contradictoires sont émis et empêchent toute réponse adéquate",
       "Une promesse formulée en deux temps, dont le second annule le premier"
     ],
     correct: 2,
@@ -714,7 +714,7 @@ const questions = [
     question: "Comment une parole peut-elle être à la fois « libératrice » et « aliénante » ?",
     answers: [
       "C'est impossible, ce sont deux effets strictement opposés et incompatibles",
-      "Selon son usage : elle libère si elle permet de nommer une souffrance ; elle aliène si elle impose un dogme",
+      "Elle libère si elle permet de nommer une souffrance ; elle aliène si elle impose un dogme",
       "Elle libère les hommes mais aliène nécessairement les femmes dans une société patriarcale"
     ],
     correct: 2,
@@ -724,9 +724,9 @@ const questions = [
   {
     question: "Que signifie la notion grecque de <em>kairos</em> (καιρός) pour un orateur ?",
     answers: [
-      "La peur paralysante de parler en public devant une assemblée",
-      "Le moment opportun, la capacité à saisir l'occasion pour prononcer la parole juste",
-      "Le thème principal et le contenu substantiel du discours à prononcer"
+      "La peur paralysante de parler en public",
+      "Le moment opportun pour prononcer la parole juste",
+      "Le thème principal du discours à prononcer"
     ],
     correct: 2,
     explanation: `Le <em>kairos</em> est une notion capitale dans la rhétorique antique. Ce n'est pas le temps chronologique (<em>chronos</em>), mais le moment propice, l'occasion à saisir. Un bon orateur doit avoir le sens du <em>kairos</em> : savoir quand intervenir dans un débat, adapter son discours à l'humeur de l'assemblée, profiter d'un événement imprévu. La séduction d'un discours dépend souvent de ce timing parfait.\nExemple : Un homme politique qui prononce un grand discours sur l'unité nationale juste après une attaque terroriste saisit le <em>kairos</em>. Le même discours en temps normal aurait beaucoup moins d'impact.`
@@ -736,7 +736,7 @@ const questions = [
     question: "Pourquoi une crise (économique, sociale) est-elle un terreau fertile pour l'émergence d'un leader charismatique ?",
     answers: [
       "Parce que les gens ont moins d'argent pour s'informer par des médias diversifiés",
-      "Parce que les institutions établies sont discréditées ; les gens, désorientés, sont en attente d'un sauveur",
+      "Parce que lorsque les institutions sont discréditées, on attend un sauveur",
       "Parce que les lois sont suspendues en temps de crise, permettant tous les excès verbaux"
     ],
     correct: 2,
@@ -780,7 +780,7 @@ const questions = [
     question: "Peut-on définir une « éthique de la séduction » ? Autrement dit, y a-t-il une « bonne » et une « mauvaise » séduction ?",
     answers: [
       "Non, séduire c'est toujours manipuler, donc c'est moralement condamnable",
-      "Oui, la distinction repose sur l'intention et le respect de la liberté et de l'intégrité de l'autre",
+      "Oui, la distinction repose sur l'intention et le respect de la liberté de l'autre",
       "Oui, la bonne séduction est celle qui réussit à ses fins, peu importe les moyens employés"
     ],
     correct: 2,
@@ -791,7 +791,7 @@ const questions = [
     question: "Qu'est-ce qui fait la séduction du « poète maudit » (comme Rimbaud ou Baudelaire) ?",
     answers: [
       "Sa richesse et son succès mondain qui fascinent le public bourgeois",
-      "Sa rébellion contre l'ordre social et son exploration des marges, qui fascinent par l'audace",
+      "Sa rébellion contre l'ordre social et son exploration des marges",
       "Sa maîtrise parfaite et académique des règles classiques de la poésie"
     ],
     correct: 2,
@@ -802,7 +802,7 @@ const questions = [
     question: "En quoi consiste l'art de la conversation, comme lieu privilégié de la séduction mondaine aux XVIIe-XVIIIe siècles ?",
     answers: [
       "À débattre de philosophie de façon académique et systématique",
-      "À briller par son esprit, sa galanterie et son savoir-dire, dans le respect de codes stricts",
+      "À briller par son esprit et son savoir-dire, dans le respect de codes stricts",
       "À échanger des informations pratiques et des nouvelles du jour de manière utilitaire"
     ],
     correct: 2,
@@ -847,7 +847,7 @@ const questions = [
     answers: [
       "Elle n'use que de menaces explicites sur les châtiments de l'au-delà",
       "Elle mêle la promesse d'un salut et la description d'une communauté d'élection",
-      "Elle se contente de lire des textes sacrés dans une langue ancienne et incompréhensible"
+      "Elle se contente de lire des textes dans une langue ancienne et incompréhensible"
     ],
     correct: 2,
     explanation: `La parole religieuse vise une transformation intime. Pour séduire, elle propose une réponse aux grandes questions existentielles (la mort, la souffrance) et promet un bien suprême (le paradis, la paix). Elle utilise des récits fondateurs (paraboles) qui parlent à l'imagination, des rites qui engagent le corps, et une communauté d'accueil. Sa puissance séductrice vient de cette réponse totale à l'angoisse humaine.\nExemple : Les sermons des grands prédicateurs mêlaient la terreur de la mort et l'espoir de la résurrection, utilisant un style ample et pathétique pour émouvoir et convertir les cœurs.`
@@ -858,7 +858,7 @@ const questions = [
     answers: [
       "Parce que cela permet de préparer mentalement sa propre réplique imparable",
       "Parce qu'une écoute attentive donne à l'autre la permission d'exister par la parole",
-      "Parce qu'il faut économiser sa voix pour les moments où l'on aura vraiment quelque chose à dire"
+      "Parce qu'il faut économiser sa voix pour les moments où l'on aura quelque chose à dire"
     ],
     correct: 2,
     explanation: `L'écoute n'est pas une simple passivité, c'est un acte de reconnaissance. En écoutant vraiment, sans interrompre, on lui signifie qu'il est digne d'être entendu. Ce silence réceptif est extrêmement séducteur, car il répond au désir fondamental d'être compris et reconnu. Il invite l'autre à aller plus loin dans sa confidence. Une parole séductrice ne peut naître que dans un espace sécurisé par une écoute.\nExemple : Dans un entretien thérapeutique, le silence du psychanalyste (« l'écoute flottante ») est ce qui permet au patient de laisser émerger des vérités refoulées.`
@@ -868,7 +868,7 @@ const questions = [
     question: "Pourquoi la flatterie est-elle un ressort si courant de la parole séductrice ?",
     answers: [
       "Parce qu'elle est toujours vraie et correspond à une réalité objective",
-      "Parce qu'elle s'adresse directement à l'amour-propre, un levier psychologique universel",
+      "Parce qu'elle s'adresse directement à l'amour-propre, un levier universel",
       "Parce qu'elle coûte cher et montre la générosité de celui qui la distribue"
     ],
     correct: 2,
@@ -879,7 +879,7 @@ const questions = [
     question: "Qu'appelle-t-on la « séduction intellectuelle » ?",
     answers: [
       "Le fait d'avoir un haut diplôme universitaire qui impressionne socialement",
-      "La capacité à fasciner par la profondeur et l'originalité de sa pensée et de sa conversation",
+      "La capacité à fasciner par la profondeur et l'originalité de sa conversation",
       "L'utilisation de mots compliqués et de références obscures pour impressionner l'ignorant"
     ],
     correct: 2,
@@ -1034,7 +1034,7 @@ const questions = [
     answers: [
       "En lui donnant des leçons morales directes et des conseils pratiques de vie",
       "En créant un univers esthétique cohérent et fascinant qui touche à l'universel",
-      "En expliquant à la fin de l'œuvre, de manière explicite, ce qu'il faut en penser et retenir"
+      "En expliquant à la fin de l'œuvre, de manière explicite, ce qu'il faut en retenir"
     ],
     correct: 2,
     explanation: `La séduction artistique opère sur un plan sensible et intellectuel. L'artiste nous « charme » en nous faisant entrer dans son monde imaginaire, en nous faisant éprouver des émotions esthétiques (le beau, le sublime, le pathétique). Une grande œuvre semble nous parler personnellement tout en atteignant à l'universel. Le public est séduit par ce mélange de familiarité et d'étrangeté, par la maîtrise technique.\nExemple : Les romans de Marcel Proust séduisent le lecteur en explorant avec une minutie infinie les méandres de la mémoire et des sentiments, créant une impression de profonde vérité psychologique qui captive.`
@@ -1063,10 +1063,10 @@ const questions = [
   },
   // Question n°96
   {
-    question: "La parole du droit et de la justice doit-elle séduire ?",
+    question: "La parole de la justice doit-elle séduire ?",
     answers: [
       "Non, elle doit être austère et incompréhensible pour inspirer le respect craintif",
-      "Elle peut user d'une séduction par la clarté et la solennité, mais son autorité doit reposer sur la raison",
+      "Elle peut user d'une séduction par la solennité mais son autorité doit être rationnelle",
       "Oui, elle doit utiliser tous les artifices rhétoriques pour faire condamner les coupables"
     ],
     correct: 2,
@@ -1077,7 +1077,7 @@ const questions = [
     question: "En quoi le don gratuit (un cadeau, un compliment) est-il une parole séductrice ?",
     answers: [
       "Il ne l'est pas, car un vrai don est désintéressé et n'attend rien en retour",
-      "Il crée une dette symbolique et un sentiment de gratitude, engageant dans un cycle de réciprocité",
+      "Il crée une dette symbolique et un sentiment de gratitude engageant la réciprocité",
       "Il est obligatoire dans les relations commerciales et n'a donc rien de séducteur"
     ],
     correct: 2,
@@ -1089,7 +1089,7 @@ const questions = [
     answers: [
       "Ils endorment les gens par leur monotonie et leur répétitivité lancinante",
       "Ils unifient un groupe par la répétition rythmée, créant une « communauté d'émotion »",
-      "Ils servent uniquement à couvrir le bruit de l'adversaire et à montrer sa supériorité numérique"
+      "Ils servent uniquement à montrer sa supériorité numérique en couvrant les bruits adverses"
     ],
     correct: 2,
     explanation: `Ces paroles chantées ou scandées sont des actes performatifs de création de communauté. En chantant ensemble, les individus synchronisent leur respiration, leurs gestes, leurs voix. Ils deviennent une seule entité, le « nous » du groupe. Cette expérience fusionnelle est extrêmement séduisante car elle procure un sentiment d'appartenance, de force et de dissolution de l'individualité anxieuse dans le corps collectif.\nExemple : Le « Marseillaise » entonnée dans un stade avant un match crée une effervescence collective et un sentiment patriotique partagé qui soude les supporters.`
@@ -1099,7 +1099,7 @@ const questions = [
     question: "Quel nouveau défi pose l'intelligence artificielle (chatbots, deepfakes audio) à la parole séductrice ?",
     answers: [
       "Aucun, l'IA ne peut pas séduire car elle manque de conscience et d'émotions réelles",
-      "Elle peut générer des paroles parfaitement adaptées et persuasives à une échelle industrielle",
+      "Elle peut générer des paroles parfaitement adaptées et persuasives à l'échelle industrielle",
       "Elle va rendre la parole humaine totalement obsolète et inutile dans la communication"
     ],
     correct: 2,
@@ -1110,7 +1110,7 @@ const questions = [
     question: "Conclusion : La séduction est-elle le contraire de la parole vraie, ou en est-elle parfois l'expression la plus achevée ?",
     answers: [
       "Elle en est toujours le contraire : séduire, c'est par essence tromper et manipuler",
-      "Elle peut en être l'expression la plus achevée : une parole vraie, dite avec justesse et empathie, peut être la plus séduisante",
+      "Elle peut en être l'expression la plus achevée : une parole vraie peut être la plus séduisante",
       "Il n'y a aucun rapport entre les deux concepts, qui appartiennent à des registres différents"
     ],
     correct: 2,

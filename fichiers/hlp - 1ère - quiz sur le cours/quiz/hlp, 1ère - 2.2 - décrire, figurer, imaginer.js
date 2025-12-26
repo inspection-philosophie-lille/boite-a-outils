@@ -1,7 +1,7 @@
 // ============================================
 // DONNÉES GÉNÉRALES
 // ============================================
-const titre = "QUIZ HLP - décrire, figurer, imaginer";
+const titre = "QUIZ HLP 1ère - décrire, figurer, imaginer";
 const sousTitre = "100 questions";
 
 // ============================================
@@ -20,7 +20,7 @@ const questions = [
   {
     question: "Comment Gorgias, dans l'<em>Éloge d'Hélène</em>, justifie-t-il l'innocence d'Hélène, ayant quitté son mari pour suivre Pâris ?",
     answers: [
-      "Il démontre qu'elle fut persuadée par le discours (λόγος) de Pâris, puissance aussi irrésistible qu'une force physique.",
+      "Il démontre qu'elle fut persuadée par le discours de Pâris.",
       "En soutenant qu'elle obéissait à la volonté des dieux, supérieure aux lois humaines.",
       "En arguant qu'elle fut victime d'un envoûtement magique (pharmakon)."
     ],
@@ -46,7 +46,7 @@ Exemple : Le réquisitoire d'un procureur est un discours judiciaire, un débat 
     answers: [
       "Une parole particulièrement bien articulée et scénarisée pour la scène.",
       "Une parole utilisée par les performeurs et artistes contemporains.",
-      "Une parole qui, en étant prononcée, accomplit immédiatement l'action qu'elle décrit."
+      "Une parole qui accomplit immédiatement l'action qu'elle décrit."
     ],
     correct: 3,
     explanation: `Une parole est performative quand dire, c'est faire. L'énonciation elle-même constitue l'acte. Austin oppose ces énoncés performatifs (ex: « Je te promets », « Je vous déclare mari et femme ») aux énoncés constatatifs qui se contentent de décrire un état de fait (« Il pleut »). Cette théorie montre que le langage n'est pas qu'un outil de description, mais un outil d'action sur le monde et sur les relations sociales.
@@ -68,7 +68,7 @@ Exemple : Un discours populiste promettant des solutions simples et gratifiantes
   {
     question: "Quelle est la différence entre <em>persuader</em> et <em>convaincre</em> selon une distinction classique héritée de la pensée pascalienne ?",
     answers: [
-      "Persuader s'appuie sur les passions et les croyances, convaincre sur la raison et les preuves logiques.",
+      "Persuader s'appuie sur les passions, convaincre sur les preuves logiques.",
       "Persuader s'adresse à la raison, convaincre aux passions.",
       "Convaincre est l'objectif de la rhétorique, persuader celui de la dialectique."
     ],
@@ -93,7 +93,7 @@ Exemple : Dans un discours sur l'écologie, un scientifique utilisera des donné
     question: "Pourquoi Platon, dans le <em>Phèdre</em>, critique-t-il l'écriture, lui préférant la parole vivante du dialogue ?",
     answers: [
       "Parce que l'écriture, invention récente, corrompt la mémoire naturelle et affaiblit l'intelligence.",
-      "Parce que l'écriture fixe la pensée, la rendant vulnérable aux contresens et incapable de se défendre, contrairement à la parole dialectique.",
+      "Parce que l'écriture fixe la pensée, la rendant vulnérable aux contresens.",
       "Parce que l'écriture, réservée aux scribes, est un outil de domination sociale."
     ],
     correct: 2,
@@ -104,7 +104,7 @@ Exemple : Un texte philosophique peut être interprété de mille façons, parfo
   {
     question: "Qu'est-ce que la <em>doxa</em> (δόξα) dans le vocabulaire platonicien, et pourquoi est-elle le terrain de prédilection du sophiste ?",
     answers: [
-      "L'opinion commune, instable et relative, que le sophiste flatte et manipule sans chercher à l'élever vers la vérité.",
+      "L'opinion commune, instable et relative, que le sophiste flatte et manipule.",
       "La doctrine officielle de la cité, que le sophiste doit enseigner aux jeunes citoyens.",
       "La gloire et la renommée que le sophiste recherche par son éloquence spectaculaire."
     ],
@@ -128,7 +128,7 @@ Exemple : Pour préparer un discours, on trouve d'abord des idées et des preuve
   {
     question: "Quelle est la fonction du <em>kairos</em> (καιρός) dans la pratique rhétorique des sophistes ?",
     answers: [
-      "Il désigne le moment opportun, la circonstance particulière à laquelle le discours doit parfaitement s'adapter pour être efficace.",
+      "Il désigne le moment opportun auquel le discours doit s'adapter pour être efficace.",
       "Il désigne le lieu commun, le thème universel sur lequel bâtir un discours.",
       "Il désigne la durée idéale d'un discours pour capter et retenir l'attention de l'auditoire."
     ],
@@ -152,7 +152,7 @@ Exemple : Un conteur qui captive son auditoire, le faisant rire, trembler ou rê
   {
     question: "Quelle critique majeure le philosophe Jacques Ellul adresse-t-il à la « parole anonyme » dans la société technicienne ?",
     answers: [
-      "Elle est émise par des institutions ou des médias impersonnels, s'adressant à des masses indifférenciées, ce qui détruit la relation personnelle et responsable propre au vrai dialogue.",
+      "Elle est émise par des médias impersonnels, s'adressant à des masses indifférenciées.",
       "Elle est trop coûteuse à produire et nécessite des moyens techniques disproportionnés.",
       "Elle est systématiquement mensongère car elle sert les intérêts des puissants qui contrôlent les moyens de communication."
     ],
@@ -164,9 +164,9 @@ Exemple : Un spot publicitaire télévisé (parole anonyme de la marque) ne dial
   {
     question: "Dans la tragédie <em>Antigone</em> de Sophocle, quel est l'enjeu du conflit entre la parole de Créon (édit royal) et celle d'Antigone (loi divine et familiale) ?",
     answers: [
-      "Un conflit entre la parole écrite de la loi humaine, rigide et politique, et la parole non-écrite mais sacrée de la conscience et des rites familiaux.",
+      "Un conflit entre la parole écrite de la loi humaine et la parole non-écrite mais sacrée des rites familiaux.",
       "Un conflit générationnel entre l'autorité d'un vieux roi et la rébellion d'une jeune femme.",
-      "Un conflit sur la forme du discours : Créon use d'un langage technique et froid, Antigone d'un langage poétique et passionné."
+      "Un conflit sur la forme du discours : Créon use d'un langage technique Antigone d'un langage poétique."
     ],
     correct: 1,
     explanation: `Créon incarne la raison d'État et la loi positive (son édit). Sa parole est performative au sens politique : elle fait loi. Antigone invoque les « lois non écrites et immuables des dieux » et le devoir sacré envers son frère. Le conflit oppose donc deux sources de légitimité et deux types de parole performative : l'une humaine, politique et contingente ; l'autre divine, morale et absolue. La tragédie montre l'impasse lorsque ces deux paroles s'affrontent sans médiation.
@@ -177,19 +177,19 @@ Exemple : Un lanceur d'alerte qui désobéit à une loi qu'il estime injuste (se
     question: "Comment appelle-t-on, en rhétorique, le fait d'anticiper et de réfuter par avance les arguments de l'adversaire ?",
     answers: [
       "L'ironie socratique.",
-      "L'occupation ou préoccupation (praemunitio).",
+      "L'occupation ou préoccupation.",
       "La prolepse ou anticipation."
     ],
     correct: 2,
-    explanation: `L'occupation (ou préoccupation) est une stratégie argumentative qui consiste à présenter soi-même les objections que pourrait soulever l'adversaire pour mieux les démolir immédiatement après. Ce procédé renforce l'ethos de l'orateur en montrant sa loyauté (il examine tous les aspects) et sa maîtrise du débat. Il désarme l'opposant en lui volant ses meilleurs arguments et en contrôlant la manière dont ils sont présentés.
+    explanation: `L'occupation (<em>praemunitio</em> préoccupation) est une stratégie argumentative qui consiste à présenter soi-même les objections que pourrait soulever l'adversaire pour mieux les démolir immédiatement après. Ce procédé renforce l'ethos de l'orateur en montrant sa loyauté (il examine tous les aspects) et sa maîtrise du débat. Il désarme l'opposant en lui volant ses meilleurs arguments et en contrôlant la manière dont ils sont présentés.
 Exemple : Un candidat politique disant : « On me reprochera de trop taxer les riches, mais je réponds que cette mesure est nécessaire pour financer nos services publics et réduire les inégalités qui fracturent la société. » Il occupe ainsi le terrain de la critique.`
   },
   // Question n°15
   {
     question: "Quelle est la position d'Isocrate concernant l'enseignement de la vertu et du savoir politique ?",
     answers: [
-      "Il croit que la rhétorique, comme culture générale et art de bien parler, est le moyen par excellence de former des citoyens éclairés et vertueux, capables d'agir dans la cité.",
-      "Il pense, comme Platon, que seuls les philosophes-rois, formés par la dialectique, peuvent accéder à la science politique.",
+      "Il croit que la rhétorique est le moyen de former des citoyens éclairés et capables d'agir dans la cité.",
+      "Il pense que seuls les philosophes-rois, formés par la dialectique, peuvent accéder à la science politique.",
       "Il estime que la vertu ne s'enseigne pas, elle est un don de la nature ou des dieux."
     ],
     correct: 1,
@@ -200,7 +200,7 @@ Exemple : Les <em>humanités</em> classiques (littérature, histoire, philosophi
   {
     question: "Selon la théorie d'Austin, quelles conditions doivent être remplies pour qu'un énoncé performatif soit réussi (ou « heureux ») ?",
     answers: [
-      "Il doit s'inscrire dans une procédure conventionnelle reconnue, être prononcé par la personne habilitée, dans les circonstances appropriées, et suivi des comportements conséquents.",
+      "Il doit s'inscrire dans une procédure conventionnelle et suivi des comportements conséquents.",
       "Il doit être prononcé avec force et conviction par une personne ayant une belle voix.",
       "Il doit être écrit noir sur blanc et signé pour avoir une valeur légale."
     ],
@@ -214,7 +214,7 @@ Exemple : Si un enfant dit à ses copains « Je vous déclare mari et femme », 
     answers: [
       "La naissance de l'humanisme, plaçant l'être humain au centre de la réflexion.",
       "L'affirmation de la supériorité de l'homme sur la nature et les dieux.",
-      "Le relativisme sophistique : la vérité et la valeur dépendent de la perception et de l'intérêt de chacun ou de chaque communauté."
+      "Le relativisme sophistique, tout dépend de la perception et de l'intérêt de chacun."
     ],
     correct: 3,
     explanation: `La formule « L'homme est la mesure (μέτρον) de toutes choses » signifie qu'il n'y a pas de vérité objective et absolue. Le vrai, le juste, le beau sont relatifs à l'individu ou au groupe humain qui en juge. Cette thèse radicale fonde la pratique sophistique : puisque tout est relatif, l'important n'est pas de découvrir la vérité, mais de faire prévaloir son point de vue, par la persuasion, comme le plus avantageux ou le plus convaincant pour son auditoire. C'est l'antithèse du projet platonicien de vérité absolue.
@@ -225,7 +225,7 @@ Exemple : L'idée que « la beauté est dans l'œil de celui qui regarde » est 
     question: "Dans l'analyse du discours de Marc Antoine dans <em>Jules César</em> de Shakespeare, quel procédé rhétorique utilise-t-il pour retourner la foule contre Brutus ?",
     answers: [
       "Il promet à la foule des avantages matériels si elle se retourne contre les conspirateurs.",
-      "Il utilise massivement l'ironie et la litote, en répétant « Brutus est un homme honorable » tout en montrant le contraire par les faits et en jouant sur les émotions.",
+      "Il utilise massivement l'ironie et la litote et joue sur les émotions.",
       "Il démontre par des preuves logiques que Brutus a menti."
     ],
     correct: 2,
@@ -234,11 +234,11 @@ Exemple : C'est une technique courante en communication politique : reprendre le
   },
   // Question n°19
   {
-    question: "Quelle distinction la linguistique (F. de Saussure) établit-elle entre « langue », « parole » et « langage » ?",
+    question: "Quelle distinction la linguistique (F. de Saussure) établit-elle entre « langage », « langue » et « parole » ?",
     answers: [
-      "Le langage est la faculté humaine de communiquer, la langue est le système de signes propre à une communauté (le français), la parole est l'acte individuel d'utilisation de ce système.",
-      "La langue est la capacité biologique, la parole est le système abstrait, le langage est l'acte concret.",
-      "La parole est l'outil de communication, la langue est son usage esthétique, le langage est son usage technique."
+      "Le langage est la faculté de communiquer, la langue est le système de signes d'une communauté, la parole est l'usage de ce système.",
+      "Le langage est l'acte concret, la langue est la capacité biologique, la parole est le système abstrait.",
+      "le langage est l'usage technique, la langue est l'usage esthétique, la parole est l'outil de communication."
     ],
     correct: 1,
     explanation: `Saussure définit le langage comme la faculté humaine générale. Cette faculté se réalise dans des langues, systèmes sociaux et conventionnels de signes (lexique, grammaire). La parole est l'acte individuel et concret par lequel un locuteur utilise la langue pour s'exprimer. La langue est à la fois le produit et l'instrument de la parole. Cette distinction est fondamentale pour étudier objectivement le système (la langue) indépendamment de ses usages variables (la parole).
@@ -249,7 +249,7 @@ Exemple : Quand vous apprenez l'anglais, vous apprenez une <em>langue</em> (son 
     question: "Que signifie l'idée de <em>violence symbolique</em> développée par le sociologue Pierre Bourdieu ?",
     answers: [
       "La violence physique justifiée par des discours symboliques (comme les rites de guerre).",
-      "Une violence douce et invisible qui s'exerce par le langage, la culture et les classements sociaux, imposant comme légitimes des rapports de domination qui ne le sont pas naturellement.",
+      "Une violence douce et invisible qui s'exerce par le langage, la culture et les classements sociaux.",
       "Une violence exercée à travers des symboles religieux pour contraindre les croyants."
     ],
     correct: 2,
@@ -262,7 +262,7 @@ Exemple : Le fait de considérer certains accents régionaux ou de banlieue comm
     answers: [
       "Exposer les faits de manière claire et neutre.",
       "Résumer les arguments et appeler à l'action ou à l'émotion.",
-      "Capturer la bienveillance de l'auditoire (captatio benevolentiae), l'intéresser et préparer l'exposé de la thèse."
+      "Capturer la bienveillance de l'auditoire et préparer l'exposé de la thèse."
     ],
     correct: 3,
     explanation: `L'exorde est la première partie du discours, cruciale pour établir le contact avec l'auditoire. Son but est de rendre les auditeurs attentifs (attentum), bienveillants (benevolum) et dociles (docilem). L'orateur peut y user de modestie feinte, d'éloges adressés aux juges ou au public, ou encore annoncer l'importance du sujet. Un bon exorde crée les conditions psychologiques favorables à la réception du reste du discours. C'est un moment stratégique pour construire son ethos.
@@ -273,8 +273,8 @@ Exemple : Un avocat commençant son plaidoirie par « Mesdames, Messieurs les ju
     question: "Comment peut-on définir un <em>sophisme</em> ?",
     answers: [
       "Un argument logiquement valide mais moralement répréhensible.",
-      "Un argument propre aux sophistes grecs, aujourd'hui totalement obsolète.",
-      "Un raisonnement faux ou biaisé qui a l'apparence de la vérité et de la logique, utilisé pour tromper ou persuader à tort."
+      "Un argument propre aux sophistes grecs, aujourd'hui obsolète.",
+      "Un raisonnement qui a l'apparence de la vérité."
     ],
     correct: 3,
     explanation: `Un sophisme est un paralogisme, c'est-à-dire un raisonnement incorrect qui simule la validité logique. Il peut reposer sur une ambiguïté de langage, un postulat caché, une généralisation hâtive, un appel fallacieux à l'émotion ou à l'autorité. Les sophistes étaient réputés pour maîtriser ces techniques afin de faire triompher n'importe quelle thèse. Distinguer un sophisme d'un argument valide est au cœur de l'esprit critique.
@@ -286,7 +286,7 @@ Exemple : L'appel à la tradition (« On a toujours fait comme ça ») est un so
     answers: [
       "Le <em>contrat social</em>.",
       "La <em>natalité</em>.",
-      "La <em>vita activa</em> (vie active)."
+      "La <em>vie active</em>."
     ],
     correct: 2,
     explanation: `Pour Arendt, la natalité (le fait de naître) est la condition métaphysique de la liberté politique. Chaque nouvel être humain possède la capacité d'initier de l'inédit, de commencer. Cette capacité s'actualise dans l'espace public par la parole et l'action, où les individus se révèlent les uns aux autres, débattent et agissent de concert. La parole politique authentique est donc performative au sens arendtien : elle inaugure, elle est un commencement, par opposition au travail cyclique ou à l'œuvre solitaire.
@@ -297,7 +297,7 @@ Exemple : Le discours « I have a dream » de Martin Luther King fut un acte de 
     question: "Dans le <em>Banquet</em> de Platon, quelle est la nature de l'ascension décrite par Diotime, qui mène de l'amour des beaux corps à l'amour du Beau en soi ?",
     answers: [
       "Une simple métaphore poétique pour décrire le désir amoureux commun à tous les hommes.",
-      "Une progression dialectique et rationnelle, où l'amour (Éros) est un intermédiaire (δαίμων) qui pousse l'âme du particulier vers l'universel, du sensible vers l'intelligible.",
+      "Une progression dialectique où l'amour pousse l'âme du sensible vers l'intelligible.",
       "Une ascension mystique et irrationnelle, accessible par la prière seule."
     ],
     correct: 2,
@@ -310,7 +310,7 @@ Exemple : Un étudiant peut d'abord être passionné par une discipline particul
     answers: [
       "Un langage volontairement compliqué et jargonnant pour impressionner l'auditoire.",
       "Le langage technique des rapports administratifs, incompréhensible pour le grand public.",
-      "Un discours stéréotypé, vague et dénué de sens concret, destiné à ne rien dire d'engageant tout en donnant l'illusion de communiquer."
+      "Un discours destiné à ne rien dire d'engageant et à donner l'illusion de communiquer."
     ],
     correct: 3,
     explanation: `La langue de bois est un discours creux, formulé avec des phrases toutes faites, des abstractions (<em>la croissance</em>, <em>l'emploi</em>, <em>le vivre-ensemble</em>) et des tournures passives qui évitent de nommer les responsabilités. Elle a pour fonction de masquer la réalité, d'éviter le débat de fond et de préserver le statu quo. C'est l'antithèse d'une parole authentique, précise et responsable. Elle illustre la dégénérescence de la parole politique en outil de camouflage.
@@ -318,21 +318,21 @@ Exemple : Une réponse politique du type « Des mesures seront prises en temps u
   },
   // Question n°26
   {
-    question: "Quelle différence majeure oppose la puissance (potentia) et le pouvoir (potestas) de la parole ?",
+    question: "Quelle différence majeure oppose la puissance (<em>potentia</em>) et le pouvoir (<em>potestas</em>) de la parole ?",
     answers: [
-      "La potentia est la puissance créatrice et relationnelle de la parole, la potestas est son usage comme instrument de domination et de contrôle.",
-      "La potentia est le pouvoir légitime (du roi), la potestas est la force illégitime (du tyran).",
-      "La potentia est le pouvoir de la parole écrite, la potestas celui de la parole orale."
+      "La <em>potentia</em> est la puissance créatrice de la parole, la <em>potestas</em> est son usage comme instrument de domination.",
+      "La <em>potentia</em> est le pouvoir légitime (du roi), la <em>potestas</em> est la force illégitime (du tyran).",
+      "La <em>potentia</em> est le pouvoir de la parole écrite, la <em>potestas</em> celui de la parole orale."
     ],
     correct: 1,
-    explanation: `La distinction, inspirée de Spinoza, est capitale. La potentia (puissance) désigne la capacité d'affirmation et de création qui est dans l'essence même de la parole : dire, c'est exister, se relier, créer du sens commun. C'est la dimension positive et constitutive. La potestas (pouvoir) désigne l'exercice d'une autorité sur autrui par la parole : commander, interdire, manipuler, aliéner. C'est la dimension instrumentale et parfois oppressive. Toute parole oscille entre ces deux pôles.
-Exemple : Une conversation amicale où l'on se confie et se comprend fait jouer la potentia de la parole. Un ordre militaire ou un discours de propagande qui formate les pensées fait jouer la potestas.`
+    explanation: `La distinction, inspirée de Spinoza, est capitale. La <em>potentia</em> (puissance) désigne la capacité d'affirmation et de création qui est dans l'essence même de la parole : dire, c'est exister, se relier, créer du sens commun. C'est la dimension positive et constitutive. La potestas (pouvoir) désigne l'exercice d'une autorité sur autrui par la parole : commander, interdire, manipuler, aliéner. C'est la dimension instrumentale et parfois oppressive. Toute parole oscille entre ces deux pôles.
+Exemple : Une conversation amicale où l'on se confie et se comprend fait jouer la <em>potentia</em> de la parole. Un ordre militaire ou un discours de propagande qui formate les pensées fait jouer la potestas.`
   },
   // Question n°27
   {
     question: "Comment Aristote définit-il l'<em>enthymème</em> dans sa <em>Rhétorique</em> ?",
     answers: [
-      "Un argument construit à partir de prémisses probables ou de signes, destiné à un auditoire non spécialiste ; c'est le syllogisme de la rhétorique.",
+      "Un argument construit à partir de prémisses probables destiné à un non-spécialiste.",
       "Un discours passionné qui transporte l'auditeur hors de lui-même (enthousiasme).",
       "La partie la plus émotionnelle d'un discours, placée généralement dans la péroraison."
     ],
@@ -345,7 +345,7 @@ Exemple : « Socrate est mortel, car il est un homme » est un enthymème. La pr
     question: "Quelle est la fonction du silence dans l'art de la parole, selon une perspective philosophique ?",
     answers: [
       "Il n'a aucune fonction ; la rhétorique vise précisément à l'éliminer par un flux continu de paroles.",
-      "Il peut être une forme d'expression à part entière, un moment de recueillement, d'écoute, de retenue ou de résistance, qui donne son sens et sa force à la parole qui l'entoure.",
+      "Il peut être une forme d'expression qui donne son sens et sa force à la parole qui l'entoure.",
       "Il est toujours un échec de la parole, un vide à combler."
     ],
     correct: 2,
@@ -356,8 +356,8 @@ Exemple : Le silence d'une minute en mémoire des victimes d'une tragédie est u
   {
     question: "Que signifie l'<em>argument d'autorité</em> et pourquoi est-il souvent considéré comme un sophisme ?",
     answers: [
-      "Un argument qui prétend prouver une thèse en invoquant le prestige d'une personne ou d'une institution (un expert, un livre saint, la tradition), sans apporter de preuve rationnelle indépendante.",
-      "Un argument qui s'appuie sur l'autorité légale de celui qui parle (un juge, un policier).",
+      "Un argument qui prétend prouver une thèse en misant sur celui qui la soutient.",
+      "Un argument qui s'appuie sur l'autorité légale de celui qui parle.",
       "Un argument qui vise à établir l'autorité de l'orateur sur son auditoire."
     ],
     correct: 1,
@@ -368,7 +368,7 @@ Exemple : « Il faut croire en Dieu car la Bible le dit » est un argument d'aut
   {
     question: "Quelle est la thèse centrale de Walter Benjamin dans son essai <em>Le Conteur</em>, concernant la modernité ?",
     answers: [
-      "La modernité, avec son information omniprésente et standardisée, a entraîné la décadence de l'expérience partagée et de la sagesse pratique qui se transmettaient par la parole des conteurs.",
+      "La modernité a entraîné la décadence de la sagesse transmise par la parole des conteurs.",
       "La modernité a vu renaître l'art du conte grâce aux nouveaux médias comme la radio.",
       "Le conteur est la figure de l'artiste moderne, qui déconstruit les récits traditionnels."
     ],
@@ -380,12 +380,12 @@ Exemple : Les grands récits des anciens (sur la guerre, l'amour, le travail) av
   {
     question: "Comment Cicéron définit-il l'idéal de l'orateur parfait dans son traité <em>De l'Orateur</em> ?",
     answers: [
-      "« L'homme de bien, habile à parler » (Vir bonus dicendi peritus), alliant une parfaite maîtrise technique de l'éloquence à une profonde culture et à une vertu morale exemplaire.",
+      "Un maître de l'éloquence, cultivé et vertueux.",
       "Un technicien spécialisé dans l'art de persuader les juges.",
       "Un philosophe qui utilise la parole pour enseigner la vérité."
     ],
     correct: 1,
-    explanation: `Pour Cicéron, l'éloquence sans sagesse est dangereuse, et la sagesse sans éloquence est impuissante. L'orateur idéal (qu'il incarne lui-même) doit posséder une vaste culture (juridique, historique, philosophique), une technique rhétorique impeccable, et surtout une intégrité morale qui garantit que son talent sert le bien commun de la République. Cet idéal humaniste vise à réconcilier philosophie et rhétorique, et fait de l'orateur le pilier de la vie civique.
+    explanation: `Pour Cicéron, l'éloquence sans sagesse est dangereuse, et la sagesse sans éloquence est impuissante. L'orateur idéal est <em>vir bonus, dicendi peritus</em> « L'homme de bien, habile à parler ». Il doit posséder une vaste culture (juridique, historique, philosophique), une technique rhétorique impeccable, et surtout une intégrité morale qui garantit que son talent sert le bien commun de la République. Cet idéal humaniste vise à réconcilier philosophie et rhétorique, et fait de l'orateur le pilier de la vie civique.
 Exemple : Cicéron lui-même, en dénonçant la conjuration de Catilina, cherchait à incarner cet idéal : user de son immense talent oratoire (les Catilinaires) pour sauver la République romaine, au nom de la vertu et de la loi.`
   },
   // Question n°32
@@ -393,7 +393,7 @@ Exemple : Cicéron lui-même, en dénonçant la conjuration de Catilina, chercha
     question: "Que désigne le terme <em>topos</em> (τόπος) en rhétorique ?",
     answers: [
       "Le lieu géographique où se tient le discours.",
-      "Un <em>lieu commun</em>, c'est-à-dire un schéma d'argumentation standard, un réservoir d'idées et d'arguments préétablis sur lequel l'orateur peut puiser.",
+      "Un schéma d'argumentation standard.",
       "Le sujet principal abordé par l'orateur."
     ],
     correct: 2,
@@ -406,10 +406,10 @@ Exemple : Pour défendre une loi, on peut puiser dans le topos de l'utilité (el
     answers: [
       "Elle est toujours prononcée par un devin et concerne l'avenir.",
       "Elle utilise un langage codé et symbolique, incompréhensible sans initiation.",
-      "Elle prétend être une parole inspirée, venant d'une autorité transcendante (Dieu), et a une fonction de jugement et d'appel à la conversion, non de persuasion adaptée."
+      "Elle prétend être une parole inspirée qui a une fonction de jugement."
     ],
     correct: 3,
-    explanation: `La parole prophétique (comme celle d'Isaïe, Jérémie ou Amos) se présente comme une parole reçue, non calculée. Elle n'est pas ad hominem mais ad populum ou ad principem. Elle dénonce, avertit, appelle à la justice et à la fidélité à l'Alliance. Son autorité ne vient pas de l'art de l'orateur mais de la source divine qu'il invoque. Elle est souvent en rupture avec la doxa et le pouvoir en place, ce qui la rend dangereuse pour le prophète. C'est une parole de vérité qui dérange, non de consensus.
+    explanation: `La parole prophétique se présente comme une parole reçue, non calculée. Elle n'est pas <em>ad hominem</em> mais <em>ad populum</em> ou <em>ad principem</em>. Elle dénonce, avertit, appelle à la justice et à la fidélité à l'Alliance. Son autorité ne vient pas de l'art de l'orateur mais de la source divine qu'il invoque. Elle est souvent en rupture avec la <em>doxa</em> et le pouvoir en place, ce qui la rend dangereuse pour le prophète. C'est une parole de vérité qui dérange, non de consensus.
 Exemple : Les discours de Martin Luther King, pasteur, empruntaient à la forme prophétique : dénonciation des injustices, appel à la repentance nationale, vision d'un avenir de justice (« I have a dream ») ancré dans une tradition religieuse.`
   },
   // Question n°34
@@ -417,7 +417,7 @@ Exemple : Les discours de Martin Luther King, pasteur, empruntaient à la forme 
     question: "Quelle est la signification et la portée de la formule de Gorgias : « Le tragique est un trompeur qui fait passer pour juste celui qui trompe » ?",
     answers: [
       "Une critique du théâtre tragique qui manipule les émotions du public.",
-      "Une définition de la tragédie comme art de l'illusion consentie, où le spectateur sait que ce qu'il voit est faux mais y adhère émotionnellement, et où le poète qui crée cette illusion est loué pour son talent.",
+      "Une définition de la tragédie comme l'art consenti de l'illusion.",
       "Une condamnation morale des poètes qui corrompent la jeunesse par des mensonges."
     ],
     correct: 2,
@@ -440,9 +440,9 @@ Exemple : Le langage diplomatique ou mondain, où l'on complimente sans le pense
   {
     question: "Quel est le sens de la fameuse phrase de Karl Marx : « Les philosophes n'ont fait qu'interpréter le monde de différentes manières ; ce qui importe, c'est de le transformer » ?",
     answers: [
-      "Une critique de la philosophie spéculative, jugée inutile.",
+      "Une critique de la philosophie spéculative qui est jugée comme étant inutile.",
       "Un éloge de l'action révolutionnaire violente contre la parole intellectualisée.",
-      "Un appel à ce que la pensée devienne une force matérielle, que la parole critique (la théorie) s'articule à l'action pratique pour changer les conditions sociales réelles."
+      "La parole critique s'articule à l'action pratique pour changer les conditions sociales réelles."
     ],
     correct: 3,
     explanation: `Cette onzième thèse sur Feuerbach condense la vision marxienne de la praxis. La philosophie traditionnelle (y compris la parole philosophique) se contente de comprendre ou de justifier le monde. Pour Marx, l'essentiel est que la critique, par la parole et l'écrit, devienne une force historique, qu'elle s'empare des masses (par la propagande, l'agitation) et les guide dans l'action révolutionnaire de transformation des rapports de production. La parole doit devenir performative au sens politique radical.
@@ -450,11 +450,11 @@ Exemple : Le <em>Manifeste du Parti communiste</em> n'est pas un traité académ
   },
   // Question n°37
   {
-    question: "Que signifie le principe de <em>charitable interpretation</em> (interprétation charitable) dans la philosophie du langage et le débat d'idées ?",
+    question: "Que signifie le principe d'<em>interprétation charitable</em> dans la philosophie du langage et le débat d'idées ?",
     answers: [
       "Il faut toujours interpréter les paroles des pauvres et des défavorisés avec une bienveillance particulière.",
       "C'est une technique sophistique qui consiste à donner une interprétation favorable à ses propres arguments.",
-      "Il s'agit d'interpréter les propos d'un adversaire dans leur version la plus forte et la plus cohérente possible, avant de les critiquer, pour éviter de combattre une caricature."
+      "Il s'agit d'interpréter les propos adverses avant de les critiquer pour éviter de combattre une caricature."
     ],
     correct: 3,
     explanation: `Également appelé <em>principe de charité</em>, cette règle méthodologique exige de prêter à l'interlocuteur ou à l'auteur qu'on lit une rationalité minimale. On doit chercher à comprendre son argument dans sa meilleure formulation, en supposant qu'il vise la cohérence et la vérité, avant d'en montrer les limites. Ce principe est au fondement d'un débat intellectuel loyal et fécond, par opposition à la polémique qui déforme la pensée adverse pour mieux la ridiculiser.
@@ -464,7 +464,7 @@ Exemple : Avant de critiquer la position d'un philosophe, on doit s'efforcer de 
   {
     question: "Quelle est la fonction de la <em>narration</em> (narratio) dans un discours judiciaire selon les traités classiques ?",
     answers: [
-      "Exposer les faits de l'affaire de manière claire, concise et orientée, en les présentant sous un jour favorable à sa cause.",
+      "Exposer les faits de l'affaire de manière claire et favorable à sa cause.",
       "Raconter une histoire fictive pour émouvoir le jury.",
       "Faire le récit de la vie de l'accusé pour attirer la compassion."
     ],
@@ -478,7 +478,7 @@ Exemple : Dans un procès, l'avocat de la défense et le procureur proposent deu
     answers: [
       "Les régimes totalitaires imposent une nouvelle langue artificielle, comme le novlangue d'Orwell.",
       "Ils interdisent simplement la liberté d'expression et punissent sévèrement toute parole dissidente.",
-      "Ils détruisent la faculté de juger et d'agir par la parole en détournant les mots de leur sens, en les vidant de leur contenu par la propagande répétitive, et en remplaçant le débat par la terreur."
+      "Ils détruisent la faculté de juger et d'agir par la parole en détournant les mots de leur sens."
     ],
     correct: 3,
     explanation: `Pour Arendt, le totalitarisme ne se contente pas de réprimer la parole ; il la corrompt de l'intérieur. La propagande utilise des slogans creux et contradictoires (« la liberté est l'esclavage »), isole les individus (détruisant l'espace de parole commune) et, par la terreur, rend toute parole authentique et tout jugement indépendant impossibles. Le langage devient un instrument de domination totale, visant à détruire la spontanéité humaine et la capacité de commencer, qui passe par la parole et l'action.
@@ -488,9 +488,9 @@ Exemple : Dans 1984 d'Orwell, le novlangue vise à réduire le nombre de mots po
   {
     question: "Que signifie l'expression <em>argument ad hominem</em> ?",
     answers: [
-      "Un argument qui s'adresse directement à la personne de l'interlocuteur pour le convaincre personnellement.",
-      "Un argument basé sur l'expérience humaine universelle.",
-      "Un sophisme qui consiste à attaquer la personne de l'adversaire (son caractère, sa situation) plutôt que ses arguments."
+      "Un argument qui s'adresse directement à l'interlocuteur pour le convaincre personnellement.",
+      "Un argument fondé sur l'expérience humaine universelle.",
+      "Un sophisme qui consiste à attaquer l'adversaire plutôt que ses arguments."
     ],
     correct: 3,
     explanation: `L'argument ad hominem (contre l'homme) est une erreur logique qui déplace le débat de la validité des idées vers la moralité ou la situation de celui qui les défend. Au lieu de réfuter un raisonnement, on discrédite la personne (« Tu ne peux pas critiquer le capitalisme puisque tu as un téléphone portable »). Il est efficace pour persuader un public en créant un préjugé défavorable, mais il est fallacieux car la vérité d'une proposition est logiquement indépendante des qualités de celui qui l'énonce.
@@ -500,9 +500,9 @@ Exemple : « Ne croyez pas les conclusions de ce rapport sur le climat, il a ét
   {
     question: "Quelle est la différence entre <em>dénotation</em> et <em>connotation</em> dans l'analyse du langage ?",
     answers: [
-      "La dénotation est l'origine étymologique du mot, la connotation son usage actuel.",
-      "La dénotation est le sens propre et objectif d'un mot (sa définition), la connotation est l'ensemble des associations subjectives, affectives ou culturelles qu'il éveille.",
-      "La dénotation est le sens littéral, la connotation le sens figuré."
+      "La dénotation est l'origine étymologique du mot, la connotation est son usage actuel.",
+      "La dénotation est la définition du mot, la connotation renvoie aux associations qu'il éveille.",
+      "La dénotation est le sens littéral, la connotation est le sens figuré."
     ],
     correct: 2,
     explanation: `Cette distinction est centrale en sémantique. La dénotation est le référent ou le concept objectif que le mot désigne (le <em>chien</em> comme animal). C'est le sens stable, partagé par tous les locuteurs d'une langue. La connotation est l'aura de sens secondaires, souvent affectifs, sociaux ou idéologiques (<em>chien</em> peut connoter la fidélité ou, péjorativement, la méchanceté). La rhétorique joue beaucoup sur les connotations pour produire des effets persuasifs ou poétiques.
@@ -514,7 +514,7 @@ Exemple : Le mot <em>révolution</em> dénote un changement politique brutal. Ma
     answers: [
       "Elle sert à marquer une pause pour laisser réfléchir l'auditoire.",
       "Elle permet de corriger une erreur de langage sans que l'auditoire ne s'en aperçoive.",
-      "Elle consiste à interrompre brusquement sa phrase, laissant sous-entendre ce qu'on ne veut ou n'ose pas dire explicitement, poussant ainsi l'auditoire à combler le vide par son imagination, souvent de manière plus accusatrice."
+      "Elle consiste à sous-entendre ce qu'on ne veut pas dire explicitement."
     ],
     correct: 3,
     explanation: `La réticence est une figure de l'ellipse et de la suggestion. En s'arrêtant net, l'orateur feint de ne pouvoir ou vouloir achever sa pensée, généralement par pudeur, émotion ou par stratégie. L'auditeur est alors invité à deviner la suite, qui est souvent plus grave ou plus scandaleuse que ce qui aurait pu être dit clairement. C'est un moyen puissant d'insinuer une accusation sans avoir à la prouver, en mobilisant les préjugés de l'auditoire.
@@ -526,7 +526,7 @@ Exemple : « Si je vous disais tout ce que je sais sur ses agissements... mais n
     answers: [
       "Une communication utilisant un langage purement logique et scientifique.",
       "Une communication qui évite soigneusement tout sujet polémique ou conflictuel.",
-      "Une situation de dialogue idéale où les participants, mus par le seul souci de la vérité et du bien commun, échangent des arguments sans contrainte de pouvoir, dans des conditions de parfaite symétrie et de sincérité."
+      "Un dialogue où les participants échangent des arguments sans contrainte de pouvoir."
     ],
     correct: 3,
     explanation: `Habermas théorise l'<em>agir communicationnel</em> comme fondement d'une démocratie délibérative. Dans une situation idéale de parole (qu'il appelle « situation idéale de discussion »), la « force du meilleur argument » doit pouvoir s'imposer seule. Pour cela, il faut que tous les participants aient une chance égale de prendre la parole, qu'ils soient sincères, et que seules les normes et les prétentions à la validité (vérité, justesse, véracité) soient soumises à la critique. Cet idéal régulateur permet de critiquer les distorsions réelles de la communication (mensonge, manipulation, domination).
@@ -536,7 +536,7 @@ Exemple : Un conseil municipal participatif où tous les habitants peuvent s'exp
   {
     question: "Quelle est la signification profonde de l'aphorisme de Wittgenstein : « Les limites de mon langage signifient les limites de mon monde » ?",
     answers: [
-      "Le monde que nous pouvons penser et expérimenter est circonscrit par les possibilités expressives de la langue que nous parlons ; ce qui est inexprimable dans cette langue reste en dehors de notre monde pensable.",
+      "Ce qui est inexprimable dans ma langue reste en dehors de mon monde pensable.",
       "On ne peut parler que de ce qu'on a vu personnellement.",
       "Il faut voyager et apprendre des langues étrangères pour élargir son horizon."
     ],
@@ -548,7 +548,7 @@ Exemple : Si une langue n'a pas de mot pour une émotion subtile (comme la <em>s
   {
     question: "Que désigne l'<em>argument du pente glissante</em> (pente savonneuse) ?",
     answers: [
-      "Un sophisme qui consiste à affirmer qu'une petite décision ou action anodine entraînera inéluctablement une cascade de conséquences désastreuses, sans apporter de preuve de ce lien de causalité nécessaire.",
+      "Un sophisme qui affirme qu'une petite décision entraîne des conséquences désastreuses.",
       "Un argument qui prévient des risques de chute physique lors d'une manifestation.",
       "Un argument qui montre la progressivité logique d'un raisonnement."
     ],
@@ -560,9 +560,9 @@ Exemple : « Si on autorise le mariage pour tous, bientôt on autorisera le mari
   {
     question: "En quoi consiste la stratégie rhétorique de la <em>concession</em> ?",
     answers: [
-      "Concéder un argument important pour obtenir en échange un autre avantage dans la négociation.",
+      "Concéder un argument important pour obtenir un autre avantage dans la négociation.",
       "Abandonner le débat et reconnaître sa défaite.",
-      "Accorder à l'adversaire un point mineur ou secondaire, pour mieux montrer que même en admettant ce point, sa thèse principale reste infondée, et pour renforcer son propre ethos de fair-play."
+      "Accorder à l'adversaire un point mineur pour montrer que même ainsi sa thèse reste infondée."
     ],
     correct: 3,
     explanation: `La concession est une manœuvre habile. En reconnaissant un aspect vrai ou valable dans la position adverse, l'orateur désarme la critique, paraît raisonnable et impartial. Cela lui permet ensuite de recentrer le débat sur le point central où sa thèse est plus forte. « Je vous accorde que... mais cela ne change rien au fait que... » C'est une forme d'occupation (préoccupation) qui montre la maîtrise du sujet et la force de son propre raisonnement, qui peut survivre à cette concession.
@@ -573,7 +573,7 @@ Exemple : « Je reconnais volontiers que cette réforme comporte des aspects pos
     question: "Quelle est la fonction de la <em>question rhétorique</em> dans un discours ?",
     answers: [
       "Poser une véritable question à l'auditoire pour susciter sa réflexion.",
-      "Poser une question dont la réponse est évidente ou implicite, pour renforcer une affirmation ou provoquer une réaction émotionnelle chez l'auditeur, sans attendre de réponse.",
+      "Poser une question dont la réponse est évidente pour renforcer une affirmation.",
       "Interroger l'adversaire pour le mettre en difficulté lors d'un débat."
     ],
     correct: 2,
@@ -582,11 +582,11 @@ Exemple : « Jusqu'à quand tolérerez-vous cette injustice ? » (sous-entendu :
   },
   // Question n°48
   {
-    question: "Comment Nietzsche analyse-t-il la relation entre la vérité et le langage dans <em>Vérité et mensonge au sens extra-moral » ?",
+    question: "Comment Nietzsche analyse-t-il la relation entre la vérité et le langage dans <em>Vérité et mensonge au sens extra-moral</em> ?",
     answers: [
       "Le langage est l'outil parfait pour exprimer la vérité des choses.",
-      "Le langage poétique seul peut approcher la vérité, car il dépasse les limites du langage conceptuel.",
-      "Le langage, né de besoins utilitaires, est une armée de métaphores usées, de métonymies et d'anthropomorphismes ; la <em>vérité</em> n'est qu'un mensonge socialement utile et oublié comme tel."
+      "Le langage poétique seul peut dépasser les limites du langage conceptuel.",
+      "La vérité n'est qu'un mensonge socialement utile et oublié comme tel."
     ],
     correct: 3,
     explanation: `Nietzsche propose une généalogie matérialiste et sceptique du langage. Les mots ne sont pas nés d'une intuition de l'essence des choses, mais de désignations arbitraires et métaphoriques visant à survivre en société. Avec le temps, on oublie l'origine métaphorique des mots et on croit qu'ils désignent la vérité des choses. La <em>vérité</em> n'est donc qu'un <em>mobile d'erreurs</em> devenu nécessaire et régulateur pour la vie en commun. Cette analyse radicale sape tout fondement absolu du discours vrai.
@@ -598,7 +598,7 @@ Exemple : Le mot <em>esprit</em> était à l'origine une métaphore souffle/vent
     answers: [
       "Une phrase type, pré-construite, utilisée dans des situations standards (comme les formules de politesse).",
       "Le style caractéristique et reconnaissable d'un grand écrivain.",
-      "Une représentation simplifiée, schématique et souvent caricaturale d'un groupe social, qui permet une communication rapide mais véhicule des préjugés et peut enfermer les individus dans des catégories."
+      "Une représentation qui permet une communication rapide mais qui véhicule des préjugés."
     ],
     correct: 3,
     explanation: `Le stéréotype est un cliché, une idée toute faite, reprise sans examen critique. Il fonctionne comme un raccourci cognitif et linguistique : il permet de catégoriser rapidement le monde social. Mais il fige des traits supposés (souvent négatifs) et les attribue à tous les membres d'un groupe (« les blondes sont stupides », « les jeunes sont fainéants »). Il est un outil puissant de la doxa et peut être utilisé rhétoriquement pour flatter ou diaboliser un groupe, sans avoir à argumenter sur des cas individuels.
@@ -609,7 +609,7 @@ Exemple : Les stéréotypes de genre (« les femmes sont émotives, les hommes s
     question: "Quelle est la différence entre <em>oralité</em> et <em>oral</em> ?",
     answers: [
       "Il n'y a pas de différence, ce sont des synonymes.",
-      "L'<em>oral</em> désigne le mode de communication (par opposition à l'écrit), tandis que <em>l'oralité</em> désigne une culture où le savoir, la mémoire et la transmission reposent principalement sur la parole et non sur l'écriture.",
+      "L'oralité désigne le savoir qui repose sur la parole, l'oral désigne le mode de communication.",
       "L'oralité désigne la communication parlée en général, l'oral est un examen où l'on doit parler."
     ],
     correct: 2,
@@ -620,9 +620,9 @@ Exemple : La culture homérique (transmission des poèmes d'Homère par des aèd
   {
     question: "Que signifie l'expression « le silence est d'or » dans le contexte de l'art de la parole ?",
     answers: [
-      "Il faut être avare de ses paroles, car une parole inutile ou mal placée peut faire plus de mal qu'un silence ; savoir se taire au bon moment est une sagesse précieuse.",
+      "Savoir se taire au bon moment est une sagesse précieuse.",
       "Il est toujours plus rentable de se taire que de parler.",
-      "Les choses les plus importantes sont indicibles et doivent rester secrètes."
+      "Les choses les plus importantes sont indicibles."
     ],
     correct: 1,
     explanation: `Ce proverbe souligne la valeur et la difficulté du silence. Parler est facile, mais parler à bon escient, avec mesure et pertinence, est un art. Un silence peut éviter un conflit, une parole blessante, une promesse inconsidérée. Il peut aussi laisser place à la réflexion ou à l'écoute de l'autre. Dans la rhétorique, le silence (les pauses) fait partie intégrante de l'actio. Philosophiquement, il rappelle que la parole est un engagement et qu'il faut en mesurer le poids.
@@ -634,7 +634,7 @@ Exemple : Dans une négociation tendue, le fait de se taire après avoir posé u
     answers: [
       "Les signes linguistiques sont choisis au hasard par les locuteurs.",
       "La grammaire est une construction arbitraire qui devrait être simplifiée.",
-      "Le lien entre le signifiant (image acoustique, suite de sons) et le signifié (concept) est immotivé, il n'y a pas de rapport naturel entre le son et l'idée."
+      "Il n'y a pas de rapport naturel entre le son du mot et son idée."
     ],
     correct: 3,
     explanation: `C'est un principe fondamental de la linguistique structurale. Le mot « arbre » n'a aucun lien naturel avec le concept d'arbre ; en anglais, on dit « tree », en allemand « Baum ». Le lien est purement conventionnel et diffère d'une langue à l'autre. Cet arbitraire explique la diversité des langues et le fait que le sens d'un mot dépende de sa place dans un système de différences (il n'a de sens que par rapport aux autres mots). Seules les onomatopées font exception (mais elles varient aussi : « cocorico » / « cock-a-doodle-doo »).
@@ -645,8 +645,8 @@ Exemple : Rien dans la suite de sons [ʃ(ə)val] ne rappelle l'animal « cheval 
     question: "Qu'est-ce que <em>l'argument par l'absurde</em> (reductio ad absurdum) ?",
     answers: [
       "Un argument si compliqué qu'il en devient absurde.",
-      "Un argument qui prétend que la vie est absurde et qu'il est donc inutile de débattre.",
-      "Une méthode de démonstration qui consiste à montrer que si l'on admet la thèse adverse, on aboutit à une conséquence absurde ou contradictoire, ce qui prouve que cette thèse est fausse."
+      "Un argument qui prétend qu'il est donc inutile de débattre.",
+      "Si une thèse a des conséquences absurdes, c'est qu'elle est fausse."
     ],
     correct: 3,
     explanation: `C'est une technique logique puissante, souvent utilisée en mathématiques et en philosophie. Pour réfuter une proposition P, on suppose provisoirement que P est vraie. On en déduit logiquement une conséquence Q qui est manifestement fausse, contradictoire ou inacceptable. On en conclut que la proposition initiale P doit être fausse. C'est une forme de raisonnement hypothético-déductif qui permet de prouver une thèse en démontrant que son contraire mène à l'absurde.
@@ -656,7 +656,7 @@ Exemple : Pour prouver qu'<em>il n'existe pas de plus grand nombre entier</em>, 
   {
     question: "Comment peut-on définir la <em>propagande</em> moderne par rapport à la rhétorique classique ?",
     answers: [
-      "C'est une forme dégradée et massive de persuasion, utilisant des moyens techniques de diffusion de masse, visant à modeler l'opinion publique de manière unilatérale et souvent mensongère, en court-circuitant la réflexion critique.",
+      "C'est une forme massive de persuasion visant à modeler l'opinion publique.",
       "C'est exactement la même chose que la rhétorique, mais appliquée à la politique.",
       "C'est la rhétorique employée par un régime autoritaire."
     ],
@@ -669,7 +669,7 @@ Exemple : La propagande nazie, avec ses affiches, ses films et ses discours radi
     question: "Quelle est la fonction de la <em>périphrase</em> comme figure de style ?",
     answers: [
       "Découper une phrase en plusieurs parties pour la rendre plus claire.",
-      "Dire en plus de mots ce qu'on pourrait dire en peu, pour éviter un mot tabou, créer un effet de style, ou insister sur une qualité.",
+      "Dire en plus de mots ce qu'on pourrait dire en peu créer un effet de style.",
       "Utiliser des mots compliqués pour impressionner l'auditoire."
     ],
     correct: 2,
@@ -681,7 +681,7 @@ Exemple : « La Ville Lumière » pour Paris, « le pays du Cèdre » pour le Li
     question: "Quelle est la position de Platon sur la poésie, exprimée notamment dans <em>La République</em> ?",
     answers: [
       "Il la tolère comme un divertissement inoffensif pour le peuple.",
-      "Il la bannit de la cité idéale car elle est une imitation (mimèsis) au troisième degré de la vérité, elle éveille les passions au détriment de la raison, et corrompt les citoyens par ses mensonges sur les dieux.",
+      "Il la bannit car elle éveille les passions au détriment de la raison.",
       "Il la considère comme le plus haut savoir, car elle imite le monde des Idées."
     ],
     correct: 2,
@@ -692,7 +692,7 @@ Exemple : Homère montre Achille pleurant la mort de Patrocle. Pour Platon, cela
   {
     question: "Que signifie l'expression « faire un procès d'intention » à quelqu'un ?",
     answers: [
-      "Lui attribuer des intentions cachées et généralement malveillantes, sans preuve, pour discréditer ses actes ou ses paroles.",
+      "Lui attribuer des intentions malveillantes pour discréditer ses actes.",
       "Lui intenter un procès pour des intentions malveillantes non concrétisées.",
       "Analyser scientifiquement les motivations psychologiques d'une personne."
     ],
@@ -706,7 +706,7 @@ Exemple : « Il propose une baisse d'impôts, mais ne vous y trompez pas, son in
     answers: [
       "Elle désigne le format physique (cadre en bois) qui entoure un discours écrit.",
       "C'est le plan détaillé que suit l'orateur pour structurer son propos.",
-      "Elle désigne la manière dont un problème est présenté, en sélectionnant certains aspects et en en excluant d'autres, ce qui oriente la perception et le jugement du public."
+      "Elle désigne la manière dont un problème est présenté pour en orienter sa perception."
     ],
     correct: 3,
     explanation: `Cadrer un débat, c'est en définir les termes, les causes présumées et les solutions envisageables. Par exemple, présenter l'immigration comme un <em>problème de sécurité</em> (cadre sécuritaire) plutôt que comme une <em>chance économique et culturelle</em> (cadre ouvert) oriente radicalement la discussion et les politiques envisagées. Le framing est une activité rhétorique puissante car il agit en amont des arguments, en conditionnant la perception même de la réalité. Qui définit le cadre a déjà gagné une grande partie du débat.
@@ -716,7 +716,7 @@ Exemple : Parler de <em>charges sociales</em> plutôt que de <em>cotisations soc
   {
     question: "Quelle est la différence entre <em>langue morte</em> et <em>langue vivante</em> ?",
     answers: [
-      "Une langue vivante est parlée par une communauté comme langue maternelle et évolue naturellement. Une langue morte (comme le latin) n'est plus langue maternelle de personne, bien qu'elle puisse être étudiée et utilisée dans certains contextes (liturgie, science).",
+      "Une langue vivante est parlée par une communauté. Une langue morte n'est plus langue maternelle de personne.",
       "Une langue morte est une langue que personne ne comprend plus, une langue vivante est comprise par au moins une personne.",
       "Une langue morte est une langue écrite, une langue vivante est une langue orale."
     ],
@@ -728,7 +728,7 @@ Exemple : L'hébreu est un cas unique de <em>résurrection</em> : langue liturgi
   {
     question: "Quel est le sens de l'expression « tourner sept fois sa langue dans sa bouche avant de parler » ?",
     answers: [
-      "Un conseil de prudence signifiant qu'il faut réfléchir mûrement aux conséquences de ses paroles avant de les prononcer.",
+      "Il faut réfléchir aux conséquences de ses paroles.",
       "Une technique d'élocution pour bien articuler.",
       "Un remède populaire contre le bégaiement."
     ],
@@ -740,7 +740,7 @@ Exemple : Avant d'envoyer un message en colère sur les réseaux sociaux, il est
   {
     question: "Que signifie l'expression « l'esprit de l'escalier » (l'esprit d'escalier) ?",
     answers: [
-      "Le fait de trouver la bonne réplique ou le bon argument... après coup, une fois la conversation terminée et qu'on est déjà parti (dans l'escalier).",
+      "Le fait de trouver le bon argument, mais trop tard.",
       "Une intelligence particulièrement rapide et vive.",
       "Une pensée décousue et qui saute du coq à l'âne."
     ],
@@ -752,8 +752,8 @@ Exemple : Après une dispute, on repense à ce qu'aurait dû être notre répons
   {
     question: "Quelle est la fonction de l'<em>apostrophe</em> dans un discours ?",
     answers: [
-      "Interpeller directement une personne (réelle ou fictive), présente ou absente, pour créer un effet dramatique, solennel ou accusateur.",
-      "Une figure qui consiste à omettre une lettre dans un mot (élision).",
+      "Interpeller directement quelqu'un pour créer un effet.",
+      "Une figure qui consiste à omettre une lettre dans un mot.",
       "S'adresser à Dieu dans une prière."
     ],
     correct: 1,
@@ -765,8 +765,8 @@ Exemple : Dans un discours politique : « Monsieur le Premier ministre, allez-vo
     question: "Comment la philosophie analytique aborde-t-elle la question des <em>actes de parole</em> ?",
     answers: [
       "Elle les ignore, car seule la logique des propositions l'intéresse.",
-      "Elle les réduit à des comportements verbaux observables (behaviorisme).",
-      "Elle les étudie en distinguant l'acte locutionnaire (produire une phrase), l'acte illocutionnaire (la force de ce qu'on fait en disant : affirmer, promettre, ordonner) et l'acte perlocutionnaire (l'effet produit sur l'auditeur : convaincre, effrayer)."
+      "Elle les réduit à des comportements verbaux observables.",
+      "Elle les distingue l'acte locutionnaire, l'acte illocutionnaire et l'acte perlocutionnaire."
     ],
     correct: 3,
     explanation: `Strawson et d'autres prolongent Austin en affinant l'analyse. L'acte locutionnaire est de dire quelque chose de sensé. L'acte illocutionnaire est l'acte accompli PAR le fait de dire (la force : une promesse, un ordre). L'acte perlocutionnaire est l'effet causé PAR le fait d'avoir dit (persuader, alarmer). Cette distinction est cruciale : deux énoncés peuvent avoir le même contenu locutionnaire (« Il fait froid ») mais des forces illocutionnaires différentes (constatation, suggestion de fermer la fenêtre, plainte) et des effets perlocutionnaires variés.
@@ -774,9 +774,9 @@ Exemple : « La porte est ouverte » (locution). Peut être une simple constatat
   },
   // Question n°64
   {
-    question: "Qu'est-ce qu'un <em>lieu commun</em> (koinos topos) dans le sens péjoratif du terme ?",
+    question: "Qu'est-ce qu'un <em>lieu commun</em> (κοινὸς τόπος, koinos topos) dans le sens péjoratif du terme ?",
     answers: [
-      "Une idée banale, rebattue, un cliché usé jusqu'à la corde qui ne suscite plus aucune réflexion.",
+      "Une idée banale qui ne suscite plus aucune réflexion.",
       "Un argument si évident qu'il est partagé par tous.",
       "Le thème principal d'une discussion."
     ],
@@ -786,11 +786,11 @@ Exemple : « Il faut vivre avec son temps » ou « L'argent ne fait pas le bonhe
   },
   // Question n°65
   {
-    question: "Quel est le rôle des <em>exemples</em> (paradeigmata) dans l'argumentation selon Aristote ?",
+    question: "Quel est le rôle des <em>exemples</em> (παραδείγματα, paradeigmata) dans l'argumentation selon Aristote ?",
     answers: [
       "Ils servent uniquement à illustrer de manière concrète une idée abstraite pour la rendre compréhensible.",
       "Ils ont une fonction purement ornementale et émotionnelle.",
-      "Ce sont des preuves rhétoriques de nature inductive : à partir d'un ou plusieurs cas particuliers, on infère une conclusion générale ou une probabilité concernant le cas présent."
+      "Ce sont des preuves rhétoriques de nature inductive."
     ],
     correct: 3,
     explanation: `Pour Aristote, l'exemple est une forme de raisonnement (une induction rhétorique) et non une simple illustration. L'orateur cite un cas passé (historique ou fictif) semblable au cas présent, et en tire une leçon applicable. « Les Athéniens ont puni X pour tel acte ; vous devez donc punir Y pour le même acte. » La force de l'exemple dépend de sa pertinence et de son analogie avec la situation actuelle. C'est un moyen puissant de persuasion, car il fait appel à l'expérience et à la mémoire collective.
@@ -802,7 +802,7 @@ Exemple : Pour défendre une politique de dépenses publiques en temps de crise,
     answers: [
       "Parler très doucement, en chuchotant.",
       "Ne terminer jamais ses phrases.",
-      "S'exprimer de manière allusive, en sous-entendant ce qu'on ne dit pas explicitement, comptant sur la compréhension de l'interlocuteur."
+      "S'exprimer de manière allusive."
     ],
     correct: 3,
     explanation: `Parler à demi-mot, c'est utiliser l'ellipse et la suggestion. Cela suppose une complicité ou un savoir partagé avec l'interlocuteur (un code commun). Cela peut être une marque d'intimité, de discrétion, ou une stratégie pour ne pas assumer pleinement ce qu'on veut dire. C'est une forme de parole économique et souvent plus puissante qu'un long discours, car elle active l'imagination et l'intelligence de l'autre. Cela relève du non-dit et de l'implicite.
@@ -813,7 +813,7 @@ Exemple : Entre deux personnes qui connaissent une situation délicate, l'une pe
     question: "Comment le <em>paradoxe</em> est-il utilisé dans la parole philosophique, notamment chez les Stoïciens ou les Cyniques ?",
     answers: [
       "Comme une simple figure de style pour amuser la galerie.",
-      "Comme une affirmation choquante ou apparemment absurde qui vise à secouer les certitudes, provoquer la réflexion et révéler une vérité cachée sous les apparences.",
+      "Comme une affirmation choquante pour provoquer la réflexion.",
       "Comme une erreur logique à éviter absolument."
     ],
     correct: 2,
@@ -826,7 +826,7 @@ Exemple : L'assertion socratique « Je sais que je ne sais rien » est un parado
     answers: [
       "Nommer une chose par un terme qui désigne le contraire, par ironie.",
       "Comparer deux éléments à l'aide de <em>comme</em> ou <em>tel</em>.",
-      "Exagérer démesurément une idée pour la mettre en relief, produire un effet comique ou émotionnel fort."
+      "Exagérer démesurément une idée pour la mettre en relief."
     ],
     correct: 3,
     explanation: `L'hyperbole est une exagération manifeste, qui ne doit pas être prise au pied de la lettre. Elle sert à frapper l'esprit, à souligner intensément une qualité (éloge) ou un défaut (blâme), ou à créer un effet comique ou grotesque. Elle est très présente dans le langage quotidien (« Je meurs de faim », « C'est à mourir de rire ») et dans la littérature (les descriptions épiques, la satire). Elle joue sur le pathos en amplifiant l'émotion.
@@ -836,7 +836,7 @@ Exemple : « Je t'ai appelé mille fois ! » (pour dire « plusieurs fois »). D
   {
     question: "Qu'est-ce qu'un <em>lapsus</em> linguistique, et comment la psychanalyse l'interprète-t-elle ?",
     answers: [
-      "Un acte manqué du langage où un mot est substitué à un autre, trahissant une pensée ou un désir inconscient que le locuteur voulait censurer.",
+      "Un acte manqué qui trahit un désir inconscient.",
       "Une simple erreur d'inattention, sans signification.",
       "Un défaut de prononciation dû à un accent régional."
     ],
@@ -860,7 +860,7 @@ Exemple : Le débat sur l'écriture inclusive (« iel », « agriculteur·rice·
   {
     question: "Quelle est la signification de l'expression <em>parole vide</em> ?",
     answers: [
-      "Un discours qui a perdu tout lien avec la réalité, tout contenu de vérité et d'engagement, réduit à des formules creuses, des slogans ou des promesses non tenues.",
+      "Un discours réduit à des formules creuses.",
       "Une parole prononcée à voix basse, inaudible.",
       "Une parole qui n'a pas de destinataire."
     ],
@@ -874,7 +874,7 @@ Exemple : Les discours de campagne électorale qui multiplient les promesses gé
     answers: [
       "Une affirmation d'égoïsme : je ne m'intéresse qu'aux choses qui me concernent directement.",
       "Une simple formule de politesse pour se présenter.",
-      "Une déclaration d'humanisme universel : en tant qu'être humain, tout ce qui touche à la condition humaine (ses joies, ses souffrances, ses folies) est mon affaire et mérite mon attention et ma compassion."
+      "Une déclaration humaniste : tout ce qui touche à la condition humaine est mon affaire."
     ],
     correct: 3,
     explanation: `Cette citation, tirée de la comédie <em>L'Homme qui se punit lui-même</em>, exprime une ouverture à autrui et un sens de la solidarité humaine. Elle fonde un impératif d'empathie et de curiosité. Rien de ce que font ou subissent les autres hommes ne doit nous laisser indifférents, car nous partageons la même nature. Cette maxime a été reprise par les humanistes de la Renaissance comme un credo contre l'indifférence et l'égoïsme. Elle invite à une parole qui reconnaît l'humanité de l'autre.
@@ -885,7 +885,7 @@ Exemple : Un journaliste qui va à la rencontre de populations marginalisées po
     question: "Qu'est-ce qu'un <em>dialogue de sourds</em> ?",
     answers: [
       "Un dialogue secret, que les autres ne doivent pas entendre.",
-      "Un échange où chacun parle sans vraiment écouter l'autre, où les positions sont figées d'avance et où il n'y a aucune volonté de se comprendre ou de faire évoluer sa pensée.",
+      "Un échange où chacun parle sans vraiment écouter l'autre.",
       "Une conversation entre deux personnes malentendantes."
     ],
     correct: 2,
@@ -909,7 +909,7 @@ Exemple : La publicité qui associe une voiture 4x4 à la liberté et à la natu
     question: "Que signifie l'expression <em>le poids des mots</em> ?",
     answers: [
       "Les dictionnaires sont très lourds.",
-      "Les paroles ont des conséquences réelles : elles peuvent blesser, engager, construire ou détruire des relations, influencer des décisions. Elles ne sont pas de simples sons mais des actes chargés de sens et de responsabilité.",
+      "Les paroles ne sont pas de simples sons mais des actes.",
       "Les mots les plus longs sont les plus difficiles à prononcer."
     ],
     correct: 2,
@@ -922,7 +922,7 @@ Exemple : Les campagnes de sensibilisation contre le harcèlement scolaire insis
     answers: [
       "Une exagération outrancière.",
       "Répéter les mêmes mots en début de phrase.",
-      "Dire moins pour suggérer davantage, en utilisant une négation ou une expression atténuée pour faire entendre une idée plus forte."
+      "Dire moins pour suggérer davantage."
     ],
     correct: 3,
     explanation: `La litote est une figure de l'euphémisme et de l'ironie. Elle consiste à affaiblir l'expression de ce qu'on veut dire, pour que l'auditeur comprenne qu'il faut entendre le contraire ou une idée plus intense. La formule la plus célèbre est « Va, je ne te hais point » (Le Cid) pour dire « Je t'aime ». Elle montre la pudeur, la retenue, ou une ironie mordante. Elle demande une participation active de l'auditeur pour décoder le sens fort sous l'apparence faible.
@@ -933,7 +933,7 @@ Exemple : Après un repas très copieux, dire « Je n'ai plus faim » est une li
     question: "Comment le philosophe Emmanuel Levinas conçoit-il la parole dans la relation à autrui ?",
     answers: [
       "Comme un outil de domination qu'il faut déconstruire.",
-      "Comme un appel et une réponse qui engage ma responsabilité infinie envers le visage d'autrui qui m'interpelle ; la parole est d'abord éthique avant d'être informative ou persuasive.",
+      "Comme un appel qui engage ma responsabilité infinie.",
       "Comme un simple échange d'informations."
     ],
     correct: 2,
@@ -942,11 +942,11 @@ Exemple : Dire « bonjour » à quelqu'un n'est pas juste un code social ; dans 
   },
   // Question n°78
   {
-    question: "Qu'est-ce qu'une <em>pétition de principe</em> (petitio principii) ?",
+    question: "Qu'est-ce qu'une <em>pétition de principe</em> (<em>petitio principii</em>) ?",
     answers: [
       "Une demande officielle adressée à un prince.",
       "Le premier principe d'un système philosophique.",
-      "Un sophisme qui consiste à prendre pour preuve de sa thèse la thèse elle-même, simplement formulée différemment (un raisonnement circulaire)."
+      "Un sophisme qui prend pour preuve de sa thèse la thèse elle-même."
     ],
     correct: 3,
     explanation: `C'est une forme de raisonnement vicieux où la conclusion est déjà contenue, déguisée, dans les prémisses. On présuppose ce qu'on prétend démontrer. C'est une imposture logique qui donne l'illusion de la démonstration. Par exemple : « La Bible est vraie parce qu'elle est la parole de Dieu. Et comment sait-on que c'est la parole de Dieu ? Parce que la Bible le dit. » La véracité de la Bible est à la fois la prémisse et la conclusion.
@@ -958,7 +958,7 @@ Exemple : « L'homéopathie est efficace car elle soigne les patients. Et commen
     answers: [
       "Elle est un simple ornement facultatif.",
       "Elle sert uniquement à créer des images frappantes dans la publicité.",
-      "Elle est constitutive de la pensée et du langage ordinaire (concepts <em>racine</em>, <em>source</em>, <em>flux</em> sont métaphoriques) ; elle permet de conceptualiser l'abstrait à partir du concret et structure notre vision du monde."
+      "Elle permet de conceptualiser l'abstrait à partir du concret."
     ],
     correct: 3,
     explanation: `Les travaux de Lakoff et Johnson ont montré que la métaphore n'est pas qu'une figure de style, mais un processus cognitif fondamental. Nous pensons et parlons constamment de manière métaphorique (« le temps, c'est de l'argent », « une discussion animée », « une idée lumineuse »). Ces métaphores structurantes organisent notre expérience. La rhétorique exploite cette propriété du langage pour orienter la perception (par exemple, métaphore de la <em>guerre</em> contre le terrorisme vs métaphore du <em>soin</em> pour une maladie sociale).
@@ -968,7 +968,7 @@ Exemple : Parler d'<em>inondation migratoire</em> est une métaphore qui fait pe
   {
     question: "Que signifie l'expression <em>parler pour ne rien dire</em> ?",
     answers: [
-      "Tenir un discours long et verbeux qui, à l'analyse, ne contient aucune information utile, aucune idée claire, et ne vise qu'à occuper l'espace sonore ou à masquer son ignorance.",
+      "Tenir un discours verbeux qui ne vise qu'à occuper l'espace sonore.",
       "Parler très doucement, de manière inaudible.",
       "Échanger des propos insignifiants dans une conversation mondaine."
     ],
@@ -978,9 +978,9 @@ Exemple : Une réponse d'expert à une question simple, remplie de termes techni
   },
   // Question n°81
   {
-    question: "Quel est le sens de la formule d'Aristote : « La parole est ce qui rend l'homme un animal politique » (zoon politikon) ?",
+    question: "Quel est le sens de la formule d'Aristote : « La parole est ce qui rend l'homme un animal politique » (ζῷον πoλιτικόν, zoon politikon) ?",
     answers: [
-      "La capacité de parler (logos) est ce qui permet de délibérer en commun sur le juste et l'injuste, le bien et le mal, et donc de fonder la cité (polis) ; la communauté politique est une communauté de parole.",
+      "La communauté politique est une communauté de parole.",
       "Seul l'homme fait de la politique professionnelle.",
       "Les hommes aiment discuter de politique."
     ],
@@ -993,8 +993,8 @@ Exemple : L'Agora athénienne, lieu de débat public où les citoyens discutaien
     question: "Qu'est-ce que <em>l'ironie socratique</em> ?",
     answers: [
       "Une moquerie méchante et blessante.",
-      "Le fait de dire le contraire de ce qu'on pense, comme dans l'ironie moderne.",
-      "Une posture pédagogique où Socrate feint l'ignorance (il est le <em>taon</em> de la cité) pour amener son interlocuteur à exposer ses prétendus savoirs et à en révéler les contradictions, l'amenant ainsi à prendre conscience de son ignorance réelle."
+      "Dire le contraire de ce qu'on pense comme dans l'ironie moderne.",
+      "Une posture pédagogique où Socrate feint l'ignorance."
     ],
     correct: 3,
     explanation: `L'ironie socratique (eirôneia, εἰρωνεία) n'est pas un simple procédé rhétorique, mais une méthode dialectique. Socrate commence par se déclarer ignorant et demande à l'<em>expert</em> (un sophiste, un politique) de l'instruire. Par des questions apparemment naïves, il pousse l'interlocuteur à préciser ses définitions, ce qui finit par mettre en lumière des incohérences dans ses croyances. Cette feinte modestie est une arme redoutable pour démasquer la fausse science et ouvrir la voie à une authentique recherche de la vérité.
@@ -1006,7 +1006,7 @@ Exemple : Dans le Ménon, Socrate demande à Ménon de définir la vertu. Chaque
     answers: [
       "Comme une technique pour apprendre aux enfants à lire.",
       "Comme une méthode pour écrire des romans.",
-      "Comme l'art de raconter des histoires pour capter l'attention, créer une identification émotionnelle, et faire adhérer à un message ou à une marque, en lui donnant du sens narratif plutôt que de présenter des arguments rationnels."
+      "Comme un art de raconter des histoires pour capter l'attention."
     ],
     correct: 3,
     explanation: `Le storytelling est la mise en récit stratégique. Au lieu de lister des faits ou des arguments, on construit un récit avec un héros (le candidat, la marque, le client), des obstacles, des méchants, et un dénouement heureux promis. Il mobilise les ressorts psychologiques de l'identification et de l'émotion, et est souvent plus mémorable qu'un discours analytique. Il peut être un outil de communication puissant, mais aussi une manière de simplifier à l'extrême des réalités complexes, voire de les déformer.
@@ -1017,7 +1017,7 @@ Exemple : Un candidat à la présidentielle qui raconte son enfance modeste, ses
     question: "Que signifie l'expression <em>jeter des mots à la tête de quelqu'un</em> ?",
     answers: [
       "Lui donner des conseils non sollicités.",
-      "Lui lancer des insultes ou des reproches de manière violente et désordonnée, dans une dispute où la parole devient une agression.",
+      "Lui lancer des propos de manière agressive.",
       "Lui adresser des compliments."
     ],
     correct: 2,
@@ -1030,7 +1030,7 @@ Exemple : Lors d'une dispute conjugale houleuse, les partenaires peuvent <em>se 
     answers: [
       "Faire aux autres ce que vous voudriez qu'ils fassent pour vous.",
       "Parler à tour de rôle sans se couper la parole.",
-      "Écouter autrui comme on voudrait être écouté, et lui accorder la présomption de rationalité et de sincérité que l'on réclame pour soi-même, comme condition d'un dialogue authentique."
+      "Traiter autrui comme on voudrait être traité conditionne le dialogue."
     ],
     correct: 3,
     explanation: `Cette règle, implicite chez Habermas et d'autres théoriciens de la délibération, est une norme procédurale fondamentale. Pour qu'un échange soit fécond et équitable, chacun doit traiter la parole de l'autre avec le même respect et la même attention qu'il attend pour la sienne. Cela implique de chercher à comprendre son point de vue avant de le critiquer, de présumer qu'il cherche aussi la vérité, et de ne pas utiliser de procédés rhétoriques déloyaux. C'est une application du principe d'égalité dans l'espace de la parole.
@@ -1042,7 +1042,7 @@ Exemple : Dans un débat en classe, si vous exigez que vos arguments soient éco
     answers: [
       "La négation d'une thèse.",
       "Une proposition intermédiaire dans un raisonnement.",
-      "L'opposition forte de deux termes ou deux idées dans une phrase, pour les mettre en relief par contraste."
+      "L'opposition de deux idées pour les mettre en relief par contraste."
     ],
     correct: 3,
     explanation: `L'antithèse rapproche deux réalités contraires pour faire ressortir leur différence ou créer un effet de balance. Elle structure souvent la pensée en oppositions binaires (le jour et la nuit, l'amour et la haine). Elle peut servir à exprimer un conflit intérieur, une alternative, ou à souligner une qualité par opposition à son contraire. C'est une figure très utilisée en rhétorique et en poésie pour sa force dramatique et sa clarté.
@@ -1050,11 +1050,11 @@ Exemple : « Vous êtes riche, je suis pauvre ; vous êtes puissant, je suis fai
   },
   // Question n°87
   {
-    question: "Comment la notion de <em>parole donnée</em> (promesse) est-elle analysée philosophiquement ?",
+    question: "Comment la notion de <em>parole donnée</em> peut-elle être analysée ?",
     answers: [
       "Comme un simple usage conventionnel du langage.",
       "Comme une illusion, car on ne peut s'engager sur l'avenir qui est incertain.",
-      "Comme un acte de parole performatif fondamental qui engage l'avenir et la fidélité de celui qui promet ; elle fonde la confiance et la stabilité des relations humaines (amitié, contrat, alliance)."
+      "Comme un acte de parole performatif fondamental qui engage celui qui promet."
     ],
     correct: 3,
     explanation: `La promesse est un acte de langage qui crée une obligation morale. En disant « Je promets », je me lie moi-même et je donne à l'autre un droit sur mon futur comportement. C'est un acte de liberté qui crée une contrainte. Des philosophes comme Hobbes ou Rousseau en font le fondement du contrat social. Pour d'autres comme Nietzsche, il faut une <em>mémoire de la volonté</em> pour tenir ses promesses, ce qui est le propre de l'homme <em>susceptible de promesse</em>. Rompre sa parole, c'est briser un lien social essentiel.
@@ -1066,7 +1066,7 @@ Exemple : Le serment d'Hippocrate (« Je promets... ») est une parole donnée p
     answers: [
       "Une situation où l'on doit choisir entre deux options également désirables.",
       "Un argument qui fonctionne dans les deux sens.",
-      "Une situation de communication pathogène où un individu reçoit deux messages contradictoires de même niveau (souvent l'un verbal, l'autre non verbal) et ne peut en satisfaire un sans violer l'autre, ce qui peut générer de la souffrance psychique."
+      "Une situation où un individu reçoit deux messages contradictoires."
     ],
     correct: 3,
     explanation: `C'est une théorie développée par Bateson et Watzlawick. Exemple classique : une mère dit à son enfant « Sois spontané ! » L'ordre lui-même empêche la spontanéité. Ou bien un père dit « Viens m'embrasser » d'une voix froide et avec un corps tendu. L'enfant est pris : s'il n'embrasse pas, il désobéit au message verbal ; s'il embrasse, il heurte le message non-verbal de rejet. Le double bind, s'il est répété, peut être une source de schizophrénie. Il montre la complexité de la communication, qui n'est pas que verbale.
@@ -1076,7 +1076,7 @@ Exemple : Un manager qui dit à son équipe « Soyez créatifs et sortez des sen
   {
     question: "Que signifie l'expression <em>appeler un chat un chat</em> ?",
     answers: [
-      "Nommer les choses avec les mots justes, sans euphémisme, sans détour, avec franchise et courage, même si c'est choquant ou impoli.",
+      "Nommer les choses avec les mots justes avec franchise.",
       "Utiliser des mots simples pour se faire comprendre des enfants.",
       "Faire un mauvais jeu de mots."
     ],
@@ -1089,7 +1089,7 @@ Exemple : Au lieu de dire « il a des difficultés sociales », dire « il est p
     question: "Quelle est la fonction de l'<em>anaphore</em> comme figure de style ?",
     answers: [
       "Dire la même chose en utilisant des mots différents (périphrase).",
-      "Répéter un mot ou une expression en début de plusieurs phrases ou vers successifs, pour créer un effet de rythme, d'insistance et de progression.",
+      "Répéter un mot en début de plusieurs phrases pour créer un effet.",
       "Inverser l'ordre des mots dans une phrase."
     ],
     correct: 2,
@@ -1098,11 +1098,11 @@ Exemple : Le discours « I have a dream » de Martin Luther King est construit s
   },
   // Question n°91
   {
-    question: "Comment le philosophe Ludwig Wittgenstein caractérise-t-il les « jeux de langage » dans ses recherches ultérieures ?",
+    question: "Comment Ludwig Wittgenstein caractérise-t-il les « jeux de langage » ?",
     answers: [
       "Des activités ludiques pour apprendre une langue.",
       "Des sophismes élaborés pour tromper.",
-      "Des formes de vie linguistiques concrètes et multiples, où la signification des mots est déterminée par leur usage dans une pratique sociale spécifique (commander, décrire, raconter, prier, etc.)."
+      "Des formes de vie linguistiques concrètes et multiples."
     ],
     correct: 3,
     explanation: `Wittgenstein, dans les <em>Recherches philosophiques</em>, rejette l'idée d'une essence unique du langage. Il propose l'image des « jeux de langage » : le langage est une collection d'activités humaines hétérogènes, chacune avec ses règles. Comprendre un mot, c'est savoir l'utiliser correctement dans le jeu auquel il appartient. Le sens n'est pas une représentation mentale, mais un usage. Cette approche pragmatique met l'accent sur la diversité des fonctions de la parole dans la vie sociale.
@@ -1113,7 +1113,7 @@ Exemple : Le mot « pain » n'a pas le même « jeu de langage » chez le boulan
     question: "Qu'est-ce qu'un <em>oxymore</em> comme figure de style ?",
     answers: [
       "Une exagération grossière.",
-      "Une association de deux termes contradictoires dans une même expression, créant une image frappante et souvent paradoxale.",
+      "Une association contradictoire de deux termes.",
       "Une comparaison sans outil de comparaison."
     ],
     correct: 2,
@@ -1126,7 +1126,7 @@ Exemple : « Cette douce violence », « un merveilleux malheur », « le clair-
     answers: [
       "Changer de costume pour s'adapter à un autre événement.",
       "Partir en laissant ses affaires derrière soi.",
-      "Changer brusquement et opportunément d'opinion ou de camp politique, par calcul plus que par conviction, ce qui est perçu comme une trahison et un manque de parole donnée."
+      "Changer brusquement d'opinion."
     ],
     correct: 3,
     explanation: `C'est une métaphore très critique. Celui qui <em>tourne sa veste</em> renie ses engagements passés, ses alliances, pour se ranger du côté qui semble le plus avantageux sur le moment. Cela trahit une absence de principe et de constance, et rompt la confiance que les électeurs ou les alliés pouvaient avoir en sa parole. C'est considéré comme un manquement grave à l'éthique politique, où la parole et la fidélité aux idées sont supposées compter.
@@ -1138,7 +1138,7 @@ Exemple : Un élu élu sur un programme de gauche qui, une fois au pouvoir, vote
     answers: [
       "Elle est toujours prononcée devant témoins.",
       "Elle a une valeur légale contraignante.",
-      "Elle engage plus profondément la personne, mettant en jeu son honneur, sa réputation et son identité morale ; la transgresser est considéré comme une faute bien plus grave qu'une promesse non tenue."
+      "Elle met en jeu l'honneur de la personne."
     ],
     correct: 3,
     explanation: `La parole d'honneur est une promesse solennelle, souvent faite dans des contextes où la loyauté et la fidélité sont des valeurs suprêmes (militaire, aristocratie, cercles fermés). La sanction de sa rupture n'est pas seulement juridique ou morale générale, mais sociale : la perte de l'honneur, c'est-à-dire de l'estime de ses pairs et de sa propre estime de soi. C'est l'engagement par la parole porté à son plus haut degré d'intensité et de risque personnel.
@@ -1150,7 +1150,7 @@ Exemple : Dans le duel, les adversaires donnaient leur parole d'honneur de respe
     answers: [
       "Une figure qui consiste à omettre un mot attendu.",
       "Un raisonnement qui va de la cause à l'effet.",
-      "Une répétition inutile de mots synonymes ou de termes qui impliquent déjà l'idée exprimée par un autre (« monter en haut », « sortir dehors »). Il est souvent une maladresse, mais peut être utilisé stylistiquement pour insister."
+      "Une répétition inutile de mots synonymes."
     ],
     correct: 3,
     explanation: `Le pléonasme est généralement considéré comme une faute de style car il alourdit la phrase en disant deux fois la même chose. Cependant, il peut être employé volontairement pour renforcer une idée, créer un effet comique, ou dans certaines expressions figées (« je l'ai vu de mes yeux vu »). Dans le langage courant, de nombreux pléonasmes passent inaperçus. En rhétorique, il faut savoir les éviter sauf pour un effet recherché.
@@ -1162,7 +1162,7 @@ Exemple : « Une fausse perruque » (toute perruque est fausse), « prévoir à 
     answers: [
       "Une description du processus de l'inspiration poétique.",
       "Une critique des écrivains obscurs.",
-      "Un idéal classique de clarté et d'ordre : une pensée véritablement maîtrisée et organisée trouve naturellement son expression dans un langage clair et simple ; les difficultés d'expression trahissent souvent des difficultés de pensée."
+      "Les difficultés d'expression renvoient à des difficultés de pensée."
     ],
     correct: 3,
     explanation: `Cette maxime, tirée de <em>L'Art poétique</em> de Boileau et reprise par Valéry, défend un rationalisme linguistique. Elle postule un parallélisme entre la clarté de la pensée et la clarté de l'expression. Si on a du mal à exprimer une idée, c'est peut-être qu'on ne la comprend pas encore pleinement soi-même. Elle encourage donc à travailler sa pensée pour la rendre limpide, plutôt qu'à chercher des artifices de style pour masquer son flou. C'est un credo de la prose philosophique et scientifique classique.
@@ -1174,7 +1174,7 @@ Exemple : Un étudiant qui bute pour expliquer un concept compliqué est invité
     answers: [
       "Un message qui est murmuré, donc mal entendu.",
       "La conclusion logique d'un raisonnement.",
-      "Une signification qui n'est pas exprimée explicitement mais que l'interlocuteur est censé comprendre à partir du contexte, des connaissances partagées ou de l'intonation."
+      "Une signification exprimée implicitement."
     ],
     correct: 3,
     explanation: `Le sous-entendu (ou implicite) est un contenu informatif qui n'est pas littéralement dit, mais qui est inféré par l'auditeur. Il repose sur des présupposés, des lois conversationnelles (la maxime de pertinence de Grice) ou une intention ironique. C'est une composante essentielle de la communication efficace et économique, mais aussi une source de malentendus ou de manipulations (insinuation). Une grande partie de ce que nous communiquons passe par le sous-entendu.
@@ -1184,7 +1184,7 @@ Exemple : Si quelqu'un dit « Il fait froid ici » en regardant la fenêtre ouve
   {
     question: "Comment la <em>parole de témoin</em> (dans un procès, sur un événement historique) est-elle épistémologiquement problématique ?",
     answers: [
-      "Elle est une source de connaissance indispensable mais fragile : la mémoire est sélective, reconstructive, et peut être affectée par le temps, les émotions, les pressions sociales ; la parole du témoin mêle le vécu subjectif et les faits objectifs.",
+      "Elle mêle le vécu subjectif et les faits objectifs.",
       "Elle est toujours fausse, car la mémoire est infidèle.",
       "Elle est la forme de preuve la plus fiable qui soit."
     ],
@@ -1197,7 +1197,7 @@ Exemple : Les témoignages sur un accident de voiture varient souvent sur des d�
     question: "Que signifie l'expression <em>prendre quelqu'un au mot</em> ?",
     answers: [
       "Le critiquer sévèrement pour ce qu'il a dit.",
-      "Interpréter ses paroles de manière très littérale et exiger qu'il les respecte à la lettre, souvent pour le mettre en difficulté ou le tenir à son engagement.",
+      "Interpréter ses paroles de manière très littérale.",
       "Répéter exactement ce qu'il a dit."
     ],
     correct: 2,
@@ -1206,11 +1206,11 @@ Exemple : Un enfant dit à ses parents « Je déteste cette école, j'arrête d'
   },
   // Question n°100
   {
-    question: "Quel est l'enjeu final de l'étude de <em>l'art de la parole</em> en philosophie et en littérature ?",
+    question: "Quel est l'enjeu de l'étude de <em>l'art de la parole</em> ?",
     answers: [
       "Apprendre à bien parler en public pour réussir ses examens oraux.",
       "Mémoriser un catalogue de figures de style.",
-      "Comprendre que la parole n'est pas un simple instrument neutre, mais le lieu même où se jouent les rapports de pouvoir, la construction du sens, la relation à autrui et à la vérité. Il s'agit de former des citoyens capables d'user de la parole avec lucidité, responsabilité et créativité, à la fois pour résister aux manipulations et pour participer à la délibération commune."
+      "Former des citoyens capables d'user de la parole avec lucidité."
     ],
     correct: 3,
     explanation: `L'art de la parole est une discipline fondamentale car il touche à l'essence de l'humain comme être de langage et être politique. En étudiant ses techniques (rhétorique), ses dévoiements (sophistique, propagande), ses formes nobles (dialogue philosophique, parole poétique, témoignage), et ses enjeux éthiques (responsabilité, sincérité), on s'arme pour naviguer dans un monde saturé de discours. L'objectif ultime est de rendre l'élève capable non seulement d'analyser la parole des autres, mais aussi de forger la sienne propre, libre et responsable.

@@ -9,7 +9,7 @@ const sousTitre = "100 questions";
 // ============================================
 const philosophyData = {
   texte: `L'autorité de la parole ne se réduit pas au pouvoir de la force. Elle oscille entre l'auctoritas (autorité fondée sur la tradition et l'origine) et la potestas (puissance de contrainte). Des paroles patriarcales aux discours charismatiques, des mythes fondateurs aux énoncés performatifs, cette séquence explore comment la parole peut fonder, légitimer ou subvertir l'ordre social. Elle interroge ce qui fait qu'une parole "fait autorité" : est-ce la personne qui la profère, la tradition qui la porte, ou la vérité qu'elle énonce ?`,
-  source: "Synthèse des enjeux"
+  source: "synthèse des enjeux de la séquence"
 };
 
 // ============================================
@@ -22,7 +22,7 @@ const questions = [
     answers: [
       "Autorité naturelle et autorité acquise",
       "Autorité personnelle et autorité institutionnelle",
-      "<em>Auctoritas</em> (autorité traditionnelle) et <em>Potestas</em> (puissance de contrainte)"
+      "Autorité traditionnelle et puissance de contrainte"
     ],
     correct: 3,
     explanation: `La distinction centrale est entre l'<em>auctoritas</em> (autorité fondée sur la tradition, l'origine, le prestige) et la <em>potestas</em> (puissance de contrainte, pouvoir de commandement). L'<em>auctoritas</em> renvoie à une légitimité héritée du passé, à un poids symbolique. La <em>potestas</em> désigne l'exercice effectif du pouvoir, la capacité à imposer sa volonté. Cette distinction, héritée de la pensée politique romaine, permet de comprendre qu'une parole peut "faire autorité" sans pour autant détenir le pouvoir coercitif.\nExemple : Un grand professeur émérite a de l'<em>auctoritas</em> dans son domaine, même s'il n'a plus de <em>potestas</em> administrative.`
@@ -31,7 +31,7 @@ const questions = [
   {
     question: "Que signifie étymologiquement le terme grec ἐξουσία, traduit par 'autorité' ?",
     answers: [
-      "Ce qui provient de l'essence, l'héritage substantiel",
+      "Ce qui provient de l'essence",
       "La force persuasive",
       "Le commandement absolu"
     ],
@@ -64,7 +64,7 @@ const questions = [
   {
     question: "Dans l'<em>Odyssée</em>, comment Télémaque justifie-t-il son ordre à Pénélope de se retirer dans ses appartements ?",
     answers: [
-      "En affirmant que 'le soin de parler appartient aux hommes'",
+      "En affirmant que parler appartient aux hommes",
       "Par son statut de futur roi",
       "En invoquant la volonté des dieux"
     ],
@@ -87,7 +87,7 @@ const questions = [
     question: "Que signifie l'expression 'dissonance cognitive' dans l'analyse des rapports à l'autorité ?",
     answers: [
       "Le conflit entre deux sources d'autorité",
-      "La tendance à justifier une situation subie contre laquelle on ne peut rien",
+      "La tendance à justifier une situation subie",
       "L'incapacité à comprendre les ordres"
     ],
     correct: 2,
@@ -99,7 +99,7 @@ const questions = [
     answers: [
       "Seuls les individus malveillants obéissent à des ordres immoraux",
       "L'obéissance dépend exclusivement de la personnalité des individus",
-      "Une majorité d'individus ordinaires peut obéir à une autorité perçue comme légitime, même pour infliger des souffrances"
+      "Une majorité d'individus ordinaires peut obéir à une autorité perçue comme légitime"
     ],
     correct: 3,
     explanation: `L'expérience de Stanley Milgram (1961-1963) démontre que, dans un cadre institutionnel perçu comme légitime (un laboratoire universitaire), une proportion alarmante de participants ordinaires (environ 65%) est prête à administrer des décharges électriques potentiellement mortelles à un tiers, sur l'ordre d'une autorité scientifique. Cette expérience révèle la puissance de la situation et de l'autorité institutionnelle sur le comportement individuel, pouvant surpasser les inhibitions morales personnelles.\nExemple : L'adaptation télévisée française "Le Jeu de la Mort" (2010) a reproduit ces résultats, montrant que l'autorité d'une animatrice de télévision pouvait obtenir des taux de soumission encore plus élevés.`
@@ -109,7 +109,7 @@ const questions = [
     question: "Selon Hannah Arendt, quel est le fondement de l'autorité (<em>auctoritas</em>) dans la Rome antique ?",
     answers: [
       "La force militaire",
-      "Le lien avec l'origine sacrée de la fondation",
+      "L'origine sacrée de sa fondation",
       "La richesse économique"
     ],
     correct: 2,
@@ -121,7 +121,7 @@ const questions = [
     answers: [
       "Il est historiquement attesté",
       "Il comporte toujours des éléments merveilleux",
-      "Il met en scène des êtres symboliques pour expliquer la condition humaine"
+      "Il met en scène des êtres symboliques"
     ],
     correct: 3,
     explanation: `Un mythe est un récit traditionnel et fabuleux qui met en scène des êtres (dieux, héros, forces naturelles) incarnant sous une forme symbolique des aspects fondamentaux de la condition humaine, du monde ou de la société. Contrairement à la légende (qui peut s'appuyer sur un fond historique) ou à la fable (qui a une morale explicite), le mythe propose une explication symbolique et fondatrice. Il répond aux grandes questions existentielles (origine du monde, du mal, de l'amour) et fonde des pratiques sociales.\nExemple : Le mythe de Prométhée explique l'origine du feu et de la technique humaine, ainsi que la condition de l'homme, partagé entre l'immortalité des dieux et la mortalité des bêtes.`
@@ -130,20 +130,20 @@ const questions = [
   {
     question: "Quel est l'enjeu principal du mythe de Gygès, rapporté par Platon dans <em>La République</em> ?",
     answers: [
-      "La supériorité de la monarchie",
-      "L'importance de la richesse pour le bonheur",
-      "La question de savoir si l'homme n'est vertueux que par peur de la punition"
+      "L'enjeu de la supériorité de la monarchie par rapport à la démocratie",
+      "L'enjeu de l'importance de la richesse pour le bonheur",
+      "L'enjeu de savoir si la vertu naît de la peur de la punition"
     ],
     correct: 3,
     explanation: `Le mythe de Gygès raconte l'histoire d'un berger qui trouve un anneau lui conférant l'invisibilité. Devenu impunissable, il séduit la reine, tue le roi et s'empare du trône. Platon utilise ce mythe pour poser une question fondamentale à la morale : un homme qui pourrait commettre l'injustice en toute impunité le ferait-il ? L'histoire suggère que oui. L'enjeu est de savoir si la justice est choisie pour elle-même ou seulement par crainte des conséquences. Socrate devra ensuite défendre, par la raison, que la justice est préférable en soi.\nExemple : La question posée par le mythe est : "Que feriez-vous si vous étiez sûr de ne jamais être découvert ?"`
   },
   // Question n°12
   {
-    question: "Quelle est la fonction de la 'parole symbolique' selon l'analyse anthropologique de Claude Lévi-Strauss ?",
+    question: "Quelle est la fonction de la parole symbolique selon l'analyse anthropologique de Claude Lévi-Strauss ?",
     answers: [
       "Transmettre des informations pratiques",
       "Divertir la communauté",
-      "Réparer symboliquement un désordre pour avoir un effet thérapeutique réel"
+      "Réparer symboliquement un désordre"
     ],
     correct: 3,
     explanation: `Claude Lévi-Strauss développe le concept d'"efficacité symbolique". À travers l'exemple du chaman qui guérit une femme en difficulté d'accouchement en racontant un mythe, il montre que la parole symbolique opère une "substitution" : elle transpose un trouble physiologique (corporel) dans un registre mythico-social compréhensible et manipulable par la collectivité. En donnant un sens social au mal individuel, le rituel verbal permet une réorganisation psychique et sociale qui peut avoir des effets thérapeutiques concrets. La parole fait le pont entre l'individu et le groupe.\nExemple : Le mythe raconté par le chaman fait de l'utérus de la femme le théâtre d'une lutte entre esprits, lutte que le chaman peut résoudre par sa parole, apaisant ainsi les contractions désordonnées.`
@@ -152,7 +152,7 @@ const questions = [
   {
     question: "Dans la Genèse, quel pouvoir particulier est attribué à la parole de Dieu lors de la Création ?",
     answers: [
-      "Elle nomme et fait advenir ce qu'elle désigne",
+      "Elle fait advenir ce qu'elle nomme",
       "Elle décrit ce qui existe déjà",
       "Elle persuade les anges d'obéir"
     ],
@@ -176,7 +176,7 @@ const questions = [
     answers: [
       "Une parole particulièrement théâtrale",
       "Une parole qui persuade efficacement",
-      "Une parole qui accomplit l'action qu'elle décrit par le fait même d'être énoncée"
+      "Une parole qui est en soi une action"
     ],
     correct: 3,
     explanation: `Dans <em>Quand dire, c'est faire</em>, Austin distingue les énoncés constatifs (qui décrivent un état de choses et peuvent être vrais ou faux) des énoncés performatifs. Un performatif est un énoncé qui, prononcé dans les conditions appropriées (contextuelles, institutionnelles, intentionnelles), accomplit l'action qu'il désigne. Dire, c'est faire. Ces énoncés sont au cœur de l'autorité discursive, car ils transforment la réalité sociale par la parole seule.\nExemple : "Je vous déclare mari et femme" (par un maire), "Je promets", "Je nomme", "Je parie" sont des performatifs.`
@@ -187,7 +187,7 @@ const questions = [
     answers: [
       "Chercher un compromis",
       "Instruire moralement l'agneau",
-      "Légitimer par avance la violence qu'il va exercer"
+      "Légitimer par avance la violence"
     ],
     correct: 3,
     explanation: `Le loup, décidé à dévorer l'agneau, invente successivement des prétextes ("tu troubles mon eau", "tu as insulté mon père l'an passé"). L'agneau réfute chaque accusation avec des arguments logiques et factuels. La parole du loup n'a donc pas pour but un dialogue authentique ou la recherche de la vérité, mais de donner une apparence de justification à son acte de violence. Elle sert à légitimer l'injustifiable, à masquer la loi du plus fort sous un semblant de droit. La morale est que face à celui qui veut abuser de sa force, la raison est impuissante.\nExemple : Le loup conclut : "Quelle que soit ta facilité à te justifier, je ne t'en mangerai pas moins", révélant la vacuité de son propre discours.`
@@ -196,7 +196,7 @@ const questions = [
   {
     question: "Quelle distinction Kant établit-il dans son texte sur les Lumières entre les ordres courants et l'ordre du seul maître qui autorise à raisonner ?",
     answers: [
-      "L'officier, le financier et le prêtre disent « Ne raisonnez pas, obéissez ! », seul le philosophe dit « Raisonnez et obéissez ! »",
+      "L'officier, le financier et le prêtre disent « Ne raisonnez pas, obéissez ! »",
       "Tous les maîtres disent « Raisonnez autant que vous voudrez, mais obéissez ! »",
       "L'officier dit « Raisonnez ! », le financier « Payez ! », le prêtre « Croyez ! »"
     ],
@@ -207,7 +207,7 @@ const questions = [
   {
     question: "Quel est le principal argument utilisé par Dominique de Villepin dans son discours à l'ONU (2003) pour s'opposer à la guerre en Irak ?",
     answers: [
-      "La nécessité de laisser plus de temps aux inspections et de privilégier le désarmement dans la paix",
+      "La nécessité de laisser plus de temps aux inspections",
       "La faiblesse militaire de la France",
       "L'alliance historique avec Saddam Hussein"
     ],
@@ -218,7 +218,7 @@ const questions = [
   {
     question: "Que signifie étymologiquement le mot 'poésie', issu du grec ποιεῖν (<em>poiein</em>) ?",
     answers: [
-      "Faire, créer",
+      "Faire",
       "Chanter",
       "Rêver"
     ],
@@ -231,7 +231,7 @@ const questions = [
     answers: [
       "Exprimer les sentiments personnels du poète",
       "Décrire la nature avec précision",
-      "Transposer un fait de nature en sa disparition vibratoire pour faire émaner la notion pure"
+      "Transposer un fait de nature"
     ],
     correct: 3,
     explanation: `Mallarmé écrit : "A quoi bon la merveille de transposer un fait de nature en sa presque disparition vibratoire selon le jeu de la parole, cependant, si ce n'est pour qu'en émane, sans la gêne d'un proche ou concret rappel, la notion pure ?" La poésie ne cherche pas à copier ou décrire le monde sensible (la "fleur" concrète). Elle opère une "transposition" qui fait disparaître l'apparence immédiate pour faire surgir, par le jeu des mots et des sons, l'Idée ou l'essence pure de la chose. La parole poétique vise l'intelligible, non le visible.\nExemple : Le poème "Le vierge, le vivace et le bel aujourd'hui..." ne décrit pas un cygne, mais évoque l'idée de pureté, de blancheur et d'impuissance créatrice.`
@@ -252,7 +252,7 @@ const questions = [
     question: "Selon Pierre Bourdieu, quelle est la fonction du 'pouvoir symbolique' de la parole ?",
     answers: [
       "Communiquer des informations neutres",
-      "Produire et imposer des représentations du monde social qui agissent sur ce monde",
+      "Produire des représentations du monde social",
       "Amuser et divertir"
     ],
     correct: 2,
@@ -264,7 +264,7 @@ const questions = [
     answers: [
       "La justice et la force sont inconciliables",
       "Il faut toujours préférer la force à la justice",
-      "L'idéal est d'unir la justice et la force, mais en pratique la force l'emporte souvent"
+      "L'idéal est d'unir la justice et la force"
     ],
     correct: 3,
     explanation: `Pascal expose ici le dilemme tragique du politique. D'un côté, une justice (le droit, la légitimité) qui n'a pas la force pour s'imposer est vaine, contournée par les méchants. De l'autre, une force (la puissance, la coercition) qui n'est pas guidée par la justice n'est qu'arbitraire et tyrannie. L'idéal serait de "mettre ensemble la justice et la force". Mais Pascal constate amèrement que dans la réalité, "ne pouvant faire que ce qui est juste fût fort, on a fait que ce qui est fort fût juste". La force finit par se donner à elle-même l'apparence de la justice.\nExemple : Un gouvernement légitime mais faible peut être renversé ; une dictature forte se donne des lois pour paraître juste.`
@@ -275,7 +275,7 @@ const questions = [
     answers: [
       "Le fait de garder ses pensées pour soi",
       "L'obéissance due à une conviction intime",
-      "La tendance à attribuer les événements à des causes internes (soi-même) plutôt qu'externes"
+      "La tendance à attribuer les événements à des causes internes"
     ],
     correct: 3,
     explanation: `L'internalité est un trait de personnalité qui consiste à attribuer la responsabilité des événements (succès, échecs) à des causes internes (ses propres efforts, capacités) plutôt qu'externes (la chance, les autres, le système). Dans les répliques de l'expérience de Milgram, il a été observé que les participants ayant un score élevé d'internalité administraient en moyenne des chocs électriques plus forts. Cela peut s'expliquer par le fait que les "internes", souvent bien intégrés socialement, adhèrent plus fortement aux normes et à l'autorité institutionnelle, qu'ils perçoivent comme légitime et à laquelle ils se soumettent.\nExemple : Un "interne" pensera : "J'obéis parce que c'est mon devoir dans cette expérience scientifique", un "externe" pensera : "C'est l'expérimentateur qui est responsable, pas moi".`
@@ -293,11 +293,11 @@ const questions = [
   },
   // Question n°26
   {
-    question: "Quel rôle joue la parole dans le 'contrat social' selon Rousseau ?",
+    question: "Quel rôle joue la parole dans le contrat social selon Rousseau ?",
     answers: [
       "Elle est l'instrument de la tromperie des puissants",
       "Elle est inutile, seul le pacte tacite importe",
-      "Elle est l'acte par lequel chacun aliène sa liberté naturelle au profit de la volonté générale"
+      "Chacun aliène sa liberté naturelle à la volonté générale"
     ],
     correct: 3,
     explanation: `Pour Rousseau, le contrat social est l'acte fondateur par lequel des individus isolés deviennent un peuple. Cet acte est essentiellement verbal/discursif : "Chacun de nous met en commun sa personne et toute sa puissance sous la suprême direction de la volonté générale". La parole performative du pacte ("nous contractons") fait advenir une nouvelle réalité politique. Elle transforme la liberté naturelle (faire tout ce qu'on peut) en liberté civile (obéir à la loi qu'on s'est prescrite). L'autorité légitime émane ainsi de cette parole collective fondatrice.\nExemple : La Déclaration des droits de l'homme et du citoyen de 1789 est une parole performative qui institue un nouvel ordre politique fondé sur la souveraineté nationale.`
@@ -306,7 +306,7 @@ const questions = [
   {
     question: "Que désigne le terme 'oint' (Christ, Messie) dans le contexte de la légitimation du pouvoir monarchique ?",
     answers: [
-      "Celui qui a été sacré par l'onction d'huile, marquant son élection divine",
+      "Celui qui est élu par Dieu",
       "Le guerrier le plus fort",
       "Le plus sage du royaume"
     ],
@@ -317,7 +317,7 @@ const questions = [
   {
     question: "Quelle est la fonction principale du 'serment' dans l'accès à une fonction (médecin, président, etc.) ?",
     answers: [
-      "Créer un engagement solennel et public qui lie moralement et juridiquement celui qui le prête",
+      "Créer un engagement solennel",
       "Rassurer l'opinion publique",
       "Satisfaire une formalité administrative"
     ],
@@ -341,7 +341,7 @@ const questions = [
     answers: [
       "Une parole prononcée par un marginal",
       "Une parole grammaticalement incorrecte",
-      "Une parole qui s'écarte de la recherche de la vérité pour viser l'efficacité ou la séduction"
+      "Une parole qui s'écarte de la recherche de la vérité"
     ],
     correct: 3,
     explanation: `Pour Socrate/Platon, une parole est "déviante" lorsqu'elle dévie de sa fin propre, qui est la recherche de la vérité (<em>alètheia</em>) et du bien. C'est le cas de la rhétorique sophistique, qui vise à persuader coûte que coûte, indépendamment du vrai ; de l'écriture, qui fige et appauvrit la pensée vivante ; du sérieux pompeux, qui masque l'ignorance sous des apparences savantes. Face à ces déviances, Socrate oppose la parole philosophique : dialogique, ironique, aporétique, toujours en quête, incarnée dans une relation vivante avec l'interlocuteur.\nExemple : Les discours flatteurs des sophistes auprès des jeunes aristocrates sont des paroles déviantes car ils visent à plaire et à gagner de l'argent, non à éveiller à la vérité.`
@@ -352,7 +352,7 @@ const questions = [
     answers: [
       "Elle est secrète et réservée aux initiés",
       "Elle est un ordre impératif et coercitif",
-      "Elle est prolixe mais ne dit 'littéralement' rien de nouveau, célébrant les normes traditionnelles"
+      "Elle est prolixe sans dire rien de nouveau"
     ],
     correct: 3,
     explanation: `Dans <em>La société contre l'État</em>, l'ethnologue Pierre Clastres observe que dans les sociétés amazoniennes, le chef a l'obligation de parler longuement. Mais cette parole n'est pas un commandement. Elle consiste "pour l'essentiel, en une célébration, maintes fois répétée, des normes de vie traditionnelles". Le chef ne dit "littéralement... rien" de nouveau ; il ne crée pas la loi, il la récite. Son autorité n'est pas un pouvoir de décision, mais une fonction de rappel et d'incarnation du consensus communautaire. La parole du chef maintient la cohésion sociale en réaffirmant ce que tout le monde sait déjà.\nExemple : Le chef prononce des discours lors des fêtes pour rappeler les mythes fondateurs et les règles du groupe, sans les modifier.`
@@ -361,7 +361,7 @@ const questions = [
   {
     question: "Quel est le sens de la formule de Carl Schmitt : 'Le Führer protège le droit' ?",
     answers: [
-      "L'action du Führer est elle-même la justice suprême, elle crée le droit",
+      "L'action du Führer est la justice qui crée le droit",
       "Le chef a pour devoir de faire respecter les lois existantes",
       "Le chef est soumis à la loi comme tout le monde"
     ],
@@ -385,10 +385,10 @@ const questions = [
     answers: [
       "Une parole qui décrit une société parfaite",
       "Une parole idéaliste",
-      "Une parole sans lieu (οὐ-τόπος) propre, qui échappe aux cadres institutionnels"
+      "Une parole sans lieu propre"
     ],
     correct: 3,
-    explanation: `Utopique vient du grec "<em>ou-topos</em>", qui signifie "sans lieu". Une parole utopique est donc, au sens premier, une parole qui n'a pas de lieu institutionnel assigné, qui échappe aux cadres établis du discours (tribunal, assemblée, chaire, média). Elle est par essence marginale, subversive, déplacée. La parole authentique du philosophe, du poète ou du prophète est souvent utopique en ce sens : elle surgit hors des lieux prévus, dérange l'ordre discursif établi. Ce n'est que secondairement qu'"utopique" a pris le sens de "chimérique".\nExemple : Socrate parlait sur l'agora, dans la rue, hors des institutions scolaires ou politiques officielles ; sa parole était utopique.`
+    explanation: `Utopique vient du grec οὐ-τόπος (<em>ou-topos</em>), qui signifie "sans lieu". Une parole utopique est donc, au sens premier, une parole qui n'a pas de lieu institutionnel assigné, qui échappe aux cadres établis du discours (tribunal, assemblée, chaire, média). Elle est par essence marginale, subversive, déplacée. La parole authentique du philosophe, du poète ou du prophète est souvent utopique en ce sens : elle surgit hors des lieux prévus, dérange l'ordre discursif établi. Ce n'est que secondairement qu'"utopique" a pris le sens de "chimérique".\nExemple : Socrate parlait sur l'agora, dans la rue, hors des institutions scolaires ou politiques officielles ; sa parole était utopique.`
   },
   // Question n°35
   {
@@ -396,18 +396,18 @@ const questions = [
     answers: [
       "Il est toujours un signe de soumission ou d'impuissance",
       "Il doit être absolument combattu pour que la liberté d'expression règne",
-      "Il constitue l'arrière-plan nécessaire d'où émerge la parole et peut être lui-même une parole stratégique"
+      "Il est l'arrière-plan d'où émerge la parole"
     ],
     correct: 3,
     explanation: `Le silence n'est pas le simple contraire ou l'absence de parole. Il en est la condition de possibilité : comme le blanc du papier permet l'écriture, le silence est l'espace de résonance où la parole prend sens. De plus, le silence peut être lui-même une parole éloquente : silence de refus, de mépris, de recueillement, de complicité. Dans un débat, savoir se taire au bon moment est une stratégie rhétorique. Parler, c'est aussi savoir laisser des silences. La "minute de silence" est une parole collective non verbale.\nExemple : Le silence obstiné d'un accusé face à un juge est une parole de défi ou de protection.`
   },
   // Question n°36
   {
-    question: "Que signifie le concept d''efficacité symbolique' développé par Claude Lévi-Strauss ?",
+    question: "Que signifie le concept d'<em>efficacité symbolique</em> développé par Claude Lévi-Strauss ?",
     answers: [
       "L'effet magique des mots",
       "L'impact persuasif des figures de style",
-      "La capacité d'une parole symbolique (mythe, rituel) à produire des effets réels en réorganisant la perception d'un désordre"
+      "La capacité à produire des effets réels"
     ],
     correct: 3,
     explanation: `L'efficacité symbolique désigne le pouvoir qu'ont certains discours rituels ou mythiques de produire des effets concrets (comme une guérison) non par magie, mais en opérant une réorganisation symbolique. En transposant un trouble physiologique individuel (une maladie) dans le langage mythique partagé par la collectivité, le chaman donne un sens social à ce trouble. Ce réencadrement symbolique permet au malade de réintégrer son expérience dans un ordre compréhensible, ce qui peut déclencher des processus psychosomatiques de guérison. La parole agit comme un opérateur de transformation du sens.\nExemple : Le chant du chaman décrit la lutte des esprits dans le corps de la femme ; cette narration "met en ordre" le chaos de la douleur et facilite l'accouchement.`
@@ -417,7 +417,7 @@ const questions = [
     question: "Comment Hannah Arendt définit-elle la relation entre autorité et tradition ?",
     answers: [
       "L'autorité est l'ennemie de la tradition",
-      "L'autorité a besoin de la tradition comme de son fondement et gardien",
+      "La tradition fonde et est gardienne de l'autorité",
       "L'autorité et la tradition n'ont aucun lien nécessaire"
     ],
     correct: 2,
@@ -429,7 +429,7 @@ const questions = [
     answers: [
       "Elle ne coûte rien à produire",
       "Elle est souvent offerte au public",
-      "Elle n'a pas d'autre fin qu'elle-même, elle n'est pas utilitaire"
+      "Elle n'a pas d'autre fin qu'elle-même"
     ],
     correct: 3,
     explanation: `La parole poétique est dite "gratuite" au sens où elle n'est pas soumise à une finalité extérieure. Elle ne vise pas à informer, convaincre, vendre, ordonner ou divertir (du moins pas comme fin principale). Elle est à elle-même sa propre fin : elle existe pour le plaisir du langage, pour la révélation de l'être, pour la beauté. Cette gratuité la distingue radicalement de la "parole de communication" utilitaire et en fait une forme de résistance à la réduction de la parole à un simple instrument.\nExemple : Un poème de René Char ne "sert" à rien d'utile ; il est un acte de langage pur, une offrande à la langue elle-même.`
@@ -440,7 +440,7 @@ const questions = [
     answers: [
       "Elle atteste d'un fait objectif et vérifiable",
       "Elle est prononcée devant un tribunal",
-      "Elle engage celui qui parle, car elle témoigne d'une expérience vécue"
+      "Elle engage celui qui parle"
     ],
     correct: 3,
     explanation: `Une parole testimoniale est une parole qui fait acte de témoignage. Celui qui parle ("je témoigne que...") s'engage personnellement dans son énonciation. Il certifie, par sa présence et son intégrité, la véracité de ce qu'il rapporte (une expérience, un événement vécu, une conviction). Cette parole est incarnée : sa force vient de l'identification entre le locuteur et son discours. Elle s'oppose à la parole anonyme, détachée, ou purement informative. Le témoignage fonde une autorité particulière, celle de l'expérience directe.\nExemple : Le témoignage d'une rescapée d'Auschwitz a une autorité morale et historique que n'a pas un manuel d'histoire, car elle incarne dans sa parole la mémoire vive de l'événement.`
@@ -449,7 +449,7 @@ const questions = [
   {
     question: "Comment Démosthène, dans la <em>Première Philippique</em>, cherche-t-il à exhorter les Athéniens à l'action ?",
     answers: [
-      "En piquant leur orgueil et en dénonçant leur indolence face à la menace macédonienne",
+      "En piquant leur orgueil",
       "En les flattant sur leur puissance passée",
       "En leur promettant des richesses"
     ],
@@ -460,9 +460,9 @@ const questions = [
   {
     question: "Que signifie l'expression 'parole d'engagement' dans le contexte politique ?",
     answers: [
-      "Un discours long et détaillé",
+      "Un discours détaillé",
       "Un contrat écrit",
-      "Une promesse publique dont la crédibilité engage l'avenir de celui qui la prononce"
+      "Une promesse publique"
     ],
     correct: 3,
     explanation: `Une parole d'engagement est une promesse publique par laquelle un individu (souvent un homme politique) s'engage à faire ou à être quelque chose dans le futur. Cette parole performative crée une attente chez les auditeurs et engage la responsabilité, la crédibilité et l'honneur de celui qui parle. Le fait de "donner sa parole" crée un lien moral. Si la promesse n'est pas tenue, c'est la confiance et l'autorité du locuteur qui sont atteintes. Dans l'ère médiatique, cet engagement est souvent renforcé par des formules comme "je vous le dis les yeux dans les yeux".\nExemple : Un candidat qui promet "Je ne fermerai pas telle usine" engage sa parole ; s'il la ferme une fois élu, il perd en crédibilité et en autorité morale.`
@@ -472,7 +472,7 @@ const questions = [
     question: "Quelle est la différence entre 'universel' et 'général' selon les définitions données ?",
     answers: [
       "L'universel est abstrait, le général est concret",
-      "L'universel vaut pour tous sans exception, le général vaut pour le plus grand nombre",
+      "L'universel vaut pour tous, le général vaut pour la plupart",
       "L'universel est quantitatif, le général est qualitatif"
     ],
     correct: 2,
@@ -483,8 +483,8 @@ const questions = [
     question: "Comment Machiavel justifie-t-il, dans <em>Le Prince</em>, qu'il vaut mieux être craint qu'aimé ?",
     answers: [
       "Parce que les hommes sont naturellement méchants et ne méritent pas l'amour",
-      "Parce que l'amour est un lien faible et versatile, tandis que la crainte du châtiment est plus stable",
-      "Parce que la crainte est plus noble que l'amour"
+      "Parce que l'amour est un lien versatile et la crainte du châtiment est plus stable",
+      "Parce que la crainte est moralement beaucoup plus noble que l'amour"
     ],
     correct: 2,
     explanation: `Machiavel, dans un calcul purement pragmatique de conservation du pouvoir, argue que "l'amour tient par un lien de reconnaissance bien faible pour la perversité humaine, et qui cède au moindre motif d'intérêt personnel ; au lieu que la crainte résulte de la menace du châtiment, et cette peur ne s'évanouit jamais." Pour lui, l'autorité du prince doit reposer sur une crainte calculée : assez forte pour assurer l'obéissance, mais pas au point de provoquer la haine et la révolte. C'est une vision cynique de l'autorité comme <em>potestas</em> (puissance de contrainte) dénuée de légitimité morale (<em>auctoritas</em>).\nExemple : Un prince qui est seulement aimé risque d'être abandonné en cas de crise ; un prince craint mais pas haï peut compter sur l'obéissance par intérêt.`
@@ -493,7 +493,7 @@ const questions = [
   {
     question: "Quel est le sens de la formule de l'apôtre Paul : 'Toute autorité vient de Dieu' (Romains 13:1) ?",
     answers: [
-      "Le pouvoir politique, même exercé par des païens, participe de l'ordre voulu par Dieu et mérite donc obéissance",
+      "Le pouvoir politique a été voulu par Dieu et mérite donc obéissance",
       "Les détenteurs du pouvoir sont toujours des saints",
       "Seul un roi chrétien a une autorité légitime"
     ],
@@ -506,7 +506,7 @@ const questions = [
     answers: [
       "La domination par la force de la loi",
       "L'obéissance à un leader charismatique qui promulgue des lois",
-      "La croyance en la légalité des règles établies et en la compétence de ceux qui détiennent l'autorité"
+      "La croyance en la légalité des règles établies"
     ],
     correct: 3,
     explanation: `La domination légale-rationnelle est le troisième type de légitimité identifié par Weber. Elle repose sur "la croyance en la légalité des règlements arrêtés et du droit de donner des directives qu'ont ceux qui sont appelés à exercer la domination par ces moyens". On n'obéit pas à une personne, mais à la loi impersonnelle et à la fonction qu'elle incarne. C'est le modèle de l'État moderne bureaucratique, de l'administration, de l'entreprise. L'autorité y est dépersonnalisée, procédurale et limitée par des règles.\nExemple : On obéit à un agent de police ou à un chef de service non pas à titre personnel, mais parce qu'ils représentent et appliquent la loi ou le règlement intérieur.`
@@ -517,7 +517,7 @@ const questions = [
     answers: [
       "Annoncer un programme politique",
       "Faire l'éloge des fondateurs",
-      "Instituer par la parole même une nouvelle réalité sociale, politique ou symbolique"
+      "Instituer une nouvelle réalité"
     ],
     correct: 3,
     explanation: `Une parole est fondatrice lorsqu'elle fait advenir, par sa seule énonciation performative, une entité nouvelle. Elle brise la continuité et inaugure un ordre différent. C'est la parole qui institue : "Nous, peuple des États-Unis..." (Constitution américaine), "Je fonde la République" (déclaration), "Je vous baptise...". Cette parole a une autorité originaire ; elle est l'acte de naissance symbolique. Elle crée le cadre à l'intérieur duquel d'autres paroles (lois, décisions) pourront ensuite avoir sens et autorité.\nExemple : Le "<em>Fiat lux</em>" de la Genèse est la parole fondatrice du cosmos ; la Déclaration d'Indépendance des États-Unis est la parole fondatrice de la nation américaine.`
@@ -528,7 +528,7 @@ const questions = [
     answers: [
       "Une parole qui dit le contraire de ce qu'elle pense pour tromper",
       "Une parole moqueuse et méprisante",
-      "Une parole qui feint l'ignorance pour amener l'interlocuteur à révéler la sienne et à progresser"
+      "Une parole qui feint l'ignorance pour révéler celle de l'autre"
     ],
     correct: 3,
     explanation: `L'ironie socratique (είρωνεία, <em>eirôneia</em>) est une attitude discursive fondamentale de Socrate. Il feint l'ignorance ("Je sais que je ne sais rien"), pose des questions naïves, et se déclare l'élève de son interlocuteur. Cette feinte a un but pédagogique et dialectique : elle pousse l'interlocuteur, souvent présomptueux de son savoir, à exposer ses opinions. Socrate peut alors, par un questionnement serré, révéler les contradictions de ces opinions. L'ironie n'est pas méchante mais stratégique : elle déstabilise les certitudes non fondées pour ouvrir la voie à une recherche authentique.\nExemple : Socrate demande à un général : "Qu'est-ce que le courage ?" et, feignant d'admirer sa réponse, l'amène à se contredire, montrant qu'il ne sait pas vraiment ce qu'est le courage.`
@@ -537,7 +537,7 @@ const questions = [
   {
     question: "Comment le mythe des androgynes (Platon, <em>Le Banquet</em>) explique-t-il l'origine de l'amour ?",
     answers: [
-      "L'amour est le désir de retrouver notre moitié originelle, après que Zeus nous ait coupés en deux",
+      "L'amour est le désir de retrouver notre moitié",
       "L'amour est une punition des dieux",
       "L'amour est une invention des poètes"
     ],
@@ -550,7 +550,7 @@ const questions = [
     answers: [
       "Le transfert complet du pouvoir à un subordonné",
       "La renonciation à son propre discours",
-      "La transmission d'une parole autorisée, où le porte-parole parle au nom de et avec l'autorité de celui qui l'envoie"
+      "La transmission d'une parole autorisée"
     ],
     correct: 3,
     explanation: `Moïse, investi par Dieu, délègue à son frère Aaron la fonction de porte-parole. Dieu dit : "Tu lui parleras et tu mettras les paroles dans sa bouche, et moi, je serai avec ta bouche et avec sa bouche". Aaron ne parle pas en son nom propre ; il est la "bouche" de Moïse, qui lui-même est le représentant de Dieu. L'autorité de la parole d'Aaron dérive entièrement de cette chaîne de délégation. Sa parole est performative parce qu'elle est investie de l'autorité divine qu'il transmet. C'est le modèle des prophètes et, en politique, des ambassadeurs ou porte-parole officiels.\nExemple : Un ambassadeur qui déclare : "Mon gouvernement exige..." parle avec l'autorité de l'État qu'il représente, non en son nom personnel.`
@@ -559,7 +559,7 @@ const questions = [
   {
     question: "Quel est l'enjeu du 'serment d'allégeance' dans les relations féodales ?",
     answers: [
-      "Un acte performatif qui crée un lien personnel et hiérarchique d'autorité et de protection",
+      "Un acte performatif hiérarchique",
       "Un simple formulaire juridique",
       "Une promesse d'amitié"
     ],
@@ -572,7 +572,7 @@ const questions = [
     answers: [
       "Elle utilise un langage codé et obscur",
       "Elle prédit l'avenir avec exactitude",
-      "Elle se présente comme parole de Dieu, dénonçant les injustices et appelant à la conversion"
+      "Elle dénonce les injustices"
     ],
     correct: 3,
     explanation: `La parole prophétique (dans les traditions biblique et coranique notamment) n'est pas principalement divinatoire. Le prophète (<em>nabi</em> en hébreu) est un "porte-parole" de Dieu. Sa parole est une interpellation vigoureuse adressée au peuple et aux puissants, dénonçant l'idolâtrie, l'injustice sociale, l'hypocrisie religieuse, et appelant à un retour à l'Alliance (la Torah). Elle annonce des malheurs (châtiments) si l'on ne se convertit pas. L'autorité du prophète vient de sa conviction d'être mandaté par Dieu, non d'une institution. Sa parole est souvent en conflit avec l'autorité établie (rois, prêtres).\nExemple : Le prophète Amos tonne : "Je hais, je méprise vos fêtes... Mais que le droit coule comme l'eau, et la justice comme un torrent intarissable !" (Amos 5, 21-24).`
@@ -583,7 +583,7 @@ const questions = [
     answers: [
       "Comme une parole humaine éclairée",
       "Comme une supercherie des prêtres",
-      "Comme une parole divine, énigmatique, nécessitant une interprétation"
+      "Comme une parole divine énigmatique"
     ],
     correct: 3,
     explanation: `La Pythie, assise sur un trépied au-dessus d'une faille d'où émanaient des vapeurs, prononçait des paroles incohérentes sous l'effet d'une possession divine (par Apollon). Ces paroles étaient ensuite transcrites et versifiées par les prêtres en réponses souvent ambiguës. L'oracle ne donnait pas des ordres clairs, mais des énigmes à interpréter. Son autorité était immense : on le consultait pour les décisions cruciales (fondation de colonies, déclarations de guerre). La parole oraculaire était performative : elle validait ou invalidait un projet, mais laissait à l'homme la responsabilité de l'interpréter correctement.\nExemple : L'oracle dit à Crésus : "Si tu traverses le fleuve Halys, tu détruiras un grand empire." Crésus interprète qu'il détruira l'empire perse ; c'est le sien qui sera détruit.`
@@ -593,7 +593,7 @@ const questions = [
     question: "Que signifie le concept de 'violence symbolique' développé par Pierre Bourdieu ?",
     answers: [
       "Les insultes et le harcèlement verbal",
-      "L'imposition, méconnue comme telle, de schèmes de perception et d'évaluation par ceux qui dominent",
+      "L'imposition de schèmes de perception",
       "La violence physique légitimée par le discours"
     ],
     correct: 2,
@@ -604,7 +604,7 @@ const questions = [
     question: "Comment le 'silence de Dieu' (<em>deus absconditus</em>) est-il interprété dans la théologie et la littérature ?",
     answers: [
       "Comme un désintérêt de Dieu pour les affaires humaines",
-      "Comme une épreuve pour la foi, ou comme une parole en creux qu'il faut apprendre à écouter",
+      "Comme une parole en creux qu'il faut apprendre à écouter",
       "Comme une preuve de son inexistence"
     ],
     correct: 2,
@@ -616,39 +616,39 @@ const questions = [
     answers: [
       "Désigner un coupable",
       "Imposer un compromis par la force",
-      "Rétablir la communication entre des parties en conflit et chercher un accord"
+      "Rétablir la communication dans un conflit"
     ],
     correct: 3,
     explanation: `La parole de conciliation (diplomatique, judiciaire, familiale) a pour fonction de rétablir un lien rompu par le conflit. Le médiateur n'est pas un juge qui impose une solution, mais un tiers qui facilite la réouverture du dialogue. Sa parole cherche à faire entendre les positions de chacun, à désamorcer les malentendus, à reformuler les enjeux, et à aider les parties à trouver elles-mêmes un terrain d'entente. L'autorité du médiateur vient de sa neutralité, de son écoute et de son habileté à faire émerger une parole commune.\nExemple : Un médiateur familial aide des parents divorcés à trouver un accord sur la garde des enfants en les amenant à dépasser leurs griefs pour se recentrer sur l'intérêt de l'enfant.`
   },
   // Question n°56
   {
-    question: "Que signifie l'expression 'parole performative infelicitous' (malheureuse) chez Austin ?",
+    question: "Que signifie l'expression « parole performative malheureuse » chez Austin ?",
     answers: [
       "Un performatif prononcé avec une mauvaise intention",
-      "Un performatif qui échoue parce que les conditions nécessaires à son succès ne sont pas réunies",
+      "Un performatif qui échoue",
       "Une parole qui rend triste"
     ],
     correct: 2,
-    explanation: `Austin appelle "infélicités" (<em>infelicities</em>) les échecs d'un énoncé performatif. Pour qu'un performatif réussisse ("Je te promets", "Je te baptise"), certaines conditions doivent être remplies : des procédures conventionnelles existantes, des participants et des circonstances appropriés, une exécution correcte et complète, et des intentions sincères. Si une de ces conditions fait défaut, le performatif est "malheureux" (<em>infelicitous</em>) : il n'accomplit pas l'action. Ex: dire "Je te baptise" à un chat, ou "Je vous déclare mari et femme" sans être maire.\nExemple : Un faux médecin qui dit "Je vous opère" ne réalise pas une opération médicale légitime ; le performatif échoue (il est "nul").`
+    explanation: `Austin appelle « infélicités » (<em>infelicities</em>) les échecs d'un énoncé performatif. Pour qu'un performatif réussisse (« Je te promets », « Je te baptise »), certaines conditions doivent être remplies : des procédures conventionnelles existantes, des participants et des circonstances appropriés, une exécution correcte et complète, et des intentions sincères. Si une de ces conditions fait défaut, le performatif est « malheureux » (<em>infelicitous</em>) : il n'accomplit pas l'action. Ex: dire « Je te baptise » à un chat, ou « Je vous déclare mari et femme » sans être maire.\nExemple : Un faux médecin qui dit « Je vous opère » ne réalise pas une opération médicale légitime ; le performatif échoue (il est « nul »).`
   },
   // Question n°57
   {
-    question: "Comment le concept de 'parole vive' s'oppose-t-il à celui de 'parole morte' ?",
+    question: "Comment le concept de « parole vive » s'oppose-t-il à celui de « parole morte » ?",
     answers: [
       "La parole vive est poétique, la parole morte est scientifique",
       "La parole vive est criée, la parole morte est chuchotée",
-      "La parole vive est dialogique, présente, adaptable ; la parole morte est fixée, absente, répétitive"
+      "La parole vive est dialogique, la parole morte est fixée"
     ],
     correct: 3,
-    explanation: `La "parole vive" est celle de la communication orale en présence, du dialogue, de l'enseignement interactif. Elle est vivante parce qu'elle peut s'adapter à l'interlocuteur, répondre à ses objections, se moduler selon les réactions. La "parole morte" est celle de l'écrit figé, du discours enregistré, du slogan répété. Elle est morte parce qu'elle est détachée de son auteur, qu'elle dit toujours la même chose et ne peut répondre. Pour Platon, la philosophie ne peut se faire que dans la parole vive ; l'écriture n'est qu'un simulacre mort.\nExemple : Une conversation entre un maître et son élève est une parole vive ; le manuel scolaire est une parole morte (mais utile).`
+    explanation: `La « parole vive » est celle de la communication orale en présence, du dialogue, de l'enseignement interactif. Elle est vivante parce qu'elle peut s'adapter à l'interlocuteur, répondre à ses objections, se moduler selon les réactions. La « parole morte » est celle de l'écrit figé, du discours enregistré, du slogan répété. Elle est morte parce qu'elle est détachée de son auteur, qu'elle dit toujours la même chose et ne peut répondre. Pour Platon, la philosophie ne peut se faire que dans la parole vive ; l'écriture n'est qu'un simulacre mort.\nExemple : Une conversation entre un maître et son élève est une parole vive ; le manuel scolaire est une parole morte (mais utile).`
   },
   // Question n°58
   {
-    question: "Quel rôle joue la 'parole d'exhortation' dans les discours militaires ou politiques ?",
+    question: "Quel rôle joue la <em>parole d'exhortation</em> dans les discours militaires ou politiques ?",
     answers: [
       "Dénoncer les erreurs du passé",
-      "Susciter l'enthousiasme, le courage et l'engagement dans l'action",
+      "Susciter l'engagement dans l'action",
       "Analyser froidement une situation"
     ],
     correct: 2,
@@ -656,20 +656,20 @@ const questions = [
   },
   // Question n°59
   {
-    question: "Que signifie l'affirmation 'La parole est un acte' dans la philosophie du langage ?",
+    question: "Que signifie l'affirmation <em>la parole est un acte</em> dans la philosophie du langage ?",
     answers: [
       "Il faut agir et non parler",
       "Parler nécessite un effort physique",
-      "Toute énonciation est une action qui produit des effets dans le monde social"
+      "Toute énonciation est une action"
     ],
     correct: 3,
     explanation: `Contre une conception purement représentationnelle du langage (les mots décrivent le monde), la philosophie du langage du XXe siècle (Austin, Wittgenstein, Searle) a montré que "parler, c'est faire". Tout énoncé est une action : questionner, promettre, ordonner, insulter, baptiser, etc. Ces "actes de langage" modifient les relations entre les personnes, créent des obligations, des statuts, des réalités sociales. L'autorité de la parole réside précisément dans ce pouvoir d'agir sur le monde par les mots, et non seulement de le décrire.\nExemple : Dire "Je m'excuse" n'est pas décrire une excuse, c'est accomplir l'acte de s'excuser.`
   },
   // Question n°60
   {
-    question: "Comment la 'parole judiciaire' (du juge) exerce-t-elle son autorité ?",
+    question: "Comment la <em>parole judiciaire</em> (du juge) exerce-t-elle son autorité ?",
     answers: [
-      "Par la puissance performative que lui confère son institution, prononçant des verdicts qui ont force de loi",
+      "Par la puissance performative de l'institution",
       "Par la force des arguments logiques seulement",
       "Par la persuasion émotionnelle des jurés"
     ],
@@ -678,43 +678,43 @@ const questions = [
   },
   // Question n°61
   {
-    question: "Quelle est la caractéristique d'une 'parole sacramentelle' dans les religions ?",
+    question: "Quelle est la caractéristique d'une <em>parole sacramentelle</em> dans les religions ?",
     answers: [
       "Elle est réservée aux prêtres",
       "Elle est incompréhensible aux laïcs",
-      "Elle est performative : elle réalise ce qu'elle signifie par la puissance divine qu'elle invoque"
+      "Elle est performative par elle-même"
     ],
     correct: 3,
     explanation: `Dans les religions chrétiennes (notamment catholique et orthodoxe), les sacrements sont des signes sensibles institués par le Christ qui donnent la grâce. La parole qui les accompagne est essentielle et performative : elle ne décrit pas, elle agit. "Je te baptise", "Ceci est mon corps", "Je te pardonne tes péchés" – ces paroles, prononcées par le ministre avec l'intention requise et sur la matière appropriée, sont censées réaliser ce qu'elles disent, grâce à l'action de Dieu. L'autorité de cette parole vient à la fois de l'institution ecclésiale et de la promesse divine.\nExemple : Lors de l'Eucharistie, les paroles de la consécration ("Ceci est mon corps") transsubstantient, selon la doctrine, le pain en corps du Christ.`
   },
   // Question n°62
   {
-    question: "Que signifie le concept de 'parole aliénée' ou 'aliénante' ?",
+    question: "Que signifie le concept de <em>parole aliénée</em> ou <em>aliénante</em> ?",
     answers: [
       "Une parole qui isole socialement",
       "Une parole prononcée dans une langue étrangère",
-      "Une parole qui ne vient pas de celui qui parle, qui le dépossède de sa pensée ou l'asservit"
+      "Une parole qui ne vient pas de celui qui parle"
     ],
     correct: 3,
     explanation: `Une parole est aliénée (ou aliénante) lorsqu'elle est subie plutôt qu'appropriée, lorsqu'elle exprime non la pensée personnelle de celui qui parle, mais des idées reçues, des slogans, un discours dominant intériorisé. L'individu parle avec des mots qui ne sont pas vraiment les siens, il se fait le porte-parole inconscient d'une idéologie ou d'un pouvoir. Cette parole peut aussi aliéner autrui en le maintenant dans la dépendance ou l'illusion. La critique de la parole aliénée est au cœur des pensées de Marx (idéologie), d'Ellul (parole anonyme) et de la psychanalyse (discours de l'Autre).\nExemple : Un employé qui répète sans distance critique le discours managérial de son entreprise ("Il faut être flexible, compétitif...") profère une parole aliénée.`
   },
   // Question n°63
   {
-    question: "Comment la 'parole proverbiale' ou 'de sagesse populaire' exerce-t-elle son autorité ?",
+    question: "Comment la <em>parole proverbiale</em> ou de <em>sagesse populaire</em> exerce-t-elle son autorité ?",
     answers: [
-      "Par la preuve scientifique qu'elle apporte",
-      "Par le poids de la tradition et de l'expérience collective condensée en formules frappantes",
+      "Par la preuve scientifique apportée",
+      "Par le poids de la tradition",
       "Par la force de la loi"
     ],
     correct: 2,
-    explanation: `Les proverbes ("Pierre qui roule n'amasse pas mousse", "L'habit ne fait pas le moine") sont des énoncés brefs, anonymes, traditionnels, qui prétendent énoncer une vérité générale sur la vie humaine. Leur autorité vient de leur ancienneté, de leur caractère supposé immémorial, et de la concision percutante de la formule. Ils condensent une prétendue sagesse collective, une expérience millénaire. On les cite pour clore une discussion, donner un conseil, ou justifier une action. Leur force persuasive tient à leur évidence apparente et à leur poids culturel.\nExemple : Invoquer "Qui vole un œuf vole un bœuf" pour justifier une punition sévère pour un petit larcin, en s'appuyant sur l'autorité de la sagesse populaire.`
+    explanation: `Les proverbes (« pierre qui roule n'amasse pas mousse », « l'habit ne fait pas le moine »...) sont des énoncés brefs, anonymes, traditionnels, qui prétendent énoncer une vérité générale sur la vie humaine. Leur autorité vient de leur ancienneté, de leur caractère supposé immémorial, et de la concision percutante de la formule. Ils condensent une prétendue sagesse collective, une expérience millénaire. On les cite pour clore une discussion, donner un conseil, ou justifier une action. Leur force persuasive tient à leur évidence apparente et à leur poids culturel.\nExemple : Invoquer « qui vole un œuf vole un bœuf » pour justifier une punition sévère pour un petit larcin, en s'appuyant sur l'autorité de la sagesse populaire.`
   },
   // Question n°64
   {
-    question: "Quelle est la fonction de la 'parole rituelle' dans les cérémonies ?",
+    question: "Quelle est la fonction de la <em>parole rituelle</em> dans les cérémonies ?",
     answers: [
-      "Expliquer le sens du rituel aux participants",
-      "Répéter des formules fixes pour assurer la validité et la perpétuation de l'acte symbolique",
+      "Expliquer le sens du rituel",
+      "Répéter des formules fixes",
       "Improviser selon l'inspiration"
     ],
     correct: 2,
@@ -722,32 +722,32 @@ const questions = [
   },
   // Question n°65
   {
-    question: "Que signifie l'expression 'prendre la parole' au-delà du simple fait de parler ?",
+    question: "Que signifie l'expression <em>prendre la parole</em> au-delà du simple fait de parler ?",
     answers: [
-      "Parler très fort",
+      "Parler à un niveau sonore très fort",
       "S'emparer physiquement d'un microphone",
-      "Accéder à un espace public d'énonciation, s'arroger ou se voir reconnaître un droit à être écouté"
+      "Accéder à un espace public d'énonciation"
     ],
     correct: 3,
-    explanation: `"Prendre la parole" est une expression performative qui désigne l'acte par lequel un individu ou un groupe s'inscrit dans l'espace public du discours, revendiquant le droit d'être écouté et de participer à la délibération commune. Cela suppose de franchir une barrière (timidité, exclusion sociale, censure). Dans un débat, "prendre la parole" c'est obtenir un tour de parole, une légitimité momentanée à s'exprimer. C'est un acte souvent politique, car il implique une redistribution de l'autorité discursive.\nExemple : Lors des États généraux de 1789, le Tiers État "prend la parole" en rédigeant des cahiers de doléances et en s'auto-proclamant Assemblée nationale, contestant le monopole de la parole royale.`
+    explanation: `« Prendre la parole » est une expression performative qui désigne l'acte par lequel un individu ou un groupe s'inscrit dans l'espace public du discours, revendiquant le droit d'être écouté et de participer à la délibération commune. Cela suppose de franchir une barrière (timidité, exclusion sociale, censure). Dans un débat, "prendre la parole" c'est obtenir un tour de parole, une légitimité momentanée à s'exprimer. C'est un acte souvent politique, car il implique une redistribution de l'autorité discursive.\nExemple : Lors des États généraux de 1789, le Tiers État "prend la parole" en rédigeant des cahiers de doléances et en s'auto-proclamant Assemblée nationale, contestant le monopole de la parole royale.`
   },
   // Question n°66
   {
-    question: "Comment la 'parole d'aveu' fonctionne-t-elle dans les relations de pouvoir (Foucault) ?",
+    question: "Comment la <em>parole d'aveu</em> fonctionne-t-elle dans les relations de pouvoir (Foucault) ?",
     answers: [
       "Elle libère toujours celui qui avoue",
       "Elle est un dialogue entre égaux",
-      "Elle est une technique par laquelle le pouvoir incite l'individu à produire une vérité sur lui-même, l'assujettissant ainsi"
+      "Elle assujetit celui qui avoue"
     ],
     correct: 3,
-    explanation: `Michel Foucault, dans <em>Histoire de la sexualité</em>, analyse l'aveu comme un "rituel de discours" où "le sujet énonce la vérité sur lui-même". Ce rituel est profondément lié au pouvoir : le pouvoir (religieux, judiciaire, psychiatrique, éducatif) exige, encourage, organise l'aveu. En se confessant, l'individu reconnaît l'autorité de celui qui l'écoute (prêtre, juge, psychanalyste) et produit une vérité sur lui-même qui sera l'objet d'un jugement, d'une absolution, d'un diagnostic. L'aveu est ainsi à la fois un acte de libération (parler de son secret) et d'assujettissement (se soumettre au cadre interprétatif du pouvoir).\nExemple : La confession catholique, l'interrogatoire policier, l'entretien d'embauche où l'on doit "se raconter" sont des situations d'aveu.`
+    explanation: `Michel Foucault, dans <em>Histoire de la sexualité</em>, analyse l'aveu comme un « rituel de discours » où « le sujet énonce la vérité sur lui-même ». Ce rituel est profondément lié au pouvoir : le pouvoir (religieux, judiciaire, psychiatrique, éducatif) exige, encourage, organise l'aveu. En se confessant, l'individu reconnaît l'autorité de celui qui l'écoute (prêtre, juge, psychanalyste) et produit une vérité sur lui-même qui sera l'objet d'un jugement, d'une absolution, d'un diagnostic. L'aveu est ainsi à la fois un acte de libération (parler de son secret) et d'assujettissement (se soumettre au cadre interprétatif du pouvoir).\nExemple : La confession catholique, l'interrogatoire policier, l'entretien d'embauche où l'on doit « se raconter » sont des situations d'aveu.`
   },
   // Question n°67
   {
-    question: "Quel est le rôle de la 'parole d'intercession' (prière de demande) ?",
+    question: "Quel est le rôle de la <em>parole d'intercession</em> (prière de demande) ?",
     answers: [
-      "Intercéder auprès d'une autorité supérieure en faveur de quelqu'un, reconnaissant ainsi cette autorité",
-      "Ordonner à Dieu",
+      "Intercéder en faveur de quelqu'un",
+      "Ordonner quelque chose à Dieu",
       "Converser d'égal à égal avec le divin"
     ],
     correct: 1,
@@ -755,25 +755,25 @@ const questions = [
   },
   // Question n°68
   {
-    question: "Que signifie l'expression 'parole d'ordre' dans le vocabulaire politique et militaire ?",
+    question: "Que signifie l'expression <em>parole d'ordre</em> dans le vocabulaire politique et militaire ?",
     answers: [
       "Un désordre verbal",
       "L'organisation alphabétique des discours",
-      "Un mot d'ordre, un slogan qui synthétise une ligne politique et sert à mobiliser"
+      "Un mot d'ordre qui sert à mobiliser"
     ],
     correct: 3,
-    explanation: `Une "parole d'ordre" (ou mot d'ordre) est une formule brève, frappante, souvent impérative, qui condense une orientation politique, une revendication, un appel à l'action. "Liberté, Égalité, Fraternité", "<em>Proletarier aller Länder, vereinigt euch!</em>" ("Prolétaires de tous les pays, unissez-vous !"), "Yes we can". Ces paroles ont une fonction performative de mobilisation : elles créent une identité collective ("nous"), désignent un ennemi ou un objectif, et incitent à agir. Leur autorité vient de leur simplicité, de leur répétition, et du mouvement qu'elles incarnent.\nExemple : Le mot d'ordre "Grève générale !" lancé par un syndicat a pour but de déclencher l'arrêt du travail en créant un sentiment d'urgence et d'unité.`
+    explanation: `Une <em>parole d'ordre</em> (ou mot d'ordre) est une formule brève, frappante, souvent impérative, qui condense une orientation politique, une revendication, un appel à l'action. "Liberté, Égalité, Fraternité", "<em>Proletarier aller Länder, vereinigt euch!</em>" ("Prolétaires de tous les pays, unissez-vous !"), "Yes we can". Ces paroles ont une fonction performative de mobilisation : elles créent une identité collective ("nous"), désignent un ennemi ou un objectif, et incitent à agir. Leur autorité vient de leur simplicité, de leur répétition, et du mouvement qu'elles incarnent.\nExemple : Le mot d'ordre "Grève générale !" lancé par un syndicat a pour but de déclencher l'arrêt du travail en créant un sentiment d'urgence et d'unité.`
   },
   // Question n°69
   {
-    question: "Comment la 'parole d'expert' (scientifique, technicien) fonde-t-elle son autorité ?",
+    question: "Comment la <em>parole d'expert</em> (scientifique, technicien) fonde-t-elle son autorité ?",
     answers: [
-      "Sur la force de ses convictions personnelles",
-      "Sur la reconnaissance sociale de sa compétence spécialisée et de la méthode qui la produit",
+      "Sur la force de ses convictions",
+      "Sur la reconnaissance sociale",
       "Sur le charisme de l'expert"
     ],
     correct: 2,
-    explanation: `La parole d'expert tire son autorité non de la personne (ethos charismatique) ni de la tradition, mais de la compétence technique ou scientifique socialement reconnue. On fait confiance au médecin, à l'ingénieur, à l'économiste parce qu'ils maîtrisent un savoir validé par des institutions (universités, diplômes, publications). Leur parole est censée être objective, fondée sur des preuves et des méthodes reproductibles (logos). Cette autorité est limitée à son domaine de compétence et peut être contestée par d'autres experts.\nExemple : On suit les recommandations sanitaires d'un épidémiologiste non parce qu'il est charismatique, mais parce qu'on croit en la validité des modèles scientifiques qu'il utilise.`
+    explanation: `La parole d'expert tire son autorité non de la personne (<em>ethos</em> charismatique) ni de la tradition, mais de la compétence technique ou scientifique socialement reconnue. On fait confiance au médecin, à l'ingénieur, à l'économiste parce qu'ils maîtrisent un savoir validé par des institutions (universités, diplômes, publications). Leur parole est censée être objective, fondée sur des preuves et des méthodes reproductibles (logos). Cette autorité est limitée à son domaine de compétence et peut être contestée par d'autres experts.\nExemple : On suit les recommandations sanitaires d'un épidémiologiste non parce qu'il est charismatique, mais parce qu'on croit en la validité des modèles scientifiques qu'il utilise.`
   },
   // Question n°70
   {
@@ -781,51 +781,51 @@ const questions = [
     answers: [
       "Elle juge le passé",
       "Elle fait l'éloge ou le blâme du présent",
-      "Elle délibère sur l'avenir, exhortant ou dissuadant en vue de l'utile ou du nuisible"
+      "Elle délibère sur l'avenir"
     ],
     correct: 3,
     explanation: `Le discours délibératif, selon Aristote, a pour objet l'avenir : il vise à exhorter (pousser à faire) ou à dissuader (pousser à ne pas faire). Il se prononce dans les assemblées politiques. Sa finalité est l'utile (ou le nuisible) pour la cité. Il s'oppose au discours judiciaire (focalisé sur le passé, le juste/injuste) et au discours épidictique (focalisé sur le présent, l'honorable/honteux). L'autorité de l'orateur délibératif repose sur sa sagesse pratique (<em>phronésis</em>), sa connaissance des affaires de la cité et sa capacité à envisager les conséquences.\nExemple : Un discours parlementaire pour ou contre un projet de loi est un discours délibératif : il cherche à convaincre de voter une loi en montrant ses avantages ou ses dangers futurs.`
   },
   // Question n°71
   {
-    question: "Que signifie l'expression 'parole proleptique' ?",
+    question: "Que signifie l'expression <em>parole proleptique</em> ?",
     answers: [
       "Une parole qui propage des rumeurs",
       "Une parole complexe",
-      "Une parole qui anticipe et répond par avance à une objection possible"
+      "Une parole qui anticipe une objection"
     ],
     correct: 3,
     explanation: `La prolepse (du grec "<em>prolambanein</em>", prendre par avance) est une figure de rhétorique et une stratégie argumentative. Elle consiste à anticiper une objection que pourrait faire l'adversaire ou l'auditoire, et à y répondre avant qu'elle ne soit formulée. Cela permet de désamorcer la critique, de montrer qu'on l'a envisagée et qu'on a une réponse. C'est une manière de renforcer son autorité en se présentant comme ayant tout prévu. Cette technique est fréquente dans les discours politiques et les plaidoyers.\nExemple : "Certains diront que cette réforme coûte trop cher. Je leur réponds par avance que son coût est largement compensé par les économies futures qu'elle générera."`
   },
   // Question n°72
   {
-    question: "Comment la 'parole écrite' (lois, constitutions) fonde-t-elle l'autorité dans les États modernes ?",
+    question: "Comment la <em>parole écrite</em> (lois, constitutions) fonde-t-elle l'autorité dans les États modernes ?",
     answers: [
       "Par le charisme de ceux qui l'ont écrite",
       "Par sa beauté stylistique",
-      "Par sa fixité qui la rend opposable à tous et supérieure aux volontés particulières"
+      "Par sa fixité opposable à tous"
     ],
     correct: 3,
     explanation: `Dans l'État de droit moderne, l'autorité suprême est souvent incarnée par un texte écrit : la Constitution. Ce texte fait autorité (<em>auctoritas</em>) parce qu'il est le fondement écrit, stable et public de tout l'ordre juridique. Sa fixité le rend indépendant des fluctuations des majorités et des humeurs du moment. Il s'impose à tous, gouvernants et gouvernés. L'écriture permet ici de soustraire la loi fondamentale à l'arbitraire de la parole vive du souverain, en l'objectivant dans un document sacralisé.\nExemple : La Constitution américaine de 1787, écrite et amendée selon des procédures rigoureuses, fait autorité sur le Président, le Congrès et la Cour suprême elle-même.`
   },
   // Question n°73
   {
-    question: "Quelle est la fonction de la 'parole prophétique de malheur' (annonce de châtiment) ?",
+    question: "Quelle est la fonction de la <em>parole prophétique de malheur</em> (annonce de châtiment) ?",
     answers: [
       "Prédire l'avenir pour montrer sa puissance",
-      "Appeler à la conversion par la crainte, en annonçant les catastrophes qui adviendront si l'on ne change pas",
+      "Appeler à la conversion par la crainte",
       "Démoraliser le peuple"
     ],
     correct: 2,
-    explanation: `Les prophètes bibliques (Jérémie, Ézéchiel, etc.) annoncent souvent des malheurs (guerre, exil, famine) comme châtiments divins pour les infidélités du peuple (idolâtrie, injustice sociale). Cette parole de malheur n'est pas une simple prédiction ; elle a une fonction performative et pédagogique. En créant la crainte, elle cherche à provoquer un retour (<em>teshouva</em>) vers Dieu et la loi. L'annonce du malheur n'est pas inéluctable ; elle peut être évitée par la conversion. L'autorité du prophète vient de sa conviction d'être le porte-parole de la colère divine.\nExemple : Le prophète Jérémie annonce la destruction de Jérusalem et l'exil à Babylone pour punir l'infidélité, mais il appelle aussi constamment à la repentance pour l'éviter.`
+    explanation: `Les prophètes bibliques annoncent souvent des malheurs (guerre, exil, famine...) comme châtiments divins pour les infidélités du peuple (idolâtrie, injustice sociale). Cette parole de malheur n'est pas une simple prédiction ; elle a une fonction performative et pédagogique. En créant la crainte, elle cherche à provoquer un retour (<em>teshouva</em>) vers Dieu et la loi. L'annonce du malheur n'est pas inéluctable ; elle peut être évitée par la conversion. L'autorité du prophète vient de sa conviction d'être le porte-parole de la colère divine.\nExemple : Le prophète Jérémie annonce la destruction de Jérusalem et l'exil à Babylone pour punir l'infidélité, mais il appelle aussi constamment à la repentance pour l'éviter.`
   },
   // Question n°74
   {
-    question: "Que signifie le concept de 'parole autoréférentielle' du pouvoir (le pouvoir qui se légitime lui-même) ?",
+    question: "Que signifie le concept de <em>parole autoréférentielle</em> du pouvoir (le pouvoir qui se légitime lui-même) ?",
     answers: [
       "Le pouvoir qui parle de lui-même avec modestie",
       "Le pouvoir qui écoute ses propres conseillers",
-      "Le pouvoir qui produit les discours qui le légitiment, créant ainsi sa propre autorité"
+      "Le pouvoir qui produit le discours qui le légitime"
     ],
     correct: 3,
     explanation: `Dans les systèmes autocratiques ou totalitaires, le pouvoir tend à produire lui-même les discours qui le légitiment, sans référence à une instance extérieure (Dieu, le peuple, la raison). Il crée sa propre mythologie, sa propre histoire, son propre langage. La parole du pouvoir devient autoréférentielle : elle ne se justifie que par elle-même. "Le Führer a toujours raison" (Schmitt) est la formule extrême de cette autoréférentialité. L'autorité n'a plus de fondement que la puissance même de l'énonciation répétée.\nExemple : La propagande d'un régime totalitaire qui répète : "Notre chef est génial, notre système est parfait" sans autre argument que l'affirmation même, crée une bulle discursive autoréférentielle.`
@@ -835,18 +835,18 @@ const questions = [
     question: "Comment la 'parole de pardon' exerce-t-elle son autorité ?",
     answers: [
       "En effaçant magiquement la faute",
-      "En rompant le cycle de la vengeance et en instaurant une relation nouvelle, par un acte gratuit de l'autorité lésée",
+      "En rompant le cycle de la vengeance",
       "En humiliant celui qui est pardonné"
     ],
     correct: 2,
-    explanation: `Le pardon est un acte de parole performatif par lequel la victime ou l'autorité lésée ("Je te pardonne") renonce à sa vengeance légitime et restaure le coupable dans sa dignité. Cet acte est d'une grande autorité morale car il suppose de dépasser le droit strict (qui exigerait châtiment) pour instaurer une relation nouvelle fondée sur la grâce. Le pardon ne nie pas la faute, mais en suspend les conséquences. Il est souvent considéré comme le sommet de l'autorité éthique, car il manifeste une liberté souveraine par rapport à la logique du talion.\nExemple : Le "Je vous pardonne" prononcé par des victimes d'attentats ou par des juges dans des procès restauratifs a une puissance symbolique et transformative considérable.`
+    explanation: `Le pardon est un acte de parole performatif par lequel la victime ou l'autorité lésée (« je te pardonne ») renonce à sa vengeance légitime et restaure le coupable dans sa dignité. Cet acte est d'une grande autorité morale car il suppose de dépasser le droit strict (qui exigerait châtiment) pour instaurer une relation nouvelle fondée sur la grâce. Le pardon ne nie pas la faute, mais en suspend les conséquences. Il est souvent considéré comme le sommet de l'autorité éthique, car il manifeste une liberté souveraine par rapport à la logique du talion.\nExemple : Le "Je vous pardonne" prononcé par des victimes d'attentats ou par des juges dans des procès restauratifs a une puissance symbolique et transformative considérable.`
   },
   // Question n°76
   {
-    question: "Quelle est la caractéristique d'une 'parole d'injonction thérapeutique' (ordres du médecin, du psychothérapeute) ?",
+    question: "Quelle est la caractéristique d'une <em>parole d'injonction thérapeutique</em> (ordres du médecin, du psychothérapeute) ?",
     answers: [
       "Elle n'a aucune force contraignante",
-      "Elle combine l'autorité de l'expert (savoir) et une dimension performative visant la guérison",
+      "Elle est experte et performative",
       "Elle est toujours négociable"
     ],
     correct: 2,
@@ -854,21 +854,21 @@ const questions = [
   },
   // Question n°77
   {
-    question: "Que signifie l'expression 'parole de défi' ou de provocation ?",
+    question: "Que signifie l'expression <em>parole de défi</em> ou de provocation ?",
     answers: [
       "Une parole qui cherche à éviter le conflit",
       "Une parole qui propose un compromis",
-      "Une parole qui défie une autorité établie, contestant sa légitimité par l'affrontement verbal"
+      "Une parole qui défie une autorité établie"
     ],
     correct: 3,
     explanation: `La parole de défi est une parole qui s'adresse à une autorité (politique, morale, parentale) pour la contester frontalement. Elle peut prendre la forme de l'insulte, de la moquerie, de la déclaration publique d'opposition. Cette parole a une fonction performative de rupture : elle brise le silence de la soumission, elle institue un rapport de force symétrique (ou le revendique) là où régnait l'asymétrie. Elle est souvent le prélude à un conflit ouvert. Son autorité (celle du rebelle) vient du courage de dire non et de la justesse de la cause invoquée.\nExemple : La déclaration de Martin Luther : "Je ne peux pas, je ne veux pas me rétracter" face à la Diète de Worms est une parole de défi à l'autorité de l'Église et de l'Empereur.`
   },
   // Question n°78
   {
-    question: "Comment la 'parole de consolation' exerce-t-elle son autorité ?",
+    question: "Comment la <em>parole de consolation</em> exerce-t-elle son autorité ?",
     answers: [
       "En ordonnant de ne plus souffrir",
-      "En reconnaissant la souffrance de l'autre et en tentant de lui donner un sens ou de l'alléger par la présence et les mots",
+      "En reconnaissant la souffrance d'autrui",
       "En minimisant la souffrance"
     ],
     correct: 2,
@@ -876,25 +876,25 @@ const questions = [
   },
   // Question n°79
   {
-    question: "Quelle est la fonction de la 'parole d'interdiction' (tabous, interdits) ?",
+    question: "Quelle est la fonction de la <em>parole d'interdiction</em> (tabous, interdits) ?",
     answers: [
       "Cacher des secrets",
       "Limiter la liberté pour le plaisir",
-      "Définir les limites du permis et de l'impensable, fondant ainsi l'ordre symbolique d'une communauté"
+      "Définir les limites du possible"
     ],
     correct: 3,
-    explanation: `Les interdits ("Tu ne tueras point", "Tu ne commettras pas d'inceste", tabous alimentaires) sont énoncés dans des paroles fondatrices (loi divine, mythe, coutume). Leur énonciation performative crée la frontière entre le sacré et le profane, le pur et l'impur, le possible et l'impossible. Ces paroles ont une autorité immense car elles structurent l'identité et la cohésion du groupe. Leur transgression provoque souvent une sanction sociale ou symbolique (souillure, exclusion). L'interdit fondamental (l'inceste selon Lévi-Strauss) est même constitutif de la culture humaine.\nExemple : L'interdit de l'inceste, présent dans toutes les sociétés, fonde l'échange des femmes et la parenté, base de l'organisation sociale.`
+    explanation: `Les interdits (« tu ne tueras point », « tu ne commettras pas d'inceste », tabous alimentaires) sont énoncés dans des paroles fondatrices (loi divine, mythe, coutume). Leur énonciation performative crée la frontière entre le sacré et le profane, le pur et l'impur, le possible et l'impossible. Ces paroles ont une autorité immense car elles structurent l'identité et la cohésion du groupe. Leur transgression provoque souvent une sanction sociale ou symbolique (souillure, exclusion). L'interdit fondamental (l'inceste selon Lévi-Strauss) est même constitutif de la culture humaine.\nExemple : L'interdit de l'inceste, présent dans toutes les sociétés, fonde l'échange des femmes et la parenté, base de l'organisation sociale.`
   },
   // Question n°80
   {
-    question: "Que signifie l'expression 'parole d'institution' (Bourdieu) ?",
+    question: "Que signifie l'expression <em>parole d'institution</em> (Bourdieu) ?",
     answers: [
       "Le règlement intérieur d'une école",
       "Un discours prononcé dans une institution",
-      "Un acte de parole qui nomme, consacre, et confère une identité sociale durable (nommer un professeur, un chevalier)"
+      "Un acte qui confère une identité sociale"
     ],
     correct: 3,
-    explanation: `Pierre Bourdieu analyse les "actes d'institution" comme des performances symboliques qui ont le pouvoir de transformer l'identité sociale d'un individu en lui conférant un titre, un statut, un nom. "Je te baptise", "Je te fais chevalier", "Je te nomme professeur". Ces paroles sont magico-sociales : elles font être ce qu'elles disent, elles produisent une différence de statut reconnue par tous. L'autorité de celui qui institue (l'évêque, le roi, le président d'université) doit être socialement reconnue pour que l'acte prenne.\nExemple : La cérémonie de remise de diplôme est un acte d'institution : la parole du président ("je vous confère le grade de...") transforme officiellement l'étudiant en diplômé.`
+    explanation: `Pierre Bourdieu analyse les <em>actes d'institution</em> comme des performances symboliques qui ont le pouvoir de transformer l'identité sociale d'un individu en lui conférant un titre, un statut, un nom. "Je te baptise", "Je te fais chevalier", "Je te nomme professeur". Ces paroles sont magico-sociales : elles font être ce qu'elles disent, elles produisent une différence de statut reconnue par tous. L'autorité de celui qui institue (l'évêque, le roi, le président d'université) doit être socialement reconnue pour que l'acte prenne.\nExemple : La cérémonie de remise de diplôme est un acte d'institution : la parole du président ("je vous confère le grade de...") transforme officiellement l'étudiant en diplômé.`
   },
   // Question n°81
   {
@@ -902,14 +902,14 @@ const questions = [
     answers: [
       "En disant toujours la vérité",
       "En imposant sa volonté par la force",
-      "En captant le désir de l'autre par le langage, exerçant ainsi un pouvoir sur ses émotions et ses choix"
+      "En captant le désir de l'autre"
     ],
     correct: 3,
     explanation: `La parole de séduction (amoureuse, commerciale, politique) vise à capter l'attention, à plaire, à créer du désir et à orienter le choix de l'autre. Elle exerce une autorité douce, une "<em>potestas</em>" affective. Elle utilise le charme, la promesse, la flatterie, le mystère. Son pouvoir réside dans sa capacité à créer un lien émotionnel et à faire adhérer l'autre à un projet (une relation, un achat, une idée) en donnant l'impression que c'est son propre désir. Cette autorité peut être bienveillante ou manipulatrice.\nExemple : Les discours de Dom Juan dans la pièce de Molière sont des paroles de séduction qui lui donnent autorité sur le cœur des femmes qu'il conquiert (puis abandonne).`
   },
   // Question n°82
   {
-    question: "Quelle est la caractéristique de la 'parole mystique' ou d'extase ?",
+    question: "Quelle est la caractéristique de la <em>parole mystique</em> ou d'extase ?",
     answers: [
       "Elle donne des ordres à Dieu",
       "Elle tente de dire l'indicible, l'expérience de l'union avec le divin, souvent par le paradoxe et le silence",
@@ -920,33 +920,33 @@ const questions = [
   },
   // Question n°83
   {
-    question: "Que signifie l'expression 'parole d'apaisement' ou de pacification ?",
+    question: "Que signifie l'expression <em>parole d'apaisement</em> ou de pacification ?",
     answers: [
       "Une parole qui impose la paix par la menace",
       "Une parole qui étouffe les conflits sans les résoudre",
-      "Une parole qui cherche à calmer les tensions, à désamorcer la violence et à rétablir un climat de dialogue"
+      "Une parole qui cherche à calmer les tensions"
     ],
     correct: 3,
     explanation: `La parole d'apaisement est prononcée dans un contexte de crise, de colère ou de violence latente. Elle vise à réduire l'intensité émotionnelle, à faire baisser la pression, à créer les conditions d'un dialogue raisonnable. Elle peut reconnaître les griefs ("Je comprends votre colère"), faire appel au calme ("Restons raisonnables"), proposer des gages ("Examinons cela ensemble"). Son autorité vient de son caractère mesuré, de sa raisonnabilité, et souvent du statut de celui qui parle (médiateur, autorité respectée).\nExemple : Le discours d'un maire tentant de calmer des tensions communautaires après un fait divers : "Ne tombons pas dans le piège de la violence, parlons-nous."`
   },
   // Question n°84
   {
-    question: "Comment la 'parole de dénonciation' (<em>whistleblowing</em>, lanceur d'alerte) exerce-t-elle son autorité ?",
+    question: "Comment la <em>parole de dénonciation</em> (<em>whistleblowing</em>, lanceur d'alerte) exerce-t-elle son autorité ?",
     answers: [
       "En répandant des rumeurs",
       "En obéissant aux ordres de sa hiérarchie",
-      "En révélant des faits cachés, souvent au péril de son auteur, pour faire éclater une vérité et appeler à la justice"
+      "En révélant des faits cachés"
     ],
     correct: 3,
-    explanation: `La parole de dénonciation (ou "lancement d'alerte") est prononcée par un individu qui, au sein d'une organisation (entreprise, État), révèle des actes illégaux, immoraux ou dangereux que cette organisation cherchait à cacher. Cette parole est hautement risquée pour le lanceur d'alerte (licenciement, poursuites). Son autorité vient de son courage, de la véracité des faits qu'elle apporte (preuves), et de l'appel à la conscience publique qu'elle lance. Elle s'adresse souvent aux médias ou à la justice pour contourner l'autorité hiérarchique corrompue.\nExemple : Edward Snowden révélant les programmes de surveillance massive de la NSA ; ou Chelsea Manning divulguant des documents militaires sur la guerre en Irak.`
+    explanation: `La parole de dénonciation (ou « lancement d'alerte ») est prononcée par un individu qui, au sein d'une organisation (entreprise, État), révèle des actes illégaux, immoraux ou dangereux que cette organisation cherchait à cacher. Cette parole est hautement risquée pour le lanceur d'alerte (licenciement, poursuites). Son autorité vient de son courage, de la véracité des faits qu'elle apporte (preuves), et de l'appel à la conscience publique qu'elle lance. Elle s'adresse souvent aux médias ou à la justice pour contourner l'autorité hiérarchique corrompue.\nExemple : Edward Snowden révélant les programmes de surveillance massive de la NSA ; ou Chelsea Manning divulguant des documents militaires sur la guerre en Irak.`
   },
   // Question n°85
   {
-    question: "Quelle est la fonction de la 'parole d'enseignement' (du maître, du professeur) ?",
+    question: "Quelle est la fonction de la <em>parole d'enseignement</em> (du maître, du professeur) ?",
     answers: [
       "Imposer un savoir par la contrainte",
       "Répéter ce que disent les manuels",
-      "Transmettre un savoir et des méthodes en exerçant une autorité pédagogique légitime, qui doit aussi s'effacer pour laisser penser l'élève"
+      "Transmettre un savoir et des méthodes"
     ],
     correct: 3,
     explanation: `La parole d'enseignement exerce une autorité spécifique : l'autorité pédagogique. Le maître est censé détenir un savoir et une compétence didactique. Sa parole fait autorité (<em>auctoritas</em>) en ce sens. Mais une bonne pédagogie vise à ce que l'élève s'approprie le savoir et devienne autonome. L'autorité du maître doit donc être à la fois ferme (pour structurer l'apprentissage) et discrète, s'effaçant progressivement ("toute autorité véritable inclut le moment de sa propre abolition", selon Hegel). Le dialogue socratique est le modèle d'une autorité qui ne s'impose pas mais fait accoucher les esprits.\nExemple : Un bon professeur n'impose pas des réponses, mais pose des questions qui guident l'élève vers la découverte personnelle.`
@@ -956,7 +956,7 @@ const questions = [
     question: "Que signifie l'expression 'parole de résistance' face à une autorité oppressive ?",
     answers: [
       "Une parole silencieuse",
-      "Une parole qui dit « non », qui affirme une dignité et une vérité contre la parole dominante, au risque de la répression",
+      "Une parole qui dit « non » à la parole dominante",
       "Une parole qui cherche un compromis avec l'oppresseur"
     ],
     correct: 2,
@@ -964,10 +964,10 @@ const questions = [
   },
   // Question n°87
   {
-    question: "Comment la 'parole prophétique de salut' (annonce d'un avenir radieux) fonctionne-t-elle ?",
+    question: "Comment la <em>parole prophétique de salut</em> (annonce d'un avenir radieux) fonctionne-t-elle ?",
     answers: [
       "Elle garantit le bonheur matériel immédiat",
-      "Elle promet un salut (libération, paix, royaume de Dieu) à condition d'une conversion ou d'une lutte, donnant ainsi de l'espérance et une orientation",
+      "Elle promet un salut conditionné",
       "Elle décrit un futur inéluctable"
     ],
     correct: 2,
@@ -975,10 +975,10 @@ const questions = [
   },
   // Question n°88
   {
-    question: "Quelle est la caractéristique d'une 'parole d'assemblée' (délibérations collectives) ?",
+    question: "Quelle est la caractéristique d'une <em>parole d'assemblée</em> (délibérations collectives) ?",
     answers: [
       "Elle est secrète",
-      "Elle est le produit d'échanges, de discussions, d'amendements, où l'autorité finale émane de la décision collective",
+      "Elle est le produit de discussions",
       "Elle est toujours le monologue d'un chef"
     ],
     correct: 2,
@@ -986,32 +986,32 @@ const questions = [
   },
   // Question n°89
   {
-    question: "Que signifie l'expression 'parole de trahison' ?",
+    question: "Que signifie l'expression <em>parole de trahison</em> ?",
     answers: [
       "Une parole prononcée dans une langue étrangère",
       "Une parole qui révèle un secret promis",
-      "Une parole qui rompt un engagement de fidélité (serment, alliance, amitié), sapant ainsi l'autorité de la parole donnée"
+      "Une parole qui rompt un engagement"
     ],
     correct: 3,
     explanation: `La parole de trahison est l'envers de la parole d'engagement. Elle brise un pacte, une promesse, une alliance. Elle peut être explicite ("Je romps notre alliance") ou implicite (agir contrairement à sa parole). La trahison sape l'autorité même de la parole comme lien social, car elle montre que la parole peut être vaine. Dans les relations de confiance (amitié, mariage, politique), la trahison verbale est souvent plus blessante que la trahison par l'action, car elle attaque le fondement symbolique de la relation.\nExemple : Un ami qui révèle un secret intime qu'on lui avait confié trahit la parole de confiance qui les liait.`
   },
   // Question n°90
   {
-    question: "Comment la 'parole d'interprétation' (de l'herméneute, du critique) exerce-t-elle son autorité ?",
+    question: "Comment la <em>parole d'interprétation</em> (de l'herméneute, du critique) exerce-t-elle son autorité ?",
     answers: [
       "En répétant le texte mot pour mot",
       "En imposant une lecture unique",
-      "En proposant une lecture éclairante d'un texte, d'un événement ou d'un symbole, qui s'impose par sa cohérence et sa fécondité"
+      "En proposant une lecture éclairante"
     ],
     correct: 3,
     explanation: `L'interprète (philosophe, critique littéraire, historien, psychanalyste) ne crée pas un texte ou un événement, mais il en propose une lecture qui en dégage le sens caché, la structure, les implications. L'autorité de sa parole ne vient pas d'un pouvoir institutionnel (sauf cas de magistère religieux) mais de la qualité de son interprétation : sa rigueur, son érudition, sa profondeur, sa capacité à rendre compte du matériau étudié. Une bonne interprétation s'impose par sa force persuasive intrinsèque. Elle ouvre le texte à de nouvelles compréhensions.\nExemple : L'interprétation freudienne des rêves ou des actes manqués propose une grille de lecture (l'inconscient, le désir) qui fait autorité dans le champ psychanalytique, sans être pourtant une "preuve" scientifique au sens strict.`
   },
   // Question n°91
   {
-    question: "Quelle est la fonction de la 'parole d'investiture' (cérémonie d'intronisation) ?",
+    question: "Quelle est la fonction de la <em>parole d'investiture</em> (cérémonie d'intronisation) ?",
     answers: [
       "Critiquer le prédécesseur",
-      "Conférer solennellement une charge, une dignité ou un pouvoir à une personne, par des paroles et des gestes rituels",
+      "Conférer solennellement une charge",
       "Fêter la fin d'un mandat"
     ],
     correct: 2,
@@ -1019,21 +1019,21 @@ const questions = [
   },
   // Question n°92
   {
-    question: "Que signifie l'expression 'parole de révélation' (dans les religions révélées) ?",
+    question: "Que signifie l'expression « parole de révélation » (dans les religions <em>révélées</em>) ?",
     answers: [
       "Une découverte scientifique",
-      "Une parole humaine sur Dieu",
-      "Une parole que Dieu adresse aux hommes pour leur faire connaître sa volonté et son mystère, souvent par l'intermédiaire d'un prophète"
+      "Une parole de l'homme sur Dieu",
+      "Une parole de Dieu aux hommes"
     ],
     correct: 3,
     explanation: `Dans les religions dites "révélées" (judaïsme, christianisme, islam), la parole fondatrice est une parole de révélation : Dieu se fait connaître et parle aux hommes. Cette parole est transcendante, elle vient d'en haut. Elle est consignée dans des textes sacrés (Torah, Bible, Coran) considérés comme "Parole de Dieu". L'autorité de ces textes est absolue pour les croyants, car elle a son origine en Dieu lui-même. L'interprétation de cette parole (exégèse, théologie) devient alors une activité majeure, mais soumise à l'autorité du texte révélé.\nExemple : Pour les musulmans, le Coran est la parole incréée de Dieu, dictée mot à mot à Mahomet par l'ange Gabriel ; son autorité est sans égale.`
   },
   // Question n°93
   {
-    question: "Comment la 'parole de dérision' (satire, moquerie) peut-elle saper une autorité ?",
+    question: "Comment la <em>parole de dérision</em> (satire, moquerie) peut-elle saper une autorité ?",
     answers: [
-      "En la ridiculisant, en exposant ses contradictions ou ses travers, elle prive l'autorité de son sérieux et de son prestige",
-      "En l'ignorant complètement",
+      "En la ridiculisant",
+      "En l'ignorant",
       "En la complimentant"
     ],
     correct: 1,
@@ -1041,10 +1041,10 @@ const questions = [
   },
   // Question n°94
   {
-    question: "Quelle est la caractéristique de la 'parole d'évidence' (qui s'impose comme allant de soi) ?",
+    question: "Quelle est la caractéristique de la <em>parole d'évidence</em> (qui s'impose comme allant de soi) ?",
     answers: [
-      "Elle est le résultat d'une démonstration longue",
-      "Elle se présente comme ne nécessitant aucune preuve, elle est l'expression de la doxa (l'opinion commune) ou d'un préjugé puissant",
+      "Elle résulte d'une démonstration",
+      "Elle se présente sans preuve",
       "Elle est toujours vraie"
     ],
     correct: 2,
@@ -1052,10 +1052,10 @@ const questions = [
   },
   // Question n°95
   {
-    question: "Que signifie l'expression 'parole de rupture' (dans les révolutions, les schismes) ?",
+    question: "Que signifie l'expression <em>parole de rupture</em> (dans les révolutions, les schismes) ?",
     answers: [
       "Une parole hésitante",
-      "Une parole qui acte et fonde une séparation radicale d'avec une autorité antérieure, inaugurant un nouvel ordre",
+      "Une parole qui inaugure un nouvel ordre",
       "Une parole qui répare un lien"
     ],
     correct: 2,
@@ -1063,9 +1063,9 @@ const questions = [
   },
   // Question n°96
   {
-    question: "Comment la 'parole de consolation philosophique' (Boèce, Sénèque) cherche-t-elle à agir ?",
+    question: "Comment la <em>parole de consolation philosophique</em> (Boèce, Sénèque) cherche-t-elle à agir ?",
     answers: [
-      "En offrant une perspective rationnelle sur le malheur (la Fortune, la nécessité, la nature) pour en atténuer la douleur par la compréhension",
+      "En atténuant la douleur par la compréhension",
       "En promettant une récompense dans l'au-delà",
       "En niant la souffrance"
     ],
@@ -1074,21 +1074,21 @@ const questions = [
   },
   // Question n°97
   {
-    question: "Quelle est la fonction de la 'parole d'avertissement' ?",
+    question: "Quelle est la fonction de la <em>parole d'avertissement</em> ?",
     answers: [
       "Annoncer une bonne nouvelle",
-      "Mettre en garde contre un danger ou une conséquence négative, pour prévenir et inciter à la prudence",
+      "Mettre en garde",
       "Faire peur inutilement"
     ],
     correct: 2,
-    explanation: `La parole d'avertissement ("Attention !", "Méfie-toi de...", "Si vous faites cela, il arrivera...") a une fonction préventive. Elle vise à éviter un mal futur en alertant sur un risque. Son autorité peut venir de l'expérience de celui qui parle ("Je te préviens en connaissance de cause"), d'un savoir expert (alerte scientifique), ou d'une position d'autorité (parent, gouvernement). Elle combine souvent un constat (le danger existe) et une injonction (il faut agir pour l'éviter). Son efficacité dépend de la crédibilité de l'émetteur et de la perception du risque par le récepteur.\nExemple : Les avertissements sanitaires sur les paquets de cigarettes ("Fumer tue") sont des paroles d'autorité (de l'État, de la science) visant à dissuader.`
+    explanation: `La parole d'avertissement (« attention ! », « méfie-toi de... », « si vous faites cela, il arrivera... ») a une fonction préventive. Elle vise à éviter un mal futur en alertant sur un risque. Son autorité peut venir de l'expérience de celui qui parle (« je te préviens en connaissance de cause »), d'un savoir expert (alerte scientifique), ou d'une position d'autorité (parent, gouvernement). Elle combine souvent un constat (le danger existe) et une injonction (il faut agir pour l'éviter). Son efficacité dépend de la crédibilité de l'émetteur et de la perception du risque par le récepteur.\nExemple : Les avertissements sanitaires sur les paquets de cigarettes (« fumer tue ») sont des paroles d'autorité (de l'État, de la science) visant à dissuader.`
   },
   // Question n°98
   {
-    question: "Que signifie l'expression 'parole de dévoilement' au sens philosophique (<em>alètheia</em>) ?",
+    question: "Que signifie l'expression <em>parole de dévoilement</em> au sens philosophique (<em>alètheia</em>) ?",
     answers: [
       "Enlever un voile matériel",
-      "Faire sortir de l'oubli (léthé) l'être des choses, les rendre présentes dans leur vérité, par la puissance du langage poétique ou philosophique",
+      "Faire sortir de l'oubli",
       "Révéler un secret personnel"
     ],
     correct: 2,
@@ -1096,10 +1096,10 @@ const questions = [
   },
   // Question n°99
   {
-    question: "Comment la 'parole de réconciliation' (post-conflit) opère-t-elle ?",
+    question: "Comment la <em>parole de réconciliation</em> (post-conflit) opère-t-elle ?",
     answers: [
       "En désignant un vainqueur et un vaincu",
-      "En reconnaissant les torts, en établissant une vérité commune, et en prononçant des paroles qui restaurent le lien social brisé",
+      "En établissant une vérité commune",
       "En effaçant le passé"
     ],
     correct: 2,
@@ -1107,11 +1107,11 @@ const questions = [
   },
   // Question n°100
   {
-    question: "Quel est l'enjeu ultime de la séquence 'L'autorité de la parole' selon la synthèse proposée ?",
+    question: "Quel est l'enjeu ultime de la séquence l'<em>autorité de la parole</em> ?",
     answers: [
       "Distinguer les différents types de discours",
       "Apprendre à imposer sa parole par la force",
-      "Comprendre comment une parole peut fonder, légitimer, contester ou transformer l'ordre social, et interroger les conditions d'une autorité discursive légitime"
+      "Interroger les conditions d'une autorité légitime"
     ],
     correct: 3,
     explanation: `Cette séquence explore la parole non comme simple communication, mais comme pouvoir de fonder, d'instituer, de légitimer ou de subvertir l'ordre des choses et des sociétés. Elle distingue l'autorité fondée sur la tradition (<em>auctoritas</em>) de la puissance de contrainte (<em>potestas</em>), analyse les formes concrètes de la parole d'autorité (du mythe au performatif, du charisme à l'institution), et interroge sans cesse ce qui fait qu'une parole "fait autorité". L'enjeu est de former un jugement critique sur les discours qui nous entourent et sur les conditions d'une parole authentique, qui lie vérité et responsabilité.\nExemple : Face à la prolifération des "paroles" sur les réseaux sociaux, la réflexion sur l'autorité légitime (compétence, preuve, débat contradictoire) est plus cruciale que jamais.`
