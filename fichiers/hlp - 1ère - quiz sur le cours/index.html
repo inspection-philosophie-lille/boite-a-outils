@@ -1407,7 +1407,6 @@ body.dark-mode .philosophy-text-source {
                 </div>
             </div>
         </div>
-    </div>
 </main>
 <!-- MENU COULISSANT -->
 <div class="menu-overlay" id="menuOverlay"></div>
@@ -1811,6 +1810,44 @@ async function loadFromGitHub(url) {
     }
 }
 
+// FONCTION POUR PRÉSERVER LES ESPACES AUTOUR DES BALISES
+function protectSpacesAroundTags(text) {
+    if (!text) return text;
+    
+    return text
+        // Protéger les espaces avant les balises ouvrantes
+        .replace(/(\s+)<(\/?\w+)([^>]*)>/g, (match, spaces, tag, attributes) => {
+            // Remplacer les espaces par &nbsp; avant une balise
+            const protectedSpaces = spaces.replace(/ /g, '&nbsp;');
+            return protectedSpaces + `<${tag}${attributes}>`;
+        })
+        // Protéger les espaces après les balises fermantes
+        .replace(/<\/(\w+)>(\s+)/g, (match, tag, spaces) => {
+            // Remplacer les espaces par &nbsp; après une balise
+            const protectedSpaces = spaces.replace(/ /g, '&nbsp;');
+            return `</${tag}>` + protectedSpaces;
+        });
+}
+
+// FONCTION POUR PROTÉGER LES ESPACES DANS LES RÉPONSES (version simplifiée)
+function protectSpacesInAnswers(answers) {
+    return answers.map(answer => protectSpacesAroundTags(answer));
+}
+
+// FONCTION POUR OBTENIR LE TEXTE D'UNE RÉPONSE AVEC ESPACES PRÉSERVÉS
+function getAnswerTextWithSpaces(answerElement) {
+    // Récupérer le HTML interne
+    const html = answerElement.innerHTML;
+    
+    // Si l'élément a stocké le texte original, l'utiliser
+    if (answerElement.dataset.originalText) {
+        return protectSpacesAroundTags(answerElement.dataset.originalText);
+    }
+    
+    // Sinon, utiliser le HTML et le protéger
+    return protectSpacesAroundTags(html);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     updateQuizTitles(currentTitre, currentSousTitre);
 
@@ -2057,35 +2094,6 @@ function formatPhilosophyText(text) {
         .join('');
 }
 
-function formatPhilosophyText(text) {
-    if (!text) return '';
-    return text.split('\n')
-        .filter(p => p.trim() !== '')
-        .map(p => {
-            // Préserver les espaces autour des balises HTML
-            let paragraph = p.trim();
-            
-            // Remplacer les espaces avant <em> par &nbsp; (espace insécable)
-            paragraph = paragraph.replace(/(\s+)<em>/g, '&nbsp;<em>');
-            
-            // Remplacer les espaces après </em> par &nbsp;
-            paragraph = paragraph.replace(/<\/em>(\s+)/g, '</em>&nbsp;');
-            
-            // Remplacer les espaces avant </em> par &nbsp; (cas rare)
-            paragraph = paragraph.replace(/(\s+)<\/em>/g, '&nbsp;</em>');
-            
-            // Remplacer les espaces après <em> par &nbsp; (cas rare)
-            paragraph = paragraph.replace(/<em>(\s+)/g, '<em>&nbsp;');
-            
-            // Pour d'autres balises HTML potentielles
-            paragraph = paragraph.replace(/(\s+)<(\/?\w+)>/g, '&nbsp;<$2>');
-            paragraph = paragraph.replace(/<\/(\w+)>(\s+)/g, '</$1>&nbsp;');
-            
-            return `<p class="philosophy-paragraph">${paragraph}</p>`;
-        })
-        .join('');
-}
-
 function displayPhilosophyText() {
     const textContent = document.getElementById('philosophyTextContent');
     const sourceContent = document.getElementById('philosophyTextSource');
@@ -2173,13 +2181,16 @@ function displayNextQuestion() {
         const shuffledAnswers = [...q.answers];
         shuffleArray(shuffledAnswers);
 
+        // Protéger les espaces dans les réponses pour l'affichage
+        const protectedAnswers = protectSpacesInAnswers(shuffledAnswers);
+
         const el = document.createElement('div');
         el.innerHTML = `
             <div class="container--question">
                 <fieldset>
                     <legend><p>${questionText}</p></legend>
-                    <ul>${shuffledAnswers.map((a, i) => `
-                        <li class="quiz-answer" data-index="${i}" data-answer="${a}">
+                    <ul>${protectedAnswers.map((a, i) => `
+                        <li class="quiz-answer" data-index="${i}" data-original-text="${shuffledAnswers[i].replace(/"/g, '&quot;')}">
                             ${a}
                             <img src="src/false.svg" alt="" class="answer-icon hidden">
                         </li>`).join('')}
@@ -2187,7 +2198,7 @@ function displayNextQuestion() {
                 </fieldset>
                 <div class="quiz-explanation hidden">
                     <div class="quiz-explanation__label"><span></span></div>
-					<p class="quiz-explanation__detail"><strong>Explication : </strong>${q.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>')}</p>
+                    <p class="quiz-explanation__detail"><strong>Explication : </strong>${q.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>')}</p>
                 </div>
                 <div class="next-button-container">
                     <button class="quiz-btn quiz-btn--default quiz-btn--fill next-question-btn">
@@ -2206,10 +2217,17 @@ function displayNextQuestion() {
             }
         }, 50);
 
+        // Stocker les réponses originales et ajouter les événements
         el.querySelectorAll('.quiz-answer').forEach((answerEl, i) => {
+            // Stocker le texte original
+            answerEl.dataset.originalText = shuffledAnswers[i];
+            
             answerEl.addEventListener('click', () => {
-                if (isDeferredEvaluation) selectAnswer(answerEl, shuffledAnswers[i]);
-                else checkAnswer(answerEl, shuffledAnswers[i], shuffledAnswers);
+                if (isDeferredEvaluation) {
+                    selectAnswer(answerEl, shuffledAnswers[i]);
+                } else {
+                    checkAnswer(answerEl, shuffledAnswers[i], shuffledAnswers);
+                }
             });
         });
 
@@ -2264,7 +2282,9 @@ function selectAnswer(selected, selectedText) {
 
     const currentQuestion = shuffledQuestions[currentQuestionIndex];
     const originalQuestionNumber = originalQuestionIndices[currentQuestionIndex] + 1;
-    const shuffledAnswers = Array.from(selected.parentNode.children).map(el => el.textContent.trim());
+    const shuffledAnswers = Array.from(selected.parentNode.children).map(el => 
+        el.dataset.originalText || el.textContent
+    );
     const originalCorrectIndex = currentQuestion.correct;
     const adjustedCorrectIndex = originalCorrectIndex - 1;
 
@@ -2291,18 +2311,20 @@ function checkAnswer(selected, selectedText, shuffledAnswers) {
     const adjustedCorrectIndex = originalCorrectIndex - 1;
     const adjustedCorrectText = currentQuestion.answers[adjustedCorrectIndex] || currentQuestion.answers[0];
 
+    // Stocker les informations avec le texte original
     const answerObj = {
         question: currentQuestion.question,
-        userAnswer: selectedText,
+        userAnswer: selectedText,  // Texte original avec espaces
         correctAnswerIndex: adjustedCorrectIndex,
         explanation: currentQuestion.explanation,
-        allAnswers: shuffledAnswers,
+        allAnswers: shuffledAnswers,  // Textes originaux
         originalQuestionNumber: originalQuestionNumber,
         originalIndex: originalQuestionIndices[currentQuestionIndex]
     };
 
     userAnswers[currentQuestionIndex] = answerObj;
 
+    // COMPARAISON : comparer les textes ORIGINAUX exactement
     if (selectedText === adjustedCorrectText) {
         selected.classList.add('correct');
         selected.querySelector('.answer-icon').src = 'src/true.svg';
@@ -2317,16 +2339,22 @@ function checkAnswer(selected, selectedText, shuffledAnswers) {
         selected.querySelector('.answer-icon').classList.remove('hidden');
         if (label) label.innerHTML = '<img src="src/emoji-sad.gif" alt="emoji" class="emoji"> mauvaise réponse !';
         if (animationsToggle && animationsToggle.checked) selected.classList.add('shake-x');
+        
+        // Marquer la réponse correcte
         Array.from(answers).forEach(a => {
-            if (a.textContent.trim() === adjustedCorrectText) {
+            const answerIndex = parseInt(a.dataset.index);
+            if (shuffledAnswers[answerIndex] === adjustedCorrectText) {
                 a.classList.add('correct');
                 a.querySelector('.answer-icon').src = 'src/true.svg';
                 a.querySelector('.answer-icon').classList.remove('hidden');
             }
         });
     }
+    
+    // Marquer toutes les autres réponses comme incorrectes
     Array.from(answers).forEach(a => {
-        if (a.textContent.trim() !== adjustedCorrectText && a !== selected) {
+        const answerIndex = parseInt(a.dataset.index);
+        if (shuffledAnswers[answerIndex] !== adjustedCorrectText && a !== selected) {
             a.classList.add('incorrect');
             a.querySelector('.answer-icon').classList.remove('hidden');
         }
@@ -2368,7 +2396,8 @@ function calculateDeferredScore() {
         const adjustedCorrectIndex = originalCorrectIndex - 1;
         const adjustedCorrectText = currentQuestion.answers[adjustedCorrectIndex] || currentQuestion.answers[0];
 
-        if (answer && answer.userAnswer === adjustedCorrectText) {
+        // Comparaison exacte des textes originaux
+        if (answer.userAnswer === adjustedCorrectText) {
             score++;
             totalCorrectAnswers++;
         }
@@ -2411,16 +2440,22 @@ function showDetailedReview() {
             questionDiv.style.background = isCorrect ? 'rgba(40, 167, 69, 0.1)' : 'rgba(220, 53, 69, 0.1)';
             questionDiv.style.borderLeft = `4px solid ${isCorrect ? 'var(--color-correct)' : 'var(--color-incorrect)'}`;
 
-            const answersList = answer.allAnswers ? answer.allAnswers.map(a => `<li>${a}</li>`).join('') : 'Informations non disponibles';
+            // Afficher les réponses avec espaces protégés
+            const answersList = answer.allAnswers ? answer.allAnswers.map(a => {
+                const protectedAnswer = protectSpacesAroundTags(a);
+                return `<li>${protectedAnswer}</li>`;
+            }).join('') : 'Informations non disponibles';
+
+            const protectedUserAnswer = protectSpacesAroundTags(answer.userAnswer || 'Non répondue');
+            const protectedCorrectAnswer = protectSpacesAroundTags(adjustedCorrectText);
 
             questionDiv.innerHTML = `
                 <p style="font-weight: bold; margin-bottom: 10px;">Question n°${questionNumber} : ${questionContent}</p>
                 <p style="margin-bottom: 8px;"><strong>Réponses proposées :</strong></p>
                 <ul style="margin-left: 20px; margin-bottom: 12px;">${answersList}</ul>
-				<p style="margin-bottom: 8px;"><strong>Votre réponse :</strong> ${answer.userAnswer || 'Non répondue'}</p>
-                <p style="margin-bottom: 8px;"><strong>Réponse correcte :</strong> ${adjustedCorrectText}</p>
-                <p style="margin-top: 10px; font-size: 0.9em;"><strong>Explication :</strong>${answer.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>')}
-</p>
+                <p style="margin-bottom: 8px;"><strong>Votre réponse :</strong> ${protectedUserAnswer}</p>
+                <p style="margin-bottom: 8px;"><strong>Réponse correcte :</strong> ${protectedCorrectAnswer}</p>
+                <p style="margin-top: 10px; font-size: 0.9em;"><strong>Explication :</strong>${answer.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>')}</p>
             `;
 
             reviewContainer.appendChild(questionDiv);
