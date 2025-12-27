@@ -1,7 +1,7 @@
 // ============================================
 // DONNÉES GÉNÉRALES
 // ============================================
-const titre = "QUIZ HLP - éducation, transmission et émancipation";
+const titre = "QUIZ HLP TERM - éducation, transmission et émancipation";
 const sousTitre = "100 questions";
 
 // ============================================

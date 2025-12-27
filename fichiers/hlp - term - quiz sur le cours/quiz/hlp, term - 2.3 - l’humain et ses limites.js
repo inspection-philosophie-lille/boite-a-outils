@@ -1,15 +1,15 @@
 // ============================================
 // DONNÉES GÉNÉRALES
 // ============================================
-const titre = "QUIZ HLP - L'humain et ses limites";
-const sousTitre = "100 questions pour maîtriser les enjeux du progrès technique, de la société liquide aux dystopies.";
+const titre = "QUIZ HLP TERM - l'humain et ses limites";
+const sousTitre = "100 questions";
 
 // ============================================
 // DONNÉES DU TEXTE PHILOSOPHIQUE (Synthèse)
 // ============================================
 const philosophyData = {
   texte: `Le XXe siècle, marqué par l'explosion cognitive et technologique, a vu s'effondrer la confiance naïve dans le progrès. Des catastrophes industrielles aux génocides, la science a révélé son double visage, libérateur et mortifère. Face à une société « liquide » où les liens se fragilisent, les écrans isolent et la technique promet l'augmentation de l'homme, se pose la question fondamentale des limites humaines. De Prométhée à l'intelligence artificielle, des utopies aux dystopies, l'enjeu est de penser un progrès responsable qui respecte l'homme et son environnement.`,
-  source: "Synthèse des enjeux philosophiques de la séquence « L'humain et ses limites »."
+  source: "Synthèse des enjeux de la séquence"
 };
 
 // ============================================

@@ -1,7 +1,7 @@
 // ============================================
 // DONNÉES GÉNÉRALES
 // ============================================
-const titre = "QUIZ HLP - Les métamorphoses du moi";
+const titre = "QUIZ HLP TERM - les métamorphoses du moi";
 const sousTitre = "100 questions";
 
 // ============================================
@@ -9,7 +9,7 @@ const sousTitre = "100 questions";
 // ============================================
 const philosophyData = {
   texte: `Le « moi » est l’objet d’une quête permanente et problématique. Depuis le « connais-toi toi-même » de l’Antiquité, la pensée occidentale a tenté de cerner cette entité. Le <em>cogito</em> cartésien en fait une substance pensante, fondement certain de la connaissance. Pourtant, dès le XVIIIe siècle, Hume et Rousseau ébranlent cette évidence, révélant un moi fluide, insaisissable, construit par la mémoire et le récit. Le XIXe siècle romantique exalte un moi tourmenté et en devenir, tandis que le XXe siècle, avec Freud, le découvre traversé par l’inconscient, éclaté en instances conflictuelles. Finalement, le moi apparaît moins comme une donnée que comme une construction, à la fois psychologique, narrative et sociale, en perpétuelle métamorphose.`,
-  source: "Synthèse des enjeux philosophiques de la séquence « Les métamorphoses du moi »."
+  source: "synthèse des enjeux de la séquence"
 };
 
 // ============================================

@@ -1,7 +1,7 @@
 // ============================================
 // DONNÉES GÉNÉRALES
 // ============================================
-const titre = "QUIZ HLP - Histoire et violence";
+const titre = "QUIZ HLP TERM - histoire et violence";
 const sousTitre = "100 questions";
 
 // ============================================
@@ -9,7 +9,7 @@ const sousTitre = "100 questions";
 // ============================================
 const philosophyData = {
   texte: `Le 20e siècle, marqué par des violences inédites (guerres mondiales, Shoah, totalitarismes, guerres coloniales), a définitivement ébranlé la confiance des Lumières dans le progrès continu de la raison. Ce module interroge la nature de la violence : est-elle inhérente à l'homme ou produite par la société ? Il en explore les formes (martiale, politique, sociale, symbolique) et les tentatives de l'encadrer par le droit (guerre juste, contrat social). Enfin, il examine comment les écrivains et philosophes du 20e siècle se sont engagés pour dénoncer, résister ou penser cette violence, de l'horreur des tranchées à la « banalité du mal » totalitaire.`,
-  source: "Synthèse des enjeux"
+  source: "synthèse des enjeux de la séquence"
 };
 
 // ============================================

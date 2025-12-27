@@ -1,7 +1,7 @@
 // ============================================
 // DONNÉES GÉNÉRALES
 // ============================================
-const titre = "QUIZ HLP - Les expressions de la sensibilité";
+const titre = "QUIZ HLP TERM - les expressions de la sensibilité";
 const sousTitre = "100 questions";
 
 // ============================================

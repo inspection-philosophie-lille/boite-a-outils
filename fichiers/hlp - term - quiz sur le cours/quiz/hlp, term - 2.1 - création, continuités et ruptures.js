@@ -1,7 +1,7 @@
 // ============================================
 // DONNÉES GÉNÉRALES
 // ============================================
-const titre = "QUIZ HLP - Création, continuités et ruptures";
+const titre = "QUIZ HLP TERM - création, continuités et ruptures";
 const sousTitre = "100 questions";
 
 // ============================================
@@ -9,7 +9,7 @@ const sousTitre = "100 questions";
 // ============================================
 const philosophyData = {
   texte: `Les 20e et 21e siècles se caractérisent par une remise en question profonde des certitudes positivistes du 19e siècle. Face aux guerres mondiales, aux crises écologiques et aux mutations artistiques, la possibilité même de construire un monde commun autour de normes partagées est interrogée. Cette séquence explore la tension dialectique entre rupture et continuité, que ce soit dans la définition de notions fondamentales, dans les expressions artistiques ou dans les courants philosophiques majeurs. Il s’agit de comprendre comment notre époque tente de créer du sens entre l’héritage critique et l’invention de nouvelles formes de pensée et d’être-ensemble.`,
-  source: "Synthèse des enjeux de la séquence"
+  source: "synthèse des enjeux de la séquence"
 };
 
 // ============================================
