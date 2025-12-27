@@ -119,8 +119,8 @@ const questions = [
   {
     question: "Que signifie l'<em>auctoritas</em> dans la Rome antique, par opposition à la <em>potestas</em> ?",
     answers: [
-      "L'<em>auctoritas</em> est le pouvoir de commandement légal et coercitif, tandis que la <em>potestas</em> est l'influence morale et le prestige.",
-      "La<em>potestas</em> est le pouvoir de commandement légal et coercitif, tandis que l'<em>auctoritas</em> est l'influence morale et le prestige.",
+      "L'<em>auctoritas </em> est le pouvoir de commandement légal et coercitif, tandis que la <em>potestas </em> est l'influence morale et le prestige.",
+      "La<em>potestas </em> est le pouvoir de commandement légal et coercitif, tandis que l'<em>auctoritas </em> est l'influence morale et le prestige.",
       "Ces deux termes sont des équivalents latins parfaits du mot grec <em>dunamis</em> (force)."
     ],
     correct: 2,

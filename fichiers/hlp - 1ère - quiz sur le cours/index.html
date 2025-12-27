@@ -1132,13 +1132,70 @@ body.dark-mode .philosophy-text-source {
         font-size: 12px !important;
     }
 }
+/* MODIFICATIONS POUR MOBILE - SUPPRESSION COMPLÈTE DES CADRES ET OMBRES EXTERNES */
 @media (max-width: 600px) {
     .toolbar-desktop { display: none; }
     .toolbar-mobile { display: flex; }
     .mobile-title-wrapper { display: block; }
     .toolbar-btn { width: 48px; height: 48px; }
     .toolbar-btn svg { width: 24px; height: 24px; }
-    .container--quiz { width: 100%; margin: 5px auto 20px; border-width: 10px; min-height: 400px; max-width: 95%; }
+    
+    /* SUPPRESSION COMPLÈTE DU CADRE ET OMBRE EXTERNE */
+    .container--quiz {
+        width: 100% !important;
+        margin: 0 auto 20px !important;
+        border: none !important; /* Supprimer la bordure de 15px */
+        min-height: 400px;
+        max-width: 100% !important;
+        border-radius: 0 !important; /* Pas de coins arrondis externes */
+        box-shadow: none !important; /* Pas d'ombre externe */
+        background: var(--bg) !important; /* Fond direct sans effet */
+    }
+    
+    /* Élargir les éléments internes */
+    .quiz__question,
+    legend p,
+    .quiz-answer,
+    .quiz-explanation,
+    .next-button-container,
+    .philosophy-text-container {
+        width: 98% !important;
+        max-width: 98% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+    
+    /* Ajuster les padding pour optimiser l'espace */
+    .quiz-answer {
+        padding: 10px 12px !important;
+        border-radius: 8px !important; /* Conserver les coins arrondis internes */
+        box-shadow: var(--shadow-out) !important; /* Conserver l'ombre interne */
+    }
+    
+    .quiz-explanation {
+        padding: 12px !important;
+        border-radius: 8px !important; /* Conserver les coins arrondis internes */
+        box-shadow: var(--shadow-out) !important; /* Conserver l'ombre interne */
+    }
+    
+    /* Réduire légèrement la barre de progression */
+    .progress-bar {
+        width: 98% !important;
+        max-width: 98% !important;
+        padding: 8px 10px !important;
+        box-shadow: none !important; /* Pas d'ombre sur la barre de progression */
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important; /* Ligne de séparation subtile */
+    }
+    
+    /* Écran de démarrage - ajuster pour l'affichage plein */
+    .quiz-start__img img {
+        border-radius: 0 !important;
+    }
+    
+    .quiz-start__opacity {
+        border-radius: 0 !important;
+    }
+    
     .quiz-btn--large { font-size: 15px; padding: 12px 25px; min-width: 200px; }
     .quiz-start__button { padding-bottom: 30px; gap: 15px; }
     .file-load-btn { font-size: 14px; padding: 12px 18px; }
@@ -1156,6 +1213,31 @@ body.dark-mode .philosophy-text-source {
     /* Sur mobile, le titre principal n'a pas de tiret à supprimer car il est en une seule ligne */
     .toolbar-center h1::first-line::after {
         display: none;
+    }
+    
+    /* Écran de résultats - ajuster */
+    .container--quiz-end {
+        padding: 15px !important;
+    }
+    
+    .container--quiz-results {
+        padding: 15px !important;
+    }
+    
+    /* Garder les ombres internes mais supprimer tout effet externe */
+    .philosophy-text-container {
+        border: 1px solid #ddd !important;
+        border-radius: 8px !important;
+        box-shadow: var(--shadow-out) !important;
+    }
+    
+    body.dark-mode .philosophy-text-container {
+        border-color: #444 !important;
+    }
+    
+    /* Écran d'accueil - ajuster */
+    .container--quiz-start {
+        border-radius: 0 !important;
     }
 }
 @media (min-width: 601px) {
@@ -1350,7 +1432,7 @@ body.dark-mode .philosophy-text-source {
         <button class="menu-item" id="settingsButton">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
             </svg>
             paramètres
         </button>
@@ -1950,7 +2032,57 @@ function formatPhilosophyText(text) {
     if (!text) return '';
     return text.split('\n')
         .filter(p => p.trim() !== '')
-        .map(p => `<p class="philosophy-paragraph">${p.trim()}</p>`)
+        .map(p => {
+            // Préserver les espaces autour des balises HTML
+            let paragraph = p.trim();
+            
+            // Remplacer les espaces avant <em> par &nbsp; (espace insécable)
+            paragraph = paragraph.replace(/(\s+)<em>/g, '&nbsp;<em>');
+            
+            // Remplacer les espaces après </em> par &nbsp;
+            paragraph = paragraph.replace(/<\/em>(\s+)/g, '</em>&nbsp;');
+            
+            // Remplacer les espaces avant </em> par &nbsp; (cas rare)
+            paragraph = paragraph.replace(/(\s+)<\/em>/g, '&nbsp;</em>');
+            
+            // Remplacer les espaces après <em> par &nbsp; (cas rare)
+            paragraph = paragraph.replace(/<em>(\s+)/g, '<em>&nbsp;');
+            
+            // Pour d'autres balises HTML potentielles
+            paragraph = paragraph.replace(/(\s+)<(\/?\w+)>/g, '&nbsp;<$2>');
+            paragraph = paragraph.replace(/<\/(\w+)>(\s+)/g, '</$1>&nbsp;');
+            
+            return `<p class="philosophy-paragraph">${paragraph}</p>`;
+        })
+        .join('');
+}
+
+function formatPhilosophyText(text) {
+    if (!text) return '';
+    return text.split('\n')
+        .filter(p => p.trim() !== '')
+        .map(p => {
+            // Préserver les espaces autour des balises HTML
+            let paragraph = p.trim();
+            
+            // Remplacer les espaces avant <em> par &nbsp; (espace insécable)
+            paragraph = paragraph.replace(/(\s+)<em>/g, '&nbsp;<em>');
+            
+            // Remplacer les espaces après </em> par &nbsp;
+            paragraph = paragraph.replace(/<\/em>(\s+)/g, '</em>&nbsp;');
+            
+            // Remplacer les espaces avant </em> par &nbsp; (cas rare)
+            paragraph = paragraph.replace(/(\s+)<\/em>/g, '&nbsp;</em>');
+            
+            // Remplacer les espaces après <em> par &nbsp; (cas rare)
+            paragraph = paragraph.replace(/<em>(\s+)/g, '<em>&nbsp;');
+            
+            // Pour d'autres balises HTML potentielles
+            paragraph = paragraph.replace(/(\s+)<(\/?\w+)>/g, '&nbsp;<$2>');
+            paragraph = paragraph.replace(/<\/(\w+)>(\s+)/g, '</$1>&nbsp;');
+            
+            return `<p class="philosophy-paragraph">${paragraph}</p>`;
+        })
         .join('');
 }
 
@@ -1964,8 +2096,15 @@ function displayPhilosophyText() {
     else {
         philosophyTextSection.classList.remove('hidden');
         textContent.innerHTML = formatPhilosophyText(philosophyData.texte);
-        if (philosophyData.source && philosophyData.source.trim() !== '') sourceContent.innerHTML = formatSource(philosophyData.source);
-        else sourceContent.innerHTML = '';
+        if (philosophyData.source && philosophyData.source.trim() !== '') {
+            // Préserver les espaces dans la source aussi
+            let sourceText = philosophyData.source;
+            sourceText = sourceText.replace(/(\s+)<span/g, '&nbsp;<span');
+            sourceText = sourceText.replace(/span>(\s+)/g, 'span>&nbsp;');
+            sourceContent.innerHTML = formatSource(sourceText);
+        } else {
+            sourceContent.innerHTML = '';
+        }
     }
 }
 
