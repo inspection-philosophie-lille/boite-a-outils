@@ -1,2092 +1,1485 @@
 <!DOCTYPE html>
-<!--------------------------- Daniel Boulagnon --------------------------->
-<!-------------------- daniel.boulagnon@ac-lille.fr ---------------------->
-<!----------------------------- version 2025 ----------------------------->
-<html lang="fr" >
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!------------------------------------ Daniel Boulagnon ------------------------------------>
+<!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
+<!------------------------------------- version 2026 --------------------------------------->
+<!----------------- Exploitation à but strictement pédagogique et non lucratif ------------->
+<html lang="fr">
+<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>boîte à outils</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" href="src/favicon.ico" />
-		<link rel="stylesheet" href="src/css.css" />
-    </head>
-	
-    <body class="activity-stream">
-		<p style="margin: 15px; line-height: 48px; text-align: center; color:red; font-size:40px; font-weight: bold; font-family: 'Muli', sans-serif">boîte à outils</p>
-		<p style="margin: 15px; line-height: 48px; text-align: center; color:black; font-size:20px; font-weight: normal; font-family: 'Muli', sans-serif">φ / spécialité HLP / option math-φ</p>
-	
-        <div id="root">
-            <div>
-                <div class="outer-wrapper ds-outer-wrapper-search-alignment ds-outer-wrapper-breakpoint-override fixed-search visible-logo">
-                    <main class="">
-                        <div class="body-wrapper on">
+		<link rel="icon" href="src/favicon.ico">
+		
+		<style>
+				/* ===== VARIABLES ET BASE ===== */
+				:root {
+						--bg-primary: #F9F9FB;
+						--bg-secondary: #FFF;
+						--text-primary: #15141a;
+						--text-secondary: #696A6B;
+						--primary-color: #696A6B;
+						--border-color: #D7D7DB;
+						--hover-color: rgba(0, 0, 0, 0.05);
+						--shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+						--shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.1);
+				}
 
-<!----------------------------------------------------------- début réviser les repères ---------------------------------------------->
+				/* Mode sombre */
+				@media (prefers-color-scheme: dark) {
+						:root {
+								--bg-primary: #2B2A33;
+								--bg-secondary: #42414d;
+								--text-primary: #fbfbfe;
+								--text-secondary: #a1a1a8;
+								--primary-color: #00ddff;
+								--border-color: #4A4A4F;
+								--hover-color: rgba(255, 255, 255, 0.1);
+						}
+				}
 
-                            <section class="collapsible-section ds-layout" data-section-id="topstories">
-                                <div class="section-top-bar">
-                                    <h3 class="section-title-container">
-                                        <span class="section-title">
-											<span data-l10n-args='{"provider":"Pocket"}' data-l10n-id="newtab-section-header-pocket">réviser les repères</span>
-										</span>
-                                    </h3>
-                                </div>
-                                <div>
-                                    <div class="discovery-stream ds-layout">
-                                        <div class="ds-column ds-column-12">
-                                            <div class="ds-column-grid">
-                                                <div>
-                                                    <div>
-                                                        <div class="ds-card-grid ds-card-grid-include-descriptions">											
+				/* Reset et base */
+				* { 
+						box-sizing: border-box;
+						margin: 0;
+						padding: 0;
+				}
 
-														<!-- début de vignette mise en pratique -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - repères - 01 - mise en pratique/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/distinction.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																				ok mise en pratique
-																			</header>
-																			<p class="source clamp">distinguer entre les repères par l'exemple</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+				body {
+						font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+						background: var(--bg-primary);
+						color: var(--text-primary);
+						line-height: 1.6;
+						min-height: 100vh;
+				}
+
+				/* ===== STRUCTURE PRINCIPALE ===== */
+				.container {
+						max-width: 1200px;
+						margin: 0 auto;
+						padding: 40px 20px;
+				}
+
+				.page-header {
+						text-align: center;
+						margin-bottom: 40px;
+						padding-bottom: 20px;
+				}
+
+				.page-title {
+						font-size: 2.5rem;
+						font-weight: 700;
+						color: red;
+						margin-bottom: 10px;
+				}
+
+				.page-subtitle {
+						font-size: 1.2rem;
+						color: black;
+						font-weight: 400;
+				}
+
+				/* ===== SECTIONS ===== */
+				.section {
+						margin-bottom: 50px;
+				}
+
+				.section-header {
+						margin-bottom: 30px;
+						padding-bottom: 15px;
+				}
+
+				.section-title {
+						font-size: 1.5rem;
+						font-weight: 600;
+						color: var(--text-primary);
+				}
+
+				/* ===== GRILLE DE CARTES ===== */
+				.card-grid {
+						display: grid;
+						gap: 25px;
+				}
+
+				/* ===== CARTES ===== */
+				.card {
+						background: var(--bg-secondary);
+						border-radius: 12px;
+						box-shadow: var(--shadow);
+						transition: all 0.3s ease;
+						overflow: hidden;
+						height: 100%;
+						display: flex;
+						flex-direction: column;
+						position: relative;
+						border: 1px solid var(--border-color);
+				}
+
+				.card:hover {
+						transform: translateY(-5px);
+						box-shadow: var(--shadow-hover);
+						border-color: var(--primary-color);
+				}
+
+				.card-link {
+						text-decoration: none;
+						color: inherit;
+						display: flex;
+						flex-direction: column;
+						height: 100%;
+						outline: none;
+				}
+
+				.card-link:focus-visible {
+						outline: 3px solid var(--primary-color);
+						outline-offset: 2px;
+						border-radius: 12px;
+				}
+
+				/* Image de la carte */
+				.card-image-container {
+						width: 100%;
+				}
+
+				.card-image {
+						width: 100%;
+				}
+
+				.card:hover .card-image {
+						transform: scale(1.05);
+				}
+
+				/* Contenu de la carte */
+				.card-content {
+						padding: 20px;
+						flex-grow: 1;
+						display: flex;
+						flex-direction: column;
+				}
+
+				.card-title {
+						font-size: 1.1rem;
+						font-weight: 600;
+						line-height: 1.4;
+						margin-bottom: 8px;
+						color: var(--text-primary);
+				}
+
+				.card-title .ok-badge {
+						color: #4caf50;
+						font-weight: 700;
+						margin-right: 5px;
+				}
+
+				.card-description {
+						font-size: 0.9rem;
+						color: var(--text-secondary);
+						margin-bottom: 15px;
+						flex-grow: 1;
+				}
+
+				/* Étoiles de difficulté */
+				.difficulty {
+						display: flex;
+						align-items: center;
+						margin-bottom: 15px;
+				}
+
+				.difficulty-stars {
+						display: flex;
+						gap: 2px;
+				}
+
+				.star {
+						color: #ffd055;
+						font-size: 2rem;
+				}
+
+				.star.empty {
+						color: var(--border-color);
+				}
+
+				/* Badge nouveauté */
+				.new-badge {
+						position: absolute;
+						top: 0;
+						right: 0;
+						background: white;
+						color: black;
+						padding: 4px 10px;
+						border-radius: 0 0 0 12px;
+						font-size: 0.8rem;
+						font-weight: 700;
+						text-transform: uppercase;
+						letter-spacing: 0.5px;
+						display: flex;
+						align-items: center;
+						gap: 5px;
+						opacity: 1;
+						transform: translateY(0);
+						z-index: 1;
+						box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
+						
+						/* Animation de clignotement */
+						animation: blink 2s infinite;
+				}
+
+				/* Définition de l'animation */
+				@keyframes blink {
+						0%, 100% {
+								opacity: 1;
+								box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
+						}
+						50% {
+								opacity: 0.7;
+				box-shadow: 0 2px 4px rgba(211, 47, 47, 0.1);
+						}
+				}
+
+				/* ===== RESPONSIVE ===== */
+/* Remplacer les media queries existantes pour .card-grid */
+
+@media (max-width: 768px) {
+		.card-grid {
+				grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
+				gap: 20px;
+		}
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+		.card-grid {
+				grid-template-columns: repeat(3, 1fr); /* 3 colonnes */
+		}
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+		.card-grid {
+				grid-template-columns: repeat(4, 1fr); /* 4 colonnes */
+		}
+}
+
+@media (min-width: 1281px) {
+		.card-grid {
+				grid-template-columns: repeat(5, 1fr); /* 5 colonnes */
+		}
+}
+
+				/* ===== UTILITAIRES ===== */
+				.sr-only {
+						position: absolute;
+						width: 1px;
+						height: 1px;
+						padding: 0;
+						margin: -1px;
+						overflow: hidden;
+						clip: rect(0, 0, 0, 0);
+						white-space: nowrap;
+						border: 0;
+				}
+		</style>
+</head>
+
+<body>
+		<div class="container">
+				<header class="page-header">
+						<h1 class="page-title">boîte à outils</h1>
+						<p class="page-subtitle">φ / spécialité HLP / option math-φ</p>
+				</header>
+
+				<main>
+						<!-- Section 1 : réviser les repères -->
+						<section class="section" id="reperes">
+								<div class="section-header">
+										<h2 class="section-title">réviser les repères</h2>
+								</div>
+								<div class="card-grid">
+										<!-- Carte 1 -->
+										<article class="card">
+												<a href="fichiers/φ - repères - 01 - mise en pratique/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/distinction.svg" alt="Mise en pratique" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>mise en pratique</h3>
+																<p class="card-description">distinguer entre les repères par l'exemple</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette mise en pratique -->
+														</div>
+												</a>
+										</article>
 
-														<!--- début de vignette repères à trous	-->			
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - repères - 08 - repères à trous/index.html" class="ds-card-link">
-																
-																<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/texte à trous.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok repères à trous
-																			</header>
-																			<p class="source clamp">réviser les repères</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 2 -->
+										<article class="card">
+												<a href="fichiers/φ - repères - 08 -repères à trous/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/texte à trous.svg" alt="repères à trous" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>repères à trous</h3>
+																<p class="card-description">réviser les repères philosophiques</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!--- fin de vignette repères à trous -->
+														</div>
+												</a>
+										</article>
 
-														<!-- début de vignette mots cachés -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - repères - 02 - mots cachés/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/mots cachés.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok mots cachés
-																			</header>
-																			<p class="source clamp">distinguer les repères</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 3 -->
+										<article class="card">
+												<a href="fichiers/φ - repères - 02 - mots cachés/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/mots cachés.svg" alt="Mots cachés" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>mots cachés</h3>
+																<p class="card-description">distinguer les repères dans une grille</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette mots cachés -->
+														</div>
+												</a>
+										</article>
 
-														<!-- début de vignette pendu -->		
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - repères - 03 - pendu/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/pendu.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok pendu
-																			</header>
-																			<p class="source clamp">de la définition au repère</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊🟊🟊</font><font color="#d8d8d8" size="5pt">🟊🟊</font>
-																			</p>															
+										<!-- Carte 4 -->
+										<article class="card">
+												<a href="fichiers/φ - repères - 03 - pendu/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/pendu.svg" alt="Jeu du pendu" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>pendu philosophique</h3>
+																<p class="card-description">de la définition au repère</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette pendu (sur tableau noir) -->
+														</div>
+												</a>
+										</article>
 
-														<!-- début de vignette appariement de mots -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - repères - 05 - appariement de mots/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/matching words.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok appariement de mots
-																			</header>
-																			<p class="source clamp">du repère à la définition</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊🟊🟊🟊</font><font color="#d8d8d8" size="5pt">🟊</font>
-																			</p>															
+										<!-- Carte 5 -->
+										<article class="card">
+												<a href="fichiers/φ - repères - 05 - appariement de mots/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/matching words.svg" alt="Appariement de mots" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>appariement de mots</h3>
+																<p class="card-description">du repère à la définition</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette appariement de mots -->
-														
-														<!-- début de vignette mots croisés -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - repères - 07 - mots croisés/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/mots croisés.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok mots croisés
-																			</header>
-																			<p class="source clamp">de la définition au repère</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊🟊🟊🟊🟊</font><font color="#d8d8d8" size="5pt"></font>
-																			</p>																		
+														</div>
+												</a>
+										</article>
+
+										<!-- Carte 6 -->
+										<article class="card">
+												<a href="fichiers/φ - repères - 07 - mots croisés/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/mots croisés.svg" alt="Mots croisés" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>mots croisés</h3>
+																<p class="card-description">de la définition au repère</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette mots croisés -->
-														
-														<!-- début de vignette interrogation -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - repères - 06 - interrogation/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/quiz.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok interrogation
-																			</header>
-																			<p class="source clamp">apprendre les repères</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊🟊🟊🟊🟊</font><font color="#d8d8d8" size="5pt"></font>
-																			</p>															
+														</div>
+												</a>
+										</article>
+
+										<!-- Carte 7 -->
+										<article class="card">
+												<a href="fichiers/φ - repères - 06 - interrogation/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/quiz.svg" alt="Interrogation" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>interrogation</h3>
+																<p class="card-description">apprendre les repères par questionnement</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- début de vignette interrogation -->
+														</div>
+												</a>
+										</article>
 
-														<!-- début de vignette mots très cachés -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - repères - 04 - mots très cachés/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/mots très cachés.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok mots très cachés
-																			</header>
-																			<p class="source clamp">apprendre les repères</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊🟊🟊🟊🟊</font><font color="#d8d8d8" size="5pt"></font>
-																			</p>															
+										<!-- Carte 8 -->
+										<article class="card">
+												<a href="fichiers/φ - repères - 04 - mots très cachés/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/mots très cachés.svg" alt="Mots très cachés" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>mots très cachés</h3>
+																<p class="card-description">apprendre les repères en profondeur</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- début de vignette mots très cachés -->
+														</div>
+												</a>
+										</article>
 
-														<!-- début de vignette wordle.Φ -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - repères - 09 - wordle.Φ/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/wordle.Φ.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok wordle.Φ
-																			</header>
-																			<p class="source clamp">de la définition au repère</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊🟊🟊🟊🟊</font><font color="#d8d8d8" size="5pt"></font>
-																			</p>															
+										<!-- Carte 9 -->
+										<article class="card">
+												<a href="fichiers/φ - repères - 09 - wordle.Φ/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/wordle.Φ.svg" alt="Wordle.Φ" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>wordle.Φ</h3>
+																<p class="card-description">de la définition au repère</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- début de vignette wordle.Φ -->															
-														
-                                                        </div>
-                                                    </div>
-                                                </div>
+														</div>
+												</a>
+										</article>
+								</div>
+						</section>
 
-                                            </div>
-                                        </div>
-                                        <style data-styles='[[null,{".ds-navigation":"margin-top: -10px;"}]]'></style>
-                                    </div>
-                                </div>
-                            </section>
-<!----------------------------------------------------------- fin réviser les repères ---------------------------------------------->
-
-<!---------------------------------------------------------- début réviser les notions --------------------------------------------->
-
-                            <section class="collapsible-section ds-layout" data-section-id="topstories">
-                                <div class="section-top-bar">
-                                    <h3 class="section-title-container">
-                                        <span class="section-title">
-											<span data-l10n-args='{"provider":"Pocket"}' data-l10n-id="newtab-section-header-pocket">réviser les notions</span>
-										</span>
-                                    </h3>
-                                </div>
-                                <div>
-                                    <div class="discovery-stream ds-layout">
-                                        <div class="ds-column ds-column-12">
-                                            <div class="ds-column-grid">
-                                                <div>
-                                                    <div>
-                                                        <div class="ds-card-grid ds-card-grid-include-descriptions">
-														
-															<!-- début de vignette quiz -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - notions - 01 - quiz/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/quiz.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			quiz
-																			</header>
-																			<p class="source clamp">100 questions par notion</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊🟊🟊🟊🟊</font><font color="#d8d8d8" size="5pt"></font>
-																			</p>															
+						<!-- Section 2 : réviser les notions -->
+						<section class="section" id="notions">
+								<div class="section-header">
+										<h2 class="section-title">réviser les notions</h2>
+								</div>
+								<div class="card-grid">
+										<!-- Carte 1 -->
+										<article class="card">
+												<a href="fichiers/φ - notions - 01 - quiz/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/quiz.svg" alt="quiz notions" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title">quiz des notions</h3>
+																<p class="card-description">100 questions par notion philosophique</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
+																				<span class="star">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette quiz -->			
-															
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <style data-styles='[[null,{".ds-navigation":"margin-top: -10px;"}]]'></style>
-                                    </div>
-                                </div>
-                            </section>
+														</div>
+												</a>
+										</article>
+								</div>
+						</section>
 
-<!---------------------------------------------------------- fin réviser les notions --------------------------------------------->
-
-<!---------------------------------------------------------- début réviser les cours --------------------------------------------->
-
-                            <section class="collapsible-section ds-layout" data-section-id="topstories">
-                                <div class="section-top-bar">
-                                    <h3 class="section-title-container">
-                                        <span class="section-title">
-											<span data-l10n-args='{"provider":"Pocket"}' data-l10n-id="newtab-section-header-pocket">réviser les cours</span>
-										</span>
-                                    </h3>
-                                </div>
-                                <div>
-                                    <div class="discovery-stream ds-layout">
-                                        <div class="ds-column ds-column-12">
-                                            <div class="ds-column-grid">
-                                                <div>
-                                                    <div>
-                                                        <div class="ds-card-grid ds-card-grid-include-descriptions">
-														
-															<!-- début de vignette cartes mentales -->
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - cours - 01 - cartes mentales/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/carte mentale.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok cartes mentales
-																			</header>
-																			<p class="source clamp">reviser les cours</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+						<!-- Section 3 : réviser les cours -->
+						<section class="section" id="cours">
+								<div class="section-header">
+										<h2 class="section-title">réviser les cours</h2>
+								</div>
+								<div class="card-grid">
+										<!-- Carte 1 -->
+										<article class="card">
+												<a href="fichiers/φ - cours - 01 - cartes mentales/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/carte mentale.svg" alt="Cartes mentales" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>cartes mentales</h3>
+																<p class="card-description">réviser les cours par cartes conceptuelles</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette cartes mentales -->		
+														</div>
+												</a>
+										</article>
 
-															<!-- début de vignette réviser le cours sur les notions -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - cours - 02 - textes à trous (notions)/index.html" class="ds-card-link">
-																
-																<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/texte à trous.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok textes à trous
-																			</header>
-																			<p class="source clamp">réviser le cours sur les notions</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 2 -->
+										<article class="card">
+												<a href="fichiers/φ - cours - 02 - textes à trous (notions)/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/texte à trous.svg" alt="Textes à trous" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>textes à trous</h3>
+																<p class="card-description">réviser le cours sur les notions</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette réviser le cours sur les notions -->
+														</div>
+												</a>
+										</article>
 
-														<!-- début de vignette réviser le cours sur les auteurs -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - cours - 03 - textes à trous (auteurs)/index.html" class="ds-card-link">
-																
-																<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/texte à trous.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok textes à trous
-																			</header>
-																			<p class="source clamp">réviser le cours sur les auteurs</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 3 -->
+										<article class="card">
+												<a href="fichiers/φ - cours - 03 - textes à trous (auteurs)/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/texte à trous.svg" alt="Textes à trous auteurs" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>textes à trous auteurs</h3>
+																<p class="card-description">réviser le cours sur les auteurs</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette réviser le cours sur les auteurs -->
-														
-														<!-- début de vignette réviser le cours -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - cours - 04 - qui veut gagner des millions/index.html" class="ds-card-link">
-																
-																<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/millions.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			qui veut gagner des millions ?
-																			</header>
-																			<p class="source clamp">réviser les cours</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+														</div>
+												</a>
+										</article>
+
+										<!-- Carte 4 -->
+										<article class="card">
+												<a href="fichiers/φ - cours - 04 - qui veut gagner des millions/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/millions.svg" alt="Qui veut gagner des millions" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title">qui veut gagner des millions ?</h3>
+																<p class="card-description">réviser les cours de manière ludique</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette réviser le cours -->
+														</div>
+												</a>
+										</article>
 
-														<!-- début de vignette réviser le cours -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - cours - 05 - quiz sur des textes/index.html" class="ds-card-link">
-																
-																<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/quiz.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok quiz sur des textes
-																			</header>
-																			<p class="source clamp">50 questions par texte</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 5 -->
+										<article class="card">
+												<a href="fichiers/φ - cours - 05 - quiz sur des textes/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/quiz.svg" alt="quiz sur textes" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>quiz sur des textes</h3>
+																<p class="card-description">50 questions par texte philosophique</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette réviser le cours -->
+														</div>
+												</a>
+										</article>
 
-														<!-- début de vignette quiz sur le cours hlp de 1ère -->
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/hlp - 1ère - quiz sur le cours/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/quiz.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok quiz cours hlp 1ère
-																			</header>
-																			<p class="source clamp">réviser le cours</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 6 -->
+										<article class="card">
+												<a href="fichiers/hlp - 1ère - quiz sur le cours/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/quiz.svg" alt="quiz HLP 1ère" class="card-image">
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>quiz cours HLP 1ère</h3>
+																<p class="card-description">réviser le cours de HLP première</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette quiz sur le cours hlp de 1ère -->
+														</div>
+												</a>
+										</article>
 
-														<!-- début de vignette quiz sur le cours hlp de term -->
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/hlp - term - quiz sur le cours/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/quiz.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok quiz cours hlp term
-																			</header>
-																			<p class="source clamp">réviser le cours</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 7 -->
+										<article class="card">
+												<a href="fichiers/hlp - term - quiz sur le cours/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/quiz.svg" alt="quiz HLP terminale" class="card-image">
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>quiz cours HLP terminale</h3>
+																<p class="card-description">réviser le cours de HLP terminale</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette quiz sur le cours hlp de term -->
-															
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <style data-styles='[[null,{".ds-navigation":"margin-top: -10px;"}]]'></style>
-                                    </div>
-                                </div>
-                            </section>
+														</div>
+												</a>
+										</article>
+								</div>
+						</section>
 
-<!---------------------------------------------------------- fin réviser les cours --------------------------------------------->
-
-<!------------------------------------------------------ début réviser la méthodologie ----------------------------------------->
-
-                            <section class="collapsible-section ds-layout" data-section-id="topstories">
-                                <div class="section-top-bar">
-                                    <h3 class="section-title-container">
-                                        <span class="section-title">
-											<span data-l10n-args='{"provider":"Pocket"}' data-l10n-id="newtab-section-header-pocket">réviser la méthodologie</span>
-										</span>
-                                    </h3>
-                                </div>
-                                <div>
-                                    <div class="discovery-stream ds-layout">
-                                        <div class="ds-column ds-column-12">
-                                            <div class="ds-column-grid">
-                                                <div>
-                                                    <div>
-                                                        <div class="ds-card-grid ds-card-grid-include-descriptions">
-														
-														<!-- début de vignette intro° de l'explication de texte -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - méthodologie - 01 - organiser l'intro de l'explication/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/explication.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok intro° de l'explication de texte
-																			</header>
-																			<p class="source clamp">(30 textes proposés)</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+						<!-- Section 4 : réviser la méthodologie -->
+						<section class="section" id="methodologie">
+								<div class="section-header">
+										<h2 class="section-title">réviser la méthodologie</h2>
+								</div>
+								<div class="card-grid">
+										<!-- Carte 1 -->
+										<article class="card">
+												<a href="fichiers/φ - méthodologie - 01 - organiser l'intro de l'explication/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/explication.svg" alt="Introduction explication" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>introduction de l'explication</h3>
+																<p class="card-description">30 textes proposés pour s'entraîner</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette intro° de l'explication de texte -->
+														</div>
+												</a>
+										</article>
 
-														<!-- début de vignette construire sa pensée -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - méthodologie - 02 - algorigramme/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/algorigramme.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok algorigramme
-																			</header>
-																			<p class="source clamp">construire un raisonnement </p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 2 -->
+										<article class="card">
+												<a href="fichiers/φ - méthodologie - 02 - algorigramme/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/algorigramme.svg" alt="Algorigramme" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>algorigramme</h3>
+																<p class="card-description">construire un raisonnement logique</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette construire sa pensée -->
+														</div>
+												</a>
+										</article>
 
-														<!-- début de vignette enchaînement des idées -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - méthodologie - 03 - enchaînement des idées/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/enchaînement des idées.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok enchaînement des idées
-																			</header>
-																			<p class="source clamp">travailler la logique (33 textes)</p>
-																			<p class="excerpt clamp">
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 3 -->
+										<article class="card">
+												<a href="fichiers/φ - méthodologie - 03 - enchaînement des idées/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/enchaînement des idées.svg" alt="Enchaînement des idées" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>enchaînement des idées</h3>
+																<p class="card-description">travailler la logique (33 textes)</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette enchaînement des idées -->	
-														
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <style data-styles='[[null,{".ds-navigation":"margin-top: -10px;"}]]'></style>
-                                    </div>
-                                </div>
-                            </section>
+														</div>
+												</a>
+										</article>
+								</div>
+						</section>
 
-<!------------------------------------------------------- fin réviser la méthodologie ------------------------------------------->
-
-<!----------------------------------------------------- début réviser le questionnement ----------------------------------------->
-
-                            <section class="collapsible-section ds-layout" data-section-id="topstories">
-                                <div class="section-top-bar">
-                                    <h3 class="section-title-container">
-                                        <span class="section-title">
-											<span data-l10n-args='{"provider":"Pocket"}' data-l10n-id="newtab-section-header-pocket">réviser le questionnement</span>
-										</span>
-                                    </h3>
-                                </div>
-                                <div>
-                                    <div class="discovery-stream ds-layout">
-                                        <div class="ds-column ds-column-12">
-                                            <div class="ds-column-grid">
-                                                <div>
-                                                    <div>
-                                                        <div class="ds-card-grid ds-card-grid-include-descriptions">
-																												
-														<!-- début de vignette identifier des types d'arguments -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - questionnement - 01 - identifier le type d'argument/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/matching words.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok identifier le type d'argument
-																			</header>
-																			<p class="source clamp">travailler la logique</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+						<!-- Section 5 : réviser le questionnement -->
+						<section class="section" id="questionnement">
+								<div class="section-header">
+										<h2 class="section-title">réviser le questionnement</h2>
+								</div>
+								<div class="card-grid">
+										<!-- Carte 1 -->
+										<article class="card">
+												<a href="fichiers/φ - questionnement - 01 - identifier le type d'argument/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/matching words.svg" alt="Identifier arguments" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>identifier le type d'argument</h3>
+																<p class="card-description">travailler la logique argumentative</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette identifier des types d'arguments -->	
-														
-														<!-- début de vignette identifier des sophismes -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - questionnement - 02 - identifier le type de sophisme/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/matching words.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok identifier le type de sophisme
-																			</header>
-																			<p class="source clamp">travailler la logique</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+														</div>
+												</a>
+										</article>
+
+										<!-- Carte 2 -->
+										<article class="card">
+												<a href="fichiers/φ - questionnement - 02 - identifier le type de sophisme/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/matching words.svg" alt="Identifier sophismes" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>identifier le type de sophisme</h3>
+																<p class="card-description">reconnaître les raisonnements fallacieux</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette identifier des sophismes -->
-														
-														<!-- début de vignette de l'intitulé au problème -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - questionnement - 03 - de l'intitulé au problème/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/matching words.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok de l'intitulé au problème
-																			</header>
-																			<p class="source clamp">travailler la logique</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+														</div>
+												</a>
+										</article>
+
+										<!-- Carte 3 -->
+										<article class="card">
+												<a href="fichiers/φ - questionnement - 03 - de l'intitulé au problème/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/matching words.svg" alt="Intitulé au problème" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>de l'intitulé au problème</h3>
+																<p class="card-description">formuler correctement les problèmes</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette transformer une question en problème -->
-														
-														<!-- début de vignette du problème au questionnement -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - questionnement - 04 - du problème au questionnement/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/matching words.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok du problème au questionnement
-																			</header>
-																			<p class="source clamp">travailler la logique</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+														</div>
+												</a>
+										</article>
+
+										<!-- Carte 4 -->
+										<article class="card">
+												<a href="fichiers/φ - questionnement - 04 - du problème au questionnement/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/matching words.svg" alt="Problème au questionnement" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>du problème au questionnement</h3>
+																<p class="card-description">développer un questionnement cohérent</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette du problème au questionnement -->
-														
-														<!-- début de vignette du problème à ce qu'il suppose -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - questionnement - 05 - du problème à ce qu'il suppose/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/matching words.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok du problème à ce qu'il suppose
-																			</header>
-																			<p class="source clamp">travailler la logique</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+														</div>
+												</a>
+										</article>
+
+										<!-- Carte 5 -->
+										<article class="card">
+												<a href="fichiers/φ - questionnement - 05 - du problème à ce qu'il suppose/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/matching words.svg" alt="Problème et présupposés" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>du problème à ce qu'il suppose</h3>
+																<p class="card-description">identifier les présupposés implicites</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette du problème à ce qu'il suppose -->
-														
-														<!-- début de vignette du problème à son enjeu -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - questionnement - 06 - du problème à son enjeu/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/matching words.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok du problème à son enjeu
-																			</header>
-																			<p class="source clamp">travailler la logique</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+														</div>
+												</a>
+										</article>
+
+										<!-- Carte 6 -->
+										<article class="card">
+												<a href="fichiers/φ - questionnement - 06 - du problème à son enjeu/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/matching words.svg" alt="Problème et enjeu" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>du problème à son enjeu</h3>
+																<p class="card-description">comprendre les implications d'un problème</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette du problème à son enjeu -->
+														</div>
+												</a>
+										</article>
 
-														<!-- début de vignette construire un questionnement -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - questionnement - 07 - construire un questionnement/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/transformer un intitulé en problème.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			construire un questionnement
-																			</header>
-																			<p class="source clamp">travailler la logique</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 7 -->
+										<article class="card">
+												<a href="fichiers/φ - questionnement - 07 - construire un questionnement/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/transformer un intitulé en problème.svg" alt="Construire questionnement" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title">construire un questionnement</h3>
+																<p class="card-description">structurer une problématique complète</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette construire un questionnement -->	
+														</div>
+												</a>
+										</article>
 
-														<!-- début de vignette construire sa pensée -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - questionnement - 08 - construire un raisonnement/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/raisonnement.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			raisonnement logique
-																			</header>
-																			<p class="source clamp">construire un raisonnement</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 8 -->
+										<article class="card">
+												<a href="fichiers/φ - questionnement - 08 - construire un raisonnement/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/raisonnement.svg" alt="Raisonnement logique" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title">raisonnement logique</h3>
+																<p class="card-description">construire un raisonnement cohérent</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette construire sa pensée -->
-														
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <style data-styles='[[null,{".ds-navigation":"margin-top: -10px;"}]]'></style>
-                                    </div>
-                                </div>
-                            </section>
+														</div>
+												</a>
+										</article>
+								</div>
+						</section>
 
-
-<!----------------------------------------------------- fin réviser le questionnement ---------------------------------------->
-
-<!------------------------------------------------------- début réviser les auteurs ------------------------------------------>
-
-                            <section class="collapsible-section ds-layout" data-section-id="topstories">
-                                <div class="section-top-bar">
-                                    <h3 class="section-title-container">
-                                        <span class="section-title">
-											<span data-l10n-args='{"provider":"Pocket"}' data-l10n-id="newtab-section-header-pocket">réviser les auteurs</span>
-										</span>
-                                    </h3>
-                                </div>
-                                <div>
-                                    <div class="discovery-stream ds-layout">
-                                        <div class="ds-column ds-column-12">
-                                            <div class="ds-column-grid">
-                                                <div>
-                                                    <div>
-                                                        <div class="ds-card-grid ds-card-grid-include-descriptions">
-														
-															<!-- début de vignette quiz auteurs -->
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - auteurs - 01 - quiz/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/quiz.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			quiz
-																			</header>
-																			<p class="source clamp">(supprimer bouton "suivant" quand jeu fini et revenir sur tous les auteurs)</p>																			
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+						<!-- Section 6 : réviser les auteurs -->
+						<section class="section" id="auteurs">
+								<div class="section-header">
+										<h2 class="section-title">réviser les auteurs</h2>
+								</div>
+								<div class="card-grid">
+										<!-- Carte 1 -->
+										<article class="card">
+												<a href="fichiers/φ - auteurs - 01 - quiz/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/quiz.svg" alt="quiz auteurs" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title">quiz des auteurs</h3>
+																<p class="card-description">tester ses connaissances sur les philosophes</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<!-- bandeau sur l'image -->
-																		<button class="card-stp-button" title="Informations diverses">																		
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-														<!-- fin de vignette quiz auteurs-->
+														</div>
+												</a>
+										</article>
 
-														<!-- début de vignette puzzle -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - auteurs - 02 - puzzle/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/puzzle.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok puzzle
-																			</header>
-																			<p class="source clamp">reconnaître les philosophes (permettre tirage au sort des images)</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 2 -->
+										<article class="card">
+												<a href="fichiers/φ - auteurs - 02 - puzzle/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/puzzle.svg" alt="Puzzle auteurs" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>puzzle des philosophes</h3>
+																<p class="card-description">reconnaître les philosophes par leurs images</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette puzzle -->													
-														
-															<!-- début de vignette d'ac ou pas d'ac ? -->
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - auteurs - 03 - d'ac ou pas d'ac/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/auteurs.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok d'ac ou pas d'ac ?
-																			</header>
-																			<p class="source clamp">neuf auteurs</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+														</div>
+												</a>
+										</article>
+
+										<!-- Carte 3 -->
+										<article class="card">
+												<a href="fichiers/φ - auteurs - 03 - d'ac ou pas d'ac/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/auteurs.svg" alt="D'accord ou pas d'accord" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>d'accord ou pas d'accord ?</h3>
+																<p class="card-description">neuf auteurs à connaître</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette d'ac ou pas d'ac ? -->	
+														</div>
+												</a>
+										</article>
 
-															<!--- début de vignette réviser auteurs -->			
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - auteurs - 04 - citations à trous/index.html" class="ds-card-link">
-																
-																<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/texte à trous.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok citations à trous
-																			</header>
-																			<p class="source clamp">réviser les auteurs</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt">🟊</font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 4 -->
+										<article class="card">
+												<a href="fichiers/φ - auteurs - 04 - citations à trous/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/texte à trous.svg" alt="Citations à trous" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>citations à trous</h3>
+																<p class="card-description">compléter les citations des auteurs</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!--- fin de vignette réviser auteurs -->	
-															
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <style data-styles='[[null,{".ds-navigation":"margin-top: -10px;"}]]'></style>
-                                    </div>
-                                </div>
-                            </section>
+														</div>
+												</a>
+										</article>
+								</div>
+						</section>
 
-<!------------------------------------------------------- fin réviser les auteurs ------------------------------------------>
-
-<!--------------------------------------------------------- début baccalauréat φ ------------------------------------------->
-
-                            <section class="collapsible-section ds-layout" data-section-id="topstories">
-                                <div class="section-top-bar">
-                                    <h3 class="section-title-container">
-                                        <span class="section-title">
-											<span data-l10n-args='{"provider":"Pocket"}' data-l10n-id="newtab-section-header-pocket">baccalauréat φ</span>
-										</span>
-                                    </h3>
-                                </div>
-                                <div>
-                                    <div class="discovery-stream ds-layout">
-                                        <div class="ds-column ds-column-12">
-                                            <div class="ds-column-grid">
-                                                <div>
-                                                    <div>
-                                                        <div class="ds-card-grid ds-card-grid-include-descriptions">
-														
-															<!-- début de vignette baccalauréat φ -->
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - bac - 01 - écrit (pour l'enseignant)/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/écrit.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok paliers de notation
-																			</header>
-																			<p class="source clamp">corriger les écrits </p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+						<!-- Section 7 : Baccalauréat φ -->
+						<section class="section" id="bac-philo">
+								<div class="section-header">
+										<h2 class="section-title">baccalauréat φ</h2>
+								</div>
+								<div class="card-grid">
+										<!-- Carte 1 -->
+										<article class="card">
+												<a href="fichiers/φ - bac - 01 - écrit (pour l'enseignant)/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/écrit.svg" alt="Paliers de notation" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>paliers de notation</h3>
+																<p class="card-description">corriger les copies du bac écrit</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<!-- bandeau sur l'image -->
-																		<button class="card-stp-button" title="Informations diverses">																		
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette baccalauréat φ-->
-															
-														
-															<!-- début de vignette oral de contrôle (pour l'enseignant) -->
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - bac - 02 - oral de contrôle (pour l'enseignant)/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/minuteur.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok minuteur
-																			</header>
-																			<p class="source clamp">faire passer l'oral de contrôle (le rendre plus blanc) </p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+														</div>
+												</a>
+										</article>
+
+										<!-- Carte 2 -->
+										<article class="card">
+												<a href="fichiers/φ - bac - 02 - oral de contrôle (pour l'enseignant)/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/minuteur.svg" alt="Minuteur oral" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>minuteur oral</h3>
+																<p class="card-description">gérer le temps à l'oral de contrôle</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette oral de contrôle (pour l'enseignant) -->
-															
+														</div>
+												</a>
+										</article>
+								</div>
+						</section>
 
-															
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <style data-styles='[[null,{".ds-navigation":"margin-top: -10px;"}]]'></style>
-                                    </div>
-                                </div>
-                            </section>
-<!--------------------------------------------------------- fin baccalauréat φ ------------------------------------------->
-
-<!------------------------------------------------------- début baccalauréat hlp ----------------------------------------->
-
-                            <section class="collapsible-section ds-layout" data-section-id="topstories">
-                                <div class="section-top-bar">
-                                    <h3 class="section-title-container">
-                                        <span class="section-title">
-											<span data-l10n-args='{"provider":"Pocket"}' data-l10n-id="newtab-section-header-pocket">baccalauréat hlp</span>
-										</span>
-                                    </h3>
-                                </div>
-                                <div>
-                                    <div class="discovery-stream ds-layout">
-                                        <div class="ds-column ds-column-12">
-                                            <div class="ds-column-grid">
-                                                <div>
-                                                    <div>
-                                                        <div class="ds-card-grid ds-card-grid-include-descriptions">
-														
-															<!-- début de vignette hlp - bac écrit (pour l'enseignant)-->
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/hlp - bac - 01 - écrit (pour l'enseignant)/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/écrit.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok paliers de notation
-																			</header>
-																			<p class="source clamp">corriger les écrits </p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+						<!-- Section 8 : Baccalauréat HLP -->
+						<section class="section" id="bac-hlp">
+								<div class="section-header">
+										<h2 class="section-title">baccalauréat HLP</h2>
+								</div>
+								<div class="card-grid">
+										<!-- Carte 1 -->
+										<article class="card">
+												<a href="fichiers/hlp - bac - 01 - écrit (pour l'enseignant)/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/écrit.svg" alt="Paliers notation HLP" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>paliers de notation HLP</h3>
+																<p class="card-description">corriger les écrits de HLP</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<!-- bandeau sur l'image -->
-																		<button class="card-stp-button" title="Informations diverses">																		
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette hlp - bac écrit (pour l'enseignant)-->
-															
-															<!-- début de vignette hlp - minuteur grand oral -->
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/hlp - bac - 02 - minuteur grand oral (pour l'enseignant)/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/minuteur.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok minuteur
-																			</header>
-																			<p class="source clamp">faire passer le grand oral (supprimer le chrono final et le rendre plus blanc)</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+														</div>
+												</a>
+										</article>
+
+										<!-- Carte 3 -->
+										<article class="card">
+												<a href="fichiers/hlp - bac - 03 - évaluation grand oral (pour l'enseignant)/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/évaluation.svg" alt="Évaluation grand oral" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>évaluation grand oral</h3>
+																<p class="card-description">noter les présentations du grand oral</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette hlp - minuteur grand oral -->
+														</div>
+												</a>
+										</article>
 
-															<!-- début de vignette hlp évaluation grand oral -->
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/hlp - bac - 03 - évaluation grand oral (pour l'enseignant)/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/évaluation.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok évaluation
-																			</header>
-																			<p class="source clamp">faire passer le grand oral </p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 4 -->
+										<article class="card">
+												<a href="fichiers/hlp - bac - 04 - minuteur oral de contrôle/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/minuteur.svg" alt="Minuteur oral contrôle" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>minuteur oral</h3>
+																<p class="card-description">gérer le temps du grand oral et du rattrapage</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette hlp évaluation grand oral -->
+														</div>
+												</a>
+										</article>
 
-															<!-- début de vignette hlp minuteur oral de contrôle -->
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/hlp - bac - 04 - minuteur oral de contrôle/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/minuteur.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok minuteur
-																			</header>
-																			<p class="source clamp">passer l'oral de contrôle (à rendre plus blanc)</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 5 -->
+										<article class="card">
+												<a href="fichiers/hlp - bac - 05 - prompteur/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/prompteur.png" alt="Prompteur" class="card-image">
+																<span class="new-badge">nouveau</span>
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>prompteur</h3>
+																<p class="card-description">travailler la fluidité à l'oral</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette hlp minuteur oral de contrôle -->
+														</div>
+												</a>
+										</article>
+								</div>
+						</section>
 
-															<!-- début de vignette prompteur -->
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/hlp - bac - 05 - prompteur/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/prompteur.png">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok prompteur
-																			</header>
-																			<p class="source clamp">travailler la fluence</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+						<!-- Section 9 : Option math-philo -->
+						<section class="section" id="math-philo">
+								<div class="section-header">
+										<h2 class="section-title">option math-philo</h2>
+								</div>
+								<div class="card-grid">
+										<!-- Carte 1 -->
+										<article class="card">
+												<a href="fichiers/math φ - harmonie - 01 - harmonie temporelle/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/harmonie temporelle.svg" alt="Harmonie temporelle" class="card-image">
+														</div>
+														<div class="card-content">
+																<h3 class="card-title">harmonie temporelle</h3>
+																<p class="card-description">rythmes euclidiens et mathématiques</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette prompteur -->
-																														
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <style data-styles='[[null,{".ds-navigation":"margin-top: -10px;"}]]'></style>
-                                    </div>
-                                </div>
-                            </section>
+														</div>
+												</a>
+										</article>
 
-<!------------------------------------------------------- fin baccalauréat hlp ----------------------------------------->
-
-<!------------------------------------------------------ début option math philo --------------------------------------->
-
-                            <section class="collapsible-section ds-layout" data-section-id="topstories">
-                                <div class="section-top-bar">
-                                    <h3 class="section-title-container">
-                                        <span class="section-title">
-											<span data-l10n-args='{"provider":"Pocket"}' data-l10n-id="newtab-section-header-pocket">option math philo</span>
-										</span>
-                                    </h3>
-                                </div>
-                                <div>
-                                    <div class="discovery-stream ds-layout">
-                                        <div class="ds-column ds-column-12">
-                                            <div class="ds-column-grid">
-                                                <div>
-                                                    <div>
-                                                        <div class="ds-card-grid ds-card-grid-include-descriptions">
-														
-															<!-- début de vignette quiz sur l'harmonie temporelle -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/math φ - harmonie - 01 - harmonie temporelle/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded" style="background: ">
-																			<img src="src/svg/harmonie temporelle.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			harmonie temporelle
-																			</header>
-																			<p class="source clamp">rythmes euclidiens</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 2 -->
+										<article class="card">
+												<a href="fichiers/math φ - harmonie - 02 - harmonie spatiale des longueurs/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/harmonie spatiale.svg" alt="Harmonie spatiale" class="card-image">
+														</div>
+														<div class="card-content">
+																<h3 class="card-title">harmonie spatiale des longueurs</h3>
+																<p class="card-description">monocorde pythagoricien et clavier</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette quiz sur l'harmonie temporelle -->			
-															
-															<!-- début de vignette quiz sur l'harmonie spatiale -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/math φ - harmonie - 02 - harmonie spatiale des longueurs/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/harmonie spatiale.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			harmonie spatiale des longueurs
-																			</header>
-																			<p class="source clamp">monocorde pythagoricien et clavier</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+														</div>
+												</a>
+										</article>
+
+										<!-- Carte 3 -->
+										<article class="card">
+												<a href="fichiers/math φ - harmonie - 03 - harmonie spatiale des intervalles/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/harmonie spatiale.svg" alt="Harmonie des intervalles" class="card-image">
+														</div>
+														<div class="card-content">
+																<h3 class="card-title">harmonie spatiale des intervalles</h3>
+																<p class="card-description">gamme pythagoricienne et proportions</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette quiz sur l'harmonie spatiale -->				
+														</div>
+												</a>
+										</article>
 
-															<!-- début de vignette quiz sur la gamme pythagoricienne -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/math φ - harmonie - 03 - harmonie spatiale des intervalles/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/harmonie spatiale.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			harmonie spatiale des intervalles
-																			</header>
-																			<p class="source clamp">gamme pythagoricienne</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 4 -->
+										<article class="card">
+												<a href="fichiers/math φ - harmonie - 04 - harmonie spatiale des longueurs (version 2)/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/harmonie spatiale.svg" alt="Harmonie spatiale v2" class="card-image">
+														</div>
+														<div class="card-content">
+																<h3 class="card-title">harmonie spatiale des longueurs (v2)</h3>
+																<p class="card-description">monocorde pythagoricien approfondi</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette quiz sur la gamme pythagoricienne -->				
+														</div>
+												</a>
+										</article>
 
-
-															<!-- début de vignette quiz sur la gamme pythagoricienne -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/math φ - harmonie - 04 - harmonie spatiale des longueurs (version 2)/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/harmonie spatiale.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			harmonie spatiale des longueurs
-																			</header>
-																			<p class="source clamp">monocorde pythagoricien</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 5 -->
+										<article class="card">
+												<a href="fichiers/math φ - 01 - pixel art/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/pixel art.bmp" alt="Pixel art" class="card-image">
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>pixel art philosophique</h3>
+																<p class="card-description">la réalité et sa représentation numérique</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette quiz sur la gamme pythagoricienne -->				
+														</div>
+												</a>
+										</article>
 
-															<!-- début de vignette pixel art -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/math φ - 01 - pixel art/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/pixel art.png">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok pixel art
-																			</header>
-																			<p class="source clamp">la réalité et sa représentation</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 6 -->
+										<article class="card">
+												<a href="fichiers/math φ - 02 - monty hall/index.html" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/monty hall.png" alt="Monty Hall" class="card-image">
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>jeu de Monty Hall</h3>
+																<p class="card-description">paradoxe probabiliste et intuition</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette pixel art -->	
+														</div>
+												</a>
+										</article>
+								</div>
+						</section>
 
-															<!-- début de vignette monty hall -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/math φ - 02 - monty hall/index.html" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded">
-																			<img src="src/svg/monty hall.png">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok jeu de monty hall
-																			</header>
-																			<p class="source clamp">paradoxe probabiliste</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+						<!-- Section 10 : Créer une application -->
+						<section class="section" id="creer-app">
+								<div class="section-header">
+										<h2 class="section-title">créer une application (fichiers zippés)</h2>
+								</div>
+								<div class="card-grid">
+										<!-- Carte 1 -->
+										<article class="card">
+												<a href="fichiers/φ - créer des applications - 01 - « apparier »/application « apparier ».zip" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/matching words.svg" alt="Apparier" class="card-image">
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>application « apparier »</h3>
+																<p class="card-description">classer par des liens logiques</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette monty hall -->	
+														</div>
+												</a>
+										</article>
 
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <style data-styles='[[null,{".ds-navigation":"margin-top: -10px;"}]]'></style>
-                                    </div>
-                                </div>
-                            </section>
-
-<!------------------------------------------------------ fin option math philo --------------------------------------->
-
-<!------------------------------------------------------ début créer une application --------------------------------------->
-
-                            <section class="collapsible-section ds-layout" data-section-id="topstories">
-                                <div class="section-top-bar">
-                                    <h3 class="section-title-container">
-                                        <span class="section-title">
-											<span data-l10n-args='{"provider":"Pocket"}' data-l10n-id="newtab-section-header-pocket">créer une application (fichiers zippés)</span>
-										</span>
-                                    </h3>
-                                </div>
-                                <div>
-                                    <div class="discovery-stream ds-layout">
-                                        <div class="ds-column ds-column-12">
-                                            <div class="ds-column-grid">
-                                                <div>
-                                                    <div>
-                                                        <div class="ds-card-grid ds-card-grid-include-descriptions">
-														
-															<!-- début de vignette application 01 « apparier » -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - créer des applications - 01 - « apparier »/application « apparier ».zip" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded" style="background: ">
-																			<img src="src/svg/matching words.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok application «&nbsp;apparier&nbsp;»
-																			</header>
-																			<p class="source clamp">classer par des liens</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 2 -->
+										<article class="card">
+												<a href="fichiers/φ - créer des applications - 02 - « distinguer »/application « distinguer ».zip" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/distinction.svg" alt="distinguer" class="card-image">
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>application « distinguer »</h3>
+																<p class="card-description">classer par glisser-déposer</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette application 01 « apparier » -->
+														</div>
+												</a>
+										</article>
 
-															<!-- début de vignette application 02 « distinguer » -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - créer des applications - 02 - « distinguer »/application « distinguer ».zip" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded" style="background: ">
-																			<img src="src/svg/distinction.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok application «&nbsp;distinguer&nbsp;»
-																			</header>
-																			<p class="source clamp">classer par glisser-déposer</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 3 -->
+										<article class="card">
+												<a href="fichiers/φ - créer des applications - 03 - « compléter »/application « compléter ».zip" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/texte à trous.svg" alt="Compléter" class="card-image">
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>application « Compléter »</h3>
+																<p class="card-description">compléter par glisser-déposer</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette application 02 « distinguer » -->
+														</div>
+												</a>
+										</article>
 
-															<!-- début de vignette application 03 « compléter » -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - créer des applications - 03 - « compléter »/application « compléter ».zip" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded" style="background: ">
-																			<img src="src/svg/texte à trous.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok application «&nbsp;compléter&nbsp;»
-																			</header>
-																			<p class="source clamp">compléter par glisser-déposer</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 4 -->
+										<article class="card">
+												<a href="fichiers/φ - créer des applications - 04 - « questionner »/application « questionner ».zip" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/quiz.svg" alt="Questionner" class="card-image">
+														</div>
+														<div class="card-content">
+																<h3 class="card-title"><span class="ok-badge">OK</span>application « questionner »</h3>
+																<p class="card-description">créer des quiz interactifs</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette application 03 « compléter » -->
+														</div>
+												</a>
+										</article>
 
-															<!-- début de vignette application 04 « questionner » -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - créer des applications - 04 - « questionner »/application « questionner ».zip" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded" style="background: ">
-																			<img src="src/svg/quiz.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			ok application «&nbsp;questionner&nbsp;»
-																			</header>
-																			<p class="source clamp">faire faire un quiz</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
+										<!-- Carte 5 -->
+										<article class="card">
+												<a href="fichiers/φ - créer des applications - 05 - « repérer »/application « repérer ».zip" class="card-link">
+														<div class="card-image-container">
+																<img src="src/svg/repérer.svg" alt="Repérer" class="card-image">
+														</div>
+														<div class="card-content">
+																<h3 class="card-title">application « repérer »</h3>
+																<p class="card-description">identifier les connecteurs logiques</p>
+																<div class="difficulty">
+																		<div class="difficulty-stars">
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
+																				<span class="star empty">★</span>
 																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
 																</div>
-															</div>
-															<!-- fin de vignette application 04 « questionner » -->
-
-															<!-- début de vignette application 05 « repérer » -->	
-                                                            <div class="ds-card ds-card-title-lines-3 ds-card-desc-lines-3">
-                                                                <a href="fichiers/φ - créer des applications - 05 - « repérer »/application « repérer ».zip" class="ds-card-link">
-																	<div class="img-wrapper">
-																		<picture class="ds-image img loaded" style="background: ">
-																			<img src="src/svg/repérer.svg">
-																		</picture>
-																	</div>
-																	
-																	<div class="meta">
-																		<div class="info-wrap">
-																			<header title="Titre 1" class="title clamp">
-																			application «&nbsp;repérer&nbsp;»
-																			</header>
-																			<p class="source clamp">identifier les connecteurs logiques</p>
-																			<p class="excerpt clamp">																		   
-																				<font color="#ffd055" size="5pt"></font><font color="#d8d8d8" size="5pt">🟊🟊🟊🟊🟊</font>
-																			</p>															
-																		</div>
-																	</div>
-																
-																	<div class="impression-observer"></div>
-																</a>
-																<div class="card-stp-button-hover-background">
-																	<div class="card-stp-button-position-wrapper">
-																		<button class="card-stp-button">
-																			<!-- bandeau sur l'image -->
-																			<span class="story-badge-icon icon icon-pocket-save"></span>
-																			<span data-l10n-id="newtab-pocket-save">nouveauté</span>
-																		</button>
-																	</div>
-																</div>
-															</div>
-															<!-- fin de vignette application 04 « questionner » -->
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <style data-styles='[[null,{".ds-navigation":"margin-top: -10px;"}]]'></style>
-                                    </div>
-                                </div>
-                            </section>
-
-<!------------------------------------------------------ fin créer une application --------------------------------------->
-
-                        </div>
-                    </main>
-                </div>
-            </div>
-        </div>
-
-    </body>
+														</div>
+												</a>
+										</article>
+								</div>
+						</section>
+				</main>
+		</div>
+</body>
 </html>
