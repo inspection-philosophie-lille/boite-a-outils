@@ -1,1396 +1,1517 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="src/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>oral de rattrapage HLP</title>
-    <style>
-    :root {
-        --bg-light: #f5f5f5;
-        --bg-dark: #121212;
-        --text-light: #000000;
-        --text-dark: #f5f5f5;
-        --primary: #ff0000;
-        --accent: #ffbb33;
-        --success: #4CAF50;
-        --warning: #FF9800;
-        --danger: #F44336;
-        --shadow-outer: 8px 8px 15px rgba(0, 0, 0, 0.1),
-        -8px -8px 15px rgba(255, 255, 255, 0.8);
-        --shadow-inner: inset 2px 2px 5px rgba(0, 0, 0, 0.1),
-        inset -2px -2px 5px rgba(255, 255, 255, 0.8);
-        --transition: all 0.3s ease;
-        /* Tooltips en mode clair - sombre sur clair */
-        --tooltip-bg: #ffffff;
-        --tooltip-color: #333333;
-        --white: #fff;
-        --grey-1: #e9e9e9;
-        --grey-2: #c1c1c1;
-        --grey-3: #3e3e3e;
-    }
+	<meta charset="UTF-8" />
+	<link rel="icon" href="src/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+	<title>oral HLP</title>
+	<style>
+	:root {
+		--bg-light: #f5f5f5;
+		--bg-dark: #121212;
+		--text-light: #000000;
+		--text-dark: #f5f5f5;
+		--primary: #ff0000;
+		--accent: #ffbb33;
+		--success: #4CAF50;
+		--warning: #FF9800;
+		--danger: #F44336;
+		--shadow-outer: 8px 8px 15px rgba(0, 0, 0, 0.1),
+		-8px -8px 15px rgba(255, 255, 255, 0.8);
+		--shadow-inner: inset 2px 2px 5px rgba(0, 0, 0, 0.1),
+		inset -2px -2px 5px rgba(255, 255, 255, 0.8);
+		--transition: all 0.3s ease;
+		--tooltip-bg: #ffffff;
+		--tooltip-color: #333333;
+		--white: #fff;
+		--grey-1: #e9e9e9;
+		--grey-2: #c1c1c1;
+		--grey-3: #3e3e3e;
+	}
 
-    body.dark-mode {
-        --bg-light: #121212;
-        --bg-dark: #f5f5f5;
-        --text-light: #f5f5f5;
-        --text-dark: #333;
-        --shadow-outer: 8px 8px 15px rgba(0, 0, 0, 0.6),
-        -8px -8px 15px rgba(255, 255, 255, 0.05);
-        --shadow-inner: inset 2px 2px 5px rgba(0, 0, 0, 0.6),
-        inset -2px -2px 5px rgba(255, 255, 255, 0.05);
-        /* Tooltips en mode sombre - clair sur sombre */
-        --tooltip-bg: #333333;
-        --tooltip-color: #ffffff;
-        --white: #1e1e1e;
-        --grey-1: #1e1e1e;
-        --grey-2: #444;
-        --grey-3: #e0e0e0;
-        background: #1e1e1e;
-        color: #e0e0e0;
-    }
+	body.dark-mode {
+		--bg-light: #121212;
+		--bg-dark: #f5f5f5;
+		--text-light: #f5f5f5;
+		--text-dark: #333;
+		--shadow-outer: 8px 8px 15px rgba(0, 0, 0, 0.6),
+		-8px -8px 15px rgba(255, 255, 255, 0.05);
+		--shadow-inner: inset 2px 2px 5px rgba(0, 0, 0, 0.6),
+		inset -2px -2px 5px rgba(255, 255, 255, 0.05);
+		--tooltip-bg: #333333;
+		--tooltip-color: #ffffff;
+		--white: #1e1e1e;
+		--grey-1: #1e1e1e;
+		--grey-2: #444;
+		--grey-3: #e0e0e0;
+		background: #1e1e1e;
+		color: #e0e0e0;
+	}
 
-		@font-face { 
-				font-family: "Segment7";
-				src: url(data:application/octet-stream;base64,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);
+	@font-face { 
+		font-family: "Segment7";
+		src: url(data:application/octet-stream;base64,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);
+	}
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		transition: var(--transition);
+	}
+
+	body {
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		background-color: var(--bg-light);
+		color: var(--text-light);
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 1rem;
+		overflow-x: hidden;
+	}
+
+	.toolbar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		max-width: 800px;
+		padding: 1rem;
+		margin-bottom: 2rem;
+		background-color: var(--bg-light);
+		border-radius: 20px;
+		flex-wrap: wrap;
+	}
+
+	body.dark-mode .toolbar {
+		background: var(--grey-1);
+	}
+
+	.toolbar-left,
+	.toolbar-right {
+		display: flex;
+		gap: 1rem;
+	}
+
+	.toolbar-title {
+		text-align: center;
+		flex: 1;
+	}
+
+	.toolbar h1 {
+		color: var(--primary);
+		font-size: 2.5rem;
+		margin: 0;
+		font-weight: 600;
+	}
+
+	.toolbar h2 {
+		color: var(--text-light);
+		font-size: 1.3rem;
+		margin: 0;
+		opacity: 0.7;
+		font-weight: 505;
+	}
+
+	body.dark-mode .toolbar h2 {
+		color: #e0e0e0;
+	}
+
+	.btn {
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+		border: none;
+		background-color: var(--bg-light);
+		box-shadow: var(--shadow-outer);
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--text-light);
+		position: relative;
+	}
+
+	.btn.disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+		pointer-events: none;
+	}
+
+	body.dark-mode .btn {
+		background: var(--white);
+		color: var(--grey-3);
+	}
+
+	.btn:hover:not(.disabled) {
+		box-shadow: var(--shadow-inner);
+	}
+
+	.btn.reload:hover svg,
+	.btn.reset:hover svg {
+		animation: rotate 1s linear;
+	}
+
+	.btn::after {
+		content: attr(data-title);
+		position: absolute;
+		bottom: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+		background-color: var(--tooltip-bg);
+		color: var(--tooltip-color);
+		padding: 0.3rem 0.6rem;
+		border-radius: 5px;
+		font-size: 0.8rem;
+		white-space: nowrap;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.2s;
+		margin-bottom: 0.5rem;
+		z-index: 10;
+	}
+
+	.btn:hover::after {
+		opacity: 1;
+	}
+
+	@keyframes rotate {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
+	}
+
+	.home-btn {
+		background-color: var(--bg-light) !important;
+		box-shadow: var(--shadow-outer) !important;
+		width: 60px !important;
+		height: 60px !important;
+		perspective: 1200px;
+		padding: 0;
+		border: none !important;
+	}
+	
+	.home-btn .icon-wrapper {
+		width: 60px;
+		height: 60px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		transform-style: preserve-3d;
+		transform: rotateY(0deg);
+	}
+	
+	.home-btn:hover .icon-wrapper {
+		animation: tourne360 2s infinite linear;
+	}
+	
+	@keyframes tourne360 {
+		0% { transform: rotateY(0deg); }
+		100% { transform: rotateY(360deg); }
+	}
+	
+	.home-btn svg {
+		width: 30px;
+		height: 30px;
+		color: currentColor;
+		z-index: 2;
+	}
+	
+	.home-btn:hover {
+		box-shadow: var(--shadow-inner) !important;
+	}
+
+	body.dark-mode .home-btn {
+		background: var(--white) !important;
+		color: var(--grey-3) !important;
+	}
+
+	.menu-btn {
+		position: relative;
+		z-index: 100;
+	}
+
+	.menu-btn .menu-icon {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		transition: transform 0.3s ease;
+	}
+
+	.menu-btn:hover .menu-icon {
+		transform: rotate(90deg);
+	}
+
+	.menu-btn span {
+		display: block;
+		width: 17px;
+		height: 2px;
+		background-color: var(--text-light);
+		transition: var(--transition);
+	}
+
+	.main-content {
+		display: flex;
+		width: 100%;
+		max-width: 800px;
+		gap: 2rem;
+		flex-direction: column;
+		margin-bottom: 2rem;
+		transition: transform 0.5s ease;
+		position: relative;
+	}
+
+	@media (min-width: 768px) {
+		.main-content {
+			flex-direction: row;
 		}
-        *{box-sizing:border-box}html{padding:0;margin:0;background:var(--grey-1);font-family:sans-serif}body{margin:0;padding:1rem;min-height:100vh;display:flex;align-items:center;justify-content:center}.outer.svelte-o5o9x4{position:relative;max-width:100%;aspect-ratio:1;padding:4px;box-shadow:var(--shadow-outer);border-radius:50%;font-size:4.5rem}.inner.svelte-o5o9x4{box-shadow:var(--shadow-inner);height:100%;width:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Segment7,sans-serif}svg.svelte-o5o9x4{position:absolute;width:100%;height:100%;top:0;left:0}circle.svelte-o5o9x4{transform:rotate(-90deg);transform-origin:center;transition:stroke .2s ease}button.svelte-lr1685{color:var(--grey-3);padding:1em 1.5em;border-radius:1.5em;box-shadow:var(--shadow-outer);border:none;background:transparent;justify-self:center;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s ease;text-transform:uppercase}button.svelte-lr1685:hover{color:var(--primary)}button.svelte-lr1685:active{box-shadow:0 0 0 transparent,0 0 0 transparent,var(--shadow-inner)}.clock.svelte-r5s5q{display:flex;flex-direction:column;align-items:stretch;box-shadow:var(--shadow-outer);max-width:100%;padding:2rem;border-radius:2rem}.question.svelte-r5s5q{text-align:center;font-size:1.25rem;margin-bottom:16px;align-self:center;max-width:250px;color:var(--grey-3)}.actions.svelte-r5s5q{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin:2rem 1rem 0}.actions.svelte-r5s5q button{width:110px}.actions.svelte-r5s5q svg{margin-left:.5rem;fill:currentColor;height:1rem;line-height:1}.container.svelte-qo0hnx{display:flex;flex-wrap:wrap;gap:3rem;align-items:center;margin-top:70px;justify-content:center}
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        transition: var(--transition);
-    }
-
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: var(--bg-light);
-        color: var(--text-light);
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem;
-        overflow-x: hidden;
-    }
-
-    .toolbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        max-width: 800px;
-        padding: 1rem;
-        margin-bottom: 2rem;
-        background-color: var(--bg-light);
-        border-radius: 20px;
-        flex-wrap: wrap;
-    }
-
-    body.dark-mode .toolbar {
-        background: var(--grey-1);
-    }
-
-    .toolbar-left,
-    .toolbar-right {
-        display: flex;
-        gap: 1rem;
-    }
-
-    .toolbar-title {
-        text-align: center;
-        flex: 1;
-    }
-
-    .toolbar h1 {
-        color: var(--primary);
-        font-size: 2.5rem;
-        margin: 0;
-        font-weight: 600;
-    }
-
-    .toolbar h2 {
-        color: var(--text-light);
-        font-size: 1.3rem;
-        margin: 0;
-        opacity: 0.7;
-        font-weight: 505;
-    }
-
-    body.dark-mode .toolbar h2 {
-        color: #e0e0e0;
-    }
-
-    .btn {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        border: none;
-        background-color: var(--bg-light);
-        box-shadow: var(--shadow-outer);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--text-light);
-        position: relative;
-    }
-
-    .btn.disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-        pointer-events: none;
-    }
-
-    body.dark-mode .btn {
-        background: var(--white);
-        color: var(--grey-3);
-    }
-
-    .btn:hover:not(.disabled) {
-        box-shadow: var(--shadow-inner);
-    }
-
-    .btn.reload:hover svg,
-    .btn.reset:hover svg {
-        animation: rotate 1s linear;
-    }
-
-    .btn.fullscreen svg {
-        transition: var(--transition);
-        width: 30px;
-        height: 30px;
-    }
-
-    .btn::after {
-        content: attr(title);
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: var(--tooltip-bg);
-        color: var(--tooltip-color);
-        padding: 0.3rem 0.6rem;
-        border-radius: 5px;
-        font-size: 0.8rem;
-        white-space: nowrap;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.2s;
-        margin-bottom: 0.5rem;
-        z-index: 10;
-    }
-
-    .btn:hover::after {
-        opacity: 1;
-    }
-
-    @keyframes rotate {
-        from {
-        transform: rotate(0deg);
-        }
-        to {
-        transform: rotate(360deg);
-        }
-    }
-
-    .menu-btn {
-        position: relative;
-        z-index: 100;
-    }
-
-    .menu-btn .menu-icon {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        transition: transform 0.3s ease;
-    }
-
-    .menu-btn:hover .menu-icon {
-        transform: rotate(90deg);
-    }
-
-    .menu-btn.active .menu-icon span:nth-child(1) {
-        transform: translateY(8px) rotate(0deg);
-    }
-
-    .menu-btn.active .menu-icon span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .menu-btn.active .menu-icon span:nth-child(3) {
-        transform: translateY(-8px) rotate(0deg);
-    }
-
-    .menu-btn.active .menu-icon {
-        gap: 0;
-        transform: none;
-    }
-
-    .menu-btn span {
-        display: block;
-        width: 20px;
-        height: 2px;
-        background-color: var(--text-light);
-        transition: var(--transition);
-    }
-
-    .main-content {
-        display: flex;
-        width: 100%;
-        max-width: 800px;
-        gap: 2rem;
-        flex-direction: column;
-        margin-bottom: 2rem;
-        transition: transform 0.5s ease;
-    }
-
-    @media (min-width: 768px) {
-        .main-content {
-        flex-direction: row;
-        }
-    }
-
-    .timer-container {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 300px;
-        justify-content: center;
-        transition: all 0.5s ease;
-    }
-
-    .timer {
-        position: relative;
-        width: 250px;
-        height: 250px;
-        border-radius: 50%;
-        background: conic-gradient(var(--success) 0%, var(--bg-light) 0%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        box-shadow:
-        var(--shadow-outer),
-        inset -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.9),
-        inset 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
-        margin-bottom: 1rem;
-    }
-
-    body.dark-mode .timer {
-        box-shadow:
-        var(--shadow-outer),
-        inset -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.1),
-        inset 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.7);
-    }
-
-    .timer::before {
-        content: '';
-        position: absolute;
-        width: 240px;
-        height: 240px;
-        border-radius: 50%;
-        background-color: var(--bg-light);
-        z-index: 1;
-        box-shadow:
-        inset -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.9),
-        inset 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
-    }
-
-    body.dark-mode .timer::before {
-        box-shadow:
-        inset -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.1),
-        inset 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.7);
-    }
-
-    .timer-display {
-        position: relative;
-        z-index: 2;
-        font-family: 'Segment7', 'Courier New', monospace;
-        font-size: 4.0rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 60px;
-        line-height: 1;
-        margin-top: 30px;
-        top: 70px;
-    }
-
-    .timer-time,
-    .timer-separator {
-        color: #000000;
-    }
-
-    body.dark-mode .timer-time,
-    body.dark-mode .timer-separator {
-        color: #ffffff;
-    }
-
-    .timer-separator {
-        animation: blink 1s steps(2, start) infinite;
-    }
-
-    @keyframes blink {
-        to {
-        visibility: hidden;
-        }
-    }
-
-    .timer-label {
-        position: relative;
-        z-index: 2;
-        font-size: 1.5rem;
-        color: var(--text-light);
-        margin-top: auto;
-        margin-bottom: 65px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .timer-controls {
-        display: flex;
-        gap: 1rem;
-        margin-top: 1rem;
-    }
-
-    .timer-controls .btn {
-        width: 50px;
-        height: 50px;
-    }
-
-    .menu-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 99;
-        opacity: 0;
-        pointer-events: none;
-        transition: var(--transition);
-    }
-
-    .menu-overlay.active {
-        opacity: 1;
-        pointer-events: all;
-    }
-
-    .menu {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 70%;
-        max-width: 300px;
-        height: 100%;
-        background-color: var(--bg-light);
-        box-shadow: var(--shadow-outer);
-        z-index: 100;
-        transform: translateX(100%);
-        transition: var(--transition);
-        padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-    }
-
-    .menu.active {
-        transform: translateX(0);
-    }
-
-    .menu-header {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .menu-close {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: var(--text-light);
-    }
-
-    body.dark-mode .menu-close {
-        color: #ffffff;
-    }
-
-    .menu-item {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 0.5rem;
-        border-radius: 10px;
-        cursor: pointer;
-    }
-
-    .menu-item:hover {
-        box-shadow: var(--shadow-inner);
-    }
-
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 101;
-        opacity: 0;
-        pointer-events: none;
-        transition: var(--transition);
-    }
-
-    .modal.active {
-        opacity: 1;
-        pointer-events: all;
-    }
-
-    .modal-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 90%;
-        max-width: 500px;
-        background-color: var(--bg-light);
-        padding: 2rem;
-        border-radius: 20px;
-        box-shadow: var(--shadow-outer);
-    }
-
-    .modal-close {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: var(--primary);
-    }
-
-    .modal h2 {
-        color: var(--primary);
-    }
-
-    /* style pour le toggle */
-    .theme-switch {
-        position: relative;
-        display: inline-block;
-        width: 44px;
-        height: 20px;
-    }
-
-    .theme-switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-    
-    .theme-switch .slider {
-        position: absolute;
-        inset: 0;
-        background: #ccc;
-        border-radius: 20px;
-        transition: .4s;
-    }
-    
-    .theme-switch .slider:before {
-        content: "";
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        left: 2px;
-        top: 2px;
-        background: white;
-        border-radius: 50%;
-        transition: .4s;
-    }
-
-    .theme-switch input:checked + .slider {
-        background: #000000;
-    }
-    
-    .theme-switch input:checked + .slider:before {
-        transform: translateX(24px);
-    }
-
-    #settings-modal .toggle-container {
-    background-color: transparent;
-    box-shadow: none;
-    padding: 0.8rem 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    margin: 1rem 0;
-    justify-content: flex-start;
-    gap: 15px;
-    }
-
-    body.dark-mode #settings-modal .toggle-container {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .toggle-label {
-    color: var(--text-light);
-    font-weight: 500;
-    }    
-
-    /* Style spécifique pour l'effet zoom du bouton plein écran */
-    .fullscreen-icon {
-        transform-origin: center;
-        transition: transform 0.3s ease;
-    }
-    
-    /* Styles pour l'icône de sortie plein écran */
-    .fullscreen-exit-icon {
-        width: 40px;
-        height: 40px;
-        transform-origin: center;
-        transition: transform 0.3s ease;
-    }
-    
-    /* Zoom arrière au survol de l'icône de sortie */
-    .btn.fullscreen.fullscreen-active:hover .fullscreen-exit-icon {
-        transform: scale(0.8); /* 40px * 0.8 = 32px */
-    }
-    
-    /* Zoom au survol en mode normal */
-    .btn.fullscreen:not(.fullscreen-active):hover .fullscreen-icon {
-        transform: scale(1.3);
-    }
-    
-    /* Dézoom en mode plein écran */
-    .btn.fullscreen.fullscreen-active .fullscreen-icon {
-        transform: scale(1);
-    }
-
-    @media (max-width: 767px) {
-        .toolbar {
-        flex-direction: column;
-        gap: 1rem;
-        }
-
-        .toolbar-left {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        width: 100%;
-        order: -1;
-        }
-
-        .toolbar-right {
-        display: none; /* Caché en mobile */
-        }
-
-        .toolbar-title {
-        order: 1;
-        width: 100%;
-        margin-top: 0rem;
-        }
-
-        .timer-container {
-        margin-top: -33px;
-        margin-bottom: 60px;
-        }             
-        
-        .timer-controls {         
-        margin-top: -4px;
-        }
-        
-        .btn {
-        width: 50px;
-        height: 50px;
-        }
-
-        .btn.fullscreen svg {
-            width: 25px;
-            height: 25px;
-        }
-
-        .timer {
-        width: 250px;
-        height: 250px;
-        margin-bottom: 2rem;
-        }
-
-        .timer::before {
-        width: 240px;
-        height: 240px;
-        }
-
-        .timer-display {
-        font-size: 4.0em;
-        margin-top: 30px;
-        }
-
-        .main-content {
-        gap: 1rem;
-        }
-        
-        /* Styles pour le basculement entre chronomètres en mobile */
-        .main-content.show-timer2 .timer1-container {
-        transform: translateX(-100%);
-        opacity: 0;
-        position: absolute;
-        pointer-events: none;
-        }
-        
-        .main-content.show-timer2 .timer2-container {
-        transform: translateX(0);
-        opacity: 1;
-        position: relative;
-        pointer-events: all;
-        }
-        
-        .timer1-container,
-        .timer2-container {
-        width: 100%;
-        transition: all 0.5s ease;
-        }
-        
-        .timer2-container {
-        transform: translateX(100%);
-        opacity: 0;
-        position: absolute;
-        pointer-events: none;
-        }
-    }
-
-    @media (min-width: 768px) {
-        .toolbar-left .fullscreen,
-        .toolbar-left .menu-btn {
-        display: none; /* Cacher les boutons Plein écran et Menu dans .toolbar-left en desktop */
-        }
-        
-        .toolbar-left,
-        .toolbar-right {
-        display: flex;
-        gap: 1rem;
-        }
-    }
-    </style>
+	}
+
+	.timer-container {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		min-height: 300px;
+		justify-content: center;
+		transition: all 0.5s ease;
+	}
+
+	.timer {
+		position: relative;
+		width: 250px;
+		height: 250px;
+		border-radius: 50%;
+		background: conic-gradient(var(--success) 0%, var(--bg-light) 0%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		box-shadow: var(--shadow-outer), inset -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.9), inset 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+		margin-bottom: 1rem;
+	}
+
+	body.dark-mode .timer {
+		box-shadow: var(--shadow-outer), inset -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.1), inset 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.7);
+	}
+
+	.timer::before {
+		content: '';
+		position: absolute;
+		width: 240px;
+		height: 240px;
+		border-radius: 50%;
+		background-color: var(--bg-light);
+		z-index: 1;
+		box-shadow: inset -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.9), inset 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+	}
+
+	body.dark-mode .timer::before {
+		box-shadow: inset -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.1), inset 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.7);
+	}
+
+	.timer-display {
+		position: relative;
+		z-index: 2;
+		font-family: 'Segment7', 'Courier New', monospace;
+		font-size: 4.0rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 60px;
+		line-height: 1;
+		margin-top: 30px;
+		top: 70px;
+	}
+
+	.timer-time,
+	.timer-separator {
+		color: #000000;
+		transition: color 0.2s ease;
+	}
+
+	body.dark-mode .timer-time,
+	body.dark-mode .timer-separator {
+		color: #ffffff;
+	}
+
+	/* Animation de clignotement quand il reste moins d'une minute */
+	.timer-display.blink-all .timer-time,
+	.timer-display.blink-all .timer-separator {
+		animation: blinkSync 1s steps(1, start) infinite;
+	}
+
+	@keyframes blinkSync {
+		0%, 49.999% { opacity: 1; visibility: visible; }
+		50%, 100% { opacity: 0; visibility: hidden; }
+	}
+
+	.timer-label {
+		position: relative;
+		z-index: 2;
+		font-size: 1.5rem;
+		color: var(--text-light);
+		margin-top: auto;
+		margin-bottom: 65px;
+		height: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.timer-controls {
+		display: flex;
+		gap: 1rem;
+		margin-top: 1rem;
+	}
+
+	.timer-controls .btn {
+		width: 50px;
+		height: 50px;
+	}
+
+	.menu-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 99;
+		opacity: 0;
+		pointer-events: none;
+		transition: var(--transition);
+	}
+
+	.menu-overlay.active {
+		opacity: 1;
+		pointer-events: all;
+	}
+
+	.menu {
+		position: fixed;
+		top: 0;
+		right: 0;
+		width: 70%;
+		max-width: 300px;
+		height: 100%;
+		background-color: var(--bg-light);
+		box-shadow: var(--shadow-outer);
+		z-index: 100;
+		transform: translateX(100%);
+		transition: var(--transition);
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		border-top-left-radius: 20px;
+		border-bottom-left-radius: 20px;
+	}
+
+	.menu.active {
+		transform: translateX(0);
+	}
+
+	.menu-header {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.menu-close {
+		background: none;
+		border: none;
+		font-size: 1.5rem;
+		cursor: pointer;
+		color: var(--text-light);
+	}
+
+	body.dark-mode .menu-close {
+		color: #ffffff;
+	}
+
+	.menu-item {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 0.5rem;
+		border-radius: 10px;
+		cursor: pointer;
+	}
+
+	.menu-item:hover {
+		box-shadow: var(--shadow-inner);
+	}
+
+	.menu-item svg {
+		transition: transform 0.3s ease;
+	}
+	
+	.menu-item:hover svg {
+		transform: rotate(180deg);
+	}
+
+	.modal {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 101;
+		opacity: 0;
+		pointer-events: none;
+		transition: var(--transition);
+	}
+
+	.modal.active {
+		opacity: 1;
+		pointer-events: all;
+	}
+
+	.modal-content {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 90%;
+		max-width: 500px;
+		background-color: var(--bg-light);
+		padding: 2rem;
+		border-radius: 20px;
+		box-shadow: var(--shadow-outer);
+	}
+
+	.modal-close {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		background: none;
+		border: none;
+		font-size: 1.5rem;
+		cursor: pointer;
+		color: var(--primary);
+	}
+
+	.modal h2 {
+		color: var(--primary);
+	}
+
+	.theme-switch {
+		position: relative;
+		display: inline-block;
+		width: 44px;
+		height: 20px;
+	}
+
+	.theme-switch input {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
+	
+	.theme-switch .slider {
+		position: absolute;
+		inset: 0;
+		background: #ccc;
+		border-radius: 20px;
+		transition: .4s;
+	}
+	
+	.theme-switch .slider:before {
+		content: "";
+		position: absolute;
+		width: 16px;
+		height: 16px;
+		left: 2px;
+		top: 2px;
+		background: white;
+		border-radius: 50%;
+		transition: .4s;
+	}
+
+	.theme-switch input:checked + .slider {
+		background: #000000;
+	}
+	
+	.theme-switch input:checked + .slider:before {
+		transform: translateX(24px);
+	}
+
+	#settings-modal .toggle-container {
+		background-color: transparent;
+		box-shadow: none;
+		padding: 0.8rem 0;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+		display: flex;
+		align-items: center;
+		margin: 1rem 0;
+		justify-content: flex-start;
+		gap: 15px;
+	}
+
+	body.dark-mode #settings-modal .toggle-container {
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.toggle-label {
+		color: var(--text-light);
+		font-weight: 500;
+	}
+
+	.fullscreen-icon, .fullscreen-exit-icon {
+		transform-origin: center;
+		transition: transform 0.3s ease;
+	}
+	
+	body.dark-mode .fullscreen-exit-icon {
+		fill: var(--text-light);
+	}
+	
+	.btn.fullscreen.fullscreen-active:hover .fullscreen-exit-icon {
+		transform: scale(0.8);
+	}
+	
+	.btn.fullscreen:not(.fullscreen-active):hover svg:not(.fullscreen-exit-icon) {
+		transform: scale(1.3);
+	}
+
+	.play-pause-btn {
+		background: none;
+		border: none;
+		cursor: pointer;
+		width: 50px;
+		height: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		transition: transform 0.3s ease;
+		color: var(--text-light);
+		background-color: var(--bg-light);
+		box-shadow: var(--shadow-outer);
+		position: relative;
+	}
+
+	body.dark-mode .play-pause-btn {
+		background: var(--white);
+		color: var(--grey-3);
+	}
+
+	.play-pause-btn:hover:not(.disabled) {
+		box-shadow: var(--shadow-inner);
+	}
+
+	.play-pause-btn svg {
+		width: 30px;
+		height: 30px;
+		overflow: visible;
+	}
+
+	.play-pause-btn svg path {
+		stroke: currentColor;
+		stroke-width: 2;
+		fill: none;
+		stroke-linecap: round;
+		transition: d 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.2), stroke 0.3s ease;
+	}
+
+	.play-pause-btn svg g {
+		transform-origin: 12px 12px;
+		transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+	}
+
+	.play-pause-btn svg g {
+		transform: rotate(0deg);
+	}
+
+	.play-pause-btn svg path {
+		d: path("M8.6 6.4 L18 12 L8.6 17.6");
+	}
+
+	.play-pause-btn.running svg g {
+		transform: rotate(45deg);
+	}
+
+	.play-pause-btn.running svg path {
+		d: path("M8.5 6.5 v11 M15.5 6.5 v11");
+		transform: rotate(-45deg);
+		transform-origin: 12px 12px;
+	}
+
+	.play-pause-btn.disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+		pointer-events: none;
+	}
+
+	.play-pause-btn::after {
+		content: attr(data-title);
+		position: absolute;
+		bottom: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+		background-color: var(--tooltip-bg);
+		color: var(--tooltip-color);
+		padding: 0.3rem 0.6rem;
+		border-radius: 5px;
+		font-size: 0.8rem;
+		white-space: nowrap;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.2s;
+		margin-bottom: 0.5rem;
+		z-index: 10;
+	}
+
+	.play-pause-btn:hover::after {
+		opacity: 1;
+	}
+
+	.play-pause-btn.disabled:hover::after {
+		opacity: 0;
+	}
+
+	/* Styles spécifiques pour mobile */
+	@media (max-width: 767px) {
+		.toolbar {
+		flex-direction: column;
+		gap: 1rem;
+		}
+
+		.toolbar-left {
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+		width: 100%;
+		order: -1;
+		}
+
+		.toolbar-right {
+		display: none;
+		}
+
+		.toolbar-title {
+		order: 1;
+		width: 100%;
+		margin-top: 0rem;
+		}
+
+		.timer-container {
+		margin-top: -33px;
+		margin-bottom: 60px;
+		}				 
+		
+		.timer-controls {		
+		margin-top: -4px;
+		}
+		
+		.btn {
+		width: 50px;
+		height: 50px;
+		}
+
+		.home-btn {
+			width: 50px !important;
+			height: 50px !important;
+		}
+		
+		.home-btn .icon-wrapper {
+			width: 50px !important;
+			height: 50px !important;
+		}
+		
+		.home-btn svg {
+			width: 25px !important;
+			height: 25px !important;
+		}
+
+		.btn.fullscreen svg {
+			width: 25px;
+			height: 25px;
+		}
+
+		.timer {
+		width: 250px;
+		height: 250px;
+		margin-bottom: 2rem;
+		}
+
+		.timer::before {
+		width: 240px;
+			height: 240px;
+		}
+
+		.timer-display {
+		font-size: 4.0em;
+		margin-top: 30px;
+		}
+
+		.main-content {
+		gap: 1rem;
+		}
+		
+		.main-content.show-timer2 .timer1-container {
+		transform: translateX(-100%);
+		opacity: 0;
+		position: absolute;
+		pointer-events: none;
+		}
+		
+		.main-content.show-timer2 .timer2-container {
+		transform: translateX(0);
+		opacity: 1;
+		position: relative;
+		pointer-events: all;
+		}
+		
+		.timer1-container,
+		.timer2-container {
+		width: 100%;
+		transition: all 0.5s ease;
+		}
+		
+		.timer2-container {
+		transform: translateX(100%);
+		opacity: 0;
+		position: absolute;
+		pointer-events: none;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.toolbar-left .fullscreen,
+		.toolbar-left .menu-btn {
+		display: none;
+		}
+		
+		.toolbar-left,
+		.toolbar-right {
+		display: flex;
+		gap: 1rem;
+		}
+	}
+	</style>
 </head>
 
 <body>
-    <div class="toolbar">
-    <div class="toolbar-left">
-        <button class="btn" id="home-btn" title="accueil">
-        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 160 160">
-            <polyline points="130,56 80,26" stroke="currentColor" stroke-width="15" fill="none"
-            stroke-linecap="round" />
-            <polyline points="52,40 30,56" stroke="currentColor" stroke-width="15" fill="none"
-            stroke-linecap="round" />
-            <polyline points="130,56 130,126 30,126 30,56" stroke="currentColor" stroke-width="15" fill="none"
-            stroke-linejoin="round" stroke-linecap="round" />
-        </svg>
-        </button>
-        <button class="btn reload" id="reload-btn" title="recharger">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="23 4 23 10 17 10"></polyline>
-            <polyline points="1 20 1 14 7 14"></polyline>
-            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-        </svg>
-        </button>
-        <button class="btn fullscreen" id="fullscreen-btn-mobile" title="plein écran">
-        <svg class="fullscreen-icon" width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <g stroke="currentColor" stroke-width="7" stroke-linecap="butt">
-                <!-- Coin haut-gauche -->
-                <line x1="16.5" y1="20" x2="40" y2="20"></line>
-                <line x1="20" y1="23.5" x2="20" y2="40"></line>
+	<div class="toolbar">
+		<div class="toolbar-left">
+			<button class="btn home-btn" id="home-btn" data-title="accueil">
+				<div class="icon-wrapper">
+					<svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+						<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+						<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+					</svg>
+				</div>
+			</button>
+			<button class="btn reload" id="reload-btn" data-title="recharger">
+				<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<polyline points="23 4 23 10 17 10"></polyline>
+					<polyline points="1 20 1 14 7 14"></polyline>
+					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+				</svg>
+			</button>
+		</div>
+		<div class="toolbar-title">
+			<h1>oral HLP</h1>
+			<h2>grand oral / rattrapage</h2>
+		</div>
+		<div class="toolbar-right">
+			<button class="btn fullscreen" id="fullscreen-btn" data-title="plein écran">
+				<svg class="fullscreen-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+					<line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" />
+					<line x1="5" y1="6" x2="5" y2="10" stroke="currentColor" />
+					<line x1="14" y1="5" x2="20" y2="5" stroke="currentColor" />
+					<line x1="19" y1="6" x2="19" y2="10" stroke="currentColor" />
+					<line x1="5" y1="14" x2="5" y2="20" stroke="currentColor" />
+					<line x1="6" y1="19" x2="10" y2="19" stroke="currentColor" />
+					<line x1="14" y1="19" x2="20" y2="19" stroke="currentColor" />
+					<line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" />			 
+				</svg>
+			</button>
+			<button class="btn menu-btn" id="menu-btn" data-title="menu">
+				<div class="menu-icon">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</button>
+		</div>
+	</div>
 
-                <!-- Coin haut-droit -->
-                <line x1="60" y1="20" x2="83.5" y2="20"></line>
-                <line x1="80" y1="23.5" x2="80" y2="40"></line>
+	<div class="main-content" id="main-content">
+		<div class="timer-container timer1-container" id="timer1-container">
+			<div class="timer" id="timer1">
+				<div class="timer-display" id="timer1-display">
+					<span class="timer-time" id="timer1-minutes">10</span>
+					<span class="timer-separator" id="timer1-sep">:</span>
+					<span class="timer-time" id="timer1-seconds">00</span>
+				</div>
+				<div class="timer-label">présentation</div>
+			</div>
+			<div class="timer-controls">
+				<button class="play-pause-btn" id="timer1-play" data-title="lancer / pause">
+					<svg viewBox="0 0 24 24">
+						<g>
+							<path d="M8.6 6.4 L18 12 L8.6 17.6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+						</g>
+					</svg>
+				</button>
+				<button class="btn reset" id="timer1-reset" data-title="réinitialiser">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+					stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="23 4 23 10 17 10"></polyline>
+						<polyline points="1 20 1 14 7 14"></polyline>
+						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+					</svg>
+				</button>
+			</div>
+		</div>
+		<div class="timer-container timer2-container" id="timer2-container">
+			<div class="timer" id="timer2">
+				<div class="timer-display" id="timer2-display">
+					<span class="timer-time" id="timer2-minutes">10</span>
+					<span class="timer-separator" id="timer2-sep">:</span>
+					<span class="timer-time" id="timer2-seconds">00</span>
+				</div>
+				<div class="timer-label">échanges</div>
+			</div>
+			<div class="timer-controls">
+				<button class="play-pause-btn" id="timer2-play" data-title="lancer">
+					<svg viewBox="0 0 24 24">
+						<g>
+							<path d="M8.6 6.4 L18 12 L8.6 17.6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+						</g>
+					</svg>
+				</button>
+				<button class="btn reset" id="timer2-reset" data-title="réinitialiser">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+					stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="23 4 23 10 17 10"></polyline>
+						<polyline points="1 20 1 14 7 14"></polyline>
+						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+					</svg>
+				</button>
+			</div>
+		</div>
+	</div>
 
-                <!-- Coin bas-gauche -->
-                <line x1="20" y1="60" x2="20" y2="83.5"></line>
-                <line x1="23.5" y1="80" x2="40" y2="80"></line>
+	<div class="menu-overlay" id="menu-overlay"></div>
+	<div class="menu" id="menu">
+		<div class="menu-header">
+			<button class="menu-close" id="menu-close">&times;</button>
+		</div>
+		<div class="menu-item" id="instructions-btn">
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+			stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="10"></circle>
+				<path d="M12 16v-4"></path>
+				<path d="M12 8h.01"></path>
+			</svg>
+			<span>mode d'emploi</span>
+		</div>
+		<div class="menu-item" id="settings-btn">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<polyline points="5,7 19,7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+				<polyline points="5,12 19,12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+				<polyline points="5,17 19,17" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+			</svg>
+			<span>paramètres</span>
+		</div>
+		<div class="menu-item" id="about-btn">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+			stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="10"></circle>
+				<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+				<line x1="12" y1="17" x2="12.01" y2="17"></line>
+			</svg>
+			<span>à propos</span>
+		</div>
+	</div>
 
-                <!-- Coin bas-droit -->
-                <line x1="60" y1="80" x2="83.5" y2="80"></line>
-                <line x1="80" y1="60" x2="80" y2="83.5"></line>
-            </g>
-        </svg>
-        </button>
-        <button class="btn menu-btn" id="menu-btn-mobile" title="menu">
-        <div class="menu-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        </button>
-    </div>
-    <div class="toolbar-title">
-        <h1>oral de rattrapage HLP</h1>
-        <h2>gestion du temps</h2>
-    </div>
-    <div class="toolbar-right">
-        <button class="btn fullscreen" id="fullscreen-btn" title="plein écran">
-        <svg class="fullscreen-icon" width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <g stroke="currentColor" stroke-width="7" stroke-linecap="butt">
-                <!-- Coin haut-gauche -->
-                <line x1="16.5" y1="20" x2="40" y2="20"></line>
-                <line x1="20" y1="23.5" x2="20" y2="40"></line>
+	<div class="modal" id="instructions-modal">
+		<div class="modal-content">
+			<button class="modal-close" id="instructions-close">&times;</button>
+			<h2>mode d'emploi</h2>
+			<br>
+			<ul style="list-style-type: none; padding: 0;">
+				<li style="margin-bottom: 10px;">✓ utilisez lancer/pause pour contrôler chaque chronomètre</li>
+				<li style="margin-bottom: 10px;">✓ <strong>barre d'espace</strong> pour lancer/mettre en pause</li>
+				<li style="margin-bottom: 10px;">✓ le bouton reset permet de réinitialiser un chronomètre</li>
+				<li style="margin-bottom: 10px;">✓ le second chronomètre démarre dès la fin du premier</li>
+				<li style="margin-bottom: 10px;">✓ la couleur change selon le temps qu'il reste</li>
+				<li style="margin-bottom: 10px;">✓ le menu permet d'accéder aux paramètres et informations</li>
+				<li style="margin-bottom: 10px;">✓ le mode sombre est disponible dans les paramètres</li>
+			</ul>
+		</div>
+	</div>
 
-                <!-- Coin haut-droit -->
-                <line x1="60" y1="20" x2="83.5" y2="20"></line>
-                <line x1="80" y1="23.5" x2="80" y2="40"></line>
+	<div class="modal" id="settings-modal">
+		<div class="modal-content">
+			<button class="modal-close" id="settings-close">&times;</button>
+			<h2>paramètres</h2>
+			<br>
+			<div class="toggle-container">
+				<span class="toggle-label">mode sombre</span>
+				<label class="theme-switch">
+					<input type="checkbox" id="darkModeToggle">
+					<span class="slider"></span>
+				</label>
+			</div>
+		</div>
+	</div>
 
-                <!-- Coin bas-gauche -->
-                <line x1="20" y1="60" x2="20" y2="83.5"></line>
-                <line x1="23.5" y1="80" x2="40" y2="80"></line>
+	<div class="modal" id="about-modal">
+		<div class="modal-content">
+			<button class="modal-close" id="about-close">&times;</button>
+			<h2>à propos</h2>
+			<br>
+			<p>application développée par Daniel Boulagnon.</p>
+			<p>daniel.boulagnon@ac-lille.fr</p>
+			<p>exploitation à but pédagogique et non commercial</p>
+			<p>© 2026</p>				 
+			<p>version 1.8</p>
+		</div>
+	</div>
 
-                <!-- Coin bas-droit -->
-                <line x1="60" y1="80" x2="83.5" y2="80"></line>
-                <line x1="80" y1="60" x2="80" y2="83.5"></line>
-            </g>
-        </svg>
-        </button>
-        <button class="btn menu-btn" id="menu-btn" title="menu">
-        <div class="menu-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        </button>
-    </div>
-    </div>
+	<script>
+	// Initialisation des éléments
+	const darkModeToggle = document.getElementById('darkModeToggle');
+	const body = document.body;
+	
+	// Éléments des menus
+	const menuBtn = document.getElementById('menu-btn');
+	const menuOverlay = document.getElementById('menu-overlay');
+	const menu = document.getElementById('menu');
+	const menuClose = document.getElementById('menu-close');
+	const mainContent = document.getElementById('main-content');
+	
+	// Éléments des modales
+	const instructionsBtn = document.getElementById('instructions-btn');
+	const settingsBtn = document.getElementById('settings-btn');
+	const aboutBtn = document.getElementById('about-btn');
+	const instructionsModal = document.getElementById('instructions-modal');
+	const settingsModal = document.getElementById('settings-modal');
+	const aboutModal = document.getElementById('about-modal');
+	const instructionsClose = document.getElementById('instructions-close');
+	const settingsClose = document.getElementById('settings-close');
+	const aboutClose = document.getElementById('about-close');
+	
+	// Éléments des timers
+	const timer1 = document.getElementById('timer1');
+	const timer2 = document.getElementById('timer2');
+	const timer1Minutes = document.getElementById('timer1-minutes');
+	const timer1Seconds = document.getElementById('timer1-seconds');
+	const timer1Sep = document.getElementById('timer1-sep');
+	const timer2Minutes = document.getElementById('timer2-minutes');
+	const timer2Seconds = document.getElementById('timer2-seconds');
+	const timer2Sep = document.getElementById('timer2-sep');
+	const timer1PlayBtn = document.getElementById('timer1-play');
+	const timer2PlayBtn = document.getElementById('timer2-play');
+	const timer1ResetBtn = document.getElementById('timer1-reset');
+	const timer2ResetBtn = document.getElementById('timer2-reset');
+	const timer1Container = document.getElementById('timer1-container');
+	const timer2Container = document.getElementById('timer2-container');
+	const timer1Display = document.getElementById('timer1-display');
+	const timer2Display = document.getElementById('timer2-display');
+	
+	// Variables des timers
+	let timer1Time = 600;
+	let timer2Time = 600;
+	let timer1Interval = null;
+	let timer2Interval = null;
+	let timer1Running = false;
+	let timer2Running = false;
+	let timer1Finished = false;
 
-    <div class="main-content" id="main-content">
-    <div class="timer-container timer1-container" id="timer1-container">
-        <div class="timer" id="timer1">
-        <div class="timer-display" id="timer1-display">
-            <span class="timer-time" id="timer1-minutes">10</span>
-            <span class="timer-separator">:</span>
-            <span class="timer-time" id="timer1-seconds">00</span>
-        </div>
-        <div class="timer-label">présentation</div>
-        </div>
-        <div class="timer-controls">
-        <button class="btn" id="timer1-play" title="lancer/pause">
-            <svg class="play-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-            <svg class="pause-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-            <rect x="6" y="4" width="3" height="17"></rect>
-            <rect x="14" y="4" width="3" height="17"></rect>
-            </svg>
-        </button>
-        <button class="btn reset" id="timer1-reset" title="réinitialiser">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="23 4 23 10 17 10"></polyline>
-            <polyline points="1 20 1 14 7 14"></polyline>
-            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-            </svg>
-        </button>
-        </div>
-    </div>
-    <div class="timer-container timer2-container" id="timer2-container">
-        <div class="timer" id="timer2">
-        <div class="timer-display" id="timer2-display">
-            <span class="timer-time" id="timer2-minutes">10</span>
-            <span class="timer-separator">:</span>
-            <span class="timer-time" id="timer2-seconds">00</span>
-        </div>
-        <div class="timer-label">échanges</div>
-        </div>
-        <div class="timer-controls">
-        <button class="btn" id="timer2-play" title="lancer/pause">
-            <svg class="play-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-            <svg class="pause-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-            <rect x="6" y="4" width="3" height="17"></rect>
-            <rect x="14" y="4" width="3" height="17"></rect>
-            </svg>
-        </button>
-        <button class="btn reset" id="timer2-reset" title="réinitialiser">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="23 4 23 10 17 10"></polyline>
-            <polyline points="1 20 1 14 7 14"></polyline>
-            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-        </svg>
-        </button>
-        </div>
-    </div>
-    </div>
+	// Fonctions utilitaires
+	function disableTimer1Buttons() {
+		timer1PlayBtn.classList.add('disabled');
+		timer1ResetBtn.classList.add('disabled');
+	}
 
-    <div class="menu-overlay" id="menu-overlay"></div>
-    <div class="menu" id="menu">
-    <div class="menu-header">
-        <button class="menu-close" id="menu-close">&times;</button>
-    </div>
-    <div class="menu-item" id="instructions-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"></circle>
-        <path d="M12 16v-4"></path>
-        <path d="M12 8h.01"></path>
-        </svg>
-        <span>mode d'emploi</span>
-    </div>
-    <div class="menu-item" id="settings-btn">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="3"></circle>
-        <path
-            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-        </path>
-        </svg>
-        <span>paramètres</span>
-    </div>
-    <div class="menu-item" id="about-btn">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"></circle>
-        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-        </svg>
-        <span>à propos</span>
-    </div>
-    </div>
+	function enableTimer1Buttons() {
+		timer1PlayBtn.classList.remove('disabled');
+		timer1ResetBtn.classList.remove('disabled');
+	}
 
-    <div class="modal" id="instructions-modal">
-    <div class="modal-content">
-        <button class="modal-close" id="instructions-close">&times;</button>
-        <h2>mode d'emploi</h2>
-        <br>
+	function disableTimer2Buttons() {
+		timer2PlayBtn.classList.add('disabled');
+		timer2ResetBtn.classList.add('disabled');
+	}
 
-    <li> utilisez lancer/pause pour contrôler chaque chronomètre</li>
-        <li> le bouton reset permet de réinitialiser un chronomètre</li>
-        <li> le second chronomètre démarre dès la fin du premier</li>
-        <li> la couleur change selon le temps qu'il reste</li>
-        <li> le menu permet d'accéder aux paramètres et informations</li>
-        <li> le mode sombre est disponible dans les paramètres</li>
+	function enableTimer2Buttons() {
+		timer2PlayBtn.classList.remove('disabled');
+		timer2ResetBtn.classList.remove('disabled');
+	}
 
-    </div>
-    </div>
+	function updateTimerDisplay(timer, minutesEl, secondsEl, separatorEl, displayEl, time) {
+		const minutes = Math.floor(time / 60);
+		const seconds = time % 60;
+		const minutesStr = minutes.toString().padStart(2, '0');
+		const secondsStr = seconds.toString().padStart(2, '0');
 
-    <div class="modal" id="settings-modal">
-    <div class="modal-content">
-        <button class="modal-close" id="settings-close">&times;</button>
-        <h2>paramètres</h2>
-        <br>
-        <div class="toggle-container">
-        <span class="toggle-label">mode sombre</span>
-        <label class="theme-switch">
-            <input type="checkbox" id="darkModeToggle">
-            <span class="slider"></span>
-        </label>
-        </div>
-    </div>
-    </div>
+		let color;
+		if (time <= 180 && time > 60) {
+			color = 'var(--warning)';
+		} else if (time <= 60) {
+			color = 'var(--danger)';
+		} else {
+			color = body.classList.contains('dark-mode') ? '#ffffff' : '#000000';
+		}
 
-    <div class="modal" id="about-modal">
-    <div class="modal-content">
-        <button class="modal-close" id="about-close">&times;</button>
-        <h2>à propos</h2>
-        <br>
-        <p>application développée par Daniel Boulagnon.</p>
-        <p>daniel.boulagnon@ac-lille.fr</p>
-        <p>exploitation à but pédagogique et non commercial</p>
-        <p>© 2026</p>                
-        <p>version 1.6</p>
-    </div>
-    </div>
+		minutesEl.style.color = color;
+		secondsEl.style.color = color;
+		separatorEl.style.color = color;
 
-    <script>
-    // Gestion du mode sombre
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const body = document.body;
+		minutesEl.textContent = minutesStr;
+		secondsEl.textContent = secondsStr;
 
-    if (localStorage.getItem('darkMode') === 'enabled') {
-        body.classList.add('dark-mode');
-        darkModeToggle.checked = true;
-        updateTimerColorsForDarkMode();
-    }
+		// Gestion du clignotement rouge
+		if (time <= 60) {
+			displayEl.classList.add('blink-all');
+		} else {
+			displayEl.classList.remove('blink-all');
+			separatorEl.style.visibility = 'visible';
+		}
 
-    darkModeToggle.addEventListener('change', () => {
-        body.classList.toggle('dark-mode');
-        
-        if (body.classList.contains('dark-mode')) {
-            localStorage.setItem('darkMode', 'enabled');
-            updateTimerColorsForDarkMode();
-        } else {
-            localStorage.setItem('darkMode', 'disabled');
-            updateTimerColorsForLightMode();
-        }
-    });
+		const percentage = (time / 600) * 100;
+		timer.style.background = `conic-gradient(
+			${time > 180 ? 'var(--success)' : time > 60 ? 'var(--warning)' : 'var(--danger)'}
+			${percentage}%,
+			var(--bg-light) ${percentage}%
+		)`;
+	}
 
-    // Fonctions pour mettre à jour les couleurs des chronomètres
-    function updateTimerColorsForDarkMode() {
-        const timerTimes = document.querySelectorAll('.timer-time');
-        const timerSeparators = document.querySelectorAll('.timer-separator');
-        
-        timerTimes.forEach(el => {
-            el.style.color = '#ffffff';
-        });
-        
-        timerSeparators.forEach(el => {
-            el.style.color = '#ffffff';
-        });
-    }
+	function showTimer2OnMobile() {
+		if (window.innerWidth < 768) {
+			mainContent.classList.add('show-timer2');
+		}
+	}
 
-    function updateTimerColorsForLightMode() {
-        const timerTimes = document.querySelectorAll('.timer-time');
-        const timerSeparators = document.querySelectorAll('.timer-separator');
-        
-        timerTimes.forEach(el => {
-            el.style.color = '#000000';
-        });
-        
-        timerSeparators.forEach(el => {
-            el.style.color = '#000000';
-        });
-    }
+	function showTimer1OnMobile() {
+		if (window.innerWidth < 768) {
+			mainContent.classList.remove('show-timer2');
+		}
+	}
 
-    // Gestion du menu
-    const menuBtn = document.getElementById('menu-btn');
-    const menuBtnMobile = document.getElementById('menu-btn-mobile');
-    const menuOverlay = document.getElementById('menu-overlay');
-    const menu = document.getElementById('menu');
-    const menuClose = document.getElementById('menu-close');
-    const mainContent = document.getElementById('main-content');
+	function startTimer1() {
+		if (timer2Running) {
+			return;
+		}
+		
+		if (timer1Time === 0) {
+			return;
+		}
+		
+		if (timer1Running) {
+			clearInterval(timer1Interval);
+			timer1Running = false;
+			timer1PlayBtn.classList.remove('running');
+		} else {
+			timer1Running = true;
+			timer1PlayBtn.classList.add('running');
+			
+			timer1Interval = setInterval(() => {
+				if (timer1Time > 0) {
+					timer1Time--;
+					updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, timer1Time);
+				}
 
-    function toggleMenu() {
-        const activeBtn = window.innerWidth < 768 ? menuBtnMobile : menuBtn;
-        activeBtn.classList.toggle('active');
-        menuOverlay.classList.toggle('active');
-        menu.classList.toggle('active');
-    }
+				if (timer1Time <= 0) {
+					clearInterval(timer1Interval);
+					timer1Running = false;
+					timer1Finished = true;
+					timer1PlayBtn.classList.remove('running');
+					
+					updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, 0);
+					
+					enableTimer2Buttons();
+					
+					showTimer2OnMobile();
+					
+					setTimeout(() => {
+						if (!timer2Running && timer2Time > 0) {
+							startTimer2();
+						}
+					}, 500);
+				}
+			}, 1000);
+		}
+	}
 
-    if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
-    if (menuBtnMobile) menuBtnMobile.addEventListener('click', toggleMenu);
+	function startTimer2() {
+		if (!timer1Finished && timer1Time > 0) {
+			alert("Le premier chronomètre doit être terminé avant de lancer le second.");
+			return;
+		}
+		
+		if (timer2Time === 0) {
+			return;
+		}
+		
+		if (timer2Running) {
+			clearInterval(timer2Interval);
+			timer2Running = false;
+			timer2PlayBtn.classList.remove('running');
+			
+			enableTimer1Buttons();
+		} else {
+			timer2Running = true;
+			timer2PlayBtn.classList.add('running');
+			
+			disableTimer1Buttons();
+			
+			timer2Interval = setInterval(() => {
+				if (timer2Time > 0) {
+					timer2Time--;
+					updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, timer2Time);
+				}
 
-    menuOverlay.addEventListener('click', closeAllMenus);
-    menuClose.addEventListener('click', closeAllMenus);
+				if (timer2Time <= 0) {
+					clearInterval(timer2Interval);
+					timer2Running = false;
+					timer2PlayBtn.classList.remove('running');
+					
+					updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, 0);
+					
+					enableTimer1Buttons();
+				}
+			}, 1000);
+		}
+	}
 
-    // Gestion des modales
-    const instructionsBtn = document.getElementById('instructions-btn');
-    const settingsBtn = document.getElementById('settings-btn');
-    const aboutBtn = document.getElementById('about-btn');
-    const instructionsModal = document.getElementById('instructions-modal');
-    const settingsModal = document.getElementById('settings-modal');
-    const aboutModal = document.getElementById('about-modal');
-    const instructionsClose = document.getElementById('instructions-close');
-    const settingsClose = document.getElementById('settings-close');
-    const aboutClose = document.getElementById('about-close');
+	function toggleMenu() {
+		menuOverlay.classList.toggle('active');
+		menu.classList.toggle('active');
+	}
 
-    instructionsBtn.addEventListener('click', () => {
-        closeAllMenus();
-        setTimeout(() => {
-            instructionsModal.classList.add('active');
-        }, 300);
-    });
+	function closeAllMenus() {
+		menuBtn.classList.remove('active');
+		menuOverlay.classList.remove('active');
+		menu.classList.remove('active');
+		instructionsModal.classList.remove('active');
+		settingsModal.classList.remove('active');
+		aboutModal.classList.remove('active');
+	}
 
-    settingsBtn.addEventListener('click', () => {
-        closeAllMenus();
-        setTimeout(() => {
-            settingsModal.classList.add('active');
-        }, 300);
-    });
+	// Gestion du thème sombre
+	if (localStorage.getItem('darkMode') === 'enabled') {
+		body.classList.add('dark-mode');
+		darkModeToggle.checked = true;
+	}
 
-    aboutBtn.addEventListener('click', () => {
-        closeAllMenus();
-        setTimeout(() => {
-            aboutModal.classList.add('active');
-        }, 300);
-    });
+	darkModeToggle.addEventListener('change', () => {
+		body.classList.toggle('dark-mode');
+		
+		if (body.classList.contains('dark-mode')) {
+			localStorage.setItem('darkMode', 'enabled');
+		} else {
+			localStorage.setItem('darkMode', 'disabled');
+		}
+		
+		// Mettre à jour l'affichage des timers
+		updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, timer1Time);
+		updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, timer2Time);
+	});
 
-    instructionsClose.addEventListener('click', () => {
-        instructionsModal.classList.remove('active');
-    });
+	// Gestion des menus
+	if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
 
-    settingsClose.addEventListener('click', () => {
-        settingsModal.classList.remove('active');
-    });
+	menuOverlay.addEventListener('click', closeAllMenus);
+	menuClose.addEventListener('click', closeAllMenus);
 
-    aboutClose.addEventListener('click', () => {
-        aboutModal.classList.remove('active');
-    });
+	instructionsBtn.addEventListener('click', () => {
+		closeAllMenus();
+		setTimeout(() => {
+			instructionsModal.classList.add('active');
+		}, 300);
+	});
 
-    // Fermer tous les menus et modales
-    function closeAllMenus() {
-        menuBtn.classList.remove('active');
-        if (menuBtnMobile) menuBtnMobile.classList.remove('active');
-        menuOverlay.classList.remove('active');
-        menu.classList.remove('active');
-        instructionsModal.classList.remove('active');
-        settingsModal.classList.remove('active');
-        aboutModal.classList.remove('active');
-    }
+	settingsBtn.addEventListener('click', () => {
+		closeAllMenus();
+		setTimeout(() => {
+			settingsModal.classList.add('active');
+		}, 300);
+	});
 
-    // Fermer en cliquant hors des menus/modales
-    document.addEventListener('click', (e) => {
-        if (
-            !menu.contains(e.target) && 
-            !menuBtn.contains(e.target) && 
-            !(menuBtnMobile && menuBtnMobile.contains(e.target)) &&
-            !instructionsModal.contains(e.target) &&
-            !settingsModal.contains(e.target) &&
-            !aboutModal.contains(e.target) &&
-            (menu.classList.contains('active') || 
-            instructionsModal.classList.contains('active') ||
-            settingsModal.classList.contains('active') ||
-            aboutModal.classList.contains('active'))
-        ) {
-            closeAllMenus();
-        }
-    });
+	aboutBtn.addEventListener('click', () => {
+		closeAllMenus();
+		setTimeout(() => {
+			aboutModal.classList.add('active');
+		}, 300);
+	});
 
-    // Gestion des chronomètres
-    const timer1 = document.getElementById('timer1');
-    const timer2 = document.getElementById('timer2');
-    const timer1Minutes = document.getElementById('timer1-minutes');
-    const timer1Seconds = document.getElementById('timer1-seconds');
-    const timer2Minutes = document.getElementById('timer2-minutes');
-    const timer2Seconds = document.getElementById('timer2-seconds');
-    const timer1PlayBtn = document.getElementById('timer1-play');
-    const timer2PlayBtn = document.getElementById('timer2-play');
-    const timer1ResetBtn = document.getElementById('timer1-reset');
-    const timer2ResetBtn = document.getElementById('timer2-reset');
-    const timer1Container = document.getElementById('timer1-container');
-    const timer2Container = document.getElementById('timer2-container');
-    const timer1Separator = document.querySelector('#timer1-display .timer-separator');
-    const timer2Separator = document.querySelector('#timer2-display .timer-separator');
+	instructionsClose.addEventListener('click', () => {
+		instructionsModal.classList.remove('active');
+	});
 
-    let timer1Time = 600;
-    let timer2Time = 600;
-    let timer1Interval = null;
-    let timer2Interval = null;
-    let timer1Running = false;
-    let timer2Running = false;
-    let timer1Finished = false;
+	settingsClose.addEventListener('click', () => {
+		settingsModal.classList.remove('active');
+	});
 
-    // Fonction pour désactiver les boutons du timer1
-    function disableTimer1Buttons() {
-        timer1PlayBtn.classList.add('disabled');
-        timer1ResetBtn.classList.add('disabled');
-    }
+	aboutClose.addEventListener('click', () => {
+		aboutModal.classList.remove('active');
+	});
 
-    // Fonction pour réactiver les boutons du timer1
-    function enableTimer1Buttons() {
-        timer1PlayBtn.classList.remove('disabled');
-        timer1ResetBtn.classList.remove('disabled');
-    }
+	document.addEventListener('click', (e) => {
+		if (
+			!menu.contains(e.target) && 
+			!menuBtn.contains(e.target) && 
+			!instructionsModal.contains(e.target) &&
+			!settingsModal.contains(e.target) &&
+			!aboutModal.contains(e.target) &&
+			(menu.classList.contains('active') || 
+			instructionsModal.classList.contains('active') ||
+			settingsModal.classList.contains('active') ||
+			aboutModal.classList.contains('active'))
+		) {
+			closeAllMenus();
+		}
+	});
 
-    // Fonction pour désactiver les boutons du timer2
-    function disableTimer2Buttons() {
-        timer2PlayBtn.classList.add('disabled');
-        timer2ResetBtn.classList.add('disabled');
-    }
+	// Gestion des timers
+	timer1PlayBtn.addEventListener('click', startTimer1);
+	timer2PlayBtn.addEventListener('click', startTimer2);
 
-    // Fonction pour réactiver les boutons du timer2
-    function enableTimer2Buttons() {
-        timer2PlayBtn.classList.remove('disabled');
-        timer2ResetBtn.classList.remove('disabled');
-    }
+	timer2PlayBtn.disabled = true;
+	timer2PlayBtn.style.opacity = '0.5';
+	timer2PlayBtn.style.cursor = 'not-allowed';
+	timer2PlayBtn.classList.add('disabled');
+	timer2ResetBtn.classList.add('disabled');
 
-    function updateTimerDisplay(timer, minutesEl, secondsEl, separatorEl, time) {
-        const minutes = Math.floor(time / 60);
-        const seconds = time % 60;
-        minutesEl.textContent = minutes.toString().padStart(2, '0');
-        secondsEl.textContent = seconds.toString().padStart(2, '0');
+	timer1ResetBtn.addEventListener('click', () => {
+		if (timer2Running) {
+			return;
+		}
+		
+		clearInterval(timer1Interval);
+		timer1Time = 600;
+		updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, timer1Time);
+		timer1Running = false;
+		timer1Finished = false;
+		timer1PlayBtn.classList.remove('running');
+		timer1Sep.style.visibility = 'visible';
+		
+		if (timer1Time === 600) {
+			timer2PlayBtn.disabled = true;
+			timer2PlayBtn.style.opacity = '0.5';
+			timer2PlayBtn.style.cursor = 'not-allowed';
+			disableTimer2Buttons();
+			showTimer1OnMobile();
+		}
+	});
 
-        let color = body.classList.contains('dark-mode') ? '#ffffff' : '#000000';
-        if (time <= 180) {
-            color = time > 60 ? 'var(--warning)' : 'var(--danger)';
-        }
-        minutesEl.style.color = color;
-        secondsEl.style.color = color;
-        separatorEl.style.color = color;
+	timer2ResetBtn.addEventListener('click', () => {
+		if (timer2Running) {
+			return;
+		}
+		
+		clearInterval(timer2Interval);
+		timer2Time = 600;
+		updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, timer2Time);
+		timer2Running = false;
+		timer2PlayBtn.classList.remove('running');
+		timer2Sep.style.visibility = 'visible';
+	});
 
-        const percentage = (time / 600) * 100;
-        timer.style.background = `conic-gradient(
-            ${time > 180 ? 'var(--success)' : time > 60 ? 'var(--warning)' : 'var(--danger)'}
-            ${percentage}%,
-            var(--bg-light) ${percentage}%
-        )`;
-    }
+	document.addEventListener('keydown', (e) => {
+		if (e.code === 'Space' || e.key === ' ') {
+			e.preventDefault();
+			
+			if (instructionsModal.classList.contains('active') ||
+				settingsModal.classList.contains('active') ||
+				aboutModal.classList.contains('active') ||
+				menu.classList.contains('active')) {
+				return;
+			}
+			
+			if (!timer1Finished && timer1Time > 0) {
+				startTimer1();
+			} else if (timer1Finished || timer1Time === 0) {
+				if (timer2Time > 0) {
+					startTimer2();
+				}
+			}
+		}
+	});
 
-    // Fonction pour basculer vers le timer2 en mobile
-    function showTimer2OnMobile() {
-        if (window.innerWidth < 768) {
-            mainContent.classList.add('show-timer2');
-        }
-    }
+	// Initialisation des timers
+	updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, timer1Time);
+	updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, timer2Time);
 
-    // Fonction pour revenir au timer1 en mobile
-    function showTimer1OnMobile() {
-        if (window.innerWidth < 768) {
-            mainContent.classList.remove('show-timer2');
-        }
-    }
+	// Gestion du plein écran
+	const fullscreenBtn = document.getElementById('fullscreen-btn');
 
-    function startTimer1() {
-        if (timer2Running) {
-            return; // Ne rien faire si timer2 est en cours
-        }
-        
-        if (timer1Running) {
-            clearInterval(timer1Interval);
-            timer1Running = false;
-            const playSvg = timer1PlayBtn.querySelector('.play-svg');
-            const pauseSvg = timer1PlayBtn.querySelector('.pause-svg');
-            playSvg.style.display = 'block';
-            pauseSvg.style.display = 'none';
-        } else {
-            timer1Running = true;
-            const playSvg = timer1PlayBtn.querySelector('.play-svg');
-            const pauseSvg = timer1PlayBtn.querySelector('.pause-svg');
-            playSvg.style.display = 'none';
-            pauseSvg.style.display = 'block';
-            
-            timer1Interval = setInterval(() => {
-                if (timer1Time > 0) {
-                    timer1Time--;
-                    updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Separator, timer1Time);
-                }
+	function toggleFullscreen() {
+		if (!document.fullscreenElement) {
+			document.documentElement.requestFullscreen().catch(err => {
+				console.error(`Erreur lors du passage en plein écran: ${err.message}`);
+			});
+		} else {
+			document.exitFullscreen();
+		}
+	}
 
-                if (timer1Time <= 0) {
-                    clearInterval(timer1Interval);
-                    timer1Running = false;
-                    timer1Finished = true;
-                    
-                    // Mettre à jour l'affichage à 00:00
-                    updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Separator, 0);
-                    
-                    // Changer l'icône play/pause
-                    const playSvg = timer1PlayBtn.querySelector('.play-svg');
-                    const pauseSvg = timer1PlayBtn.querySelector('.pause-svg');
-                    playSvg.style.display = 'block';
-                    pauseSvg.style.display = 'none';
-                    
-                    // Activer le bouton du timer2
-                    enableTimer2Buttons();
-                    timer2PlayBtn.disabled = false;
-                    timer2PlayBtn.style.opacity = '1';
-                    timer2PlayBtn.style.cursor = 'pointer';
-                    
-                    // Basculer vers le timer2 en mode mobile
-                    showTimer2OnMobile();
-                    
-                    // Démarrer automatiquement le timer2 après 0.5s
-                    setTimeout(() => {
-                        if (!timer2Running) {
-                            startTimer2();
-                        }
-                    }, 500);
-                }
-            }, 1000);
-        }
-    }
+	if (fullscreenBtn) fullscreenBtn.addEventListener('click', toggleFullscreen);
 
-    function startTimer2() {
-        // Vérifier que le timer1 est terminé
-        if (!timer1Finished && timer1Time > 0) {
-            alert("Le premier chronomètre doit être terminé avant de lancer le second.");
-            return;
-        }
-        
-        if (timer2Running) {
-            clearInterval(timer2Interval);
-            timer2Running = false;
-            const playSvg = timer2PlayBtn.querySelector('.play-svg');
-            const pauseSvg = timer2PlayBtn.querySelector('.pause-svg');
-            playSvg.style.display = 'block';
-            pauseSvg.style.display = 'none';
-            
-            // Réactiver les boutons du timer1
-            enableTimer1Buttons();
-        } else {
-            timer2Running = true;
-            const playSvg = timer2PlayBtn.querySelector('.play-svg');
-            const pauseSvg = timer2PlayBtn.querySelector('.pause-svg');
-            playSvg.style.display = 'none';
-            pauseSvg.style.display = 'block';
-            
-            // Désactiver les boutons du timer1
-            disableTimer1Buttons();
-            
-            timer2Interval = setInterval(() => {
-                if (timer2Time > 0) {
-                    timer2Time--;
-                    updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Separator, timer2Time);
-                }
+	document.addEventListener('fullscreenchange', () => {
+		const isFullscreen = !!document.fullscreenElement;
+		
+		const fullscreenBtns = [fullscreenBtn].filter(btn => btn);
+		fullscreenBtns.forEach(btn => {
+			if (isFullscreen) {
+				btn.classList.add('fullscreen-active');
+			} else {
+				btn.classList.remove('fullscreen-active');
+			}
+		});
+		
+		if (isFullscreen) {
+			const exitIcon = `<svg class="fullscreen-exit-icon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+				<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path>
+			</svg>`;
+			fullscreenBtns.forEach(btn => {
+				btn.innerHTML = exitIcon;
+			});
+		} else {
+			const enterIcon = `<svg class="fullscreen-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+				<line x1="4" y1="5" x2="8" y2="5"></line>
+				<line x1="5" y1="6" x2="5" y2="9"></line>
+				<line x1="16" y1="5" x2="20" y2="5"></line>
+				<line x1="19" y1="6" x2="19" y2="9"></line>
+				<line x1="5" y1="15" x2="5" y2="19"></line>
+				<line x1="6" y1="18" x2="9" y2="18"></line>
+				<line x1="15" y1="18" x2="19" y2="18"></line>
+				<line x1="19" y1="15" x2="19" y2="19"></line>
+			</svg>`;
+			fullscreenBtns.forEach(btn => {
+				btn.innerHTML = enterIcon;
+			});
+		}
+	});
 
-                if (timer2Time <= 0) {
-                    clearInterval(timer2Interval);
-                    timer2Running = false;
-                    
-                    // Mettre à jour l'affichage à 00:00
-                    updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Separator, 0);
-                    
-                    // Changer l'icône play/pause
-                    const playSvg = timer2PlayBtn.querySelector('.play-svg');
-                    const pauseSvg = timer2PlayBtn.querySelector('.pause-svg');
-                    playSvg.style.display = 'block';
-                    pauseSvg.style.display = 'none';
-                    
-                    // Réactiver les boutons du timer1
-                    enableTimer1Buttons();
-                }
-            }, 1000);
-        }
-    }
+	// Bouton recharger
+	const reloadBtn = document.getElementById('reload-btn');
+	reloadBtn.addEventListener('click', () => {
+		location.reload();
+	});
 
-    timer1PlayBtn.addEventListener('click', startTimer1);
-    timer2PlayBtn.addEventListener('click', startTimer2);
+	// Bouton home avec animation 3D
+	const homeBtn = document.getElementById('home-btn');
+	const wrapper = homeBtn.querySelector('.icon-wrapper');
 
-    // Désactiver le bouton timer2 au démarrage
-    timer2PlayBtn.disabled = true;
-    timer2PlayBtn.style.opacity = '0.5';
-    timer2PlayBtn.style.cursor = 'not-allowed';
-    timer2PlayBtn.classList.add('disabled');
-    timer2ResetBtn.classList.add('disabled');
+	homeBtn.addEventListener('click', () => {
+		window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+	});
 
-    timer1ResetBtn.addEventListener('click', () => {
-        // Empêcher la réinitialisation si timer2 est en cours
-        if (timer2Running) {
-            return;
-        }
-        
-        clearInterval(timer1Interval);
-        timer1Time = 600;
-        updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Separator, timer1Time);
-        timer1Running = false;
-        timer1Finished = false;
-        const playSvg = timer1PlayBtn.querySelector('.play-svg');
-        const pauseSvg = timer1PlayBtn.querySelector('.pause-svg');
-        playSvg.style.display = 'block';
-        pauseSvg.style.display = 'none';
-        
-        // Réactiver le bouton timer2 seulement si timer1 est terminé
-        if (timer1Time === 600) {
-            timer2PlayBtn.disabled = true;
-            timer2PlayBtn.style.opacity = '0.5';
-            timer2PlayBtn.style.cursor = 'not-allowed';
-            disableTimer2Buttons();
-            // Revenir au timer1 en mode mobile
-            showTimer1OnMobile();
-        }
-    });
+	homeBtn.addEventListener('mouseenter', () => {
+		wrapper.style.transition = 'none';
+		wrapper.style.animation = 'none';
+		wrapper.offsetHeight;
+		wrapper.style.animation = 'tourne360 2s infinite linear';
+	});
 
-    timer2ResetBtn.addEventListener('click', () => {
-        // Empêcher la réinitialisation si timer2 est en cours
-        if (timer2Running) {
-            return;
-        }
-        
-        clearInterval(timer2Interval);
-        timer2Time = 600;
-        updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Separator, timer2Time);
-        timer2Running = false;
-        const playSvg = timer2PlayBtn.querySelector('.play-svg');
-        const pauseSvg = timer2PlayBtn.querySelector('.pause-svg');
-        playSvg.style.display = 'block';
-        pauseSvg.style.display = 'none';
-    });
+	homeBtn.addEventListener('mouseleave', () => {
+		const style = window.getComputedStyle(wrapper);
+		const matrix = style.transform;
 
-    // Initialisation
-    updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Separator, timer1Time);
-    updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Separator, timer2Time);
+		let currentAngle = 0;
 
-    // Gestion du plein écran
-    const fullscreenBtn = document.getElementById('fullscreen-btn');
-    const fullscreenBtnMobile = document.getElementById('fullscreen-btn-mobile');
+		if (matrix && matrix !== 'none') {
+			if (matrix.includes('matrix3d')) {
+				const values = matrix.match(/matrix3d\((.+)\)/);
+				if (values) {
+					const nums = values[1].split(', ').map(Number);
+					if (nums.length >= 6) {
+						const cosAngle = nums[0];
+						const sinAngle = nums[2];
+						currentAngle = Math.atan2(sinAngle, cosAngle) * (180 / Math.PI);
+						if (currentAngle < 0) currentAngle += 360;
+					}
+				}
+			} else if (matrix.includes('matrix')) {
+				const values = matrix.match(/matrix\((.+)\)/);
+				if (values) {
+					const nums = values[1].split(', ').map(Number);
+					if (nums.length >= 4) {
+						const cosAngle = nums[0];
+						const sinAngle = nums[1];
+						currentAngle = Math.atan2(sinAngle, cosAngle) * (180 / Math.PI);
+						if (currentAngle < 0) currentAngle += 360;
+					}
+				}
+			}
+		}
 
-    function toggleFullscreen() {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(err => {
-                console.error(`Erreur lors du passage en plein écran: ${err.message}`);
-            });
-        } else {
-            document.exitFullscreen();
-        }
-    }
+		wrapper.style.animation = 'none';
+		wrapper.offsetHeight;
+		wrapper.style.transition = 'none';
+		wrapper.style.transform = `rotateY(${currentAngle}deg)`;
+		wrapper.offsetHeight;
 
-    if (fullscreenBtn) fullscreenBtn.addEventListener('click', toggleFullscreen);
-    if (fullscreenBtnMobile) fullscreenBtnMobile.addEventListener('click', toggleFullscreen);
+		const remainingAngle = 360 - currentAngle;
+		const duration = (remainingAngle / 360) * 2;
 
-    document.addEventListener('fullscreenchange', () => {
-        const isFullscreen = !!document.fullscreenElement;
-        
-        // Mettre à jour les boutons plein écran
-        const fullscreenBtns = [fullscreenBtn, fullscreenBtnMobile].filter(btn => btn);
-        fullscreenBtns.forEach(btn => {
-            if (isFullscreen) {
-                btn.classList.add('fullscreen-active');
-            } else {
-                btn.classList.remove('fullscreen-active');
-            }
-        });
-        
-        // Changement de l'icône SVG
-        if (isFullscreen) {
-            // Icône pour quitter le plein écran (icône carrée avec flèches vers l'intérieur)
-            const exitIcon = `<svg class="fullscreen-exit-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path>
-            </svg>`;
-            fullscreenBtns.forEach(btn => {
-                const svg = btn.querySelector('svg');
-                if (svg) {
-                    btn.innerHTML = exitIcon;
-                }
-            });
-        } else {
-            // Icône pour entrer en plein écran (équerres avec chevauchement parfait)
-            const enterIcon = `<svg class="fullscreen-icon" width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <g stroke="currentColor" stroke-width="7" stroke-linecap="butt">
-                    <line x1="16.5" y1="20" x2="40" y2="20"></line>
-                    <line x1="20" y1="23.5" x2="20" y2="40"></line>
-                    <line x1="60" y1="20" x2="83.5" y2="20"></line>
-                    <line x1="80" y1="23.5" x2="80" y2="40"></line>
-                    <line x1="20" y1="60" x2="20" y2="83.5"></line>
-                    <line x1="23.5" y1="80" x2="40" y2="80"></line>
-                    <line x1="60" y1="80" x2="83.5" y2="80"></line>
-                    <line x1="80" y1="60" x2="80" y2="83.5"></line>
-                </g>
-            </svg>`;
-            fullscreenBtns.forEach(btn => {
-                btn.innerHTML = enterIcon;
-            });
-        }
-    });
+		wrapper.style.transition = `transform ${duration}s linear`;
+		wrapper.style.transform = `rotateY(360deg)`;
+	});
 
-    // Gestion du rechargement
-    const reloadBtn = document.getElementById('reload-btn');
-    reloadBtn.addEventListener('click', () => {
-        location.reload();
-    });
+	wrapper.addEventListener('transitionend', () => {
+		wrapper.style.transition = 'none';
+		wrapper.style.transform = 'rotateY(0deg)';
+	});
 
-    // Gestion de l'accueil
-    const homeBtn = document.getElementById('home-btn');
-    homeBtn.addEventListener('click', () => {
-        window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
-    });
+	// Gestion du redimensionnement
+	window.addEventListener('resize', () => {
+		if (window.innerWidth >= 768) {
+			mainContent.classList.remove('show-timer2');
+		} else if (timer1Finished && !mainContent.classList.contains('show-timer2')) {
+			showTimer2OnMobile();
+		}
+	});
 
-    // Vérifier la taille de l'écran au redimensionnement
-    window.addEventListener('resize', () => {
-        if (window.innerWidth >= 768) {
-            // En desktop, toujours montrer les deux timers
-            mainContent.classList.remove('show-timer2');
-        } else if (timer1Finished && !mainContent.classList.contains('show-timer2')) {
-            // En mobile, si timer1 est fini, montrer timer2
-            showTimer2OnMobile();
-        }
-    });
-    </script>
+	// DÉPLACEMENT DES BOUTONS POUR MOBILE - UNE SEULE MODIFICATION DYNAMIQUE
+	function rearrangeToolbarForMobile() {
+		const toolbarLeft = document.querySelector('.toolbar-left');
+		const toolbarRight = document.querySelector('.toolbar-right');
+		const fullscreenBtn = document.getElementById('fullscreen-btn');
+		const menuBtn = document.getElementById('menu-btn');
+		
+		if (window.innerWidth < 768) {
+			// Sur mobile : déplacer fullscreen et menu dans toolbar-left
+			if (fullscreenBtn && menuBtn && toolbarRight) {
+				// Vérifier s'ils ne sont pas déjà dans toolbar-left
+				if (!toolbarLeft.contains(fullscreenBtn)) {
+					toolbarLeft.appendChild(fullscreenBtn);
+				}
+				if (!toolbarLeft.contains(menuBtn)) {
+					toolbarLeft.appendChild(menuBtn);
+				}
+			}
+		} else {
+			// Sur desktop : remettre fullscreen et menu dans toolbar-right
+			if (fullscreenBtn && menuBtn && toolbarRight) {
+				// Vider toolbar-right et remettre les boutons
+				toolbarRight.innerHTML = '';
+				toolbarRight.appendChild(fullscreenBtn);
+				toolbarRight.appendChild(menuBtn);
+				
+				// S'assurer que toolbar-left garde seulement home et reload
+				const homeBtn = document.getElementById('home-btn');
+				const reloadBtn = document.getElementById('reload-btn');
+				toolbarLeft.innerHTML = '';
+				toolbarLeft.appendChild(homeBtn);
+				toolbarLeft.appendChild(reloadBtn);
+			}
+		}
+	}
+
+	// Appeler au chargement et au redimensionnement
+	window.addEventListener('load', rearrangeToolbarForMobile);
+	window.addEventListener('resize', rearrangeToolbarForMobile);
+	</script>
 </body>
 </html>
