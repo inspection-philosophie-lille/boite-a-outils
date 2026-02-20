@@ -284,6 +284,7 @@
 		.toolbar-title {
 			text-align: center;
 			flex: 1;
+			margin-bottom: 25px; /* distance entre le sous-titre et en-dessous en mode portable */
 		}
 
 		.toolbar h1 {
@@ -974,7 +975,7 @@
 
 		/* Ajustement pour le mode plein écran */
 		:fullscreen .card {
-			height: calc(100vh - 220px);
+			height: calc(100vh - 250px);
 			max-height: 90vh;
 		}
 
@@ -1227,7 +1228,7 @@
 		@media screen and (max-width: 767px) {
 			.toolbar {
 				flex-direction: column;
-				gap: 0.2rem;
+				gap: 0.2rem; /* distance entre le titre et au-dessus en mode portable */
 				padding: 0.3rem 0.5rem;
 			}
 
