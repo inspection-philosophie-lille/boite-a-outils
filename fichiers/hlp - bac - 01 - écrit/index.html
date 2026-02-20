@@ -876,7 +876,10 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
-			height: 97%; /* longueur des vignettes en desktop */
+			/* Hauteur dynamique avec viewport height */
+			height: calc(100vh - 200px);
+			max-height: 400px;
+			min-height: 250px;
 			width: 97%;
 			background-color: var(--bg-light);
 			color: var(--text-light);
@@ -903,7 +906,7 @@
 		}
 
 		.card h2 {
-			font-size: 15px !important; /* police des titres des vignettes en affichage portable */
+			font-size: 15px !important;
 			margin: 0 0 0.4rem 0;
 			line-height: 1.2;
 		}
@@ -914,44 +917,73 @@
 		}
 
 		@media screen and (max-width: 767px) {
-
 			.switch-button-label span {
 				font-size: 1rem;
 			}
 
 			.card {
-				/* max-height: 55vh;
-				min-height: 260px; */
-				height: 97%; /* longueur des vignettes en mode portable */
-
+				height: calc(100vh - 180px);
+				min-height: 200px;
+				max-height: 350px;
 			}
-
+			
+			.card-content {
+				font-size: 0.8rem !important;
+			}
+			
+			.card p {
+				font-size: 10px !important;
+				margin: 0 0 0.2rem;
+			}
+			
 			.card-title {
-				font-size: 36px;
+				font-size: 32px !important;
+				margin: 0.1rem 0;
+			}
+			
+			.card h2 {
+				font-size: 13px !important;
+				margin: 0 0 0.2rem 0;
 			}
 		}
 
-		/* 
-@media screen and (max-height: 600px) {
+		/* Ajustement spécifique pour les très petits écrans (moins de 600px de hauteur) */
+		@media screen and (max-height: 600px) {
+			.card {
+				height: calc(100vh - 150px);
+				min-height: 180px;
+			}
+			
+			.card-content {
+				padding: 0.3rem 0.4rem;
+			}
+			
+			.card p {
+				font-size: 9px !important;
+				margin: 0 0 0.2rem;
+			}
+			
+			.card-title {
+				font-size: 28px !important;
+			}
+			
+			.card h2 {
+				font-size: 11px !important;
+			}
+		}
 
-    .switch-button-label span {
-        font-size: 0.7rem;
-    }
+		/* Ajustement pour le mode plein écran */
+		:fullscreen .card {
+			height: calc(100vh - 220px);
+			max-height: 90vh;
+		}
 
-    .progress-footer {
-        padding: 8px 15px;
-    }
-    
-    .card {
-        max-height: 60vh;
-        min-height: 200px;
-    }
-    
-    .card-title {
-        font-size: 32px;
-    }
-}
-*/
+		/* Ajustement pour les écrans très larges */
+		@media screen and (min-width: 1280px) {
+			.card {
+				height: 380px;
+			}
+		}
 
 		* {
 			box-sizing: border-box;
@@ -1195,7 +1227,7 @@
 		@media screen and (max-width: 767px) {
 			.toolbar {
 				flex-direction: column;
-				gap: 0.2rem; /* distance entre le titre et au-dessus en mode portable */
+				gap: 0.2rem;
 				padding: 0.3rem 0.5rem;
 			}
 
@@ -1214,7 +1246,7 @@
 			.toolbar-title {
 				order: 1;
 				width: 100%;
-				margin-bottom: -15px; /* distance entre le sous-titre et en-dessous en mode portable */
+				margin-bottom: -15px;
 			}
 
 			.toolbar h1 {
@@ -1246,7 +1278,6 @@
 				height: 25px !important;
 			}
 
-			/* La hauteur du progress-footer reste fixe même en mode mobile */
 			.progress-footer {
 				height: 20px;
 			}
@@ -1275,14 +1306,6 @@
 			.carousel-item {
 				width: calc(100% - 0.6rem);
 				flex: 0 0 calc(100% - 0.6rem);
-			}
-
-			.card-content {
-				font-size: 0.9rem !important;
-			}
-
-			.card p {
-				font-size: 11px !important; /* taille de la police de caractère du contenu de la vignette en mode portable */
 			}
 		}
 
