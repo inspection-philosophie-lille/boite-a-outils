@@ -743,18 +743,18 @@
 			border: 1px solid var(--switch-border);
 			box-shadow: var(--switch-shadow);
 			color: #000;
-			font-size: 1em;
+			font-size: 0.8em;
 			overflow: hidden;
 			position: relative;
 			text-align: center;
-			width: 300px;
-			max-width: none;
 			margin: 20px auto 10px auto;
 			padding: 0;
 			display: flex;
 			justify-content: space-between;
 			flex-shrink: 0;
-			height: 50px;
+			height: 40px;
+			width: 250px;
+			max-width: none;
 			z-index: 1;
 		}
 
@@ -807,7 +807,7 @@
 			text-align: center;
 			z-index: 3;
 			transition: color .3s;
-			font-size: 1.2rem;
+			font-size: 1.0rem;
 			color: var(--switch-text-inactive);
 			display: flex;
 			align-items: center;
@@ -866,20 +866,18 @@
 			box-shadow: 0 0 10px var(--progress-fill);
 		}
 
-		/* ========== CARTES : HAUTEUR AUGMENTÉE (350px) ========== */
+		/* ========== CARTES ========== */
 		.card {
 			border: 0 solid #000;
 			border-radius: 12px;
 			box-shadow: rgba(50, 50, 93, .25) 0 50px 100px -20px, rgba(0, 0, 0, .3) 0 30px 60px -30px, rgba(10, 37, 64, .35) 0 -2px 6px 0 inset;
-			min-height: 350px;
-			max-height: 350px;
 			padding: 0.6rem 0.8rem;
 			text-align: center;
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
-			height: 100%;
-			width: 100%;
+			height: 97%; /* longueur des vignettes en desktop */
+			width: 97%;
 			background-color: var(--bg-light);
 			color: var(--text-light);
 			overflow-y: auto;
@@ -905,7 +903,7 @@
 		}
 
 		.card h2 {
-			font-size: 20px !important;
+			font-size: 15px !important; /* police des titres des vignettes en affichage portable */
 			margin: 0 0 0.4rem 0;
 			line-height: 1.2;
 		}
@@ -922,8 +920,10 @@
 			}
 
 			.card {
-				max-height: 55vh;
-				min-height: 260px;
+				/* max-height: 55vh;
+				min-height: 260px; */
+				height: 97%; /* longueur des vignettes en mode portable */
+
 			}
 
 			.card-title {
@@ -935,7 +935,7 @@
 @media screen and (max-height: 600px) {
 
     .switch-button-label span {
-        font-size: 0.9rem;
+        font-size: 0.7rem;
     }
 
     .progress-footer {
@@ -1195,7 +1195,7 @@
 		@media screen and (max-width: 767px) {
 			.toolbar {
 				flex-direction: column;
-				gap: 0.3rem;
+				gap: 0.2rem; /* distance entre le titre et au-dessus en mode portable */
 				padding: 0.3rem 0.5rem;
 			}
 
@@ -1214,7 +1214,7 @@
 			.toolbar-title {
 				order: 1;
 				width: 100%;
-				margin-top: 0;
+				margin-bottom: -15px; /* distance entre le sous-titre et en-dessous en mode portable */
 			}
 
 			.toolbar h1 {
@@ -1282,7 +1282,7 @@
 			}
 
 			.card p {
-				font-size: 0.9rem !important;
+				font-size: 11px !important; /* taille de la police de caractère du contenu de la vignette en mode portable */
 			}
 		}
 
@@ -1366,8 +1366,8 @@
 			</button>
 		</div>
 		<div class="toolbar-title">
-			<h1>paliers de notation</h1>
-			<h2>pour guider la notation des copies de HLP</h2>
+			<h1>notation</h1>
+			<h2>par paliers en HLP</h2>
 		</div>
 		<div class="toolbar-right">
 			<button class="btn fullscreen" id="fullscreen-btn" data-title="plein écran (F)">
