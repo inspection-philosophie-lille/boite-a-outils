@@ -38,6 +38,9 @@
 			--progress-bg: rgba(0, 0, 0, 0.1);
 			--progress-fill: #ff0000;
 			--progress-text: #444;
+			
+			/* Distance FIXE entre le bas des vignettes et le bas de la fenêtre - AJUSTABLE */
+			--bottom-spacing: 40px;
 		}
 
 		body.dark-mode {
@@ -70,7 +73,7 @@
 		}
 
 		body.dark-mode .modal h2 {
-			color: #ff0000;  /* titres des modales en rouge en mode sombre */
+			color: #ff0000;
 		}
 
 		body,
@@ -284,7 +287,7 @@
 		.toolbar-title {
 			text-align: center;
 			flex: 1;
-			margin-bottom: 25px; /* distance entre le sous-titre et en-dessous en mode portable */
+			margin-bottom: 25px;
 		}
 
 		.toolbar h1 {
@@ -727,17 +730,14 @@
 			transition: transform 0.3s ease;
 		}
 
-		/* CORRECTION : Règle pour le zoom avant en mode normal */
 		.btn.fullscreen:not(.fullscreen-active):hover svg:not(.fullscreen-exit-icon) {
 			transform: scale(1.3);
 		}
 
-		/* CORRECTION : Règle pour le zoom arrière en mode plein écran */
 		.btn.fullscreen.fullscreen-active:hover .fullscreen-exit-icon {
 			transform: scale(0.8);
 		}
 
-		/* ========== BOUTON ESSAI/INTERPRÉTATION OPTIMISÉ ========== */
 		.switch-button {
 			background: var(--switch-bg);
 			border-radius: 30px;
@@ -758,10 +758,6 @@
 			max-width: none;
 			z-index: 1;
 		}
-
-:fullscreen .switch-button {
-    margin-bottom: 80px;  /* ← Passe de 10px à 40px (4x plus) */
-}
 
 		.switch-button-checkbox {
 			cursor: pointer;
@@ -829,7 +825,6 @@
 			color: var(--switch-text-inactive);
 		}
 
-		/* ========== BARRE DE PROGRESSION SIMPLE EN BAS ========== */
 		.progress-footer {
 			display: flex;
 			justify-content: center;
@@ -842,6 +837,10 @@
 			flex-shrink: 0;
 			border-top: 1px solid rgba(0, 0, 0, 0.05);
 			box-sizing: border-box;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			z-index: 10;
 		}
 
 		body.dark-mode .progress-footer {
@@ -867,7 +866,6 @@
 			box-shadow: 0 0 10px var(--progress-fill);
 		}
 
-		/* ========== CARTES ========== */
 		.card {
 			border: 0 solid #000;
 			border-radius: 12px;
@@ -877,10 +875,10 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
-			/* Hauteur dynamique avec viewport height */
-			height: calc(100vh - 200px);
-			max-height: 400px;
-			min-height: 250px;
+			/* La hauteur sera définie dynamiquement par JavaScript */
+			height: auto;
+			min-height: 150px;
+			max-height: none;
 			width: 97%;
 			background-color: var(--bg-light);
 			color: var(--text-light);
@@ -921,12 +919,6 @@
 			.switch-button-label span {
 				font-size: 1rem;
 			}
-
-			.card {
-				height: calc(100vh - 180px);
-				min-height: 200px;
-				max-height: 350px;
-			}
 			
 			.card-content {
 				font-size: 0.8rem !important;
@@ -938,7 +930,7 @@
 			}
 			
 			.card-title {
-				font-size: 32px !important;
+				font-size: 40px !important;
 				margin: 0.1rem 0;
 			}
 			
@@ -948,13 +940,7 @@
 			}
 		}
 
-		/* Ajustement spécifique pour les très petits écrans (moins de 600px de hauteur) */
 		@media screen and (max-height: 600px) {
-			.card {
-				height: calc(100vh - 150px);
-				min-height: 180px;
-			}
-			
 			.card-content {
 				padding: 0.3rem 0.4rem;
 			}
@@ -965,25 +951,25 @@
 			}
 			
 			.card-title {
-				font-size: 28px !important;
+				font-size: 40px !important;
 			}
 			
 			.card h2 {
-				font-size: 11px !important;
+				font-size: 15px !important;
 			}
 		}
 
-		/* Ajustement pour le mode plein écran */
-		:fullscreen .card {
-			height: calc(100vh - 250px);
-			max-height: 90vh;
-		}
-
-		/* Ajustement pour les écrans très larges */
-		@media screen and (min-width: 1280px) {
-			.card {
-				height: 380px;
-			}
+		main {
+			margin: 0;
+			padding: 0;
+			width: 100vw;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			min-height: 0;
+			overflow: hidden;
+			position: relative;
+			z-index: 1;
 		}
 
 		* {
@@ -1032,19 +1018,6 @@
 		p {
 			text-align: left;
 			margin: 0 0 0.3rem;
-		}
-
-		main {
-			margin: 0;
-			padding: 0;
-			width: 100vw;
-			flex: 1;
-			display: flex;
-			flex-direction: column;
-			min-height: 0;
-			overflow: hidden;
-			position: relative;
-			z-index: 1;
 		}
 
 		header {
@@ -1228,7 +1201,7 @@
 		@media screen and (max-width: 767px) {
 			.toolbar {
 				flex-direction: column;
-				gap: 0.2rem; /* distance entre le titre et au-dessus en mode portable */
+				gap: 0.2rem;
 				padding: 0.3rem 0.5rem;
 			}
 
@@ -1832,6 +1805,46 @@
 	</main>
 
 	<script type="text/javascript">
+		// === FONCTION CRITIQUE : Calcul et application de la hauteur des cartes ===
+		function adjustCardHeights() {
+			// Récupérer tous les conteneurs de cartes
+			const carousels = ['carousel-1', 'carousel-2'];
+			const bottomSpacing = 40; // Doit correspondre à la variable CSS --bottom-spacing
+			
+			carousels.forEach(carouselId => {
+				const carousel = document.getElementById(carouselId);
+				if (!carousel) return;
+				
+				const cards = carousel.querySelectorAll('.card');
+				if (cards.length === 0) return;
+				
+				// Calculer la hauteur disponible
+				const viewportHeight = window.innerHeight;
+				
+				// Récupérer les hauteurs des éléments fixes
+				const toolbar = document.querySelector('.toolbar');
+				const header = document.querySelector('header');
+				const progressFooter = document.querySelector('.progress-footer');
+				
+				const toolbarHeight = toolbar ? toolbar.offsetHeight : 80;
+				const headerHeight = header ? header.offsetHeight : 70;
+				const progressHeight = progressFooter ? progressFooter.offsetHeight : 20;
+				
+				// Hauteur totale des éléments fixes
+				const fixedElementsHeight = toolbarHeight + headerHeight + progressHeight + bottomSpacing;
+				
+				// Hauteur disponible pour chaque carte
+				const availableHeight = viewportHeight - fixedElementsHeight;
+				
+				// Appliquer la hauteur à toutes les cartes
+				cards.forEach(card => {
+					card.style.height = availableHeight + 'px';
+					card.style.maxHeight = availableHeight + 'px';
+				});
+			});
+		}
+
+		// === RESTE DU CODE (inchangé, mais avec ajout des appels à adjustCardHeights) ===
 		const darkModeToggle = document.getElementById('darkModeToggle');
 		const body = document.body;
 
@@ -1953,6 +1966,8 @@
 					<line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" />
 				</svg>`;
 			}
+			// Recalculer les hauteurs après changement de mode plein écran
+			setTimeout(adjustCardHeights, 100);
 		});
 
 		reloadBtn.addEventListener('click', () => location.reload());
@@ -1984,10 +1999,27 @@
 					toolbarLeft.appendChild(reloadBtn);
 				}
 			}
+			// Recalculer après réorganisation
+			setTimeout(adjustCardHeights, 50);
 		}
 
-		window.addEventListener('load', rearrangeToolbarForMobile);
-		window.addEventListener('resize', rearrangeToolbarForMobile);
+		window.addEventListener('load', () => {
+			rearrangeToolbarForMobile();
+			adjustCardHeights();
+			setTimeout(updateProgress, 200);
+		});
+		
+		window.addEventListener('resize', () => {
+			adjustCardHeights();
+			const activeOnglet = document.querySelector('.onglet.active');
+			if (activeOnglet) {
+				const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
+				const leftBtnId = carouselId === 'carousel-1' ? 'scroll-left-1' : 'scroll-left-2';
+				const rightBtnId = carouselId === 'carousel-1' ? 'scroll-right-1' : 'scroll-right-2';
+				updateButtonsVisibility(carouselId, leftBtnId, rightBtnId);
+				updateProgress();
+			}
+		});
 
 		function switchOnglet(showInterp) {
 			document.querySelectorAll('.onglet').forEach(el => {
@@ -2012,6 +2044,7 @@
 					updateButtonsVisibility(carouselId, leftBtnId, rightBtnId);
 					updateProgress();
 				}
+				adjustCardHeights(); // Recalculer après changement d'onglet
 			}, 100);
 		}
 
@@ -2042,9 +2075,7 @@
 			const paddingLeft = parseInt(window.getComputedStyle(carousel).paddingLeft) || 0;
 			const threshold = 1;
 
-			// Masquer le bouton gauche si on est au début (en tenant compte du padding)
 			leftBtn.classList.toggle('hidden', scrollLeft <= paddingLeft + threshold);
-			// Masquer le bouton droit si on est à la fin
 			rightBtn.classList.toggle('hidden', scrollLeft + clientWidth >= scrollWidth - threshold);
 		}
 
@@ -2145,21 +2176,13 @@
 		setupCarouselNavigation('carousel-1', 'scroll-left-1', 'scroll-right-1');
 		setupCarouselNavigation('carousel-2', 'scroll-left-2', 'scroll-right-2');
 
-		window.addEventListener('load', () => {
-			setTimeout(updateProgress, 200);
-		});
-
-		// Ajoutez ceci à votre JavaScript existant
 		const interrupteur = document.getElementById('switch');
 
 		interrupteur.addEventListener('change', function () {
-			// Enlève temporairement le focus de l'interrupteur
 			this.blur();
 		});
 
-		// Gère également les événements de clic
 		interrupteur.addEventListener('click', function (e) {
-			// Laisse le temps à l'événement change de se déclencher, puis enlève le focus
 			setTimeout(() => {
 				this.blur();
 			}, 10);
@@ -2235,6 +2258,12 @@
 				}
 			}
 		});
+
+		// MutationObserver pour surveiller les changements dans le DOM (comme l'activation du mode sombre)
+		const observer = new MutationObserver(() => {
+			adjustCardHeights();
+		});
+		observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 	</script>
 </body>
 
