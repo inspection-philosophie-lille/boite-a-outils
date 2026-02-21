@@ -946,7 +946,7 @@
 			}
 			
 			.card p {
-				font-size: 9px !important;
+				font-size: 13px !important;
 				margin: 0 0 0.2rem;
 			}
 			
@@ -1408,7 +1408,7 @@
 				<path d="M12 16v-4"></path>
 				<path d="M12 8h.01"></path>
 			</svg>
-			<span>mode d'emploi</span>
+			<span>présentation</span>
 		</div>
 		<div class="menu-item" id="settings-btn">
 			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -1418,15 +1418,6 @@
 				<polyline points="5,17 19,17"></polyline>
 			</svg>
 			<span>paramètres</span>
-		</div>
-		<div class="menu-item" id="about-btn">
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-				stroke-linecap="round" stroke-linejoin="round">
-				<circle cx="12" cy="12" r="10"></circle>
-				<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-				<line x1="12" y1="17" x2="12.01" y2="17"></line>
-			</svg>
-			<span>à propos</span>
 		</div>
 		<div class="menu-item" id="keyboard-help-btn">
 			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -1441,6 +1432,15 @@
 			</svg>
 			<span>raccourcis clavier</span>
 		</div>
+		<div class="menu-item" id="about-btn">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+				stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="10"></circle>
+				<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+				<line x1="12" y1="17" x2="12.01" y2="17"></line>
+			</svg>
+			<span>à propos</span>
+		</div>
 	</div>
 
 	<div class="modal" id="instructions-modal">
@@ -1452,18 +1452,15 @@
 					<line x1="6" y1="6" x2="18" y2="18"></line>
 				</svg>
 			</button>
-			<h2>mode d'emploi</h2>
+			<h2>présentation</h2>
 			<br>
 			<ul style="list-style-type: none; padding: 0;">
-				<li style="margin-bottom: 10px;">• bouton accueil <kbd>(H)</kbd> : renvoi au site pédagogique</li>
-				<li style="margin-bottom: 10px;">• bouton recharger <kbd>(R)<kbd> : recharger la page</li>
-				<li style="margin-bottom: 10px;">• bouton plein écran <kbd>(F)</kbd> : mettre/retirer mode "plein écran"</li>				
-				<li style="margin-bottom: 10px;">• bouton menu <kbd>(M)</kbd> : ouvrir/fermer le menu</li>			
-				<li style="margin-bottom: 10px;">• mode sombre disponible dans les paramètres</li>
-				<li style="margin-bottom: 10px;">• <kbd>(E)</kbd> ou <kbd>(I)</kbd> : changer les critères "essai/interprétation" </li>
-				<li style="margin-bottom: 10px;">• <kbd>(←)</kbd> <kbd>(→)</kbd> : faire défiler les paliers de notation</li>
-				<li style="margin-bottom: 10px;">• <kbd>(1)</kbd> à <kbd>(6)</kbd> : accéder directement à un palier de notation</li>
-				<li style="margin-bottom: 10px;">• <kbd>(?)</kbd> : afficher les raccourcis clavier</li>
+				<li style="margin-bottom: 10px;">Cette application est un outil pédagogique conçu pour aider les enseignants à évaluer les copies en HLP (Humanités, Littérature et Philosophie) selon des paliers de notation.</li>
+				<li style="margin-bottom: 10px;"><strong>Objectif principal :</strong></li>
+				<li style="margin-bottom: 10px;">Visualiser et comparer les critères d'évaluation pour les deux types d'exercices en HLP :</li>
+				<li style="margin-bottom: 10px;">• L'essai</li>
+				<li style="margin-bottom: 10px;">• L'interprétation de texte</li>
+				<li style="margin-bottom: 10px;">Le mode sombre est disponible dans les paramètres</li>
 			</ul>
 		</div>
 	</div>
@@ -1520,46 +1517,42 @@
 			<h2>raccourcis clavier</h2>
 			<table style="width:100%; border-collapse: collapse; margin: 20px 0;">
 				<tr>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>←</kbd> <kbd>→</kbd></td>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Navigation entre les paliers</td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>(accueil)/(H)</kbd></td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">renvoi au site académique</td>
 				</tr>
 				<tr>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>E</kbd></td>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Mode essai</td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>(recharger)/(R)</kbd></td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">recharger la page</td>
 				</tr>
 				<tr>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>I</kbd></td>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Mode interprétation</td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>(plein écran)/(F)</kbd></td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">entrer/sortir du mode "plein écran"</td>
 				</tr>
 				<tr>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>1-6</kbd></td>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Accéder directement à un palier
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>(menu)/(M)</kbd></td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">ouvrir/fermer le menu</td>
+				</tr>
+				<tr>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>(esc)</kbd></td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">fermer les menus et modales</td>
+				</tr>
+				<tr>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>(1) à (6)</kbd></td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">accéder à un palier de notation
 					</td>
 				</tr>
 				<tr>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>M</kbd></td>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Ouvrir/fermer le menu</td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>(E) / (I)</kbd></td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">mode essai / interprétation</td>
 				</tr>
 				<tr>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>F</kbd></td>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Plein écran</td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>(?)</kbd></td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">afficher cette aide</td>
 				</tr>
 				<tr>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>R</kbd></td>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Recharger la page</td>
-				</tr>
-				<tr>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>H</kbd></td>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Accueil (site pédagogique)</td>
-				</tr>
-				<tr>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>Esc</kbd></td>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Fermer les menus et modales</td>
-				</tr>
-				<tr>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>?</kbd></td>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Afficher cette aide</td>
-				</tr>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>(←)</kbd> <kbd>(→)</kbd></td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">faire défiler les paliers de notation</td>
+				</tr>			
 			</table>
 		</div>
 	</div>
