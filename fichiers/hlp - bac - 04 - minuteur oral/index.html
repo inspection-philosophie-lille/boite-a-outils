@@ -407,7 +407,7 @@
 			gap: 2rem;
 			border-top-left-radius: 20px;
 			border-bottom-left-radius: 20px;
-			overflow-y: auto; /* Ajout pour permettre le scroll si nécessaire */
+			overflow-y: auto;
 	 }
 
 	 .menu.active {
@@ -507,13 +507,13 @@
 	 .modal-content {
 			width: 90%;
 			max-width: 500px;
-			max-height: 90vh; /* Limite la hauteur */
+			max-height: 90vh;
 			background-color: var(--bg-light);
 			padding: 2rem;
 			border-radius: 20px;
 			box-shadow: var(--shadow-outer);
-			overflow-y: auto; /* Permet le scroll interne */
-			-webkit-overflow-scrolling: touch; /* Scroll fluide sur iOS */
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
 	 }
 
 	.modal-header {
@@ -1045,8 +1045,12 @@
 					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">lancer/mettre en pause</td>
 				</tr>
 				<tr>
-					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>(⭯)</kbd></td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>R</kbd></td>
 					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">réinitialise le chronomètre</td>
+				</tr>
+				<tr>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>F</kbd></td>
+					<td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">plein écran</td>
 				</tr>
 			</table>
 				<ul style="list-style-type: none; padding: 0;">
@@ -1440,16 +1444,21 @@
 			timer2Sep.style.visibility = 'visible';
 	 });
 
+	 // Gestion des raccourcis clavier - AJOUT DES TOUCHES F ET R
 	 document.addEventListener('keydown', (e) => {
-			if (e.code === 'Space' || e.key === ' ') {
+			// Ignorer les raccourcis si un menu/modal est ouvert
+			if (instructionsModal.classList.contains('active') ||
+				 settingsModal.classList.contains('active') ||
+				 aboutModal.classList.contains('active') ||
+				 menu.classList.contains('active')) {
+				 return;
+			}
+			
+			const key = e.key.toLowerCase();
+			
+			// Espace ou > pour lancer/pause (déjà existant)
+			if (e.code === 'Space' || e.key === ' ' || key === '>') {
 				e.preventDefault();
-				
-				if (instructionsModal.classList.contains('active') ||
-					 settingsModal.classList.contains('active') ||
-					 aboutModal.classList.contains('active') ||
-					 menu.classList.contains('active')) {
-					 return;
-				}
 				
 				if (!timer1Finished && timer1Time > 0) {
 					 startTimer1();
@@ -1458,6 +1467,43 @@
 							startTimer2();
 					 }
 				}
+			}
+			
+			// NOUVEAU: Touche R pour réinitialiser
+			if (key === 'r') {
+				e.preventDefault();
+				
+				// Réinitialiser le timer actif
+				if (timer1Running || (!timer1Finished && timer1Time > 0)) {
+					// Réinitialiser timer 1
+					clearInterval(timer1Interval);
+					timer1Time = 600;
+					updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, timer1Time);
+					timer1Running = false;
+					timer1Finished = false;
+					timer1PlayBtn.classList.remove('running');
+					timer1Sep.style.visibility = 'visible';
+					
+					timer2PlayBtn.disabled = true;
+					timer2PlayBtn.style.opacity = '0.5';
+					timer2PlayBtn.style.cursor = 'not-allowed';
+					disableTimer2Buttons();
+					showTimer1OnMobile();
+				} else if (timer1Finished || timer2Running || timer2Time < 600) {
+					// Réinitialiser timer 2
+					clearInterval(timer2Interval);
+					timer2Time = 600;
+					updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, timer2Time);
+					timer2Running = false;
+					timer2PlayBtn.classList.remove('running');
+					timer2Sep.style.visibility = 'visible';
+				}
+			}
+			
+			// NOUVEAU: Touche F pour le plein écran
+			if (key === 'f') {
+				e.preventDefault();
+				toggleFullscreen();
 			}
 	 });
 
@@ -1596,7 +1642,7 @@
 			}
 	 });
 
-	 // DÉPLACEMENT DES BOUTONS POUR MOBILE - UNE SEULE MODIFICATION DYNAMIQUE
+	 // DÉPLACEMENT DES BOUTONS POUR MOBILE
 	 function rearrangeToolbarForMobile() {
 			const toolbarLeft = document.querySelector('.toolbar-left');
 			const toolbarRight = document.querySelector('.toolbar-right');
