@@ -111,6 +111,9 @@
 		.toolbar-title {
 			text-align: center;
 			flex: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
 		}
 
 		.toolbar h1 {
@@ -604,15 +607,18 @@
 			max-width: 800px;
 			gap: 2rem;
 			flex-direction: column;
-			margin: 1rem 0 2rem 0;
+			margin: 0;
 			transition: transform 0.5s ease;
 			position: relative;
 			flex: 1;
+			justify-content: space-between;
+			min-height: 0;
 		}
 
 		@media (min-width: 768px) {
 			.main-content {
 				flex-direction: row;
+				align-items: center;
 			}
 		}
 
@@ -626,6 +632,24 @@
 			transition: all 0.5s ease;
 		}
 
+		/* Centrage vertical des boutons de contrôle */
+		.timer-controls {
+			display: flex;
+			gap: 1rem;
+			margin-top: 1rem;
+			align-items: center;
+			justify-content: center;
+			flex: 0 0 auto;
+		}
+
+		/* Ajustement pour que les conteneurs de timer prennent tout l'espace disponible */
+		.timer1-container, .timer2-container {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			height: 100%;
+		}
+
 		.timer {
 			position: relative;
 			width: 250px;
@@ -637,7 +661,8 @@
 			align-items: center;
 			justify-content: center;
 			box-shadow: var(--shadow-out);
-			margin-bottom: 1rem;
+			margin: 0 auto 1rem auto;
+			flex: 0 0 auto;
 		}
 
 		body.dark-mode .timer {
@@ -706,12 +731,6 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-		}
-
-		.timer-controls {
-			display: flex;
-			gap: 1rem;
-			margin-top: 1rem;
 		}
 
 		.timer-controls .btn {
@@ -910,7 +929,8 @@
 
 			.main-content {
 				gap: 1rem;
-				margin: 0.5rem 0 1rem 0;
+				margin: 0;
+				justify-content: space-between;
 			}
 
 			.main-content.show-timer2 .timer1-container {
@@ -931,6 +951,8 @@
 			.timer2-container {
 				width: 100%;
 				transition: all 0.5s ease;
+				height: 100%;
+				justify-content: center;
 			}
 
 			.timer2-container {
@@ -988,6 +1010,10 @@
 			.toolbar-right {
 				display: flex;
 				gap: 0.8rem;
+			}
+			
+			.main-content {
+				min-height: calc(100vh - 180px);
 			}
 		}
 	</style>
