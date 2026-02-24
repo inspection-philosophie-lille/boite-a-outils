@@ -258,6 +258,7 @@
 			color: var(--grey-3) !important;
 		}
 
+		/* Style du bouton menu - identique à l'exemple */
 		.menu-btn {
 			position: relative;
 			z-index: 100;
@@ -362,6 +363,10 @@
 
 		.menu-close:hover {
 			box-shadow: var(--shadow-in);
+		}
+
+		.menu-close:hover svg {
+			animation: rotate 1s linear;
 		}
 
 		.menu-item {
@@ -476,6 +481,10 @@
 
 		.modal-close:hover {
 			box-shadow: var(--shadow-in);
+		}
+
+		.modal-close:hover svg {
+			animation: rotate 1s linear;
 		}
 
 		.modal-close svg {
@@ -632,7 +641,6 @@
 			transition: all 0.5s ease;
 		}
 
-		/* Centrage vertical des boutons de contrôle */
 		.timer-controls {
 			display: flex;
 			gap: 1rem;
@@ -642,7 +650,6 @@
 			flex: 0 0 auto;
 		}
 
-		/* Ajustement pour que les conteneurs de timer prennent tout l'espace disponible */
 		.timer1-container, .timer2-container {
 			display: flex;
 			flex-direction: column;
@@ -709,7 +716,6 @@
 			color: #ffffff;
 		}
 
-		/* Animation de clignotement quand il reste moins d'une minute */
 		.timer-display.blink-all .timer-time,
 		.timer-display.blink-all .timer-separator {
 			animation: blinkSync 1s steps(1, start) infinite;
@@ -726,7 +732,7 @@
 			font-size: 1.5rem;
 			color: var(--text-light);
 			margin-top: auto;
-			margin-bottom: 65px;
+			margin-bottom: 51px;
 			height: 30px;
 			display: flex;
 			align-items: center;
@@ -839,7 +845,6 @@
 			opacity: 0;
 		}
 
-		/* Styles spécifiques pour mobile */
 		@media screen and (max-width: 767px) {
 			.toolbar {
 				flex-direction: column;
@@ -962,7 +967,6 @@
 				pointer-events: none;
 			}
 
-			/* Améliorations pour les menus sur mobile */
 			.menu {
 				width: 85%;
 				padding: 1.5rem;
@@ -1442,13 +1446,13 @@
 			}
 		}
 
+		// Fonctions du menu
 		function toggleMenu() {
 			menuOverlay.classList.toggle('active');
 			menu.classList.toggle('active');
 		}
 
 		function closeAllMenus() {
-			menuBtn.classList.remove('active');
 			menuOverlay.classList.remove('active');
 			menu.classList.remove('active');
 			instructionsModal.classList.remove('active');
@@ -1476,12 +1480,13 @@
 			updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, timer2Time);
 		});
 
-		// Gestion des menus
+		// Événements du menu
 		if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
 
 		menuOverlay.addEventListener('click', closeAllMenus);
 		menuClose.addEventListener('click', closeAllMenus);
 
+		// Ouverture des sous-menus
 		instructionsBtn.addEventListener('click', () => {
 			closeAllMenus();
 			setTimeout(() => {
@@ -1503,6 +1508,7 @@
 			}, 300);
 		});
 
+		// Fermeture des modales
 		instructionsClose.addEventListener('click', () => {
 			instructionsModal.classList.remove('active');
 		});
@@ -1515,6 +1521,7 @@
 			aboutModal.classList.remove('active');
 		});
 
+		// Fermeture au clic en dehors
 		document.addEventListener('click', (e) => {
 			if (
 				!menu.contains(e.target) && 
@@ -1528,6 +1535,18 @@
 				aboutModal.classList.contains('active'))
 			) {
 				closeAllMenus();
+			}
+		});
+
+		// Touche Echap pour fermer
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') {
+				if (instructionsModal.classList.contains('active') ||
+					settingsModal.classList.contains('active') ||
+					aboutModal.classList.contains('active') ||
+					menu.classList.contains('active')) {
+					closeAllMenus();
+				}
 			}
 		});
 
@@ -1583,10 +1602,6 @@
 				 settingsModal.classList.contains('active') ||
 				 aboutModal.classList.contains('active') ||
 				 menu.classList.contains('active')) {
-				// Touche Echap pour fermer les menus
-				if (e.key === 'Escape') {
-					closeAllMenus();
-				}
 				return;
 			}
 
