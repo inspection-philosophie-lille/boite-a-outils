@@ -1,2 +1,0 @@
-- les tags vides sont alignés sur le texte (et non centrés verticalement)
-- les tags ne peuvent être "drag" s'ils sont mis dans un trou du texte à trous
