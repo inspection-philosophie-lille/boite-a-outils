@@ -282,7 +282,7 @@
 			background: var(--bg);
 			z-index: 10000;
 			box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-			transition: right 0.3s ease;
+			transition: right 0.6s ease; /* vitesse menu coulissant */
 			overflow: hidden;
 			border-radius: 20px 0 0 20px;
 			padding: 2rem 1.5rem;
@@ -305,7 +305,7 @@
 			background: var(--bg);
 			z-index: 10010;
 			box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
-			transition: right 0.25s ease;
+			transition: right 0.5s ease; /* vitesse sous menu coulissant */
 			border-radius: 20px 0 0 20px;
 			padding: 2rem 1.5rem;
 			overflow-y: auto;
@@ -1666,12 +1666,13 @@
 	<!-- TOOLBAR MOBILE -->
 	<div class="toolbar-mobile">
 		<div class="mobile-buttons-container">
-			<button class="toolbar-btn home-btn" id="homeBtnMobile">
+			<button class="toolbar-btn home-btn" id="homeBtnMobile" data-title="accueil (H)">
 				<div class="icon-wrapper">
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<polyline points="19,10 12,5"/>
-						<polyline points="8,8 5,10"/>
-						<polyline points="19,11 19,19 5,19 5,11"/>
+					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+						<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+						<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2"
+							stroke-linejoin="round" stroke-linecap="round" />
 					</svg>
 				</div>
 			</button>
