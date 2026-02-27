@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>monocorde de pythagore</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #e0e0e0;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    h1 {
+      color: red;
+    }
+    #monochord-container {
+      position: relative;
+      width: 66vw;
+      max-width: 660px;
+      min-width: 300px;
+      height: 120px;
+      background: #e0e0e0;
+      border-radius: 10px;
+      box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+      margin-bottom: 20px;
+    }
+    #string-svg {
+      position: absolute;
+      top: 50%;
+      left: 5%;
+      width: 90%;
+      max-width: 600px;
+      height: 40px;
+      z-index: 1;
+      cursor: pointer;
+      transform: translateY(-20px);
+    }
+    #bridge-svg {
+      position: absolute;
+      top: 50%;
+      z-index: 10;
+      cursor: move;
+    }
+    .disk {
+      position: absolute;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      background: #333;
+      border-radius: 50%;
+      transform: translateY(-5px);
+      z-index: 2;
+    }
+    #left-disk {
+      left: 5%;
+    }
+    #right-disk {
+      right: 5%;
+    }
+    #markers {
+      position: absolute;
+      top: 70%;
+      width: 90%;
+      left: 5%;
+      height: 40px;
+    }
+    .marker {
+      position: absolute;
+      top: 0;
+      width: 2px;
+      height: 10px;
+      background: #a0a0a0;
+      border-radius: 1px;
+    }
+    .marker-label {
+      position: absolute;
+      top: 15px;
+      font-size: 12px;
+      text-align: center;
+      transform: translateX(-50%);
+      color: #555;
+    }
+    #info {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #333;
+      background: #e0e0e0;
+      padding: 10px 20px;
+      border-radius: 10px;
+      box-shadow: inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff;
+    }
+    @media (max-width: 600px) {
+      #monochord-container {
+        width: 90vw;
+        max-width: 400px;
+      }
+      #string-svg {
+        max-width: 360px;
+      }
+      #info {
+        font-size: 14px;
+      }
+      .marker-label {
+        font-size: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>monocorde de pythagore</h1>
+  <div id="monochord-container">
+    <svg id="string-svg" height="40">
+      <path id="string-path" d="M0 20 H600" stroke="#808080" stroke-width="4" fill="none"/>
+    </svg>
+    <svg id="bridge-svg" width="24" height="21">
+      <polygon points="12,0 0,20.78 24,20.78" fill="red" stroke="none"/>
+    </svg>
+    <div id="left-disk" class="disk"></div>
+    <div id="right-disk" class="disk"></div>
+    <div id="markers"></div>
+  </div>
+  <div id="info">do (fondamentale) / rien</div>
+
+  <script type="text/javascript">
+    var gk_isXlsx = false;
+    var gk_xlsxFileLookup = {};
+    var gk_fileData = {};
+    function filledCell(cell) {
+      return cell !== '' && cell != null;
+    }
+    function loadFileData(filename) {
+      if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+        try {
+          var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+          var firstSheetName = workbook.SheetNames[0];
+          var worksheet = workbook.Sheets[firstSheetName];
+          var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+          var filteredData = jsonData.filter(row => row.some(filledCell));
+          var headerRowIndex = filteredData.findIndex((row, index) =>
+            row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+          );
+          if (headerRowIndex === -1 || headerRowIndex > 25) {
+            headerRowIndex = 0;
+          }
+          var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+          csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+          return csv;
+        } catch (e) {
+          console.error(e);
+          return "";
+        }
+      }
+      return gk_fileData[filename] || "";
+    }
+
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    let bridgeSvg = document.getElementById('bridge-svg');
+    let container = document.getElementById('monochord-container');
+    let stringSvg = document.getElementById('string-svg');
+    let stringPath = document.getElementById('string-path');
+    let info = document.getElementById('info');
+    let markers = document.getElementById('markers');
+    let isDragging = false;
+    const baseFreq = 261.63;
+    let animationFrame;
+
+    // Rendre stringLength dynamique pour correspondre à la distance entre 0/12 et 12/12
+    let stringLength = markers.clientWidth;
+    stringSvg.setAttribute('width', stringLength);
+    stringPath.setAttribute('d', `M0 20 H${stringLength}`);
+    const snapStep = stringLength / 12;
+
+    const pythagoreanRatios = {
+      1: 'do (fondamentale)',
+      1.125: 'ré', // 9/8
+      1.265625: 'mi', // 81/64
+      1.333333: 'fa (quarte)', // 4/3
+      1.5: 'sol (quinte)', // 3/2
+      1.6875: 'la', // 27/16
+      1.8984375: 'si', // 243/128
+      2: 'do (octave)' // 2/1
+    };
+
+    for (let i = 0; i <= 12; i++) {
+      let marker = document.createElement('div');
+      marker.className = 'marker';
+      marker.style.left = `${(i / 12) * 100}%`;
+      markers.appendChild(marker);
+
+      let fractionLabel = document.createElement('div');
+      fractionLabel.className = 'marker-label';
+      fractionLabel.style.left = `${(i / 12) * 100}%`;
+      let fraction = `${i}/12`;
+      fractionLabel.textContent = fraction;
+      markers.appendChild(fractionLabel);
+    }
+
+    bridgeSvg.addEventListener('mousedown', () => {
+      isDragging = true;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        let rect = container.getBoundingClientRect();
+        let offset = (rect.width - stringLength) / 2;
+        let x = e.clientX - rect.left - offset;
+        x = Math.max(0, Math.min(stringLength, x));
+        x = Math.round(x / snapStep) * snapStep;
+        let bridgePos = x + offset - 12; // Pointe alignée sur x
+        bridgePos = Math.max(offset - 12, Math.min(offset + stringLength - 12, bridgePos));
+        bridgeSvg.style.left = `${bridgePos}px`;
+        updateInfo();
+        resetString();
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    stringSvg.addEventListener('click', (e) => {
+      let rect = container.getBoundingClientRect();
+      let offset = (rect.width - stringLength) / 2;
+      let clickX = e.clientX - rect.left - offset;
+      let bridgeX = parseFloat(bridgeSvg.style.left) + 12 - offset || 0;
+      if (clickX < bridgeX) {
+        playLeftSide(clickX);
+      } else {
+        playRightSide(clickX);
+      }
+    });
+
+    function updateInfo() {
+      let offset = (container.getBoundingClientRect().width - stringLength) / 2;
+      let x = parseFloat(bridgeSvg.style.left) + 12 - offset || 0; // Pointe comme référence
+      let ratio = x / stringLength;
+      let leftRatio = ratio;
+      let rightRatio = 1 - ratio;
+      info.textContent = `${getIntervalName(leftRatio)} / ${getIntervalName(rightRatio)}`;
+    }
+
+    function getIntervalName(ratio) {
+      // Pour le côté gauche, le rapport de fréquence est 1/ratio
+      // Pour le côté droit, le rapport est 1/(1-ratio)
+      let freqRatio = ratio > 0 ? 1 / ratio : Infinity;
+      if (ratio > 0.5) {
+        // Côté gauche : chercher le rapport de fréquence
+        for (let [r, name] of Object.entries(pythagoreanRatios)) {
+          if (Math.abs(freqRatio - r) < 0.05) return name;
+        }
+      } else {
+        // Côté droit : calculer 1/(1-ratio)
+        let rightFreqRatio = ratio < 1 ? 1 / (1 - ratio) : Infinity;
+        for (let [r, name] of Object.entries(pythagoreanRatios)) {
+          if (Math.abs(rightFreqRatio - r) < 0.05) return name;
+        }
+      }
+      return 'rien';
+    }
+
+    function playTone(frequency) {
+      const oscillator = ctx.createOscillator();
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(frequency, ctx.currentTime);
+      oscillator.connect(ctx.destination);
+      oscillator.start();
+      oscillator.stop(ctx.currentTime + 1);
+    }
+
+    function vibrateString(start, end, duration = 2000) {
+      if (start === end) return;
+      let startTime = performance.now();
+      let initialAmplitude = 20;
+      let offset = (container.getBoundingClientRect().width - stringLength) / 2;
+      let bridgeX = parseFloat(bridgeSvg.style.left) + 12 - offset || 0;
+      function animate(time) {
+        let progress = (time - startTime) / duration;
+        if (progress > 1) {
+          resetString();
+          return;
+        }
+        let envelope = Math.exp(-progress * 3);
+        let phase = (time - startTime) * 0.05;
+        let sign = Math.sin(phase) >= 0 ? 1 : -1;
+        let disp = initialAmplitude * sign * envelope;
+        let midX = start + (end - start) / 2;
+        let midY = 20 + disp;
+        let controlX1 = start + (end - start) / 3;
+        let controlX2 = start + 2 * (end - start) / 3;
+        let path;
+        if (end <= bridgeX) {
+          path = `M0 20 C${controlX1} ${midY} ${controlX2} ${midY} ${end} 20 L${bridgeX} 20 L${stringLength} 20`;
+        } else {
+          path = `M0 20 L${bridgeX} 20 C${controlX1} ${midY} ${controlX2} ${midY} ${end} 20`;
+        }
+        stringPath.setAttribute('d', path);
+        animationFrame = requestAnimationFrame(animate);
+      }
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(animate);
+    }
+
+    function resetString() {
+      cancelAnimationFrame(animationFrame);
+      stringPath.setAttribute('d', `M0 20 H${stringLength}`);
+    }
+
+    function playLeftSide(clickX) {
+      let offset = (container.getBoundingClientRect().width - stringLength) / 2;
+      let x = parseFloat(bridgeSvg.style.left) + 12 - offset || 0;
+      if (x <= 0) return;
+      let ratio = x / stringLength;
+      let freq = baseFreq / ratio;
+      playTone(freq);
+      vibrateString(0, x);
+    }
+
+    function playRightSide(clickX) {
+      let offset = (container.getBoundingClientRect().width - stringLength) / 2;
+      let x = parseFloat(bridgeSvg.style.left) + 12 - offset || 0;
+      let ratio = 1 - (x / stringLength);
+      if (ratio <= 0) return;
+      let freq = baseFreq / ratio;
+      playTone(freq);
+      vibrateString(x, stringLength);
+    }
+
+    // Initialiser le chevalet pour que la pointe soit centrée sur le disque gauche
+    let initialOffset = (container.getBoundingClientRect().width - stringLength) / 2;
+    bridgeSvg.style.left = `${initialOffset - 12}px`; // Pointe (x=12) alignée sur x=0
+    updateInfo();
+  </script>
+</body>
+</html>
