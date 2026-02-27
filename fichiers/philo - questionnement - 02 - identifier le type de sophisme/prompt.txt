@@ -1,0 +1,122 @@
+Crée un fichier JavaScript complet dont le nom sera "fichier_ressource" pour un exercice d'association "drag & drop" sur les sophismes en philosophie niveau Terminale. Le fichier doit reproduire EXACTEMENT la structure technique et le formatage du code fourni.
+
+STRUCTURE TECHNIQUE OBLIGATOIRE :
+javascript
+
+// Contenu à modifier
+
+window.title = "identifier le type de sophisme";
+window.subtitle = "relier chaque type de sophisme à l'exemple correspondant";
+
+window.argumentsData = [
+/* attention aux virgules ! le dernier argument est le seul à ne pas en comporter !*/
+/* attention aux " que l'on ajouterait dans la définition. A remplacer par '' */
+
+  	{ colonne_de_gauche: "Type de sophisme", colonne_de_droite: "Exemple concret de sophisme"},
+  	// ... autres paires
+  	{ colonne_de_gauche: "Dernier sophisme", colonne_de_droite: "Dernier exemple"} /* pas de virgule ! */
+];
+
+window.settings = {
+    // MODE CLAIR - Couleurs neumorphiques classiques
+    "titleColor": "#ff0000",              // couleur du titre en mode clair
+    "subtitleColor": "#000000",           // couleur du sous-titre en mode clair
+    "textColor": "#000000",               // couleur du texte en mode clair
+    "backgroundColor": "#f0f0f0",         // couleur de fond en mode clair
+    "cellColor": "#e0e0e0",               // couleur des cellules en mode clair
+    "buttonColor": "#e0e0e0",             // couleur des boutons en mode clair
+    "correctColor": "#008000",            // couleur pour les bonnes réponses en mode clair
+    "incorrectColor": "#ff0000",          // couleur pour les mauvaises réponses en mode clair
+    
+    // MODE SOMBRE - Couleurs neumorphiques classiques
+    "titleColorDark": "#ff6666",          // couleur du titre en mode sombre
+    "subtitleColorDark": "#ffffff",       // couleur du sous-titre en mode sombre
+    "textColorDark": "#ffffff",           // couleur du texte en mode sombre
+    "backgroundColorDark": "#121212",     // couleur de fond en mode sombre
+    "cellColorDark": "#2d2d2d",          // couleur des cellules en mode sombre
+    "buttonColorDark": "#3d3d3d",        // couleur des boutons en mode sombre
+    "correctColorDark": "#4caf50",        // couleur pour les bonnes réponses en mode sombre
+    "incorrectColorDark": "#f44336",      // couleur pour les mauvaises réponses en mode sombre
+    
+    "fontFamily": "'Muli', Arial, sans-serif",
+    "titleSize": "clamp(1.8rem, 5vw, 2.5rem)",
+    "cellSize": "clamp(0.9rem, 2.5vw, 1rem)",
+    "enableAnimations": true,
+    "enableDarkMode": false,
+    "enableColorblindMode": false,
+    "maxPairs": 5,
+    "showScore": true,
+    "randomOrder": true,
+    "baseFontSize": 12                  // taille de base du texte en pixels (16 = 100%)
+};
+
+CONTENU PÉDAGOGIQUE - SOPHISMES À COUVRIR :
+
+Génère 25-30 paires de sophismes couvrant ces catégories :
+
+Sophismes formels :
+    Fausse analogie
+    Fausse alternative / Faux dilemme
+    Pétition de principe
+    Non sequitur
+    Post hoc ergo propter hoc
+
+Sophismes informels :
+    Ad hominem
+    Homme de paille
+    Pente glissante
+    Appel à la nature
+    Appel à la tradition
+    Appel à l'émotion
+    Appel à l'ignorance (Argument ad ignorantiam)
+    Appel à la popularité
+    Argument d'autorité
+    Généralisation hâtive
+
+Sophismes spécifiques :
+    Tu quoque
+    Double faute
+    Sophisme du joueur
+    Sophisme de composition/division
+    Sophisme du vrai Écossais
+    Sophisme de l'anecdote
+    Sophisme du Texas
+    Sophisme de la solution parfaite
+    Sophisme du juste milieu
+    Sophisme de la cause unique
+
+THÈMES CONTEMPORAINS :
+
+    Écologie et changement climatique
+    Questions sociales et politiques
+    Éthique et morale
+    Science et technologie
+    Éducation et société
+    Santé et bien-être
+
+EXIGENCES TECHNIQUES STRICTES :
+
+    Commentaires identiques "/* attention aux virgules ! ... */"
+    Formatage avec tabulations et sauts de ligne identiques
+    Dernière entrée sans virgule avec commentaire "/* pas de virgule ! */"
+    Police 'Muli' spécifiée dans fontFamily
+    Même ordre des propriétés dans window.settings
+    Mêmes valeurs de couleurs exactes
+    25 à 30 entrées dans window.argumentsData
+
+EXEMPLES DE FORMAT ATTENDU :
+javascript
+
+	{ colonne_de_gauche: "Faux dilemme", colonne_de_droite: "Soit tu acceptes cette réforme, soit tu veux la ruine du pays."},
+  	{ colonne_de_gauche: "Appel à la nature", colonne_de_droite: "Les médicaments naturels sont meilleurs car la nature ne peut pas nous tromper."},
+  	{ colonne_de_gauche: "Sophisme du Texas", colonne_de_droite: "Il a neigé cet hiver, donc le réchauffement climatique est un mensonge"} /* pas de virgule ! */
+
+VALIDATION :
+    Chaque sophisme doit être clairement identifiable
+    Les exemples doivent être contemporains et pertinents
+    Langage accessible à des élèves de Terminale
+    Éviter les répétitions de mêmes structures d'exemples
+    Varier les thèmes abordés
+    Assurer la cohérence pédagogique
+
+Le fichier final doit être parfaitement compatible avec l'application d'apprentissage existante sans aucune modification technique.

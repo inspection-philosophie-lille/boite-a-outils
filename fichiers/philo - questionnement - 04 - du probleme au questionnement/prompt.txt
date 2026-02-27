@@ -1,0 +1,130 @@
+Crée un fichier JavaScript complet nommé "fichier_ressource" pour un exercice d'association "drag & drop" sur l'interconnexion des problèmes philosophiques en niveau Terminale. Le fichier doit reproduire EXACTEMENT la structure technique et le formatage du code fourni.
+
+STRUCTURE TECHNIQUE OBLIGATOIRE :
+javascript
+
+// Contenu à modifier
+
+window.title = "du problème au questionnement";
+window.subtitle = "interconnecter des problèmes";
+
+window.argumentsData = [
+    
+	/* attention aux virgules ! le dernier argument est le seul à ne pas en comporter !*/
+	/* attention aux " dans la définition. A remplacer par '' */
+
+	{colonne_de_gauche: "Problème philosophique complet avec alternative", colonne_de_droite: "Problème philosophique lié avec alternative"},
+	// ... autres paires
+
+/* pas de virgule ! */
+];
+
+window.settings = {
+    // MODE CLAIR - Couleurs neumorphiques classiques
+    "titleColor": "#ff0000",              // couleur du titre en mode clair
+    "subtitleColor": "#000000",           // couleur du sous-titre en mode clair
+    "textColor": "#000000",               // couleur du texte en mode clair
+    "backgroundColor": "#f0f0f0",         // couleur de fond en mode clair
+    "cellColor": "#e0e0e0",               // couleur des cellules en mode clair
+    "buttonColor": "#e0e0e0",             // couleur des boutons en mode clair
+    "correctColor": "#008000",            // couleur pour les bonnes réponses en mode clair
+    "incorrectColor": "#ff0000",          // couleur pour les mauvaises réponses en mode clair
+    
+    // MODE SOMBRE - Couleurs neumorphiques classiques
+    "titleColorDark": "#ff6666",          // couleur du titre en mode sombre
+    "subtitleColorDark": "#ffffff",       // couleur du sous-titre en mode sombre
+    "textColorDark": "#ffffff",           // couleur du texte en mode sombre
+    "backgroundColorDark": "#121212",     // couleur de fond en mode sombre
+    "cellColorDark": "#2d2d2d",          // couleur des cellules en mode sombre
+    "buttonColorDark": "#3d3d3d",        // couleur des boutons en mode sombre
+    "correctColorDark": "#4caf50",        // couleur pour les bonnes réponses en mode sombre
+    "incorrectColorDark": "#f44336",      // couleur pour les mauvaises réponses en mode sombre
+    
+    "fontFamily": "'Muli', Arial, sans-serif",
+    "titleSize": "clamp(1.8rem, 5vw, 2.5rem)",
+    "cellSize": "clamp(0.9rem, 2.5vw, 1rem)",
+    "enableAnimations": true,
+    "enableDarkMode": false,
+    "enableColorblindMode": false,
+    "maxPairs": 5,
+    "showScore": true,
+    "randomOrder": true,
+    "baseFontSize": 12                  // taille de base du texte en pixels (16 = 100%)
+};
+
+CONTENU PÉDAGOGIQUE - INTERCONNEXION DES PROBLÈMES :
+
+Génère 25-30 paires de problèmes philosophiques interconnectés couvrant les grands champs du programme :
+
+CHAMPS PHILOSOPHIQUES À COUVRIR :
+    Métaphysique et existence
+    Épistémologie et connaissance
+    Éthique et morale
+    Philosophie politique
+    Esthétique et art
+    Philosophie des sciences
+    Anthropologie philosophique
+    Philosophie du langage
+    Philosophie de l'esprit
+    Questions contemporaines
+
+STRUCTURE DES PAIRES :
+    Colonne de gauche : Problème philosophique complet intégrant une alternative (structure "X ou Y ?")
+    Colonne de droite : Problème philosophique lié thématiquement, également avec alternative intégrée
+    Les deux problèmes doivent partager une thématique commune ou être conceptuellement reliés
+
+EXIGENCES DE PROBLÉMATISATION AVANCÉE :
+    Chaque problème doit intégrer sa propre alternative interne
+    Les paires doivent montrer des liens conceptuels évidents
+    Créer des réseaux de problèmes philosophiques
+    Montrer l'unité des questionnements philosophiques
+    Éviter les associations trop faciles ou superficielles
+
+TYPES DE LIENS À PRIVILÉGIER :
+    Liens cause/conséquence
+    Liens partie/tout
+    Liens moyen/fin
+    Liens théorie/pratique
+    Liens individu/société
+    Liens nature/culture
+
+EXEMPLES DE STRUCTURES ATTENDUES :
+javascript
+
+	{colonne_de_gauche: "La liberté est-elle une illusion ou une réalité que nous expérimentons ?", colonne_de_droite: "Le déterminisme scientifique annule-t-il notre libre arbitre ou peut-on concilier les deux ?"},
+	{colonne_de_gauche: "L'art doit-il imiter la réalité ou créer de nouvelles formes ?", colonne_de_droite: "La beauté est-elle objective ou dans l'œil de celui qui regarde ?"}
+
+EXIGENCES TECHNIQUES STRICTES :
+    Commentaires identiques avec les mêmes avertissements sur les virgules
+    Formatage avec tabulations simples et sauts de ligne identiques
+    Dernière entrée sans virgule avec commentaire "/* pas de virgule ! */" en dehors du tableau
+    Police 'Muli' spécifiée dans fontFamily
+    Même ordre des propriétés dans window.settings
+    Mêmes valeurs de couleurs exactes
+    25 à 30 entrées dans window.argumentsData
+    Structure syntaxique identique pour toutes les paires
+
+VALIDATION PÉDAGOGIQUE :
+    Chaque problème doit être philosophiquement riche et complexe
+    Les liens entre problèmes doivent être conceptuellement solides
+    Langage précis et rigoureux mais accessible
+    Respect du programme officiel de Terminale
+    Capacité à montrer la systématicité de la pensée philosophique
+
+CRITÈRES DE QUALITÉ :
+    Problèmes authentiquement interconnectés
+    Alternatives internes pertinentes et équilibrées
+    Formulations claires et non ambiguës
+    Respect de la structure problématique double
+    Cohérence thématique entre les paires
+    Actualité et pertinence pour des élèves de Terminale
+
+THÈMES CONTEMPORAINS À INTÉGRER :
+    Intelligence artificielle et éthique
+    Écologie et responsabilité
+    Bioéthique et transhumanisme
+    Société numérique et liberté
+    Mondialisation et identité
+    Justice sociale et inégalités
+
+Le fichier final doit permettre aux élèves de comprendre comment les problèmes philosophiques s'articulent en réseaux conceptuels, tout en étant parfaitement compatible avec l'application d'apprentissage existante.
