@@ -474,11 +474,13 @@
 		
 		.submenu p {
 			margin-bottom: 0.5rem;
+			padding-left: 8px;
 			color: var(--font-color);
 		}
 		
 		.settings-info {
 			margin-top: 20px;
+			margin-right: 10px;
 			padding: 15px;
 			background: rgba(0,0,0,0.05);
 			border-radius: 10px;
@@ -1315,12 +1317,14 @@
 		</div>
 		<div class="submenu-title">présentation</div>
 		<div class="submenu-content">
-			<p>Cette application est un outil pédagogique conçu pour aider les enseignants à évaluer les copies en HLP (Humanités, Littérature et Philosophie) selon des paliers de notation.</p>
-			<p><strong>Objectif principal :</strong> visualiser et comparer les critères d'évaluation pour les deux types d'exercices en HLP :</p>
-			<ul>
-				<li>L'essai</li>
-				<li>L'interprétation de texte</li>
-			</ul>
+			<p>Cette application est un outil pédagogique conçu pour aider les enseignants à évaluer les copies en HLP selon des paliers de notation.</p>
+			<div class="settings-info">
+				<p><strong>Objectif principal :</strong> visualiser et comparer les critères d'évaluation pour les deux types d'exercices en HLP :</p>
+				<ul>
+					<li>L'essai</li>
+					<li>L'interprétation de texte</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 
@@ -1342,6 +1346,10 @@
 				<input type="checkbox" id="darkModeToggle">
 				<span class="slider"></span>
 			</label>
+		</div>
+		
+		<div class="settings-info">
+			<p>Le mode sombre inverse les couleurs de l'interface pour afficher du texte clair sur un fond sombre, réduisant ainsi la fatigue oculaire dans les environnements peu éclairés et économisant la batterie sur les écrans OLED.</p>
 		</div>
 	</div>
 
@@ -1395,6 +1403,9 @@
 				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">faire défiler les paliers</td>
 			</tr>
 		</table>
+		<div class="settings-info">
+			<p><strong>Mode sombre :</strong> cf. menu/paramètres</p>
+		</div>	
 	</div>
 
 	<!-- SOUS-MENU À propos -->
