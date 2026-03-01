@@ -12,9 +12,7 @@
 	<style>
 		:root {
 			--bg-light: #f5f5f5;
-			--bg-dark: #121212;
 			--text-light: #000000;
-			--text-dark: #f5f5f5;
 			--primary: #ff0000;
 			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.9);
 			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.9);
@@ -32,16 +30,12 @@
 			--switch-text-inactive: #000;
 			--progress-bg: rgba(0, 0, 0, 0.1);
 			--progress-fill: #ff0000;
-			
-			/* Distance FIXE entre le bas des vignettes et le bas de la fenêtre */
 			--bottom-spacing: 40px;
 		}
 
 		body.dark-mode {
 			--bg-light: #121212;
-			--bg-dark: #f5f5f5;
 			--text-light: #f5f5f5;
-			--text-dark: #333;
 			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.3), -0.3rem -0.3rem 0.6rem rgba(40, 40, 40, 0.5);
 			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.3), inset -0.2rem -0.2rem 0.4rem rgba(40, 40, 40, 0.5);
 			--tooltip-bg: #333333;
@@ -61,7 +55,8 @@
 			color: #e0e0e0;
 		}
 
-		body.dark-mode .modal h2 {
+		body.dark-mode .modal h2,
+		body.dark-mode .submenu-title {
 			color: #ff0000;
 		}
 
@@ -168,7 +163,7 @@
 			transition: all 0.2s ease;
 		}
 
-		.btn:hover:not(.disabled) {
+		.btn:hover {
 			box-shadow: var(--shadow-in);
 			transform: translateY(-2px);
 		}
@@ -178,10 +173,15 @@
 		}
 
 		.btn.reload:hover svg,
-		.btn.reset:hover svg,
-		.modal-close:hover svg,
-		.menu-close:hover svg {
+		.menu-close:hover svg,
+		.submenu-close:hover svg,
+		.modal-close:hover svg {
 			animation: rotate 1s linear;
+		}
+
+		@keyframes rotate {
+			from { transform: rotate(0deg); }
+			to { transform: rotate(360deg); }
 		}
 
 		.btn::after {
@@ -205,11 +205,6 @@
 
 		.btn:hover::after {
 			opacity: 1;
-		}
-
-		@keyframes rotate {
-			from { transform: rotate(0deg); }
-			to { transform: rotate(360deg); }
 		}
 
 		.home-btn {
@@ -291,25 +286,24 @@
 		.menu {
 			position: fixed;
 			top: 0;
-			right: 0;
+			right: -320px;
 			width: 70%;
 			max-width: 300px;
 			height: 100%;
 			background-color: var(--bg-light);
 			box-shadow: var(--shadow-out);
 			z-index: 10000;
-			transform: translateX(100%);
-			transition: var(--transition);
+			transition: right 0.6s ease;
 			padding: 2rem;
 			display: flex;
 			flex-direction: column;
-			gap: 2rem;
+			gap: 6rem;
 			border-top-left-radius: 20px;
 			border-bottom-left-radius: 20px;
 		}
 
 		.menu.active {
-			transform: translateX(0);
+			right: 0;
 		}
 
 		.menu-header {
@@ -317,10 +311,9 @@
 			justify-content: flex-end;
 		}
 
-		.menu-close {
+		.menu-close, .submenu-close, .modal-close {
 			background: none;
 			border: none;
-			font-size: 1.5rem;
 			cursor: pointer;
 			color: #000000;
 			background: var(--btn-bg);
@@ -335,7 +328,7 @@
 			padding: 0;
 		}
 
-		.menu-close svg {
+		.menu-close svg, .submenu-close svg, .modal-close svg {
 			width: 18px;
 			height: 18px;
 			transition: transform 0.2s ease;
@@ -343,13 +336,23 @@
 			stroke-width: 2;
 		}
 
-		body.dark-mode .menu-close {
+		body.dark-mode .menu-close,
+		body.dark-mode .submenu-close,
+		body.dark-mode .modal-close {
 			color: #ffffff;
 			background: #2d2d2d;
 		}
 
-		body.dark-mode .menu-close svg {
+		body.dark-mode .menu-close svg,
+		body.dark-mode .submenu-close svg,
+		body.dark-mode .modal-close svg {
 			stroke: #ffffff;
+		}
+
+		.menu-close:hover,
+		.submenu-close:hover,
+		.modal-close:hover {
+			box-shadow: var(--shadow-in);
 		}
 
 		.menu-item {
@@ -367,6 +370,8 @@
 			transition: all 0.2s ease;
 			position: relative;
 			z-index: 10001;
+			width: 100%;
+			margin-bottom: 1rem;
 		}
 
 		.menu-item:hover {
@@ -379,6 +384,117 @@
 			stroke: currentColor;
 			stroke-width: 2;
 			fill: none;
+		}
+
+		.menu-item:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		.submenu {
+			position: fixed;
+			top: 0;
+			right: -340px;
+			width: 70%;
+			max-width: 300px;
+			height: 100%;
+			background: var(--bg-light);
+			z-index: 10010;
+			box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+			transition: right 0.5s ease;
+			border-radius: 20px 0 0 20px;
+			padding: 2rem 1.5rem;
+			overflow-y: auto;
+		}
+		
+		.submenu.active {
+			right: 0;
+			padding-left: 17px;
+			padding-right: 5px;
+		}
+		
+		@media (max-width: 768px) {
+			.submenu {
+				width: 70%;
+				max-width: 300px;
+				right: -280px;
+			}
+			.submenu.active {
+				right: 0;
+			}
+		}
+		
+		.submenu-title {
+			font-size: 1.4rem;
+			font-weight: bold;
+			color: var(--primary);
+			margin: 0.5rem 0 1.5rem 0;
+			text-align: center;
+		}
+		
+		.submenu table {
+			width: 100%;
+			color: var(--font-color);
+			margin-bottom: 1rem;
+			border-collapse: collapse;
+		}
+		
+		.submenu td {
+			padding: 8px 0;
+			font-size: 12px;
+		}
+		
+		.submenu kbd {
+			background-color: #b9b3b3;
+			border-radius: 4px;
+			box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 1px 0 0 rgba(255,255,255,0.7) inset;
+			color: white;
+			display: inline-block;
+			font-size: 0.85em;
+			font-weight: 700;
+			line-height: 1;
+			padding: 2px 4px;
+			white-space: nowrap;
+		}
+		
+		body.dark-mode .submenu kbd {
+			background-color: #444;
+			color: #eee;
+		}
+		
+		.submenu ul {
+			list-style: none;
+			padding: 0;
+		}
+		
+		.submenu li {
+			padding: 4px 0;
+			font-size: 12px;
+			display: block;
+		}
+		
+		.submenu p {
+			margin-bottom: 0.5rem;
+			color: var(--font-color);
+		}
+		
+		.settings-info {
+			margin-top: 20px;
+			padding: 15px;
+			background: rgba(0,0,0,0.05);
+			border-radius: 10px;
+		}
+		
+		.settings-info p {
+			margin: 0 0 10px 0;
+			font-size: 0.9em;
+		}
+		
+		.settings-info p:last-child {
+			margin-bottom: 0;
+		}
+		
+		body.dark-mode .submenu {
+			background: #1e1e1e;
 		}
 
 		.modal {
@@ -415,44 +531,6 @@
 
 		.modal.active .modal-content {
 			transform: translateY(0);
-		}
-
-		.modal-close {
-			position: absolute;
-			top: 1rem;
-			right: 1rem;
-			background: none;
-			border: none;
-			font-size: 1.5rem;
-			cursor: pointer;
-			color: #000000;
-			background: var(--btn-bg);
-			width: 30px;
-			height: 30px;
-			border-radius: 50%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			box-shadow: var(--shadow-out);
-			transition: all 0.2s ease;
-			z-index: 10004;
-			padding: 0;
-		}
-
-		.modal-close:hover {
-			box-shadow: var(--shadow-in);
-		}
-
-		.modal-close svg {
-			width: 18px;
-			height: 18px;
-			transition: transform 0.2s ease;
-			stroke: #000000;
-			stroke-width: 2;
-		}
-
-		body.dark-mode .modal-close svg {
-			stroke: #ffffff;
 		}
 
 		.modal h2 {
@@ -518,22 +596,6 @@
 
 		.theme-switch input:checked+.slider:before {
 			transform: translateX(24px);
-		}
-
-		#settings-modal .toggle-container {
-			background-color: transparent;
-			box-shadow: none;
-			padding: 0.8rem 0;
-			display: flex;
-			align-items: center;
-			margin: 1rem 0;
-			justify-content: flex-start;
-			gap: 15px;
-		}
-
-		.toggle-label {
-			color: var(--font-color);
-			font-weight: 500;
 		}
 
 		.fullscreen-icon,
@@ -675,6 +737,7 @@
 			transition: width 0.3s ease;
 			border-radius: 20px;
 			box-shadow: 0 0 10px var(--progress-fill);
+			pointer-events: none;
 		}
 
 		.card {
@@ -788,18 +851,6 @@
 
 		* {
 			box-sizing: border-box;
-		}
-
-		body,
-		button,
-		input,
-		optgroup,
-		select,
-		textarea {
-			color: #3d4852;
-			font-family: Muli, sans-serif;
-			font-size: 13px;
-			line-height: 1.2;
 		}
 
 		h1 {
@@ -1099,19 +1150,50 @@
 		}
 
 		@media screen and (min-width: 992px) {
-			body,
-			button,
-			input,
-			optgroup,
-			select,
-			textarea {
-				font-size: 1rem;
-			}
-
 			.carousel-item {
 				width: 320px;
 				flex: 0 0 320px;
 			}
+		}
+		
+		.submenu .toggle-container {
+			background-color: transparent;
+			box-shadow: none;
+			padding: 0.8rem 0;
+			display: flex;
+			align-items: center;
+			margin: 1rem 0;
+			justify-content: flex-start;
+			gap: 15px;
+		}
+		
+		.submenu .theme-switch {
+			position: relative;
+			display: inline-block;
+			width: 44px;
+			height: 20px;
+		}
+		
+		.submenu-content {
+			margin-top: 1rem;
+			color: var(--font-color);
+		}
+		
+		.submenu-content p {
+			margin-bottom: 0.8rem;
+			line-height: 1.4;
+		}
+		
+		.submenu-content ul {
+			list-style-type: disc;
+			padding-left: 1.2rem;
+			margin-bottom: 1rem;
+		}
+		
+		.submenu-content li {
+			margin-bottom: 0.5rem;
+			font-size: 13px;
+			display: list-item;
 		}
 	</style>
 </head>
@@ -1150,7 +1232,13 @@
 					<line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" />
 				</svg>
 			</button>
-			<button class="btn menu-btn" id="menu-btn" data-title="menu (M)">
+		</div>
+		<div class="toolbar-title">
+			<h1>notations</h1>
+			<h2>par paliers en HLP</h2>
+		</div>
+		<div class="toolbar-right">
+			<button class="btn menu-btn" id="menuButton" data-title="menu (M)">
 				<div class="menu-icon">
 					<span></span>
 					<span></span>
@@ -1158,175 +1246,173 @@
 				</div>
 			</button>
 		</div>
-		<div class="toolbar-title">
-			<h1>notations</h1>
-			<h2>par paliers en HLP</h2>
-		</div>
-		<div class="toolbar-right"></div>
 	</div>
 
-	<div class="menu-overlay" id="menu-overlay"></div>
-	<div class="menu" id="menu">
+	<!-- OVERLAY MENU -->
+	<div class="menu-overlay" id="menuOverlay"></div>
+
+	<!-- MENU PRINCIPAL COULISSANT -->
+	<div class="menu" id="slideMenu">
 		<div class="menu-header">
-			<button class="menu-close" id="menu-close">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-					stroke-linejoin="round">
+			<button class="menu-close" id="menuClose">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 					<line x1="18" y1="6" x2="6" y2="18"></line>
 					<line x1="6" y1="6" x2="18" y2="18"></line>
 				</svg>
 			</button>
 		</div>
-		<div class="menu-item" id="instructions-btn">
-			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-				stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-				<circle cx="12" cy="12" r="10"></circle>
-				<path d="M12 16v-4"></path>
-				<path d="M12 8h.01"></path>
-			</svg>
-			<span>présentation</span>
-		</div>
-		<div class="menu-item" id="settings-btn">
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-				stroke-linecap="round" stroke-linejoin="round">
-				<polyline points="5,7 19,7"></polyline>
-				<polyline points="5,12 19,12"></polyline>
-				<polyline points="5,17 19,17"></polyline>
-			</svg>
-			<span>paramètres</span>
-		</div>
-		<div class="menu-item" id="keyboard-help-btn">
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-				stroke-linecap="round" stroke-linejoin="round">
-				<rect x="2" y="4" width="20" height="16" rx="2"></rect>
-				<line x1="6" y1="8" x2="10" y2="8"></line>
-				<line x1="14" y1="8" x2="18" y2="8"></line>
-				<line x1="6" y1="12" x2="10" y2="12"></line>
-				<line x1="14" y1="12" x2="18" y2="12"></line>
-				<line x1="6" y1="16" x2="10" y2="16"></line>
-				<line x1="14" y1="16" x2="18" y2="16"></line>
-			</svg>
-			<span>raccourcis clavier</span>
-		</div>
-		<div class="menu-item" id="about-btn">
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-				stroke-linecap="round" stroke-linejoin="round">
-				<circle cx="12" cy="12" r="10"></circle>
-				<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-				<line x1="12" y1="17" x2="12.01" y2="17"></line>
-			</svg>
-			<span>à propos</span>
+		<div class="menu-content">
+			<button class="menu-item" id="openPresentationSub">
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+					 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<path d="M12 16v-4"></path>
+					<path d="M12 8h.01"></path>
+				</svg>
+				présentation
+			</button>
+			<button class="menu-item" id="openSettingsSub">	
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<circle cx="12" cy="12" r="3"></circle>
+					<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+				</svg>
+				paramètres
+			</button>
+			<button class="menu-item" id="openShortcutsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="round" stroke-linejoin="round">
+					<rect x="2" y="4" width="20" height="16" rx="2"></rect>
+					<line x1="6" y1="8" x2="10" y2="8"></line>
+					<line x1="14" y1="8" x2="18" y2="8"></line>
+					<line x1="6" y1="12" x2="10" y2="12"></line>
+					<line x1="14" y1="12" x2="18" y2="12"></line>
+					<line x1="6" y1="16" x2="10" y2="16"></line>
+					<line x1="14" y1="16" x2="18" y2="16"></line>
+				</svg>
+				raccourcis clavier
+			</button>	
+			<button class="menu-item" id="openAboutSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					 stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+					<line x1="12" y1="17" x2="12.01" y2="17"></line>
+				</svg>
+				à propos
+			</button>
 		</div>
 	</div>
 
-	<div class="modal" id="instructions-modal">
-		<div class="modal-content">
-			<button class="modal-close" id="instructions-close">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-					stroke-linejoin="round">
+	<!-- SOUS-MENU Présentation -->
+	<div class="submenu" id="submenuPresentation">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="presentation">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 					<line x1="18" y1="6" x2="6" y2="18"></line>
 					<line x1="6" y1="6" x2="18" y2="18"></line>
 				</svg>
 			</button>
-			<h2>présentation</h2>
-			<br>
-			<ul style="list-style-type: none; padding: 0;">
-				<li style="margin-bottom: 10px;">Cette application est un outil pédagogique conçu pour aider les enseignants à évaluer les copies en HLP (Humanités, Littérature et Philosophie) selon des paliers de notation.</li>
-				<li style="margin-bottom: 10px;"><strong>Objectif principal :</strong> visualiser et comparer les critères d'évaluation pour les deux types d'exercices en HLP :</li>
-				<li style="margin-bottom: 10px;">• L'essai</li><br>
-				<li style="margin-bottom: 10px;">• L'interprétation de texte</li>
-				<li style="margin-bottom: 10px;">Le mode sombre est disponible dans les paramètres</li>
+		</div>
+		<div class="submenu-title">présentation</div>
+		<div class="submenu-content">
+			<p>Cette application est un outil pédagogique conçu pour aider les enseignants à évaluer les copies en HLP (Humanités, Littérature et Philosophie) selon des paliers de notation.</p>
+			<p><strong>Objectif principal :</strong> visualiser et comparer les critères d'évaluation pour les deux types d'exercices en HLP :</p>
+			<ul>
+				<li>L'essai</li>
+				<li>L'interprétation de texte</li>
 			</ul>
 		</div>
 	</div>
 
-	<div class="modal" id="settings-modal">
-		<div class="modal-content">
-			<button class="modal-close" id="settings-close">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-					stroke-linejoin="round">
-					<line x1="18" y1="6" x2="6" y2="18"></line>
-					<line x1="6" y1="6" x2="18" y2="18"></line>
+	<!-- SOUS-MENU Paramètres -->
+	<div class="submenu" id="submenuSettings">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="settings">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"/>
+					<line x1="6" y1="6" x2="18" y2="18"/>
 				</svg>
 			</button>
-			<h2>paramètres</h2>
-			<br>
-			<div class="toggle-container">
-				<span class="toggle-label">mode sombre</span>
-				<label class="theme-switch">
-					<input type="checkbox" id="darkModeToggle">
-					<span class="slider"></span>
-				</label>
-			</div>
+		</div>
+		<div class="submenu-title">paramètres</div>
+		
+		<div class="toggle-container">
+			<span class="toggle-label">mode sombre :</span>
+			<label class="theme-switch">
+				<input type="checkbox" id="darkModeToggle">
+				<span class="slider"></span>
+			</label>
 		</div>
 	</div>
 
-	<div class="modal" id="about-modal">
-		<div class="modal-content">
-			<button class="modal-close" id="about-close">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-					stroke-linejoin="round">
-					<line x1="18" y1="6" x2="6" y2="18"></line>
-					<line x1="6" y1="6" x2="18" y2="18"></line>
+	<!-- SOUS-MENU Raccourcis clavier -->
+	<div class="submenu" id="submenuShortcuts">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="shortcuts">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"/>
+					<line x1="6" y1="6" x2="18" y2="18"/>
 				</svg>
 			</button>
-			<h2>à propos</h2>
-			<br>
+		</div>
+		<div class="submenu-title">raccourcis clavier</div>
+		
+		<table style="width:100%; margin-bottom:1rem;">
+			<tr>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>accueil</kbd> <kbd>H</kbd></td>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">renvoi au site académique</td>
+			</tr>
+			<tr>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>recharger</kbd> <kbd>R</kbd></td>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">recharger la page</td>
+			</tr>
+			<tr>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>plein écran</kbd> <kbd>F</kbd></td>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">entrer/sortir du plein écran</td>
+			</tr>
+			<tr>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>menu</kbd> <kbd>M</kbd></td>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">ouvrir/fermer le menu</td>
+			</tr>
+			<tr>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>ESC</kbd></td>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">fermer les menus</td>
+			</tr>
+			<tr>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>1</kbd> à <kbd>6</kbd></td>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">accéder à un palier de notation</td>
+			</tr>
+			<tr>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>E</kbd> / <kbd>I</kbd></td>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">mode essai / interprétation</td>
+			</tr>
+			<tr>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>?</kbd></td>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">afficher cette aide</td>
+			</tr>
+			<tr>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>←</kbd> <kbd>→</kbd></td>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">faire défiler les paliers</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- SOUS-MENU À propos -->
+	<div class="submenu" id="submenuAbout">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="about">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"/>
+					<line x1="6" y1="6" x2="18" y2="18"/>
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">à propos</div>
+		<div class="submenu-content">
 			<p>application développée par Daniel Boulagnon</p>
 			<p>daniel.boulagnon@ac-lille.fr</p>
 			<p>exploitation à but pédagogique et non commercial</p>
-			<p>© 2026</p>
-			<p>version 1.9.3</p>
-		</div>
-	</div>
-
-	<div class="modal" id="keyboard-help-modal">
-		<div class="modal-content">
-			<button class="modal-close" id="keyboard-help-close">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-					stroke-linejoin="round">
-					<line x1="18" y1="6" x2="6" y2="18"></line>
-					<line x1="6" y1="6" x2="18" y2="18"></line>
-				</svg>
-			</button>
-			<h2>raccourcis clavier</h2>
-			<table style="width:98%; border-collapse: collapse; margin: 10px 0;">
-				<tr>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>accueil</kbd>/<kbd>H</kbd></td>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);">renvoi au site académique</td>
-				</tr>
-				<tr>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>recharger</kbd>/<kbd>R</kbd></td>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);">recharger la page</td>
-				</tr>
-				<tr>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>plein écran</kbd>/<kbd>F</kbd></td>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);">entrer/sortir du mode "plein écran"</td>
-				</tr>
-				<tr>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>menu</kbd>/<kbd>M</kbd></td>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);">ouvrir/fermer le menu</td>
-				</tr>
-				<tr>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>esc</kbd></td>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);">fermer les menus et modales</td>
-				</tr>
-				<tr>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>1</kbd>à<kbd>6</kbd></td>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);">accéder à un palier de notation</td>
-				</tr>
-				<tr>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>E</kbd>/<kbd>I</kbd></td>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);">mode essai / interprétation</td>
-				</tr>
-				<tr>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>?</kbd></td>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);">afficher cette aide</td>
-				</tr>
-				<tr>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>←</kbd> <kbd>→</kbd></td>
-					<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);">faire défiler les paliers de notation</td>
-				</tr>			
-			</table>
+			<p>© 2026 – version 2.1.8</p>
 		</div>
 	</div>
 
@@ -1547,7 +1633,7 @@
 		</div>
 
 		<div class="progress-footer">
-			<div class="progress-bar-container">
+			<div class="progress-bar-container" id="progress-bar-container">
 				<div class="progress-bar-fill" id="progress-bar" style="width: 0%"></div>
 			</div>
 		</div>
@@ -1587,7 +1673,7 @@
 			const toolbarLeft = document.querySelector('.toolbar-left');
 			const toolbarRight = document.querySelector('.toolbar-right');
 			const fullscreenBtn = document.getElementById('fullscreen-btn');
-			const menuBtn = document.getElementById('menu-btn');
+			const menuBtn = document.getElementById('menuButton');
 			const homeBtn = document.getElementById('home-btn');
 			const reloadBtn = document.getElementById('reload-btn');
 
@@ -1613,86 +1699,104 @@
 			setTimeout(adjustCardHeights, 50);
 		}
 
-		const darkModeToggle = document.getElementById('darkModeToggle');
 		const body = document.body;
+		const menuOverlay = document.getElementById('menuOverlay');
+		const slideMenu = document.getElementById('slideMenu');
+		const menuButton = document.getElementById('menuButton');
+		const menuClose = document.getElementById('menuClose');
 
-		const menuOverlay = document.getElementById('menu-overlay');
-		const menu = document.getElementById('menu');
-		const menuClose = document.getElementById('menu-close');
+		const subPresentation = document.getElementById('submenuPresentation');
+		const subSettings = document.getElementById('submenuSettings');
+		const subShortcuts = document.getElementById('submenuShortcuts');
+		const subAbout = document.getElementById('submenuAbout');
+		const submenus = [subPresentation, subSettings, subShortcuts, subAbout];
 
-		const instructionsBtn = document.getElementById('instructions-btn');
-		const settingsBtn = document.getElementById('settings-btn');
-		const aboutBtn = document.getElementById('about-btn');
-		const keyboardHelpBtn = document.getElementById('keyboard-help-btn');
-		const instructionsModal = document.getElementById('instructions-modal');
-		const settingsModal = document.getElementById('settings-modal');
-		const aboutModal = document.getElementById('about-modal');
-		const keyboardHelpModal = document.getElementById('keyboard-help-modal');
-		const instructionsClose = document.getElementById('instructions-close');
-		const settingsClose = document.getElementById('settings-close');
-		const aboutClose = document.getElementById('about-close');
-		const keyboardHelpClose = document.getElementById('keyboard-help-close');
+		const darkModeToggle = document.getElementById('darkModeToggle');
 
 		const switchInput = document.getElementById('switch');
 		const homeBtn = document.getElementById('home-btn');
 		const reloadBtn = document.getElementById('reload-btn');
 		const fullscreenBtn = document.getElementById('fullscreen-btn');
 		const progressBar = document.getElementById('progress-bar');
+		const progressContainer = document.getElementById('progress-bar-container');
 
-		function showKeyboardHelp() {
-			closeAllMenus();
-			keyboardHelpModal.classList.add('active');
+		function toggleMainMenu(force) {
+			const willOpen = (force !== undefined) ? force : !slideMenu.classList.contains('active');
+			slideMenu.classList.toggle('active', willOpen);
+			menuOverlay.classList.toggle('active', willOpen);
+			if (!willOpen) {
+				closeAllSubmenus();
+			}
 		}
 
-		if (localStorage.getItem('darkMode') === 'enabled') {
+		function closeAllSubmenus() {
+			submenus.forEach(s => {
+				if (s) s.classList.remove('active');
+			});
+		}
+
+		function openSubmenu(submenu) {
+			closeAllSubmenus();
+			if (submenu) submenu.classList.add('active');
+		}
+
+		if (localStorage.getItem('darkMode') === 'true') {
 			body.classList.add('dark-mode');
-			darkModeToggle.checked = true;
+			if (darkModeToggle) darkModeToggle.checked = true;
 		}
 
-		darkModeToggle.addEventListener('change', () => {
-			body.classList.toggle('dark-mode');
-			localStorage.setItem('darkMode', body.classList.contains('dark-mode') ? 'enabled' : 'disabled');
-		});
-
-		function toggleMenu() {
-			menuOverlay.classList.toggle('active');
-			menu.classList.toggle('active');
+		if (menuButton) {
+			menuButton.addEventListener('click', (e) => {
+				e.stopPropagation();
+				toggleMainMenu();
+			});
 		}
 
-		function closeAllMenus() {
-			menuOverlay.classList.remove('active');
-			menu.classList.remove('active');
-			instructionsModal.classList.remove('active');
-			settingsModal.classList.remove('active');
-			aboutModal.classList.remove('active');
-			keyboardHelpModal.classList.remove('active');
+		if (menuClose) {
+			menuClose.addEventListener('click', () => toggleMainMenu(false));
 		}
 
-		document.getElementById('menu-btn').addEventListener('click', toggleMenu);
-		menuOverlay.addEventListener('click', closeAllMenus);
-		menuClose.addEventListener('click', closeAllMenus);
+		if (menuOverlay) {
+			menuOverlay.addEventListener('click', () => toggleMainMenu(false));
+		}
 
-		instructionsBtn.addEventListener('click', () => {
-			closeAllMenus();
-			setTimeout(() => instructionsModal.classList.add('active'), 300);
+		document.getElementById('openPresentationSub').addEventListener('click', (e) => {
+			e.stopPropagation();
+			openSubmenu(subPresentation);
+		});
+		document.getElementById('openSettingsSub').addEventListener('click', (e) => {
+			e.stopPropagation();
+			openSubmenu(subSettings);
+		});
+		document.getElementById('openShortcutsSub').addEventListener('click', (e) => {
+			e.stopPropagation();
+			openSubmenu(subShortcuts);
+		});
+		document.getElementById('openAboutSub').addEventListener('click', (e) => {
+			e.stopPropagation();
+			openSubmenu(subAbout);
 		});
 
-		settingsBtn.addEventListener('click', () => {
-			closeAllMenus();
-			setTimeout(() => settingsModal.classList.add('active'), 300);
+		document.querySelectorAll('.submenu-close').forEach(btn => {
+			btn.addEventListener('click', (e) => {
+				e.stopPropagation();
+				closeAllSubmenus();
+			});
 		});
 
-		aboutBtn.addEventListener('click', () => {
-			closeAllMenus();
-			setTimeout(() => aboutModal.classList.add('active'), 300);
+		if (slideMenu) {
+			slideMenu.addEventListener('click', (e) => e.stopPropagation());
+		}
+		submenus.forEach(s => {
+			if (s) s.addEventListener('click', (e) => e.stopPropagation());
 		});
 
-		keyboardHelpBtn.addEventListener('click', showKeyboardHelp);
-
-		instructionsClose.addEventListener('click', () => instructionsModal.classList.remove('active'));
-		settingsClose.addEventListener('click', () => settingsModal.classList.remove('active'));
-		aboutClose.addEventListener('click', () => aboutModal.classList.remove('active'));
-		keyboardHelpClose.addEventListener('click', () => keyboardHelpModal.classList.remove('active'));
+		if (darkModeToggle) {
+			darkModeToggle.addEventListener('change', function(e) {
+				body.classList.toggle('dark-mode', e.target.checked);
+				localStorage.setItem('darkMode', e.target.checked);
+			});
+		}
 
 		function toggleFullscreen() {
 			if (!document.fullscreenElement) {
@@ -1702,7 +1806,9 @@
 			}
 		}
 
-		fullscreenBtn.addEventListener('click', toggleFullscreen);
+		if (fullscreenBtn) {
+			fullscreenBtn.addEventListener('click', toggleFullscreen);
+		}
 
 		document.addEventListener('fullscreenchange', () => {
 			const isFullscreen = !!document.fullscreenElement;
@@ -1727,28 +1833,50 @@
 			setTimeout(adjustCardHeights, 100);
 		});
 
-		reloadBtn.addEventListener('click', () => location.reload());
-		homeBtn.addEventListener('click', () => {
-			window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
-		});
+		if (reloadBtn) {
+			reloadBtn.addEventListener('click', () => {
+				location.reload();
+			});
+		}
+		
+		if (homeBtn) {
+			homeBtn.addEventListener('click', () => {
+				window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+			});
+		}
 
 		window.addEventListener('load', () => {
+			if (progressBar) {
+				progressBar.style.transition = 'none';
+				progressBar.style.width = '0%';
+			}
+			
 			rearrangeToolbarForScreen();
 			adjustCardHeights();
-			setTimeout(updateProgress, 200);
-		});
-		
-		window.addEventListener('resize', () => {
-			rearrangeToolbarForScreen();
-			adjustCardHeights();
+			
 			const activeOnglet = document.querySelector('.onglet.active');
 			if (activeOnglet) {
 				const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
-				const leftBtnId = carouselId === 'carousel-1' ? 'scroll-left-1' : 'scroll-left-2';
-				const rightBtnId = carouselId === 'carousel-1' ? 'scroll-right-1' : 'scroll-right-2';
-				updateButtonsVisibility(carouselId, leftBtnId, rightBtnId);
-				updateProgress();
+				const carousel = document.getElementById(carouselId);
+				if (carousel) {
+					carousel.scrollLeft = 0;
+				}
 			}
+			
+			setTimeout(() => {
+				if (progressBar) {
+					progressBar.style.transition = 'width 0.3s ease';
+				}
+				updateButtonsVisibilityForActiveCarousel();
+				updateProgress();
+			}, 50);
+		});
+
+		window.addEventListener('resize', () => {
+			rearrangeToolbarForScreen();
+			adjustCardHeights();
+			updateButtonsVisibilityForActiveCarousel();
+			updateProgress();
 		});
 
 		function switchOnglet(showInterp) {
@@ -1766,23 +1894,35 @@
 			}
 
 			setTimeout(() => {
-				const activeOnglet = document.querySelector('.onglet.active');
-				if (activeOnglet) {
-					const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
-					const leftBtnId = carouselId === 'carousel-1' ? 'scroll-left-1' : 'scroll-left-2';
-					const rightBtnId = carouselId === 'carousel-1' ? 'scroll-right-1' : 'scroll-right-2';
-					updateButtonsVisibility(carouselId, leftBtnId, rightBtnId);
-					updateProgress();
-				}
+				updateButtonsVisibilityForActiveCarousel();
+				updateProgress();
 				adjustCardHeights();
 			}, 100);
 		}
 
 		switchOnglet(false);
 
-		switchInput.addEventListener('change', function () {
-			switchOnglet(this.checked);
-		});
+		if (switchInput) {
+			switchInput.addEventListener('change', function () {
+				switchOnglet(this.checked);
+			});
+		}
+
+		function getActiveCarouselId() {
+			const activeOnglet = document.querySelector('.onglet.active');
+			if (!activeOnglet) return null;
+			return activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
+		}
+
+		function updateButtonsVisibilityForActiveCarousel() {
+			const carouselId = getActiveCarouselId();
+			if (!carouselId) return;
+			
+			const leftBtnId = carouselId === 'carousel-1' ? 'scroll-left-1' : 'scroll-left-2';
+			const rightBtnId = carouselId === 'carousel-1' ? 'scroll-right-1' : 'scroll-right-2';
+			
+			updateButtonsVisibility(carouselId, leftBtnId, rightBtnId);
+		}
 
 		function updateButtonsVisibility(carouselId, leftBtnId, rightBtnId) {
 			const carousel = document.getElementById(carouselId);
@@ -1859,7 +1999,60 @@
 			}, 10);
 		}
 
+		function getEffectiveScrollPosition(carousel) {
+			if (!carousel) return 0;
+			
+			const firstItem = carousel.querySelector('.carousel-item');
+			if (!firstItem) return 0;
+			
+			const itemRect = firstItem.getBoundingClientRect();
+			const containerRect = carousel.getBoundingClientRect();
+			
+			if (itemRect.left >= containerRect.left) {
+				return 0;
+			}
+			
+			return containerRect.left - itemRect.left;
+		}
+
+		function getEffectiveMaxScroll(carousel) {
+			if (!carousel) return 0;
+			
+			const items = carousel.querySelectorAll('.carousel-item');
+			if (items.length === 0) return 0;
+			
+			const lastItem = items[items.length - 1];
+			const containerRect = carousel.getBoundingClientRect();
+			const lastItemRect = lastItem.getBoundingClientRect();
+			
+			const firstItem = items[0];
+			const firstItemRect = firstItem.getBoundingClientRect();
+			
+			return (lastItemRect.right - containerRect.right) + 
+				 (containerRect.left - firstItemRect.left);
+		}
+
 		function updateProgress() {
+			const activeOnglet = document.querySelector('.onglet.active');
+			if (!activeOnglet || !progressBar) return;
+
+			const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
+			const carousel = document.getElementById(carouselId);
+			if (!carousel) return;
+
+			const effectiveScroll = getEffectiveScrollPosition(carousel);
+			const effectiveMaxScroll = getEffectiveMaxScroll(carousel);
+			
+			let percentage = 0;
+			if (effectiveMaxScroll > 0) {
+				percentage = (effectiveScroll / effectiveMaxScroll) * 100;
+				percentage = Math.min(100, Math.max(0, percentage));
+			}
+			
+			progressBar.style.width = percentage + '%';
+		}
+		
+		function handleProgressBarClick(e) {
 			const activeOnglet = document.querySelector('.onglet.active');
 			if (!activeOnglet) return;
 
@@ -1867,9 +2060,36 @@
 			const carousel = document.getElementById(carouselId);
 			if (!carousel) return;
 
-			const maxScroll = Math.max(0, carousel.scrollWidth - carousel.clientWidth);
-			const percentage = maxScroll > 0 ? (carousel.scrollLeft / maxScroll) * 100 : 0;
-			progressBar.style.width = percentage + '%';
+			const rect = progressContainer.getBoundingClientRect();
+			const clickX = e.clientX - rect.left;
+			const containerWidth = rect.width;
+			const clickPercentage = Math.max(0, Math.min(1, clickX / containerWidth));
+			
+			const items = carousel.querySelectorAll('.carousel-item');
+			if (items.length === 0) return;
+			
+			const effectiveMaxScroll = getEffectiveMaxScroll(carousel);
+			
+			const targetScroll = clickPercentage * effectiveMaxScroll;
+			
+			const firstItem = items[0];
+			const itemWidth = firstItem.offsetWidth;
+			const gap = parseInt(window.getComputedStyle(carousel).gap) || 8;
+			
+			let closestIndex = 0;
+			let minDiff = Infinity;
+			
+			for (let i = 0; i < items.length; i++) {
+				const itemPosition = i * (itemWidth + gap);
+				const diff = Math.abs(itemPosition - targetScroll);
+				
+				if (diff < minDiff) {
+					minDiff = diff;
+					closestIndex = i;
+				}
+			}
+			
+			scrollToPalier(closestIndex);
 		}
 
 		function setupCarouselNavigation(carouselId, leftBtnId, rightBtnId) {
@@ -1894,6 +2114,10 @@
 
 			updateButtonsVisibility(carouselId, leftBtnId, rightBtnId);
 		}
+		
+		if (progressContainer) {
+			progressContainer.addEventListener('click', handleProgressBarClick);
+		}
 
 		setupCarouselNavigation('carousel-1', 'scroll-left-1', 'scroll-right-1');
 		setupCarouselNavigation('carousel-2', 'scroll-left-2', 'scroll-right-2');
@@ -1907,7 +2131,7 @@
 
 			if (key === 'm') {
 				e.preventDefault();
-				toggleMenu();
+				toggleMainMenu();
 			}
 			else if (key === 'f') {
 				e.preventDefault();
@@ -1923,13 +2147,13 @@
 			}
 			else if (key === '?') {
 				e.preventDefault();
-				showKeyboardHelp();
+				openSubmenu(subShortcuts);
 			}
 			else if (e.key === 'Escape') {
-				if (document.querySelector('.modal.active')) {
-					closeAllMenus();
-				} else if (menu.classList.contains('active')) {
-					closeAllMenus();
+				if (document.querySelector('.submenu.active')) {
+					closeAllSubmenus();
+				} else if (slideMenu.classList.contains('active')) {
+					toggleMainMenu(false);
 				} else if (document.fullscreenElement) {
 					document.exitFullscreen();
 				}
@@ -1968,9 +2192,6 @@
 				}
 			}
 		});
-
-		const observer = new MutationObserver(adjustCardHeights);
-		observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 	</script>
 </body>
 </html>
