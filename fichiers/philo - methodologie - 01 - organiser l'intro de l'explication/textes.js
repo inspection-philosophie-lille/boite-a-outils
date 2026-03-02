@@ -14,11 +14,11 @@ const textes = [
     <span class="phrase-num">[10]</span> En somme, l'art est indispensable à notre humanité. 
     »`,
     reponses: {
-      origine: "Platon, *La République*, Paris : Les Belles Lettres, 2016, p. 125.",
+      origine: "Platon, <i>La République</i>, Paris : Les Belles Lettres, 2016, p. 125.",
       theme: "L’art",
       these: "L'art permet d'accéder à la vérité au-delà des apparences.",
       interet: "Il éveille les émotions et suscite la réflexion.",
-      problematique: "L'art a-t-il pour vocation de représenter fidèlement le monde réel, ou bien sa véritable force réside-t-elle dans sa capacité à créer des univers imaginaires qui nous font échapper à la réalité ?"
+      problematique: "L'art a-t-il pour vocation de représenter fidèlement le monde réel ou bien sa véritable force réside-t-elle dans sa capacité à créer des univers imaginaires qui nous font échapper à la réalité ?"
     }
   },
   {
@@ -36,11 +36,11 @@ const textes = [
     <span class="phrase-num">[10]</span> Ainsi, apprendre à apprécier chaque moment devient un art en soi. 
     »`,
     reponses: {
-      origine: "Épicure, *Lettre à Ménécée*, Genève : Éditions de l'Atlantique, 2015, p. 37.",
+      origine: "Épicure, <i>Lettre à Ménécée</i>, Genève : Éditions de l'Atlantique, 2015, p. 37.",
       theme: "Le bonheur",
       these: "Le bonheur véritable réside dans la simplicité et l'amitié.",
       interet: "Il nous enseigne à apprécier les petites choses de la vie.",
-      problematique: "Le bonheur dépend-il de la satisfaction de nos désirs, ou bien repose-t-il sur notre capacité à les réguler et à nous contenter de ce que nous avons ?"
+      problematique: "Le bonheur dépend-il de la satisfaction de nos désirs ou bien repose-t-il sur notre capacité à les réguler et à nous contenter de ce que nous avons ?"
     }
   },
   {
@@ -58,11 +58,11 @@ const textes = [
     <span class="phrase-num">[10]</span> Il est vital de nourrir notre conscience par la réflexion. 
     »`,
     reponses: {
-      origine: "Socrate, *Les dialogues*, Paris : Gallimard, 2018, p. 173.",
+      origine: "Socrate, <i>Les dialogues</i>, Paris : Gallimard, 2018, p. 173.",
       theme: "La conscience",
       these: "La conscience guide nos choix moraux et éthiques.",
       interet: "Elle est essentielle pour vivre une vie harmonieuse.",
-      problematique: "La conscience morale est-elle une voix intérieure innée et universelle, ou bien est-elle le produit de notre éducation, de notre culture et de nos expériences personnelles ?"
+      problematique: "La conscience morale est-elle une voix intérieure innée et universelle ou bien est-elle le produit de notre éducation, de notre culture et de nos expériences personnelles ?"
     }
   },
   {
@@ -80,11 +80,11 @@ const textes = [
     <span class="phrase-num">[10]</span> En somme, le devoir est la clé de notre moralité. 
     »`,
     reponses: {
-      origine: "Kant, *Fondements de la métaphysique des mœurs*, Paris : Presses Universitaires de France, 2017, p. 202.",
+      origine: "Kant, <i>Fondements de la métaphysique des mœurs</i>, Paris : Presses Universitaires de France, 2017, p. 202.",
       theme: "Le devoir",
       these: "Le devoir est la base de toutes les actions morales.",
       interet: "Il nous pousse à agir avec intégrité.",
-      problematique: "Le devoir moral s'impose-t-il à nous de manière universelle et inconditionnelle, ou ses exigences varient-elles en fonction des situations particulières et de leurs conséquences ?"
+      problematique: "Le devoir moral s'impose-t-il à nous de manière universelle et inconditionnelle ou ses exigences varient-elles en fonction des situations particulières et de leurs conséquences ?"
     }
   },
   {
@@ -102,11 +102,11 @@ const textes = [
     <span class="phrase-num">[10]</span> En fin de compte, l'État doit servir le bien commun. 
     »`,
     reponses: {
-      origine: "Platon, *La République*, Paris : Les Belles Lettres, 2016, p. 143.",
+      origine: "Platon, <i>La République</i>, Paris : Les Belles Lettres, 2016, p. 143.",
       theme: "L’État",
       these: "L'État doit être un modèle de justice et de vertu.",
       interet: "Sa fonction essentielle est d'assurer la paix sociale.",
-      problematique: "L'État doit-il prioriser la protection des libertés individuelles, quitte à accepter une certaine insécurité, ou doit-il avant tout garantir la sécurité et l'ordre collectif, au risque de restreindre ces libertés ?"
+      problematique: "L'État doit-il prioriser la protection des libertés individuelles, quitte à accepter une certaine insécurité ou doit-il avant tout garantir la sécurité et l'ordre collectif, au risque de restreindre ces libertés ?"
     }
   },
   {
@@ -124,11 +124,11 @@ const textes = [
     <span class="phrase-num">[10]</span> L'inconscient est un territoire à explorer, riche en découvertes. 
     »`,
     reponses: {
-      origine: "Freud, *L'interprétation des rêves*, Paris : Éditions Payot, 2001, p. 58.",
+      origine: "Freud, <i>L'interprétation des rêves</i>, Paris : Éditions Payot, 2001, p. 58.",
       theme: "L’inconscient",
       these: "Nos désirs inconscients peuvent influencer notre comportement.",
       interet: "Comprendre l'inconscient nous aide à mieux nous connaître.",
-      problematique: "Sommes-nous véritablement les auteurs conscients de nos actes et de nos choix, ou bien sommes-nous, à notre insu, largement déterminés par des forces psychiques qui nous échappent ?"
+      problematique: "Sommes-nous véritablement les auteurs conscients de nos actes et de nos choix ou bien sommes-nous, à notre insu, largement déterminés par des forces psychiques qui nous échappent ?"
     }
   },
   {
@@ -146,11 +146,11 @@ const textes = [
     <span class="phrase-num">[10]</span> En somme, la justice est essentielle pour l'épanouissement humain. 
     »`,
     reponses: {
-      origine: "Aristote, *Éthique à Nicomaque*, Éditions PQR, 2014, p. 89.",
+      origine: "Aristote, <i>Éthique à Nicomaque</i>, Éditions PQR, 2014, p. 89.",
       theme: "La justice",
       these: "La justice est la vertu qui garantit l'harmonie sociale.",
       interet: "Elle assure l'équité entre tous les citoyens.",
-      problematique: "La justice exige-t-elle de traiter tous les individus de manière strictement identique, ou bien commande-t-elle au contraire de traiter les cas particuliers de façon différenciée pour corriger des inégalités ?"
+      problematique: "La justice exige-t-elle de traiter tous les individus de manière strictement identique ou bien commande-t-elle au contraire de traiter les cas particuliers de façon différenciée pour corriger des inégalités ?"
     }
   },
   {
@@ -168,11 +168,11 @@ const textes = [
     <span class="phrase-num">[10]</span> Il est donc essentiel de l'utiliser avec soin. 
     »`,
     reponses: {
-      origine: "Saussure, *Cours de linguistique générale*, Éditions STU, 2003, p. 45.",
+      origine: "Saussure, <i>Cours de linguistique générale</i>, Éditions STU, 2003, p. 45.",
       theme: "Le langage",
       these: "Le langage structure notre perception de la réalité.",
       interet: "Il est essentiel pour la communication et les relations interpersonnelles.",
-      problematique: "Le langage est-il principalement un instrument de communication, un outil neutre pour exprimer une pensée préexistante, ou est-il la condition même de la pensée, ce qui la structure et en détermine les limites ?"
+      problematique: "Le langage est-il principalement un instrument de communication, un outil neutre pour exprimer une pensée préexistante ou est-il la condition même de la pensée, ce qui la structure et en détermine les limites ?"
     }
   },
   {
@@ -190,11 +190,11 @@ const textes = [
     <span class="phrase-num">[10]</span> En conclusion, défendre la liberté, c'est défendre notre humanité. 
     »`,
     reponses: {
-      origine: "Rousseau, *Du Contrat Social*, Éditions VWX, 1999, p. 67.",
+      origine: "Rousseau, <i>Du Contrat Social</i>, Éditions VWX, 1999, p. 67.",
       theme: "La liberté",
       these: "La vraie liberté ne peut exister sans responsabilité sociale.",
       interet: "Elle est indispensable à la démocratie.",
-      problematique: "La liberté se définit-elle essentiellement comme l'absence de contraintes extérieures et la possibilité de faire ce que l'on veut, ou suppose-t-elle au contraire le respect de règles et de limites qui seules rendent possible la vie en société ?"
+      problematique: "La liberté se définit-elle essentiellement comme l'absence de contraintes extérieures et la possibilité de faire ce que l'on veut ou suppose-t-elle au contraire le respect de règles et de limites qui seules rendent possible la vie en société ?"
     }
   },
   {
@@ -212,11 +212,11 @@ const textes = [
     <span class="phrase-num">[10]</span> En définitive, elle est à la fois notre refuge et notre origine. 
     »`,
     reponses: {
-      origine: "Zhuangzi, *Le livre de Zhuangzi*, Éditions STU, 2014, p. 89.",
+      origine: "Zhuangzi, <i>Le livre de Zhuangzi</i>, Éditions STU, 2014, p. 89.",
       theme: "La nature",
       these: "La nature doit être protégée pour préserver nos ressources.",
       interet: "Elle nous relie à une existence plus holistique.",
-      problematique: "La nature constitue-t-elle un idéal d'harmonie et un modèle à suivre pour l'homme, ou bien n'est-elle qu'un réservoir de ressources qu'il est en droit d'exploiter pour satisfaire ses besoins et assurer son progrès ?"
+      problematique: "La nature constitue-t-elle un idéal d'harmonie et un modèle à suivre pour l'homme ou bien n'est-elle qu'un réservoir de ressources qu'il est en droit d'exploiter pour satisfaire ses besoins et assurer son progrès ?"
     }
   },
   {
@@ -234,11 +234,11 @@ const textes = [
     <span class="phrase-num">[10]</span> En résumé, la science doit être au service de l'humanité. 
     »`,
     reponses: {
-      origine: "Popper, *La logique de la découverte scientifique*, Éditions JKL, 2015.",
+      origine: "Popper, <i>La logique de la découverte scientifique</i>, Éditions JKL, 2015.",
       theme: "La science",
       these: "La science doit se soumettre à des principes éthiques.",
       interet: "Elle éclaire notre compréhension du monde.",
-      problematique: "La science a-t-elle pour unique finalité la compréhension désintéressée du monde, ou doit-elle avant tout être mise au service de l'action humaine et de la transformation technique de notre environnement ?"
+      problematique: "La science a-t-elle pour unique finalité la compréhension désintéressée du monde ou doit-elle avant tout être mise au service de l'action humaine et de la transformation technique de notre environnement ?"
     }
   },
   {
@@ -256,11 +256,11 @@ const textes = [
     <span class="phrase-num">[10]</span> La technique doit être un moyen, pas une finalité. 
     »`,
     reponses: {
-      origine: "Heidegger, *La question de la technique*, Éditions STU, 2015.",
+      origine: "Heidegger, <i>La question de la technique</i>, Éditions STU, 2015.",
       theme: "La technique",
       these: "La technique pose des questions éthiques.",
       interet: "Elle influence notre rapport à la nature et à l'homme.",
-      problematique: "La technique est-elle un facteur de libération humaine, en nous affranchissant des contraintes naturelles et en augmentant nos capacités, ou est-elle au contraire une source d'aliénation qui finit par nous dominer et déshumaniser nos rapports au monde ?"
+      problematique: "La technique est-elle un facteur de libération humaine, en nous affranchissant des contraintes naturelles et en augmentant nos capacités ou est-elle au contraire une source d'aliénation qui finit par nous dominer et déshumaniser nos rapports au monde ?"
     }
   },
   {
@@ -278,11 +278,11 @@ const textes = [
     <span class="phrase-num">[10]</span> Le temps, ce maître impitoyable, nous rappelle notre mortalité. 
     »`,
     reponses: {
-      origine: "Bergson, *Essai sur les données immédiates de la conscience*, Éditions ABC, 2020.",
+      origine: "Bergson, <i>Essai sur les données immédiates de la conscience</i>, Éditions ABC, 2020.",
       theme: "Le temps",
       these: "Le temps vécu diffère du temps mesuré.",
       interet: "Il façonne nos souvenirs et nos attentes.",
-      problematique: "Le temps est-il une réalité objective et universelle, qui s'écoule indépendamment de nous, ou bien n'est-il qu'une construction de notre conscience, une manière subjective de percevoir et d'organiser notre expérience du monde ?"
+      problematique: "Le temps est-il une réalité objective et universelle, qui s'écoule indépendamment de nous ou bien n'est-il qu'une construction de notre conscience, une manière subjective de percevoir et d'organiser notre expérience du monde ?"
     }
   },
   {
@@ -300,11 +300,11 @@ const textes = [
     <span class="phrase-num">[10]</span> En fin de compte, le bonheur doit être vu comme un état d'esprit. 
     »`,
     reponses: {
-      origine: "Aristote, *Éthique à Nicomaque*, Éditions DEF, 2014.",
+      origine: "Aristote, <i>Éthique à Nicomaque</i>, Éditions DEF, 2014.",
       theme: "Le bonheur",
       these: "Le bonheur dépend de l'équilibre entre plaisirs et raison.",
       interet: "Il est intimement lié à notre moralité.",
-      problematique: "Le bonheur est-il un état stable et durable que l'on peut atteindre, ou bien est-il une quête perpétuelle, un idéal que l'on poursuit sans jamais pouvoir le saisir complètement ?"
+      problematique: "Le bonheur est-il un état stable et durable que l'on peut atteindre ou bien est-il une quête perpétuelle, un idéal que l'on poursuit sans jamais pouvoir le saisir complètement ?"
     }
   },
   {
@@ -322,11 +322,11 @@ const textes = [
     <span class="phrase-num">[10]</span> Que signifie vraiment chercher la vérité dans nos vies ? 
     »`,
     reponses: {
-      origine: "Nietzsche, *Par-delà le bien et le mal*, Éditions MNO, 2004.",
+      origine: "Nietzsche, <i>Par-delà le bien et le mal</i>, Éditions MNO, 2004.",
       theme: "La vérité",
       these: "La vérité est souvent subjective et contextuelle.",
       interet: "Son étude permet de mieux comprendre l'humanité.",
-      problematique: "Existe-t-il une vérité universelle, valable pour tous les êtres humains en tous temps et en tous lieux, ou bien la vérité est-elle toujours relative à une culture, une époque, ou un point de vue individuel ?"
+      problematique: "Existe-t-il une vérité universelle, valable pour tous les êtres humains en tous temps et en tous lieux ou bien la vérité est-elle toujours relative à une culture, une époque ou un point de vue individuel ?"
     }
   },
   {
@@ -344,11 +344,11 @@ const textes = [
     <span class="phrase-num">[10]</span> La nature est à la fois notre berceau et notre refuge. 
     »`,
     reponses: {
-      origine: "Zhuangzi, *Le livre de Zhuangzi*, Éditions QRS, 2014.",
+      origine: "Zhuangzi, <i>Le livre de Zhuangzi</i>, Éditions QRS, 2014.",
       theme: "La nature",
       these: "La nature doit être protégée pour préserver nos ressources.",
       interet: "Elle nous relie à une existence plus holistique.",
-      problematique: "La nature est-elle un bien commun sacré qu'il est de notre devoir de protéger pour elle-même, ou est-elle avant tout un réservoir de ressources que nous devons gérer de manière rationnelle pour assurer la survie et le bien-être de l'humanité ?"
+      problematique: "La nature est-elle un bien commun sacré qu'il est de notre devoir de protéger pour elle-même ou est-elle avant tout un réservoir de ressources que nous devons gérer de manière rationnelle pour assurer la survie et le bien-être de l'humanité ?"
     }
   },
   {
@@ -366,11 +366,11 @@ const textes = [
     <span class="phrase-num">[10]</span> Au fond, le travail doit être une source de fierté. 
     »`,
     reponses: {
-      origine: "Marx, *Le Capital*, Éditions PQR, 2018.",
+      origine: "Marx, <i>Le Capital</i>, Éditions PQR, 2018.",
       theme: "Le travail",
       these: "Le travail est central dans la vie économique et sociale.",
       interet: "Il définit notre identité et notre place dans la société.",
-      problematique: "Le travail est-il un facteur d'épanouissement personnel et de réalisation de soi, ou bien est-il fondamentalement une contrainte sociale et une activité aliénante qui nous détourne de notre humanité ?"
+      problematique: "Le travail est-il un facteur d'épanouissement personnel et de réalisation de soi ou bien est-il fondamentalement une contrainte sociale et une activité aliénante qui nous détourne de notre humanité ?"
     }
   },
   {
@@ -388,11 +388,11 @@ const textes = [
     <span class="phrase-num">[10]</span> La quête de la connaissance exige humilité et ouverture d'esprit. 
     »`,
     reponses: {
-      origine: "Popper, *La logique de la découverte scientifique*, Éditions JKL, 2015.",
+      origine: "Popper, <i>La logique de la découverte scientifique</i>, Éditions JKL, 2015.",
       theme: "La science",
       these: "La science doit se soumettre à des principes éthiques.",
       interet: "Elle éclaire notre compréhension du monde.",
-      problematique: "La science parvient-elle à une connaissance objective et neutre du réel, ou bien ses théories et ses résultats sont-ils toujours influencés par le contexte social, historique et culturel dans lequel elle se développe ?"
+      problematique: "La science parvient-elle à une connaissance objective et neutre du réel ou bien ses théories et ses résultats sont-ils toujours influencés par le contexte social, historique et culturel dans lequel elle se développe ?"
     }
   },
   {
@@ -410,11 +410,11 @@ const textes = [
     <span class="phrase-num">[10]</span> En fin de compte, la vérité est une lumière qui éclaire notre chemin. 
     »`,
     reponses: {
-      origine: "Nietzsche, *Par-delà le bien et le mal*, Éditions MNO, 2004.",
+      origine: "Nietzsche, <i>Par-delà le bien et le mal</i>, Éditions MNO, 2004.",
       theme: "La vérité",
       these: "La vérité est souvent une construction sociale.",
       interet: "Son étude permet de mieux comprendre l'humanité.",
-      problematique: "La vérité a-t-elle un caractère absolu et intemporel, ou bien est-elle toujours relative, changeante et dépendante du point de vue de celui qui l'énonce ?"
+      problematique: "La vérité a-t-elle un caractère absolu et intemporel ou bien est-elle toujours relative, changeante et dépendante du point de vue de celui qui l'énonce ?"
     }
   },
   {
@@ -432,11 +432,11 @@ const textes = [
     <span class="phrase-num">[10]</span> En somme, la technique doit être un voyage vers la liberté. 
     »`,
     reponses: {
-      origine: "Heidegger, *La question de la technique*, Éditions STU, 2015.",
+      origine: "Heidegger, <i>La question de la technique</i>, Éditions STU, 2015.",
       theme: "La technique",
       these: "La technique pose des questions éthiques.",
       interet: "Elle influence notre rapport à la nature et à l'homme.",
-      problematique: "La technique est-elle un instrument neutre que l'homme peut maîtriser et orienter vers le bien, ou bien est-elle porteuse d'une logique propre qui finit par imposer sa loi à la société et à l'individu ?"
+      problematique: "La technique est-elle un instrument neutre que l'homme peut maîtriser et orienter vers le bien ou bien est-elle porteuse d'une logique propre qui finit par imposer sa loi à la société et à l'individu ?"
     }
   },
   {
@@ -454,11 +454,11 @@ const textes = [
     <span class="phrase-num">[10]</span> Le travail bien fait mérite d'être célébré et respecté. 
     »`,
     reponses: {
-      origine: "Marx, *Le Capital*, Éditions PQR, 2018.",
+      origine: "Marx, <i>Le Capital</i>, Éditions PQR, 2018.",
       theme: "Le travail",
       these: "Le travail est central dans la vie économique et sociale.",
       interet: "Il définit notre identité et notre place dans la société.",
-      problematique: "Le travail est-il ce par quoi l'homme transforme le monde et s'accomplit en tant qu'être créateur, ou est-il l'activité par laquelle il se soumet à des contraintes extérieures et perd sa liberté ?"
+      problematique: "Le travail est-il ce par quoi l'homme transforme le monde et s'accomplit en tant qu'être créateur ou est-il l'activité par laquelle il se soumet à des contraintes extérieures et perd sa liberté ?"
     }
   },
   {
@@ -476,11 +476,11 @@ const textes = [
     <span class="phrase-num">[10]</span> La nature nous enseigne les valeurs d'humilité et de respect. 
     »`,
     reponses: {
-      origine: "Zhuangzi, *Le livre de Zhuangzi*, Éditions STU, 2014.",
+      origine: "Zhuangzi, <i>Le livre de Zhuangzi</i>, Éditions STU, 2014.",
       theme: "La nature",
       these: "La nature doit être protégée pour préserver nos ressources.",
       interet: "Elle nous relie à une existence plus holistique.",
-      problematique: "La nature est-elle une source inépuisable de richesses mise à la disposition de l'homme, ou bien est-elle un milieu vivant et fragile avec lequel l'homme doit apprendre à coexister et à dialoguer ?"
+      problematique: "La nature est-elle une source inépuisable de richesses mise à la disposition de l'homme ou bien est-elle un milieu vivant et fragile avec lequel l'homme doit apprendre à coexister et à dialoguer ?"
     }
   },
   {
@@ -498,11 +498,11 @@ const textes = [
     <span class="phrase-num">[10]</span> La technique doit être sous le contrôle de valeurs éthiques. 
     »`,
     reponses: {
-      origine: "Heidegger, *La question de la technique*, Éditions DEF, 2015.",
+      origine: "Heidegger, <i>La question de la technique</i>, Éditions DEF, 2015.",
       theme: "La technique",
       these: "La technique pose des questions éthiques.",
       interet: "Elle influence notre rapport à la nature et à l'homme.",
-      problematique: "La technique est-elle un facteur de progrès et d'émancipation, ou représente-t-elle une menace pour l'autonomie humaine et l'équilibre de la planète ?"
+      problematique: "La technique est-elle un facteur de progrès et d'émancipation ou représente-t-elle une menace pour l'autonomie humaine et l'équilibre de la planète ?"
     }
   },
   {
@@ -520,11 +520,11 @@ const textes = [
     <span class="phrase-num">[10]</span> C'est un voyage inévitable que nous devons apprécier. 
     »`,
     reponses: {
-      origine: "Bergson, *Essai sur les données immédiates de la conscience*, Éditions GHI, 2020.",
+      origine: "Bergson, <i>Essai sur les données immédiates de la conscience</i>, Éditions GHI, 2020.",
       theme: "Le temps",
       these: "Le temps vécu diffère du temps mesuré.",
       interet: "Il façonne nos souvenirs et nos attentes.",
-      problematique: "Le temps est-il un flux continu et homogène que l'on peut mesurer, ou bien est-il une succession discontinue d'instants vécus, dont la qualité et la densité varient selon notre état de conscience ?"
+      problematique: "Le temps est-il un flux continu et homogène que l'on peut mesurer ou bien est-il une succession discontinue d'instants vécus, dont la qualité et la densité varient selon notre état de conscience ?"
     }
   },
   {
@@ -542,11 +542,11 @@ const textes = [
     <span class="phrase-num">[10]</span> Trouver le bonheur nécessite une exploration continue de soi. 
     »`,
     reponses: {
-      origine: "Aristote, *Éthique à Nicomaque*, Éditions DEF, 2014.",
+      origine: "Aristote, <i>Éthique à Nicomaque</i>, Éditions DEF, 2014.",
       theme: "Le bonheur",
       these: "Le bonheur dépend de l'équilibre entre plaisirs et raison.",
       interet: "Il est intimement lié à notre moralité.",
-      problematique: "Le bonheur réside-t-il dans la satisfaction de nos désirs et la poursuite du plaisir, ou bien se trouve-t-il dans une vie vertueuse et conforme à la raison ?"
+      problematique: "Le bonheur réside-t-il dans la satisfaction de nos désirs et la poursuite du plaisir ou bien se trouve-t-il dans une vie vertueuse et conforme à la raison ?"
     }
   },
   {
@@ -564,11 +564,11 @@ const textes = [
     <span class="phrase-num">[10]</span> La vérité est une lumière dans l'obscurité de l'incertitude. 
     »`,
     reponses: {
-      origine: "Nietzsche, *Par-delà le bien et le mal*, Éditions MNO, 2004.",
+      origine: "Nietzsche, <i>Par-delà le bien et le mal</i>, Éditions MNO, 2004.",
       theme: "La vérité",
       these: "La vérité est souvent une construction subjective.",
       interet: "Son étude permet de mieux comprendre l'humanité.",
-      problematique: "La vérité est-elle une et universelle, ou bien est-elle plurielle, changeante et dépendante du point de vue adopté ?"
+      problematique: "La vérité est-elle une et universelle ou bien est-elle plurielle, changeante et dépendante du point de vue adopté ?"
     }
   },
   {
@@ -586,11 +586,11 @@ const textes = [
     <span class="phrase-num">[10]</span> C'est une responsabilité collective d'assurer sa pérennité. 
     »`,
     reponses: {
-      origine: "Zhuangzi, *Le livre de Zhuangzi*, Éditions STU, 2014.",
+      origine: "Zhuangzi, <i>Le livre de Zhuangzi</i>, Éditions STU, 2014.",
       theme: "La nature",
       these: "La nature doit être protégée pour préserver nos ressources.",
       interet: "Elle nous relie à une existence plus holistique.",
-      problematique: "L'homme doit-il se considérer comme le maître et le possesseur de la nature, ou comme un élément parmi d'autres au sein d'un écosystème dont il dépend ?"
+      problematique: "L'homme doit-il se considérer comme le maître et le possesseur de la nature ou comme un élément parmi d'autres au sein d'un écosystème dont il dépend ?"
     }
   },
   {
@@ -608,11 +608,11 @@ const textes = [
     <span class="phrase-num">[10]</span> La sagesse est de l'utiliser avec discernement et éthique. 
     »`,
     reponses: {
-      origine: "Heidegger, *La question de la technique*, Éditions DEF, 2015.",
+      origine: "Heidegger, <i>La question de la technique</i>, Éditions DEF, 2015.",
       theme: "La technique",
       these: "La technique pose des questions éthiques.",
       interet: "Elle influence notre rapport à la nature et à l'homme.",
-      problematique: "La technique est-elle au service de l'homme et de son épanouissement, ou bien l'homme est-il devenu le rouage d'un système technique qui le dépasse et le conditionne ?"
+      problematique: "La technique est-elle au service de l'homme et de son épanouissement ou bien l'homme est-il devenu le rouage d'un système technique qui le dépasse et le conditionne ?"
     }
   },
   {
@@ -630,11 +630,11 @@ const textes = [
     <span class="phrase-num">[10]</span> La recherche est un voyage, pas un aboutissement. 
     »`,
     reponses: {
-      origine: "Popper, *La logique de la découverte scientifique*, Éditions JKL, 2015.",
+      origine: "Popper, <i>La logique de la découverte scientifique</i>, Éditions JKL, 2015.",
       theme: "La science",
       these: "La science doit se soumettre à des principes éthiques.",
       interet: "Elle éclaire notre compréhension du monde.",
-      problematique: "La science a-t-elle pour vocation première de décrire le monde tel qu'il est, ou bien de le transformer et de le rendre plus conforme aux besoins humains ?"
+      problematique: "La science a-t-elle pour vocation première de décrire le monde tel qu'il est ou bien de le transformer et de le rendre plus conforme aux besoins humains ?"
     }
   },
   {
@@ -652,11 +652,11 @@ const textes = [
     <span class="phrase-num">[10]</span> En somme, la nature doit être protégée par tous pour tous. 
     »`,
     reponses: {
-      origine: "Zhuangzi, *Le livre de Zhuangzi*, Éditions STU, 2014.",
+      origine: "Zhuangzi, <i>Le livre de Zhuangzi</i>, Éditions STU, 2014.",
       theme: "La nature",
       these: "La nature doit être protégée pour préserver nos ressources.",
       interet: "Elle nous relie à une existence plus holistique.",
-      problematique: "Devons-nous considérer la nature comme un simple décor ou un réservoir de ressources, ou bien comme un partenaire avec lequel nous devons entretenir une relation de respect et de réciprocité ?"
+      problematique: "Devons-nous considérer la nature comme un simple décor ou un réservoir de ressources ou bien comme un partenaire avec lequel nous devons entretenir une relation de respect et de réciprocité ?"
     }
   }
 ];
