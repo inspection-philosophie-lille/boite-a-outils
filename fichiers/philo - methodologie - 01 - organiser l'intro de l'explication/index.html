@@ -19,8 +19,8 @@
         }
 
         body {
-            max-width: 1800px; /* Encore plus large */
-            width: 98%; /* Plus large */
+            max-width: 1800px;
+            width: 98%;
             margin: 0 auto;
             padding: 15px 25px;
             font-family: Arial, sans-serif;
@@ -37,9 +37,7 @@
             color: red;
             font-size: clamp(24px, 8vw, 40px);
             font-weight: bold;
-            font-family: 'Muli', sans-serif;
             word-break: break-word;
-            text-transform: none;
         }
 
         .header-subtitle {
@@ -48,25 +46,16 @@
             color: black;
             font-size: clamp(16px, 5vw, 20px);
             line-height: 1.4;
-            text-transform: none;
         }
 
         .question-body {
-            margin: 0 0 0px;
             flex: 1;
             width: 100%;
         }
 
-        /* Style pour les numéros de phrase - Bleu 1919fb */
         .phrase-num {
             color: #1919fb;
-            margin-right: 0;
             display: inline-block;
-        }
-
-        /* Style pour les titres d'ouvrages */
-        .titre-ouvrage {
-            font-style: italic !important; /* Forcé pour être sûr */
         }
 
         /* Structure responsive pour le tableau */
@@ -74,14 +63,14 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 8px;
         }
 
         .table-row {
             display: flex;
             flex-direction: column;
             background: #ffffff;
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: 8px 8px 16px #b8b8b8, -8px -8px 16px #ffffff;
             transition: transform 0.3s;
             overflow: hidden;
@@ -93,25 +82,25 @@
 
         .keyword-cell {
             background: #f2f2f2;
-            padding: 12px 15px;
-			margin-right: -42px;
-			margin-left: -34px;
+            padding: 12px 20px;
             font-weight: bold;
             color: #333;
-            font-size: 14px; /* Fixé à 14px */
+            font-size: 14px;
+            text-align: center;
+            border-bottom: 2px solid #d0d0d0;
         }
 
         .answer-cell {
-            padding: 12px 15px;
-            min-height: 50px;
+            padding: 12px 20px;
+            min-height: 45px;
             background: #ffffff;
             cursor: move;
             word-break: break-word;
-            font-size: 14px; /* Fixé à 14px */
+            font-size: 14px;
             transition: background-color 0.3s;
         }
 
-        /* Version tablette/desktop */
+        /* Version tablette/desktop - COLONNE GAUCHE RÉDUITE */
         @media (min-width: 768px) {
             body {
                 max-width: 95%;
@@ -119,74 +108,65 @@
             }
 
             .responsive-table {
-                gap: 20px;
+                gap: 10px;
             }
 
             .table-row {
                 flex-direction: row;
-                border-radius: 25px;
+                border-radius: 20px;
             }
 
             .keyword-cell {
-                flex: 0 0 280px; /* Augmenté à 280px */
-                padding: 15px 25px;
+                flex: 0 0 140px; /* Réduit de 220px à 140px */
+                padding: 12px 15px; /* Padding horizontal réduit */
                 border-right: 2px solid #d0d0d0;
+                border-bottom: none;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                text-align: center;
-                background: #f2f2f2;
-                font-size: 14px;
+                white-space: nowrap; /* Empêche le retour à la ligne */
             }
 
             .answer-cell {
-                flex: 1;
-                padding: 15px 25px;
+                flex: 1; /* Prend tout l'espace restant */
+                padding: 12px 25px; /* Padding augmenté à droite */
                 display: flex;
                 align-items: center;
-                background: #ffffff;
-                font-size: 14px;
             }
         }
 
-        /* Version grand écran */
+        /* Version grand écran - ENCORE PLUS DE PLACE À DROITE */
         @media (min-width: 1024px) {
-            body {
-                max-width: 98%;
-                padding: 25px 50px;
-            }
-
             .keyword-cell {
-                flex: 0 0 350px; /* Encore plus large */
-                padding: 18px 30px;
-                font-size: 14px;
+                flex: 0 0 150px; /* Légèrement plus large mais toujours réduit */
+                padding: 12px 15px;
             }
 
             .answer-cell {
-                padding: 18px 30px;
-                font-size: 14px;
+                padding: 12px 30px; /* Plus de padding à droite */
             }
         }
 
         /* Version très grand écran */
         @media (min-width: 1440px) {
             .keyword-cell {
-                flex: 0 0 420px; /* Maximum */
-                padding: 20px 35px;
-                font-size: 14px;
+                flex: 0 0 160px; /* Reste contenu */
+                padding: 14px 15px;
             }
 
             .answer-cell {
-                padding: 20px 35px;
-                font-size: 14px;
+                padding: 14px 35px; /* Padding augmenté */
             }
         }
 
         /* Version écran ultra large */
         @media (min-width: 1920px) {
             .keyword-cell {
-                flex: 0 0 500px;
-                font-size: 14px;
+                flex: 0 0 170px; /* Reste contenu */
+            }
+            
+            .answer-cell {
+                padding: 14px 40px; /* Maximum de padding à droite */
             }
         }
 
@@ -206,9 +186,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px; /* Fixé à 14px */
+            font-size: 14px;
             height: 45px;
-            padding: 0 35px; /* Plus large */
+            padding: 0 35px;
             border: none;
             border-radius: 25px;
             background: #ffffff;
@@ -216,7 +196,7 @@
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 500;
-            min-width: 160px; /* Plus large */
+            min-width: 160px;
         }
 
         button:hover {
@@ -235,7 +215,7 @@
             box-shadow: 4px 4px 12px rgba(0,0,0,0.2) !important;
             transform: rotate(2deg);
             z-index: 1000;
-            padding: 15px 25px !important;
+            padding: 12px 20px !important;
             font-size: 14px !important;
         }
 
@@ -245,37 +225,26 @@
             border-radius: 20px !important;
         }
 
-        /* Conteneur du texte - plus large sur desktop */
+        /* Conteneur du texte */
         #contenuTexte {
             background: white;
-            padding: 25px 30px; /* Plus large */
+            padding: 25px 30px;
             border-radius: 25px;
-            margin: 15px 0 25px;
+            margin: 15px 0 20px;
             box-shadow: inset 4px 4px 8px #b8b8b8, inset -4px -4px 8px #ffffff;
-            font-size: 14px; /* Fixé à 14px */
+            font-size: 14px;
             line-height: 1.8;
             width: 100%;
         }
 
-        /* Style pour le texte à l'intérieur */
         #contenuTexte span.phrase-num {
             user-select: none;
-            font-size: 14px; /* Même taille */
+            font-size: 14px;
         }
-
-        /* Ajustements pour les très grands écrans */
-        @media (min-width: 1200px) {
-            #contenuTexte {
-                padding: 30px 40px;
-                font-size: 14px;
-            }
-        }
-
-        /* Pour être sûr que les titres soient en italique */
-        .titre-ouvrage, 
-        span.titre-ouvrage,
-        [class*="titre-ouvrage"] {
-            font-style: italic !important;
+        
+        /* Style pour préserver les espaces autour des balises i */
+        #contenuTexte i {
+            font-style: italic;
         }
     </style>
 </head>
@@ -290,23 +259,23 @@
     <section class="question-body">
         <div class="responsive-table" id="reponses">
             <div class="table-row">
-                <div class="keyword-cell"><div>Origine</div></div>
+                <div class="keyword-cell">Origine</div>
                 <div class="answer-cell" draggable="true"></div>
             </div>
             <div class="table-row">
-                <div class="keyword-cell"><div>Thème</div></div>
+                <div class="keyword-cell">Thème</div>
                 <div class="answer-cell" draggable="true"></div>
             </div>
             <div class="table-row">
-                <div class="keyword-cell"><div>Thèse</div></div>
+                <div class="keyword-cell">Thèse</div>
                 <div class="answer-cell" draggable="true"></div>
             </div>
             <div class="table-row">
-                <div class="keyword-cell"><div>Intérêt</div></div>
+                <div class="keyword-cell">Intérêt</div>
                 <div class="answer-cell" draggable="true"></div>
             </div>
             <div class="table-row">
-                <div class="keyword-cell"><div>Problématique</div></div>
+                <div class="keyword-cell">Problématique</div>
                 <div class="answer-cell" draggable="true"></div>
             </div>
         </div>
@@ -323,26 +292,20 @@
         $(document).ready(function() {
             const texteAleatoire = textes[Math.floor(Math.random() * textes.length)];
             
-            // Fonction pour convertir les titres entre * en italique
-            // Version améliorée qui préserve les espaces
-            function formaterTitres(contenu) {
-                // Remplacer tous les * par des spans avec la classe
-                // Cette regex capture les espaces avant et après s'ils existent
-                let contenuFormate = contenu.replace(/(\s*)\*([^*]+)\*(\s*)/g, function(match, espaceAvant, p1, espaceApres) {
-                    return espaceAvant + '<span class="titre-ouvrage">' + p1 + '</span>' + espaceApres;
-                });
-                
-                return contenuFormate;
+            // Fonction pour préserver les espaces autour des balises <i>
+            function preserverEspaces(contenu) {
+                // Ajoute un espace insécable avant et après chaque balise <i> si nécessaire
+                return contenu
+                    .replace(/(\S)<i>/g, '$1 <i>') // Espace avant si pas d'espace
+                    .replace(/<\/i>(\S)/g, '</i> $1'); // Espace après si pas d'espace
             }
             
-            // Appliquer le formatage au contenu
+            // Appliquer la préservation des espaces
             const contenuOriginal = texteAleatoire.contenu;
-            console.log("Contenu original:", contenuOriginal); // Pour déboguer
+            const contenuCorrige = preserverEspaces(contenuOriginal);
             
-            const contenuFormate = formaterTitres(contenuOriginal);
-            console.log("Contenu formaté:", contenuFormate); // Pour vérifier
-            
-            $('#contenuTexte').html(contenuFormate);
+            // Afficher le texte corrigé
+            $('#contenuTexte').html(contenuCorrige);
 
             const reponses = Object.values(texteAleatoire.reponses)
                                  .sort(() => Math.random() - 0.5);
@@ -351,11 +314,6 @@
             $('.answer-cell').each(function(index) {
                 $(this).html(reponses[index]);
             });
-
-            // Vérification manuelle que les spans sont bien ajoutés
-            setTimeout(function() {
-                console.log("Vérification des titres en italique:", $('.titre-ouvrage').length, "éléments trouvés");
-            }, 500);
 
             // Configuration du drag and drop
             $('.answer-cell').draggable({
@@ -366,7 +324,7 @@
                 helper: function() {
                     return $(this).clone().css({
                         'background': '#f2f2f2',
-                        'padding': '15px 25px',
+                        'padding': '12px 20px',
                         'border-radius': '20px',
                         'box-shadow': '4px 4px 12px rgba(0,0,0,0.2)',
                         'font-size': '14px'
