@@ -34,6 +34,9 @@
 		--progress-bg: rgba(0, 0, 0, 0.1);
 		--progress-fill: #ff0000;
 		--bottom-spacing: 40px;
+		--info-bg: #f0f0f0;
+		--info-border: #cccccc;
+		--info-color: #333333;
 	}
 
 	body.dark-mode {
@@ -54,6 +57,9 @@
 		--switch-text-inactive: #ffffff;
 		--progress-bg: rgba(255, 255, 255, 0.1);
 		--progress-fill: #ff4444;
+		--info-bg: #2a2a2a;
+		--info-border: #4a4a4a;
+		--info-color: #e0e0e0;
 		background: #1e1e1e;
 		color: #e0e0e0;
 	}
@@ -481,6 +487,8 @@
 		padding: 15px;
 		background: rgba(0,0,0,0.05);
 		border-radius: 10px;
+		width: calc(100% - 20px);
+		margin-left: 0;
 	}
 	
 	.settings-info p {
@@ -561,6 +569,7 @@
 		display: inline-block;
 		width: 44px;
 		height: 20px;
+		flex-shrink: 0;
 	}
 
 	.theme-switch input {
@@ -781,11 +790,63 @@
 		user-select: none;
 		-webkit-user-select: none;
 		touch-action: pan-y;
+		position: relative;
 	}
 
 	body.dark-mode .answer-cell {
 		background: #2d2d2d;
 		color: #e0e0e0;
+	}
+
+	/* Zone d'information en mode évaluation */
+	.evaluation-info {
+		background-color: var(--info-bg);
+		border: 2px solid var(--info-border);
+		border-radius: 16px;
+		padding: 15px 20px;
+		margin: 20px 0;
+		text-align: center;
+		font-size: 17px;
+		font-weight: 500;
+		color: var(--info-color);
+		box-shadow: var(--shadow-in);
+		transition: all 0.3s ease;
+		display: none;
+		width: 100%;
+	}
+
+	body.evaluation-mode .evaluation-info {
+		display: block;
+	}
+
+	/* Masquer tout le tableau (labels ET réponses) en mode évaluation */
+	body.evaluation-mode .responsive-table {
+		display: none;
+	}
+
+	/* Style pour le mode évaluation - masquer le contenu (conservé pour compatibilité) */
+	body.evaluation-mode .answer-cell {
+		color: transparent !important;
+		text-shadow: none !important;
+		background-color: var(--btn-bg) !important;
+		user-select: none;
+	}
+
+	body.evaluation-mode .answer-cell::before {
+		content: "⬤⬤⬤";
+		position: absolute;
+		left: 20px;
+		top: 50%;
+		transform: translateY(-50%);
+		color: var(--font-color);
+		opacity: 0.5;
+		font-size: 12px;
+		letter-spacing: 2px;
+		pointer-events: none;
+	}
+
+	body.evaluation-mode .answer-cell * {
+		visibility: hidden;
 	}
 
 	/* Style spécifique pour les italiques dans les cellules */
@@ -863,7 +924,7 @@
 			border-bottom: none;
 			display: flex;
 			align-items: center;
-			justify-content: center;
+			justify-content: right;
 		}
 
 		body.dark-mode .keyword-cell {
@@ -875,6 +936,11 @@
 			padding: 12px 25px;
 			display: flex;
 			align-items: center;
+		}
+
+		.evaluation-info {
+			font-size: 17px;
+			padding: 15px 20px;
 		}
 	}
 
@@ -1063,6 +1129,51 @@
 			justify-content: flex-end;
 		}
 	}
+
+	/* Styles pour les paramètres */
+	.settings-container {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		margin-bottom: 20px;
+		width: calc(100% - 20px);
+	}
+
+	.setting-item {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 5px 0;
+		width: 100%;
+	}
+
+	.setting-label {
+		font-size: 14px;
+		color: var(--font-color);
+	}
+
+	/* Style pour l'origine dupliquée avec italique uniquement sur le titre */
+	.texte-origin {
+		text-align: right;
+		margin-top: 25px;
+		font-size: inherit;
+		font-family: inherit;
+		display: block;
+		width: 100%;
+		clear: both;
+	}
+	
+	.texte-origin .titre-italique {
+		font-style: italic;
+	}
+	
+	/* Pour s'assurer que l'origine est bien séparée sur sa propre ligne */
+	.origine-container {
+		display: block;
+		width: 100%;
+		text-align: right;
+		margin-top: 20px;
+	}
 	</style>
 </head>
 <body>
@@ -1209,16 +1320,27 @@
 		</div>
 		<div class="submenu-title">paramètres</div>
 		
-		<div class="toggle-container">
-			<span class="toggle-label">mode sombre :</span>
-			<label class="theme-switch">
-				<input type="checkbox" id="darkModeToggle">
-				<span class="slider"></span>
-			</label>
+		<div class="settings-container">
+			<div class="setting-item">
+				<span class="setting-label">mode sombre</span>
+				<label class="theme-switch">
+					<input type="checkbox" id="darkModeToggle">
+					<span class="slider"></span>
+				</label>
+			</div>
+			
+			<div class="setting-item">
+				<span class="setting-label">mode évaluation</span>
+				<label class="theme-switch">
+					<input type="checkbox" id="evaluationToggle">
+					<span class="slider"></span>
+				</label>
+			</div>
 		</div>
 		
 		<div class="settings-info">
 			<p>Le mode sombre inverse les couleurs de l'interface pour afficher du texte clair sur un fond sombre, réduisant ainsi la fatigue oculaire dans les environnements peu éclairés.</p>
+			<p style="margin-top: 10px;">Le mode évaluation masque le contenu des réponses pour permettre une auto-évaluation. Raccourci clavier : <kbd>E</kbd></p>
 		</div>
 	</div>
 
@@ -1252,6 +1374,10 @@
 				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">ouvrir / fermer le menu</td>
 			</tr>
 			<tr>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>Évaluation</kbd> <kbd>E</kbd></td>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">activer/désactiver le mode évaluation</td>
+			</tr>
+			<tr>
 				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>ESC</kbd></td>
 				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">fermer les menus</td>
 			</tr>
@@ -1262,6 +1388,7 @@
 		</table>
 		<div class="settings-info">
 			<p><strong>Mode sombre :</strong> disponible dans le menu paramètres</p>
+			<p><strong>Mode évaluation :</strong> disponible dans le menu paramètres ou via <kbd>E</kbd></p>
 		</div>	
 	</div>
 
@@ -1289,26 +1416,31 @@
 		<div id="contenuTexte"></div>
 	</header>
 
+	<!-- Zone d'information pour le mode évaluation -->
+	<div class="evaluation-info" id="evaluationInfo">
+		Rédigez l'introduction de l'explication de ce texte
+	</div>
+
 	<section class="question-body">
 		<div class="responsive-table" id="reponses">
 			<div class="table-row">
-				<div class="keyword-cell">Origine</div>
+				<div class="keyword-cell">Origine :</div>
 				<div class="answer-cell" draggable="true" data-key="origine"></div>
 			</div>
 			<div class="table-row">
-				<div class="keyword-cell">Thème</div>
+				<div class="keyword-cell">Thème :</div>
 				<div class="answer-cell" draggable="true" data-key="theme"></div>
 			</div>
 			<div class="table-row">
-				<div class="keyword-cell">Thèse</div>
+				<div class="keyword-cell">Thèse :</div>
 				<div class="answer-cell" draggable="true" data-key="these"></div>
 			</div>
 			<div class="table-row">
-				<div class="keyword-cell">Intérêt</div>
+				<div class="keyword-cell">Intérêt :</div>
 				<div class="answer-cell" draggable="true" data-key="interet"></div>
 			</div>
 			<div class="table-row">
-				<div class="keyword-cell">Problématique</div>
+				<div class="keyword-cell">Problématique :</div>
 				<div class="answer-cell" draggable="true" data-key="problematique"></div>
 			</div>
 		</div>
@@ -1352,9 +1484,40 @@
 				const texteAleatoire = textesData[Math.floor(Math.random() * textesData.length)];
 				currentTexte = texteAleatoire;
 				
-				// Insérer le texte sans modification
+				// Insérer le texte avec l'origine dupliquée à la fin
 				const contenuTexte = document.getElementById('contenuTexte');
-				if (contenuTexte) contenuTexte.innerHTML = texteAleatoire.contenu;
+				if (contenuTexte) {
+					// Créer le contenu avec l'origine dupliquée
+					let contenuHtml = texteAleatoire.contenu;
+					
+					// Ajouter l'origine à la fin si elle existe, sur une nouvelle ligne
+					if (texteAleatoire.reponses && texteAleatoire.reponses.origine) {
+						// Fonction pour mettre en italique uniquement le titre du livre
+						function formaterOrigine(origine) {
+							// Format attendu: "Aristote, Éthique à Nicomaque, Livre I"
+							// On met en italique uniquement le titre du livre (entre la virgule après l'auteur et la virgule avant le livre)
+							const parties = origine.split(',');
+							if (parties.length >= 2) {
+								// Le titre est généralement la deuxième partie
+								const auteur = parties[0].trim();
+								const titre = parties[1].trim();
+								const reste = parties.slice(2).join(',').trim();
+								
+								if (reste) {
+									return `<div class="origine-container"><span class="texte-origin">${auteur}, <span class="titre-italique">${titre}</span>, ${reste}</span></div>`;
+								} else {
+									return `<div class="origine-container"><span class="texte-origin">${auteur}, <span class="titre-italique">${titre}</span></span></div>`;
+								}
+							}
+							// Si le format n'est pas reconnu, on retourne l'original sans italique
+							return `<div class="origine-container"><span class="texte-origin">${origine}</span></div>`;
+						}
+						
+						contenuHtml += formaterOrigine(texteAleatoire.reponses.origine);
+					}
+					
+					contenuTexte.innerHTML = contenuHtml;
+				}
 
 				// Remplir les cellules avec les réponses mélangées
 				const reponsesAvecCles = Object.entries(texteAleatoire.reponses).map(([cle, valeur]) => ({
@@ -1576,6 +1739,22 @@
 				location.reload();
 			}
 
+			// --- MODE ÉVALUATION ---
+			function toggleEvaluationMode(force) {
+				const body = document.body;
+				const evaluationToggle = document.getElementById('evaluationToggle');
+				
+				if (force !== undefined) {
+					body.classList.toggle('evaluation-mode', force);
+					if (evaluationToggle) evaluationToggle.checked = force;
+				} else {
+					body.classList.toggle('evaluation-mode');
+					if (evaluationToggle) evaluationToggle.checked = body.classList.contains('evaluation-mode');
+				}
+				
+				localStorage.setItem('evaluationMode', body.classList.contains('evaluation-mode'));
+			}
+
 			// --- GESTION DES MENUS ET BOUTONS ---
 			function initUI() {
 				const body = document.body;
@@ -1591,6 +1770,7 @@
 				const submenus = [subPresentation, subSettings, subShortcuts, subAbout];
 
 				const darkModeToggle = document.getElementById('darkModeToggle');
+				const evaluationToggle = document.getElementById('evaluationToggle');
 				const homeBtn = document.getElementById('home-btn');
 				const reloadBtn = document.getElementById('reload-btn');
 				const fullscreenBtn = document.getElementById('fullscreen-btn');
@@ -1611,9 +1791,15 @@
 					if (submenu) submenu.classList.add('active');
 				}
 
+				// Restaurer les préférences
 				if (localStorage.getItem('darkMode') === 'true') {
 					body.classList.add('dark-mode');
 					if (darkModeToggle) darkModeToggle.checked = true;
+				}
+				
+				if (localStorage.getItem('evaluationMode') === 'true') {
+					body.classList.add('evaluation-mode');
+					if (evaluationToggle) evaluationToggle.checked = true;
 				}
 
 				if (menuButton) menuButton.addEventListener('click', (e) => { e.stopPropagation(); toggleMainMenu(); });
@@ -1636,6 +1822,12 @@
 					darkModeToggle.addEventListener('change', function(e) {
 						body.classList.toggle('dark-mode', e.target.checked);
 						localStorage.setItem('darkMode', e.target.checked);
+					});
+				}
+				
+				if (evaluationToggle) {
+					evaluationToggle.addEventListener('change', function(e) {
+						toggleEvaluationMode(e.target.checked);
 					});
 				}
 
@@ -1686,6 +1878,7 @@
 					else if (key === 'f') { e.preventDefault(); toggleFullscreen(); }
 					else if (key === 'r') { e.preventDefault(); location.reload(); }
 					else if (key === 'h') { e.preventDefault(); window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); }
+					else if (key === 'e') { e.preventDefault(); toggleEvaluationMode(); }
 					else if (key === '?') { e.preventDefault(); openSubmenu(subShortcuts); }
 					else if (e.key === 'Escape') {
 						if (document.querySelector('.submenu.active')) closeAllSubmenus();
