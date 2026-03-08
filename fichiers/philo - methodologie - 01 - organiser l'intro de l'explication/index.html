@@ -1073,6 +1073,13 @@
 		box-shadow: var(--shadow-out);
 	}
 
+	/* Style pour les cellules non déplaçables */
+	.answer-cell.disabled {
+		cursor: not-allowed !important;
+		opacity: 0.8;
+		pointer-events: none;
+	}
+
 	.texte-origin {
 		text-align: right;
 		margin-top: 8px;
@@ -1503,6 +1510,7 @@
 			let touchStartY = 0;
 			let isDragging = false;
 			let correctionInProgress = false;
+			let gameLocked = false; // Indique si le jeu est verrouillé après correction
 
 			function initTexte() {
 				if (typeof textes !== 'undefined' && textes && textes.length > 0) {
@@ -1566,13 +1574,17 @@
 					if (index < reponsesMelangees.length) {
 						cell.innerHTML = reponsesMelangees[index].valeur;
 						cell.dataset.reponseCle = reponsesMelangees[index].cle;
-						cell.classList.remove('correct', 'incorrect');
+						cell.classList.remove('correct', 'incorrect', 'disabled');
 					}
 				});
+				
+				// Déverrouiller le jeu
+				gameLocked = false;
+				updateDragAndDropState();
 			}
 
 			function handleDragStart(e) {
-				if (correctionInProgress) {
+				if (correctionInProgress || gameLocked) {
 					e.preventDefault();
 					return;
 				}
@@ -1603,7 +1615,7 @@
 			}
 
 			function handleDragEnter(e) {
-				if (correctionInProgress) return;
+				if (correctionInProgress || gameLocked) return;
 				const targetCell = e.target.closest('.answer-cell');
 				if (targetCell && targetCell !== draggedElement) {
 					targetCell.classList.add('drop-hover');
@@ -1620,7 +1632,7 @@
 			function handleDrop(e) {
 				e.preventDefault();
 				
-				if (correctionInProgress) return;
+				if (correctionInProgress || gameLocked) return;
 				
 				const targetCell = e.target.closest('.answer-cell');
 				if (!targetCell || !draggedElement || targetCell === draggedElement) {
@@ -1653,7 +1665,7 @@
 			}
 
 			function handleTouchStart(e) {
-				if (correctionInProgress) {
+				if (correctionInProgress || gameLocked) {
 					e.preventDefault();
 					return;
 				}
@@ -1714,7 +1726,7 @@
 				const elementUnderTouch = document.elementFromPoint(touch.clientX, touch.clientY);
 				const targetCell = elementUnderTouch?.closest('.answer-cell');
 				
-				if (targetCell && targetCell !== touchDraggedElement && isDragging && !correctionInProgress) {
+				if (targetCell && targetCell !== touchDraggedElement && isDragging && !correctionInProgress && !gameLocked) {
 					const sourceHtml = touchDraggedElement.innerHTML;
 					const sourceCle = touchDraggedElement.dataset.reponseCle;
 					const targetHtml = targetCell.innerHTML;
@@ -1760,6 +1772,21 @@
 				});
 			}
 
+			function updateDragAndDropState() {
+				const cells = document.querySelectorAll('.answer-cell');
+				if (gameLocked) {
+					cells.forEach(cell => {
+						cell.draggable = false;
+						cell.classList.add('disabled');
+					});
+				} else {
+					cells.forEach(cell => {
+						cell.draggable = true;
+						cell.classList.remove('disabled');
+					});
+				}
+			}
+
 			function checkAnswers() {
 				if (!currentTexte) {
 					alert('Aucun texte chargé');
@@ -1794,6 +1821,7 @@
 					checkBtn.textContent = 'Corriger';
 				} else {
 					checkBtn.textContent = 'Vérifier';
+					// Si tout est correct, on ne verrouille pas
 				}
 			}
 
@@ -1884,12 +1912,19 @@
 					cell.classList.remove('incorrect');
 				});
 				
-				checkBtn.disabled = false;
+				// Changer le texte du bouton et le verrouiller
 				checkBtn.textContent = 'Vérifier';
+				checkBtn.disabled = true; // Désactiver le bouton Vérifier
+				
+				// Verrouiller le jeu
+				gameLocked = true;
+				updateDragAndDropState();
+				
 				correctionInProgress = false;
 			}
 
 			function resetGame() {
+				// Recharger la page ou réinitialiser l'état
 				location.reload();
 			}
 
@@ -1909,9 +1944,12 @@
 				if (body.classList.contains('evaluation-mode')) {
 					const checkBtn = document.querySelector('.check-answer');
 					checkBtn.textContent = 'Vérifier';
+					checkBtn.disabled = false;
 					document.querySelectorAll('.answer-cell').forEach(cell => {
-						cell.classList.remove('correct', 'incorrect');
+						cell.classList.remove('correct', 'incorrect', 'disabled');
+						cell.draggable = true;
 					});
+					gameLocked = false;
 				}
 				
 				localStorage.setItem('evaluationMode', body.classList.contains('evaluation-mode'));
@@ -2117,7 +2155,7 @@
 						return;
 					}
 					
-					if (e.target.textContent === 'Vérifier') {
+					if (e.target.textContent === 'Vérifier' && !e.target.disabled) {
 						checkAnswers();
 					} else if (e.target.textContent === 'Corriger') {
 						await animateCorrection();
