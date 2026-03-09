@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!------------------------------------ Daniel Boulagnon ------------------------------------>
-<!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
-<!------------------------------------- version 2026 --------------------------------------->
-<!----------------- Exploitation à but strictement pédagogique et non lucratif ------------->
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
@@ -18,10 +14,6 @@
 			--text-light: #15141a;
 			--text-dark: #f5f5f5;
 			--primary: #ff0000;
-			--accent: #ffbb33;
-			--success: #4CAF50;
-			--warning: #FF9800;
-			--danger: #F44336;
 			--border-color: #D7D7DB;
 			--hover-color: rgba(0, 0, 0, 0.05);
 			--shadow-outer: 8px 8px 15px rgba(0, 0, 0, 0.1),
@@ -38,6 +30,11 @@
 			--grey-3: #3e3e3e;
 			--badge-bg: white;
 			--badge-text: black;
+			--btn-bg: #fff;
+			--font-color: #444;
+			--info-bg: #f0f0f0;
+			--info-border: #cccccc;
+			--info-color: #333333;
 		}
 
 		body.dark-mode {
@@ -59,13 +56,13 @@
 			--grey-3: #fbfbfe;
 			--badge-bg: #2B2A33;
 			--badge-text: #fbfbfe;
+			--btn-bg: #2d2d2d;
+			--font-color: #e0e0e0;
+			--info-bg: #2a2a2a;
+			--info-border: #4a4a4a;
+			--info-color: #e0e0e0;
 			background: #2B2A33;
 			color: #fbfbfe;
-		}
-
-		@font-face { 
-			font-family: "Segment7";
-			src: url(data:application/octet-stream;base64,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);
 		}
 		
 		* { 
@@ -169,6 +166,7 @@
 			color: var(--text-light);
 			position: relative;
 			font-size: 1rem;
+			flex-shrink: 0;
 		}
 
 		.btn.disabled {
@@ -194,7 +192,7 @@
 		.btn::after {
 			content: attr(data-title);
 			position: absolute;
-			bottom: 100%;
+			top: 100%;
 			left: 50%;
 			transform: translateX(-50%);
 			background-color: var(--tooltip-bg);
@@ -206,7 +204,7 @@
 			opacity: 0;
 			pointer-events: none;
 			transition: opacity 0.2s;
-			margin-bottom: 0.5rem;
+			margin-top: 0.5rem;
 			z-index: 1000;
 		}
 
@@ -289,7 +287,7 @@
 			transition: var(--transition);
 		}
 
-		/* ===== BOUTONS DU HAUT ===== */
+		/* ===== BOUTONS DU HAUT (conservé pour compatibilité) ===== */
 		.top-buttons {
 			display: flex;
 			flex-wrap: wrap;
@@ -347,7 +345,7 @@
 			color: var(--text-light);
 		}
 
-		/* ===== MENU ET MODALES ===== */
+		/* ===== MENU ET SOUS-MENUS ===== */
 		.menu-overlay {
 			position: fixed;
 			top: 0;
@@ -366,19 +364,19 @@
 			pointer-events: all;
 		}
 
+		/* menu principal (slide) */
 		.menu {
 			position: fixed;
 			top: 0;
-			right: 0;
-			width: 70%;
+			right: -100%;
+			width: 85%;
 			max-width: 300px;
 			height: 100%;
 			background-color: var(--bg-light);
-			box-shadow: var(--shadow-outer);
+
 			z-index: 1000;
-			transform: translateX(100%);
-			transition: var(--transition);
-			padding: 2rem;
+			transition: right 0.6s ease;
+			padding: 2rem 1.5rem;
 			display: flex;
 			flex-direction: column;
 			gap: 2rem;
@@ -387,7 +385,7 @@
 		}
 
 		.menu.active {
-			transform: translateX(0);
+			right: 0;
 		}
 
 		.menu-header {
@@ -395,145 +393,199 @@
 			justify-content: flex-end;
 		}
 
-		.menu-close {
+		.menu-close, .submenu-close {
 			background: none;
 			border: none;
-			font-size: 1.5rem;
 			cursor: pointer;
-			color: var(--text-light);
+			color: #000000;
+			background: var(--btn-bg);
+			width: 36px;
+			height: 36px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: var(--shadow-outer);
+			transition: all 0.2s ease;
+			padding: 0;
 		}
-
-		body.dark-mode .menu-close {
+		.menu-close svg, .submenu-close svg {
+			width: 20px;
+			height: 20px;
+			stroke: currentColor;
+			stroke-width: 2;
+		}
+		body.dark-mode .menu-close, body.dark-mode .submenu-close {
 			color: #ffffff;
+			background: #2d2d2d;
+		}
+		.menu-close:hover, .submenu-close:hover {
+			box-shadow: var(--shadow-inner);
+		}
+		.menu-close:hover svg, .submenu-close:hover svg {
+			animation: rotate 1s linear;
 		}
 
 		.menu-item {
 			display: flex;
 			align-items: center;
 			gap: 1rem;
-			padding: 0.5rem;
-			border-radius: 10px;
+			height: 50px;
+			padding: 0.5rem 1rem;
+			border-radius: 25px;
 			cursor: pointer;
+			background: var(--btn-bg);
+			box-shadow: var(--shadow-outer);
+			color: var(--font-color);
+			border: none;
+			transition: all 0.2s ease;
+			width: 100%;
+			margin-bottom: 1rem;
+			font-size: 16px;
 		}
-
 		.menu-item:hover {
 			box-shadow: var(--shadow-inner);
+			transform: translateY(-2px);
 		}
-
 		.menu-item svg {
 			transition: transform 0.3s ease;
+			stroke: currentColor;
+			stroke-width: 2;
+			fill: none;
+			width: 24px;
+			height: 24px;
 		}
-		
 		.menu-item:hover svg {
-			transform: rotate(180deg);
+			animation: rotate 1s linear;
 		}
 
-		.modal {
+		/* sous-menus */
+		.submenu {
 			position: fixed;
 			top: 0;
-			left: 0;
-			width: 100%;
+			right: -100%;
+			width: 85%;
+			max-width: 320px;
 			height: 100%;
-			background-color: rgba(0, 0, 0, 0.5);
-			z-index: 1001;
-			opacity: 0;
-			pointer-events: none;
-			transition: var(--transition);
+			background: var(--bg-light);
+			z-index: 1010;
+			box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+			transition: right 0.5s ease;
+			border-radius: 20px 0 0 20px;
+			padding: 2rem 1.5rem;
+			overflow-y: auto;
 		}
-
-		.modal.active {
-			opacity: 1;
-			pointer-events: all;
+		.submenu.active {
+			right: 0;
 		}
-
-		.modal-content {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			width: 90%;
-			max-width: 500px;
-			background-color: var(--bg-light);
-			padding: 2rem;
-			border-radius: 20px;
-			box-shadow: var(--shadow-outer);
+		.submenu-content {
+			width: 100%;
 		}
-
-		.modal-close {
-			position: absolute;
-			top: 1rem;
-			right: 1rem;
-			background: none;
-			border: none;
-			font-size: 1.5rem;
-			cursor: pointer;
+		.submenu-title {
+			font-size: 1.4rem;
+			font-weight: bold;
 			color: var(--primary);
+			margin: 0.5rem 0 1.5rem 0;
+			text-align: center;
 		}
-
-		.modal h2 {
-			color: var(--primary);
+		.submenu table {
+			width: 100%;
+			color: var(--font-color);
+			margin-bottom: 1rem;
+			border-collapse: collapse;
+			font-size: 14px;
 		}
-
+		.submenu td {
+			padding: 8px 5px;
+			border-bottom: 1px solid rgba(0,0,0,0.1);
+			font-size: 14px;
+		}
+		body.dark-mode .submenu td {
+			border-bottom: 1px solid rgba(255,255,255,0.1);
+		}
+		.submenu kbd {
+			background-color: #b9b3b3;
+			border-radius: 4px;
+			box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.7) inset;
+			color: white;
+			display: inline-block;
+			font-size: 0.85em;
+			font-weight: 700;
+			line-height: 1;
+			padding: 3px 6px;
+			white-space: nowrap;
+		}
+		body.dark-mode .submenu kbd {
+			background-color: #444;
+			color: #eee;
+		}
+		.submenu ul {
+			list-style: none;
+			padding: 0;
+		}
+		.submenu li {
+			padding: 6px 0;
+			font-size: 14px;
+		}
+		.submenu p {
+			margin-bottom: 0.5rem;
+			color: var(--font-color);
+			font-size: 14px;
+		}
+		.settings-container {
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+			margin-bottom: 20px;
+		}
+		.setting-item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.settings-info {
+			margin-top: 20px;
+			padding: 15px;
+			background: rgba(0, 0, 0, 0.05);
+			border-radius: 15px;
+			font-size: 14px;
+			line-height: 1.5;
+		}
 		.theme-switch {
 			position: relative;
 			display: inline-block;
-			width: 44px;
-			height: 20px;
+			width: 50px;
+			height: 24px;
+			flex-shrink: 0;
 		}
-
 		.theme-switch input {
 			opacity: 0;
 			width: 0;
 			height: 0;
 		}
-		
 		.theme-switch .slider {
 			position: absolute;
 			inset: 0;
 			background: #ccc;
-			border-radius: 20px;
+			border-radius: 24px;
 			transition: .4s;
 		}
-		
 		.theme-switch .slider:before {
 			content: "";
 			position: absolute;
-			width: 16px;
-			height: 16px;
+			width: 20px;
+			height: 20px;
 			left: 2px;
 			top: 2px;
 			background: white;
 			border-radius: 50%;
 			transition: .4s;
 		}
-
 		.theme-switch input:checked + .slider {
-			background: #000000;
+			background: #2196F3;
 		}
-		
 		.theme-switch input:checked + .slider:before {
-			transform: translateX(24px);
-		}
-
-		#settings-modal .toggle-container {
-			background-color: transparent;
-			box-shadow: none;
-			padding: 0.8rem 0;
-			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-			display: flex;
-			align-items: center;
-			margin: 1rem 0;
-			justify-content: flex-start;
-			gap: 15px;
-		}
-
-		body.dark-mode #settings-modal .toggle-container {
-			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-		}
-
-		.toggle-label {
-			color: var(--text-light);
-			font-weight: 500;
+			transform: translateX(26px);
 		}
 
 		.fullscreen-icon, .fullscreen-exit-icon {
@@ -818,18 +870,6 @@
 				display: flex;
 				gap: 1rem;
 			}
-		}
-
-		.sr-only {
-			position: absolute;
-			width: 1px;
-			height: 1px;
-			padding: 0;
-			margin: -1px;
-			overflow: hidden;
-			clip: rect(0, 0, 0, 0);
-			white-space: nowrap;
-			border: 0;
 		}
 	</style>
 </head>
@@ -1749,7 +1789,7 @@
 						</a>
 					</article>
 
-					<!-- Carte 4 -->
+					<!-- Carte 2 -->
 					<article class="card">
 						<a href="fichiers/hlp - bac - 04 - minuteur oral/index.html" class="card-link">
 							<div class="card-image-container">
@@ -1795,7 +1835,7 @@
 						</a>
 					</article>
 
-					<!-- Carte 5 -->
+					<!-- Carte 4 -->
 					<article class="card">
 						<a href="fichiers/hlp - bac - 02 - prompteur/index.html" class="card-link">
 							<div class="card-image-container">
@@ -2080,391 +2120,347 @@
 		</main>
 	</div>
 
-	<!-- Menu overlay et menu -->
+	<!-- Menu overlay -->
 	<div class="menu-overlay" id="menu-overlay"></div>
-	<div class="menu" id="menu">
+
+	<!-- Menu principal (slide) -->
+	<div class="menu" id="slideMenu">
 		<div class="menu-header">
-			<button class="menu-close" id="menu-close">&times;</button>
+			<button class="menu-close" id="menu-close">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>
 		</div>
-		<div class="menu-item" id="instructions-btn">
-			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-			stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-				<circle cx="12" cy="12" r="10"></circle>
-				<path d="M12 16v-4"></path>
-				<path d="M12 8h.01"></path>
-			</svg>
-			<span>mode d'emploi</span>
-		</div>
-		<div class="menu-item" id="settings-btn">
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<polyline points="5,7 19,7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-				<polyline points="5,12 19,12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-				<polyline points="5,17 19,17" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-			</svg>
-			<span>paramètres</span>
-		</div>
-		<div class="menu-item" id="about-btn">
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-			stroke-linecap="round" stroke-linejoin="round">
-				<circle cx="12" cy="12" r="10"></circle>
-				<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-				<line x1="12" y1="17" x2="12.01" y2="17"></line>
-			</svg>
-			<span>à propos</span>
+		<div class="menu-content">
+			<button class="menu-item" id="openPresentationSub">
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+					stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<path d="M12 16v-4"></path>
+					<path d="M12 8h.01"></path>
+				</svg>
+				<span>présentation</span>
+			</button>
+			<button class="menu-item" id="openSettingsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<circle cx="12" cy="12" r="3"></circle>
+					<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+				</svg>
+				<span>paramètres</span>
+			</button>
+			<button class="menu-item" id="openShortcutsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<rect x="2" y="4" width="20" height="16" rx="2"></rect>
+					<line x1="6" y1="8" x2="10" y2="8"></line>
+					<line x1="14" y1="8" x2="18" y2="8"></line>
+					<line x1="6" y1="12" x2="10" y2="12"></line>
+					<line x1="14" y1="12" x2="18" y2="12"></line>
+					<line x1="6" y1="16" x2="10" y2="16"></line>
+					<line x1="14" y1="16" x2="18" y2="16"></line>
+				</svg>
+				<span>raccourcis clavier</span>
+			</button>
+			<button class="menu-item" id="openAboutSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+					<line x1="12" y1="17" x2="12.01" y2="17"></line>
+				</svg>
+				<span>à propos</span>
+			</button>
 		</div>
 	</div>
 
-	<!-- Modales -->
-	<div class="modal" id="instructions-modal">
-		<div class="modal-content">
-			<button class="modal-close" id="instructions-close">&times;</button>
-			<h2>mode d'emploi</h2>
-			<br>
-			<ul style="list-style-type: none; padding: 0;">
-				<li style="margin-bottom: 10px;">✓ utilisez le menu pour accéder aux paramètres</li>
-				<li style="margin-bottom: 10px;">✓ le mode sombre est disponible dans les paramètres</li>
-				<li style="margin-bottom: 10px;">✓ le bouton plein écran permet d'agrandir la vue</li>
-				<li style="margin-bottom: 10px;">✓ le bouton "accueil" ouvre le site académique</li>
-				<li style="margin-bottom: 10px;">✓ le bouton recharger actualise la page</li>
-				<li style="margin-bottom: 10px;">✓ les cartes sont organisées par catégories</li>
-				<li style="margin-bottom: 10px;">✓ cliquez sur "au hasard" pour découvrir une activité</li>
-			</ul>
+	<!-- Sous-menus -->
+	<div class="submenu" id="submenuPresentation">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="presentation">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">présentation</div>
+		<div class="submenu-content">
+			<p>cette application rassemble des outils pédagogiques pour la philosophie, l'HLP et l'option math-philo.</p>
+			<div class="settings-info">
+				<ul>
+					<li><strong>objectif :</strong> réviser les repères, les notions, les cours, les auteurs.</li>
+					<li><strong>méthodologie :</strong> organiser une introduction, construire un raisonnement.</li>
+					<li><strong>questionnement :</strong> identifier arguments et sophismes.</li>
+					<li><strong>baccalauréat :</strong> s'entraîner pour l'écrit et l'oral.</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 
-	<div class="modal" id="settings-modal">
-		<div class="modal-content">
-			<button class="modal-close" id="settings-close">&times;</button>
-			<h2>paramètres</h2>
-			<br>
-			<div class="toggle-container">
-				<span class="toggle-label">mode sombre</span>
+	<div class="submenu" id="submenuSettings">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="settings">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18" />
+					<line x1="6" y1="6" x2="18" y2="18" />
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">paramètres</div>
+		<div class="settings-container">
+			<div class="setting-item">
+				<span class="setting-label">mode sombre</span>
 				<label class="theme-switch">
 					<input type="checkbox" id="darkModeToggle">
 					<span class="slider"></span>
 				</label>
 			</div>
 		</div>
+		<div class="settings-info">
+			<p>Le mode sombre inverse les couleurs de l'interface pour afficher du texte clair sur un fond sombre.</p>
+		</div>
 	</div>
 
-	<div class="modal" id="about-modal">
-		<div class="modal-content">
-			<button class="modal-close" id="about-close">&times;</button>
-			<h2>à propos</h2>
-			<br>
-			<p>application développée par Daniel Boulagnon.</p>
+	<div class="submenu" id="submenuShortcuts">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="shortcuts">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18" />
+					<line x1="6" y1="6" x2="18" y2="18" />
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">raccourcis clavier</div>
+		<table>
+			<tr><td><kbd>H</kbd></td><td>accueil (site académique)</td></tr>
+			<tr><td><kbd>R</kbd></td><td>recharger la page</td></tr>
+			<tr><td><kbd>F</kbd></td><td>plein écran</td></tr>
+			<tr><td><kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr>
+			<tr><td><kbd>ESC</kbd></td><td>fermer les menus</td></tr>
+			<tr><td><kbd>?</kbd></td><td>afficher cette aide</td></tr>
+		</table>
+		<div class="settings-info">
+			<p><strong>Mode sombre :</strong> via menu paramètres</p>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuAbout">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="about">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18" />
+					<line x1="6" y1="6" x2="18" y2="18" />
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">à propos</div>
+		<div class="submenu-content">
+			<p>application développée par Daniel Boulagnon</p>
 			<p>daniel.boulagnon@ac-lille.fr</p>
 			<p>exploitation à but pédagogique et non commercial</p>
-			<p>© 2026</p>		 
-			<p>version 1.8</p>
+			<p>© 2026 – version 2.0</p>
 		</div>
 	</div>
 
 	<script>
-		// Initialisation des éléments
-		const darkModeToggle = document.getElementById('darkModeToggle');
-		const body = document.body;
-		
-		// Éléments des menus
-		const menuBtn = document.getElementById('menu-btn');
-		const menuOverlay = document.getElementById('menu-overlay');
-		const menu = document.getElementById('menu');
-		const menuClose = document.getElementById('menu-close');
-		
-		// Éléments des modales
-		const instructionsBtn = document.getElementById('instructions-btn');
-		const settingsBtn = document.getElementById('settings-btn');
-		const aboutBtn = document.getElementById('about-btn');
-		const instructionsModal = document.getElementById('instructions-modal');
-		const settingsModal = document.getElementById('settings-modal');
-		const aboutModal = document.getElementById('about-modal');
-		const instructionsClose = document.getElementById('instructions-close');
-		const settingsClose = document.getElementById('settings-close');
-		const aboutClose = document.getElementById('about-close');
+		(function() {
+			'use strict';
 
-		// Gestion du thème sombre
-		if (localStorage.getItem('darkMode') === 'enabled') {
-			body.classList.add('dark-mode');
-			darkModeToggle.checked = true;
-		}
-
-		darkModeToggle.addEventListener('change', () => {
-			body.classList.toggle('dark-mode');
-			
-			if (body.classList.contains('dark-mode')) {
-				localStorage.setItem('darkMode', 'enabled');
-			} else {
-				localStorage.setItem('darkMode', 'disabled');
-			}
-		});
-
-		// Gestion des menus
-		function toggleMenu() {
-			menuOverlay.classList.toggle('active');
-			menu.classList.toggle('active');
-		}
-
-		function closeAllMenus() {
-			menuOverlay.classList.remove('active');
-			menu.classList.remove('active');
-			instructionsModal.classList.remove('active');
-			settingsModal.classList.remove('active');
-			aboutModal.classList.remove('active');
-		}
-
-		if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
-
-		menuOverlay.addEventListener('click', closeAllMenus);
-		menuClose.addEventListener('click', closeAllMenus);
-
-		instructionsBtn.addEventListener('click', () => {
-			closeAllMenus();
-			setTimeout(() => {
-				instructionsModal.classList.add('active');
-			}, 300);
-		});
-
-		settingsBtn.addEventListener('click', () => {
-			closeAllMenus();
-			setTimeout(() => {
-				settingsModal.classList.add('active');
-			}, 300);
-		});
-
-		aboutBtn.addEventListener('click', () => {
-			closeAllMenus();
-			setTimeout(() => {
-				aboutModal.classList.add('active');
-			}, 300);
-		});
-
-		instructionsClose.addEventListener('click', () => {
-			instructionsModal.classList.remove('active');
-		});
-
-		settingsClose.addEventListener('click', () => {
-			settingsModal.classList.remove('active');
-		});
-
-		aboutClose.addEventListener('click', () => {
-			aboutModal.classList.remove('active');
-		});
-
-		document.addEventListener('click', (e) => {
-			if (
-				!menu.contains(e.target) && 
-				!menuBtn.contains(e.target) && 
-				!instructionsModal.contains(e.target) &&
-				!settingsModal.contains(e.target) &&
-				!aboutModal.contains(e.target) &&
-				(menu.classList.contains('active') || 
-				instructionsModal.classList.contains('active') ||
-				settingsModal.classList.contains('active') ||
-				aboutModal.classList.contains('active'))
-			) {
-				closeAllMenus();
-			}
-		});
-
-		// Gestion du plein écran
-		const fullscreenBtn = document.getElementById('fullscreen-btn');
-
-		function toggleFullscreen() {
-			if (!document.fullscreenElement) {
-				document.documentElement.requestFullscreen().catch(err => {
-					console.error(`Erreur lors du passage en plein écran: ${err.message}`);
-				});
-			} else {
-				document.exitFullscreen();
-			}
-		}
-
-		if (fullscreenBtn) fullscreenBtn.addEventListener('click', toggleFullscreen);
-
-		document.addEventListener('fullscreenchange', () => {
-			const isFullscreen = !!document.fullscreenElement;
-			
-			const fullscreenBtns = [fullscreenBtn].filter(btn => btn);
-			fullscreenBtns.forEach(btn => {
-				if (isFullscreen) {
-					btn.classList.add('fullscreen-active');
-				} else {
-					btn.classList.remove('fullscreen-active');
-				}
-			});
-			
-			if (isFullscreen) {
-				const exitIcon = `<svg class="fullscreen-exit-icon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
-					<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path>
-				</svg>`;
-				fullscreenBtns.forEach(btn => {
-					btn.innerHTML = exitIcon;
-				});
-			} else {
-				const enterIcon = `<svg class="fullscreen-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
-					<line x1="4" y1="5" x2="8" y2="5"></line>
-					<line x1="5" y1="6" x2="5" y2="9"></line>
-					<line x1="16" y1="5" x2="20" y2="5"></line>
-					<line x1="19" y1="6" x2="19" y2="9"></line>
-					<line x1="5" y1="15" x2="5" y2="19"></line>
-					<line x1="6" y1="18" x2="9" y2="18"></line>
-					<line x1="15" y1="18" x2="19" y2="18"></line>
-					<line x1="19" y1="15" x2="19" y2="19"></line>
-				</svg>`;
-				fullscreenBtns.forEach(btn => {
-					btn.innerHTML = enterIcon;
-				});
-			}
-		});
-
-		// Bouton recharger
-		const reloadBtn = document.getElementById('reload-btn');
-		if (reloadBtn) {
-			reloadBtn.addEventListener('click', () => {
-				location.reload();
-			});
-		}
-
-		// Bouton home avec animation 3D
-		const homeBtn = document.getElementById('home-btn');
-		if (homeBtn) {
-			const wrapper = homeBtn.querySelector('.icon-wrapper');
-
-			homeBtn.addEventListener('click', () => {
-				window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
-			});
-
-			homeBtn.addEventListener('mouseenter', () => {
-				wrapper.style.transition = 'none';
-				wrapper.style.animation = 'none';
-				wrapper.offsetHeight;
-				wrapper.style.animation = 'tourne360 2s infinite linear';
-			});
-
-			homeBtn.addEventListener('mouseleave', () => {
-				const style = window.getComputedStyle(wrapper);
-				const matrix = style.transform;
-
-				let currentAngle = 0;
-
-				if (matrix && matrix !== 'none') {
-					if (matrix.includes('matrix3d')) {
-						const values = matrix.match(/matrix3d\((.+)\)/);
-						if (values) {
-							const nums = values[1].split(', ').map(Number);
-							if (nums.length >= 6) {
-								const cosAngle = nums[0];
-								const sinAngle = nums[2];
-								currentAngle = Math.atan2(sinAngle, cosAngle) * (180 / Math.PI);
-								if (currentAngle < 0) currentAngle += 360;
-							}
-						}
-					} else if (matrix.includes('matrix')) {
-						const values = matrix.match(/matrix\((.+)\)/);
-						if (values) {
-							const nums = values[1].split(', ').map(Number);
-							if (nums.length >= 4) {
-								const cosAngle = nums[0];
-								const sinAngle = nums[1];
-								currentAngle = Math.atan2(sinAngle, cosAngle) * (180 / Math.PI);
-								if (currentAngle < 0) currentAngle += 360;
-							}
-						}
-					}
-				}
-
-				wrapper.style.animation = 'none';
-				wrapper.offsetHeight;
-				wrapper.style.transition = 'none';
-				wrapper.style.transform = `rotateY(${currentAngle}deg)`;
-				wrapper.offsetHeight;
-
-				const remainingAngle = 360 - currentAngle;
-				const duration = (remainingAngle / 360) * 2;
-
-				wrapper.style.transition = `transform ${duration}s linear`;
-				wrapper.style.transform = `rotateY(360deg)`;
-			});
-
-			wrapper.addEventListener('transitionend', () => {
-				wrapper.style.transition = 'none';
-				wrapper.style.transform = 'rotateY(0deg)';
-			});
-		}
-
-		// Réorganisation responsive des boutons
-		function rearrangeToolbarForMobile() {
-			const toolbarLeft = document.querySelector('.toolbar-left');
-			const toolbarRight = document.querySelector('.toolbar-right');
-			const fullscreenBtn = document.getElementById('fullscreen-btn');
+			// Éléments
+			const body = document.body;
+			const menuOverlay = document.getElementById('menu-overlay');
+			const slideMenu = document.getElementById('slideMenu');
 			const menuBtn = document.getElementById('menu-btn');
-			
-			if (window.innerWidth < 768) {
-				// Sur mobile : déplacer fullscreen et menu dans toolbar-left
-				if (fullscreenBtn && menuBtn && toolbarRight) {
-					if (!toolbarLeft.contains(fullscreenBtn)) {
-						toolbarLeft.appendChild(fullscreenBtn);
-					}
-					if (!toolbarLeft.contains(menuBtn)) {
-						toolbarLeft.appendChild(menuBtn);
-					}
-				}
-			} else {
-				// Sur desktop : remettre fullscreen et menu dans toolbar-right
-				if (fullscreenBtn && menuBtn && toolbarRight) {
-					toolbarRight.innerHTML = '';
-					toolbarRight.appendChild(fullscreenBtn);
-					toolbarRight.appendChild(menuBtn);
-					
-					const homeBtn = document.getElementById('home-btn');
-					const reloadBtn = document.getElementById('reload-btn');
-					toolbarLeft.innerHTML = '';
-					toolbarLeft.appendChild(homeBtn);
-					toolbarLeft.appendChild(reloadBtn);
+			const menuClose = document.getElementById('menu-close');
+
+			// Sous-menus
+			const subPresentation = document.getElementById('submenuPresentation');
+			const subSettings = document.getElementById('submenuSettings');
+			const subShortcuts = document.getElementById('submenuShortcuts');
+			const subAbout = document.getElementById('submenuAbout');
+			const submenus = [subPresentation, subSettings, subShortcuts, subAbout];
+
+			// Boutons d'ouverture des sous-menus
+			const openPresentation = document.getElementById('openPresentationSub');
+			const openSettings = document.getElementById('openSettingsSub');
+			const openShortcuts = document.getElementById('openShortcutsSub');
+			const openAbout = document.getElementById('openAboutSub');
+
+			// Toggle
+			const darkModeToggle = document.getElementById('darkModeToggle');
+
+			// Boutons home, reload, fullscreen
+			const homeBtn = document.getElementById('home-btn');
+			const reloadBtn = document.getElementById('reload-btn');
+			const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+			// ===== FONCTIONS MENU =====
+			function toggleMainMenu(force) {
+				const willOpen = (force !== undefined) ? force : !slideMenu.classList.contains('active');
+				slideMenu.classList.toggle('active', willOpen);
+				menuOverlay.classList.toggle('active', willOpen);
+				if (!willOpen) closeAllSubmenus();
+			}
+
+			function closeAllSubmenus() {
+				submenus.forEach(s => s && s.classList.remove('active'));
+			}
+
+			function openSubmenu(submenu) {
+				closeAllSubmenus();
+				if (submenu) submenu.classList.add('active');
+			}
+
+			// ===== GESTION THEME =====
+			function applyDarkMode(enabled) {
+				body.classList.toggle('dark-mode', enabled);
+				if (darkModeToggle) darkModeToggle.checked = enabled;
+				localStorage.setItem('darkMode', enabled ? 'enabled' : 'disabled');
+			}
+
+			if (localStorage.getItem('darkMode') === 'enabled') {
+				applyDarkMode(true);
+			}
+
+			if (darkModeToggle) {
+				darkModeToggle.addEventListener('change', (e) => applyDarkMode(e.target.checked));
+			}
+
+			// ===== EVENEMENTS MENU =====
+			if (menuBtn) menuBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMainMenu(); });
+			if (menuClose) menuClose.addEventListener('click', () => toggleMainMenu(false));
+			if (menuOverlay) menuOverlay.addEventListener('click', () => toggleMainMenu(false));
+
+			// Ouverture sous-menus
+			if (openPresentation) openPresentation.addEventListener('click', (e) => { e.stopPropagation(); openSubmenu(subPresentation); });
+			if (openSettings) openSettings.addEventListener('click', (e) => { e.stopPropagation(); openSubmenu(subSettings); });
+			if (openShortcuts) openShortcuts.addEventListener('click', (e) => { e.stopPropagation(); openSubmenu(subShortcuts); });
+			if (openAbout) openAbout.addEventListener('click', (e) => { e.stopPropagation(); openSubmenu(subAbout); });
+
+			// Fermeture sous-menus par leur bouton close
+			document.querySelectorAll('.submenu-close').forEach(btn => {
+				btn.addEventListener('click', (e) => { e.stopPropagation(); closeAllSubmenus(); });
+			});
+
+			// Empêcher propagation clics dans menus
+			if (slideMenu) slideMenu.addEventListener('click', e => e.stopPropagation());
+			submenus.forEach(s => s && s.addEventListener('click', e => e.stopPropagation()));
+
+			// ===== PLEIN ECRAN =====
+			function toggleFullscreen() {
+				if (!document.fullscreenElement) {
+					document.documentElement.requestFullscreen().catch(err => console.warn(err));
+				} else {
+					document.exitFullscreen();
 				}
 			}
-		}
+			if (fullscreenBtn) fullscreenBtn.addEventListener('click', toggleFullscreen);
 
-		window.addEventListener('load', rearrangeToolbarForMobile);
-		window.addEventListener('resize', rearrangeToolbarForMobile);
+			document.addEventListener('fullscreenchange', () => {
+				const isFullscreen = !!document.fullscreenElement;
+				if (fullscreenBtn) {
+					fullscreenBtn.classList.toggle('fullscreen-active', isFullscreen);
+					if (isFullscreen) {
+						fullscreenBtn.innerHTML = `<svg class="fullscreen-exit-icon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+							<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path>
+						</svg>`;
+					} else {
+						fullscreenBtn.innerHTML = `<svg class="fullscreen-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+							<line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" />
+							<line x1="5" y1="6" x2="5" y2="10" stroke="currentColor" />
+							<line x1="14" y1="5" x2="20" y2="5" stroke="currentColor" />
+							<line x1="19" y1="6" x2="19" y2="10" stroke="currentColor" />
+							<line x1="5" y1="14" x2="5" y2="20" stroke="currentColor" />
+							<line x1="6" y1="19" x2="10" y2="19" stroke="currentColor" />
+							<line x1="14" y1="19" x2="20" y2="19" stroke="currentColor" />
+							<line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" />		 
+						</svg>`;
+					}
+				}
+			});
 
-		// Script pour le bouton "au hasard"
-		document.addEventListener('DOMContentLoaded', function() {
-			const randomButton = document.getElementById('randomButton');
-			
-			if (randomButton) {
-				randomButton.addEventListener('click', function(e) {
-					e.preventDefault();
-					
-					const sections = document.querySelectorAll('.section');
-					const sectionsWithCards = [];
-					
-					sections.forEach(section => {
-						const cards = section.querySelectorAll('.card');
-						if (cards.length > 0) {
-							sectionsWithCards.push({
-								element: section,
-								cards: cards
-							});
-						}
+			// ===== BOUTONS HOME / RELOAD =====
+			if (reloadBtn) reloadBtn.addEventListener('click', () => location.reload());
+			if (homeBtn) {
+				homeBtn.addEventListener('click', () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'));
+				const wrapper = homeBtn.querySelector('.icon-wrapper');
+				if (wrapper) {
+					homeBtn.addEventListener('mouseenter', () => {
+						wrapper.style.animation = 'tourne360 2s infinite linear';
 					});
-					
-					if (sectionsWithCards.length === 0) return;
-					
-					const randomSectionIndex = Math.floor(Math.random() * sectionsWithCards.length);
-					const selectedSection = sectionsWithCards[randomSectionIndex];
-					
-					const randomCardIndex = Math.floor(Math.random() * selectedSection.cards.length);
-					const selectedCard = selectedSection.cards[randomCardIndex];
-					
-					const cardLink = selectedCard.querySelector('.card-link');
-					
-					if (cardLink && cardLink.href) {
-						window.location.href = cardLink.href;
-					}
-				});
+					homeBtn.addEventListener('mouseleave', () => {
+						wrapper.style.animation = 'none';
+						wrapper.style.transform = 'rotateY(0deg)';
+					});
+				}
 			}
-		});
+
+			// ===== RACCOURCIS CLAVIER =====
+			document.addEventListener('keydown', (e) => {
+				if (e.target.matches('input, textarea, select, [contenteditable]')) return;
+				const key = e.key.toLowerCase();
+				if (key === 'm') { e.preventDefault(); toggleMainMenu(); }
+				else if (key === 'f') { e.preventDefault(); toggleFullscreen(); }
+				else if (key === 'r') { e.preventDefault(); location.reload(); }
+				else if (key === 'h') { e.preventDefault(); window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); }
+				else if (key === '?') { e.preventDefault(); openSubmenu(subShortcuts); }
+				else if (e.key === 'Escape') {
+					if (document.querySelector('.submenu.active')) closeAllSubmenus();
+					else if (slideMenu.classList.contains('active')) toggleMainMenu(false);
+					else if (document.fullscreenElement) document.exitFullscreen();
+				}
+			});
+
+			// ===== REORGANISATION RESPONSIVE =====
+			function rearrangeToolbarForMobile() {
+				const toolbarLeft = document.querySelector('.toolbar-left');
+				const toolbarRight = document.querySelector('.toolbar-right');
+				const fullscreen = document.getElementById('fullscreen-btn');
+				const menu = document.getElementById('menu-btn');
+				if (window.innerWidth < 768) {
+					if (fullscreen && menu && toolbarRight) {
+						if (!toolbarLeft.contains(fullscreen)) toolbarLeft.appendChild(fullscreen);
+						if (!toolbarLeft.contains(menu)) toolbarLeft.appendChild(menu);
+					}
+				} else {
+					if (fullscreen && menu && toolbarRight) {
+						toolbarRight.innerHTML = '';
+						toolbarRight.appendChild(fullscreen);
+						toolbarRight.appendChild(menu);
+						const home = document.getElementById('home-btn');
+						const reload = document.getElementById('reload-btn');
+						toolbarLeft.innerHTML = '';
+						toolbarLeft.appendChild(home);
+						toolbarLeft.appendChild(reload);
+					}
+				}
+			}
+			window.addEventListener('load', rearrangeToolbarForMobile);
+			window.addEventListener('resize', rearrangeToolbarForMobile);
+
+			// ===== BOUTON AU HASARD =====
+			document.addEventListener('DOMContentLoaded', function() {
+				const randomButton = document.getElementById('randomButton');
+				if (randomButton) {
+					randomButton.addEventListener('click', function(e) {
+						e.preventDefault();
+						const sections = document.querySelectorAll('.section');
+						const sectionsWithCards = [];
+						sections.forEach(section => {
+							const cards = section.querySelectorAll('.card');
+							if (cards.length > 0) sectionsWithCards.push({ element: section, cards: cards });
+						});
+						if (sectionsWithCards.length === 0) return;
+						const randomSectionIndex = Math.floor(Math.random() * sectionsWithCards.length);
+						const selectedSection = sectionsWithCards[randomSectionIndex];
+						const randomCardIndex = Math.floor(Math.random() * selectedSection.cards.length);
+						const selectedCard = selectedSection.cards[randomCardIndex];
+						const cardLink = selectedCard.querySelector('.card-link');
+						if (cardLink && cardLink.href) window.location.href = cardLink.href;
+					});
+				}
+			});
+		})();
 	</script>
 </body>
 </html>
