@@ -1,94 +1,2001 @@
 <!DOCTYPE html>
+<!-- Daniel Boulagnon -->
+<!-- daniel.boulagnon@ac-lille.fr -->
+<!-- version 2026 -->
+<!-- Exploitation à but strictement pédagogique et non lucratif -->
 <html lang="fr">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" href="../../src/favicon.ico">
-		<title>oral de contrôle</title>
-	
-		<script type="module" crossorigin>
-		/* durée exprimée en seconde */
-			const questions = [
-			["Explication de texte", 10*60],
-			["Entretien", 10*60],
-			];
-			const Ne=function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const r of document.querySelectorAll('link[rel="modulepreload"]'))i(r);new MutationObserver(r=>{for(const o of r)if(o.type==="childList")for(const s of o.addedNodes)s.tagName==="LINK"&&s.rel==="modulepreload"&&i(s)}).observe(document,{childList:!0,subtree:!0});function n(r){const o={};return r.integrity&&(o.integrity=r.integrity),r.referrerpolicy&&(o.referrerPolicy=r.referrerpolicy),r.crossorigin==="use-credentials"?o.credentials="include":r.crossorigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function i(r){if(r.ep)return;r.ep=!0;const o=n(r);fetch(r.href,o)}};Ne();function g(){}const je=e=>e;function w(e,t){for(const n in t)e[n]=t[n];return e}function $e(e){return e()}function fe(){return Object.create(null)}function J(e){e.forEach($e)}function ye(e){return typeof e=="function"}function C(e,t){return e!=e?t==t:e!==t||e&&typeof e=="object"||typeof e=="function"}function qe(e){return Object.keys(e).length===0}function Me(e,...t){if(e==null)return g;const n=e.subscribe(...t);return n.unsubscribe?()=>n.unsubscribe():n}function se(e,t,n,i){if(e){const r=we(e,t,n,i);return e[0](r)}}
-			function we(e,t,n,i){return e[1]&&i?w(n.ctx.slice(),e[1](i(t))):n.ctx}function ie(e,t,n,i){if(e[2]&&i){const r=e[2](i(n));if(t.dirty===void 0)return r;if(typeof r=="object"){const o=[],s=Math.max(t.dirty.length,r.length);for(let l=0;l<s;l+=1)o[l]=t.dirty[l]|r[l];return o}return t.dirty|r}return t.dirty}
-			function oe(e,t,n,i,r,o){if(r){const s=we(t,n,i,o);e.p(s,r)}}function le(e){if(e.ctx.length>32){const t=[],n=e.ctx.length/32;for(let i=0;i<n;i++)t[i]=-1;return t}return-1}
-			function H(e){const t={};for(const n in e)n[0]!=="$"&&(t[n]=e[n]);return t}const ve=typeof window<"u";let Oe=ve?()=>window.performance.now():()=>Date.now(),be=ve?e=>requestAnimationFrame(e):g;const I=new Set;
-			function ke(e){I.forEach(t=>{t.c(e)||(I.delete(t),t.f())}),I.size!==0&&be(ke)}function ze(e){let t;return I.size===0&&be(ke),{promise:new Promise(n=>{I.add(t={c:e,f:n})}),abort(){I.delete(t)}}}let Y=!1;
-			function Le(){Y=!0}
-			function Ie(){Y=!1}
-			function De(e,t,n,i){for(;e<t;){const r=e+(t-e>>1);n(r)<=i?e=r+1:t=r}return e}
-			function He(e){if(e.hydrate_init)return;e.hydrate_init=!0;let t=e.childNodes;if(e.nodeName==="HEAD"){const c=[];for(let u=0;u<t.length;u++){const f=t[u];f.claim_order!==void 0&&c.push(f)}t=c}const n=new Int32Array(t.length+1),i=new Int32Array(t.length);n[0]=-1;let r=0;for(let c=0;c<t.length;c++){const u=t[c].claim_order,f=(r>0&&t[n[r]].claim_order<=u?r+1:De(1,r,h=>t[n[h]].claim_order,u))-1;i[c]=n[f]+1;const a=f+1;n[a]=c,r=Math.max(a,r)}const o=[],s=[];let l=t.length-1;for(let c=n[r]+1;c!=0;c=i[c-1]){for(o.push(t[c-1]);l>=c;l--)s.push(t[l]);l--}for(;l>=0;l--)s.push(t[l]);o.reverse(),s.sort((c,u)=>c.claim_order-u.claim_order);for(let c=0,u=0;c<s.length;c++){for(;u<o.length&&s[c].claim_order>=o[u].claim_order;)u++;const f=u<o.length?o[u]:null;e.insertBefore(s[c],f)}}
-			function E(e,t){e.appendChild(t)}
-			function Z(e,t){if(Y){for(He(e),(e.actual_end_child===void 0||e.actual_end_child!==null&&e.actual_end_child.parentElement!==e)&&(e.actual_end_child=e.firstChild);e.actual_end_child!==null&&e.actual_end_child.claim_order===void 0;)e.actual_end_child=e.actual_end_child.nextSibling;t!==e.actual_end_child?(t.claim_order!==void 0||t.parentNode!==e)&&e.insertBefore(t,e.actual_end_child):e.actual_end_child=t.nextSibling}else(t.parentNode!==e||t.nextSibling!==null)&&e.appendChild(t)}
-			function v(e,t,n){e.insertBefore(t,n||null)}
-			function ce(e,t,n){Y&&!n?Z(e,t):(t.parentNode!==e||t.nextSibling!=n)&&e.insertBefore(t,n||null)}
-			function m(e){e.parentNode.removeChild(e)}
-			function Te(e,t){for(let n=0;n<e.length;n+=1)e[n]&&e[n].d(t)}
-			function j(e){return document.createElement(e)}function x(e){return document.createElementNS("http://www.w3.org/2000/svg",e)}
-			function F(e){return document.createTextNode(e)}function D(){return F(" ")}function Ve(){return F("")}
-			function Fe(e,t,n,i){return e.addEventListener(t,n,i),()=>e.removeEventListener(t,n,i)}
-			function _(e,t,n){n==null?e.removeAttribute(t):e.getAttribute(t)!==n&&e.setAttribute(t,n)}
-			function T(e,t){for(const n in t)_(e,n,t[n])}
-			function M(e){return Array.from(e.childNodes)}
-			function Re(e){e.claim_info===void 0&&(e.claim_info={last_index:0,total_claimed:0})}
-			function Ke(e,t,n,i,r=!1){Re(e);const o=(()=>{for(let s=e.claim_info.last_index;s<e.length;s++){const l=e[s];if(t(l)){const c=n(l);return c===void 0?e.splice(s,1):e[s]=c,r||(e.claim_info.last_index=s),l}}for(let s=e.claim_info.last_index-1;s>=0;s--){const l=e[s];if(t(l)){const c=n(l);return c===void 0?e.splice(s,1):e[s]=c,r?c===void 0&&e.claim_info.last_index--:e.claim_info.last_index=s,l}}return i()})();return o.claim_order=e.claim_info.total_claimed,e.claim_info.total_claimed+=1,o}
-			function Ge(e,t,n,i){return Ke(e,r=>r.nodeName===t,r=>{const o=[];for(let s=0;s<r.attributes.length;s++){const l=r.attributes[s];n[l.name]||o.push(l.name)}o.forEach(s=>r.removeAttribute(s))},()=>i(t))}
-			function V(e,t,n){return Ge(e,t,n,x)}
-			function Ee(e,t){t=""+t,e.wholeText!==t&&(e.data=t)}
-			function Je(e,t,{bubbles:n=!1,cancelable:i=!1}={}){const r=document.createEvent("CustomEvent");return r.initCustomEvent(e,n,i,t),r}let G;function K(e){G=e}
-			function Qe(){if(!G)throw new Error("Function called outside component initialization");return G}
-			function We(){const e=Qe();return(t,n,{cancelable:i=!1}={})=>{const r=e.$$.callbacks[t];if(r){const o=Je(t,n,{cancelable:i});return r.slice().forEach(s=>{s.call(e,o)}),!o.defaultPrevented}return!0}}
-			function Xe(e,t){const n=e.$$.callbacks[t.type];n&&n.slice().forEach(i=>i.call(this,t))}const R=[],ee=[],W=[],ae=[],Ye=Promise.resolve();let te=!1;function Ze(){te||(te=!0,Ye.then(xe))}
-			function ne(e){W.push(e)}const U=new Set;let Q=0;function xe(){const e=G;do{for(;Q<R.length;){const t=R[Q];Q++,K(t),Ue(t.$$)}for(K(null),R.length=0,Q=0;ee.length;)ee.pop()();for(let t=0;t<W.length;t+=1){const n=W[t];U.has(n)||(U.add(n),n())}W.length=0}while(R.length);for(;ae.length;)ae.pop()();te=!1,U.clear(),K(e)}
-			function Ue(e){if(e.fragment!==null){e.update(),J(e.before_update);const t=e.dirty;e.dirty=[-1],e.fragment&&e.fragment.p(e.ctx,t),e.after_update.forEach(ne)}}const X=new Set;let N;
-			function Ae(){N={r:0,c:[],p:N}}function Be(){N.r||J(N.c),N=N.p}
-			function $(e,t){e&&e.i&&(X.delete(e),e.i(t))}
-			function y(e,t,n,i){if(e&&e.o){if(X.has(e))return;X.add(e),N.c.push(()=>{X.delete(e),i&&(n&&e.d(1),i())}),e.o(t)}else i&&i()}
-			function ue(e,t){const n={},i={},r={$$scope:1};let o=e.length;for(;o--;){const s=e[o],l=t[o];if(l){for(const c in s)c in l||(i[c]=1);for(const c in l)r[c]||(n[c]=l[c],r[c]=1);e[o]=l}else for(const c in s)r[c]=1}for(const s in i)s in n||(n[s]=void 0);return n}
-			function q(e){e&&e.c()}function A(e,t,n,i){const{fragment:r,on_mount:o,on_destroy:s,after_update:l}=e.$$;r&&r.m(t,n),i||ne(()=>{const c=o.map($e).filter(ye);s?s.push(...c):J(c),e.$$.on_mount=[]}),l.forEach(ne)}
-			function B(e,t){const n=e.$$;n.fragment!==null&&(J(n.on_destroy),n.fragment&&n.fragment.d(t),n.on_destroy=n.fragment=null,n.ctx=[])}
-			function et(e,t){e.$$.dirty[0]===-1&&(R.push(e),Ze(),e.$$.dirty.fill(0)),e.$$.dirty[t/31|0]|=1<<t%31}
-			function O(e,t,n,i,r,o,s,l=[-1]){const c=G;K(e);const u=e.$$={fragment:null,ctx:null,props:o,update:g,not_equal:r,bound:fe(),on_mount:[],on_destroy:[],on_disconnect:[],before_update:[],after_update:[],context:new Map(t.context||(c?c.$$.context:[])),callbacks:fe(),dirty:l,skip_bound:!1,root:t.target||c.$$.root};s&&s(u.root);let f=!1;if(u.ctx=n?n(e,t.props||{},(a,h,...d)=>{const p=d.length?d[0]:h;return u.ctx&&r(u.ctx[a],u.ctx[a]=p)&&(!u.skip_bound&&u.bound[a]&&u.bound[a](p),f&&et(e,a)),h}):[],u.update(),f=!0,J(u.before_update),u.fragment=i?i(u.ctx):!1,t.target){if(t.hydrate){Le();const a=M(t.target);u.fragment&&u.fragment.l(a),a.forEach(m)}else u.fragment&&u.fragment.c();t.intro&&$(e.$$.fragment),A(e,t.target,t.anchor,t.customElement),Ie(),xe()}K(c)}class z{$destroy(){B(this,1),this.$destroy=g}$on(t,n){const i=this.$$.callbacks[t]||(this.$$.callbacks[t]=[]);return i.push(n),()=>{const r=i.indexOf(n);r!==-1&&i.splice(r,1)}}$set(t){this.$$set&&!qe(t)&&(this.$$.skip_bound=!0,this.$$set(t),this.$$.skip_bound=!1)}}
-			function tt(e){let t,n,i,r,o,s,l;const c=e[3].default,u=se(c,e,e[2],null);return{c(){t=j("div"),n=j("div"),u&&u.c(),i=D(),r=x("svg"),o=x("circle"),_(n,"class","inner svelte-o5o9x4"),_(o,"stroke",e[1]),_(o,"stroke-width","4px"),_(o,"fill","none"),_(o,"stroke-dasharray","calc((100% - 4px) * "+Math.PI+")"),_(o,"stroke-dashoffset",s="calc((100% - 4px) * "+Math.PI*(1-e[0])+")"),_(o,"stroke-linecap","round"),_(o,"r","calc(50% - 2px)"),_(o,"cx","50%"),_(o,"cy","50%"),_(o,"class","svelte-o5o9x4"),_(r,"class","svelte-o5o9x4"),_(t,"class","outer svelte-o5o9x4")},m(f,a){v(f,t,a),E(t,n),u&&u.m(n,null),E(t,i),E(t,r),E(r,o),l=!0},p(f,[a]){u&&u.p&&(!l||a&4)&&oe(u,c,f,f[2],l?ie(c,f[2],a,null):le(f[2]),null),(!l||a&2)&&_(o,"stroke",f[1]),(!l||a&1&&s!==(s="calc((100% - 4px) * "+Math.PI*(1-f[0])+")"))&&_(o,"stroke-dashoffset",s)},i(f){l||($(u,f),l=!0)},o(f){y(u,f),l=!1},d(f){f&&m(t),u&&u.d(f)}}}
-			function nt(e,t,n){let{$$slots:i={},$$scope:r}=t,{progress:o=0}=t,{color:s="var(--primary)"}=t;return e.$$set=l=>{"progress"in l&&n(0,o=l.progress),"color"in l&&n(1,s=l.color),"$$scope"in l&&n(2,r=l.$$scope)},[o,s,r,i]}class rt extends z{constructor(t){super(),O(this,t,nt,tt,C,{progress:0,color:1})}}
-			function st(e){let t,n,i,r;const o=e[1].default,s=se(o,e,e[0],null);return{c(){t=j("button"),s&&s.c(),_(t,"class","svelte-lr1685")},m(l,c){v(l,t,c),s&&s.m(t,null),n=!0,i||(r=Fe(t,"click",e[2]),i=!0)},p(l,[c]){s&&s.p&&(!n||c&1)&&oe(s,o,l,l[0],n?ie(o,l[0],c,null):le(l[0]),null)},i(l){n||($(s,l),n=!0)},o(l){y(s,l),n=!1},d(l){l&&m(t),s&&s.d(l),i=!1,r()}}}
-			function it(e,t,n){let{$$slots:i={},$$scope:r}=t;
-			function o(s){Xe.call(this,e,s)}return e.$$set=s=>{"$$scope"in s&&n(0,r=s.$$scope)},[r,i,o]}class de extends z{constructor(t){super(),O(this,t,it,st,C,{})}}
-			function ot(e){let t,n,i=[{xmlns:"http://www.w3.org/2000/svg"},{viewBox:"0 0 320 512"},e[0]],r={};for(let o=0;o<i.length;o+=1)r=w(r,i[o]);return{c(){t=x("svg"),n=x("path"),this.h()},l(o){t=V(o,"svg",{xmlns:!0,viewBox:!0});var s=M(t);n=V(s,"path",{d:!0}),M(n).forEach(m),s.forEach(m),this.h()},h(){_(n,"d","M272 63.1h-32c-26.51 0-48 21.49-48 47.1v288c0 26.51 21.49 48 48 48l32 1.8c26.51 0 48-21.49 48-48V112c0-26.51-21.5-48.9-48-48.9zm-192 0H48c-26.51 0-48 21.49-48 48v288C0 426.5 21.49 448 48 448h32c26.51 0 48-21.49 48-48V112c0-26.51-21.5-48.9-48-48.9z"),T(t,r)},m(o,s){ce(o,t,s),Z(t,n)},p(o,[s]){T(t,r=ue(i,[{xmlns:"http://www.w3.org/2000/svg"},{viewBox:"0 0 320 512"},s&1&&o[0]]))},i:g,o:g,d(o){o&&m(t)}}}function lt(e,t,n){return e.$$set=i=>{n(0,t=w(w({},t),H(i)))},t=H(t),[t]}class _e extends z{constructor(t){super(),O(this,t,lt,ot,C,{})}}
-			function ct(e){let t,n,i=[{xmlns:"http://www.w3.org/2000/svg"},{viewBox:"0 0 384 512"},e[0]],r={};for(let o=0;o<i.length;o+=1)r=w(r,i[o]);return{c(){t=x("svg"),n=x("path"),this.h()},l(o){t=V(o,"svg",{xmlns:!0,viewBox:!0});var s=M(t);n=V(s,"path",{d:!0}),M(n).forEach(m),s.forEach(m),this.h()},h(){_(n,"d","M361 215c14.3 8.8 23 24.3 23 41s-8.7 32.2-23 40.1l-287.97 176c-14.82 9.9-33.37 10.3-48.51 1.8A48.02 48.02 0 0 1 0 432V80a48.02 48.02 0 0 1 24.52-41.87 48.019 48.019 0 0 1 48.51.91L361 215z"),T(t,r)},m(o,s){ce(o,t,s),Z(t,n)},p(o,[s]){T(t,r=ue(i,[{xmlns:"http://www.w3.org/2000/svg"},{viewBox:"0 0 384 512"},s&1&&o[0]]))},i:g,o:g,d(o){o&&m(t)}}}function ut(e,t,n){return e.$$set=i=>{n(0,t=w(w({},t),H(i)))},t=H(t),[t]}class he extends z{constructor(t){super(),O(this,t,ut,ct,C,{})}}
-			function ft(e){let t,n,i=[{xmlns:"http://www.w3.org/2000/svg"},{viewBox:"0 0 512 512"},e[0]],r={};for(let o=0;o<i.length;o+=1)r=w(r,i[o]);return{c(){t=x("svg"),n=x("path"),this.h()},l(o){t=V(o,"svg",{xmlns:!0,viewBox:!0});var s=M(t);n=V(s,"path",{d:!0}),M(n).forEach(m),s.forEach(m),this.h()},h(){_(n,"d","M480 256c0 123.4-100.5 223.9-223.9 223.9-48.86 0-95.19-15.58-134.2-44.86-14.14-10.59-17-30.66-6.391-44.81 10.61-14.09 30.69-16.97 44.8-6.375 27.84 20.91 61 31.94 95.89 31.94C344.3 415.8 416 344.1 416 256S344.33 96.2 256.2 96.2c-50.3.02-97.6 24.1-127.6 63.8H192c17.67 0 32 14.31 32 32s-14.3 32-32 32H48c-17.67 0-32-14.31-32-32V48c0-17.69 14.33-32 32-32s32 14.31 32 32v70.23c42.1-53.65 106.1-86.12 176.1-86.12C379.5 32.11 480 132.6 480 256z"),T(t,r)},m(o,s){ce(o,t,s),Z(t,n)},p(o,[s]){T(t,r=ue(i,[{xmlns:"http://www.w3.org/2000/svg"},{viewBox:"0 0 512 512"},s&1&&o[0]]))},i:g,o:g,d(o){o&&m(t)}}}
-			function at(e,t,n){return e.$$set=i=>{n(0,t=w(w({},t),H(i)))},t=H(t),[t]}class dt extends z{constructor(t){super(),O(this,t,at,ft,C,{})}}const L=[];function _t(e,t=g){let n;const i=new Set;function r(l){if(C(e,l)&&(e=l,n)){const c=!L.length;for(const u of i)u[1](),L.push(u,e);if(c){for(let u=0;u<L.length;u+=2)L[u][0](L[u+1]);L.length=0}}}
-			function o(l){r(l(e))}
-			function s(l,c=g){const u=[l,c];return i.add(u),i.size===1&&(n=t(r)||g),l(e),()=>{i.delete(u),i.size===0&&(n(),n=null)}}return{set:r,update:o,subscribe:s}}
-			function me(e){return Object.prototype.toString.call(e)==="[object Date]"}
-			function re(e,t){if(e===t||e!==e)return()=>e;const n=typeof e;if(n!==typeof t||Array.isArray(e)!==Array.isArray(t))throw new Error("Cannot interpolate values of different type");if(Array.isArray(e)){const i=t.map((r,o)=>re(e[o],r));return r=>i.map(o=>o(r))}if(n==="object"){if(!e||!t)throw new Error("Object cannot be null");if(me(e)&&me(t)){e=e.getTime(),t=t.getTime();const o=t-e;return s=>new Date(e+s*o)}const i=Object.keys(t),r={};return i.forEach(o=>{r[o]=re(e[o],t[o])}),o=>{const s={};return i.forEach(l=>{s[l]=r[l](o)}),s}}if(n==="number"){const i=t-e;return r=>e+r*i}throw new Error(`Cannot interpolate ${n} values`)}
-			function ht(e,t={}){const n=_t(e);let i,r=e;
-			function o(s,l){if(e==null)return n.set(e=s),Promise.resolve();r=s;let c=i,u=!1,{delay:f=0,duration:a=400,easing:h=je,interpolate:d=re}=w(w({},t),l);if(a===0)return c&&(c.abort(),c=null),n.set(e=r),Promise.resolve();const p=Oe()+f;let b;return i=ze(S=>{if(S<p)return!0;u||(b=d(e,s),typeof a=="function"&&(a=a(e,s)),u=!0),c&&(c.abort(),c=null);const P=S-p;return P>a?(n.set(e=s),!1):(n.set(e=b(h(P/a))),!0)}),i.promise}return{set:o,update:(s,l)=>o(s(r,e),l),subscribe:n.subscribe}}
-			function mt(e){let t;return{c(){t=F(e[6])},m(n,i){v(n,t,i)},p(n,i){i&64&&Ee(t,n[6])},d(n){n&&m(t)}}}
-			function pt(e){let t=e[3]?"":"",n,i,r,o,s;var l=e[3]?_e:he;function c(u){return{}}return l&&(r=new l(c())),{c(){n=F(t),i=D(),r&&q(r.$$.fragment),o=Ve()},m(u,f){v(u,n,f),v(u,i,f),r&&A(r,u,f),v(u,o,f),s=!0},p(u,f){if((!s||f&8)&&t!==(t=u[3]?"":"")&&Ee(n,t),l!==(l=u[3]?_e:he)){if(r){Ae();const a=r;y(a.$$.fragment,1,0,()=>{B(a,1)}),Be()}l?(r=new l(c()),q(r.$$.fragment),$(r.$$.fragment,1),A(r,o.parentNode,o)):r=null}},i(u){s||(r&&$(r.$$.fragment,u),s=!0)},o(u){r&&y(r.$$.fragment,u),s=!1},d(u){u&&m(n),u&&m(i),u&&m(o),r&&B(r,u)}}}
-			function gt(e){let t,n,i;return n=new dt({}),{c(){t=F(""),q(n.$$.fragment)},m(r,o){v(r,t,o),A(n,r,o),i=!0},i(r){i||($(n.$$.fragment,r),i=!0)},o(r){y(n.$$.fragment,r),i=!1},d(r){r&&m(t),B(n,r)}}}
-			function $t(e){let t,n,i,r,o,s,l,c,u,f;const a=e[10].default,h=se(a,e,e[11],null);return r=new rt({props:{progress:e[7],color:e[4],$$slots:{default:[mt]},$$scope:{ctx:e}}}),l=new de({props:{$$slots:{default:[pt]},$$scope:{ctx:e}}}),l.$on("click",function(){ye(e[3]?e[1]:e[0])&&(e[3]?e[1]:e[0]).apply(this,arguments)}),u=new de({props:{$$slots:{default:[gt]},$$scope:{ctx:e}}}),u.$on("click",e[2]),{c(){t=j("div"),n=j("div"),h&&h.c(),i=D(),q(r.$$.fragment),o=D(),s=j("div"),q(l.$$.fragment),c=D(),q(u.$$.fragment),_(n,"class","question svelte-r5s5q"),_(s,"class","actions svelte-r5s5q"),_(t,"class","clock svelte-r5s5q")},m(d,p){v(d,t,p),E(t,n),h&&h.m(n,null),E(t,i),A(r,t,null),E(t,o),E(t,s),A(l,s,null),E(s,c),A(u,s,null),f=!0},p(d,[p]){e=d,h&&h.p&&(!f||p&2048)&&oe(h,a,e,e[11],f?ie(a,e[11],p,null):le(e[11]),null);const b={};p&128&&(b.progress=e[7]),p&16&&(b.color=e[4]),p&2112&&(b.$$scope={dirty:p,ctx:e}),r.$set(b);const S={};p&2056&&(S.$$scope={dirty:p,ctx:e}),l.$set(S);const P={};p&2048&&(P.$$scope={dirty:p,ctx:e}),u.$set(P)},i(d){f||($(h,d),$(r.$$.fragment,d),$(l.$$.fragment,d),$(u.$$.fragment,d),f=!0)},o(d){y(h,d),y(r.$$.fragment,d),y(l.$$.fragment,d),y(u.$$.fragment,d),f=!1},d(d){d&&m(t),h&&h.d(d),B(r),B(l),B(u)}}}
-			function yt(e,t,n){let i,r,o,s,l=g,c=()=>(l(),l=Me(i,k=>n(9,s=k)),i);e.$$.on_destroy.push(()=>l());let{$$slots:u={},$$scope:f}=t,{time:a=60}=t,h=!1,d;const p=We();function b(k){let Se=(k/60|0).toString().padStart(2,"0"),Pe=(k%60|0).toString().padStart(2,"0");return`${Se}:${Pe}`}
-			function S(){!s||(n(3,h=!0),i.set(0,{duration:1e3*s}).then(()=>p("finish")))}
-			function P(){n(3,h=!1),i.set(s)}
-			function Ce(){n(3,h=!1),i.set(a,{duration:0})}return e.$$set=k=>{"time"in k&&n(8,a=k.time),"$$scope"in k&&n(11,f=k.$$scope)},e.$$.update=()=>{e.$$.dirty&256&&c(n(5,i=a&&ht(a))),e.$$.dirty&768&&n(7,r=a?s/a:1),e.$$.dirty&512&&n(6,o=b(s)),e.$$.dirty&512&&(s<=10?n(4,d="#dc3545"):s<=60?n(4,d="#ffc107"):n(4,d="#28a745"))},[S,P,Ce,h,d,i,o,r,a,s,u,f]}class wt extends z{constructor(t){super(),O(this,t,yt,$t,C,{time:8,start:0,stop:1,reset:2})}get start(){return this.$$.ctx[0]}get stop(){return this.$$.ctx[1]}get reset(){return this.$$.ctx[2]}}
-			function pe(e,t,n){const i=e.slice();return i[3]=t[n][0],i[4]=t[n][1],i[5]=t,i[6]=n,i}
-			function vt(e){var r;let t=((r=e[3])!=null?r:"")+"",n,i;return{c(){n=F(t),i=D()},m(o,s){v(o,n,s),v(o,i,s)},p:g,d(o){o&&m(n),o&&m(i)}}}
-			function ge(e){let t,n=e[6],i;const r=()=>e[1](t,n),o=()=>e[1](null,n);function s(){return e[2](e[6])}let l={time:e[4],$$slots:{default:[vt]},$$scope:{ctx:e}};return t=new wt({props:l}),r(),t.$on("finish",s),{c(){q(t.$$.fragment)},m(c,u){A(t,c,u),i=!0},p(c,u){e=c,n!==e[6]&&(o(),n=e[6],r());const f={};u&128&&(f.$$scope={dirty:u,ctx:e}),t.$set(f)},i(c){i||($(t.$$.fragment,c),i=!0)},o(c){y(t.$$.fragment,c),i=!1},d(c){o(),B(t,c)}}}
-			function bt(e){let t,n,i=questions,r=[];for(let s=0;s<i.length;s+=1)r[s]=ge(pe(e,i,s));const o=s=>y(r[s],1,1,()=>{r[s]=null});return{c(){t=j("div");for(let s=0;s<r.length;s+=1)r[s].c();_(t,"class","container svelte-qo0hnx")},m(s,l){v(s,t,l);for(let c=0;c<r.length;c+=1)r[c].m(t,null);n=!0},p(s,[l]){if(l&1){i=questions;let c;for(c=0;c<i.length;c+=1){const u=pe(s,i,c);r[c]?(r[c].p(u,l),$(r[c],1)):(r[c]=ge(u),r[c].c(),$(r[c],1),r[c].m(t,null))}for(Ae(),c=i.length;c<r.length;c+=1)o(c);Be()}},i(s){if(!n){for(let l=0;l<i.length;l+=1)$(r[l]);n=!0}},o(s){r=r.filter(Boolean);for(let l=0;l<r.length;l+=1)y(r[l]);n=!1},d(s){s&&m(t),Te(r,s)}}}
-			function kt(e,t,n){let i=[];function r(s,l){ee[s?"unshift":"push"](()=>{i[l]=s,n(0,i)})}return[i,r,s=>s<i.length-1&&i[s+1].start()]}class Et extends z{constructor(t){super(),O(this,t,kt,bt,C,{})}}new Et({target:document.getElementById("app")});
-		</script>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="../../src/favicon.ico">
+	<title>oral φ</title>
+	<style>
+		:root {
+			--bg-light: #f5f5f5;
+			--bg-dark: #121212;
+			--text-light: #000000;
+			--text-dark: #f5f5f5;
+			--primary: #ff0000;
+			--accent: #ffbb33;
+			--success: #4CAF50;
+			--warning: #FF9800;
+			--danger: #F44336;
+			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.9);
+			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.9);
+			--transition: all 0.3s ease;
+			--tooltip-bg: #ffffff;
+			--tooltip-color: #333333;
+			--white: #fff;
+			--grey-1: #e9e9e9;
+			--grey-2: #c1c1c1;
+			--grey-3: #3e3e3e;
+			--btn-bg: #fff;
+			--font-color: #444;
+		}
 
-		<style type="text/css">
-			@font-face{font-family:digital;src:url(data:font/woff2;base64,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)}*{box-sizing:border-box}:root{--white: #fff;--grey-1: #e9e9e9;--grey-2: #c1c1c1;--grey-3: #3e3e3e;--primary: grey;--shadow-pos-left: -.2rem -.2rem .5rem;--shadow-pos-right: .2rem .2rem .5rem;--shadow-outer: var(--shadow-pos-left) var(--white), var(--shadow-pos-right) var(--grey-2);--shadow-inner: inset var(--shadow-pos-left) var(--white), inset var(--shadow-pos-right) var(--grey-2)}html{padding:0;margin:0;background:var(--grey-1);font-family:sans-serif}body{margin:0;padding:1rem;min-height:100vh;display:flex;align-items:center;justify-content:center}.outer.svelte-o5o9x4{position:relative;max-width:100%;aspect-ratio:1;padding:4px;box-shadow:var(--shadow-outer);border-radius:50%;font-size:4.5rem}.inner.svelte-o5o9x4{box-shadow:var(--shadow-inner);height:100%;width:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:digital,sans-serif}svg.svelte-o5o9x4{position:absolute;width:100%;height:100%;top:0;left:0}circle.svelte-o5o9x4{transform:rotate(-90deg);transform-origin:center;transition:stroke .2s ease}button.svelte-lr1685{color:var(--grey-3);padding:1em 1.5em;border-radius:1.5em;box-shadow:var(--shadow-outer);border:none;background:transparent;justify-self:center;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s ease;text-transform:uppercase}button.svelte-lr1685:hover{color:var(--primary)}button.svelte-lr1685:active{box-shadow:0 0 0 transparent,0 0 0 transparent,var(--shadow-inner)}.clock.svelte-r5s5q{display:flex;flex-direction:column;align-items:stretch;box-shadow:var(--shadow-outer);max-width:100%;padding:2rem;border-radius:2rem}.question.svelte-r5s5q{text-align:center;font-size:1.25rem;margin-bottom:2rem;align-self:center;max-width:250px;color:var(--grey-3)}.actions.svelte-r5s5q{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin:2rem 1rem 0}.actions.svelte-r5s5q button{width:110px}.actions.svelte-r5s5q svg{margin-left:.5rem;fill:currentColor;height:1rem;line-height:1}.container.svelte-qo0hnx{display:flex;flex-wrap:wrap;gap:3rem;align-items:center;justify-content:center}
-		</style>
-	</head>
-	
-	<body>
-		<div id="app"></div>
-	</body>
-  
+		body.dark-mode {
+			--bg-light: #121212;
+			--bg-dark: #f5f5f5;
+			--text-light: #f5f5f5;
+			--text-dark: #333;
+			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.3), -0.3rem -0.3rem 0.6rem rgba(40, 40, 40, 0.5);
+			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.3), inset -0.2rem -0.2rem 0.4rem rgba(40, 40, 40, 0.5);
+			--tooltip-bg: #333333;
+			--tooltip-color: #ffffff;
+			--white: #1e1e1e;
+			--grey-1: #1e1e1e;
+			--grey-2: #444;
+			--grey-3: #e0e0e0;
+			--btn-bg: #2d2d2d;
+			--font-color: #e0e0e0;
+			background: #1e1e1e;
+			color: #e0e0e0;
+		}
+
+		@font-face { 
+			font-family: "Segment7";
+			src: url(data:application/octet-stream;base64,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);
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body,
+		html {
+			margin: 0;
+			padding: 0;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background-color: var(--bg-light);
+			color: var(--text-light);
+			transition: var(--transition);
+			min-height: 100vh;
+			width: 100%;
+			overflow-x: hidden;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		:focus-visible {
+			outline: 3px solid var(--primary);
+			outline-offset: 2px;
+			border-radius: 4px;
+		}
+
+		.toolbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+			max-width: 800px;
+			padding: 1rem;
+			margin: 0.5rem 0 0.5rem 0;
+			background-color: var(--bg-light);
+			border-radius: 20px;
+			flex-wrap: wrap;
+			flex-shrink: 0;
+			box-sizing: border-box;
+			position: relative;
+			z-index: 100;
+		}
+
+		body.dark-mode .toolbar {
+			background: var(--grey-1);
+		}
+
+		.toolbar-left,
+		.toolbar-right {
+			display: flex;
+			gap: 0.8rem;
+		}
+
+		.toolbar-title {
+			text-align: center;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+
+		.toolbar h1 {
+			color: var(--primary);
+			font-size: 2.5rem;
+			margin: 0;
+			font-weight: 600;
+			line-height: 1.2;
+		}
+
+		.toolbar h2 {
+			color: var(--text-light);
+			font-size: 1.3rem;
+			margin: 0;
+			opacity: 0.7;
+			font-weight: 505;
+			line-height: 1.2;
+		}
+
+		body.dark-mode .toolbar h2 {
+			color: #e0e0e0;
+		}
+
+		.btn {
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			border: none;
+			background: var(--btn-bg);
+			box-shadow: var(--shadow-out);
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: var(--font-color);
+			position: relative;
+			flex-shrink: 0;
+			transition: all 0.2s ease;
+		}
+
+		.btn.disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+			pointer-events: none;
+		}
+
+		body.dark-mode .btn {
+			background: #2d2d2d;
+			box-shadow: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.3), -0.3rem -0.3rem 0.6rem rgba(40, 40, 40, 0.5);
+		}
+
+		.btn:hover:not(.disabled) {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+
+		.btn:active {
+			transform: translateY(1px);
+		}
+
+		.btn.reload:hover svg,
+		.btn.reset:hover svg,
+		.modal-close:hover svg,
+		.menu-close:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		.btn::after {
+			content: attr(data-title);
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: 0.5rem; 
+			background-color: var(--tooltip-bg);
+			color: var(--tooltip-color);
+			padding: 0.3rem 0.6rem;
+			border-radius: 5px;
+			font-size: 0.8rem;
+			white-space: nowrap;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.2s;
+			margin-bottom: 0.5rem;
+			z-index: 10;
+		}
+
+		.btn:hover::after {
+			opacity: 1;
+		}
+
+		@keyframes rotate {
+			from { transform: rotate(0deg); }
+			to { transform: rotate(360deg); }
+		}
+
+		.home-btn {
+			background: var(--btn-bg) !important;
+			box-shadow: var(--shadow-out) !important;
+			width: 60px !important;
+			height: 60px !important;
+			perspective: 1200px;
+			padding: 0;
+			border: none !important;
+		}
+
+		.home-btn .icon-wrapper {
+			width: 60px;
+			height: 60px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			transform-style: preserve-3d;
+			transform: rotateY(0deg);
+		}
+
+		.home-btn:hover .icon-wrapper {
+			animation: tourne360 2s infinite linear;
+		}
+
+		@keyframes tourne360 {
+			0% { transform: rotateY(0deg); }
+			100% { transform: rotateY(360deg); }
+		}
+
+		.home-btn svg {
+			width: 30px;
+			height: 30px;
+			stroke: currentColor;
+			stroke-width: 2;
+			fill: none;
+			z-index: 2;
+		}
+
+		.home-btn:hover {
+			box-shadow: var(--shadow-in) !important;
+		}
+
+		body.dark-mode .home-btn {
+			background: #2d2d2d !important;
+			color: var(--grey-3) !important;
+		}
+
+		/* Style du bouton menu - identique aux autres */
+		.menu-btn {
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			border: none;
+			background: var(--btn-bg);
+			box-shadow: var(--shadow-out);
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: var(--font-color);
+			position: relative;
+			flex-shrink: 0;
+			transition: all 0.2s ease;
+			z-index: 100;
+		}
+
+		body.dark-mode .menu-btn {
+			background: #2d2d2d;
+		}
+
+		.menu-btn:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+
+		.menu-btn:active {
+			transform: translateY(1px);
+		}
+
+		.menu-btn .menu-icon {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			transition: transform 0.3s ease;
+		}
+
+		.menu-btn:hover .menu-icon {
+			transform: rotate(90deg);
+		}
+
+		.menu-btn span {
+			display: block;
+			width: 17px;
+			height: 2px;
+			background-color: var(--font-color);
+			transition: var(--transition);
+		}
+
+		.menu-btn::after {
+			content: attr(data-title);
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: 0.5rem;
+			background-color: var(--tooltip-bg);
+			color: var(--tooltip-color);
+			padding: 0.3rem 0.6rem;
+			border-radius: 5px;
+			font-size: 0.8rem;
+			white-space: nowrap;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.2s;
+			z-index: 10;
+		}
+
+		.menu-btn:hover::after {
+			opacity: 1;
+		}
+
+		.menu-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 9999;
+			opacity: 0;
+			pointer-events: none;
+			transition: var(--transition);
+		}
+
+		.menu-overlay.active {
+			opacity: 1;
+			pointer-events: all;
+		}
+
+		/* Menu principal coulissant */
+		.slide-menu {
+			position: fixed;
+			top: 0;
+			right: -320px;
+			width: 280px;
+			height: 100%;
+			background: var(--bg-light);
+			z-index: 10000;
+			box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+			transition: right 0.6s ease;
+			border-radius: 20px 0 0 20px;
+			padding: 2rem 1.5rem;
+			display: flex;
+			flex-direction: column;
+			gap: 2rem;
+			overflow-y: auto;
+		}
+		
+		.slide-menu.active {
+			right: 0;
+		}
+
+		body.dark-mode .slide-menu {
+			background: var(--grey-1);
+		}
+
+		/* Sous-menus */
+		.submenu {
+			position: fixed;
+			top: 0;
+			right: -340px;
+			width: 280px;
+			height: 100%;
+			background: var(--bg-light);
+			z-index: 10010;
+			box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+			transition: right 0.5s ease;
+			border-radius: 20px 0 0 20px;
+			padding: 2rem 1.5rem;
+			overflow-y: auto;
+		}
+		
+		.submenu.active {
+			right: 0;
+			padding-left: 17px;
+			padding-right: 5px;
+		}
+		
+		body.dark-mode .submenu {
+			background: var(--grey-1);
+		}
+		
+		@media (max-width: 768px) {
+			.slide-menu, .submenu {
+				width: 260px;
+				right: -280px;
+			}
+			.submenu.active {
+				right: 0;
+			}
+		}
+
+		/* En-tête des menus */
+		.menu-header {
+			display: flex;
+			justify-content: flex-end;
+			margin-bottom: 1rem;
+		}
+
+		.menu-close, .submenu-close {
+			background: none;
+			border: none;
+			cursor: pointer;
+			color: var(--font-color);
+			background: var(--btn-bg);
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+			padding: 0;
+		}
+		
+		.menu-close svg, .submenu-close svg {
+			width: 18px;
+			height: 18px;
+			stroke: currentColor;
+			transition: transform 0.2s ease;
+		}
+		
+		.menu-close:hover, .submenu-close:hover {
+			box-shadow: var(--shadow-in);
+		}
+		
+		.menu-close:hover svg,
+		.submenu-close:hover svg,
+		.menu-item:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		/* Items du menu */
+		.menu-item {
+			background: var(--btn-bg);
+			padding: 15px;
+			margin-bottom: 8px;
+			border-radius: 10px;
+			text-align: left;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			box-shadow: var(--shadow-out);
+			width: 100%;
+			color: var(--font-color);
+			font-size: 1em;
+			border: none;
+			transition: all 0.2s ease;
+		}
+		
+		.menu-item:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+		
+		.menu-item svg {
+			width: 24px;
+			height: 24px;
+			stroke: currentColor;
+			fill: none;
+			transition: transform 0.2s ease;
+		}
+
+		/* Titre du sous-menu */
+		.submenu-title {
+			font-size: 1.4rem;
+			font-weight: bold;
+			color: red;
+			margin: 0.5rem 0 1.5rem 0;
+			text-align: center;
+		}
+
+		/* ====== STYLES SPÉCIFIQUES AUX SOUS-MENUS ====== */
+		.toggle-container {
+			display: grid;
+			grid-template-columns: 120px 1fr;
+			align-items: center;
+			gap: 1rem;
+			margin-left: 10px;
+			margin-top: 4px;
+			min-height: 10px;
+			width: 100%;
+		}
+		
+		.toggle-label {
+			color: var(--font-color);
+			font-size: 1rem;
+			text-align: left;
+			white-space: nowrap;
+		}
+
+		/* Switch - hauteur réduite à 18px, boule 14px, translation 24px */
+		.theme-switch {
+			position: relative;
+			display: inline-block;
+			left: 52px;
+			width: 38px;  /* largeur conservée pour l'esthétique */
+			height: 18px;  /* hauteur réduite à 18px */
+		}
+		
+		.theme-switch input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
+		
+		.theme-switch .slider {
+			position: absolute;
+			cursor: pointer;
+			inset: 0;
+			background: #ccc;
+			border-radius: 18px; /* adapté à la hauteur */
+			transition: .3s;
+		}
+		
+		.theme-switch .slider:before {
+			content: "";
+			position: absolute;
+			width: 14px;   /* boule 14px */
+			height: 14px;   /* boule 14px */
+			left: 2px;
+			top: 2px;
+			background: white;
+			border-radius: 50%;
+			transition: .3s;
+		}
+		
+		.theme-switch input:checked + .slider {
+			background: #2196F3;
+		}
+		
+		.theme-switch input:checked + .slider:before {
+			transform: translateX(20px); /* translation de 20px */
+		}
+
+		/* Table pour les raccourcis */
+		table {
+			width: 100%;
+			color: var(--font-color);
+			margin-bottom: 1rem;
+			border-collapse: collapse;
+		}
+		
+		td {
+			padding: 0px 0px;
+			vertical-align: middle;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+		}
+
+		td:first-child {
+			white-space: nowrap;
+			font-weight: 500;
+		}
+
+		td:last-child {
+			font-size: 12px;
+			line-height: 1.4;
+		}
+		
+		kbd {
+			background-color: #b9b3b3;
+			border-radius: 4px;
+			box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 1px 0 0 rgba(255,255,255,0.7) inset;
+			color: white;
+			display: inline-block;
+			font-size: 0.85em;
+			font-weight: 700;
+			line-height: 1;
+			padding: 2px 4px;
+			white-space: nowrap;
+			margin-right: 2px;
+		}
+		
+		body.dark-mode kbd {
+			background-color: #444;
+			color: #eee;
+		}
+		
+		ul {
+			list-style: none;
+			padding: 0;
+		}
+		
+		li {
+			padding: 0px 0;
+			font-size: 12px;
+		}
+		
+		.submenu p {
+			margin-bottom: 0.5rem;
+			color: var(--font-color);
+		}
+		
+		.settings-info {
+			margin-top: 20px;
+			margin-right: 15px;
+			padding: 15px;
+			background: rgba(0,0,0,0.05);
+			border-radius: 10px;
+		}
+		
+		.settings-info p {
+			margin: 0 0 10px 0;
+			font-size: 0.9em;
+		}
+		
+		.settings-info p:last-child {
+			margin-bottom: 0;
+		}
+
+		.fullscreen-icon,
+		.fullscreen-exit-icon {
+			transform-origin: center;
+			transition: transform 0.3s ease;
+		}
+
+		.btn.fullscreen.fullscreen-active:hover .fullscreen-exit-icon {
+			transform: scale(0.8);
+		}
+
+		.btn.fullscreen:not(.fullscreen-active):hover svg:not(.fullscreen-exit-icon) {
+			transform: scale(1.3);
+		}
+
+		.main-content {
+			display: flex;
+			width: 100%;
+			max-width: 800px;
+			gap: 2rem;
+			flex-direction: column;
+			margin: 0;
+			transition: transform 0.5s ease;
+			position: relative;
+			flex: 1;
+			justify-content: space-between;
+			min-height: 0;
+		}
+
+		@media (min-width: 768px) {
+			.main-content {
+				flex-direction: row;
+				align-items: center;
+			}
+		}
+
+		.timer-container {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			min-height: 300px;
+			justify-content: center;
+			transition: all 0.5s ease;
+		}
+
+		.timer-controls {
+			display: flex;
+			gap: 1rem;
+			margin-top: 1rem;
+			align-items: center;
+			justify-content: center;
+			flex: 0 0 auto;
+		}
+
+		.timer1-container, .timer2-container {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			height: 100%;
+		}
+
+		.timer {
+			position: relative;
+			width: 250px;
+			height: 250px;
+			border-radius: 50%;
+			background: conic-gradient(var(--success) 0%, var(--bg-light) 0%);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			box-shadow: var(--shadow-out);
+			margin: 0 auto 1rem auto;
+			flex: 0 0 auto;
+		}
+
+		body.dark-mode .timer {
+			box-shadow: var(--shadow-out);
+		}
+
+		.timer::before {
+			content: '';
+			position: absolute;
+			width: 240px;
+			height: 240px;
+			border-radius: 50%;
+			background-color: var(--bg-light);
+			z-index: 1;
+			box-shadow: var(--shadow-in);
+		}
+
+		body.dark-mode .timer::before {
+			box-shadow: var(--shadow-in);
+		}
+
+		.timer-display {
+			position: relative;
+			z-index: 2;
+			font-family: 'Segment7', 'Courier New', monospace;
+			font-size: 4rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 60px;
+			line-height: 1;
+			margin-top: 30px;
+			top: 70px;
+		}
+
+		.timer-time,
+		.timer-separator {
+			color: #000000;
+			transition: color 0.2s ease;
+		}
+
+		body.dark-mode .timer-time,
+		body.dark-mode .timer-separator {
+			color: #ffffff;
+		}
+
+		.timer-display.blink-all .timer-time,
+		.timer-display.blink-all .timer-separator {
+			animation: blinkSync 1s steps(1, start) infinite;
+		}
+
+		@keyframes blinkSync {
+			0%, 49.999% { opacity: 1; visibility: visible; }
+			50%, 100% { opacity: 0; visibility: hidden; }
+		}
+
+		.timer-label {
+			position: relative;
+			z-index: 2;
+			font-size: 1.5rem;
+			color: var(--text-light);
+			margin-top: auto;
+			margin-bottom: 51px;
+			height: 30px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.timer-controls .btn {
+			width: 50px;
+			height: 50px;
+		}
+
+		.play-pause-btn {
+			background: none;
+			border: none;
+			cursor: pointer;
+			width: 50px;
+			height: 50px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+			transition: all 0.2s ease;
+			color: var(--font-color);
+			background: var(--btn-bg);
+			box-shadow: var(--shadow-out);
+			position: relative;
+		}
+
+		body.dark-mode .play-pause-btn {
+			background: #2d2d2d;
+			color: var(--grey-3);
+		}
+
+		.play-pause-btn:hover:not(.disabled) {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+
+		.play-pause-btn:active {
+			transform: translateY(1px);
+		}
+
+		.play-pause-btn svg {
+			width: 30px;
+			height: 30px;
+			overflow: visible;
+		}
+
+		.play-pause-btn svg path {
+			stroke: currentColor;
+			stroke-width: 2;
+			fill: none;
+			stroke-linecap: round;
+			transition: d 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.2), stroke 0.3s ease;
+		}
+
+		.play-pause-btn svg g {
+			transform-origin: 12px 12px;
+			transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+		}
+
+		.play-pause-btn svg g {
+				transform: rotate(0deg);
+		}
+
+		.play-pause-btn svg path {
+			d: path("M8.6 6.4 L18 12 L8.6 17.6");
+		}
+
+		.play-pause-btn.running svg g {
+			transform: rotate(45deg);
+		}
+
+		.play-pause-btn.running svg path {
+			d: path("M8.5 6.5 v11 M15.5 6.5 v11");
+			transform: rotate(-45deg);
+			transform-origin: 12px 12px;
+		}
+
+		.play-pause-btn.disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+			pointer-events: none;
+		}
+
+		.play-pause-btn::after {
+			content: attr(data-title);
+			position: absolute;
+			bottom: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			background-color: var(--tooltip-bg);
+			color: var(--tooltip-color);
+			padding: 0.3rem 0.6rem;
+			border-radius: 5px;
+			font-size: 0.8rem;
+			white-space: nowrap;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.2s;
+			margin-bottom: 0.5rem;
+			z-index: 10;
+		}
+
+		.play-pause-btn:hover::after {
+			opacity: 1;
+		}
+
+		.play-pause-btn.disabled:hover::after {
+			opacity: 0;
+		}
+
+		@media screen and (max-width: 767px) {
+			.toolbar {
+				flex-direction: column;
+				gap: 2.5rem;
+				padding: 0.5rem;
+			}
+
+			.toolbar-left {
+				display: flex;
+				justify-content: center;
+				gap: 0.5rem;
+				width: 100%;
+				order: -1;
+			}
+
+			.toolbar-right {
+				display: none;
+			}
+
+			.toolbar-title {
+				order: 1;
+				width: 100%;
+				margin-top: 0;
+			}
+
+			.toolbar h1 {
+				font-size: 2rem;
+				line-height: 1.1;
+			}
+
+			.toolbar h2 {
+				font-size: 1.1rem;
+				line-height: 1.2;
+			}
+
+			.btn {
+				width: 50px;
+				height: 50px;
+			}
+
+			.menu-btn {
+				width: 50px !important;
+				height: 50px !important;
+			}
+
+			.home-btn {
+				width: 50px !important;
+				height: 50px !important;
+				z-index: 100;
+			}
+
+			.home-btn .icon-wrapper {
+				width: 50px !important;
+				height: 50px !important;
+			}
+
+			.home-btn svg {
+				width: 25px !important;
+				height: 25px !important;
+			}
+
+			.btn.fullscreen svg {
+				width: 25px;
+				height: 25px;
+			}
+
+			.timer {
+				width: 220px;
+				height: 220px;
+				margin-bottom: 1.5rem;
+			}
+
+			.timer::before {
+				width: 210px;
+				height: 210px;
+			}
+
+			.timer-display {
+				font-size: 3.5rem;
+				margin-top: 20px;
+				top: 60px;
+			}
+
+			.timer-container {
+				margin-top: 0;
+				margin-bottom: 20px;
+			}
+
+			.timer-controls {
+				margin-top: 9px;
+			}
+
+			.main-content {
+				gap: 1rem;
+				margin: 0;
+				justify-content: space-between;
+			}
+
+			.main-content.show-timer2 .timer1-container {
+				transform: translateX(-100%);
+				opacity: 0;
+				position: absolute;
+				pointer-events: none;
+			}
+
+			.main-content.show-timer2 .timer2-container {
+				transform: translateX(0);
+				opacity: 1;
+				position: relative;
+				pointer-events: all;
+			}
+
+			.timer1-container,
+			.timer2-container {
+				width: 100%;
+				transition: all 0.5s ease;
+				height: 100%;
+				justify-content: center;
+			}
+
+			.timer2-container {
+				transform: translateX(100%);
+				opacity: 0;
+				position: absolute;
+				pointer-events: none;
+			}
+
+			.menu {
+				width: 85%;
+				padding: 1.5rem;
+				gap: 1rem;
+				overflow-y: auto;
+				-webkit-overflow-scrolling: touch;
+			}
+
+			.modal-content {
+				padding: 1.5rem;
+				max-height: 85vh;
+				font-size: 12px;
+				overflow-y: auto;
+				-webkit-overflow-scrolling: touch;
+			}
+
+			.modal-header h2 {
+				font-size: 1.5rem;
+			}
+
+			.menu-item {
+				padding: 0.8rem;
+			}
+
+			.modal table {
+				font-size: 12px;
+			}
+
+			.modal td {
+				padding: 6px;
+			}
+
+			.modal td:first-child {
+				white-space: normal;
+			}
+		}
+
+		@media screen and (min-width: 768px) {
+			.toolbar-left .fullscreen,
+			.toolbar-left .menu-btn {
+				display: none;
+			}
+
+			.toolbar-left,
+			.toolbar-right {
+				display: flex;
+				gap: 0.8rem;
+			}
+			
+			.main-content {
+				min-height: calc(100vh - 180px);
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="toolbar">
+		<div class="toolbar-left">
+			<button class="btn home-btn" id="home-btn" data-title="accueil (H)">
+				<div class="icon-wrapper">
+					<svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+						<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+						<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+					</svg>
+				</div>
+			</button>
+			<button class="btn reload" id="reload-btn" data-title="recharger (R)">
+				<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<polyline points="23 4 23 10 17 10"></polyline>
+					<polyline points="1 20 1 14 7 14"></polyline>
+					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+				</svg>
+			</button>
+		</div>
+		<div class="toolbar-title">
+			<h1>oral φ</h1>
+			<h2>épreuve de contrôle - rattrapage</h2>
+		</div>
+		<div class="toolbar-right">
+			<button class="btn fullscreen" id="fullscreen-btn" data-title="plein écran (F)">
+				<svg class="fullscreen-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+					<line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" />
+					<line x1="5" y1="6" x2="5" y2="10" stroke="currentColor" />
+					<line x1="14" y1="5" x2="20" y2="5" stroke="currentColor" />
+					<line x1="19" y1="6" x2="19" y2="10" stroke="currentColor" />
+					<line x1="5" y1="14" x2="5" y2="20" stroke="currentColor" />
+					<line x1="6" y1="19" x2="10" y2="19" stroke="currentColor" />
+					<line x1="14" y1="19" x2="20" y2="19" stroke="currentColor" />
+					<line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" />				 
+				</svg>
+			</button>
+			<button class="menu-btn" id="menuButton" data-title="menu (M)">
+				<div class="menu-icon">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</button>
+		</div>
+	</div>
+
+	<div class="main-content" id="main-content">
+		<div class="timer-container timer1-container" id="timer1-container">
+			<div class="timer" id="timer1">
+				<div class="timer-display" id="timer1-display">
+					<span class="timer-time" id="timer1-minutes">10</span>
+					<span class="timer-separator" id="timer1-sep">:</span>
+					<span class="timer-time" id="timer1-seconds">00</span>
+				</div>
+				<div class="timer-label">exposé</div>
+			</div>
+			<div class="timer-controls">
+				<button class="play-pause-btn" id="timer1-play" data-title="lancer / pause">
+					<svg viewBox="0 0 24 24">
+						<g>
+							<path d="M8.6 6.4 L18 12 L8.6 17.6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+						</g>
+					</svg>
+				</button>
+				<button class="btn reset" id="timer1-reset" data-title="réinitialiser">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+					stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="23 4 23 10 17 10"></polyline>
+						<polyline points="1 20 1 14 7 14"></polyline>
+						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+					</svg>
+				</button>
+			</div>
+		</div>
+		<div class="timer-container timer2-container" id="timer2-container">
+			<div class="timer" id="timer2">
+				<div class="timer-display" id="timer2-display">
+					<span class="timer-time" id="timer2-minutes">10</span>
+					<span class="timer-separator" id="timer2-sep">:</span>
+					<span class="timer-time" id="timer2-seconds">00</span>
+				</div>
+				<div class="timer-label">entretien</div>
+			</div>
+			<div class="timer-controls">
+				<button class="play-pause-btn" id="timer2-play" data-title="lancer">
+					<svg viewBox="0 0 24 24">
+						<g>
+							<path d="M8.6 6.4 L18 12 L8.6 17.6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+						</g>
+					</svg>
+				</button>
+				<button class="btn reset" id="timer2-reset" data-title="réinitialiser">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+					stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="23 4 23 10 17 10"></polyline>
+						<polyline points="1 20 1 14 7 14"></polyline>
+						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+					</svg>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- OVERLAY MENU -->
+	<div class="menu-overlay" id="menuOverlay"></div>
+
+	<!-- MENU PRINCIPAL COULISSANT -->
+	<div class="slide-menu" id="slideMenu">
+		<div class="menu-header">
+			<button class="menu-close" id="menuClose">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>
+		</div>
+		<div class="menu-content">
+			<button class="menu-item" id="openPresentationSub">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<line x1="12" y1="16" x2="12" y2="12"></line>
+					<line x1="12" y1="8" x2="12.01" y2="8"></line>
+				</svg>
+				présentation
+			</button>
+			<button class="menu-item" id="openSettingsSub">	
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<circle cx="12" cy="12" r="3"></circle>
+					<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+				</svg>
+				paramètres
+			</button>
+			<button class="menu-item" id="openShortcutsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					 stroke-linecap="round" stroke-linejoin="round">
+					<rect x="2" y="4" width="20" height="16" rx="2"></rect>
+					<line x1="6" y1="8" x2="10" y2="8"></line>
+					<line x1="14" y1="8" x2="18" y2="8"></line>
+					<line x1="6" y1="12" x2="10" y2="12"></line>
+					<line x1="14" y1="12" x2="18" y2="12"></line>
+					<line x1="6" y1="16" x2="10" y2="16"></line>
+					<line x1="14" y1="16" x2="18" y2="16"></line>
+				</svg>
+				raccourcis clavier
+			</button>
+			<button class="menu-item" id="openAboutSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+				stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+					<line x1="12" y1="17" x2="12.01" y2="17"></line>
+				</svg>
+				à propos
+			</button>	
+		</div>
+	</div>
+
+	<!-- SOUS-MENU Présentation -->
+	<div class="submenu" id="submenuPresentation">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="presentation">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">présentation</div>
+		<div style="color: var(--font-color); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">
+			<p><strong>oral φ</strong> est un chronomètre double développé pour les épreuves de contrôle (oraux de rattrapage)</p>
+				<div class="settings-info">
+					<p><strong>• 1er timer :</strong> exposé<br>(10 minutes)</p>
+					<p><strong>• 2nd timer :</strong> entretien<br>(10 minutes)</p>
+					<p><strong>• code couleur :</strong><br>
+					vert : > 3 minutes<br>
+					orange : 1-3 minutes<br>
+					rouge : < 1 minutes</p>					
+					<p>• passage automatique au 2nd timer</p>
+					<p>• raccourcis clavier</p>
+				</div>
+		</div>
+	</div>
+
+	<!-- SOUS-MENU Raccourcis clavier - Avec tableau amélioré -->
+	<div class="submenu" id="submenuShortcuts">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="shortcuts">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">raccourcis clavier</div>
+		<table>
+			<tr>
+				<td><kbd>accueil</kbd> <kbd>H</kbd></td>
+				<td>renvoi au site académique</td>
+			</tr>
+			<tr>
+				<td><kbd>⟳</kbd> <kbd>R</kbd></td>
+				<td>recharger la page</td>
+			</tr>
+			<tr>
+				<td><kbd>plein écran</kbd> <kbd>F</kbd></td>
+				<td>entrer/sortir du plein écran</td>
+			</tr>
+			<tr>
+				<td><kbd>menu</kbd> <kbd>M</kbd></td>
+				<td>ouvrir/fermer le menu</td>
+			</tr>			
+			<tr>
+				<td><kbd>ESC</kbd></td>
+				<td>fermer sous-menu/menu</td>
+			</tr>
+			<tr>
+				<td><kbd>espace</kbd> <kbd>></kbd></td>
+				<td>lancer/pause le chrono actif</td>
+			</tr>
+			<tr>
+				<td><kbd>R</kbd></td>
+				<td>réinitialiser le chrono actif</td>
+			</tr>
+		</table>
+		<div class="settings-info">
+			<p>• le mode sombre est accessible dans "paramètres"</p>
+			<p>• les timers s'enchaînent automatiquement</p>
+		</div>
+	</div>
+
+	<!-- SOUS-MENU Paramètres -->
+	<div class="submenu" id="submenuSettings">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="settings">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"/>
+					<line x1="6" y1="6" x2="18" y2="18"/>
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">paramètres</div>
+		
+		<div class="toggle-container">
+			<span class="toggle-label">mode sombre</span>
+			<label class="theme-switch">
+				<input type="checkbox" id="darkModeToggle">
+				<span class="slider"></span>
+			</label>
+		</div>
+		
+		<div class="toggle-container">
+			<span class="toggle-label">animations</span>
+			<label class="theme-switch">
+				<input type="checkbox" id="animationsToggle" checked>
+				<span class="slider"></span>
+			</label>
+		</div>
+		
+		<div class="toggle-container">
+			<span class="toggle-label">mode daltonien</span>
+			<label class="theme-switch">
+				<input type="checkbox" id="colorblindToggle">
+				<span class="slider"></span>
+			</label>
+		</div>
+		
+		<div class="toggle-container">
+			<span class="toggle-label">mode évaluation</span>
+			<label class="theme-switch">
+				<input type="checkbox" id="deferredEvaluationToggle">
+				<span class="slider"></span>
+			</label>
+		</div>
+		
+		<div class="settings-info">
+			<p><strong>mode daltonien :</strong> affiche des icônes ✓ / ✗ et utilise des couleurs bleu / rouge au lieu de vert / rouge.</p>
+			<p><strong>mode évaluation :</strong> les réponses sont évaluées uniquement à la fin du quiz.</p>
+		</div>
+	</div>
+
+	<!-- SOUS-MENU À propos -->
+	<div class="submenu" id="submenuAbout">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="about">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"/>
+					<line x1="6" y1="6" x2="18" y2="18"/>
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">à propos</div>
+		<p style="margin-bottom:0.5rem;">application développée par Daniel Boulagnon</p>
+		<p style="margin-bottom:0.5rem;">daniel.boulagnon@ac-lille.fr</p>
+		<p style="margin-bottom:0.5rem;">exploitation à but pédagogique et non commercial</p>
+		<p>© 2026 – version 2.1.5</p>
+	</div>
+
+	<script>
+		// Initialisation des éléments
+		const body = document.body;
+
+		// Éléments du nouveau menu
+		const menuOverlay = document.getElementById('menuOverlay');
+		const slideMenu = document.getElementById('slideMenu');
+		const menuButton = document.getElementById('menuButton');
+		const menuClose = document.getElementById('menuClose');
+
+		const subPresentation = document.getElementById('submenuPresentation');
+		const subShortcuts = document.getElementById('submenuShortcuts');
+		const subSettings = document.getElementById('submenuSettings');
+		const subAbout = document.getElementById('submenuAbout');
+		const submenus = [subPresentation, subShortcuts, subSettings, subAbout];
+
+		// Éléments des timers
+		const timer1 = document.getElementById('timer1');
+		const timer2 = document.getElementById('timer2');
+		const timer1Minutes = document.getElementById('timer1-minutes');
+		const timer1Seconds = document.getElementById('timer1-seconds');
+		const timer1Sep = document.getElementById('timer1-sep');
+		const timer2Minutes = document.getElementById('timer2-minutes');
+		const timer2Seconds = document.getElementById('timer2-seconds');
+		const timer2Sep = document.getElementById('timer2-sep');
+		const timer1PlayBtn = document.getElementById('timer1-play');
+		const timer2PlayBtn = document.getElementById('timer2-play');
+		const timer1ResetBtn = document.getElementById('timer1-reset');
+		const timer2ResetBtn = document.getElementById('timer2-reset');
+		const timer1Container = document.getElementById('timer1-container');
+		const timer2Container = document.getElementById('timer2-container');
+		const timer1Display = document.getElementById('timer1-display');
+		const timer2Display = document.getElementById('timer2-display');
+		const mainContent = document.getElementById('main-content');
+
+		// Variables des timers
+		let timer1Time = 600;
+		let timer2Time = 600;
+		let timer1Interval = null;
+		let timer2Interval = null;
+		let timer1Running = false;
+		let timer2Running = false;
+		let timer1Finished = false;
+
+		// ========== FONCTIONS DU MENU ==========
+		function toggleMainMenu(force) {
+			const willOpen = (force !== undefined) ? force : !slideMenu.classList.contains('active');
+			slideMenu.classList.toggle('active', willOpen);
+			menuOverlay.classList.toggle('active', willOpen);
+			if (!willOpen) {
+				closeAllSubmenus();
+			}
+		}
+
+		function closeAllSubmenus() {
+			submenus.forEach(s => s.classList.remove('active'));
+		}
+
+		function openSubmenu(submenu) {
+			closeAllSubmenus();
+			if (submenu) submenu.classList.add('active');
+		}
+
+		// ========== FONCTIONS DES PARAMÈTRES ==========
+		function toggleDarkMode(e) {
+			document.body.classList.toggle('dark-mode', e.target.checked);
+			localStorage.setItem('darkMode', e.target.checked);
+			// Mettre à jour l'affichage des timers
+			updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, timer1Time);
+			updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, timer2Time);
+		}
+
+		function toggleAnimations(e) {
+			localStorage.setItem('animations', e.target.checked);
+		}
+
+		function toggleColorblind(e) {
+			document.body.classList.toggle('colorblind-mode', e.target.checked);
+			localStorage.setItem('colorblindMode', e.target.checked);
+		}
+
+		function toggleDeferredEvaluation(e) {
+			localStorage.setItem('deferredEvaluation', e.target.checked);
+		}
+
+		// Fonctions utilitaires des timers
+		function disableTimer1Buttons() {
+			timer1PlayBtn.classList.add('disabled');
+			timer1ResetBtn.classList.add('disabled');
+		}
+
+		function enableTimer1Buttons() {
+			timer1PlayBtn.classList.remove('disabled');
+			timer1ResetBtn.classList.remove('disabled');
+		}
+
+		function disableTimer2Buttons() {
+			timer2PlayBtn.classList.add('disabled');
+			timer2ResetBtn.classList.add('disabled');
+		}
+
+		function enableTimer2Buttons() {
+			timer2PlayBtn.classList.remove('disabled');
+			timer2ResetBtn.classList.remove('disabled');
+		}
+
+		function updateTimerDisplay(timer, minutesEl, secondsEl, separatorEl, displayEl, time) {
+			const minutes = Math.floor(time / 60);
+			const seconds = time % 60;
+			const minutesStr = minutes.toString().padStart(2, '0');
+			const secondsStr = seconds.toString().padStart(2, '0');
+
+			let color;
+			if (time <= 180 && time > 60) {
+				color = 'var(--warning)';
+			} else if (time <= 60) {
+				color = 'var(--danger)';
+			} else {
+				color = body.classList.contains('dark-mode') ? '#ffffff' : '#000000';
+			}
+
+			minutesEl.style.color = color;
+			secondsEl.style.color = color;
+			separatorEl.style.color = color;
+
+			minutesEl.textContent = minutesStr;
+			secondsEl.textContent = secondsStr;
+
+			// Gestion du clignotement rouge
+			if (time <= 60) {
+				displayEl.classList.add('blink-all');
+			} else {
+				displayEl.classList.remove('blink-all');
+				separatorEl.style.visibility = 'visible';
+			}
+
+			const percentage = (time / 600) * 100;
+			timer.style.background = `conic-gradient(
+				${time > 180 ? 'var(--success)' : time > 60 ? 'var(--warning)' : 'var(--danger)'}
+				${percentage}%,
+				var(--bg-light) ${percentage}%
+			)`;
+		}
+
+		function showTimer2OnMobile() {
+			if (window.innerWidth < 768) {
+				mainContent.classList.add('show-timer2');
+			}
+		}
+
+		function showTimer1OnMobile() {
+			if (window.innerWidth < 768) {
+				mainContent.classList.remove('show-timer2');
+			}
+		}
+
+		function startTimer1() {
+			if (timer2Running) {
+				return;
+			}
+
+			if (timer1Time === 0) {
+				return;
+			}
+
+			if (timer1Running) {
+				clearInterval(timer1Interval);
+				timer1Running = false;
+				timer1PlayBtn.classList.remove('running');
+			} else {
+				timer1Running = true;
+				timer1PlayBtn.classList.add('running');
+
+				timer1Interval = setInterval(() => {
+					if (timer1Time > 0) {
+						timer1Time--;
+						updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, timer1Time);
+					}
+
+					if (timer1Time <= 0) {
+						clearInterval(timer1Interval);
+						timer1Running = false;
+						timer1Finished = true;
+						timer1PlayBtn.classList.remove('running');
+
+						updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, 0);
+
+						enableTimer2Buttons();
+
+						showTimer2OnMobile();
+
+						setTimeout(() => {
+							if (!timer2Running && timer2Time > 0) {
+								startTimer2();
+							}
+						}, 500);
+					}
+				}, 1000);
+			}
+		}
+
+		function startTimer2() {
+			if (!timer1Finished && timer1Time > 0) {
+				alert("Le premier chronomètre doit être terminé avant de lancer le second.");
+				return;
+			}
+
+			if (timer2Time === 0) {
+				return;
+			}
+
+			if (timer2Running) {
+				clearInterval(timer2Interval);
+				timer2Running = false;
+				timer2PlayBtn.classList.remove('running');
+
+				enableTimer1Buttons();
+			} else {
+				timer2Running = true;
+				timer2PlayBtn.classList.add('running');
+
+				disableTimer1Buttons();
+
+				timer2Interval = setInterval(() => {
+					if (timer2Time > 0) {
+						timer2Time--;
+						updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, timer2Time);
+					}
+
+					if (timer2Time <= 0) {
+						clearInterval(timer2Interval);
+						timer2Running = false;
+						timer2PlayBtn.classList.remove('running');
+
+						updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, 0);
+
+						enableTimer1Buttons();
+					}
+				}, 1000);
+			}
+		}
+
+		// ========== INITIALISATION ==========
+		document.addEventListener('DOMContentLoaded', function() {
+			// Restaurer les paramètres
+			if (localStorage.getItem('darkMode') === 'true') {
+				document.body.classList.add('dark-mode');
+				if (document.getElementById('darkModeToggle')) {
+					document.getElementById('darkModeToggle').checked = true;
+				}
+			}
+			if (localStorage.getItem('animations') === 'false') {
+				if (document.getElementById('animationsToggle')) {
+					document.getElementById('animationsToggle').checked = false;
+				}
+			}
+			if (localStorage.getItem('colorblindMode') === 'true') {
+				document.body.classList.add('colorblind-mode');
+				if (document.getElementById('colorblindToggle')) {
+					document.getElementById('colorblindToggle').checked = true;
+				}
+			}
+			if (localStorage.getItem('deferredEvaluation') === 'true') {
+				if (document.getElementById('deferredEvaluationToggle')) {
+					document.getElementById('deferredEvaluationToggle').checked = true;
+				}
+			}
+
+			// Écouteurs menu
+			menuButton.addEventListener('click', (e) => {
+				e.stopPropagation();
+				toggleMainMenu();
+			});
+
+			menuClose.addEventListener('click', () => toggleMainMenu(false));
+			menuOverlay.addEventListener('click', () => toggleMainMenu(false));
+
+			// Ouverture des sous-menus
+			document.getElementById('openPresentationSub').addEventListener('click', (e) => {
+				e.stopPropagation();
+				openSubmenu(subPresentation);
+			});
+			document.getElementById('openShortcutsSub').addEventListener('click', (e) => {
+				e.stopPropagation();
+				openSubmenu(subShortcuts);
+			});
+			document.getElementById('openSettingsSub').addEventListener('click', (e) => {
+				e.stopPropagation();
+				openSubmenu(subSettings);
+			});
+			document.getElementById('openAboutSub').addEventListener('click', (e) => {
+				e.stopPropagation();
+				openSubmenu(subAbout);
+			});
+
+			// Fermeture des sous-menus
+			document.querySelectorAll('.submenu-close').forEach(btn => {
+				btn.addEventListener('click', (e) => {
+					e.stopPropagation();
+					closeAllSubmenus();
+				});
+			});
+
+			// Éviter propagation dans les menus
+			slideMenu.addEventListener('click', (e) => e.stopPropagation());
+			submenus.forEach(s => s.addEventListener('click', (e) => e.stopPropagation()));
+
+			// Paramètres
+			document.getElementById('darkModeToggle').addEventListener('change', toggleDarkMode);
+			document.getElementById('animationsToggle').addEventListener('change', toggleAnimations);
+			document.getElementById('colorblindToggle').addEventListener('change', toggleColorblind);
+			document.getElementById('deferredEvaluationToggle').addEventListener('change', toggleDeferredEvaluation);
+		});
+
+		// Fermeture avec Echap
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') {
+				if (slideMenu.classList.contains('active') || submenus.some(s => s.classList.contains('active'))) {
+					e.preventDefault();
+					toggleMainMenu(false);
+				}
+			}
+		});
+
+		// Gestion des timers
+		timer1PlayBtn.addEventListener('click', startTimer1);
+		timer2PlayBtn.addEventListener('click', startTimer2);
+
+		timer2PlayBtn.disabled = true;
+		timer2PlayBtn.style.opacity = '0.5';
+		timer2PlayBtn.style.cursor = 'not-allowed';
+		timer2PlayBtn.classList.add('disabled');
+		timer2ResetBtn.classList.add('disabled');
+
+		timer1ResetBtn.addEventListener('click', () => {
+			if (timer2Running) {
+				return;
+			}
+
+			clearInterval(timer1Interval);
+			timer1Time = 600;
+			updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, timer1Time);
+			timer1Running = false;
+			timer1Finished = false;
+			timer1PlayBtn.classList.remove('running');
+			timer1Sep.style.visibility = 'visible';
+
+			if (timer1Time === 600) {
+				timer2PlayBtn.disabled = true;
+				timer2PlayBtn.style.opacity = '0.5';
+				timer2PlayBtn.style.cursor = 'not-allowed';
+				disableTimer2Buttons();
+				showTimer1OnMobile();
+			}
+		});
+
+		timer2ResetBtn.addEventListener('click', () => {
+			if (timer2Running) {
+				return;
+			}
+
+			clearInterval(timer2Interval);
+			timer2Time = 600;
+			updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, timer2Time);
+			timer2Running = false;
+			timer2PlayBtn.classList.remove('running');
+			timer2Sep.style.visibility = 'visible';
+		});
+
+		// Gestion des raccourcis clavier
+		document.addEventListener('keydown', (e) => {
+			// Ignorer les raccourcis si un menu/modal est ouvert
+			if (slideMenu.classList.contains('active') ||
+				 submenus.some(s => s.classList.contains('active'))) {
+				return;
+			}
+
+			const key = e.key.toLowerCase();
+
+			// Espace ou > pour lancer/pause
+			if (e.code === 'Space' || e.key === ' ' || key === '>') {
+				e.preventDefault();
+
+				if (!timer1Finished && timer1Time > 0) {
+					startTimer1();
+				} else if (timer1Finished || timer1Time === 0) {
+					if (timer2Time > 0) {
+						startTimer2();
+					}
+				}
+			}
+
+			// Touche R pour réinitialiser le chronomètre actif
+			if (key === 'r') {
+				e.preventDefault();
+
+				if (timer2Running) {
+					// Si le timer 2 est en cours, ne pas réinitialiser
+					return;
+				}
+
+				if (timer1Running) {
+					// Si le timer 1 est en cours, on le réinitialise
+					clearInterval(timer1Interval);
+					timer1Time = 600;
+					updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, timer1Time);
+					timer1Running = false;
+					timer1Finished = false;
+					timer1PlayBtn.classList.remove('running');
+					timer1Sep.style.visibility = 'visible';
+
+					timer2PlayBtn.disabled = true;
+					timer2PlayBtn.style.opacity = '0.5';
+					timer2PlayBtn.style.cursor = 'not-allowed';
+					disableTimer2Buttons();
+					showTimer1OnMobile();
+				} else if (timer1Finished && timer2Running) {
+					// Si le timer 2 est en cours, on le réinitialise
+					clearInterval(timer2Interval);
+					timer2Time = 600;
+					updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, timer2Time);
+					timer2Running = false;
+					timer2PlayBtn.classList.remove('running');
+					timer2Sep.style.visibility = 'visible';
+					enableTimer1Buttons();
+				} else if (timer1Finished) {
+					// Si seul le timer 2 est visible (timer1 terminé)
+					clearInterval(timer2Interval);
+					timer2Time = 600;
+					updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, timer2Time);
+					timer2Running = false;
+					timer2PlayBtn.classList.remove('running');
+					timer2Sep.style.visibility = 'visible';
+				} else {
+					// Cas par défaut : réinitialiser le timer 1
+					clearInterval(timer1Interval);
+					timer1Time = 600;
+					updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, timer1Time);
+					timer1Running = false;
+					timer1Finished = false;
+					timer1PlayBtn.classList.remove('running');
+					timer1Sep.style.visibility = 'visible';
+
+					timer2PlayBtn.disabled = true;
+					timer2PlayBtn.style.opacity = '0.5';
+					timer2PlayBtn.style.cursor = 'not-allowed';
+					disableTimer2Buttons();
+					showTimer1OnMobile();
+				}
+			}
+
+			// Touche F pour le plein écran
+			if (key === 'f') {
+				e.preventDefault();
+				toggleFullscreen();
+			}
+		});
+
+		// Initialisation des timers
+		updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, timer1Time);
+		updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, timer2Time);
+
+		// Gestion du plein écran
+		const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+		function toggleFullscreen() {
+			if (!document.fullscreenElement) {
+				document.documentElement.requestFullscreen().catch(err => {
+					console.error(`Erreur lors du passage en plein écran: ${err.message}`);
+				});
+			} else {
+				document.exitFullscreen();
+			}
+		}
+
+		if (fullscreenBtn) fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+		document.addEventListener('fullscreenchange', () => {
+			const isFullscreen = !!document.fullscreenElement;
+
+			const fullscreenBtns = [fullscreenBtn].filter(btn => btn);
+			fullscreenBtns.forEach(btn => {
+				if (isFullscreen) {
+					btn.classList.add('fullscreen-active');
+				} else {
+					btn.classList.remove('fullscreen-active');
+				}
+			});
+
+			if (isFullscreen) {
+				const exitIcon = `<svg class="fullscreen-exit-icon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path>
+				</svg>`;
+				fullscreenBtns.forEach(btn => {
+					btn.innerHTML = exitIcon;
+				});
+			} else {
+				const enterIcon = `<svg class="fullscreen-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+					<line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" />
+					<line x1="5" y1="6" x2="5" y2="10" stroke="currentColor" />
+					<line x1="14" y1="5" x2="20" y2="5" stroke="currentColor" />
+					<line x1="19" y1="6" x2="19" y2="10" stroke="currentColor" />
+					<line x1="5" y1="14" x2="5" y2="20" stroke="currentColor" />
+					<line x1="6" y1="19" x2="10" y2="19" stroke="currentColor" />
+					<line x1="14" y1="19" x2="20" y2="19" stroke="currentColor" />
+					<line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" />				 
+				</svg>`;
+				fullscreenBtns.forEach(btn => {
+					btn.innerHTML = enterIcon;
+				});
+			}
+		});
+
+		// Bouton recharger
+		const reloadBtn = document.getElementById('reload-btn');
+		reloadBtn.addEventListener('click', () => {
+			location.reload();
+		});
+
+		// Bouton home avec animation 3D
+		const homeBtn = document.getElementById('home-btn');
+		const wrapper = homeBtn.querySelector('.icon-wrapper');
+
+		homeBtn.addEventListener('click', () => {
+			window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+		});
+
+		homeBtn.addEventListener('mouseenter', () => {
+			wrapper.style.transition = 'none';
+			wrapper.style.animation = 'none';
+			wrapper.offsetHeight;
+			wrapper.style.animation = 'tourne360 2s infinite linear';
+		});
+
+		homeBtn.addEventListener('mouseleave', () => {
+			const style = window.getComputedStyle(wrapper);
+			const matrix = style.transform;
+
+			let currentAngle = 0;
+
+			if (matrix && matrix !== 'none') {
+				if (matrix.includes('matrix3d')) {
+					const values = matrix.match(/matrix3d\((.+)\)/);
+					if (values) {
+						const nums = values[1].split(', ').map(Number);
+						if (nums.length >= 6) {
+							const cosAngle = nums[0];
+							const sinAngle = nums[2];
+							currentAngle = Math.atan2(sinAngle, cosAngle) * (180 / Math.PI);
+							if (currentAngle < 0) currentAngle += 360;
+						}
+					}
+				} else if (matrix.includes('matrix')) {
+					const values = matrix.match(/matrix\((.+)\)/);
+					if (values) {
+						const nums = values[1].split(', ').map(Number);
+						if (nums.length >= 4) {
+							const cosAngle = nums[0];
+							const sinAngle = nums[1];
+							currentAngle = Math.atan2(sinAngle, cosAngle) * (180 / Math.PI);
+							if (currentAngle < 0) currentAngle += 360;
+						}
+					}
+				}
+			}
+
+			wrapper.style.animation = 'none';
+			wrapper.offsetHeight;
+			wrapper.style.transition = 'none';
+			wrapper.style.transform = `rotateY(${currentAngle}deg)`;
+			wrapper.offsetHeight;
+
+			const remainingAngle = 360 - currentAngle;
+			const duration = (remainingAngle / 360) * 2;
+
+			wrapper.style.transition = `transform ${duration}s linear`;
+			wrapper.style.transform = `rotateY(360deg)`;
+		});
+
+		wrapper.addEventListener('transitionend', () => {
+			wrapper.style.transition = 'none';
+			wrapper.style.transform = 'rotateY(0deg)';
+		});
+
+		// Gestion du redimensionnement
+		window.addEventListener('resize', () => {
+			if (window.innerWidth >= 768) {
+				mainContent.classList.remove('show-timer2');
+			} else if (timer1Finished && !mainContent.classList.contains('show-timer2')) {
+				showTimer2OnMobile();
+			}
+		});
+
+		// DÉPLACEMENT DES BOUTONS POUR MOBILE
+		function rearrangeToolbarForMobile() {
+			const toolbarLeft = document.querySelector('.toolbar-left');
+			const toolbarRight = document.querySelector('.toolbar-right');
+			const fullscreenBtn = document.getElementById('fullscreen-btn');
+			const menuBtn = document.getElementById('menuButton');
+
+			if (window.innerWidth < 768) {
+				// Sur mobile : déplacer fullscreen et menu dans toolbar-left
+				if (fullscreenBtn && menuBtn && toolbarRight) {
+					if (!toolbarLeft.contains(fullscreenBtn)) {
+						toolbarLeft.appendChild(fullscreenBtn);
+					}
+					if (!toolbarLeft.contains(menuBtn)) {
+						toolbarLeft.appendChild(menuBtn);
+					}
+				}
+			} else {
+				// Sur desktop : remettre fullscreen et menu dans toolbar-right
+				if (fullscreenBtn && menuBtn && toolbarRight) {
+					toolbarRight.innerHTML = '';
+					toolbarRight.appendChild(fullscreenBtn);
+					toolbarRight.appendChild(menuBtn);
+
+					const homeBtn = document.getElementById('home-btn');
+					const reloadBtn = document.getElementById('reload-btn');
+					toolbarLeft.innerHTML = '';
+					toolbarLeft.appendChild(homeBtn);
+					toolbarLeft.appendChild(reloadBtn);
+				}
+			}
+		}
+
+		// Appeler au chargement et au redimensionnement
+		window.addEventListener('load', rearrangeToolbarForMobile);
+		window.addEventListener('resize', rearrangeToolbarForMobile);
+	</script>
+</body>
 </html>
