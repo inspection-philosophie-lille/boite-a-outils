@@ -399,8 +399,9 @@
 		
 		.submenu.active {
 			right: 0;
-			padding-left: 17px;
-			padding-right: 5px;
+			/* Ajout de padding cohérent pour tout le contenu */
+			padding-left: 20px;
+			padding-right: 20px;
 		}
 		
 		body.dark-mode .submenu {
@@ -414,6 +415,9 @@
 			}
 			.submenu.active {
 				right: 0;
+				/* Ajustement pour mobile */
+				padding-left: 16px;
+				padding-right: 16px;
 			}
 		}
 
@@ -497,6 +501,8 @@
 			color: red;
 			margin: 0.5rem 0 1.5rem 0;
 			text-align: center;
+			/* Assurer que le titre utilise le même padding */
+			width: 100%;
 		}
 
 		/* ====== STYLES SPÉCIFIQUES AUX SOUS-MENUS ====== */
@@ -505,10 +511,14 @@
 			grid-template-columns: 120px 1fr;
 			align-items: center;
 			gap: 1rem;
-			margin-left: 10px;
+			/* Supprimer la marge gauche qui créait un décalage */
+			margin-left: 0;
 			margin-top: 4px;
 			min-height: 10px;
 			width: 100%;
+			padding-left: 0;
+			padding-right: 0;
+			box-sizing: border-box;
 		}
 		
 		.toggle-label {
@@ -518,13 +528,16 @@
 			white-space: nowrap;
 		}
 
-		/* Switch - hauteur réduite à 18px, boule 14px, translation 24px */
+		/* Switch - aligné à DROITE */
 		.theme-switch {
 			position: relative;
 			display: inline-block;
-			left: 52px;
+			/* Supprimer le left:52px qui causait un décalage */
+			left: auto;
 			width: 38px;  /* largeur conservée pour l'esthétique */
 			height: 18px;  /* hauteur réduite à 18px */
+			/* Aligner à droite dans la cellule grid */
+			justify-self: end;
 		}
 		
 		.theme-switch input {
@@ -563,27 +576,32 @@
 		}
 
 		/* Table pour les raccourcis */
-		table {
+		.submenu table {
 			width: 100%;
 			color: var(--font-color);
 			margin-bottom: 1rem;
 			border-collapse: collapse;
+			/* S'assurer que le tableau utilise toute la largeur disponible */
+			box-sizing: border-box;
 		}
 		
-		td {
+		.submenu td {
 			padding: 0px 0px;
 			vertical-align: middle;
 			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 		}
 
-		td:first-child {
+		.submenu td:first-child {
 			white-space: nowrap;
 			font-weight: 500;
+			padding-right: 8px; /* Ajout d'un petit espace entre les colonnes */
 		}
 
-		td:last-child {
+		.submenu td:last-child {
 			font-size: 12px;
 			line-height: 1.4;
+			/* Assurer que le texte de droite s'aligne correctement */
+			padding-left: 0;
 		}
 		
 		kbd {
@@ -615,22 +633,34 @@
 			font-size: 12px;
 		}
 		
+		/* Style pour les paragraphes dans les sous-menus */
 		.submenu p {
 			margin-bottom: 0.5rem;
 			color: var(--font-color);
+			/* Ajout de padding horizontal nul car le conteneur parent a déjà du padding */
+			padding-left: 0;
+			padding-right: 0;
+			width: 100%;
 		}
 		
 		.settings-info {
 			margin-top: 20px;
-			margin-right: 15px;
+			/* Supprimer la marge droite qui créait un décalage */
+			margin-right: 0;
 			padding: 15px;
 			background: rgba(0,0,0,0.05);
 			border-radius: 10px;
+			/* S'assurer que la largeur utilise tout l'espace disponible */
+			width: 100%;
+			box-sizing: border-box;
 		}
 		
 		.settings-info p {
 			margin: 0 0 10px 0;
 			font-size: 0.9em;
+			/* Pas de padding supplémentaire pour les paragraphes dans settings-info */
+			padding-left: 0;
+			padding-right: 0;
 		}
 		
 		.settings-info p:last-child {
@@ -1124,7 +1154,7 @@
 					<span class="timer-separator" id="timer1-sep">:</span>
 					<span class="timer-time" id="timer1-seconds">00</span>
 				</div>
-				<div class="timer-label">exposé</div>
+				<div class="timer-label">présentation</div>
 			</div>
 			<div class="timer-controls">
 				<button class="play-pause-btn" id="timer1-play" data-title="lancer / pause">
@@ -1151,7 +1181,7 @@
 					<span class="timer-separator" id="timer2-sep">:</span>
 					<span class="timer-time" id="timer2-seconds">00</span>
 				</div>
-				<div class="timer-label">entretien</div>
+				<div class="timer-label">échanges</div>
 			</div>
 			<div class="timer-controls">
 				<button class="play-pause-btn" id="timer2-play" data-title="lancer">
@@ -1239,10 +1269,10 @@
 		</div>
 		<div class="submenu-title">présentation</div>
 		<div style="color: var(--font-color); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">
-			<p><strong>oral φ</strong> est un chronomètre double conçu pour les épreuves de contrôle (oraux de rattrapage)</p>
+			<p><strong>oral φ</strong> est un chronomètre double conçu pour les épreuves du grand oral et des oraux de rattrapage</p>
 				<div class="settings-info">
-					<p><strong>• 1er timer :</strong> exposé<br>(10 minutes)</p>
-					<p><strong>• 2nd timer :</strong> entretien<br>(10 minutes)</p>
+					<p><strong>• 1er timer :</strong> présentation<br>(10 minutes)</p>
+					<p><strong>• 2nd timer :</strong> échanges<br>(10 minutes)</p>
 					<p><strong>• code couleur :</strong><br>
 					vert : > 3 minutes<br>
 					orange : 1-3 minutes<br>
@@ -1361,9 +1391,9 @@
 			</button>
 		</div>
 		<div class="submenu-title">à propos</div>
-		<p style="margin-bottom:0.5rem;">application développée par Daniel Boulagnon</p>
-		<p style="margin-bottom:0.5rem;">daniel.boulagnon@ac-lille.fr</p>
-		<p style="margin-bottom:0.5rem;">exploitation à but pédagogique et non commercial</p>
+		<p>application développée par Daniel Boulagnon</p>
+		<p>daniel.boulagnon@ac-lille.fr</p>
+		<p>exploitation à but pédagogique et non commercial</p>
 		<p>© 2026 – version 2.1.5</p>
 	</div>
 
@@ -1485,7 +1515,8 @@
 			} else if (time <= 60) {
 				color = 'var(--danger)';
 			} else {
-				color = body.classList.contains('dark-mode') ? '#ffffff' : '#000000';
+				// Utiliser la variable CSS pour la couleur normale (s'adapte au thème)
+				color = 'var(--font-color)';
 			}
 
 			minutesEl.style.color = color;
@@ -1634,6 +1665,10 @@
 					document.getElementById('deferredEvaluationToggle').checked = true;
 				}
 			}
+
+			// Initialisation des timers APRÈS avoir appliqué le mode sombre
+			updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, timer1Time);
+			updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, timer2Time);
 
 			// Écouteurs menu
 			menuButton.addEventListener('click', (e) => {
@@ -1824,10 +1859,6 @@
 				toggleFullscreen();
 			}
 		});
-
-		// Initialisation des timers
-		updateTimerDisplay(timer1, timer1Minutes, timer1Seconds, timer1Sep, timer1Display, timer1Time);
-		updateTimerDisplay(timer2, timer2Minutes, timer2Seconds, timer2Sep, timer2Display, timer2Time);
 
 		// Gestion du plein écran
 		const fullscreenBtn = document.getElementById('fullscreen-btn');
