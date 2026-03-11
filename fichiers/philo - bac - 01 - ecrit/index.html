@@ -634,6 +634,17 @@
 			z-index: 1;
 		}
 
+	@media screen and (max-width: 767px) {
+		.switch-button {
+			width: 250px !important;    /* Largeur réduite à 250px */
+			height: 40px;               /* On garde la même hauteur */
+		}
+
+		.switch-button-label span {
+			font-size: 0.8rem !important; /* Taille de police réduite */
+		}
+	}
+
 		.switch-button-checkbox {
 			cursor: pointer;
 			height: 100%;
@@ -1046,6 +1057,7 @@
 
 		@media screen and (max-width: 400px) {
 			.carousel-nav-btn {
+				top: 58vh;
 				width: 48px;
 				height: 48px;
 			}
@@ -1237,7 +1249,7 @@
 		</div>
 		<div class="toolbar-title">
 			<h1>notation</h1>
-			<h2>par palier en φ</h2>
+			<h2>par paliers en φ</h2>
 		</div>
 		<div class="toolbar-right">
 			<button class="btn menu-btn" id="menuButton" data-title="menu (M)">
@@ -1431,8 +1443,8 @@
 		<div class="switch-button">
 			<input id="switch" class="switch-button-checkbox" type="checkbox">
 			<label class="switch-button-label" for="switch">
-				<span class="label-dissertation">Dissertation</span>
-				<span class="label-explication">Explication de texte</span>
+				<span class="label-dissertation">dissertation</span>
+				<span class="label-explication">explication de texte</span>
 			</label>
 		</div>
 	</header>
