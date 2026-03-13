@@ -12,7 +12,7 @@ window.allQuestions = [
 	question: "Question n°2 : Quel célèbre philosophe fut le maître de Platon ?",
 	answers: [
 	{ text: "Socrate, qu'il a immortalisé comme personnage principal de ses dialogues", correct: true },
-	{ text: "Héraclite, car Platon a largement repris sa théorie du flux permanents", correct: false }
+	{ text: "Héraclite, car Platon a largement repris sa théorie du flux permanents", correct: false },
 	{ text: "Pythagore, dont les idées mathématiques l'ont influencé mais qu'il n'a pas connu", correct: false }
 	],
 	explanation: "Socrate (469-399 av. J.-C.) fut le maître et l'inspiration majeure de Platon. La condamnation à mort de Socrate par la démocratie athénienne marqua profondément le jeune Platon et orienta sa réflexion politique et philosophique. La plupart des dialogues de Platon mettent en scène Socrate comme interlocuteur principal"

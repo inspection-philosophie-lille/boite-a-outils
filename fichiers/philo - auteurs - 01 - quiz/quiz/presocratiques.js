@@ -290,8 +290,8 @@ window.allQuestions = [
 	{
 	question: "Question n°33 : Quelle position les atomistes (Leucippe, Démocrite) adoptent-ils face à la sensation et à la connaissance ?",
 	answers: [
-    { text: "Les sensations sont des effluves d'atomes ; la pensée résulte d'atomes plus subtils", correct: true }
-    { text: "Les sensations sont trompeuses ; seule la raison atteint la vérité des atomes", correct: false }
+    { text: "Les sensations sont des effluves d'atomes ; la pensée résulte d'atomes plus subtils", correct: true },
+    { text: "Les sensations sont trompeuses ; seule la raison atteint la vérité des atomes", correct: false },
     { text: "Les sensations viennent des dieux ; la raison nous élève à la connaissance", correct: false }
 	],
 	explanation: "Les atomistes proposent une théorie matérialiste cohérente : la vue est causée par des « simulacres » (εἴδωλα, <i>eidōla</i>), fines pellicules d'atomes émises par les objets. La pensée est un processus physique impliquant des atomes d'âme, plus mobiles et sphériques. La raison permet de déduire l'existence des atomes, que les sens ne perçoivent pas directement"
@@ -335,8 +335,8 @@ window.allQuestions = [
 	{
 	question: "Question n°38 : Quelle est la nature de l'âme (ψυχή, <i>psychē</i>) selon Héraclite ?",
 	answers: [
-    { text: "Une étincelle du feu cosmique, un fragment du <i>logos</i>", correct: true }
-    { text: "Un nombre qui se meut lui-même, principe d'harmonie", correct: false }
+    { text: "Une étincelle du feu cosmique, un fragment du <i>logos</i>", correct: true },
+    { text: "Un nombre qui se meut lui-même, principe d'harmonie", correct: false },
     { text: "Un composé harmonieux et équilibré des quatre éléments", correct: false }
 	],
 	explanation: "Pour Héraclite, l'âme n'est pas une substance immatérielle distincte. Elle est une manifestation du feu primordial, donc sèche et lumineuse. Une âme « humide » (par l'ivresse, la passion) est dégradée. La sagesse consiste à « s'accroître en soi-même » (à développer son propre <i>logos</i>) pour être en harmonie avec le <i>logos</i> universel qui gouverne tout"
