@@ -264,11 +264,11 @@ window.allQuestions = [
 	question: "Question n°30 : Quel mouvement intellectuel et thérapeutique, fondé par Freud, se scinde en 1913 avec la défection de l'un de ses principaux disciples, Carl Gustav Jung ?",
 	answers: [
 	{ text: "L'École de Zurich", correct: false },
-	{ text: "L'Association Psychanalytique Internationale", correct: false },
-	{ text: "L'Association Psychanalytique Internationale)", correct: true }
+	{ text: "La Société Psychologique du Mercredi", correct: false },
+	{ text: "L'Association Psychanalytique Internationale", correct: true }
 	],
 	explanation: "Jung, d'abord considéré comme le « dauphin » de Freud et président de l'Association Psychanalytique Internationale (fondée en 1910), développe des désaccords théoriques majeurs (sur la nature de la libido, l'inconscient collectif, l'importance du religieux). Sa rupture avec Freud en 1913 marque la première grande scission au sein du mouvement psychanalytique naissant, bien que l'API elle-même survive."
-	}
+	},
 	{
 	question: "Question n°31 : Quelle pratique thérapeutique, utilisée par Freud au début de sa carrière avec Breuer, abandonne-t-il car elle reposait trop sur la suggestion et l'autorité du médecin ?",
 	answers: [
@@ -655,7 +655,7 @@ window.allQuestions = [
 	{ text: "L'attention flottante", correct: true }
 	],
 	explanation: "L'attention également flottante (ou libre) est la contrepartie, pour l'analyste, de la libre association du patient. Il doit écouter sans préjugé, sans chercher à retenir ou à sélectionner, pour être réceptif à tous les éléments du discours, y compris ceux qui semblent insignifiants. Cette attitude, prônée par Freud, permet de saisir les connexions inconscientes sans orienter le discours du patient."
-	}
+	},
 	{
 	question: "Question n°74 : Quelle est la critique féministe majeure adressée à la théorie freudienne du développement psychosexuel féminin ?",
 	answers: [

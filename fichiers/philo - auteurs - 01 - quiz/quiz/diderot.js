@@ -43,7 +43,7 @@ window.allQuestions = [
 	{ text: "<i>L'Entretien d'un philosophe avec la Maréchale de ***</i>", correct: true }
 	],
 	explanation: "Dans <i>L'Entretien d'un philosophe avec la Maréchale de ***</i>, Diderot met en scène un dialogue entre un philosophe athée et une grande dame. Le philosophe y défend l'idée qu'on peut être vertueux sans croire en Dieu, en s'appuyant sur une morale naturelle fondée sur la sensibilité et la raison. Ce texte illustre la position déiste/athée de Diderot qui sépare morale et religion."
-	}
+	},
 	{
 	question: "Question n°6 : Quelle méthode Diderot privilégie-t-il pour explorer les questions philosophiques complexes, notamment dans <i>Le Rêve de d'Alembert</i> ?",
 	answers: [

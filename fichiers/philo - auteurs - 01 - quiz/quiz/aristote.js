@@ -731,20 +731,11 @@ window.allQuestions = [
 	{
 	question: "Question n°82 : Quelle est la vertu relative aux petits honneurs et aux petites situations ?",
 	answers: [
-	{ text: "La justice", correct: false },
-	{ text: "La magnanimité (grands honneurs)", correct: false },
-	{ text: "La dignité (μικροψυχία ? Non, c'est un vice) ou la tempérance selon les cas", correct: false }
+    { "text": "La justice", "correct": false },
+    { "text": "La magnanimité", "correct": false },
+    { "text": "L'ambition", "correct": true }
 	],
-	explanation: "Cette question contient un piège. La magnanimité concerne les grands honneurs. Pour les honneurs mineurs, Aristote évoque une vertu sans nom précis, intermédiaire entre l'ambition (φιλοτιμία, <i>philotimia</i>, excès) et le manque d'ambition (ἀφιλοτιμία, <i>aphilotimia</i>, défaut). L'homme vertueux désire les honneurs à la juste mesure, selon son mérite."
-	},
-	{	
-	question: "Question n°82 : Quelle est la vertu relative aux petits honneurs et aux petites situations ?",
-	answers: [
-	{ text: "La justice", correct: false },
-	{ text: "La magnanimité (grands honneurs)", correct: false },
-	{ text: "La vertu sans nom (juste milieu concernant les honneurs mineurs)", correct: true }
-	],
-	explanation: "La magnanimité concerne les grands honneurs. Pour les honneurs mineurs, Aristote évoque une vertu sans nom précis, intermédiaire entre l'ambition (φιλοτιμία, <i>philotimia</i>, excès) et le manque d'ambition (ἀφιλοτιμία, <i>aphilotimia</i>, défaut). L'homme vertueux désire les honneurs à la juste mesure, selon son mérite."
+	explanation: "Aristote établit un parallèle entre deux vertus sociales liées à l'honneur : la magnanimité (μεγαλοψυχία) concerne les grands honneurs ; une vertu souvent anonyme ou nommée ambition (φιλοτιμία) concerne les honneurs modestes et quotidiens. Le vice peut être l'excès (être trop ambitieux, vaniteux) ou le défaut (manquer d'ambition, être indifférent)."
 	},
 	{	
 	question: "Question n°83 : Quel philosophe des Lumières a repris et transformé la notion aristotélicienne de « finalité sans fin » dans son esthétique ?",
