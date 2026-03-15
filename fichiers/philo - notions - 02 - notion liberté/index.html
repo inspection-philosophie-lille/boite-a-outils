@@ -878,9 +878,9 @@
 			<div class="control-slider-container">
 				<div class="control-slider-label">
 					<span>nombre de boids :</span>
-					<span id="boidCountDisplay">9409</span>
+					<span id="boidCountDisplay">8000</span>
 				</div>
-				<input type="range" id="boidSlider" min="50" max="20000" step="50" value="10000">
+				<input type="range" id="boidSlider" min="50" max="20000" step="50" value="8000">
 			</div>
 			
 			<!-- Séparation -->
@@ -889,7 +889,7 @@
 					<span>distance d'évitement entre boids :</span>
 					<span id="separationDisplay">16.0</span>
 				</div>
-				<input type="range" id="separationSlider" min="5" max="50" step="0.5" value="20.0">
+				<input type="range" id="separationSlider" min="5" max="50" step="0.5" value="16.0">
 			</div>
 
 			<!-- Alignement -->
@@ -898,7 +898,7 @@
 					<span>distance d'influence pour l'alignement :</span>
 					<span id="alignmentDisplay">45.0</span>
 				</div>
-				<input type="range" id="alignmentSlider" min="5" max="50" step="0.5" value="30.0">
+				<input type="range" id="alignmentSlider" min="5" max="50" step="0.5" value="45.0">
 			</div>
 
 			<!-- Cohésion -->
@@ -907,7 +907,7 @@
 					<span>distance d'attraction vers le groupe :</span>
 					<span id="cohesionDisplay">25.0</span>
 				</div>
-				<input type="range" id="cohesionSlider" min="5" max="50" step="0.5" value="20.0">
+				<input type="range" id="cohesionSlider" min="5" max="50" step="0.5" value="25.0">
 			</div>
 		</div>
 		
@@ -1225,8 +1225,8 @@
 		var hash = document.location.hash.substr(1);
 		if (hash) hash = parseInt(hash, 0);
 		
-		// Valeur initiale
-		var currentBoidCount = hash || 1024;
+		// Valeur initiale - 8000 boids
+		var currentBoidCount = hash || 8000;
 		// S'assurer que c'est un carré parfait pour la texture
 		var argumentHash = Math.floor(Math.sqrt(currentBoidCount));
 		currentBoidCount = argumentHash * argumentHash;
@@ -1255,11 +1255,11 @@
 		var boidSlider = document.getElementById('boidSlider');
 		var boidCountDisplay = document.getElementById('boidCountDisplay');
 
-		// Variables pour les contrôles de comportement
+		// Variables pour les contrôles de comportement - VOS RÉGLAGES
 		var controller_variables = {
-			separation: 20.0,
-			alignment: 30.0,
-			cohesion: 20.0
+			separation: 16.0,
+			alignment: 45.0,
+			cohesion: 25.0
 		};
 
 		// Initialiser l'affichage du slider
