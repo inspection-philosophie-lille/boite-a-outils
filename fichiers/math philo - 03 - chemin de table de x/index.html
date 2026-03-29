@@ -1,0 +1,2191 @@
+<!DOCTYPE html>
+<!------------------------------------ Daniel Boulagnon ------------------------------------>
+<!----------------------------- daniel.boulagnon@ac-lille.fr ------------------------------->
+<!------------------------------------- version 2026 --------------------------------------->
+<!----------------- Exploitation à but strictement pédagogique et non lucratif ------------->
+<!------------------------------------------------------------------------------------------>
+
+<html lang="fr" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<link rel="icon" href="../../src/favicon.ico">
+	<title>chemin de table</title>
+	<style>
+		@font-face {
+			font-family: 'Calibri';
+			src: local('Calibri'), local('Arial'), sans-serif;
+			unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+2013-2014, U+2018-201A, U+201C-201E, U+2026;
+			font-weight: normal;
+			font-style: normal;
+		}
+		:root {
+			--grid-size: 4;
+			--max-width: 600px;
+			--game-width: 95%;
+			--cell-size: 60px;
+			--cell-font-size: 1.8em;
+			--bonus-font-size: 0.7em;
+			--connection-line-width: 2em;
+			--infostatsingame-font-size: 1.2em;
+			--primary-color: #808080;
+			--secondary-color: #FFFFFF;
+			--connection-color: #808080;
+			--success-color: #808080;
+			--error-color: #e74c3c;
+			--border-radius: 15px;
+			--neumorphic-shadow: inset 5px 5px 10px #d1d9e6, inset -5px -5px 10px #ffffff;
+			--neumorphic-shadow-light: 5px 5px 10px #d1d9e6, -5px -5px 10px #ffffff;
+			--main-font: 'Calibri', "Arial", "Helvetica", sans-serif;
+			--reload-color: #ff4444;
+			--background-color: #f5f5f5;
+			--text-color: #2c3e50;
+			--touch-target-size: 44px;
+			--btn: #f5f5f5;
+			--font-color: #2c3e50;
+			--shadow-out: 5px 5px 10px #b8b9be, -5px -5px 10px #ffffff;
+			--shadow-in: inset 3px 3px 6px #b8b9be, inset -3px -3px 6px #ffffff;
+			--tooltip-bg: #ffffff;
+			--tooltip-color: #333333;
+		}
+		
+		html, body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+		
+		body {
+			font-family: var(--main-font);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			min-height: 100vh;
+			height: 100%;
+			padding: 8px;
+			background: #f5f5f5;
+			touch-action: pan-y pinch-zoom;
+			overflow-y: auto;
+		}
+		
+		/* Mode sombre */
+		body.dark-mode {
+			--background-color: #1a1c2a;
+			--btn: #2d2d2d;
+			--font-color: #e0e0e0;
+			--shadow-out: 5px 5px 10px #0f1119, -5px -5px 10px #25283b;
+			--shadow-in: inset 3px 3px 6px #0f1119, inset -3px -3px 6px #25283b;
+			--tooltip-bg: #333333;
+			--tooltip-color: #ffffff;
+			background: #1a1c2a;
+		}
+		
+		/* En mode sombre, les chiffres des lettres doivent être noirs */
+		body.dark-mode .letter {
+			color: #000000 !important;
+		}
+		
+		/* TOOLBAR - Version desktop avec titre centré entre les boutons */
+		.toolbar {
+			width: 100%;
+			max-width: var(--max-width);
+			position: relative;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 10px;
+			background: transparent;
+			flex-shrink: 0;
+			height: 60px;
+		}
+		.toolbar-left,
+		.toolbar-right {
+			display: flex;
+			gap: 12px;
+			align-items: center;
+			z-index: 2;
+			height: 100%;
+		}
+		.toolbar-left {
+			justify-content: flex-start;
+			align-items: center;
+		}
+		.toolbar-right {
+			justify-content: flex-end;
+			align-items: center;
+		}
+		.toolbar-center {
+			position: absolute;
+			left: 0;
+			right: 0;
+			pointer-events: none;
+			text-align: center;
+			z-index: 1;
+		}
+		.toolbar-title-desktop {
+			pointer-events: auto;
+			margin: 0;
+			color: red;
+			font-size: clamp(20px, 4vw, 28px);
+			font-weight: bold;
+			font-family: 'Muli', sans-serif;
+			white-space: nowrap;
+		}
+		.toolbar-subtitle-desktop {
+			display: none;
+		}
+		
+		/* Version mobile du titre (cachée par défaut) */
+		.toolbar-mobile {
+			display: none;
+			width: 100%;
+			flex-direction: column;
+			align-items: center;
+			margin-bottom: 6px;
+		}
+		.toolbar-title-mobile {
+			margin: 0;
+			color: red;
+			font-size: clamp(20px, 6vw, 26px);
+			font-weight: bold;
+			font-family: 'Muli', sans-serif;
+			text-align: center;
+		}
+		.toolbar-subtitle-mobile {
+			margin: 2px 0 0 0;
+			color: #5a6e7c;
+			font-size: clamp(10px, 3vw, 12px);
+			text-align: center;
+		}
+		body.dark-mode .toolbar-subtitle-mobile {
+			color: #aaa;
+		}
+		
+		.toolbar-btn {
+			width: 44px;
+			height: 44px;
+			border-radius: 50%;
+			background: var(--btn);
+			border: none;
+			color: var(--font-color);
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+			position: relative;
+			margin: auto 0;
+		}
+		.toolbar-btn:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+		.toolbar-btn:active {
+			transform: translateY(1px);
+		}
+		.toolbar-btn svg {
+			width: 24px;
+			height: 24px;
+			fill: none;
+			stroke: currentColor;
+			stroke-width: 2;
+		}
+		.toolbar-btn::after {
+			content: attr(data-title);
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: 0.5rem;
+			background-color: var(--tooltip-bg);
+			color: var(--tooltip-color);
+			padding: 0.3rem 0.6rem;
+			border-radius: 5px;
+			font-size: 0.75rem;
+			white-space: nowrap;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.2s;
+			z-index: 10;
+		}
+		.toolbar-btn:hover::after {
+			opacity: 1;
+		}
+		
+		/* Bouton HOME avec animation 3D */
+		.home-btn {
+			perspective: 1200px;
+		}
+		.home-btn .icon-wrapper {
+			width: 44px;
+			height: 44px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			transform-style: preserve-3d;
+		}
+		.home-btn:hover .icon-wrapper {
+			animation: tourne360 2s infinite linear;
+		}
+		@keyframes tourne360 {
+			0% { transform: rotateY(0deg); }
+			100% { transform: rotateY(360deg); }
+		}
+		
+		/* Bouton RELOAD avec animation */
+		.reload-btn:hover svg {
+			animation: rotate 1s linear;
+		}
+		
+		/* Animation pour les SVG des éléments de menu */
+		.menu-item:hover svg {
+			animation: rotate 1s linear;
+		}
+		
+		/* Animation pour les SVG des sous-menus (boutons de fermeture) */
+		.menu-close:hover svg,
+		.submenu-close:hover svg {
+			animation: rotate 1s linear;
+		}
+		
+		@keyframes rotate {
+			from { transform: rotate(0deg); }
+			to { transform: rotate(360deg); }
+		}
+		
+		/* Bouton FULLSCREEN */
+		.fullscreen-icon, .fullscreen-exit-icon {
+			transform-origin: center;
+			transition: transform 0.3s ease;
+		}
+		.toolbar-btn.fullscreen:not(.fullscreen-active):hover svg:not(.fullscreen-exit-icon) {
+			transform: scale(1.3);
+		}
+		.toolbar-btn.fullscreen.fullscreen-active:hover .fullscreen-exit-icon {
+			transform: scale(0.8);
+		}
+		
+		/* Bouton MENU */
+		.menu-btn {
+			position: relative;
+			z-index: 100;
+		}
+		.menu-btn .menu-icon {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			transition: transform 0.3s ease;
+		}
+		.menu-btn:hover .menu-icon {
+			transform: rotate(90deg);
+		}
+		.menu-btn span {
+			display: block;
+			width: 20px;
+			height: 2px;
+			background-color: var(--font-color);
+			transition: all 0.3s ease;
+		}
+		
+		/* Effet de survol des cellules */
+		.grid-cell.hover-highlight {
+			transform: scale(0.98);
+			box-shadow: 0 0 0 2px #808080, 0 0 15px -3px rgba(0,0,0,0.3);
+			transition: all 0.1s ease;
+		}
+		
+		/* MENU PRINCIPAL ET SOUS-MENUS */
+		.menu-overlay {
+			position: fixed;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.5);
+			z-index: 9999;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.3s;
+		}
+		.menu-overlay.active {
+			opacity: 1;
+			visibility: visible;
+		}
+		.slide-menu {
+			position: fixed;
+			top: 0;
+			right: -320px;
+			width: 280px;
+			height: 100%;
+			background: var(--btn);
+			z-index: 10000;
+			box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+			transition: right 0.6s ease;
+			border-radius: 20px 0 0 20px;
+			padding: 2rem 1.5rem;
+			display: flex;
+			flex-direction: column;
+			gap: 2rem;
+			overflow-y: auto;
+		}
+		.slide-menu.active {
+			right: 0;
+		}
+		.submenu {
+			position: fixed;
+			top: 0;
+			right: -340px;
+			width: 280px;
+			height: 100%;
+			background: var(--btn);
+			z-index: 10010;
+			box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+			transition: right 0.5s ease;
+			border-radius: 20px 0 0 20px;
+			padding: 2rem 1.5rem;
+			overflow-y: auto;
+		}
+		.submenu.active {
+			right: 0;
+		}
+		.menu-header {
+			display: flex;
+			justify-content: flex-end;
+			margin-bottom: 1rem;
+		}
+		.menu-close, .submenu-close {
+			background: none;
+			border: none;
+			cursor: pointer;
+			color: var(--font-color);
+			background: var(--btn);
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+			padding: 0;
+		}
+		.menu-close svg, .submenu-close svg {
+			width: 18px;
+			height: 18px;
+			stroke: currentColor;
+			transition: transform 0.2s ease;
+		}
+		.menu-close:hover, .submenu-close:hover {
+			box-shadow: var(--shadow-in);
+		}
+		.menu-item {
+			background: var(--btn);
+			padding: 15px;
+			margin-bottom: 8px;
+			border-radius: 10px;
+			text-align: left;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			box-shadow: var(--shadow-out);
+			width: 100%;
+			color: var(--font-color);
+			font-size: 1em;
+			border: none;
+			transition: all 0.2s ease;
+		}
+		.menu-item:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+		.menu-item svg {
+			width: 24px;
+			height: 24px;
+			stroke: currentColor;
+			fill: none;
+		}
+		.submenu-title {
+			font-size: 1.3rem;
+			font-weight: bold;
+			color: red;
+			margin: 0.5rem 0 1.5rem 0;
+			text-align: center;
+		}
+		
+		/* SWITCH pour mode sombre */
+		.theme-switch {
+			position: relative;
+			display: inline-block;
+			width: 52px;
+			height: 26px;
+		}
+		.theme-switch input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
+		.theme-switch .slider {
+			position: absolute;
+			cursor: pointer;
+			inset: 0;
+			background: #ccc;
+			border-radius: 26px;
+			transition: .3s;
+		}
+		.theme-switch .slider:before {
+			content: "";
+			position: absolute;
+			width: 22px;
+			height: 22px;
+			left: 2px;
+			top: 2px;
+			background: white;
+			border-radius: 50%;
+			transition: .3s;
+		}
+		.theme-switch input:checked + .slider {
+			background: #2196F3;
+		}
+		.theme-switch input:checked + .slider:before {
+			transform: translateX(26px);
+		}
+		
+		.toggle-container {
+			display: grid;
+			grid-template-columns: 120px 1fr;
+			align-items: center;
+			gap: 1rem;
+			margin-top: 0rem;
+			min-height: 40px;
+			width: 100%;
+		}
+		.toggle-label {
+			color: var(--font-color);
+			font-size: 1rem;
+			text-align: left;
+		}
+		
+		/* Stats dans le sous-menu */
+		.stats-content {
+			margin-top: 10px;
+			padding: 15px;
+			background: rgba(0,0,0,0.05);
+			border-radius: 12px;
+		}
+		.stat-row {
+			display: flex;
+			justify-content: space-between;
+			padding: 10px 0;
+			border-bottom: 1px solid rgba(0,0,0,0.1);
+		}
+		.stat-row:last-child {
+			border-bottom: none;
+		}
+		.stat-label {
+			font-weight: bold;
+		}
+		.stat-value-display {
+			color: #27ae60;
+			font-weight: bold;
+		}
+		body.dark-mode .stat-row {
+			border-bottom-color: rgba(255,255,255,0.1);
+		}
+		
+		kbd {
+			background-color: #b9b3b3;
+			border-radius: 4px;
+			box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 1px 0 0 rgba(255,255,255,0.7) inset;
+			color: white;
+			display: inline-block;
+			font-size: 0.85em;
+			font-weight: 700;
+			line-height: 1;
+			padding: 2px 4px;
+			white-space: nowrap;
+		}
+		body.dark-mode kbd {
+			background-color: #444;
+			color: #eee;
+		}
+		
+		.shortcut-table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 10px;
+		}
+		.shortcut-table td {
+			padding: 8px 4px;
+			border-bottom: 1px solid rgba(0,0,0,0.1);
+			font-size: 0.85rem;
+		}
+		.shortcut-table td:first-child {
+			width: 50px;
+			text-align: left;
+		}
+		
+		.vertical-layout {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			width: 100%;
+			max-width: var(--max-width);
+			margin: 0 auto;
+			box-sizing: border-box;
+			align-items: center;
+			min-height: 0;
+			max-height: calc(100vh - 20px);
+		}
+		
+		/* Mode desktop UNIQUEMENT - margin-top et margin-bottom de 15px */
+		@media (min-width: 769px) {
+			.vertical-layout {
+				margin-top: 15px;
+				margin-bottom: 15px;
+			}
+		}
+		
+		#game-container {
+			width: var(--game-width);
+			max-width: var(--max-width);
+			max-height: calc(100vh - 100px);
+			padding: 10px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 6px;
+			background-color: #f5f5f5;
+			border-radius: var(--border-radius);
+			box-shadow: 9px 9px 16px #b8b9be, -9px -9px 16px #ffffff;
+			box-sizing: border-box;
+			flex: 1;
+			overflow: hidden;
+		}
+		body.dark-mode #game-container {
+			background-color: #1a1c2a;
+			box-shadow: 9px 9px 16px #0f1119, -9px -9px 16px #25283b;
+		}
+		.game-header {
+			display: flex;
+			width: 100%;
+			justify-content: center;
+			align-items: center;
+			margin-top: 0;
+			flex-wrap: wrap;
+			gap: 12px;
+			flex-shrink: 0;
+		}
+		.stats-wrapper {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 12px;
+			min-width: 0;
+			width: 100%;
+			max-width: 100%;
+		}
+		.game-controls {
+			display: flex;
+			padding-left: 3px;
+			gap: 8px;
+			align-items: center;
+			height: 35px;
+			justify-content: flex-start;
+			flex-shrink: 0;
+		}
+		.stat-value {
+			font-size: var(--infostatsingame-font-size);
+			font-weight: bold;
+			color: #333;
+			min-height: 38px;
+			height: auto;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 2px 0 !important;
+			padding: 6px 12px;
+			width: auto;
+			min-width: 70px;
+			border: none;
+			border-radius: 12px;
+			background: #f5f5f5;
+			box-shadow: inset 5px 5px 10px #b8b9be, inset -5px -5px 10px #ffffff;
+			position: relative;
+		}
+		body.dark-mode .stat-value {
+			background: #1a1c2a;
+			color: #e0e0e0;
+			box-shadow: inset 5px 5px 10px #0f1119, inset -5px -5px 10px #25283b;
+		}
+		.game-stat {
+			text-align: center;
+			margin: 1px;
+			position: relative;
+			flex-shrink: 0;
+			flex: 1;
+		}
+		.game-stat.stat-timer .stat-value,
+		.game-stat.stat-points .stat-value,
+		.game-stat.stat-words .stat-value {
+			min-width: auto;
+			width: auto;
+			justify-content: center;
+		}
+		
+		/* Ajustements spécifiques pour mobile */
+		@media (max-width: 768px) {
+			.stats-wrapper {
+				gap: 6px;
+				justify-content: space-between;
+			}
+			.game-stat {
+				flex: 1;
+				min-width: 0;
+			}
+			.game-stat.stat-timer {
+				text-align: left;
+				flex: 0 0 auto;
+			}
+			.game-stat.stat-words {
+				text-align: right;
+				flex: 0 0 auto;
+			}
+			.game-stat.stat-points {
+				flex: 2;
+				text-align: center;
+			}
+			.stat-value {
+				padding: 6px 8px;
+				min-width: auto;
+				white-space: nowrap;
+			}
+			.game-stat.stat-timer .stat-value,
+			.game-stat.stat-words .stat-value {
+				min-width: auto;
+				padding-left: 10px;
+				padding-right: 10px;
+			}
+			.game-stat.stat-points .stat-value {
+				justify-content: center;
+				gap: 4px;
+				padding-left: 8px;
+				padding-right: 8px;
+			}
+			#progress-count {
+				white-space: nowrap;
+			}
+			#game-timer {
+				white-space: nowrap;
+			}
+		}
+		
+		.game-stat.stat-points .stat-value {
+			justify-content: center;
+			gap: 8px;
+		}
+		.points-bonus {
+			color: #27ae60;
+			font-size: var(--infostatsingame-font-size);
+			margin-left: 6px;
+			font-weight: bold;
+			position: relative;
+			display: inline-block;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
+		.points-bonus.show {
+			opacity: 1;
+			animation: pointsAppear 5s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+		}
+		@keyframes pointsAppear {
+			0% { opacity: 0; transform: translateY(10px) scale(0.8); }
+			5% { opacity: 1; transform: translateY(0) scale(1.1); }
+			10% { transform: translateY(0) scale(1); }
+			90% { opacity: 1; transform: translateY(0); }
+			100% { opacity: 0; transform: translateY(-10px); }
+		}
+		#grid-container {
+			width: 85%;
+			aspect-ratio: 1!important;
+			display: grid;
+			grid-template-columns: repeat(var(--grid-size), 1fr);
+			grid-template-rows: repeat(var(--grid-size), 1fr);
+			gap: min(0.6rem, 1.5vw);
+			padding: 6px;
+			border-radius: 8px;
+			position: relative;
+			background-color: #f5f5f5;
+			flex-shrink: 1;
+			margin: auto 0;
+			touch-action: manipulation;
+			max-height: 100%;
+		}
+		body.dark-mode #grid-container {
+			background-color: #1a1c2a;
+		}
+		.grid-cell {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			background-color: white;
+			border-radius: 50%;
+			cursor: pointer;
+			transition: all 0.2s ease;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			outline: 0.2vw solid #0000;
+			user-select: none;
+			box-shadow: 0 0 10px -5px #0006;
+			background: linear-gradient(45deg, rgba(237, 237, 237, 1) 20%, rgba(255, 255, 255, 1) 100%);
+			z-index: 2;
+			aspect-ratio: 1 / 1;
+		}
+		body.dark-mode .grid-cell {
+			background: linear-gradient(45deg, #2a2c3a 20%, #1e202e 100%);
+		}
+		.grid-cell:active {
+			transform: scale(0.98);
+		}
+		.grid-cell.correct {
+			background: linear-gradient(45deg, rgba(237, 237, 237, 1) 20%, rgba(255, 255, 255, 1) 100%);
+			box-shadow: 0 0 0 3px #808080, 0 0 10px -5px rgba(0,0,0,0.4);
+		}
+		.grid-cell.correct .letter-container {
+			background: linear-gradient(45deg, rgba(255, 255, 255, 1) 20%, rgba(237, 237, 237, 1) 100%);
+			box-shadow: 0 0 10px -5px rgba(0,0,0,0.4);
+		}
+		.letter-container {
+			position: relative;
+			width: 65%;
+			height: 65%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 3;
+			background-color: #f7f7f7;
+			border-radius: 50%;
+			background: linear-gradient(45deg, rgba(255, 255, 255, 1) 20%, rgba(237, 237, 237, 1) 100%);
+			box-shadow: 0 0 10px -5px rgba(0,0,0,0.4);
+		}
+		body.dark-mode .letter-container {
+			background: linear-gradient(45deg, #3a3c4a 20%, #2e303e 100%);
+		}
+		.letter {
+			font-size: var(--cell-font-size);
+			font-weight: bold;
+			cursor: pointer;
+			position: relative;
+			z-index: 3;
+			transition: all 0.2s ease;
+			color: #2c3e50;
+			pointer-events: none;
+		}
+		body.dark-mode .letter {
+			color: #000000 !important;
+		}
+		.hidden {
+			display: none !important;
+		}
+		#game-timer.warning {
+			color: #ff3333;
+			animation: pulse 1s infinite;
+		}
+		#game-timer.timer-warning {
+			color: #ff0000;
+			font-weight: bold;
+			animation: timer-pulse 0.8s infinite alternate;
+		}
+		@keyframes timer-pulse {
+			0% { transform: scale(1); }
+			100% { transform: scale(1.15); }
+		}
+		@keyframes success-pulse {
+			0% { transform: scale(1); }
+			50% { transform: scale(1.1); background: #808080; }
+			100% { transform: scale(1); }
+		}
+		.grid-cell.success-highlight {
+			animation: success-pulse 0.3s ease;
+		}
+		.connection-line {
+			stroke: #808080;
+			stroke-width: 16px;
+			stroke-linecap: round;
+			fill: none;
+			opacity: 0.9;
+			filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+		}
+		.info-message {
+			position: fixed;
+			top: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			background-color: #3498db;
+			color: white;
+			padding: 10px 18px;
+			border-radius: 30px;
+			z-index: 1000;
+			box-shadow: 5px 5px 10px #b8b9be, -5px -5px 10px #ffffff;
+			font-size: 14px;
+			font-weight: bold;
+			text-align: center;
+			white-space: normal;
+			word-break: keep-all;
+			animation: slideDown 0.3s ease;
+		}
+		@keyframes slideDown {
+			from {
+				opacity: 0;
+				transform: translateX(-50%) translateY(-20px);
+			}
+			to {
+				opacity: 1;
+				transform: translateX(-50%) translateY(0);
+			}
+		}
+		.table-selector {
+			background: #f5f5f5;
+			border-radius: 20px;
+			padding: 8px;
+			margin-bottom: 4px;
+			text-align: center;
+			width: 100%;
+			flex-shrink: 0;
+		}
+		body.dark-mode .table-selector {
+			background: #1a1c2a;
+		}
+		.table-control {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 20px;
+		}
+		.table-nav-btn {
+			width: 36px;
+			height: 36px;
+			border: none;
+			border-radius: 50%;
+			background: #f5f5f5;
+			box-shadow: 5px 5px 10px #b8b9be, -5px -5px 10px #ffffff;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1em;
+			font-weight: bold;
+			color: #2c3e50;
+			transition: all 0.2s ease;
+			touch-action: manipulation;
+		}
+		body.dark-mode .table-nav-btn {
+			background: #2d2d2d;
+			color: #e0e0e0;
+			box-shadow: 5px 5px 10px #0f1119, -5px -5px 10px #25283b;
+		}
+		.table-nav-btn:active {
+			box-shadow: inset 3px 3px 6px #b8b9be, inset -3px -3px 6px #ffffff;
+			transform: scale(0.95);
+		}
+		.current-table {
+			font-size: 0.9em;
+			font-weight: bold;
+			color: #2c3e50;
+			min-width: 100px;
+			text-align: center;
+			background: #f5f5f5;
+			padding: 6px 12px;
+			border-radius: 30px;
+			box-shadow: inset 2px 2px 5px #b8b9be, inset -2px -2px 5px #ffffff;
+		}
+		body.dark-mode .current-table {
+			background: #1a1c2a;
+			color: #e0e0e0;
+			box-shadow: inset 2px 2px 5px #0f1119, inset -2px -2px 5px #25283b;
+		}
+		.game-over-message {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: #f5f5f5;
+			padding: 25px;
+			border-radius: 25px;
+			box-shadow: 20px 20px 30px #b8b9be, -20px -20px 30px #ffffff;
+			z-index: 1001;
+			text-align: center;
+			max-width: 85%;
+			width: 320px;
+		}
+		body.dark-mode .game-over-message {
+			background: #1a1c2a;
+			color: #e0e0e0;
+			box-shadow: 20px 20px 30px #0f1119, -20px -20px 30px #25283b;
+		}
+		.game-over-message h2 {
+			color: #2c3e50;
+			margin-bottom: 12px;
+			font-size: 1.4em;
+		}
+		body.dark-mode .game-over-message h2 {
+			color: #e0e0e0;
+		}
+		#new-game-btn {
+			background: #f5f5f5;
+			color: #2c3e50;
+			border: none;
+			padding: 12px 24px;
+			border-radius: 30px;
+			cursor: pointer;
+			font-size: 1em;
+			margin: 4px;
+			box-shadow: 5px 5px 10px #b8b9be, -5px -5px 10px #ffffff;
+			touch-action: manipulation;
+			min-height: 44px;
+			transition: all 0.2s ease;
+		}
+		#new-game-btn:hover {
+			box-shadow: inset 5px 5px 10px #b8b9be, inset -5px -5px 10px #ffffff;
+			transform: scale(0.98);
+		}
+		body.dark-mode #new-game-btn {
+			background: #2d2d2d;
+			color: #e0e0e0;
+			box-shadow: 5px 5px 10px #0f1119, -5px -5px 10px #25283b;
+		}
+		body.dark-mode #new-game-btn:hover {
+			box-shadow: inset 5px 5px 10px #0f1119, inset -5px -5px 10px #25283b;
+		}
+		
+		/* Styles pour la présentation */
+		.presentation-content {
+			font-size: 13px;
+			line-height: 1.5;
+		}
+		.presentation-section {
+			margin-bottom: 20px;
+		}
+		.presentation-section h3 {
+			color: #27ae60;
+			font-size: 1.1rem;
+			margin-bottom: 8px;
+			border-left: 3px solid #27ae60;
+			padding-left: 10px;
+		}
+		body.dark-mode .presentation-section h3 {
+			color: #2ecc71;
+		}
+		.presentation-section p {
+			margin: 6px 0;
+		}
+		.presentation-section ul {
+			margin: 6px 0;
+			padding-left: 20px;
+		}
+		.presentation-section li {
+			margin: 4px 0;
+		}
+		.feature-list {
+			list-style: none;
+			padding-left: 0;
+		}
+		.feature-list li {
+			padding: 4px 0;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+		.feature-list li::before {
+			content: "✓";
+			color: #27ae60;
+			font-weight: bold;
+		}
+		
+		/* Responsive mobile */
+		@media (max-width: 768px) {
+			body {
+				padding: 4px 6px;
+				justify-content: flex-start;
+			}
+			.toolbar {
+				flex-direction: column;
+				margin-bottom: 6px;
+				margin-top: 13px;
+				height: auto;
+			}
+			.toolbar-center {
+				display: none;
+			}
+			.toolbar-title-desktop {
+				display: none;
+			}
+			.toolbar-mobile {
+				display: flex;
+				margin-top: 8px;
+			}
+			.toolbar-title-mobile {
+				margin-top: 13px;
+			}
+			.toolbar {
+				flex-direction: row;
+				justify-content: center;
+				gap: 20px;
+			}
+			.toolbar-left,
+			.toolbar-right {
+				gap: 20px;
+				height: auto;
+			}
+			.toolbar-left {
+				justify-content: flex-end;
+			}
+			.toolbar-right {
+				justify-content: flex-start;
+			}
+			.toolbar-btn {
+				width: 40px;
+				height: 40px;
+			}
+			.toolbar-btn svg {
+				width: 20px;
+				height: 20px;
+			}
+			.vertical-layout {
+				max-height: calc(100vh - 80px);
+			}
+			#game-container {
+				padding: 6px;
+				max-height: calc(100vh - 120px);
+			}
+			#grid-container {
+				width: 95%;
+				gap: min(0.5rem, 2vw);
+				padding: 4px;
+			}
+			.stat-value {
+				font-size: clamp(11px, 3vw, 14px);
+				padding: 4px 8px;
+			}
+			.info-message {
+				font-size: 12px;
+				padding: 8px 14px;
+				top: 10px;
+			}
+			.table-selector {
+				padding: 6px;
+			}
+			.table-nav-btn {
+				width: 32px;
+				height: 32px;
+			}
+			.current-table {
+				font-size: 0.8em;
+				padding: 5px 10px;
+				min-width: 90px;
+			}
+			.vertical-layout {
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+			.presentation-content {
+				font-size: 12px;
+			}
+		}
+		@media (min-width: 769px) {
+			.toolbar-mobile {
+				display: none !important;
+			}
+		}
+		@media (min-width: 768px) {
+			#grid-container {
+				width: 60% !important;
+				max-width: 400px;
+			}
+		}
+		@media (min-width: 1200px) {
+			#grid-container {
+				width: 50% !important;
+				max-width: 350px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<!-- TOOLBAR avec deux versions : desktop (titre centré) et mobile (titre sous les boutons) -->
+	<div class="toolbar">
+		<div class="toolbar-left">
+			<button class="toolbar-btn home-btn" id="homeBtn" data-title="accueil (H)">
+				<div class="icon-wrapper">
+					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+						<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+						<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2"
+							stroke-linejoin="round" stroke-linecap="round" />
+					</svg>
+				</div>
+			</button>
+			<button class="toolbar-btn reload-btn" id="reloadBtn" data-title="recharger (R)">
+				<svg viewBox="0 0 25 25">
+					<polyline points="23 4 23 10 17 10"/>
+					<polyline points="1 20 1 14 7 14"/>
+					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+				</svg>
+			</button>
+		</div>
+		<div class="toolbar-center">
+			<h1 class="toolbar-title-desktop">chemin de table</h1>
+			<p class="toolbar-subtitle-mobile">réviser les tables de multiplication</p>
+		</div>
+		<div class="toolbar-right">
+			<button class="toolbar-btn fullscreen" id="fullscreenBtn" data-title="plein écran (F)">
+				<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+					<line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" />
+					<line x1="5" y1="6" x2="5" y2="10" stroke="currentColor" />
+					<line x1="14" y1="5" x2="20" y2="5" stroke="currentColor" />
+					<line x1="19" y1="6" x2="19" y2="10" stroke="currentColor" />
+					<line x1="5" y1="14" x2="5" y2="20" stroke="currentColor" />
+					<line x1="6" y1="19" x2="10" y2="19" stroke="currentColor" />
+					<line x1="14" y1="19" x2="20" y2="19" stroke="currentColor" />
+					<line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" />
+				</svg>
+			</button>
+			<button class="toolbar-btn menu-btn" id="menuBtn" data-title="menu (M)">
+				<div class="menu-icon"><span></span><span></span><span></span></div>
+			</button>
+		</div>
+	</div>
+	
+	<!-- Version mobile du titre (apparaît uniquement sur mobile) -->
+	<div class="toolbar-mobile">
+		<h1 class="toolbar-title-mobile">chemin de table</h1>
+		<p class="toolbar-subtitle-mobile">réviser les tables de multiplication</p>
+	</div>
+	
+	<div class="vertical-layout">
+		<div id="game-container">
+			<div class="table-selector">
+				<div class="table-control">
+					<button id="table-minus" class="table-nav-btn" aria-label="Table précédente">−</button>							
+					<div id="current-table-display" class="current-table">table de 2</div>
+					<button id="table-plus" class="table-nav-btn" aria-label="Table suivante">+</button>
+				</div>
+			</div>
+			<div class="game-header">
+				<div class="stats-wrapper">
+					<div class="game-stat stat-timer" data-tooltip="temps restant">
+						<div class="stat-value" id="game-timer">temps : 2:00</div>
+					</div>
+					<div class="game-stat stat-points" data-tooltip="score total">
+						<div class="stat-value">
+							<span class="timer-label">score :</span>
+							<span id="points-value">0</span>
+							<span class="points-bonus hide" id="points-bonus">+&nbsp;0</span>
+						</div>
+					</div>
+					<div class="game-stat stat-words" data-tooltip="progression">
+						<div class="stat-value" id="progress-count">0/20</div>
+					</div>
+				</div>
+			</div>
+			<div id="grid-container">
+				<svg id="connection-lines" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; pointer-events: none; z-index: 1;"></svg>
+			</div>
+		</div>
+	</div>
+
+	<!-- OVERLAY MENU -->
+	<div class="menu-overlay" id="menuOverlay"></div>
+
+	<!-- MENU PRINCIPAL COULISSANT -->
+	<div class="slide-menu" id="slideMenu">
+		<div class="menu-header">
+			<button class="menu-close" id="menuClose">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>
+		</div>
+		<div class="menu-content">
+			<button class="menu-item" id="openPresentationSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<line x1="12" y1="16" x2="12" y2="12"></line>
+					<line x1="12" y1="8" x2="12.01" y2="8"></line>
+				</svg>
+				présentation
+			</button>
+			<button class="menu-item" id="openShortcutsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<rect x="2" y="4" width="20" height="16" rx="2"></rect>
+					<line x1="6" y1="8" x2="10" y2="8"></line>
+					<line x1="14" y1="8" x2="18" y2="8"></line>
+					<line x1="6" y1="12" x2="10" y2="12"></line>
+					<line x1="14" y1="12" x2="18" y2="12"></line>
+					<line x1="6" y1="16" x2="10" y2="16"></line>
+					<line x1="14" y1="16" x2="18" y2="16"></line>
+				</svg>
+				raccourcis clavier
+			</button>
+			<button class="menu-item" id="openStatsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="round" stroke-linejoin="round">
+					<line x1="18" y1="20" x2="18" y2="10"></line>
+					<line x1="12" y1="20" x2="12" y2="4"></line>
+					<line x1="6" y1="20" x2="6" y2="14"></line>
+				</svg>
+				statistiques
+			</button>
+			<button class="menu-item" id="openSettingsSub">	
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="3"></circle>
+					<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+				</svg>
+				paramètres
+			</button>
+			<button class="menu-item" id="openAboutSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+					<line x1="12" y1="17" x2="12.01" y2="17"></line>
+				</svg>
+				à propos
+			</button>	
+		</div>
+	</div>
+
+	<!-- SOUS-MENU Présentation -->
+	<div class="submenu" id="submenuPresentation">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="presentation">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">présentation</div>
+		<div class="presentation-content">
+			<div class="settings-info" style="margin-top: 0px; margin-bottom: 0px; padding: 8px; background: rgba(0,0,0,0.05); border-radius: 8px;padding-top: 1px;padding-bottom: 1px;padding-right: 6px;padding-left: 8px;">
+				<p><strong>objectif pédagogique : </strong>
+				un jeu pour apprendre et réviser les tables de multiplication
+				</p>
+			</div>
+			<div class="settings-info" style="margin-top: 8px; margin-bottom: 0px; background: rgba(0,0,0,0.05); border-radius: 8px; padding-top: 1px;padding-bottom: 1px;padding-right: 6px;padding-left: 8px;">
+				<p><strong>compétences travaillées : </strong>
+				mémorisation des tables, logique, repérage spatial...
+				</p>
+			</div>			
+
+			<div class="settings-info" style="margin-top: 8px; margin-bottom: 0px; background: rgba(0,0,0,0.05); border-radius: 8px; padding-top: 1px;padding-bottom: 1px;padding-right: 6px;padding-left: 8px;">
+				<p><strong>règles du jeu : </strong><br>
+				• parcourez la grille en suivant l'ordre croissant des multiples de la table choisie<br>
+				• glissez le doigt ou la souris pour tracer votre chemin<br>
+				• les cases sont adjacentes (horizontalement, verticalement ou en diagonale)<br>
+				• vous avez <strong>2 minutes</strong> pour compléter la table<br>
+				• chaque multiple trouvé rapporte <strong>10 points</strong><br>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- SOUS-MENU Raccourcis clavier -->
+	<div class="submenu" id="submenuShortcuts">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="shortcuts">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">raccourcis clavier</div>
+
+			<div class="settings-info" style="margin-top: 8px; margin-bottom: 0px; background: rgba(0,0,0,0.05); border-radius: 8px; padding-top: 1px;padding-bottom: 1px;padding-right: 6px;padding-left: 8px;">
+
+			<p><kbd>H</kbd> : retour au site académique</p>
+			<p><kbd>R</kbd> : recharger la page</p>
+			<p><kbd>F</kbd> : plein écran</p>
+			<p><kbd>M</kbd> : ouvrir/fermer le menu</p>
+			<p><kbd>ESC</kbd> : fermer les menus</p>
+		</div>
+	</div>
+		
+	<!-- SOUS-MENU Statistiques -->
+	<div class="submenu" id="submenuStats">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="stats">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">statistiques</div>
+		<div class="stats-content" id="statsContent">
+			<div class="stat-row">
+				<span class="stat-label">score actuel :</span>
+				<span class="stat-value-display" id="statsScore">0</span>
+			</div>
+			<div class="stat-row">
+				<span class="stat-label">progression :</span>
+				<span class="stat-value-display" id="statsProgress">0/20</span>
+			</div>
+			<div class="stat-row">
+				<span class="stat-label">table :</span>
+				<span class="stat-value-display" id="statsTable">2</span>
+			</div>
+			<div class="stat-row">
+				<span class="stat-label">temps restant :</span>
+				<span class="stat-value-display" id="statsTime">2:00</span>
+			</div>
+		</div>
+	</div>
+
+	<!-- SOUS-MENU Paramètres -->
+	<div class="submenu" id="submenuSettings">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="settings">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"/>
+					<line x1="6" y1="6" x2="18" y2="18"/>
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">paramètres</div>
+		<div class="toggle-container">
+			<span class="toggle-label">mode sombre</span>
+			<label class="theme-switch">
+				<input type="checkbox" id="darkModeToggle">
+				<span class="slider"></span>
+			</label>
+		</div>
+		<div class="settings-info" style="margin-top: 20px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 8px;">
+			<p>activez le mode sombre pour une expérience visuelle plus confortable dans l'obscurité.</p>
+		</div>
+	</div>
+
+	<!-- SOUS-MENU À propos -->
+	<div class="submenu" id="submenuAbout">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="about">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"/>
+					<line x1="6" y1="6" x2="18" y2="18"/>
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">à propos</div>
+		
+		
+			<div class="settings-info" style="margin-top: 8px; margin-bottom: 0px; background: rgba(0,0,0,0.05); border-radius: 8px; padding-top: 1px;padding-bottom: 1px;padding-right: 6px;padding-left: 8px;">
+
+		<p style="margin-bottom:0.5rem;">application développée par Daniel Boulagnon</p>
+		<p style="margin-bottom:0.5rem;">daniel.boulagnon@ac-lille.fr</p>
+		<p style="margin-bottom:0.5rem;">exploitation à but pédagogique et non commercial</p>
+		<p>© 2026 – version 1.0.7</p>
+	</div>
+</div>
+
+<script>
+// =======================================================
+// JEU DE PARCOURS CONTINU DES TABLES DE MULTIPLICATIONS
+// =======================================================
+
+class GameConfig {
+	constructor() {
+		this.gameTime = 120;
+		this.updateConfig();
+		window.addEventListener("resize", () => this.updateConfig());
+		window.addEventListener("orientationchange", () => setTimeout(() => this.updateConfig(), 100));
+	}
+	updateConfig() {
+		const gridContainer = document.getElementById("grid-container");
+		if (!gridContainer) return;
+		const containerWidth = gridContainer.clientWidth;
+		const cellSize = containerWidth / 4;
+		const fontSize = Math.max(0.45 * cellSize, 18);
+		const connectionWidth = Math.max(0.27 * cellSize, 6);
+		const infoFontSize = Math.max(0.25 * cellSize, 12);
+		
+		document.documentElement.style.setProperty("--cell-font-size", fontSize + "px");
+		document.documentElement.style.setProperty("--connection-line-width", connectionWidth + "px");
+		document.documentElement.style.setProperty("--infostatsingame-font-size", infoFontSize + "px");
+	}
+}
+
+class PathGame {
+	constructor() {
+		this.currentTable = 2;
+		this.maxMultiplier = 20;
+		this.sequence = [];
+		this.expectedNextValue = null;
+		this.foundValues = new Set();
+		this.foundPositions = [];
+		this.score = 0;
+		this.grid = [];
+		this.size = 4;
+		this.isGameEnded = false;
+		this.timer = null;
+		this.gameStartTime = null;
+		this.remainingTime = 120;
+		this.sequenceComplete = false;
+		this.messageTimeout = null;
+		
+		this.init();
+	}
+	
+	init() {
+		this.setupTableControls();
+		this.setupEventListeners();
+		this.setupDragAndHover();
+		this.generateGrid();
+		this.startTimer();
+		this.updateUI();
+	}
+	
+	setupTableControls() {
+		const minusBtn = document.getElementById("table-minus");
+		const plusBtn = document.getElementById("table-plus");
+		const display = document.getElementById("current-table-display");
+		
+		const updateButtons = () => {
+			minusBtn.disabled = this.currentTable <= 2;
+			plusBtn.disabled = this.currentTable >= 20;
+		};
+		
+		const changeTable = (delta) => {
+			const newTable = this.currentTable + delta;
+			if (newTable >= 2 && newTable <= 20) {
+				this.currentTable = newTable;
+				display.textContent = `table de ${this.currentTable}`;
+				updateButtons();
+				this.resetGame();
+			}
+		};
+		
+		minusBtn.onclick = (e) => {
+			e.preventDefault();
+			changeTable(-1);
+		};
+		
+		plusBtn.onclick = (e) => {
+			e.preventDefault();
+			changeTable(1);
+		};
+		
+		minusBtn.addEventListener("touchstart", (e) => {
+			e.preventDefault();
+			changeTable(-1);
+		}, { passive: false });
+		
+		plusBtn.addEventListener("touchstart", (e) => {
+			e.preventDefault();
+			changeTable(1);
+		}, { passive: false });
+		
+		updateButtons();
+	}
+	
+	clearHoverHighlight() {
+		document.querySelectorAll('.grid-cell.hover-highlight').forEach(cell => {
+			cell.classList.remove('hover-highlight');
+		});
+	}
+	
+	setupDragAndHover() {
+		const gridContainer = document.getElementById("grid-container");
+		if (!gridContainer) return;
+		
+		let isDragging = false;
+		let lastProcessedCell = null;
+		
+		// Gestion du hover souris
+		const handleMouseEnter = (e) => {
+			if (isDragging) return;
+			const cellDiv = e.target.closest('.grid-cell');
+			if (!cellDiv) return;
+			
+			const row = parseInt(cellDiv.getAttribute("data-row"));
+			const col = parseInt(cellDiv.getAttribute("data-col"));
+			
+			// Effet visuel hover
+			this.clearHoverHighlight();
+			cellDiv.classList.add('hover-highlight');
+		};
+		
+		const handleMouseLeave = (e) => {
+			if (isDragging) return;
+			const cellDiv = e.target.closest('.grid-cell');
+			if (cellDiv) {
+				cellDiv.classList.remove('hover-highlight');
+			}
+		};
+		
+		// Gestion du glissement (souris + tactile)
+		const handleDragStart = (e) => {
+			isDragging = true;
+			const cellDiv = e.target.closest('.grid-cell');
+			if (cellDiv) {
+				const row = parseInt(cellDiv.getAttribute("data-row"));
+				const col = parseInt(cellDiv.getAttribute("data-col"));
+				if (!isNaN(row) && !isNaN(col)) {
+					this.handleCellClick(row, col);
+					lastProcessedCell = `${row},${col}`;
+				}
+			}
+		};
+		
+		const handleDragMove = (e) => {
+			if (!isDragging) return;
+			
+			// Empêcher le comportement par défaut (sélection de texte, etc.)
+			e.preventDefault();
+			
+			// Récupérer les coordonnées du point de contact
+			let clientX, clientY;
+			if (e.touches) {
+				clientX = e.touches[0].clientX;
+				clientY = e.touches[0].clientY;
+			} else {
+				clientX = e.clientX;
+				clientY = e.clientY;
+			}
+			
+			const element = document.elementFromPoint(clientX, clientY);
+			const cellDiv = element?.closest('.grid-cell');
+			
+			if (cellDiv) {
+				const row = parseInt(cellDiv.getAttribute("data-row"));
+				const col = parseInt(cellDiv.getAttribute("data-col"));
+				const cellKey = `${row},${col}`;
+				
+				// Éviter de traiter plusieurs fois la même cellule
+				if (cellKey !== lastProcessedCell && !isNaN(row) && !isNaN(col)) {
+					this.handleCellClick(row, col);
+					lastProcessedCell = cellKey;
+				}
+			}
+		};
+		
+		const handleDragEnd = () => {
+			isDragging = false;
+			lastProcessedCell = null;
+			this.clearHoverHighlight();
+		};
+		
+		// Événements souris
+		gridContainer.addEventListener('mouseover', handleMouseEnter);
+		gridContainer.addEventListener('mouseout', handleMouseLeave);
+		gridContainer.addEventListener('mousedown', handleDragStart);
+		window.addEventListener('mousemove', handleDragMove);
+		window.addEventListener('mouseup', handleDragEnd);
+		
+		// Événements tactiles
+		gridContainer.addEventListener('touchstart', handleDragStart, { passive: false });
+		window.addEventListener('touchmove', handleDragMove, { passive: false });
+		window.addEventListener('touchend', handleDragEnd);
+		window.addEventListener('touchcancel', handleDragEnd);
+	}
+	
+	showMessage(message, isError = false) {
+		if (this.messageTimeout) clearTimeout(this.messageTimeout);
+		
+		const existingMsg = document.querySelector(".info-message");
+		if (existingMsg) existingMsg.remove();
+		
+		const msgDiv = document.createElement("div");
+		msgDiv.className = "info-message";
+		msgDiv.textContent = message;
+		msgDiv.style.backgroundColor = isError ? "#e74c3c" : "#808080";
+		document.body.appendChild(msgDiv);
+		
+		this.messageTimeout = setTimeout(() => {
+			if (msgDiv.parentNode) {
+				msgDiv.style.opacity = "0";
+				setTimeout(() => {
+					if (msgDiv.parentNode) msgDiv.remove();
+				}, 300);
+			}
+			this.messageTimeout = null;
+		}, 2000);
+	}
+	
+	areAdjacent(pos1, pos2) {
+		const rowDiff = Math.abs(pos1.row - pos2.row);
+		const colDiff = Math.abs(pos1.col - pos2.col);
+		return (rowDiff <= 1 && colDiff <= 1) && !(rowDiff === 0 && colDiff === 0);
+	}
+	
+	getAllAdjacentPositions(row, col) {
+		const adjacent = [];
+		for (let dr = -1; dr <= 1; dr++) {
+			for (let dc = -1; dc <= 1; dc++) {
+				if (dr === 0 && dc === 0) continue;
+				const newRow = row + dr;
+				const newCol = col + dc;
+				if (newRow >= 0 && newRow < this.size && newCol >= 0 && newCol < this.size) {
+					adjacent.push({ row: newRow, col: newCol });
+				}
+			}
+		}
+		return adjacent;
+	}
+	
+	generateGrid() {
+		// Générer la séquence
+		this.sequence = [];
+		for (let i = 1; i <= this.maxMultiplier; i++) {
+			this.sequence.push(this.currentTable * i);
+		}
+		
+		this.grid = Array(this.size).fill().map(() => Array(this.size).fill().map(() => ({ value: null, isTableValue: false })));
+		
+		const maxValues = this.size * this.size;
+		const limitedSequence = this.sequence.slice(0, maxValues);
+		
+		if (limitedSequence.length !== this.sequence.length) {
+			console.warn(`Grille 4x4 limitée à ${maxValues} valeurs.`);
+			this.sequence = limitedSequence;
+		}
+		
+		const allPositions = [];
+		for (let i = 0; i < this.size; i++) {
+			for (let j = 0; j < this.size; j++) {
+				allPositions.push({ row: i, col: j });
+			}
+		}
+		
+		let pathPositions = [];
+		let success = false;
+		let attempts = 0;
+		const maxAttempts = 100;
+		
+		while (!success && attempts < maxAttempts) {
+			pathPositions = [];
+			const visited = new Set();
+			const startPos = { row: 0, col: 0 };
+			pathPositions.push(startPos);
+			visited.add(`0,0`);
+			success = this.buildHamiltonianPath(startPos, visited, pathPositions, 1);
+			attempts++;
+		}
+		
+		if (!success) {
+			pathPositions = [];
+			for (let i = 0; i < this.size; i++) {
+				if (i % 2 === 0) {
+					for (let j = 0; j < this.size; j++) {
+						pathPositions.push({ row: i, col: j });
+					}
+				} else {
+					for (let j = this.size - 1; j >= 0; j--) {
+						pathPositions.push({ row: i, col: j });
+					}
+				}
+			}
+		}
+		
+		for (let idx = 0; idx < this.sequence.length && idx < pathPositions.length; idx++) {
+			const pos = pathPositions[idx];
+			this.grid[pos.row][pos.col] = { value: this.sequence[idx], isTableValue: true };
+		}
+		
+		const tableValuesSet = new Set(this.sequence);
+		const randomValues = [];
+		const usedRandomValues = new Set();
+		
+		let freeCells = [];
+		for (let i = 0; i < this.size; i++) {
+			for (let j = 0; j < this.size; j++) {
+				if (this.grid[i][j].value === null) {
+					freeCells.push({ row: i, col: j });
+				}
+			}
+		}
+		
+		while (randomValues.length < freeCells.length) {
+			const randomVal = Math.floor(Math.random() * (this.currentTable * this.maxMultiplier + 50)) + 1;
+			if (!tableValuesSet.has(randomVal) && !usedRandomValues.has(randomVal)) {
+				usedRandomValues.add(randomVal);
+				randomValues.push(randomVal);
+			}
+		}
+		
+		for (let i = 0; i < freeCells.length; i++) {
+			const pos = freeCells[i];
+			this.grid[pos.row][pos.col] = { value: randomValues[i], isTableValue: false };
+		}
+		
+		this.expectedNextValue = this.sequence.length > 1 ? this.sequence[1] : null;
+		this.foundValues.clear();
+		this.foundPositions = [];
+		
+		for (let i = 0; i < this.size; i++) {
+			for (let j = 0; j < this.size; j++) {
+				if (this.grid[i][j].value === this.sequence[0]) {
+					this.foundValues.add(this.sequence[0]);
+					this.foundPositions.push({ row: i, col: j, value: this.sequence[0] });
+					break;
+				}
+			}
+		}
+		
+		this.sequenceComplete = false;
+		this.render();
+		this.updateProgressDisplay();
+	}
+	
+	buildHamiltonianPath(current, visited, path, depth) {
+		const targetDepth = this.size * this.size;
+		
+		if (depth === targetDepth) {
+			return true;
+		}
+		
+		const neighbors = this.getAllAdjacentPositions(current.row, current.col);
+		for (let i = neighbors.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[neighbors[i], neighbors[j]] = [neighbors[j], neighbors[i]];
+		}
+		
+		for (const neighbor of neighbors) {
+			const key = `${neighbor.row},${neighbor.col}`;
+			if (!visited.has(key)) {
+				visited.add(key);
+				path.push(neighbor);
+				if (this.buildHamiltonianPath(neighbor, visited, path, depth + 1)) {
+					return true;
+				}
+				path.pop();
+				visited.delete(key);
+			}
+		}
+		return false;
+	}
+	
+	resetGame() {
+		this.score = 0;
+		this.foundValues.clear();
+		this.foundPositions = [];
+		this.sequenceComplete = false;
+		this.updateUI();
+		this.generateGrid();
+		if (this.timer) {
+			clearInterval(this.timer);
+		}
+		this.startTimer();
+	}
+	
+	startTimer() {
+		this.gameStartTime = Date.now();
+		this.remainingTime = 120;
+		this.isGameEnded = false;
+		this.timer = setInterval(() => {
+			this.updateTimer();
+		}, 1000);
+	}
+	
+	updateTimer() {
+		if (this.isGameEnded) return;
+		const elapsedSeconds = Math.floor((Date.now() - this.gameStartTime) / 1000);
+		this.remainingTime = Math.max(0, 120 - elapsedSeconds);
+		const minutes = Math.floor(this.remainingTime / 60);
+		const seconds = this.remainingTime % 60;
+		const timeString = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+		const timerElement = document.getElementById("game-timer");
+		if (timerElement) {
+			timerElement.textContent = `temps : ${timeString}`;
+			if (this.remainingTime <= 10) timerElement.classList.add("timer-warning");
+			else timerElement.classList.remove("timer-warning");
+		}
+		if (this.remainingTime <= 0) {
+			this.endGame();
+		}
+	}
+	
+	endGame() {
+		if (this.isGameEnded) return;
+		this.isGameEnded = true;
+		if (this.timer) clearInterval(this.timer);
+		document.querySelectorAll(".grid-cell").forEach(cell => {
+			cell.style.pointerEvents = "none";
+		});
+		this.showGameOverMessage();
+	}
+	
+	showGameOverMessage() {
+		const overlay = document.createElement("div");
+		overlay.style.position = "fixed";
+		overlay.style.top = "0";
+		overlay.style.left = "0";
+		overlay.style.width = "100%";
+		overlay.style.height = "100%";
+		overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+		overlay.style.zIndex = "1000";
+		overlay.style.display = "flex";
+		overlay.style.justifyContent = "center";
+		overlay.style.alignItems = "center";
+		
+		const modal = document.createElement("div");
+		modal.className = "game-over-message";
+		
+		const foundCount = this.foundValues.size;
+		const totalCount = this.sequence.length;
+		
+		modal.innerHTML = `
+			<h2>${foundCount === totalCount ? "félicitations !" : "temps écoulé !"}</h2>
+			<p><strong>score : ${this.score} points</strong></p>
+			<p><strong>progression : ${foundCount}/${totalCount}</strong></p>
+			<p><strong>table de ${this.currentTable}</strong></p>
+			<div>
+				<button id="new-game-btn">nouvelle partie</button>
+			</div>
+		`;
+		
+		overlay.appendChild(modal);
+		document.body.appendChild(overlay);
+		
+		const newGameBtn = modal.querySelector("#new-game-btn");
+		newGameBtn.addEventListener("click", (e) => {
+			e.preventDefault();
+			document.body.removeChild(overlay);
+			this.resetGame();
+		});
+	}
+	
+	updateUI() {
+		const pointsElement = document.getElementById("points-value");
+		if (pointsElement) pointsElement.textContent = this.score;
+		this.updateProgressDisplay();
+	}
+	
+	updateProgressDisplay() {
+		const progressElement = document.getElementById("progress-count");
+		if (progressElement) {
+			progressElement.textContent = `${this.foundValues.size}/${this.sequence.length}`;
+		}
+	}
+	
+	updateStats() {
+		const statsScore = document.getElementById("statsScore");
+		const statsProgress = document.getElementById("statsProgress");
+		const statsTable = document.getElementById("statsTable");
+		const statsTime = document.getElementById("statsTime");
+		const timerElement = document.getElementById("game-timer");
+		
+		if (statsScore) statsScore.textContent = this.score;
+		if (statsProgress) statsProgress.textContent = `${this.foundValues.size}/${this.sequence.length}`;
+		if (statsTable) statsTable.textContent = this.currentTable;
+		if (statsTime && timerElement) statsTime.textContent = timerElement.textContent;
+	}
+	
+	animateCell(row, col, isSuccess) {
+		const cellElement = document.querySelector(`.grid-cell[data-row="${row}"][data-col="${col}"]`);
+		if (cellElement) {
+			cellElement.classList.add(isSuccess ? "success-highlight" : "highlight");
+			setTimeout(() => {
+				cellElement.classList.remove(isSuccess ? "success-highlight" : "highlight");
+			}, 300);
+		}
+	}
+	
+	isAdjacentToLastFound(row, col) {
+		if (this.foundPositions.length === 0) return true;
+		const lastPos = this.foundPositions[this.foundPositions.length - 1];
+		return this.areAdjacent(lastPos, { row, col });
+	}
+	
+	handleCellClick(row, col) {
+		if (this.isGameEnded || this.sequenceComplete) return;
+		
+		const cell = this.grid[row][col];
+		const cellValue = cell.value;
+		
+		if (cellValue === this.expectedNextValue && cell.isTableValue && !this.foundValues.has(cellValue)) {
+			if (!this.isAdjacentToLastFound(row, col)) {
+				this.showMessage(`❌ ${cellValue} n'est pas adjacent à ${this.foundPositions[this.foundPositions.length-1].value} !`, true);
+				this.animateCell(row, col, false);
+				return;
+			}
+			
+			const pointsGained = 10;
+			this.score += pointsGained;
+			this.foundValues.add(cellValue);
+			this.foundPositions.push({ row: row, col: col, value: cellValue });
+			
+			this.updateUI();
+			this.updateStats();
+			this.render();
+			
+			this.showMessage(`« ${cellValue} » trouvé ! +${pointsGained} points`, false);
+			this.animateCell(row, col, true);
+			
+			const bonusElement = document.getElementById("points-bonus");
+			if (bonusElement) {
+				bonusElement.textContent = `+ ${pointsGained}`;
+				bonusElement.classList.remove("hide", "show");
+				bonusElement.offsetWidth;
+				bonusElement.classList.add("show");
+				setTimeout(() => {
+					bonusElement.classList.remove("show");
+					bonusElement.classList.add("hide");
+				}, 2000);
+			}
+			
+			const currentIndex = this.sequence.indexOf(cellValue);
+			if (currentIndex + 1 < this.sequence.length) {
+				this.expectedNextValue = this.sequence[currentIndex + 1];
+			} else {
+				this.sequenceComplete = true;
+				this.showMessage(`Bravo ! Table de ${this.currentTable} complète !`, false);
+				setTimeout(() => {
+					this.endGame();
+				}, 2000);
+			}
+			
+			this.updateProgressDisplay();
+		} else if (this.foundValues.has(cellValue)) {
+			this.showMessage(`${cellValue} déjà trouvé !`, true);
+			this.animateCell(row, col, false);
+		} else if (cell.isTableValue && this.sequence.includes(cellValue)) {
+			this.showMessage(`❌ mauvaise réponse`, true);
+			this.animateCell(row, col, false);
+		} else {
+			this.showMessage(`❌ ${cellValue} n'est pas dans la table de ${this.currentTable}`, true);
+			this.animateCell(row, col, false);
+		}
+	}
+	
+	setupEventListeners() {
+		const gridContainer = document.getElementById("grid-container");
+		if (!gridContainer) return;
+		
+		const handleClick = (e) => {
+			e.preventDefault();
+			const cellDiv = e.target.closest('.grid-cell');
+			if (!cellDiv) return;
+			
+			const row = parseInt(cellDiv.getAttribute("data-row"));
+			const col = parseInt(cellDiv.getAttribute("data-col"));
+			
+			if (!isNaN(row) && !isNaN(col)) {
+				this.handleCellClick(row, col);
+			}
+		};
+		
+		gridContainer.addEventListener("click", handleClick);
+		
+		const reloadBtn = document.getElementById("reload-game-btn");
+		if (reloadBtn) {
+			reloadBtn.addEventListener("click", (e) => {
+				e.preventDefault();
+				this.resetGame();
+			});
+			reloadBtn.addEventListener("touchstart", (e) => {
+				e.preventDefault();
+				this.resetGame();
+			}, { passive: false });
+		}
+		
+		// Mettre à jour les stats périodiquement
+		setInterval(() => {
+			this.updateStats();
+		}, 1000);
+	}
+	
+	render() {
+		const gridContainer = document.getElementById("grid-container");
+		if (!gridContainer) return;
+		
+		const cells = gridContainer.querySelectorAll(".grid-cell");
+		cells.forEach(cell => cell.remove());
+		
+		for (let row = 0; row < this.size; row++) {
+			for (let col = 0; col < this.size; col++) {
+				const cell = this.grid[row][col];
+				const cellElement = document.createElement("div");
+				cellElement.className = "grid-cell";
+				if (this.foundValues.has(cell.value)) {
+					cellElement.classList.add("correct");
+				}
+				cellElement.setAttribute("data-row", row);
+				cellElement.setAttribute("data-col", col);
+				
+				const letterContainer = document.createElement("div");
+				letterContainer.className = "letter-container";
+				letterContainer.innerHTML = `<span class="letter">${cell.value}</span>`;
+				cellElement.appendChild(letterContainer);
+				gridContainer.appendChild(cellElement);
+			}
+		}
+		
+		this.drawConnectionLines();
+	}
+	
+	drawConnectionLines() {
+		const svg = document.getElementById("connection-lines");
+		if (!svg) return;
+		svg.innerHTML = "";
+		
+		for (let k = 1; k < this.foundPositions.length; k++) {
+			const prev = this.foundPositions[k-1];
+			const curr = this.foundPositions[k];
+			
+			const prevElement = document.querySelector(`.grid-cell[data-row="${prev.row}"][data-col="${prev.col}"]`);
+			const currElement = document.querySelector(`.grid-cell[data-row="${curr.row}"][data-col="${curr.col}"]`);
+			
+			if (prevElement && currElement) {
+				const rect1 = prevElement.getBoundingClientRect();
+				const rect2 = currElement.getBoundingClientRect();
+				const svgRect = svg.getBoundingClientRect();
+				
+				const startX = rect1.left + rect1.width / 2 - svgRect.left;
+				const startY = rect1.top + rect1.height / 2 - svgRect.top;
+				const endX = rect2.left + rect2.width / 2 - svgRect.left;
+				const endY = rect2.top + rect2.height / 2 - svgRect.top;
+				
+				const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+				line.setAttribute("x1", startX);
+				line.setAttribute("y1", startY);
+				line.setAttribute("x2", endX);
+				line.setAttribute("y2", endY);
+				line.setAttribute("class", "connection-line");
+				svg.appendChild(line);
+			}
+		}
+	}
+}
+
+// Gestion du menu et des boutons
+function initMenuAndToolbar() {
+	const menuOverlay = document.getElementById('menuOverlay');
+	const slideMenu = document.getElementById('slideMenu');
+	const menuBtn = document.getElementById('menuBtn');
+	const menuClose = document.getElementById('menuClose');
+	const homeBtn = document.getElementById('homeBtn');
+	const reloadBtn = document.getElementById('reloadBtn');
+	const fullscreenBtn = document.getElementById('fullscreenBtn');
+	
+	const subPresentation = document.getElementById('submenuPresentation');
+	const subShortcuts = document.getElementById('submenuShortcuts');
+	const subStats = document.getElementById('submenuStats');
+	const subSettings = document.getElementById('submenuSettings');
+	const subAbout = document.getElementById('submenuAbout');
+	const submenus = [subPresentation, subShortcuts, subStats, subSettings, subAbout];
+	
+	function toggleMainMenu(force) {
+		const willOpen = (force !== undefined) ? force : !slideMenu.classList.contains('active');
+		slideMenu.classList.toggle('active', willOpen);
+		menuOverlay.classList.toggle('active', willOpen);
+		if (!willOpen) {
+			submenus.forEach(s => s.classList.remove('active'));
+		}
+	}
+	
+	function closeAllSubmenus() {
+		submenus.forEach(s => s.classList.remove('active'));
+	}
+	
+	function openSubmenu(submenu) {
+		closeAllSubmenus();
+		if (submenu) submenu.classList.add('active');
+	}
+	
+	function toggleFullscreen() {
+		if (!document.fullscreenElement) {
+			document.documentElement.requestFullscreen().catch(() => {});
+		} else {
+			document.exitFullscreen();
+		}
+	}
+	
+	// Écouteurs
+	menuBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMainMenu(); });
+	menuClose.addEventListener('click', () => toggleMainMenu(false));
+	menuOverlay.addEventListener('click', () => toggleMainMenu(false));
+	homeBtn.addEventListener('click', () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'));
+	reloadBtn.addEventListener('click', () => location.reload());
+	fullscreenBtn.addEventListener('click', toggleFullscreen);
+	
+	document.getElementById('openPresentationSub')?.addEventListener('click', (e) => { e.stopPropagation(); openSubmenu(subPresentation); });
+	document.getElementById('openShortcutsSub')?.addEventListener('click', (e) => { e.stopPropagation(); openSubmenu(subShortcuts); });
+	document.getElementById('openStatsSub')?.addEventListener('click', (e) => { e.stopPropagation(); openSubmenu(subStats); });
+	document.getElementById('openSettingsSub')?.addEventListener('click', (e) => { e.stopPropagation(); openSubmenu(subSettings); });
+	document.getElementById('openAboutSub')?.addEventListener('click', (e) => { e.stopPropagation(); openSubmenu(subAbout); });
+	
+	document.querySelectorAll('.submenu-close').forEach(btn => {
+		btn.addEventListener('click', (e) => { e.stopPropagation(); closeAllSubmenus(); });
+	});
+	
+	slideMenu.addEventListener('click', (e) => e.stopPropagation());
+	submenus.forEach(s => s?.addEventListener('click', (e) => e.stopPropagation()));
+	
+	// Mode sombre
+	const darkModeToggle = document.getElementById('darkModeToggle');
+	if (darkModeToggle) {
+		if (localStorage.getItem('darkMode') === 'true') {
+			document.body.classList.add('dark-mode');
+			darkModeToggle.checked = true;
+		}
+		darkModeToggle.addEventListener('change', (e) => {
+			document.body.classList.toggle('dark-mode', e.target.checked);
+			localStorage.setItem('darkMode', e.target.checked);
+		});
+	}
+	
+	// Raccourcis clavier
+	document.addEventListener('keydown', (e) => {
+		if (e.target.matches('input, textarea, select')) return;
+		if (e.key === 'Escape') {
+			if (submenus.some(s => s.classList.contains('active'))) {
+				closeAllSubmenus();
+				e.preventDefault();
+			} else if (slideMenu.classList.contains('active')) {
+				toggleMainMenu(false);
+				e.preventDefault();
+			}
+		}
+		if (e.key === 'm' || e.key === 'M') { e.preventDefault(); toggleMainMenu(); }
+		if (e.key === 'h' || e.key === 'H') { e.preventDefault(); window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); }
+		if (e.key === 'r' || e.key === 'R') { e.preventDefault(); location.reload(); }
+		if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFullscreen(); }
+	});
+	
+	// Gestion de l'icône plein écran
+	document.addEventListener('fullscreenchange', () => {
+		const isFullscreen = !!document.fullscreenElement;
+		if (isFullscreen) {
+			fullscreenBtn.classList.add('fullscreen-active');
+			fullscreenBtn.innerHTML = `<svg class="fullscreen-exit-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="10" x2="10" y2="10"/><line x1="9" y1="4" x2="9" y2="11"/><line x1="14" y1="10" x2="21" y2="10"/><line x1="15" y1="4" x2="15" y2="10"/><line x1="3" y1="15.5" x2="10" y2="15.5"/><line x1="9" y1="15" x2="9" y2="21"/><line x1="14" y1="15.5" x2="21" y2="15.5"/><line x1="15" y1="15" x2="15" y2="21"/></svg>`;
+			fullscreenBtn.setAttribute('data-title', 'quitter plein écran (F)');
+		} else {
+			fullscreenBtn.classList.remove('fullscreen-active');
+			fullscreenBtn.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/><line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/><line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/><line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/></svg>`;
+			fullscreenBtn.setAttribute('data-title', 'plein écran (F)');
+		}
+	});
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+	window.gameConfig = new GameConfig();
+	window.game = new PathGame();
+	initMenuAndToolbar();
+});
+
+window.addEventListener("resize", () => {
+	if (window.game && window.game.render) {
+		setTimeout(() => window.game.render(), 100);
+	}
+});
+</script>
+</body>
+</html>
