@@ -203,6 +203,7 @@
 			0% {
 				transform: rotateY(0deg);
 			}
+
 			100% {
 				transform: rotateY(360deg);
 			}
@@ -216,6 +217,7 @@
 			from {
 				transform: rotate(0deg);
 			}
+
 			to {
 				transform: rotate(360deg);
 			}
@@ -229,9 +231,11 @@
 			0% {
 				transform: scale(1);
 			}
+
 			50% {
 				transform: scale(1.25);
 			}
+
 			100% {
 				transform: scale(1);
 			}
@@ -250,6 +254,7 @@
 			0% {
 				transform: rotate(0deg);
 			}
+
 			100% {
 				transform: rotate(360deg);
 			}
@@ -264,6 +269,7 @@
 			0% {
 				transform: rotate(0deg);
 			}
+
 			100% {
 				transform: rotate(360deg);
 			}
@@ -607,7 +613,6 @@
 			position: relative;
 		}
 
-		/* Correction du problème d'affichage des boutons sur mobile */
 		.btn:focus,
 		.btn:focus-visible,
 		.toolbar-btn:focus,
@@ -661,15 +666,7 @@
 			opacity: 1;
 		}
 
-		/* Le bouton réinitialiser a maintenant la même taille et le même centrage que les autres */
-		.btn#retour_btn,
-		.btn#mobileRetourBtn {
-			font-size: 1.8rem;
-			line-height: 1;
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-		}
+
 
 		.preset-section {
 			margin-top: 12px;
@@ -700,6 +697,7 @@
 			max-height: calc(100vh - 80px);
 			width: auto;
 			height: auto;
+			margin-top: 22px;
 		}
 
 		body.dark-mode #mon_canvas {
@@ -943,17 +941,6 @@
 				display: none;
 			}
 
-			.mobile-controls {
-				display: block;
-				width: 100%;
-				background: #eef2f9;
-				flex-shrink: 0;
-				order: 3;
-				padding: 8px;
-				max-height: 38%;
-				overflow-y: auto;
-			}
-
 			body.dark-mode .mobile-controls {
 				background: #1e1f2c;
 			}
@@ -974,6 +961,17 @@
 				align-items: center;
 				justify-content: center;
 				overflow: hidden;
+			}
+
+			.mobile-controls {
+				display: block;
+				width: 100%;
+				background: #eef2f9;
+				flex-shrink: 0;
+				order: 3;
+				padding: 8px;
+				max-height: 38%;
+				overflow-y: auto;
 			}
 
 			#mon_canvas {
@@ -1092,7 +1090,7 @@
 				background: #b8b9be;
 				cursor: pointer;
 				border: 2px solid white;
-				box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 			}
 
 			.mobile-controls input[type="range"]::-moz-range-thumb {
@@ -1114,13 +1112,25 @@
 				border-color: #1e1f2c;
 			}
 
-			/* Ajustement mobile pour le bouton réinitialiser */
-			.mobile-controls .btn#mobileRetourBtn {
-		font-size: 1.7rem;
-				line-height: 1;
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
+		}
+
+		@media (max-width: 768px) {
+			.main-content {
+				display: flex;
+				flex-direction: column;
+				height: 100%;
+				overflow: hidden;
+			}
+
+			.canvas-container {
+				flex: 2.2;
+				min-height: 0;
+			}
+
+			.mobile-controls {
+				flex: 1.8;
+				overflow-y: auto;
+				max-height: none;
 			}
 		}
 
@@ -1171,7 +1181,8 @@
 						<svg viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2">
 							<polyline points="19,10 12,5" stroke="#2c3e50" stroke-width="2" stroke-linecap="round" />
 							<polyline points="8,8 5,10" stroke="#2c3e50" stroke-width="2" stroke-linecap="round" />
-							<polyline points="19,11 19,19 5,19 5,11" stroke="#2c3e50" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+							<polyline points="19,11 19,19 5,19 5,11" stroke="#2c3e50" stroke-width="2"
+								stroke-linejoin="round" stroke-linecap="round" />
 						</svg>
 					</div>
 				</button>
@@ -1226,14 +1237,38 @@
 							<div class="increment-row">
 								<input type="number" id="mainAnimValue" class="main-value-input" step="0.1" value="2">
 								<label>incrément :</label>
-								<input type="number" id="commonIncrement" class="increment-value" value="0.1" step="0.1" min="0.01">
+								<input type="number" id="commonIncrement" class="increment-value" value="0.1" step="0.1"
+									min="0.01">
 							</div>
 						</div>
 						<div class="button-group">
-							<button id="anim_rev" class="btn" data-title="décrémenter">◀</button>
-							<button id="stop_btn" class="btn" data-title="arrêter">⏹</button>
-							<button id="anim_play" class="btn" data-title="incrémenter">▶</button>
-							<button id="retour_btn" class="btn" data-title="réinitialiser">↺</button>
+							<button id="anim_rev" class="btn" data-title="décrémenter">
+								<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+									<polyline points="15 18 9 12 15 6"></polyline>
+								</svg>
+							</button>
+							<button id="stop_btn" class="btn" data-title="arrêter">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+									<rect x="4" y="4" width="16" height="16" rx="0" ry="0"></rect>
+								</svg>
+							</button>
+							<button id="anim_play" class="btn" data-title="incrémenter">
+								<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+									<polyline points="9 18 15 12 9 6"></polyline>
+								</svg>
+							</button>
+							<button id="retour_btn" class="btn" data-title="réinitialiser">
+								<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M23 4v6h-6"></path>
+									<path d="M1 20v-6h6"></path>
+									<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"></path>
+									<path d="M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+								</svg>
+							</button>
 						</div>
 					</div>
 					<div class="preset-section">
@@ -1270,14 +1305,38 @@
 						<div class="increment-row">
 							<input type="number" id="mobileMainAnimValue" class="main-value-input" step="0.1" value="2">
 							<label>incrément :</label>
-							<input type="number" id="mobileCommonIncrement" class="increment-value" value="0.1" step="0.1" min="0.01">
+							<input type="number" id="mobileCommonIncrement" class="increment-value" value="0.1"
+								step="0.1" min="0.01">
 						</div>
 					</div>
 					<div class="button-group">
-						<button id="mobileAnimRev" class="btn" data-title="décrémenter">◀</button>
-						<button id="mobileStopBtn" class="btn" data-title="arrêter">⏹</button>
-						<button id="mobileAnimPlay" class="btn" data-title="incrémenter">▶</button>
-						<button id="mobileRetourBtn" class="btn" data-title="réinitialiser">↺</button>
+						<button id="mobileAnimRev" class="btn" data-title="décrémenter">
+							<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="15 18 9 12 15 6"></polyline>
+							</svg>
+						</button>
+						<button id="mobileStopBtn" class="btn" data-title="arrêter">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+								<rect x="4" y="4" width="16" height="16" rx="0" ry="0"></rect>
+							</svg>
+						</button>
+						<button id="mobileAnimPlay" class="btn" data-title="incrémenter">
+							<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="9 18 15 12 9 6"></polyline>
+							</svg>
+						</button>
+						<button id="retour_btn_mobile" class="btn" data-title="réinitialiser">
+							<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M23 4v6h-6"></path>
+								<path d="M1 20v-6h6"></path>
+								<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"></path>
+								<path d="M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+							</svg>
+						</button>
 					</div>
 					<div class="preset-section">
 						<select id="mobilePresetSelect" class="preset-select">
@@ -1320,7 +1379,8 @@
 			présentation
 		</button>
 		<button class="menu-item" id="openShortcutsSub">
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2"
+				stroke-linecap="round" stroke-linejoin="round">
 				<rect x="2" y="4" width="20" height="16" rx="2" stroke="#2c3e50"></rect>
 				<line x1="6" y1="8" x2="10" y2="8" stroke="#2c3e50"></line>
 				<line x1="14" y1="8" x2="18" y2="8" stroke="#2c3e50"></line>
@@ -1331,11 +1391,13 @@
 			</svg>
 			raccourcis clavier
 		</button>
-		<button class="menu-item" id="openSettingsSub">	
+		<button class="menu-item" id="openSettingsSub">
 			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2"
 				stroke-linecap="round" stroke-linejoin="round">
 				<circle cx="12" cy="12" r="3" stroke="#2c3e50"></circle>
-				<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="#2c3e50"></path>
+				<path
+					d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+					stroke="#2c3e50"></path>
 			</svg>
 			paramètres
 		</button>
@@ -1366,7 +1428,8 @@
 				figures complexes d'une beauté surprenante.</p><br>
 			<p><strong>comment expérimenter :</strong><br>• ajustez la <strong>table</strong> (le multiplicateur) et le
 				<strong>modulo</strong> (le nombre de points).<br>• le mode <strong>lent</strong> dessine les traits un
-				à un et le mode <strong>rapide</strong> fait varier automatiquement la valeur.</p>
+				à un et le mode <strong>rapide</strong> fait varier automatiquement la valeur.
+			</p>
 		</div>
 	</div>
 	<div class="submenu" id="submenuShortcuts">
@@ -1385,6 +1448,8 @@
 			<p><kbd>F</kbd> : plein écran</p>
 			<p><kbd>M</kbd> : menu</p>
 			<p><kbd>ESC</kbd> : fermer menus</p>
+			<p><kbd>↑</kbd> ou <kbd>V</kbd> : incrémenter la valeur</p>
+			<p><kbd>↓</kbd> ou <kbd>C</kbd> : décrémenter la valeur</p>
 		</div>
 	</div>
 	<div class="submenu" id="submenuSettings">
@@ -1427,7 +1492,7 @@
 			<p>application développée par Daniel Boulagnon</p>
 			<p>daniel.boulagnon@ac-lille.fr</p>
 			<p>exploitation à but pédagogique et non commercial</p>
-			<p>© 2026 – version 1.0.5</p>
+			<p>© 2026 – version 1.0.6</p>
 		</div>
 	</div>
 	<script>
@@ -1446,487 +1511,517 @@
 		const mobileSelectTable = document.getElementById('mobileSelectTableAnim'), mobileSelectModulo = document.getElementById('mobileSelectModuloAnim');
 		const mobileSpeedSlider = document.getElementById('mobileSpeed'), mobileSpeedLabel = document.getElementById('mobileSpeedValue');
 		const mobilePresetSelect = document.getElementById('mobilePresetSelect');
-		const mobileAnimPlay = document.getElementById('mobileAnimPlay'), mobileAnimRev = document.getElementById('mobileAnimRev'), mobileStopBtn = document.getElementById('mobileStopBtn'), mobileRetourBtn = document.getElementById('mobileRetourBtn');
-		
-		function updateSpeedDisplay() { 
-			speedLabel.innerText = "vitesse : " + speed1 + " ms"; 
-			if (mobileSpeedLabel) mobileSpeedLabel.innerText = "vitesse : " + speed1 + " ms"; 
+		const mobileAnimPlay = document.getElementById('mobileAnimPlay'), mobileAnimRev = document.getElementById('mobileAnimRev'), mobileStopBtn = document.getElementById('mobileStopBtn'), mobileRetourBtn = document.getElementById('retour_btn_mobile');
+
+		function updateSpeedDisplay() {
+			speedLabel.innerText = "vitesse : " + speed1 + " ms";
+			if (mobileSpeedLabel) mobileSpeedLabel.innerText = "vitesse : " + speed1 + " ms";
 		}
-		
-		function computeDelayFromSpeed(s) { 
-			if (s == 0) return 0; 
-			return Math.max(1, 201 - s); 
+
+		function computeDelayFromSpeed(s) {
+			if (s == 0) return 0;
+			return Math.max(1, 201 - s);
 		}
-		
-		function updateAnimationDelay() { 
-			animationDelay = computeDelayFromSpeed(speed1); 
-			updateSpeedDisplay(); 
+
+		function updateAnimationDelay() {
+			animationDelay = computeDelayFromSpeed(speed1);
+			updateSpeedDisplay();
 		}
-		
-		function getSegmentColor(idx) { 
-			if (gradientMode) return `hsl(${(idx / segments.length) * 360},70%,60%)`; 
-			else return menuBaseColor.value; 
+
+		function getSegmentColor(idx) {
+			if (gradientMode) return `hsl(${(idx / segments.length) * 360},70%,60%)`;
+			else return menuBaseColor.value;
 		}
-		
-		function resizeCanvas() { 
-			const c = document.querySelector('.canvas-container'); 
-			if (!c) return; 
-			let w = c.clientWidth, h = c.clientHeight; 
-			let size = Math.min(w, h) - 25; 
-			size = Math.min(size, 700); 
-			if (size < 100) return; 
-			canvas.width = size; 
-			canvas.height = size; 
+
+		function resizeCanvas() {
+			const c = document.querySelector('.canvas-container');
+			if (!c) return;
+			let w = c.clientWidth, h = c.clientHeight;
+			let size = Math.min(w, h) - 25;
+			size = Math.min(size, 700);
+			if (size < 100) return;
+			canvas.width = size;
+			canvas.height = size;
 			rayoncercle = canvas.width / 2 - 28;
-			centrex = canvas.width / 2; 
-			centrey = canvas.height / 2; 
-			if (rayoncercle < 20) rayoncercle = 20; 
-			dessinecercle(); 
+			centrex = canvas.width / 2;
+			centrey = canvas.height / 2;
+			if (rayoncercle < 20) rayoncercle = 20;
+			dessinecercle();
 		}
-		
-		function updatePositions() { 
-			const start = -Math.PI / 2, step = (2 * Math.PI) / nbpointcercle; 
-			positions = []; 
-			for (let i = 0; i < nbpointcercle; i++) { 
-				const a = start + i * step; 
-				positions.push({ x: centrex + rayoncercle * Math.cos(a), y: centrey + rayoncercle * Math.sin(a) }); 
-			} 
+
+		function updatePositions() {
+			const start = -Math.PI / 2, step = (2 * Math.PI) / nbpointcercle;
+			positions = [];
+			for (let i = 0; i < nbpointcercle; i++) {
+				const a = start + i * step;
+				positions.push({ x: centrex + rayoncercle * Math.cos(a), y: centrey + rayoncercle * Math.sin(a) });
+			}
 		}
-		
-		function buildSegments() { 
-			const segs = []; 
-			for (let i = 0; i < nbpointcercle; i++) { 
-				let j = (i * tablemultiplication) % nbpointcercle; 
-				let idx = ((Math.round(j) % nbpointcercle) + nbpointcercle) % nbpointcercle; 
-				segs.push({ fromIdx: i, toIdx: idx }); 
-			} 
-			return segs; 
+
+		function buildSegments() {
+			const segs = [];
+			for (let i = 0; i < nbpointcercle; i++) {
+				let j = (i * tablemultiplication) % nbpointcercle;
+				let idx = ((Math.round(j) % nbpointcercle) + nbpointcercle) % nbpointcercle;
+				segs.push({ fromIdx: i, toIdx: idx });
+			}
+			return segs;
 		}
-		
+
 		function dessinecercle() {
-			if (!ctx || !canvas) return; 
-			ctx.clearRect(0, 0, canvas.width, canvas.height); 
-			const isDark = document.body.classList.contains('dark-mode'); 
-			const bg = isDark ? "#1e1f2c" : "#eef2f9"; 
-			const effCircle = animationHideElements ? false : showCircle; 
+			if (!ctx || !canvas) return;
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			const isDark = document.body.classList.contains('dark-mode');
+			const bg = isDark ? "#1e1f2c" : "#eef2f9";
+			const effCircle = animationHideElements ? false : showCircle;
 			const effPoints = animationHideElements ? false : showPoints;
 			const effNumbers = animationHideElements ? false : affichagechiffre;
-			
-			if (effCircle) { 
-				ctx.beginPath(); 
-				ctx.arc(centrex, centrey, rayoncercle, 0, 2 * Math.PI); 
-				ctx.fillStyle = bg; 
-				ctx.fill(); 
-				ctx.strokeStyle = isDark ? "#6a7c8e" : "#bdc7d4"; 
-				ctx.lineWidth = 1; 
-				ctx.stroke(); 
-			} else { 
-				ctx.fillStyle = bg; 
-				ctx.fillRect(0, 0, canvas.width, canvas.height); 
+
+			if (effCircle) {
+				ctx.beginPath();
+				ctx.arc(centrex, centrey, rayoncercle, 0, 2 * Math.PI);
+				ctx.fillStyle = bg;
+				ctx.fill();
+				ctx.strokeStyle = isDark ? "#6a7c8e" : "#bdc7d4";
+				ctx.lineWidth = 1;
+				ctx.stroke();
+			} else {
+				ctx.fillStyle = bg;
+				ctx.fillRect(0, 0, canvas.width, canvas.height);
 			}
-			
-			updatePositions(); 
+
+			updatePositions();
 			const fontSize = Math.max(12, Math.floor(rayoncercle / 13));
 			const rayonTexte = rayoncercle + fontSize * 1.05;
-			
-			for (let i = 0; i < nbpointcercle; i++) { 
-				const a = -Math.PI / 2 + i * (2 * Math.PI) / nbpointcercle; 
+
+			for (let i = 0; i < nbpointcercle; i++) {
+				const a = -Math.PI / 2 + i * (2 * Math.PI) / nbpointcercle;
 				const x = centrex + rayoncercle * Math.cos(a), y = centrey + rayoncercle * Math.sin(a);
 				const xTexte = centrex + rayonTexte * Math.cos(a), yTexte = centrey + rayonTexte * Math.sin(a);
-				
-				if (effPoints) { 
-					ctx.beginPath(); 
-					ctx.fillStyle = "#0f172a"; 
-					ctx.arc(x, y, 4.5, 0, 2 * Math.PI); 
-					ctx.fill(); 
-					ctx.fillStyle = "white"; 
-					ctx.arc(x, y, 1.8, 0, 2 * Math.PI); 
-					ctx.fill(); 
-				} 
-				if (effNumbers) { 
-					ctx.font = `bold ${fontSize}px "Segoe UI"`; 
-					ctx.fillStyle = isDark ? "#cccccc" : "#1e293b"; 
+
+				if (effPoints) {
+					ctx.beginPath();
+					ctx.fillStyle = "#0f172a";
+					ctx.arc(x, y, 4.5, 0, 2 * Math.PI);
+					ctx.fill();
+					ctx.fillStyle = "white";
+					ctx.arc(x, y, 1.8, 0, 2 * Math.PI);
+					ctx.fill();
+				}
+				if (effNumbers) {
+					ctx.font = `bold ${fontSize}px "Segoe UI"`;
+					ctx.fillStyle = isDark ? "#cccccc" : "#1e293b";
 					ctx.shadowBlur = 0;
 					const textWidth = ctx.measureText(i.toString()).width;
-					ctx.fillText(i.toString(), xTexte - textWidth / 2, yTexte + fontSize * 0.35); 
-				} 
+					ctx.fillText(i.toString(), xTexte - textWidth / 2, yTexte + fontSize * 0.35);
+				}
 			}
-			
+
 			ctx.shadowBlur = 0;
-			segments = buildSegments(); 
-			
+			segments = buildSegments();
+
 			if (slowAnimationActive && animFrameId) {
-				for (let k = 0; k < currentSegmentIndex && k < segments.length; k++) { 
-					const f = positions[segments[k].fromIdx], t = positions[segments[k].toIdx]; 
-					if (f && t) { 
-						ctx.beginPath(); 
-						ctx.moveTo(f.x, f.y); 
-						ctx.lineTo(t.x, t.y); 
-						ctx.strokeStyle = getSegmentColor(k); 
-						ctx.lineWidth = 1.5; 
-						ctx.stroke(); 
-					} 
+				for (let k = 0; k < currentSegmentIndex && k < segments.length; k++) {
+					const f = positions[segments[k].fromIdx], t = positions[segments[k].toIdx];
+					if (f && t) {
+						ctx.beginPath();
+						ctx.moveTo(f.x, f.y);
+						ctx.lineTo(t.x, t.y);
+						ctx.strokeStyle = getSegmentColor(k);
+						ctx.lineWidth = 1.5;
+						ctx.stroke();
+					}
 				}
-				if (currentSegmentIndex < segments.length && animationProgress > 0) { 
-					const seg = segments[currentSegmentIndex]; 
-					const f = positions[seg.fromIdx], t = positions[seg.toIdx]; 
-					if (f && t) { 
-						const tt = Math.min(1, animationProgress); 
-						const cx = f.x + (t.x - f.x) * tt, cy = f.y + (t.y - f.y) * tt; 
-						ctx.beginPath(); 
-						ctx.moveTo(f.x, f.y); 
-						ctx.lineTo(cx, cy); 
-						ctx.strokeStyle = getSegmentColor(currentSegmentIndex); 
-						ctx.lineWidth = 2; 
-						ctx.stroke(); 
-						ctx.beginPath(); 
-						ctx.arc(cx, cy, rayoncercle * 0.012, 0, 2 * Math.PI); 
-						ctx.fillStyle = "#ff6b4a"; 
-						ctx.fill(); 
-					} 
+				if (currentSegmentIndex < segments.length && animationProgress > 0) {
+					const seg = segments[currentSegmentIndex];
+					const f = positions[seg.fromIdx], t = positions[seg.toIdx];
+					if (f && t) {
+						const tt = Math.min(1, animationProgress);
+						const cx = f.x + (t.x - f.x) * tt, cy = f.y + (t.y - f.y) * tt;
+						ctx.beginPath();
+						ctx.moveTo(f.x, f.y);
+						ctx.lineTo(cx, cy);
+						ctx.strokeStyle = getSegmentColor(currentSegmentIndex);
+						ctx.lineWidth = 2;
+						ctx.stroke();
+						ctx.beginPath();
+						ctx.arc(cx, cy, rayoncercle * 0.012, 0, 2 * Math.PI);
+						ctx.fillStyle = "#ff6b4a";
+						ctx.fill();
+					}
 				}
-			} else { 
-				for (let k = 0; k < segments.length; k++) { 
-					const f = positions[segments[k].fromIdx], t = positions[segments[k].toIdx]; 
-					if (f && t) { 
-						ctx.beginPath(); 
-						ctx.moveTo(f.x, f.y); 
-						ctx.lineTo(t.x, t.y); 
-						ctx.strokeStyle = getSegmentColor(k); 
-						ctx.lineWidth = 1.5; 
-						ctx.stroke(); 
-					} 
-				} 
+			} else {
+				for (let k = 0; k < segments.length; k++) {
+					const f = positions[segments[k].fromIdx], t = positions[segments[k].toIdx];
+					if (f && t) {
+						ctx.beginPath();
+						ctx.moveTo(f.x, f.y);
+						ctx.lineTo(t.x, t.y);
+						ctx.strokeStyle = getSegmentColor(k);
+						ctx.lineWidth = 1.5;
+						ctx.stroke();
+					}
+				}
 			}
 		}
-		
-		function startSlowAnimation() { 
-			if (animer) stopAnim(); 
-			if (slowAnimationActive) return; 
-			stopAllAnimations(); 
-			slowAnimationActive = true; 
-			currentSegmentIndex = 0; 
-			animationProgress = 0; 
-			segments = buildSegments(); 
-			function step() { 
-				if (!slowAnimationActive) return; 
-				if (currentSegmentIndex >= segments.length) { 
-					slowAnimationActive = false; 
-					animFrameId = null; 
-					dessinecercle(); 
-					return; 
-				} 
-				animationProgress += 0.022; 
-				if (animationProgress >= 1) { 
-					animationProgress = 1; 
-					dessinecercle(); 
-					currentSegmentIndex++; 
-					animationProgress = 0; 
-					if (currentSegmentIndex < segments.length) animFrameId = requestAnimationFrame(step); 
-					else { 
-						slowAnimationActive = false; 
-						animFrameId = null; 
-						dessinecercle(); 
-					} 
-				} else { 
-					dessinecercle(); 
-					animFrameId = requestAnimationFrame(step); 
-				} 
-			} 
-			animFrameId = requestAnimationFrame(step); 
+
+		function startSlowAnimation() {
+			if (animer) stopAnim();
+			if (slowAnimationActive) return;
+			stopAllAnimations();
+			slowAnimationActive = true;
+			currentSegmentIndex = 0;
+			animationProgress = 0;
+			segments = buildSegments();
+			function step() {
+				if (!slowAnimationActive) return;
+				if (currentSegmentIndex >= segments.length) {
+					slowAnimationActive = false;
+					animFrameId = null;
+					dessinecercle();
+					return;
+				}
+				animationProgress += 0.022;
+				if (animationProgress >= 1) {
+					animationProgress = 1;
+					dessinecercle();
+					currentSegmentIndex++;
+					animationProgress = 0;
+					if (currentSegmentIndex < segments.length) animFrameId = requestAnimationFrame(step);
+					else {
+						slowAnimationActive = false;
+						animFrameId = null;
+						dessinecercle();
+					}
+				} else {
+					dessinecercle();
+					animFrameId = requestAnimationFrame(step);
+				}
+			}
+			animFrameId = requestAnimationFrame(step);
 		}
-		
-		function stopAllAnimations() { 
-			if (animFrameId) { 
-				cancelAnimationFrame(animFrameId); 
-				animFrameId = null; 
-			} 
-			animer = false; 
-			slowAnimationActive = false; 
+
+		function stopAllAnimations() {
+			if (animFrameId) {
+				cancelAnimationFrame(animFrameId);
+				animFrameId = null;
+			}
+			animer = false;
+			slowAnimationActive = false;
 		}
-		
+
 		function handleSpeedChange(newSpeed) {
 			speed1 = newSpeed;
 			updateAnimationDelay();
 			if (speedSlider) speedSlider.value = speed1;
 			if (mobileSpeedSlider) mobileSpeedSlider.value = speed1;
-			
-			// Gestion de l'affichage des nombres en fonction de la vitesse
+
 			if (speed1 === 0) {
-				// Vitesse à zéro : on affiche les nombres et on coche la case
 				if (menuShowNumbers && !menuShowNumbers.checked) {
 					menuShowNumbers.checked = true;
 				}
 				affichagechiffre = true;
 			} else {
-				// Vitesse > 0 : on cache les nombres et on décoche la case
 				if (menuShowNumbers && menuShowNumbers.checked) {
 					menuShowNumbers.checked = false;
 				}
 				affichagechiffre = false;
 			}
-			
+
 			dessinecercle();
-			
-			if (speed1 === 0) { 
-				if (animer) stopAnim(); 
-				startSlowAnimation(); 
-			} else { 
-				if (slowAnimationActive) { 
-					stopAllAnimations(); 
-					dessinecercle(); 
-				} 
+
+			if (speed1 === 0) {
+				if (animer) stopAnim();
+				startSlowAnimation();
+			} else {
+				if (slowAnimationActive) {
+					stopAllAnimations();
+					dessinecercle();
+				}
 			}
 		}
-		
-		speedSlider.addEventListener("input", function () { 
+
+		speedSlider.addEventListener("input", function () {
 			handleSpeedChange(parseInt(this.value));
 		});
-		
-		if (mobileSpeedSlider) { 
-			mobileSpeedSlider.addEventListener("input", function () { 
+
+		if (mobileSpeedSlider) {
+			mobileSpeedSlider.addEventListener("input", function () {
 				handleSpeedChange(parseInt(this.value));
-			}); 
+			});
 		}
-		
-		function updateTable(value) { 
-			stopAllAnimations(); 
-			tablemultiplication = parseFloat(value); 
-			tablemultiplication_back = tablemultiplication; 
-			if (mainAnimValue && currentAnimType === 'table') mainAnimValue.value = tablemultiplication; 
-			if (mobileMainAnimValue && currentAnimType === 'table') mobileMainAnimValue.value = tablemultiplication; 
-			dessinecercle(); 
+
+		function updateTable(value) {
+			stopAllAnimations();
+			tablemultiplication = parseFloat(value);
+			tablemultiplication_back = tablemultiplication;
+			if (mainAnimValue && currentAnimType === 'table') mainAnimValue.value = tablemultiplication;
+			if (mobileMainAnimValue && currentAnimType === 'table') mobileMainAnimValue.value = tablemultiplication;
+			dessinecercle();
 		}
-		
-		function updateModulo(value) { 
-			stopAllAnimations(); 
-			let val = parseInt(value); 
-			if (isNaN(val) || val < 2) val = 2; 
-			nbpointcercle = val; 
-			nbpointcercle_back = nbpointcercle; 
-			if (mainAnimValue && currentAnimType === 'modulo') mainAnimValue.value = nbpointcercle; 
-			if (mobileMainAnimValue && currentAnimType === 'modulo') mobileMainAnimValue.value = nbpointcercle; 
-			dessinecercle(); 
+
+		function updateModulo(value) {
+			stopAllAnimations();
+			let val = parseInt(value);
+			if (isNaN(val) || val < 2) val = 2;
+			nbpointcercle = val;
+			nbpointcercle_back = nbpointcercle;
+			if (mainAnimValue && currentAnimType === 'modulo') mainAnimValue.value = nbpointcercle;
+			if (mobileMainAnimValue && currentAnimType === 'modulo') mobileMainAnimValue.value = nbpointcercle;
+			dessinecercle();
 		}
-		
-		function setActiveAnimType(type) { 
-			currentAnimType = type; 
-			const isTable = (type === 'table'); 
-			if (selectTableBtn) selectTableBtn.classList.toggle('active', isTable); 
-			if (selectModuloBtn) selectModuloBtn.classList.toggle('active', !isTable); 
-			if (mobileSelectTable) mobileSelectTable.classList.toggle('active', isTable); 
-			if (mobileSelectModulo) mobileSelectModulo.classList.toggle('active', !isTable); 
-			const stepVal = isTable ? 0.1 : 1; 
-			const incVal = isTable ? 0.1 : 1; 
-			if (mainAnimValue) { 
-				mainAnimValue.step = stepVal; 
-				mainAnimValue.value = isTable ? tablemultiplication : nbpointcercle; 
-			} 
-			if (mobileMainAnimValue) { 
-				mobileMainAnimValue.step = stepVal; 
-				mobileMainAnimValue.value = isTable ? tablemultiplication : nbpointcercle; 
-			} 
-			if (commonIncrement) { 
-				commonIncrement.value = incVal; 
-				commonIncrement.step = stepVal; 
-			} 
-			if (mobileCommonIncrement) { 
-				mobileCommonIncrement.value = incVal; 
-				mobileCommonIncrement.step = stepVal; 
-			} 
+
+		function setActiveAnimType(type) {
+			currentAnimType = type;
+			const isTable = (type === 'table');
+			if (selectTableBtn) selectTableBtn.classList.toggle('active', isTable);
+			if (selectModuloBtn) selectModuloBtn.classList.toggle('active', !isTable);
+			if (mobileSelectTable) mobileSelectTable.classList.toggle('active', isTable);
+			if (mobileSelectModulo) mobileSelectModulo.classList.toggle('active', !isTable);
+			const stepVal = isTable ? 0.1 : 1;
+			const incVal = isTable ? 0.1 : 1;
+			if (mainAnimValue) {
+				mainAnimValue.step = stepVal;
+				mainAnimValue.value = isTable ? tablemultiplication : nbpointcercle;
+			}
+			if (mobileMainAnimValue) {
+				mobileMainAnimValue.step = stepVal;
+				mobileMainAnimValue.value = isTable ? tablemultiplication : nbpointcercle;
+			}
+			if (commonIncrement) {
+				commonIncrement.value = incVal;
+				commonIncrement.step = stepVal;
+			}
+			if (mobileCommonIncrement) {
+				mobileCommonIncrement.value = incVal;
+				mobileCommonIncrement.step = stepVal;
+			}
 		}
-		
-		function animCommon(direction, isMobileAnim = false) { 
-			if (slowAnimationActive) stopAllAnimations(); 
-			if (animer) stopAnim(); 
-			
-			// Si la vitesse est à 0, on utilise l'animation lente au lieu de l'animation rapide
+
+		function animCommon(direction, isMobileAnim = false) {
+			if (slowAnimationActive) stopAllAnimations();
+			if (animer) stopAnim();
+
 			if (speed1 === 0) {
 				startSlowAnimation();
 				return;
 			}
-			
+
 			animationHideElements = true;
 			dessinecercle();
-			animer = true; 
-			const inc = parseFloat(isMobileAnim ? mobileCommonIncrement.value : commonIncrement.value); 
-			function step() { 
-				if (!animer) { 
+			animer = true;
+			
+			// Récupérer l'incrément à chaque étape pour permettre la modification en cours d'animation
+			function step() {
+				if (!animer) {
 					animationHideElements = false;
 					dessinecercle();
-					return; 
-				} 
-				if (currentAnimType === 'table') { 
-					if (direction === 'up') tablemultiplication += inc; 
-					else tablemultiplication = Math.max(0, tablemultiplication - inc); 
-					tablemultiplication = Math.round(tablemultiplication * 100) / 100; 
-					tablemultiplication_back = tablemultiplication; 
-					if (mainAnimValue) mainAnimValue.value = tablemultiplication; 
-					if (mobileMainAnimValue) mobileMainAnimValue.value = tablemultiplication; 
-					dessinecercle(); 
-				} else { 
-					let newVal = nbpointcercle + (direction === 'up' ? inc : -inc); 
-					if (newVal < 2) newVal = 2; 
-					nbpointcercle = newVal; 
-					nbpointcercle_back = nbpointcercle; 
-					if (mainAnimValue) mainAnimValue.value = nbpointcercle; 
-					if (mobileMainAnimValue) mobileMainAnimValue.value = nbpointcercle; 
-					dessinecercle(); 
-				} 
-				setTimeout(() => { 
-					if (animer) step(); 
-				}, animationDelay); 
-			} 
-			step(); 
+					return;
+				}
+				
+				// Récupérer l'incrément actuel à chaque étape
+				const inc = parseFloat(isMobileAnim ? mobileCommonIncrement.value : commonIncrement.value);
+				
+				if (currentAnimType === 'table') {
+					if (direction === 'up') tablemultiplication += inc;
+					else tablemultiplication = Math.max(0, tablemultiplication - inc);
+					tablemultiplication = Math.round(tablemultiplication * 100) / 100;
+					tablemultiplication_back = tablemultiplication;
+					if (mainAnimValue) mainAnimValue.value = tablemultiplication;
+					if (mobileMainAnimValue) mobileMainAnimValue.value = tablemultiplication;
+					dessinecercle();
+				} else {
+					let newVal = nbpointcercle + (direction === 'up' ? inc : -inc);
+					if (newVal < 2) newVal = 2;
+					nbpointcercle = newVal;
+					nbpointcercle_back = nbpointcercle;
+					if (mainAnimValue) mainAnimValue.value = nbpointcercle;
+					if (mobileMainAnimValue) mobileMainAnimValue.value = nbpointcercle;
+					dessinecercle();
+				}
+				setTimeout(() => {
+					if (animer) step();
+				}, animationDelay);
+			}
+			step();
 		}
-		
-		function stopAnim() { 
-			animer = false; 
-			stopAllAnimations(); 
+
+		function stopAnim() {
+			animer = false;
+			stopAllAnimations();
 			animationHideElements = false;
-			dessinecercle(); 
+			dessinecercle();
 		}
-		
-		function retourCommon() { 
-			stopAnim(); 
-			if (currentAnimType === 'table') { 
-				tablemultiplication = tablemultiplication_back; 
-				if (mainAnimValue) mainAnimValue.value = tablemultiplication; 
-				if (mobileMainAnimValue) mobileMainAnimValue.value = tablemultiplication; 
-			} else { 
-				nbpointcercle = nbpointcercle_back; 
-				if (mainAnimValue) mainAnimValue.value = nbpointcercle; 
-				if (mobileMainAnimValue) mobileMainAnimValue.value = nbpointcercle; 
-			} 
-			dessinecercle(); 
+
+		function retourCommon() {
+			stopAnim();
+			if (currentAnimType === 'table') {
+				tablemultiplication = tablemultiplication_back;
+				if (mainAnimValue) mainAnimValue.value = tablemultiplication;
+				if (mobileMainAnimValue) mobileMainAnimValue.value = tablemultiplication;
+			} else {
+				nbpointcercle = nbpointcercle_back;
+				if (mainAnimValue) mainAnimValue.value = nbpointcercle;
+				if (mobileMainAnimValue) mobileMainAnimValue.value = nbpointcercle;
+			}
+			dessinecercle();
 		}
-		
-		function applyPreset(tval, mval) { 
-			stopAllAnimations(); 
-			stopAnim(); 
-			tablemultiplication = parseFloat(tval); 
-			nbpointcercle = parseInt(mval); 
-			if (isNaN(nbpointcercle) || nbpointcercle < 2) nbpointcercle = 2; 
-			tablemultiplication_back = tablemultiplication; 
-			nbpointcercle_back = nbpointcercle; 
-			if (mainAnimValue) mainAnimValue.value = (currentAnimType === 'table') ? tablemultiplication : nbpointcercle; 
-			if (mobileMainAnimValue) mobileMainAnimValue.value = (currentAnimType === 'table') ? tablemultiplication : nbpointcercle; 
-			dessinecercle(); 
+
+		function applyPreset(tval, mval) {
+			stopAllAnimations();
+			stopAnim();
+			tablemultiplication = parseFloat(tval);
+			nbpointcercle = parseInt(mval);
+			if (isNaN(nbpointcercle) || nbpointcercle < 2) nbpointcercle = 2;
+			tablemultiplication_back = tablemultiplication;
+			nbpointcercle_back = nbpointcercle;
+			if (mainAnimValue) mainAnimValue.value = (currentAnimType === 'table') ? tablemultiplication : nbpointcercle;
+			if (mobileMainAnimValue) mobileMainAnimValue.value = (currentAnimType === 'table') ? tablemultiplication : nbpointcercle;
+			dessinecercle();
 		}
-		
+
 		if (selectTableBtn) selectTableBtn.onclick = () => { setActiveAnimType('table'); stopAnim(); dessinecercle(); };
 		if (selectModuloBtn) selectModuloBtn.onclick = () => { setActiveAnimType('modulo'); stopAnim(); dessinecercle(); };
 		if (mobileSelectTable) mobileSelectTable.onclick = () => { setActiveAnimType('table'); stopAnim(); dessinecercle(); };
 		if (mobileSelectModulo) mobileSelectModulo.onclick = () => { setActiveAnimType('modulo'); stopAnim(); dessinecercle(); };
-		
+
 		document.getElementById("anim_play").onclick = () => { if (currentAnimType === 'table') tablemultiplication_back = tablemultiplication; else nbpointcercle_back = nbpointcercle; animCommon('up', false); };
 		document.getElementById("anim_rev").onclick = () => { if (currentAnimType === 'table') tablemultiplication_back = tablemultiplication; else nbpointcercle_back = nbpointcercle; animCommon('down', false); };
 		document.getElementById("stop_btn").onclick = stopAnim;
 		document.getElementById("retour_btn").onclick = retourCommon;
-		
+
 		if (mobileAnimPlay) mobileAnimPlay.onclick = () => { if (currentAnimType === 'table') tablemultiplication_back = tablemultiplication; else nbpointcercle_back = nbpointcercle; animCommon('up', true); };
 		if (mobileAnimRev) mobileAnimRev.onclick = () => { if (currentAnimType === 'table') tablemultiplication_back = tablemultiplication; else nbpointcercle_back = nbpointcercle; animCommon('down', true); };
 		if (mobileStopBtn) mobileStopBtn.onclick = stopAnim;
 		if (mobileRetourBtn) mobileRetourBtn.onclick = retourCommon;
-		
+
 		if (mainAnimValue) mainAnimValue.addEventListener("change", function () { if (currentAnimType === 'table') updateTable(this.value); else updateModulo(this.value); });
 		if (mobileMainAnimValue) mobileMainAnimValue.addEventListener("change", function () { if (currentAnimType === 'table') updateTable(this.value); else updateModulo(this.value); });
-		
+
 		if (presetSelect) presetSelect.addEventListener("change", function (e) { const v = e.target.value; if (!v) return; const [t, m] = v.split(","); if (t && m) applyPreset(t, m); presetSelect.value = ""; });
 		if (mobilePresetSelect) mobilePresetSelect.addEventListener("change", function (e) { const v = e.target.value; if (!v) return; const [t, m] = v.split(","); if (t && m) applyPreset(t, m); mobilePresetSelect.value = ""; });
-		
+
 		const menuOverlay = document.getElementById('menuOverlay'), slideMenu = document.getElementById('slideMenu'), menuBtn = document.getElementById('menuBtn'), menuClose = document.getElementById('menuClose');
 		function toggleMainMenu(force) { const open = (force !== undefined) ? force : !slideMenu.classList.contains('active'); slideMenu.classList.toggle('active', open); menuOverlay.classList.toggle('active', open); }
-		if (menuBtn) menuBtn.onclick = () => toggleMainMenu(); 
-		if (menuClose) menuClose.onclick = () => toggleMainMenu(false); 
+		if (menuBtn) menuBtn.onclick = () => toggleMainMenu();
+		if (menuClose) menuClose.onclick = () => toggleMainMenu(false);
 		if (menuOverlay) menuOverlay.onclick = () => toggleMainMenu(false);
-		
+
 		const submenus = { presentation: document.getElementById('submenuPresentation'), shortcuts: document.getElementById('submenuShortcuts'), settings: document.getElementById('submenuSettings'), about: document.getElementById('submenuAbout') };
 		document.getElementById('openPresentationSub').onclick = () => { if (submenus.presentation) submenus.presentation.classList.add('active'); toggleMainMenu(false); };
 		document.getElementById('openShortcutsSub').onclick = () => { if (submenus.shortcuts) submenus.shortcuts.classList.add('active'); toggleMainMenu(false); };
 		document.getElementById('openSettingsSub').onclick = () => { if (submenus.settings) submenus.settings.classList.add('active'); toggleMainMenu(false); };
 		document.getElementById('openAboutSub').onclick = () => { if (submenus.about) submenus.about.classList.add('active'); toggleMainMenu(false); };
 		document.querySelectorAll('.submenu-close').forEach(btn => { btn.onclick = () => { Object.values(submenus).forEach(s => { if (s) s.classList.remove('active'); }); }; });
-		
+
 		if (menuBaseColor) menuBaseColor.addEventListener('change', () => { gradientMode = false; if (menuGradientMode) menuGradientMode.checked = false; dessinecercle(); });
 		if (menuGradientMode) menuGradientMode.addEventListener('change', (e) => { gradientMode = e.target.checked; dessinecercle(); });
-		
+
 		if (menuShowCircle) menuShowCircle.addEventListener('change', (e) => { showCircle = e.target.checked; dessinecercle(); });
 		if (menuShowPoints) menuShowPoints.addEventListener('change', (e) => { showPoints = e.target.checked; dessinecercle(); });
-		if (menuShowNumbers) menuShowNumbers.addEventListener('change', (e) => { 
-			affichagechiffre = e.target.checked; 
-			dessinecercle(); 
+		if (menuShowNumbers) menuShowNumbers.addEventListener('change', (e) => {
+			affichagechiffre = e.target.checked;
+			dessinecercle();
 		});
-		
-		const darkToggle = document.getElementById('darkModeToggle'); 
-		if (darkToggle) { 
-			if (localStorage.getItem('darkModeTables') === 'true') { 
-				document.body.classList.add('dark-mode'); 
-				darkToggle.checked = true; 
-			} 
-			darkToggle.addEventListener('change', (e) => { 
-				document.body.classList.toggle('dark-mode', e.target.checked); 
-				localStorage.setItem('darkModeTables', e.target.checked); 
-				dessinecercle(); 
-			}); 
+
+		const darkToggle = document.getElementById('darkModeToggle');
+		if (darkToggle) {
+			if (localStorage.getItem('darkModeTables') === 'true') {
+				document.body.classList.add('dark-mode');
+				darkToggle.checked = true;
+			}
+			darkToggle.addEventListener('change', (e) => {
+				document.body.classList.toggle('dark-mode', e.target.checked);
+				localStorage.setItem('darkModeTables', e.target.checked);
+				dessinecercle();
+			});
 		}
-		
+
 		document.getElementById('screenshotBtn').onclick = () => { const link = document.createElement('a'); link.download = 'multiplication_modulaire.png'; link.href = canvas.toDataURL(); link.click(); };
 		document.getElementById('homeBtn').onclick = () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
 		document.getElementById('reloadBtn').onclick = () => location.reload();
-		
-		const fullBtn = document.getElementById('fullscreenBtn'); 
-		function updateFullIcon() { 
-			if (document.fullscreenElement) { 
-				fullBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="10" x2="10" y2="10"/><line x1="9" y1="4" x2="9" y2="11"/><line x1="14" y1="10" x2="21" y2="10"/><line x1="15" y1="4" x2="15" y2="10"/><line x1="3" y1="15.5" x2="10" y2="15.5"/><line x1="9" y1="15" x2="9" y2="21"/><line x1="14" y1="15.5" x2="21" y2="15.5"/><line x1="15" y1="15" x2="15" y2="21"/></svg>`; 
-				fullBtn.setAttribute('data-title', 'quitter plein écran'); 
-			} else { 
-				fullBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/><line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/><line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/><line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/></svg>`; 
-				fullBtn.setAttribute('data-title', 'plein écran'); 
-			} 
+
+		const fullBtn = document.getElementById('fullscreenBtn');
+		function updateFullIcon() {
+			if (document.fullscreenElement) {
+				fullBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="10" x2="10" y2="10"/><line x1="9" y1="4" x2="9" y2="11"/><line x1="14" y1="10" x2="21" y2="10"/><line x1="15" y1="4" x2="15" y2="10"/><line x1="3" y1="15.5" x2="10" y2="15.5"/><line x1="9" y1="15" x2="9" y2="21"/><line x1="14" y1="15.5" x2="21" y2="15.5"/><line x1="15" y1="15" x2="15" y2="21"/></svg>`;
+				fullBtn.setAttribute('data-title', 'quitter plein écran');
+			} else {
+				fullBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/><line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/><line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/><line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/></svg>`;
+				fullBtn.setAttribute('data-title', 'plein écran');
+			}
 		}
-		
+
 		if (fullBtn) fullBtn.onclick = () => { if (!document.fullscreenElement) document.documentElement.requestFullscreen().then(updateFullIcon); else document.exitFullscreen().then(updateFullIcon); };
 		document.addEventListener('fullscreenchange', updateFullIcon);
-		
-		document.addEventListener('keydown', (e) => { 
-			if (e.key === 'Escape') toggleMainMenu(false); 
-			if (e.key === 'm' || e.key === 'M') toggleMainMenu(); 
-			if (e.key === 'h' || e.key === 'H') window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); 
-			if (e.key === 'r' || e.key === 'R') location.reload(); 
-			if (e.key === 'f' || e.key === 'F') { 
-				if (!document.fullscreenElement) document.documentElement.requestFullscreen().then(updateFullIcon); 
-				else document.exitFullscreen().then(updateFullIcon); 
-			} 
+
+		// Raccourcis clavier pour les flèches et les touches V/C
+		document.addEventListener('keydown', (e) => {
+			// Touche flèche haut ou V/v = incrémenter
+			if (e.key === 'ArrowUp' || e.key === 'v' || e.key === 'V') {
+				e.preventDefault();
+				if (currentAnimType === 'table') {
+					tablemultiplication_back = tablemultiplication;
+				} else {
+					nbpointcercle_back = nbpointcercle;
+				}
+				animCommon('up', false);
+			}
+			// Touche flèche bas ou C/c = décrémenter
+			else if (e.key === 'ArrowDown' || e.key === 'c' || e.key === 'C') {
+				e.preventDefault();
+				if (currentAnimType === 'table') {
+					tablemultiplication_back = tablemultiplication;
+				} else {
+					nbpointcercle_back = nbpointcercle;
+				}
+				animCommon('down', false);
+			}
+			// Touche Echap pour fermer les menus
+			else if (e.key === 'Escape') {
+				toggleMainMenu(false);
+			}
+			// Touche M pour ouvrir/fermer le menu
+			else if (e.key === 'm' || e.key === 'M') {
+				toggleMainMenu();
+			}
+			// Touche H pour l'accueil
+			else if (e.key === 'h' || e.key === 'H') {
+				window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+			}
+			// Touche R pour recharger
+			else if (e.key === 'r' || e.key === 'R') {
+				location.reload();
+			}
+			// Touche F pour le plein écran
+			else if (e.key === 'f' || e.key === 'F') {
+				if (!document.fullscreenElement) document.documentElement.requestFullscreen().then(updateFullIcon);
+				else document.exitFullscreen().then(updateFullIcon);
+			}
 		});
-		
+
 		window.addEventListener('resize', () => setTimeout(resizeCanvas, 100));
-		
-		window.onload = () => { 
-			// Forcer la vitesse à 0 au chargement
+
+		window.onload = () => {
 			speed1 = 0;
 			animationDelay = computeDelayFromSpeed(0);
-			
-			// Synchroniser les deux curseurs
+
 			if (speedSlider) speedSlider.value = 0;
 			if (mobileSpeedSlider) mobileSpeedSlider.value = 0;
-			
-			// Mettre à jour l'affichage de la vitesse
+
 			updateSpeedDisplay();
-			
-			// Activer l'affichage des nombres car vitesse = 0
+
 			if (menuShowNumbers) menuShowNumbers.checked = true;
 			affichagechiffre = true;
-			
-			updateAnimationDelay(); 
-			resizeCanvas(); 
-			tablemultiplication_back = tablemultiplication; 
-			nbpointcercle_back = nbpointcercle; 
-			setActiveAnimType('table'); 
-			dessinecercle(); 
-			updateFullIcon(); 
-			
-			// Démarrer l'animation lente
+
+			updateAnimationDelay();
+			resizeCanvas();
+			tablemultiplication_back = tablemultiplication;
+			nbpointcercle_back = nbpointcercle;
+			setActiveAnimType('table');
+			dessinecercle();
+			updateFullIcon();
+
 			startSlowAnimation();
 		};
 
