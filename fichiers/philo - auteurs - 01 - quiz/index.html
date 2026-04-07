@@ -82,7 +82,7 @@
 			color: red;
 			font-size: 40px;
 			font-weight: bold;
-			margin: 15px 0;
+			margin: 0px 0;
 			letter-spacing: 1px;
 		}
 
@@ -104,7 +104,7 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			margin-bottom: 20px;
+			margin-bottom: 7px;
 			background: var(--bg);
 			flex-shrink: 0;
 		}
@@ -151,8 +151,8 @@
 		}
 
 		.toolbar-btn svg {
-			width: 28px;
-			height: 28px;
+			width: 25px;
+			height: 25px;
 			fill: none;
 			stroke: currentColor;
 			stroke-width: 2;
@@ -186,7 +186,7 @@
 		.home-btn {
 			perspective: 1200px;
 		}
-		
+
 		.home-btn .icon-wrapper {
 			width: 60px;
 			height: 60px;
@@ -196,14 +196,19 @@
 			position: relative;
 			transform-style: preserve-3d;
 		}
-		
+
 		.home-btn:hover .icon-wrapper {
 			animation: tourne360 2s infinite linear;
 		}
-		
+
 		@keyframes tourne360 {
-			0% { transform: rotateY(0deg); }
-			100% { transform: rotateY(360deg); }
+			0% {
+				transform: rotateY(0deg);
+			}
+
+			100% {
+				transform: rotateY(360deg);
+			}
 		}
 
 		/* Bouton RELOAD avec animation */
@@ -213,8 +218,13 @@
 
 		/* Animation de rotation commune */
 		@keyframes rotate {
-			from { transform: rotate(0deg); }
-			to { transform: rotate(360deg); }
+			from {
+				transform: rotate(0deg);
+			}
+
+			to {
+				transform: rotate(360deg);
+			}
 		}
 
 		/* Bouton FULLSCREEN - STYLE SPÉCIFIQUE */
@@ -267,6 +277,7 @@
 			visibility: hidden;
 			transition: opacity 0.3s;
 		}
+
 		.menu-overlay.active {
 			opacity: 1;
 			visibility: visible;
@@ -282,7 +293,8 @@
 			background: var(--bg);
 			z-index: 10000;
 			box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-			transition: right 0.6s ease; /* vitesse menu coulissant */
+			transition: right 0.6s ease;
+			/* vitesse menu coulissant */
 			overflow: hidden;
 			border-radius: 20px 0 0 20px;
 			padding: 2rem 1.5rem;
@@ -291,6 +303,7 @@
 			gap: 2rem;
 			overflow-y: auto;
 		}
+
 		.slide-menu.active {
 			right: 0;
 		}
@@ -305,23 +318,28 @@
 			background: var(--bg);
 			z-index: 10010;
 			box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
-			transition: right 0.5s ease; /* vitesse sous menu coulissant */
+			transition: right 0.5s ease;
+			/* vitesse sous menu coulissant */
 			border-radius: 20px 0 0 20px;
 			padding: 2rem 1.5rem;
 			overflow-y: auto;
 		}
+
 		.submenu.active {
 			right: 0;
 			padding-left: 17px;
 			padding-right: 5px;
 		}
-		
+
 		/* Version mobile : superposition totale, même largeur */
 		@media (max-width: 768px) {
-			.slide-menu, .submenu {
+
+			.slide-menu,
+			.submenu {
 				width: 260px;
 				right: -280px;
 			}
+
 			.submenu.active {
 				right: 0;
 			}
@@ -333,7 +351,8 @@
 			margin-bottom: 1rem;
 		}
 
-		.menu-close, .submenu-close {
+		.menu-close,
+		.submenu-close {
 			background: none;
 			border: none;
 			cursor: pointer;
@@ -349,18 +368,20 @@
 			transition: all 0.2s ease;
 			padding: 0;
 		}
-		
-		.menu-close svg, .submenu-close svg {
+
+		.menu-close svg,
+		.submenu-close svg {
 			width: 18px;
 			height: 18px;
 			stroke: currentColor;
 			transition: transform 0.2s ease;
 		}
-		
-		.menu-close:hover, .submenu-close:hover {
+
+		.menu-close:hover,
+		.submenu-close:hover {
 			box-shadow: var(--shadow-in);
 		}
-		
+
 		/* Animation de rotation pour les SVG des boutons de fermeture */
 		.menu-close:hover svg,
 		.submenu-close:hover svg {
@@ -390,10 +411,12 @@
 			border: none;
 			transition: all 0.2s ease;
 		}
+
 		.menu-item:hover {
 			box-shadow: var(--shadow-in);
 			transform: translateY(-2px);
 		}
+
 		.menu-item svg {
 			width: 24px;
 			height: 24px;
@@ -401,6 +424,7 @@
 			fill: none;
 			transition: transform 0.2s ease;
 		}
+
 		/* Titre du sous-menu */
 		.submenu-title {
 			font-size: 1.4rem;
@@ -410,43 +434,101 @@
 			text-align: center;
 		}
 
-		/* SWITCH */
+		/* SWITCH - Version améliorée avec taille fixe et adaptative */
 		.theme-switch {
 			position: relative;
 			display: inline-block;
 			width: 52px;
 			height: 26px;
-			justify-self: start; /* Aligne l'interrupteur à gauche de sa cellule */
+			justify-self: start;
+			flex-shrink: 0;
 		}
+
 		.theme-switch input {
 			opacity: 0;
 			width: 0;
 			height: 0;
 		}
+
 		.theme-switch .slider {
 			position: absolute;
 			cursor: pointer;
 			inset: 0;
 			background: #ccc;
-			border-radius: 26px;
+			border-radius: 34px;
 			transition: .3s;
 		}
+
 		.theme-switch .slider:before {
 			content: "";
 			position: absolute;
 			width: 22px;
 			height: 22px;
 			left: 2px;
-			top: 2px;
+			bottom: 2px;
 			background: white;
 			border-radius: 50%;
 			transition: .3s;
 		}
-		.theme-switch input:checked + .slider {
+
+		.theme-switch input:checked+.slider {
 			background: #2196F3;
 		}
-		.theme-switch input:checked + .slider:before {
+
+		.theme-switch input:checked+.slider:before {
 			transform: translateX(26px);
+		}
+
+		/* Version plus petite pour mobile si nécessaire */
+		@media (max-width: 480px) {
+			.theme-switch {
+				width: 46px;
+				height: 23px;
+			}
+			
+			.theme-switch .slider:before {
+				width: 19px;
+				height: 19px;
+			}
+			
+			.theme-switch input:checked+.slider:before {
+				transform: translateX(23px);
+			}
+		}
+
+		/* Container des toggles - amélioration de l'alignement */
+		.toggle-container {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			align-items: center;
+			gap: 1rem;
+			margin-top: 0;
+			padding: 0.5rem 0;
+			min-height: 44px;
+			width: 100%;
+			border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+		}
+
+		.toggle-label {
+			color: var(--font-color);
+			font-size: 1rem;
+			text-align: left;
+			white-space: normal;
+			word-wrap: break-word;
+			padding-right: 10px;
+			line-height: 1.3;
+		}
+
+		/* Pour les très petits écrans */
+		@media (max-width: 360px) {
+			.toggle-container {
+				grid-template-columns: 1fr;
+				gap: 0.5rem;
+			}
+			
+			.theme-switch {
+				justify-self: start;
+			}
 		}
 
 		/* ====== STYLES DU CARROUSEL ====== */
@@ -469,33 +551,43 @@
 			opacity: 0.8;
 			color: var(--font-color);
 		}
+
 		.nav-button.hidden {
 			opacity: 0;
 			pointer-events: none;
 		}
+
 		.nav-button svg {
 			width: 39px;
 			height: 39px;
 			fill: currentColor;
 		}
+
 		.nav-button:hover {
 			opacity: 1;
 			transform: translateY(-50%) scale(1.1);
 			box-shadow: var(--shadow-out), 0 0 15px rgba(0, 0, 0, 0.2);
 		}
+
 		.nav-button:hover svg {
 			transform: scale(1.1);
 		}
-		.prev { left: 5px; } 
-		.next { right: 5px; }
-		
-		/* Barre de progression - NOUVELLE VERSION */
+
+		.prev {
+			left: 5px;
+		}
+
+		.next {
+			right: 5px;
+		}
+
+		/* Barre de progression - NOUVELLE VERSION AVEC CLIC */
 		.progress-footer {
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			height: 20px;
-			padding: 0 5px;
+			padding: 0 0px;
 			width: 100%;
 			background: transparent;
 			flex-shrink: 0;
@@ -514,6 +606,7 @@
 			border-radius: 20px;
 			overflow: hidden;
 			box-shadow: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
+			cursor: pointer;
 		}
 
 		.progress-bar-fill {
@@ -523,6 +616,7 @@
 			transition: width 0.3s ease;
 			border-radius: 20px;
 			box-shadow: 0 0 10px #ff0000;
+			pointer-events: none;
 		}
 
 		/* SLIDER CONTAINER PRINCIPAL */
@@ -536,17 +630,17 @@
 			height: 100%;
 			min-height: 0;
 		}
-		
+
 		.slider-wrapper {
 			position: relative;
 			width: 100%;
 			flex: 1;
 			min-height: 0;
 		}
-		
+
 		.slider {
 			display: flex;
-			gap: 20px;
+			gap: 12px;
 			overflow-x: auto;
 			padding: 0 0px;
 			scrollbar-width: none;
@@ -556,7 +650,7 @@
 			scroll-behavior: smooth;
 			-webkit-overflow-scrolling: touch;
 		}
-		
+
 		.slider::-webkit-scrollbar {
 			height: 3px;
 		}
@@ -570,7 +664,7 @@
 			background: #ff0000;
 			border-radius: 10px;
 		}
-		
+
 		.quiz-card {
 			flex: 0 0 auto;
 			width: 240px;
@@ -588,16 +682,16 @@
 			flex-direction: column;
 			position: relative;
 		}
-		
+
 		.quiz-card:hover {
 			transform: translateY(-5px);
 			box-shadow: 8px 8px 20px #d9d9d9, -8px -8px 20px #ffffff;
 		}
-		
+
 		body.dark-mode .quiz-card:hover {
 			box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.4), -8px -8px 20px rgba(40, 40, 40, 0.6);
 		}
-		
+
 		.keyboard-highlight {
 			outline: 3px solid #ff0000;
 			outline-offset: 3px;
@@ -606,11 +700,19 @@
 		}
 
 		@keyframes pulse {
-			0% { transform: scale(1); }
-			50% { transform: scale(1.02); }
-			100% { transform: scale(1); }
+			0% {
+				transform: scale(1);
+			}
+
+			50% {
+				transform: scale(1.02);
+			}
+
+			100% {
+				transform: scale(1);
+			}
 		}
-		
+
 		.card-image-container {
 			height: 150px;
 			width: 100%;
@@ -620,17 +722,17 @@
 			background: #f5f5f5;
 			position: relative;
 		}
-		
+
 		body.dark-mode .card-image-container {
 			background: #2a2a2a;
 		}
-		
+
 		.card-image {
 			max-width: 100%;
 			max-height: 100%;
 			object-fit: contain;
 		}
-		
+
 		.card-label {
 			position: absolute;
 			top: 0;
@@ -643,19 +745,19 @@
 			z-index: 2;
 			box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 		}
-		
+
 		body.dark-mode .card-label {
 			background: #1e1e1e;
 			color: #e0e0e0;
 		}
-		
+
 		.card-content {
 			padding: 15px;
 			flex: 1;
 			display: flex;
 			flex-direction: column;
 		}
-		
+
 		.author-name {
 			color: red;
 			font-size: 21px;
@@ -663,18 +765,18 @@
 			margin-bottom: 5px;
 			line-height: 1.2;
 		}
-		
+
 		.author-description {
 			font-size: 14px;
 			color: #666;
 			margin-bottom: 15px;
 			line-height: 1.4;
 		}
-		
+
 		body.dark-mode .author-description {
 			color: #aaa;
 		}
-		
+
 		.card-meta {
 			margin-top: auto;
 			padding-top: 10px;
@@ -684,33 +786,33 @@
 			justify-content: space-between;
 			align-items: center;
 		}
-		
+
 		body.dark-mode .card-meta {
 			color: #aaa;
 		}
-		
+
 		.questions-count {
 			font-weight: normal;
 			color: #555;
 		}
-		
+
 		body.dark-mode .questions-count {
 			color: #ccc;
 		}
-		
+
 		.quiz-code {
 			color: #666;
 			font-style: normal;
 		}
-		
+
 		body.dark-mode .quiz-code {
 			color: #ccc;
 		}
-		
+
 		.hidden {
 			display: none !important;
 		}
-		
+
 		/* Styles du quiz (extrait conservé du premier code) */
 		.container--quiz {
 			background: var(--bg);
@@ -775,7 +877,7 @@
 			width: 98% !important;
 			max-width: 98% !important;
 			background-color: var(--bg);
-			padding: 10px 15px;
+			padding: 0px 15px;
 			flex-shrink: 0;
 			position: sticky;
 			top: 0;
@@ -801,6 +903,7 @@
 
 		.progress-bar__title .phi-symbol {
 			margin-right: 4px;
+			margin-top: -10px;
 			font-family: 'Times New Roman', serif;
 			font-size: 40px !important;
 			width: 40px;
@@ -818,7 +921,7 @@
 			display: flex;
 			font-size: 14px;
 			font-weight: bold;
-			margin-top: 10px;
+			margin-top: 6px;
 			flex-shrink: 0;
 			white-space: nowrap;
 		}
@@ -851,7 +954,7 @@
 		}
 
 		.quiz__question {
-			margin-bottom: 15px;
+			margin-bottom: -2px;
 			font-size: 16px;
 			line-height: 24px;
 			text-align: left;
@@ -886,7 +989,7 @@
 			font-weight: bold;
 			font-size: 16px;
 			line-height: 1.4;
-			margin-bottom: 15px;
+			margin-bottom: 7px;
 			flex-shrink: 0;
 			width: 98% !important;
 			margin-left: auto !important;
@@ -907,7 +1010,7 @@
 			background: var(--btn);
 			box-shadow: var(--shadow-out);
 			border-radius: 10px;
-			margin-bottom: 10px;
+			margin-bottom: 7px;
 			padding: 12px 15px;
 			border: 0;
 			width: 98% !important;
@@ -1002,11 +1105,13 @@
 			width: 24px;
 			height: 24px;
 			object-fit: contain;
+			margin-top: 0px;
+			margin-bottom: 0px;
 		}
 
 		.quiz-explanation {
 			position: relative;
-			margin: 10px auto 10px;
+			margin: 3px auto 10px;
 			background: var(--btn);
 			border: 1px solid #ddd;
 			border-radius: 0.75rem;
@@ -1014,8 +1119,8 @@
 			line-height: 1.5;
 			text-align: left;
 			padding: 15px;
-			width: 98% !important;
-			max-width: 98% !important;
+			width: 100% !important;
+			max-width: 100% !important;
 			box-shadow: var(--shadow-out);
 			flex-shrink: 0;
 			max-height: none;
@@ -1026,7 +1131,7 @@
 			display: flex;
 			align-items: center;
 			gap: 10px;
-			margin-bottom: 10px;
+			margin-bottom: 0px;
 			font-weight: bold;
 		}
 
@@ -1038,7 +1143,7 @@
 
 		.next-button-container {
 			text-align: center;
-			padding: 10px 0 20px;
+			padding: -2px 0 0px;
 			flex-shrink: 0;
 			background: var(--bg);
 			margin-top: auto;
@@ -1347,7 +1452,7 @@
 			.slide-menu {
 				width: 260px;
 			}
-			
+
 			.progress-bar-container {
 				width: 50vw;
 			}
@@ -1395,7 +1500,7 @@
 				box-shadow: none !important;
 				border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
 			}
-			
+
 			.progress-bar-container {
 				width: 60vw;
 			}
@@ -1472,6 +1577,7 @@
 				padding: 0 40px;
 				gap: 10px;
 			}
+
 			.quiz-card {
 				width: 180px;
 				min-width: 180px;
@@ -1521,34 +1627,38 @@
 		}
 
 		@media (min-width: 601px) {
+
 			.toolbar-mobile,
 			.mobile-title-wrapper {
 				display: none;
 			}
 		}
-		
-		/* Styles pour les sous-menus - VERSION GRILLE POUR ALIGNEMENT PARFAIT */
+
+		/* Styles pour les sous-menus */
 		.toggle-container {
 			display: grid;
-			grid-template-columns: 120px 1fr; /* 120px pour l'étiquette, le reste pour l'interrupteur */
+			grid-template-columns: 153px 1fr;
 			align-items: center;
 			gap: 1rem;
 			margin-top: 0rem;
-			min-height: 40px; /* Hauteur uniforme */
+			padding-left: 16px;
+			min-height: 40px;
+			/* Hauteur uniforme */
 			width: 100%;
 		}
-		
+
 		.toggle-label {
 			color: var(--font-color);
 			font-size: 1rem;
 			text-align: left;
-			white-space: nowrap; /* Empêche le texte de passer à la ligne */
+			white-space: nowrap;
+			/* Empêche le texte de passer à la ligne */
 		}
-		
+
 		kbd {
 			background-color: #b9b3b3;
 			border-radius: 4px;
-			box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 1px 0 0 rgba(255,255,255,0.7) inset;
+			box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.7) inset;
 			color: white;
 			display: inline-block;
 			font-size: 0.85em;
@@ -1557,64 +1667,63 @@
 			padding: 2px 4px;
 			white-space: nowrap;
 		}
-		
+
 		body.dark-mode kbd {
 			background-color: #444;
 			border-color: #666;
 			color: #eee;
-			box-shadow: 0 1px 0 rgba(255,255,255,0.1), 0 1px 0 0 rgba(0,0,0,0.7) inset;
+			box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 0 rgba(0, 0, 0, 0.7) inset;
 		}
-		
+
 		table {
 			width: 100%;
 			color: var(--font-color);
 			margin-bottom: 1rem;
 			border-collapse: collapse;
 		}
-		
+
 		td {
 			padding: 4px 0;
 		}
-		
+
 		ul {
 			list-style: none;
 			padding: 0;
 		}
-		
+
 		li {
 			padding: 4px 0;
 		}
-		
+
 		.submenu p {
 			margin-bottom: 0.5rem;
 			color: var(--font-color);
 		}
-		
+
 		/* Style pour le bloc d'information des paramètres */
 		.settings-info {
 			margin-top: 20px;
 			padding: 15px;
-			background: rgba(0,0,0,0.05);
+			background: rgba(0, 0, 0, 0.05);
 			border-radius: 10px;
 		}
-		
+
 		.settings-info p {
 			margin: 0 0 10px 0;
 			font-size: 0.9em;
 			color: var(--font-color);
 		}
-		
+
 		.settings-info p:last-child {
 			margin-bottom: 0;
 		}
 
-		/* Style pour le bloc mode d'emploi */		
+		/* Style pour le bloc mode d'emploi */
 		.instruction-shortcut {
 			padding: 0 !important;
-			border-bottom: 1px solid rgba(0,0,0,0.1);
+			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 			width: 110px;
-		}	
-		
+		}
 	</style>
 </head>
 
@@ -1631,12 +1740,12 @@
 							stroke-linejoin="round" stroke-linecap="round" />
 					</svg>
 				</div>
-			</button>	
+			</button>
 			<button class="toolbar-btn reload-btn" id="reloadButton" data-title="recharger (R)">
-				<svg viewBox="0 0 25 25">
-					<polyline points="23 4 23 10 17 10"/>
-					<polyline points="1 20 1 14 7 14"/>
-					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+				<svg viewBox="0 0 24 24">
+					<polyline points="23 4 23 10 17 10" />
+					<polyline points="1 20 1 14 7 14" />
+					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
 				</svg>
 			</button>
 		</div>
@@ -1646,7 +1755,8 @@
 		</div>
 		<div class="toolbar-right">
 			<button class="toolbar-btn fullscreen" id="fullscreenButton" data-title="plein écran (F)">
-				<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+				<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="butt">
 					<line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" />
 					<line x1="5" y1="6" x2="5" y2="10" stroke="currentColor" />
 					<line x1="14" y1="5" x2="20" y2="5" stroke="currentColor" />
@@ -1678,21 +1788,22 @@
 			</button>
 			<button class="toolbar-btn reload-btn" id="reloadButtonMobile">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-					<polyline points="23 4 23 10 17 10"/>
-					<polyline points="1 20 1 14 7 14"/>
-					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+					<polyline points="23 4 23 10 17 10" />
+					<polyline points="1 20 1 14 7 14" />
+					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
 				</svg>
 			</button>
 			<button class="toolbar-btn fullscreen" id="fullscreenButtonMobile">
-				<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
-					<line x1="4" y1="5" x2="10" y2="5"/>
-					<line x1="5" y1="6" x2="5" y2="10"/>
-					<line x1="14" y1="5" x2="20" y2="5"/>
-					<line x1="19" y1="6" x2="19" y2="10"/>
-					<line x1="5" y1="14" x2="5" y2="20"/>
-					<line x1="6" y1="19" x2="10" y2="19"/>
-					<line x1="14" y1="19" x2="20" y2="19"/>
-					<line x1="19" y1="14" x2="19" y2="18"/>
+				<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="butt">
+					<line x1="4" y1="5" x2="10" y2="5" />
+					<line x1="5" y1="6" x2="5" y2="10" />
+					<line x1="14" y1="5" x2="20" y2="5" />
+					<line x1="19" y1="6" x2="19" y2="10" />
+					<line x1="5" y1="14" x2="5" y2="20" />
+					<line x1="6" y1="19" x2="10" y2="19" />
+					<line x1="14" y1="19" x2="20" y2="19" />
+					<line x1="19" y1="14" x2="19" y2="18" />
 				</svg>
 			</button>
 			<button class="toolbar-btn menu-btn" id="menuButtonMobile">
@@ -1793,8 +1904,8 @@
 						</a>
 
 						<!-- 05 Épicure -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="epicure"
-							data-js="quiz/epicure.js" data-image="images/epicure.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="epicure" data-js="quiz/epicure.js"
+							data-image="images/epicure.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/epicure.jpg" alt="Portrait d'Épicure">
@@ -1811,8 +1922,8 @@
 						</a>
 
 						<!-- 06 Cicéron -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="ciceron"
-							data-js="quiz/ciceron.js" data-image="images/ciceron.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="ciceron" data-js="quiz/ciceron.js"
+							data-image="images/ciceron.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/ciceron.jpg" alt="Portrait de Cicéron">
@@ -1829,8 +1940,8 @@
 						</a>
 
 						<!-- 07 Lucrèce -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="lucrece"
-							data-js="quiz/lucrece.js" data-image="images/lucrece.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="lucrece" data-js="quiz/lucrece.js"
+							data-image="images/lucrece.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/lucrece.jpg" alt="Portrait de Lucrèce">
@@ -1847,8 +1958,8 @@
 						</a>
 
 						<!-- 08 Sénèque -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="seneque"
-							data-js="quiz/seneque.js" data-image="images/seneque.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="seneque" data-js="quiz/seneque.js"
+							data-image="images/seneque.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/seneque.jpg" alt="Portrait de Sénèque">
@@ -1992,8 +2103,8 @@
 						</a>
 
 						<!-- 16 Anselme -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="anselme"
-							data-js="quiz/anselme.js" data-image="images/anselme.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="anselme" data-js="quiz/anselme.js"
+							data-image="images/anselme.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/anselme.jpg" alt="Portrait d'Anselme">
@@ -2208,8 +2319,8 @@
 						</a>
 
 						<!-- 28 Spinoza -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="spinoza"
-							data-js="quiz/spinoza.js" data-image="images/spinoza.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="spinoza" data-js="quiz/spinoza.js"
+							data-image="images/spinoza.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/spinoza.jpg" alt="Portrait de Spinoza">
@@ -2244,8 +2355,8 @@
 						</a>
 
 						<!-- 30 Leibniz -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="leibniz"
-							data-js="quiz/leibniz.js" data-image="images/leibniz.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="leibniz" data-js="quiz/leibniz.js"
+							data-image="images/leibniz.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/leibniz.jpg" alt="Portrait de Leibniz">
@@ -2352,8 +2463,8 @@
 						</a>
 
 						<!-- 36 Diderot -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="diderot"
-							data-js="quiz/diderot.js" data-image="images/diderot.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="diderot" data-js="quiz/diderot.js"
+							data-image="images/diderot.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/diderot.jpg" alt="Portrait de Diderot">
@@ -2424,8 +2535,8 @@
 						</a>
 
 						<!-- 40 Bentham -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="bentham"
-							data-js="quiz/bentham.js" data-image="images/bentham.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="bentham" data-js="quiz/bentham.js"
+							data-image="images/bentham.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/bentham.jpg" alt="Portrait de Bentham">
@@ -2496,8 +2607,8 @@
 						</a>
 
 						<!-- 44 Cournot -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="cournot"
-							data-js="quiz/cournot.js" data-image="images/cournot.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="cournot" data-js="quiz/cournot.js"
+							data-image="images/cournot.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/cournot.jpg" alt="Portrait de Cournot">
@@ -2694,8 +2805,8 @@
 						</a>
 
 						<!-- 55 Bergson -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="bergson"
-							data-js="quiz/bergson.js" data-image="images/bergson.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="bergson" data-js="quiz/bergson.js"
+							data-image="images/bergson.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/bergson.jpg" alt="Portrait de Bergson">
@@ -2712,8 +2823,8 @@
 						</a>
 
 						<!-- 56 Husserl -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="husserl"
-							data-js="quiz/husserl.js" data-image="images/husserl.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="husserl" data-js="quiz/husserl.js"
+							data-image="images/husserl.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/husserl.jpg" alt="Portrait de Husserl">
@@ -2784,8 +2895,8 @@
 						</a>
 
 						<!-- 60 Russell -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="russell"
-							data-js="quiz/russell.js" data-image="images/russell.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="russell" data-js="quiz/russell.js"
+							data-image="images/russell.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/russell.jpg" alt="Portrait de Russell">
@@ -2802,8 +2913,8 @@
 						</a>
 
 						<!-- 61 Jaspers -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="jaspers"
-							data-js="quiz/jaspers.js" data-image="images/jaspers.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="jaspers" data-js="quiz/jaspers.js"
+							data-image="images/jaspers.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/jaspers.jpg" alt="Portrait de Jaspers">
@@ -3000,8 +3111,8 @@
 						</a>
 
 						<!-- 72 Levinas -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="levinas"
-							data-js="quiz/levinas.js" data-image="images/levinas.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="levinas" data-js="quiz/levinas.js"
+							data-image="images/levinas.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/levinas.jpg" alt="Portrait de Levinas">
@@ -3108,8 +3219,8 @@
 						</a>
 
 						<!-- 78 Ricœur -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="ricoeur"
-							data-js="quiz/ricoeur.js" data-image="images/ricoeur.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="ricoeur" data-js="quiz/ricoeur.js"
+							data-image="images/ricoeur.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/ricoeur.jpg" alt="Portrait de Ricœur">
@@ -3144,8 +3255,8 @@
 						</a>
 
 						<!-- 80 Murdoch -->
-						<a href="javascript:void(0);" class="quiz-card" data-author="murdoch"
-							data-js="quiz/murdoch.js" data-image="images/murdoch.jpg">
+						<a href="javascript:void(0);" class="quiz-card" data-author="murdoch" data-js="quiz/murdoch.js"
+							data-image="images/murdoch.jpg">
 
 							<div class="card-image-container">
 								<img class="card-image" src="images/murdoch.jpg" alt="Portrait de Murdoch">
@@ -3240,10 +3351,10 @@
 						<path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
 					</svg>
 				</button>
-				
-				<!-- Barre de progression - NOUVELLE VERSION -->
+
+				<!-- Barre de progression - NOUVELLE VERSION CLICKABLE -->
 				<div class="progress-footer">
-					<div class="progress-bar-container">
+					<div class="progress-bar-container" id="progressBarClickable">
 						<div class="progress-bar-fill" id="progress-bar"></div>
 					</div>
 				</div>
@@ -3267,7 +3378,7 @@
 													<span class="phi-symbol"
 														style="color: var(--font-color); font-family: 'Times New Roman', serif; font-size: 40px; line-height: 1; display: flex; align-items: center; justify-content: center; height: 100%;">φ</span>
 													<h1 id="quizTitle"
-														style="color: var(--font-color); margin: 0; margin-top: 10px;">
+														style="color: var(--font-color); margin: 0; margin-top: 0px;">
 													</h1>
 												</div>
 											</div>
@@ -3371,11 +3482,13 @@
 				</svg>
 				mode d'emploi
 			</button>
-			<button class="menu-item" id="openSettingsSub">	
+			<button class="menu-item" id="openSettingsSub">
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 					stroke-linecap="round" stroke-linejoin="round">
 					<circle cx="12" cy="12" r="3"></circle>
-					<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+					<path
+						d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+					</path>
 				</svg>
 				paramètres
 			</button>
@@ -3387,7 +3500,7 @@
 					<line x1="12" y1="17" x2="12.01" y2="17"></line>
 				</svg>
 				à propos
-			</button>	
+			</button>
 		</div>
 	</div>
 
@@ -3412,13 +3525,14 @@
 				<td style="padding:0px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">recharger la page</td>
 			</tr>
 			<tr>
-				<td style="padding:0px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>plein écran</kbd> <kbd>F</kbd></td>
-				<td style="padding:0px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">entrer/sortir du plein écran</td>
+				<td style="padding:0px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>plein écran</kbd> <kbd>F</kbd>
+				</td>
+				<td style="padding:0px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">entrer/sortir du	plein écran</td>
 			</tr>
 			<tr>
 				<td style="padding:0px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>menu</kbd> <kbd>M</kbd></td>
 				<td style="padding:0px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">ouvrir/fermer le menu</td>
-			</tr>			
+			</tr>
 
 			<tr>
 				<td style="padding:0px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>ESC</kbd></td>
@@ -3433,13 +3547,11 @@
 				<td style="padding:0px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>←</kbd> <kbd>→</kbd></td>
 				<td style="padding:0px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">faire défiler les auteurs</td>
 			</tr>
-			
-			
 		</table>
-		<ul style="list-style:none; font-size: 12px;">
-			<li>• cliquez sur une vignette pour accéder au quiz</li>
-			<li>• le mode sombre est accessible dans "paramètres"</li>
-		</ul>
+		<div class="settings-info">
+			<p>• cliquez sur une vignette pour accéder au quiz</p>
+			<p>• le mode sombre est accessible dans "paramètres"</p>
+		</div>
 	</div>
 
 	<!-- SOUS-MENU Paramètres - VERSION AVEC GRILLE POUR ALIGNEMENT PARFAIT -->
@@ -3447,45 +3559,45 @@
 		<div class="menu-header">
 			<button class="submenu-close" data-submenu="settings">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-					<line x1="18" y1="6" x2="6" y2="18"/>
-					<line x1="6" y1="6" x2="18" y2="18"/>
+					<line x1="18" y1="6" x2="6" y2="18" />
+					<line x1="6" y1="6" x2="18" y2="18" />
 				</svg>
 			</button>
 		</div>
 		<div class="submenu-title">paramètres</div>
-		
+
 		<div class="toggle-container">
-			<span class="toggle-label">mode sombre</span>
+			<span class="toggle-label">mode sombre :</span>
 			<label class="theme-switch">
 				<input type="checkbox" id="darkModeToggle">
 				<span class="slider"></span>
 			</label>
 		</div>
-		
+
 		<div class="toggle-container">
-			<span class="toggle-label">animations</span>
+			<span class="toggle-label">animations :</span>
 			<label class="theme-switch">
 				<input type="checkbox" id="animationsToggle" checked>
 				<span class="slider"></span>
 			</label>
 		</div>
-		
+
 		<div class="toggle-container">
-			<span class="toggle-label">mode daltonien</span>
+			<span class="toggle-label">mode daltonien :</span>
 			<label class="theme-switch">
 				<input type="checkbox" id="colorblindToggle">
 				<span class="slider"></span>
 			</label>
 		</div>
-		
+
 		<div class="toggle-container">
-			<span class="toggle-label">mode évaluation</span>
+			<span class="toggle-label">mode évaluation :</span>
 			<label class="theme-switch">
 				<input type="checkbox" id="deferredEvaluationToggle">
 				<span class="slider"></span>
 			</label>
 		</div>
-		
+
 		<div class="settings-info">
 			<p><strong>mode daltonien :</strong> affiche des icônes ✓ / ✗ et utilise des couleurs bleu / rouge au lieu de vert / rouge.</p>
 			<p><strong>mode évaluation :</strong> les réponses sont évaluées uniquement à la fin du quiz.</p>
@@ -3497,8 +3609,8 @@
 		<div class="menu-header">
 			<button class="submenu-close" data-submenu="about">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-					<line x1="18" y1="6" x2="6" y2="18"/>
-					<line x1="6" y1="6" x2="18" y2="18"/>
+					<line x1="18" y1="6" x2="6" y2="18" />
+					<line x1="6" y1="6" x2="18" y2="18" />
 				</svg>
 			</button>
 		</div>
@@ -3510,7 +3622,7 @@
 	</div>
 
 	<script>
-		(function() {
+		(function () {
 			// ========== VARIABLES GLOBALES ==========
 			let currentAuthor = null;
 			let currentAuthorName = '';
@@ -3579,11 +3691,12 @@
 				if (submenu) submenu.classList.add('active');
 			}
 
-			// ========== FONCTIONS DU CARROUSEL AVEC NOUVELLE BARRE DE PROGRESSION ==========
+			// ========== FONCTIONS DU CARROUSEL AVEC NOUVELLE BARRE DE PROGRESSION CLICKABLE ==========
 			const carousel = document.getElementById('quizSlider');
 			const leftBtn = document.getElementById('scroll-left');
 			const rightBtn = document.getElementById('scroll-right');
 			const progressBarCarousel = document.getElementById('progress-bar');
+			const progressBarClickable = document.getElementById('progressBarClickable');
 
 			// Variables pour le calcul des dimensions
 			let itemWidth = 240;
@@ -3594,20 +3707,20 @@
 			 */
 			function getEffectiveScrollPosition() {
 				if (!carousel) return 0;
-				
+
 				// Le premier élément du carrousel
 				const firstItem = carousel.querySelector('.quiz-card');
 				if (!firstItem) return 0;
-				
+
 				// La position du premier élément par rapport au conteneur
 				const itemRect = firstItem.getBoundingClientRect();
 				const containerRect = carousel.getBoundingClientRect();
-				
+
 				// Si le premier élément est encore dans le padding, le scroll effectif est 0
 				if (itemRect.left >= containerRect.left) {
 					return 0;
 				}
-				
+
 				// Sinon, on calcule combien on a défilé
 				return containerRect.left - itemRect.left;
 			}
@@ -3617,20 +3730,20 @@
 			 */
 			function getEffectiveMaxScroll() {
 				if (!carousel) return 0;
-				
+
 				const items = carousel.querySelectorAll('.quiz-card');
 				if (items.length === 0) return 0;
-				
+
 				const lastItem = items[items.length - 1];
 				const containerRect = carousel.getBoundingClientRect();
 				const lastItemRect = lastItem.getBoundingClientRect();
-				
+
 				// La distance à parcourir pour que la dernière carte arrive au bord droit
 				const firstItem = items[0];
 				const firstItemRect = firstItem.getBoundingClientRect();
-				
-				return (lastItemRect.right - containerRect.right) + 
-					 (containerRect.left - firstItemRect.left);
+
+				return (lastItemRect.right - containerRect.right) +
+					(containerRect.left - firstItemRect.left);
 			}
 
 			/**
@@ -3655,13 +3768,13 @@
 
 				const effectiveScroll = getEffectiveScrollPosition();
 				const effectiveMaxScroll = getEffectiveMaxScroll();
-				
+
 				let percentage = 0;
 				if (effectiveMaxScroll > 0) {
 					percentage = (effectiveScroll / effectiveMaxScroll) * 100;
 					percentage = Math.min(100, Math.max(0, percentage));
 				}
-				
+
 				progressBarCarousel.style.width = percentage + '%';
 			}
 
@@ -3670,7 +3783,7 @@
 			 */
 			function updateDimensions() {
 				if (!carousel) return;
-				
+
 				const items = carousel.querySelectorAll('.quiz-card');
 				if (items.length > 0) {
 					itemWidth = items[0].offsetWidth;
@@ -3686,7 +3799,7 @@
 				if (!carousel) return;
 
 				updateDimensions();
-				
+
 				const scrollAmount = (itemWidth + gap) * (direction === 'left' ? -1 : 1);
 
 				carousel.scrollBy({
@@ -3710,7 +3823,7 @@
 				if (palierIndex < 0 || palierIndex >= items.length) return;
 
 				updateDimensions();
-				
+
 				const scrollPosition = (itemWidth + gap) * palierIndex;
 
 				carousel.scrollTo({
@@ -3728,6 +3841,40 @@
 					updateButtonsVisibility();
 					updateProgress();
 				}, 100);
+			}
+
+			// ========== CLIC SUR LA BARRE DE PROGRESSION ==========
+			function handleProgressBarClick(event) {
+				if (!carousel) return;
+
+				const rect = event.currentTarget.getBoundingClientRect();
+				const clickX = event.clientX - rect.left;
+				const percentage = clickX / rect.width;
+
+				const effectiveMaxScroll = getEffectiveMaxScroll();
+				const targetScroll = percentage * effectiveMaxScroll;
+
+				const items = carousel.querySelectorAll('.quiz-card');
+				if (items.length === 0) return;
+
+				updateDimensions();
+
+				// Trouver l'index le plus proche du pourcentage cliqué
+				let closestIndex = 0;
+				let minDiff = Infinity;
+
+				for (let i = 0; i < items.length; i++) {
+					const itemPosition = i * (itemWidth + gap);
+					const itemPercentage = itemPosition / effectiveMaxScroll;
+					const diff = Math.abs(percentage - itemPercentage);
+
+					if (diff < minDiff) {
+						minDiff = diff;
+						closestIndex = i;
+					}
+				}
+
+				scrollToPalier(closestIndex);
 			}
 
 			// ========== FONCTIONS DU QUIZ ==========
@@ -4195,10 +4342,10 @@
 				if (deferredEvaluationMode) {
 					evaluateAllAnswers();
 				}
-				
+
 				// SAUVEGARDER LES STATISTIQUES
 				saveQuizStats();
-				
+
 				quizQuestions.classList.add('hidden');
 				quizEnd.classList.remove('hidden');
 				scoreEl.textContent = score;
@@ -4278,12 +4425,12 @@
 
 			function saveQuizStats() {
 				if (!currentAuthor) return;
-				
+
 				const percentage = Math.round((score / selectedQuestions.length) * 100);
-				
+
 				// Récupérer les statistiques existantes
 				const stats = JSON.parse(localStorage.getItem('quizStats') || '{}');
-				
+
 				// Initialiser ou mettre à jour les statistiques pour cet auteur
 				if (!stats[currentAuthor]) {
 					stats[currentAuthor] = {
@@ -4296,9 +4443,9 @@
 						lastPlayed: new Date().toISOString()
 					};
 				}
-				
+
 				const authorStats = stats[currentAuthor];
-				
+
 				// Mettre à jour les statistiques
 				authorStats.attempts++;
 				authorStats.totalScore += percentage;
@@ -4307,10 +4454,10 @@
 				authorStats.questionsAnswered += selectedQuestions.length;
 				authorStats.correctAnswers += score;
 				authorStats.lastPlayed = new Date().toISOString();
-				
+
 				// Sauvegarder
 				localStorage.setItem('quizStats', JSON.stringify(stats));
-				
+
 				console.log('Statistiques sauvegardées pour', currentAuthor);
 			}
 
@@ -4338,7 +4485,7 @@
 			// ========== FONCTIONS UTILITAIRES ==========
 			function toggleFullscreen() {
 				if (!document.fullscreenElement) {
-					document.documentElement.requestFullscreen().catch(() => {});
+					document.documentElement.requestFullscreen().catch(() => { });
 				} else {
 					document.exitFullscreen();
 				}
@@ -4399,10 +4546,10 @@
 				// Toolbar
 				document.getElementById('reloadButton').addEventListener('click', () => location.reload());
 				document.getElementById('reloadButtonMobile').addEventListener('click', () => location.reload());
-				
+
 				document.getElementById('fullscreenButton').addEventListener('click', toggleFullscreen);
 				document.getElementById('fullscreenButtonMobile').addEventListener('click', toggleFullscreen);
-				
+
 				document.getElementById('homeBtnDesktop').addEventListener('click', () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'));
 				document.getElementById('homeBtnMobile').addEventListener('click', () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'));
 
@@ -4470,6 +4617,11 @@
 					});
 				}
 
+				// Écouteur de clic sur la barre de progression
+				if (progressBarClickable) {
+					progressBarClickable.addEventListener('click', handleProgressBarClick);
+				}
+
 				// Écouteur de redimensionnement
 				window.addEventListener('resize', () => {
 					updateDimensions();
@@ -4482,11 +4634,11 @@
 					if (carousel) {
 						carousel.scrollLeft = 0;
 					}
-					
+
 					updateDimensions();
 					updateButtonsVisibility();
 					updateProgress();
-					
+
 					// Forcer la barre à 0% au démarrage
 					if (progressBarCarousel) {
 						progressBarCarousel.style.width = '0%';
@@ -4498,7 +4650,7 @@
 			document.addEventListener('fullscreenchange', () => {
 				const isFullscreen = !!document.fullscreenElement;
 				const fullscreenButtons = document.querySelectorAll('#fullscreenButton, #fullscreenButtonMobile');
-				
+
 				fullscreenButtons.forEach(btn => {
 					if (isFullscreen) {
 						btn.classList.add('fullscreen-active');
@@ -4531,73 +4683,74 @@
 				});
 			});
 
-// raccourcis clavier
+			// raccourcis clavier
 
-function handleKeyboardNavigation(e) {
-    // Ignorer si champ formulaire
-    if (e.target.matches('input, textarea, select, [contenteditable]')) return;
-    
-    // Touche Échap : ferme d'abord sous-menu, puis menu principal
-    if (e.key === 'Escape') {
-        if (submenus.some(s => s.classList.contains('active'))) {
-            closeAllSubmenus();
-            e.preventDefault();
-        } else if (slideMenu.classList.contains('active')) {
-            toggleMainMenu(false);
-            e.preventDefault();
-        }
-    }
-    
-    // Touche M : ouvrir/fermer le menu
-    if (e.key === 'm' || e.key === 'M') {
-        e.preventDefault();
-        toggleMainMenu();
-    }
-    
-    // AJOUTER CETTE CONDITION POUR LA TOUCHE H
-    if (e.key === 'h' || e.key === 'H') {
-        e.preventDefault();
-        window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
-    }
-    
-    // Navigation dans le carrousel (uniquement si la section auteurs est visible)
-    if (!document.getElementById('authorsSection').classList.contains('hidden')) {
-        const key = e.key;
-        
-        if (key === 'ArrowLeft') { 
-            e.preventDefault(); 
-            scrollCarousel('left'); 
-        }
-        else if (key === 'ArrowRight') { 
-            e.preventDefault(); 
-            scrollCarousel('right'); 
-        }
-        else if (!isNaN(key) && parseInt(key) >= 1 && parseInt(key) <= 6) {
-            e.preventDefault();
-            const palierIndex = parseInt(key) - 1;
-            const items = carousel.querySelectorAll('.quiz-card');
-            if (palierIndex < items.length) {
-                scrollToPalier(palierIndex);
-            }
-        }
-    }
-    
-    // Autres raccourcis globaux
-    if (e.key === 'r' || e.key === 'R') { 
-        e.preventDefault(); 
-        location.reload(); 
-    }
-    
-    if (e.key === 'f' || e.key === 'F') { 
-        e.preventDefault(); 
-        toggleFullscreen(); 
-    }
-}
+			function handleKeyboardNavigation(e) {
+				// Ignorer si champ formulaire
+				if (e.target.matches('input, textarea, select, [contenteditable]')) return;
 
-// fin raccourci clavier
+				// Touche Échap : ferme d'abord sous-menu, puis menu principal
+				if (e.key === 'Escape') {
+					if (submenus.some(s => s.classList.contains('active'))) {
+						closeAllSubmenus();
+						e.preventDefault();
+					} else if (slideMenu.classList.contains('active')) {
+						toggleMainMenu(false);
+						e.preventDefault();
+					}
+				}
+
+				// Touche M : ouvrir/fermer le menu
+				if (e.key === 'm' || e.key === 'M') {
+					e.preventDefault();
+					toggleMainMenu();
+				}
+
+				// AJOUTER CETTE CONDITION POUR LA TOUCHE H
+				if (e.key === 'h' || e.key === 'H') {
+					e.preventDefault();
+					window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+				}
+
+				// Navigation dans le carrousel (uniquement si la section auteurs est visible)
+				if (!document.getElementById('authorsSection').classList.contains('hidden')) {
+					const key = e.key;
+
+					if (key === 'ArrowLeft') {
+						e.preventDefault();
+						scrollCarousel('left');
+					}
+					else if (key === 'ArrowRight') {
+						e.preventDefault();
+						scrollCarousel('right');
+					}
+					else if (!isNaN(key) && parseInt(key) >= 1 && parseInt(key) <= 6) {
+						e.preventDefault();
+						const palierIndex = parseInt(key) - 1;
+						const items = carousel.querySelectorAll('.quiz-card');
+						if (palierIndex < items.length) {
+							scrollToPalier(palierIndex);
+						}
+					}
+				}
+
+				// Autres raccourcis globaux
+				if (e.key === 'r' || e.key === 'R') {
+					e.preventDefault();
+					location.reload();
+				}
+
+				if (e.key === 'f' || e.key === 'F') {
+					e.preventDefault();
+					toggleFullscreen();
+				}
+			}
+
+			// fin raccourci clavier
 
 
 		})();
 	</script>
 </body>
+
 </html>
