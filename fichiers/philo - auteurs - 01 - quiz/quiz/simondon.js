@@ -176,7 +176,6 @@ window.allQuestions = [
 	{ text: "Le système complexe unissant l'humain et la machine", correct: false },
 	{ text: "L'individu hybride mêlant le biologique et le technique", correct: false },
 	{ text: "L'ensemble opérationnel homme et objet technique", correct: true }
-	]
 	],
 	explanation: "Simondon évite les dichotomies strictes. Il décrit comment, dans l'action (ex: conduire une voiture, utiliser un outil), l'homme et l'objet technique forment un « circuit » de régulation, un ensemble où les gestes et les perceptions s'ajustent mutuellement. C'est une individuation mixte, psychique et technique"
 	},
