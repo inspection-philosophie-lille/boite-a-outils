@@ -1,4 +1,4 @@
-wwindow.allQuestions = [
+window.allQuestions = [
 	{
 	question: "Question n°1 : Quel est le principal contexte historique dans lequel a vécu Simone Weil ?",
 	answers: [
@@ -468,13 +468,13 @@ wwindow.allQuestions = [
 	explanation: "Le médiateur (le Christ) relie la Nécessité aveugle à la Transendance. Par son sacrifice volontaire, il rend possible un contact mystique entre l'homme fini et l'absolu éternel."
 	},
 	{
-	question: "Question n°53 : Quel livre de Simone Weil est consacré à la critique de la colonisation ?",
+	question: "Question n°53 : Quel recueil posthume de Simone Weil contient une critique explicite de la colonisation et de l'oppression impériale ?",
 	answers: [
-	{ text: "Réflexions sur les causes de la liberté et de l'oppression sociale de l'homme", correct: false },
-	{ text: "Les Écrits historiques et politiques traitant de l'empire et du choc des mondes", correct: true },
-	{ text: "L'ouvrage intitulé Sur la science traitant des lois de la géométrie euclidienne", correct: false }
+	{ text: "<i>L'Enracinement</i>, consacré aux besoins fondamentaux de l'âme humaine", correct: false },
+	{ text: "<i>Écrits historiques et politiques</i>, incluant des textes sur l'Empire romain", correct: true },
+	{ text: "<i>La Condition ouvrière</i>, centré sur son expérience du travail à la chaîne", correct: false }
 	],
-	explanation: "Weil dénonce la colonisation comme une machine à déraciner brutalement les peuples. Elle compare l'impérialisme moderne à la cruauté froide de l'Empire romain de l'Antiquité."
+	explanation: "Dans Écrits historiques et politiques, Simone Weil dénonce la colonisation comme une machine à déraciner les peuples. Elle compare l'impérialisme moderne à la cruauté froide de l'Empire romain antique, qu'elle analyse comme un modèle d'oppression par la force brute."
 	},
 	{
 	question: "Question n°54 : Quelle est la différence entre la « pesanteur » et la « grâce » ?",
