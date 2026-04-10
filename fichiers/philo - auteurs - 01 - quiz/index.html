@@ -508,10 +508,10 @@
 			line-height: 1.3;
 		}
 
+		/* ========== BOUTONS DE NAVIGATION - VERSION ÉLÉGANTE ========== */
+		/* Règle de base : ni top, ni transform définis ici */
 		.nav-button {
 			position: absolute;
-			top: 70%;
-			transform: translateY(-50%);
 			width: 55px;
 			height: 55px;
 			background: var(--btn);
@@ -526,6 +526,34 @@
 			transition: all 0.3s ease;
 			opacity: 0.8;
 			color: var(--font-color);
+		}
+
+		/* Desktop : top: 70% avec translation */
+		@media (min-width: 769px) {
+			.nav-button {
+				top: 70%;
+				transform: translateY(-50%);
+			}
+		}
+
+		/* Mobile : top fixe à 210px, pas de translation */
+		@media (max-width: 768px) {
+			.nav-button {
+				top: 210px;
+				transform: none;
+				width: 50px;
+				height: 50px;
+			}
+		}
+
+		/* Très petits écrans */
+		@media (max-width: 480px) {
+			.nav-button {
+				top: 210px;
+				transform: none;
+				width: 48px;
+				height: 48px;
+			}
 		}
 
 		.nav-button.hidden {
@@ -545,8 +573,26 @@
 			box-shadow: var(--shadow-out), 0 0 15px rgba(0, 0, 0, 0.2);
 		}
 
+		/* Version mobile du hover (sans translateY) */
+		@media (max-width: 768px) {
+			.nav-button:hover {
+				transform: scale(1.1);
+			}
+		}
+
 		.prev { left: 5px; }
 		.next { right: 5px; }
+
+		/* Position des boutons en version mobile */
+		@media (max-width: 768px) {
+			.prev { left: 18px; }
+			.next { right: 18px; }
+		}
+
+		@media (max-width: 480px) {
+			.prev { left: 18px; }
+			.next { right: 18px; }
+		}
 
 		.progress-footer {
 			display: flex;
@@ -1252,18 +1298,16 @@
 			.slider { padding: 0 50px; gap: 15px; scroll-snap-type: x mandatory; }
 			.quiz-card { width: 220px; min-width: 220px; height: 320px; margin: 20px 0; scroll-snap-align: start; }
 			.nav-button svg { width: 36px; height: 36px; }
-				.prev { left: 3px; }
-				.next { right: 3px; }
-				.main-title { font-size: 32px; }
-				.subtitle { font-size: 18px; }
-				.toolbar-desktop { display: none; }
-				.toolbar-mobile { display: flex; }
-				.mobile-title-wrapper { display: block; }
-				.toolbar-btn { width: 48px; height: 48px; }
-				.toolbar-btn svg { width: 24px; height: 24px; }
-				body { padding: 15px; }
-				.slide-menu { width: 260px; }
-				.progress-bar-container { width: 50vw; }
+			.main-title { font-size: 32px; }
+			.subtitle { font-size: 18px; }
+			.toolbar-desktop { display: none; }
+			.toolbar-mobile { display: flex; }
+			.mobile-title-wrapper { display: block; }
+			.toolbar-btn { width: 48px; height: 48px; }
+			.toolbar-btn svg { width: 24px; height: 24px; }
+			body { padding: 15px; }
+			.slide-menu { width: 260px; }
+			.progress-bar-container { width: 50vw; }
 		}
 
 		@media (max-width: 600px) {
@@ -1286,18 +1330,7 @@
 			.slider-wrapper { min-height: 320px; }
 			.slider { padding: 0 45px; gap: 12px; scroll-snap-type: x mandatory; }
 			.quiz-card { width: 200px; min-width: 200px; height: 300px; margin: 20px 0; scroll-snap-align: start; }
-			.nav-button { top: 60%; width: 48px; height: 48px; z-index: 300; }
-			.nav-button svg { width: 34px; height: 34px; }
 			body { padding: 10px; }
-			
-			
-			
-			
-			
-			
-			
-			
-			
 		}
 
 		@media (max-width: 360px) {
@@ -1316,40 +1349,37 @@
 			.quiz-card { width: 260px; min-width: 260px; height: 370px; margin: 20px 0; scroll-snap-align: start; }
 		}
 
-* Version mobile (téléphone portable) */
-@media (max-width: 768px) {
-	.nav-button {
-		top: 210px;  /* Position fixe à 210px du haut */
-		transform: translateY(0);  /* Annule la translation verticale */
-		width: 50px;
-		height: 50px;
-	}
-	.nav-button svg {
-		width: 36px;
-		height: 36px;
-	}
-	.nav-button:hover {
-		transform: scale(1.1);  /* Garde uniquement l'effet d'agrandissement */
-	}
-	.prev { left: 18px; }
-	.next { right: 18px; }
-}
+		/* Version mobile : position fixe des boutons de navigation */
+		@media (max-width: 768px) {
+			.nav-button {
+				top: 210px;
+				transform: none;
+			}
+			.nav-button svg {
+				width: 36px;
+				height: 36px;
+			}
+			.nav-button:hover {
+				transform: scale(1.1);
+			}
+			.prev { left: 18px; }
+			.next { right: 18px; }
+		}
 
-/* Pour très petits écrans (optionnel, si besoin d'ajuster) */
-@media (max-width: 480px) {
-	.nav-button {
-		top: 210px;  /* Maintient la même position */
-		width: 48px;
-		height: 48px;
-	}
-		.prev { left: 18px; }
-	.next { right: 18px; }
-	
-	.nav-button svg {
-		width: 34px;
-		height: 34px;
-	}
-}
+		@media (max-width: 480px) {
+			.nav-button {
+				top: 210px;
+				transform: none;
+				width: 48px;
+				height: 48px;
+			}
+			.prev { left: 18px; }
+			.next { right: 18px; }
+			.nav-button svg {
+				width: 34px;
+				height: 34px;
+			}
+		}
 
 		@media (min-width: 601px) {
 			.toolbar-mobile, .mobile-title-wrapper { display: none; }
@@ -3367,7 +3397,7 @@
 		<p style="margin-bottom:0.5rem;">application développée par Daniel Boulagnon</p>
 		<p style="margin-bottom:0.5rem;">daniel.boulagnon@ac-lille.fr</p>
 		<p style="margin-bottom:0.5rem;">exploitation à but pédagogique et non commercial</p>
-		<p>© 2026 – version 2.2.2</p>
+		<p>© 2026 – version 2.2.3</p>
 	</div>
 
 	<script>
