@@ -14,6 +14,7 @@
 	<style>
 		* {
 			box-sizing: border-box;
+			touch-action: manipulation;
 		}
 
 		body {
@@ -712,6 +713,7 @@
 			width: 100%;
 			height: 100%;
 			z-index: 2;
+			pointer-events: none;
 		}
 
 		.controls {
@@ -850,12 +852,8 @@
 			height: 100%;
 			z-index: 4;
 			opacity: 0;
-			touch-action: none;
-		}
-
-		/* Mode défilement automatique sur mobile - la classe est ajoutée/retirée dynamiquement */
-		.drawing-layer.scroll-mode {
-			touch-action: pan-y pinch-zoom !important;
+			/* MODIFICATION UNIQUE : permet le défilement vertical sur mobile tout en conservant le dessin */
+			touch-action: pan-y pinch-zoom;
 		}
 
 		.brush-info {
@@ -1994,7 +1992,7 @@
 			border-radius: 3px;
 		}
 
-			.category-connectors {
+		.category-connectors {
 			display: flex;
 			flex-wrap: wrap;
 			gap: 4px;
@@ -2981,7 +2979,7 @@
 				<p>application développée par Daniel Boulagnon<br></p>
 				<p>daniel.boulagnon@ac-lille.fr</p>
 				<p>exploitation à but pédagogique et non commercial</p>
-				<p>© 2026 – version 2.1.5</p>
+				<p>© 2026 – version 2.1.6</p>
 			</div>
 	</div>
 
@@ -3519,6 +3517,175 @@
 		}
 		
 		document.addEventListener('keydown', handleKeyboardNavigation);
+		
+		// ====== INITIALISATION ======
+		document.addEventListener('DOMContentLoaded', function () {
+			// Charger les stats cumulées
+			loadCumulativeStats();
+			
+			// Initialiser les boutons de couleur
+			initColorButtons();
+			
+			// Boutons de la toolbar (desktop)
+			const homeBtnDesktop = document.getElementById('homeBtnDesktop');
+			if (homeBtnDesktop) {
+				homeBtnDesktop.addEventListener('click', function() {
+					window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+				});
+			}
+			
+			const reloadBtnDesktop = document.getElementById('reloadButtonDesktop');
+			if (reloadBtnDesktop) {
+				reloadBtnDesktop.addEventListener('click', function() {
+					location.reload();
+				});
+			}
+			
+			const fullscreenBtnDesktop = document.getElementById('fullscreenButtonDesktop');
+			if (fullscreenBtnDesktop) {
+				fullscreenBtnDesktop.addEventListener('click', toggleFullscreen);
+			}
+			
+			const menuBtnDesktop = document.getElementById('menuButtonDesktop');
+			if (menuBtnDesktop) {
+				menuBtnDesktop.addEventListener('click', function(e) {
+					e.stopPropagation();
+					toggleMainMenu();
+				});
+			}
+			
+			// Boutons mobile
+			const homeBtnMobile = document.getElementById('homeBtnMobile');
+			if (homeBtnMobile) {
+				homeBtnMobile.addEventListener('click', function() {
+					window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+				});
+			}
+			
+			const reloadBtnMobile = document.getElementById('reloadButtonMobile');
+			if (reloadBtnMobile) {
+				reloadBtnMobile.addEventListener('click', function() {
+					location.reload();
+				});
+			}
+			
+			const fullscreenBtnMobile = document.getElementById('fullscreenButtonMobile');
+			if (fullscreenBtnMobile) {
+				fullscreenBtnMobile.addEventListener('click', toggleFullscreen);
+			}
+			
+			const menuBtnMobile = document.getElementById('menuButtonMobile');
+			if (menuBtnMobile) {
+				menuBtnMobile.addEventListener('click', function(e) {
+					e.stopPropagation();
+					toggleMainMenu();
+				});
+			}
+			
+			// Bouton de fermeture du menu (croix)
+			if (menuClose) {
+				menuClose.addEventListener('click', function(e) {
+					e.stopPropagation();
+					closeMenu();
+				});
+			}
+			
+			// Overlay pour fermer le menu
+			if (menuOverlay) {
+				menuOverlay.addEventListener('click', closeMenu);
+			}
+			
+			// Empêcher la propagation dans les menus
+			if (slideMenu) {
+				slideMenu.addEventListener('click', (e) => e.stopPropagation());
+			}
+			
+			// Boutons du menu principal
+			const presentationButton = document.getElementById('presentationButton');
+			const shortcutsButton = document.getElementById('shortcutsButton');
+			const statsButton = document.getElementById('statsButton');
+			const settingsButton = document.getElementById('settingsButton');
+			const aboutButton = document.getElementById('aboutButton');
+
+			if (presentationButton) {
+				presentationButton.addEventListener('click', function (e) {
+					e.stopPropagation();
+					openSubmenu(subPresentation);
+				});
+			}
+			
+			if (shortcutsButton) {
+				shortcutsButton.addEventListener('click', function (e) {
+					e.stopPropagation();
+					openSubmenu(subShortcuts);
+				});
+			}
+			
+			if (statsButton) {
+				statsButton.addEventListener('click', function () {
+					displayStatsInSubmenu();
+					openSubmenu(subStats);
+				});
+			}
+			
+			if (settingsButton) {
+				settingsButton.addEventListener('click', function (e) {
+					e.stopPropagation();
+					openSubmenu(subSettings);
+				});
+			}
+			
+			if (aboutButton) {
+				aboutButton.addEventListener('click', function (e) {
+					e.stopPropagation();
+					openSubmenu(subAbout);
+				});
+			}
+			
+			// Fermeture des sous-menus
+			document.querySelectorAll('.submenu-close').forEach(btn => {
+				btn.addEventListener('click', (e) => {
+					e.stopPropagation();
+					closeAllSubmenus();
+				});
+			});
+			
+			// Empêcher la propagation dans les sous-menus
+			allSubmenus.forEach(sub => {
+				if (sub) {
+					sub.addEventListener('click', (e) => e.stopPropagation());
+				}
+			});
+			
+			// Gestion des toggles dans les paramètres
+			const darkModeToggle = document.getElementById('darkModeToggle');
+			if (darkModeToggle) {
+				darkModeToggle.addEventListener('change', function(e) {
+					if (e.target.checked) {
+						document.body.classList.add('dark-theme');
+						settings.darkTheme = true;
+					} else {
+						document.body.classList.remove('dark-theme');
+						settings.darkTheme = false;
+					}
+					saveSettings();
+				});
+			}
+			
+			const colorblindToggle = document.getElementById('colorblindToggle');
+			if (colorblindToggle) {
+				colorblindToggle.addEventListener('change', function(e) {
+					if (e.target.checked) {
+						document.body.classList.add('colorblind-mode');
+						settings.colorblindMode = true;
+					} else {
+						document.body.classList.remove('colorblind-mode');
+						settings.colorblindMode = false;
+					}
+					saveSettings();
+				});
+			}
+		});
 		
 		// ====== FONCTIONS DE L'APPLICATION ======
 		
@@ -4470,10 +4637,9 @@
 			console.log(`${targetWords.length} mots cibles masqués`);
 		}
 		
-		// ====== GESTION INTELLIGENTE DU DÉFILEMENT SUR MOBILE ======
-		// Détection automatique : en mode dessin, on bloque le défilement.
-		// En mode non-dessin (gomme, solution), on laisse le défilement.
-		// Et on bascule automatiquement selon le mode actif.
+		// ====== GESTION DU DÉFILEMENT SUR MOBILE ======
+		// La seule modification est dans la classe .drawing-layer dans le CSS :
+		// touch-action: pan-y pinch-zoom; permet de scroller verticalement sans perdre les surlignages
 		
 		function updateDrawingLayer() {
 			if (!currentTextData) {
@@ -4486,23 +4652,15 @@
 				if (currentMode === 'highlight') {
 					const cursorFile = settings.brushCursor || 'feutrejaune.png';
 					drawingLayer.style.cursor = `url('src/${cursorFile}') 0 5, crosshair`;
-					// En mode surligneur, on bloque le défilement tactile pour dessiner précisément
-					drawingLayer.style.touchAction = 'none';
 				} else if (currentMode === 'erase') {
 					drawingLayer.style.cursor = 'url(\'src/gomme.png\') 0 5, crosshair';
-					// En mode gomme, on bloque aussi le défilement
-					drawingLayer.style.touchAction = 'none';
 				} else if (currentMode === 'reveal') {
 					drawingLayer.style.cursor = 'default';
-					// En mode solution, on permet le défilement
-					drawingLayer.style.touchAction = 'pan-y pinch-zoom';
 				}
 				drawingLayer.style.opacity = '0.01';
 			} else {
 				drawingLayer.style.cursor = 'default';
 				drawingLayer.style.opacity = '0';
-				// Quand le dessin est désactivé (mode solution ou surligneur désactivé), on permet le défilement
-				drawingLayer.style.touchAction = 'pan-y pinch-zoom';
 			}
 		}
 		
