@@ -1220,6 +1220,7 @@
 		@media (max-width: 768px) {
 			body {
 				padding: 10px;
+				padding-bottom: 60px !important;
 			}
 
 			.toolbar-desktop {
@@ -1357,6 +1358,13 @@
 				max-height: 80vh;
 				border-radius: 12px;
 			}
+
+			.drawing-layer {
+				pointer-events: auto !important;
+				/* Désactive le dessin uniquement dans les 40px du bas */
+				clip-path: inset(0 0 40px 0);
+			}
+			
 		}
 
 		@media (max-width: 400px) {
@@ -1387,6 +1395,8 @@
 				width: 24px;
 				height: 24px;
 			}
+
+
 		}
 
 		@media (min-width: 769px) {
