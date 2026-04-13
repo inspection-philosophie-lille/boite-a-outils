@@ -844,6 +844,7 @@
 			display: none;
 		}
 
+		/* MODIFICATION UNIQUE POUR LE DÉFILEMENT MOBILE SANS EFFACER LES SURlIGNAGES */
 		.drawing-layer {
 			position: absolute;
 			top: 0;
@@ -852,8 +853,12 @@
 			height: 100%;
 			z-index: 4;
 			opacity: 0;
-			/* MODIFICATION UNIQUE : permet le défilement vertical sur mobile tout en conservant le dessin */
-			touch-action: pan-y pinch-zoom;
+			touch-action: pan-y pinch-zoom;  /* Permet le défilement vertical normalement */
+		}
+		
+		/* Nouvelle classe : désactive le défilement uniquement quand on dessine */
+		.drawing-layer.drawing-active {
+			touch-action: none;  /* Désactive le défilement pendant le dessin */
 		}
 
 		.brush-info {
@@ -1358,13 +1363,6 @@
 				max-height: 80vh;
 				border-radius: 12px;
 			}
-
-			.drawing-layer {
-				pointer-events: auto !important;
-				/* Désactive le dessin uniquement dans les 40px du bas */
-				clip-path: inset(0 15px 40px 15px) !important;
-			}
-			
 		}
 
 		@media (max-width: 400px) {
@@ -1395,8 +1393,6 @@
 				width: 24px;
 				height: 24px;
 			}
-
-
 		}
 
 		@media (min-width: 769px) {
@@ -4650,6 +4646,21 @@
 		// ====== GESTION DU DÉFILEMENT SUR MOBILE ======
 		// La seule modification est dans la classe .drawing-layer dans le CSS :
 		// touch-action: pan-y pinch-zoom; permet de scroller verticalement sans perdre les surlignages
+		// Ajout de la classe .drawing-active pour désactiver le défilement pendant le dessin
+		
+		// Activation du mode dessin (désactive le défilement)
+		function enableDrawingMode() {
+			if (drawingLayer) {
+				drawingLayer.classList.add('drawing-active');
+			}
+		}
+		
+		// Désactivation du mode dessin (réactive le défilement)
+		function disableDrawingMode() {
+			if (drawingLayer) {
+				drawingLayer.classList.remove('drawing-active');
+			}
+		}
 		
 		function updateDrawingLayer() {
 			if (!currentTextData) {
@@ -5144,6 +5155,7 @@
 		drawingLayer.addEventListener('mousedown', (e) => {
 			if (!drawingEnabled || !currentTextData) return;
 			
+			enableDrawingMode();
 			saveCanvasState();
 			isDrawing = true;
 			const pos = getCanvasPosition(e.clientX, e.clientY);
@@ -5181,6 +5193,7 @@
 		});
 		
 		drawingLayer.addEventListener('mouseup', () => {
+			disableDrawingMode();
 			isDrawing = false;
 			ctx.closePath();
 			updateWordLabels();
@@ -5191,6 +5204,7 @@
 		});
 		
 		drawingLayer.addEventListener('mouseout', () => {
+			disableDrawingMode();
 			isDrawing = false;
 			ctx.closePath();
 			updateWordLabels();
@@ -5203,6 +5217,7 @@
 		drawingLayer.addEventListener('touchstart', (e) => {
 			if (!drawingEnabled || !currentTextData) return;
 			
+			enableDrawingMode();
 			saveCanvasState();
 			e.preventDefault();
 			isDrawing = true;
@@ -5274,12 +5289,20 @@
 		}, { passive: false });
 		
 		drawingLayer.addEventListener('touchend', () => {
+			disableDrawingMode();
 			isDrawing = false;
 			ctx.closePath();
 			updateWordLabels();
 			updateStatsDisplay();
 			updateFoundConnectorsByCategory();
 			updateWordListColors();
+			endStroke();
+		});
+		
+		drawingLayer.addEventListener('touchcancel', () => {
+			disableDrawingMode();
+			isDrawing = false;
+			ctx.closePath();
 			endStroke();
 		});
 		
