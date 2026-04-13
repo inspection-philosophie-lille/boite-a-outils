@@ -844,21 +844,19 @@
 			display: none;
 		}
 
-		/* MODIFICATION UNIQUE POUR LE DÉFILEMENT MOBILE SANS EFFACER LES SURlIGNAGES */
+		/* Styles pour le dessin sur mobile - SOLUTION DÉFINITIVE */
 		.drawing-layer {
 			position: absolute;
 			top: 0;
 			left: 0;
 			width: 100%;
-			height: 100%;
 			z-index: 4;
 			opacity: 0;
-			touch-action: pan-y pinch-zoom;  /* Permet le défilement vertical normalement */
+			touch-action: pan-y pinch-zoom;
 		}
 		
-		/* Nouvelle classe : désactive le défilement uniquement quand on dessine */
 		.drawing-layer.drawing-active {
-			touch-action: none;  /* Désactive le défilement pendant le dessin */
+			touch-action: none;
 		}
 
 		.brush-info {
@@ -1224,8 +1222,7 @@
 
 		@media (max-width: 768px) {
 			body {
-				padding: 20px; /* marge extérieure */
-				padding-bottom: 40px !important;
+				padding: 5px 11px 40px 30px !important; /* marge extérieure en mode portable */
 			}
 
 			.toolbar-desktop {
@@ -1266,7 +1263,7 @@
 			}
 
 			.container {
-				padding: 15px;
+				padding: 7px; /* épaisseur du bord du container en mode portable */
 				margin-top: 10px;
 			}
 
@@ -1284,6 +1281,7 @@
 				min-height: 200px;
 				display: flex;
 				flex-direction: column;
+				overflow: visible;
 			}
 
 			.text-content {
@@ -1302,6 +1300,32 @@
 			.text-content .reference-text {
 				margin-top: 17px;
 				font-size: 0.75em;
+			}
+
+			/* SOLUTION DÉFINITIVE POUR LE SCROLL MOBILE */
+			#drawingCanvas {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				min-height: 100%;
+				z-index: 2;
+				pointer-events: none;
+			}
+
+			.drawing-layer {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				min-height: 100%;
+				z-index: 4;
+				opacity: 0;
+				touch-action: pan-y pinch-zoom;
+			}
+			
+			.drawing-layer.drawing-active {
+				touch-action: none;
 			}
 
 			.button,
@@ -1461,6 +1485,10 @@
 				margin: 0;
 				line-height: 1.4;
 				text-align: center;
+			}
+			
+			.drawing-layer {
+				height: 100%;
 			}
 		}
 
@@ -2985,12 +3013,12 @@
 				<p>application développée par Daniel Boulagnon<br></p>
 				<p>daniel.boulagnon@ac-lille.fr</p>
 				<p>exploitation à but pédagogique et non commercial</p>
-				<p>© 2026 – version 2.1.7</p>
+				<p>© 2026 – version 2.1.8</p>
 			</div>
 	</div>
 
 	<script src="src/textes.js"></script>
-	<script src="src/connecteurs.js"></script>
+.text-content {
 	<script>
 		// ====== FONCTIONS DE GESTION DES MENUS ======
 		
@@ -4431,6 +4459,7 @@
 			
 			setTimeout(() => {
 				initCanvas();
+				updateCanvasHeight();
 				updateStatsDisplay();
 				
 				if (highlightModeButton && !highlightModeButton.classList.contains('active')) {
@@ -4452,6 +4481,54 @@
 			if (selectedOption && selectedOption.dataset.shortTitle) {
 				selectedOption.textContent = selectedOption.dataset.shortTitle;
 			}
+		}
+		
+		// Synchronise la position du canvas avec le défilement du texte
+		function syncCanvasWithScroll() {
+			if (!currentTextData) return;
+			
+			const textContentDiv = document.getElementById('textContent');
+			const canvasElem = document.getElementById('drawingCanvas');
+			const drawingLayerElem = document.getElementById('drawingLayer');
+			
+			if (!textContentDiv || !canvasElem || !drawingLayerElem) return;
+			
+			const scrollTop = textContentDiv.scrollTop;
+			
+			canvasElem.style.transform = `translateY(-${scrollTop}px)`;
+			drawingLayerElem.style.transform = `translateY(-${scrollTop}px)`;
+		}
+		
+		// Redessine complètement le canvas en conservant les traits
+		function redrawCanvas() {
+			if (!currentTextData || drawingHistory.length === 0) return;
+			
+			const lastValidState = drawingHistory[historyIndex];
+			if (lastValidState) {
+				const img = new Image();
+				img.onload = function() {
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+					ctx.drawImage(img, 0, 0);
+				};
+				img.src = lastValidState;
+			}
+		}
+		
+		// Met à jour la hauteur du canvas en fonction du contenu texte
+		function updateCanvasHeight() {
+			const textContentDiv = document.getElementById('textContent');
+			const canvasElem = document.getElementById('drawingCanvas');
+			const drawingLayerElem = document.getElementById('drawingLayer');
+			
+			if (!textContentDiv || !canvasElem || !drawingLayerElem) return;
+			
+			const textHeight = textContentDiv.scrollHeight;
+			
+			canvasElem.style.height = `${textHeight}px`;
+			canvasElem.height = textHeight;
+			drawingLayerElem.style.height = `${textHeight}px`;
+			
+			redrawCanvas();
 		}
 		
 		function identifyTargetSpans() {
@@ -4557,16 +4634,29 @@
 				});
 				textContent.style.color = '#ffffff';
 			}
+			
+			// Ajouter l'écouteur d'événement pour le scroll
+			textContent.removeEventListener('scroll', syncCanvasWithScroll);
+			textContent.addEventListener('scroll', syncCanvasWithScroll);
 		}
 		
 		function initCanvas() {
-			const wrapper = canvas.parentElement;
-			const rect = wrapper.getBoundingClientRect();
+			const textContentDiv = document.getElementById('textContent');
+			const canvasElem = document.getElementById('drawingCanvas');
+			const drawingLayerElem = document.getElementById('drawingLayer');
 			
-			canvas.width = rect.width;
-			canvas.height = rect.height;
-			canvas.style.width = `${rect.width}px`;
-			canvas.style.height = `${rect.height}px`;
+			if (!textContentDiv || !canvasElem || !drawingLayerElem) return;
+			
+			const wrapper = canvasElem.parentElement;
+			const rect = wrapper.getBoundingClientRect();
+			const textHeight = textContentDiv.scrollHeight;
+			
+			canvasElem.width = rect.width;
+			canvasElem.style.width = `${rect.width}px`;
+			
+			canvasElem.height = textHeight;
+			canvasElem.style.height = `${textHeight}px`;
+			drawingLayerElem.style.height = `${textHeight}px`;
 			
 			ctx.lineCap = 'round';
 			ctx.lineJoin = 'round';
@@ -5327,6 +5417,7 @@
 				adjustTitleForSpacing();
 				if (currentTextData) {
 					initCanvas();
+					updateCanvasHeight();
 				}
 			});
 		});
@@ -5334,6 +5425,7 @@
 		window.addEventListener('resize', () => {
 			if (currentTextData) {
 				initCanvas();
+				updateCanvasHeight();
 			}
 		});
 		
