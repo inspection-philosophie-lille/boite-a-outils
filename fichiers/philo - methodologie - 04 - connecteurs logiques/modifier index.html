@@ -10,3106 +10,983 @@
         content="width=device-width, initial-scale=1, maximum-scale=3.0, user-scalable=no, viewport-fit=cover">
     <link rel="icon" type="image/svg+xml" href="src/favicon.ico" />
     <title>gestionnaire de textes à repérer</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px 40px;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .subtitle {
-            font-size: 1.1em;
-            opacity: 0.9;
-            margin-bottom: 20px;
-        }
-
-        .phases {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        .phase {
-            padding: 15px 30px;
-            border-radius: 50px;
-            background: rgba(255, 255, 255, 0.2);
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            min-width: 200px;
-        }
-
-        .phase:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .phase.active {
-            background: white;
-            color: #667eea;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .content {
-            padding: 40px;
-        }
-
-        .phase-content {
-            display: none;
-        }
-
-        .phase-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        h2 {
-            color: #667eea;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #eaeaea;
-            font-size: 1.8em;
-        }
-
-        textarea {
-            width: 100%;
-            min-height: 200px;
-            padding: 20px;
-            border: 2px solid #eaeaea;
-            border-radius: 10px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 16px;
-            line-height: 1.6;
-            resize: vertical;
-            transition: border-color 0.3s ease;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .buttons-container {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        button {
-            padding: 14px 28px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .primary-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .primary-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .secondary-btn {
-            background: #f0f2f5;
-            color: #333;
-        }
-
-        .secondary-btn:hover {
-            background: #e4e6e9;
-            transform: translateY(-2px);
-        }
-
-        .danger-btn {
-            background: #ff4757;
-            color: white;
-        }
-
-        .danger-btn:hover {
-            background: #ff3742;
-            transform: translateY(-2px);
-        }
-
-        .success-btn {
-            background: #2ed573;
-            color: white;
-        }
-
-        .success-btn:hover {
-            background: #25c464;
-            transform: translateY(-2px);
-        }
-
-        .warning-btn {
-            background: #ffa502;
-            color: white;
-        }
-
-        .warning-btn:hover {
-            background: #e59400;
-            transform: translateY(-2px);
-        }
-
-        .text-display {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 10px;
-            margin-top: 20px;
-            line-height: 1.8;
-            font-size: 17px;
-            white-space: pre-wrap;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 2px solid #eaeaea;
-        }
-
-        .instructions {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            border-left: 4px solid #2196F3;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #555;
-        }
-
-        input[type="text"],
-        input[type="number"] {
-            padding: 12px 15px;
-            border: 2px solid #eaeaea;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .text-item {
-            background: white;
-            border: 2px solid #eaeaea;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .text-item:hover {
-            border-color: #667eea;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
-        }
-
-        .text-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .text-item-id {
-            background: #667eea;
-            color: white;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-
-        .text-item-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .action-btn {
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 14px;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .legend-btn {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .legend-btn:hover {
-            background: #c8e6c9;
-        }
-
-        .edit-btn {
-            background: #e3f2fd;
-            color: #2196F3;
-        }
-
-        .edit-btn:hover {
-            background: #bbdefb;
-        }
-
-        .delete-btn {
-            background: #ffebee;
-            color: #f44336;
-        }
-
-        .delete-btn:hover {
-            background: #ffcdd2;
-        }
-
-        .text-item-content {
-            color: #444;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .highlighted-text {
-            background: #FFEB3B;
-            padding: 0 2px;
-            border-radius: 3px;
-            font-weight: 500;
-            color: black !important;
-        }
-
-        .highlighted {
-            background: #FFEB3B !important;
-            padding: 0 2px;
-            border-radius: 3px;
-            font-weight: 500;
-            color: black !important;
-        }
-
-        .text-editor-tools {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 15px 0;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border: 2px solid #eaeaea;
-        }
-
-        .editor-btn {
-            padding: 10px 16px;
-            border-radius: 6px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 2px solid #eaeaea;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .editor-btn:hover {
-            background: #f1f3f4;
-            border-color: #667eea;
-        }
-
-        .editor-btn.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #666;
-            background: #f8f9fa;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-
-        .file-input-container {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            width: 100%;
-            margin: 10px 0;
-        }
-
-        .file-input {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-
-        .file-input-label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 25px;
-            background: #f1f3f4;
-            border: 2px dashed #dadce0;
-            border-radius: 10px;
-            color: #444;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .file-input-label:hover {
-            background: #e8eaed;
-            border-color: #667eea;
-        }
-
-        .stats {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-            border-left: 4px solid #667eea;
-        }
-
-        .stats h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 15px;
-        }
-
-        .stat-item {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-        }
-
-        .stat-value {
-            font-size: 2em;
-            font-weight: bold;
-            color: #667eea;
-            margin: 10px 0;
-        }
-
-        .text-content-editable {
-            min-height: 200px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 2px solid #eaeaea;
-            border-radius: 10px;
-            padding: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 16px;
-            line-height: 1.6;
-            background: white;
-            outline: none;
-        }
-
-        .text-content-editable:focus {
-            border-color: #667eea;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            background: #2ed573;
-            color: white;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            font-weight: bold;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideOut {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .modal-content {
-            background: white;
-            max-width: 800px;
-            margin: 20px auto;
-            border-radius: 12px;
-            padding: 25px;
-            position: relative;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            color: #666;
-            border-top: 1px solid #eaeaea;
-        }
-
-        .connecteur {
-            font-weight: 600 !important;
-            padding: 2px 6px !important;
-            border-radius: 4px !important;
-            cursor: help;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(0, 0, 0, 0.3) !important;
-            margin: 0 1px !important;
-            color: white !important;
-        }
-
-        .connecteur:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            z-index: 10;
-            position: relative;
-        }
-
-        .connecteur-commencer {
-            background-color: #FF0000 !important;
-        }
-
-        .connecteur-poursuivre {
-            background-color: #00FF00 !important;
-        }
-
-        .connecteur-changer_dangle {
-            background-color: #0000FF !important;
-        }
-
-        .connecteur-préciser {
-            background-color: #FF00FF !important;
-        }
-
-        .connecteur-illustrer {
-            background-color: #FFFF00 !important;
-        }
-
-        .connecteur-comparer {
-            background-color: #00FFFF !important;
-        }
-
-        .connecteur-cause {
-            background-color: #FFA500 !important;
-        }
-
-        .connecteur-conséquence {
-            background-color: #800080 !important;
-        }
-
-        .connecteur-but {
-            background-color: #008000 !important;
-        }
-
-        .connecteur-opposition {
-            background-color: #000080 !important;
-        }
-
-        .connecteur-concession {
-            background-color: #800000 !important;
-        }
-
-        .connecteur-restriction {
-            background-color: #008080 !important;
-        }
-
-        .connecteur-rectifier {
-            background-color: #FF1493 !important;
-        }
-
-        .connecteur-supposer {
-            background-color: #FF4500 !important;
-        }
-
-        .connecteur-conclure {
-            background-color: #4B0082 !important;
-        }
-
-        .connecteur-modalisation {
-            background-color: #2E8B57 !important;
-        }
-
-        .connecteur-temps {
-            background-color: #8B4513 !important;
-        }
-
-        .connecteur-condition {
-            background-color: #DC143C !important;
-        }
-
-        .connecteur-addition {
-            background-color: #9932CC !important;
-        }
-
-        .connecteur-alternative {
-            background-color: #D2691E !important;
-        }
-
-        .connecteur-comparaison {
-            background-color: #B8860B !important;
-        }
-
-        .connecteur-conséquence_avancée {
-            background-color: #8FBC8F !important;
-        }
-
-        .text-item em,
-        .text-content-editable em,
-        .highlighted-text em,
-        .highlighted em,
-        .connecteur em {
-            font-style: italic !important;
-        }
-
-        .text-item-title em {
-            font-style: italic;
-        }
-
-        .form-row {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .form-label {
-            font-weight: 600;
-            color: #555;
-            white-space: nowrap;
-            margin: 0;
-        }
-
-        .form-field {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .form-hint {
-            color: #666;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            margin: 0;
-        }
-
-        #textId {
-            width: 80px;
-            text-align: center;
-        }
-
-        #title {
-            width: 100%;
-        }
-
-        .tooltip {
-            position: relative;
-            display: inline-block;
-        }
-
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 300px;
-            background-color: #333;
-            color: #fff;
-            text-align: left;
-            border-radius: 6px;
-            padding: 10px 15px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -150px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 14px;
-            font-weight: normal;
-            line-height: 1.4;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .tooltip .tooltiptext::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #333 transparent transparent transparent;
-        }
-
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .file-separator {
-            text-align: center;
-            margin: 20px 0;
-            color: #666;
-            font-weight: bold;
-        }
-
-        .file-import-section {
-            margin: 20px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border: 2px solid #eaeaea;
-        }
-
-        .file-import-section h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-
-        .legend-toggle-btn {
-            display: none;
-        }
-
-        .text-legend {
-            background: #f8f9fa;
-            border: 2px solid #eaeaea;
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 15px;
-            font-size: 0.85rem;
-        }
-
-        .text-legend-title {
-            color: #667eea;
-            font-size: 0.95rem;
-            margin-bottom: 8px;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .text-legend-title i {
-            transition: transform 0.3s ease;
-        }
-
-        .text-legend-title.collapsed i {
-            transform: rotate(-90deg);
-        }
-
-        .text-legend-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .text-legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px;
-            border-radius: 4px;
-            background: white;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-            font-size: 0.8rem;
-        }
-
-        .text-legend-color {
-            width: 16px;
-            height: 16px;
-            border-radius: 3px;
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            flex-shrink: 0;
-        }
-
-        .detect-single-btn {
-            background: #e3f2fd;
-            color: #2196F3;
-        }
-
-        .detect-single-btn:hover {
-            background: #bbdefb;
-        }
-
-        .detect-single-btn.active {
-            background: #1976D2;
-            color: white;
-        }
-
-        .single-line-legend {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 15px;
-            margin: 15px 0;
-            padding: 12px 20px;
-            background: #f8f9fa;
-            border: 2px solid #eaeaea;
-            border-radius: 8px;
-            font-size: 0.9rem;
-        }
-
-        .single-line-legend-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
-        }
-
-        .single-line-legend-color {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border-radius: 3px;
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            flex-shrink: 0;
-        }
-
-        .single-line-legend-text {
-            font-weight: 500;
-            color: #333;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                border-radius: 0;
-            }
-
-            header {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 2em;
-            }
-
-            .phase {
-                min-width: 150px;
-                padding: 12px 20px;
-                font-size: 14px;
-            }
-
-            .content {
-                padding: 20px;
-            }
-
-            .buttons-container {
-                flex-direction: column;
-            }
-
-            button {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .text-editor-tools {
-                flex-direction: column;
-            }
-
-            .editor-btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .form-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-
-            .form-label {
-                margin-bottom: 0;
-            }
-
-            .form-field {
-                width: 100%;
-            }
-
-            .form-hint {
-                white-space: normal;
-                font-size: 0.85rem;
-            }
-
-            .tooltip .tooltiptext {
-                width: 250px;
-                margin-left: -125px;
-                font-size: 12px;
-            }
-
-            .text-legend-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-
-            .text-item-actions {
-                flex-direction: column;
-            }
-
-            .single-line-legend {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-                padding: 15px;
-            }
-
-            .single-line-legend-item {
-                width: 100%;
-                justify-content: flex-start;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+			background: linear-gradient(135deg, #f5f7fa 0%, #e9eef5 100%);
+			min-height: 100vh;
+			padding: 16px;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+		}
+
+		.header {
+			text-align: center;
+			padding: 24px 16px 32px;
+		}
+
+		.header h1 {
+			font-size: clamp(1.8rem, 6vw, 2.5rem);
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			background-clip: text;
+			-webkit-background-clip: text;
+			color: transparent;
+			margin-bottom: 12px;
+		}
+
+		.phases {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 12px;
+			margin-bottom: 32px;
+			background: white;
+			padding: 16px 12px;
+			border-radius: 60px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+		}
+
+		.phase {
+			flex: 1;
+			min-width: 100px;
+			padding: 14px 8px;
+			border-radius: 40px;
+			text-align: center;
+			font-weight: 600;
+			font-size: clamp(0.8rem, 3.5vw, 1rem);
+			cursor: pointer;
+			background: #f0f2f5;
+			color: #5a6e8a;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			transition: all 0.3s ease;
+		}
+
+		.phase.active {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+			box-shadow: 0 6px 14px rgba(102, 126, 234, 0.3);
+		}
+
+		.phase-content {
+			display: none;
+			animation: fadeIn 0.4s ease;
+		}
+
+		.phase-content.active {
+			display: block;
+		}
+
+		@keyframes fadeIn {
+			from { opacity: 0; transform: translateY(15px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		.card {
+			background: white;
+			border-radius: 28px;
+			padding: 24px 20px;
+			margin-bottom: 20px;
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+		}
+
+		.card-title {
+			font-size: 1.4rem;
+			font-weight: 700;
+			color: #333;
+			margin-bottom: 16px;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.badge {
+			background: #eef2ff;
+			color: #4f46e5;
+			padding: 6px 14px;
+			border-radius: 30px;
+			font-size: 0.8rem;
+			font-weight: 500;
+		}
+
+		.file-input-area {
+			border: 2px dashed #cbd5e1;
+			border-radius: 24px;
+			padding: 30px 20px;
+			text-align: center;
+			cursor: pointer;
+			transition: all 0.3s;
+			background: #f8fafc;
+			margin: 20px 0;
+		}
+
+		.file-input-area:hover {
+			border-color: #667eea;
+			background: #f1f5f9;
+		}
+
+		.file-input-area input {
+			display: none;
+		}
+
+		/* PAS de scroll sur la liste des textes */
+		.text-list {
+			overflow: visible;
+		}
+
+		.text-item {
+			border: 1px solid #e2e8f0;
+			border-radius: 20px;
+			padding: 20px;
+			margin-bottom: 24px;
+			background: white;
+		}
+
+		.text-number {
+			font-weight: 700;
+			color: #4f46e5;
+			background: #eef2ff;
+			padding: 4px 12px;
+			border-radius: 30px;
+			font-size: 0.85rem;
+			display: inline-block;
+			margin-bottom: 12px;
+		}
+
+		/* Zone de contenu */
+		.text-fullcontent {
+			background: #fefce8;
+			padding: 12px 12px;
+			border-radius: 16px;
+			font-size: 0.9rem;
+			line-height: 1.6;
+			color: #1e293b;
+			word-break: break-word;
+			text-align: justify;
+			text-indent: 40px;
+		}
+
+		/* Référence - avec espacement augmenté */
+		.text-reference {
+			margin-top: 20px;
+			margin-bottom: 0;
+			padding-top: 8px;
+			padding-bottom: 0;
+			font-size: 0.9rem;
+			color: #1e293b;
+			text-align: right;
+			border-top: 1px solid #e2e8f0;
+		}
+		
+		.text-reference em {
+			font-style: italic;
+		}
+
+		.connectors-list {
+			margin: 12px 0 16px 0;
+			padding: 10px;
+			background: #f1f5f9;
+			border-radius: 12px;
+			font-size: 0.8rem;
+		}
+
+		.connectors-list-title {
+			font-weight: 600;
+			color: #334155;
+			margin-bottom: 6px;
+			font-size: 0.75rem;
+			letter-spacing: 0.5px;
+		}
+
+		.connector-category-tag {
+			display: inline-block;
+			background: white;
+			border-radius: 20px;
+			padding: 4px 10px;
+			margin: 4px 6px 4px 0;
+			font-size: 0.75rem;
+			font-weight: 500;
+			border: 1px solid #e2e8f0;
+		}
+
+		.connector-category-tag span.connector-text {
+			color: #1e293b;
+			font-weight: 600;
+		}
+
+		.connector-category-tag span.category-name {
+			color: #4f46e5;
+		}
+
+		.text-buttons {
+			display: flex;
+			justify-content: flex-end;
+			gap: 10px;
+			margin-top: 0;
+		}
+
+		.connector {
+			background-color: yellow;
+			font-weight: 600;
+			padding: 0 2px;
+			border-radius: 6px;
+		}
+
+		em {
+			font-style: italic;
+		}
+
+		.stats-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+			gap: 16px;
+			margin-top: 16px;
+		}
+
+		.stat-card {
+			background: #f8fafc;
+			padding: 16px;
+			border-radius: 20px;
+			text-align: center;
+		}
+
+		.stat-number {
+			font-size: 2rem;
+			font-weight: 700;
+			color: #667eea;
+		}
+
+		button {
+			background: none;
+			border: none;
+			cursor: pointer;
+		}
+
+		.notification {
+			position: fixed;
+			bottom: 20px;
+			left: 20px;
+			right: 20px;
+			background: #2b6e3c;
+			color: white;
+			padding: 12px 16px;
+			border-radius: 40px;
+			text-align: center;
+			z-index: 1000;
+			animation: slideUp 0.3s ease;
+		}
+
+		@keyframes slideUp {
+			from { transform: translateY(100px); opacity: 0; }
+			to { transform: translateY(0); opacity: 1; }
+		}
+
+		.loading {
+			text-align: center;
+			padding: 40px;
+			color: #667eea;
+		}
+
+		@media (max-width: 640px) {
+			.phases { gap: 8px; padding: 12px 8px; }
+			.phase { min-width: 70px; padding: 10px 4px; font-size: 0.7rem; }
+			.card { padding: 20px 16px; }
+			.text-fullcontent { font-size: 0.8rem; padding: 8px 12px; }
+			.connector-category-tag { font-size: 0.7rem; padding: 3px 8px; }
+		}
+	</style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-book-open"></i> gestionnaire de textes à repérer</h1>
-            <div class="phases">
-                <div class="phase active" data-phase="1"><i class="fas fa-file-import"></i> importer</div>
-                <div class="phase" data-phase="2"><i class="fas fa-list"></i> lister</div>
-                <div class="phase" data-phase="3"><i class="fas fa-edit"></i> modifier</div>
-                <div class="phase" data-phase="4"><i class="fas fa-file-export"></i> exporter</div>
-            </div>
-        </header>
-
-        <div class="content">
-            <!-- Phase 1: Import -->
-            <div class="phase-content active" id="phase1">
-                <div class="stats">
-                    <h3>à propos de cet outil</h3>
-                    <p>Cet outil permet de gérer des textes pour l'apprentissage des connecteurs logiques. Vous pouvez :
-                    </p>
-                    <ul style="margin-top: 10px; padding-left: 20px;">
-                        <li>importer des textes existants</li>
-                        <li>modifier et annoter les textes</li>
-                        <li>détecter les connecteurs logiques (y compris ceux avec apostrophe comme "il s'ensuit qu'il")</li>
-                        <li>surligner manuellement des passages</li>
-                        <li>exporter le travail dans un format réutilisable</li>
-                    </ul>
-                </div>
-
-                <br>
-
-                <h2>phase 1 : importer le fichier js</h2>
-                <div class="instructions">
-                    <strong>instructions :</strong> importer un fichier existant (format JS)
-                </div>
-
-                <div class="file-import-section">
-                    <h3><i class="fas fa-file-import"></i> importer le fichier textes.js</h3>
-                    <div class="file-input-container">
-                        <input type="file" id="unifiedFileInput" class="file-input" accept=".js">
-                        <label for="unifiedFileInput" class="file-input-label">
-                            <i class="fas fa-file-code"></i>
-                            <span>cliquer ici pour importer un fichier existant</span>
-                        </label>
-                    </div>
-                    <div class="file-info" id="unifiedFileInfo"
-                        style="display: none; margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 6px; color: #2e7d32;">
-                        <i class="fas fa-check-circle"></i> fichier importé : <span id="unifiedFileName"></span>
-                    </div>
-                    <div id="unifiedStats"
-                        style="display: none; margin-top: 10px; padding: 10px; background: #e3f2fd; border-radius: 6px; color: #1976d2;">
-                        <i class="fas fa-info-circle"></i>
-                        <span id="unifiedTextesCount">0</span> textes,
-                        <span id="unifiedConnecteursCount">0</span> chargés
-                    </div>
-                </div>
-
-                <div class="buttons-container">
-                    <button class="secondary-btn" onclick="resetAll()">
-                        <i class="fas fa-trash-alt"></i> tout effacer
-                    </button>
-                    <button class="secondary-btn" onclick="goToPhase(2)">
-                        <i class="fas fa-list"></i>
-                        phase 2
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Phase 2: Liste des textes -->
-            <div class="phase-content" id="phase2">
-                <h2>phase 2 : lister les textes</h2>
-                <div class="instructions">
-                    <strong>instructions :</strong> gérer les textes ici. Cliquer sur "modifier" pour modifier un texte
-                    ou sur "supprimer" pour le retirer de la liste.
-                </div>
-
-                <div id="textListContainer">
-                    <div id="textList"></div>
-
-                    <div id="emptyState" class="empty-state">
-                        <i class="fas fa-book-open" style="font-size: 3rem; color: #dadce0; margin-bottom: 15px;"></i>
-                        <h3>aucun texte pour le moment</h3>
-                        <p>importer un fichier (étape 1) ou ajouter le premier texte en phase 3.</p>
-                    </div>
-                </div>
-
-                <div class="buttons-container">
-                    <button class="secondary-btn" onclick="goToPhase(1)">
-                        <i class="fas fa-arrow-left"></i>
-                        <i class="fas fa-folder-open"></i>
-                        phase 1
-                    </button>
-                    <button class="secondary-btn" onclick="goToPhase(3)">
-                        <i class="fas fa-plus"></i>
-                        ajouter un texte
-                    </button>
-                    <button class="secondary-btn" onclick="goToPhase(3)">
-                        <i class="fas fa-edit"></i>
-                        phase 3
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Phase 3: Édition -->
-            <div class="phase-content" id="phase3">
-                <h2>phase 3 : modifier un texte</h2>
-                <div class="instructions">
-                    <strong>instructions :</strong> ajouter ou modifier le texte ici. Utiliser les outils pour détecter
-                    les connecteurs logiques et surligner des passages.
-                </div>
-
-                <div id="connecteursInfo" class="stats" style="display: none;">
-                    <h3><i class="fas fa-link"></i> connecteurs disponibles</h3>
-                    <p id="connecteursSummary">Aucun connecteur chargé. Importez d'abord un fichier connecteurs.js</p>
-                </div>
-
-                <form id="textForm">
-                    <div class="form-row">
-                        <label for="textId" class="form-label">
-                            n° du texte :
-                        </label>
-                        <div class="form-field">
-                            <input type="number" id="textId" min="1" value="1" required>
-                        </div>
-                        <span class="form-hint">choisir un numéro unique pour chaque texte</span>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="title" class="form-label">
-                            <i class="fas fa-heading"></i> titre du texte :
-                        </label>
-                        <div class="form-field">
-                            <input type="text" id="title" placeholder="Exemple : AUTEUR, Titre, références" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="textContentEditable"><i class="fas fa-align-left"></i> contenu du texte :</label>
-
-                        <div class="text-editor-tools">
-                            <div class="tooltip">
-                                <button type="button" class="editor-btn" id="detectionBtn">
-                                    <i class="fas fa-search"></i>afficher connecteurs
-                                </button>
-                                <span class="tooltiptext">surligner automatiquement tous les
-                                    connecteurs logiques dans le texte (y compris ceux collés comme "il s'ensuit qu'il").</span>
-                            </div>
-
-                            <div class="tooltip">
-                                <button type="button" class="editor-btn" id="highlightBtn">
-                                    <i class="fas fa-highlighter"></i>surligner
-                                </button>
-                                <span class="tooltiptext">appliquer un surlignage au texte sélectionné.</span>
-                            </div>
-
-                            <div class="tooltip">
-                                <button type="button" class="editor-btn" id="removeHighlightBtn">
-                                    <i class="fas fa-eraser"></i>enlever surlignage
-                                </button>
-                                <span class="tooltiptext">retirer le surlignage du texte sélectionné.</span>
-                            </div>
-
-                            <div class="tooltip">
-                                <button type="button" class="editor-btn" id="italicBtn">
-                                    <i class="fas fa-italic"></i>italique
-                                </button>
-                                <span class="tooltiptext">appliquer ou retirer la balite &lt;em&gt; au texte sélectionné (pour les citations, les titres...).</span>
-                            </div>
-
-                            <div class="tooltip">
-                                <button type="button" class="editor-btn" id="clearMarksBtn">
-                                    <i class="fas fa-broom"></i>effacer tout
-                                </button>
-                                <span class="tooltiptext">supprimer tous les marqueurs du texte.</span>
-                            </div>
-                        </div>
-
-                        <div class="text-content-editable" id="textContentEditable" contenteditable="true"
-                            placeholder="Coller ou écrire votre texte ici..."></div>
-                        <textarea id="content" style="display: none;"></textarea>
-                    </div>
-
-                    <div class="buttons-container">
-                        <button class="secondary-btn" type="button" onclick="goToPhase(2)">
-                            <i class="fas fa-arrow-left"></i>
-                            <i class="fas fa-list"></i>phase 2
-                        </button>
-                        <button class="secondary-btn" type="submit" id="submitBtn">
-                            <i class="fas fa-plus"></i>ajouter ce texte
-                        </button>
-                        <button class="secondary-btn" type="button" id="clearBtn">
-                            <i class="fas fa-eraser"></i>effacer le formulaire
-                        </button>
-                        <button class="secondary-btn" onclick="goToPhase(4)">
-                            <i class="fas fa-edit"></i>
-                            phase 4
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </form>
-
-                <div class="stats">
-                    <h3>Utilisation des outils</h3>
-                    <p>Passez votre souris sur les boutons de la barre d'outils pour voir leur description détaillée.
-                    </p>
-                    <p>La détection des connecteurs fonctionne désormais avec les apostrophes et les connecteurs collés (ex: "il s'ensuit qu'il").</p>
-                    <p><strong>Note :</strong> Les connecteurs à points de suspension (ex: "quelque... que") ne sont détectés que s'il n'y a AUCUN signe de ponctuation (, ; : ! ? .) entre les deux parties.</p>
-                </div>
-            </div>
-
-            <!-- Phase 4: Export -->
-            <div class="phase-content" id="phase4">
-                <h2>phase 4 : exporter les textes</h2>
-                <div class="instructions">
-                    <strong>instructions :</strong> exporter les textes dans un format réutilisable ou les sauvegarder
-                    localement.
-                </div>
-
-                <div class="stats">
-                    <h3>statistiques des textes</h3>
-                    <div id="exportStats">
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <h4>nombre de textes</h4>
-                                <div class="stat-value" id="exportTextCount">0</div>
-                            </div>
-                            <div class="stat-item">
-                                <h4>connecteurs chargés</h4>
-                                <div class="stat-value" id="exportConnecteursCount">0</div>
-                            </div>
-                            <div class="stat-item">
-                                <h4>dernière modification</h4>
-                                <div id="exportLastModified" style="font-size: 1.2em; color: #667eea; margin: 10px 0;">-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="buttons-container">
-                    <button class="secondary-btn" onclick="previewCode()">
-                        <i class="fas fa-eye"></i>prévisualiser
-                    </button>
-                    <button class="secondary-btn" onclick="copyCode()">
-                        <i class="fas fa-copy"></i>copier le code
-                    </button>
-                    <button class="secondary-btn" onclick="saveLocal()">
-                        <i class="fas fa-save"></i>sauvegarder localement
-                    </button>
-                </div>
-                <div class="buttons-container">
-                    <button class="secondary-btn" onclick="goToPhase(3)">
-                        <i class="fas fa-arrow-left"></i>
-                        phase 3
-                    </button>
-                    <button class="secondary-btn" onclick="exportJS()">
-                        <i class="fas fa-file-export"></i>exporter en JS
-                    </button>
-                    <button class="secondary-btn" onclick="goToPhase(1)">
-                        <i class="fas fa-redo"></i>
-                        recommencer
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-            <p>gestionnaire de textes à repérer &copy; 2026</p>
-        </footer>
-    </div>
-
-    <!-- Modal pour la prévisualisation -->
-    <div id="previewModal" class="modal">
-        <div class="modal-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2 style="color: #667eea; font-size: 1.3rem;">
-                    <i class="fas fa-code"></i>code JavaScript à exporter
-                </h2>
-                <button id="closeModal"
-                    style="background: none; border: none; font-size: 1.5rem; color: #666; cursor: pointer;">×</button>
-            </div>
-            <pre id="previewContent"
-                style="background: #f8f9fa; padding: 20px; border-radius: 8px; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.9rem; line-height: 1.4; max-height: 500px; overflow-y: auto;"></pre>
-            <div style="text-align: center; margin-top: 20px;">
-                <button id="copyFromPreview" class="primary-btn" style="padding: 12px 24px;">
-                    <i class="fas fa-copy"></i>copier ce code
-                </button>
-                <button id="exportFromPreview" class="success-btn" style="padding: 12px 24px; margin-left: 10px;">
-                    <i class="fas fa-download"></i>télécharger le fichier
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Variables globales
-        let textData = {
-            texts: []
-        };
-
-        let currentPhase = 1;
-        let editingTextId = null;
-        let connecteurs = {};
-        let currentLegend = null;
-        let textesAvecLegend = new Set();
-        let textesAvecConnecteurs = new Set();
-
-        // MAPPING DES COULEURS
-        const connecteursColors = {
-            "commencer": "#FF0000",
-            "poursuivre": "#00FF00",
-            "changer_dangle": "#0000FF",
-            "préciser": "#FF00FF",
-            "illustrer": "#FFFF00",
-            "comparer": "#00FFFF",
-            "cause": "#FFA500",
-            "conséquence": "#800080",
-            "but": "#008000",
-            "opposition": "#000080",
-            "concession": "#800000",
-            "restriction": "#008080",
-            "rectifier": "#FF1493",
-            "supposer": "#FF4500",
-            "conclure": "#4B0082",
-            "modalisation": "#2E8B57",
-            "temps": "#8B4513",
-            "condition": "#DC143C",
-            "addition": "#9932CC",
-            "alternative": "#D2691E",
-            "comparaison": "#B8860B",
-            "conséquence_avancée": "#8FBC8F"
-        };
-
-        // Initialisation
-        function initApp() {
-            console.log('=== DÉMARRAGE DE L\'APPLICATION ===');
-            
-            try {
-                loadFromStorage();
-                updateTextList();
-                updateExportStats();
-                updateNextId();
-                updateConnecteursInfo();
-
-                document.getElementById('textForm').addEventListener('submit', handleFormSubmit);
-                document.getElementById('clearBtn').addEventListener('click', initForm);
-                document.getElementById('unifiedFileInput').addEventListener('change', handleUnifiedImport);
-                document.getElementById('detectionBtn').addEventListener('click', detectConnecteursPhase3);
-                document.getElementById('highlightBtn').addEventListener('click', applyHighlight);
-                document.getElementById('removeHighlightBtn').addEventListener('click', removeHighlight);
-                document.getElementById('italicBtn').addEventListener('click', applyEmphasis);
-                document.getElementById('clearMarksBtn').addEventListener('click', clearAllMarksPhase3);
-                document.getElementById('closeModal').addEventListener('click', closePreview);
-                document.getElementById('copyFromPreview').addEventListener('click', copyFromPreview);
-                document.getElementById('exportFromPreview').addEventListener('click', exportFromPreview);
-                document.getElementById('textContentEditable').addEventListener('input', updateContentTextarea);
-
-                document.querySelectorAll('.phase').forEach(phase => {
-                    phase.addEventListener('click', () => {
-                        const phaseNumber = parseInt(phase.dataset.phase);
-                        goToPhase(phaseNumber);
-                    });
-                });
-                
-                console.log('Application initialisée avec succès');
-                showMessage('Application prête ! Les connecteurs collés sont maintenant détectés.', 'success');
-                
-            } catch (error) {
-                console.error('Erreur lors de l\'initialisation:', error);
-                showMessage('Erreur au démarrage: ' + error.message, 'error');
-            }
-        }
-
-        function goToPhase(phaseNumber) {
-            currentPhase = phaseNumber;
-
-            document.querySelectorAll('.phase').forEach(phase => {
-                phase.classList.remove('active');
-                if (parseInt(phase.dataset.phase) === phaseNumber) {
-                    phase.classList.add('active');
-                }
-            });
-
-            document.querySelectorAll('.phase-content').forEach(content => {
-                content.classList.remove('active');
-                if (content.id === 'phase' + phaseNumber) {
-                    content.classList.add('active');
-                }
-            });
-
-            if (phaseNumber === 2) {
-                updateTextList();
-            } else if (phaseNumber === 3) {
-                updateConnecteursInfo();
-                removeLegend();
-            } else if (phaseNumber === 4) {
-                updateExportStats();
-            }
-        }
-
-        function handleFormSubmit(e) {
-            e.preventDefault();
-
-            const id = parseInt(document.getElementById('textId').value);
-            const title = document.getElementById('title').value.trim();
-            const content = document.getElementById('content').value.trim();
-
-            if (!title || !content) {
-                showMessage('Veuillez remplir le titre et le contenu', 'warning');
-                return;
-            }
-
-            if (editingTextId) {
-                const index = textData.texts.findIndex(t => t.id === editingTextId);
-                if (index !== -1) {
-                    textData.texts[index] = { id, title, content };
-                    showMessage('Texte modifié avec succès !');
-                }
-            } else {
-                if (textData.texts.some(t => t.id === id)) {
-                    showMessage(`Le numéro ${id} est déjà utilisé. Choisissez un autre numéro.`, 'warning');
-                    return;
-                }
-                textData.texts.push({ id, title, content });
-                showMessage('Texte ajouté avec succès !');
-            }
-
-            updateTextList();
-            initForm();
-            goToPhase(2);
-        }
-
-        function initForm() {
-            document.getElementById('title').value = '';
-            document.getElementById('textContentEditable').innerHTML = '';
-            document.getElementById('content').value = '';
-            editingTextId = null;
-            document.getElementById('submitBtn').innerHTML = '<i class="fas fa-plus"></i> Ajouter ce texte';
-            updateNextId();
-            removeLegend();
-        }
-
-        function updateNextId() {
-            if (textData.texts.length === 0) {
-                document.getElementById('textId').value = 1;
-                return;
-            }
-
-            const ids = textData.texts.map(text => text.id).sort((a, b) => a - b);
-            let nextId = 1;
-
-            for (let id of ids) {
-                if (id === nextId) {
-                    nextId++;
-                } else if (id > nextId) {
-                    break;
-                }
-            }
-
-            if (!editingTextId) {
-                document.getElementById('textId').value = nextId;
-            }
-        }
-
-        function updateTextList() {
-            const textList = document.getElementById('textList');
-            const emptyState = document.getElementById('emptyState');
-
-            textList.innerHTML = '';
-
-            if (textData.texts.length === 0) {
-                emptyState.style.display = 'block';
-                return;
-            }
-
-            emptyState.style.display = 'none';
-            textData.texts.sort((a, b) => a.id - b.id);
-
-            textData.texts.forEach(text => {
-                const textElement = document.createElement('div');
-                textElement.className = 'text-item';
-                textElement.dataset.textId = text.id;
-
-                let displayContent = text.content
-                    .replace(/\*\*(.*?)\*\*/g, '$1')
-                    .replace(/\\n/g, '<br>');
-
-                let displayTitle = text.title
-                    .replace(/\\n/g, '<br>');
-
-                const hasDetectedConnecteurs = textesAvecConnecteurs.has(text.id);
-
-                const detectSingleButton = `
-                    <button class="action-btn detect-single-btn" onclick="toggleDetectSingleText(${text.id})" id="detect-single-${text.id}">
-                        <i class="fas fa-search"></i>${hasDetectedConnecteurs ? 'masquer connecteurs' : 'afficher connecteurs'}
-                    </button>
-                `;
-
-                textElement.innerHTML = `
-                    <div class="text-item-header">
-                        <div class="text-item-id">
-                            texte n°${text.id}
-                        </div>
-                        <div class="text-item-actions">
-                            ${detectSingleButton}
-                            <button class="action-btn edit-btn" onclick="editText(${text.id})">
-                                <i class="fas fa-edit"></i>modifier
-                            </button>
-                            <button class="action-btn delete-btn" onclick="deleteText(${text.id})">
-                                <i class="fas fa-trash-alt"></i>supprimer
-                            </button>
-                        </div>
-                    </div>
-                    <div class="text-item-content" id="content-${text.id}">
-                        ${displayContent}
-                    </div>
-                    <div style="color: #333; font-size: 0.9rem; padding-top: 8px; text-align: right;">
-                        ${displayTitle}
-                    </div>
-                    <div class="single-line-legend-container" id="single-line-legend-${text.id}" style="display: none;"></div>
-                `;
-
-                textList.appendChild(textElement);
-                
-                if (hasDetectedConnecteurs) {
-                    setTimeout(() => {
-                        detectConnecteursForSingleText(text.id);
-                        const button = document.getElementById(`detect-single-${text.id}`);
-                        if (button) {
-                            button.innerHTML = '<i class="fas fa-eye-slash"></i>masquer connecteurs';
-                            button.classList.add('active');
-                        }
-                    }, 50);
-                }
-            });
-
-            saveToStorage();
-        }
-
-        function escapeRegExp(string) {
-            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        }
-
-        // FONCTION MODIFIÉE POUR LA PHASE 3 - avec correction pour les connecteurs à points de suspension
-        function detectConnecteursPhase3() {
-            if (!connecteurs || Object.keys(connecteurs).length === 0) {
-                showMessage('Aucun connecteur chargé. Importez d\'abord un fichier connecteurs.js', 'warning');
-                return;
-            }
-
-            const editor = document.getElementById('textContentEditable');
-            let htmlContent = editor.innerHTML;
-
-            if (!htmlContent.trim()) {
-                showMessage('Le texte est vide', 'warning');
-                return;
-            }
-
-            htmlContent = htmlContent.replace(/<span class="connecteur[^"]*"[^>]*>(.*?)<\/span>/gi, '$1');
-
-            let normalizedContent = htmlContent
-                .replace(/’/g, "'")
-                .replace(/‘/g, "'")
-                .replace(/’/g, "'");
-
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = normalizedContent;
-
-            let connecteursTrouves = {};
-            let totalReplacements = 0;
-
-            let allConnectors = [];
-
-            Object.keys(connecteurs).forEach(category => {
-                const connecteursList = connecteurs[category];
-                if (!Array.isArray(connecteursList)) return;
-
-                connecteursList.forEach(connector => {
-                    const normalizedConnector = connector.replace(/’/g, "'");
-
-                    allConnectors.push({
-                        connector: normalizedConnector,
-                        category: category,
-                        length: normalizedConnector.length,
-                        hasEllipsis: normalizedConnector.includes('...')
-                    });
-                });
-            });
-
-            allConnectors.sort((a, b) => {
-                if (b.length !== a.length) {
-                    return b.length - a.length;
-                }
-                if (a.hasEllipsis && !b.hasEllipsis) return 1;
-                if (!a.hasEllipsis && b.hasEllipsis) return -1;
-                return 0;
-            });
-
-            function processTextNode(textNode) {
-                let text = textNode.textContent;
-                let parent = textNode.parentNode;
-
-                if (parent.classList && parent.classList.contains('connecteur')) {
-                    return;
-                }
-
-                let replacements = [];
-
-                for (let connData of allConnectors) {
-                    const connector = connData.connector;
-                    const category = connData.category;
-                    const hasEllipsis = connData.hasEllipsis;
-
-                    let color = connecteursColors[category];
-                    if (!color) {
-                        const hue = Math.floor(Math.random() * 360);
-                        color = `hsl(${hue}, 70%, 50%)`;
-                    }
-                    const textColor = 'white';
-
-                    if (hasEllipsis) {
-                        const connectorParts = connector.split(/\s*\.\.\.\s*/);
-
-                        if (connectorParts.length > 1) {
-                            const escapedPart1 = escapeRegExp(connectorParts[0]);
-                            const escapedPart2 = escapeRegExp(connectorParts[1] || "");
-
-                            // CORRECTION CRUCIALE : AUCUN signe de ponctuation autorisé entre les deux parties
-                            // Sont interdits : , ; : ! ? . 
-                            // Seuls les espaces, lettres, apostrophes, tirets sont autorisés
-                            const regexPattern = `(^|[^\\w'\\-])(${escapedPart1})[^,;:!?\\.]*(${escapedPart2})([^\\w'\\-]|$)`;
-                            const regex = new RegExp(regexPattern, 'gi');
-
-                            let match;
-                            while ((match = regex.exec(text)) !== null) {
-                                const connectorPart1 = match[2];
-                                const connectorPart2 = match[3];
-                                const fullMatch = match[0];
-                                const startIndex = match.index + match[1].length;
-                                const endIndex = startIndex + fullMatch.length - match[4].length;
-
-                                let overlap = false;
-                                for (let r of replacements) {
-                                    if (startIndex < r.end && endIndex > r.start) {
-                                        overlap = true;
-                                        break;
-                                    }
-                                }
-
-                                if (!overlap) {
-                                    if (!connecteursTrouves[category]) {
-                                        connecteursTrouves[category] = {
-                                            count: 0,
-                                            color: color,
-                                            connecteursUniques: new Set()
-                                        };
-                                    }
-                                    connecteursTrouves[category].count++;
-                                    connecteursTrouves[category].connecteursUniques.add(connector.toLowerCase());
-
-                                    const fullConnectorText = fullMatch.substring(match[1].length, fullMatch.length - match[4].length);
-                                    
-                                    replacements.push({
-                                        start: startIndex,
-                                        end: endIndex,
-                                        text: fullConnectorText,
-                                        category: category,
-                                        color: color,
-                                        textColor: textColor,
-                                        isMultiPart: true,
-                                        fullConnector: connector
-                                    });
-                                }
-                            }
-                        }
-                    } else {
-                        const escapedConnector = escapeRegExp(connector);
-                        
-                        // Pour les connecteurs simples, on accepte qu'ils soient collés
-                        const regex = new RegExp(`(^|[^\\w'\\-])(${escapedConnector})`, 'gi');
-
-                        let match;
-                        while ((match = regex.exec(text)) !== null) {
-                            const connectorMatch = match[2];
-                            const connectorStart = match.index + match[1].length;
-                            const connectorEnd = connectorStart + connectorMatch.length;
-
-                            let overlap = false;
-                            for (let r of replacements) {
-                                if (connectorStart < r.end && connectorEnd > r.start) {
-                                    overlap = true;
-                                    break;
-                                }
-                            }
-
-                            if (!overlap) {
-                                if (!connecteursTrouves[category]) {
-                                    connecteursTrouves[category] = {
-                                        count: 0,
-                                        color: color,
-                                        connecteursUniques: new Set()
-                                    };
-                                }
-                                connecteursTrouves[category].count++;
-                                connecteursTrouves[category].connecteursUniques.add(connectorMatch.toLowerCase());
-
-                                replacements.push({
-                                    start: connectorStart,
-                                    end: connectorEnd,
-                                    text: connectorMatch,
-                                    category: category,
-                                    color: color,
-                                    textColor: textColor
-                                });
-                            }
-                        }
-                    }
-                }
-
-                replacements.sort((a, b) => b.start - a.start);
-
-                let newText = text;
-                for (let replacement of replacements) {
-                    const before = newText.substring(0, replacement.start);
-                    const after = newText.substring(replacement.end);
-
-                    const titleText = replacement.isMultiPart
-                        ? `Catégorie: ${replacement.category.replace('_', ' ')} (${replacement.fullConnector})`
-                        : `Catégorie: ${replacement.category.replace('_', ' ')}`;
-
-                    newText = before +
-                        `<span class="connecteur connecteur-${replacement.category}" 
-                            style="background-color: ${replacement.color}; color: ${replacement.textColor}; padding: 2px 6px; border-radius: 4px; font-weight: 600; border: 1px solid rgba(0,0,0,0.3); margin: 0 1px;" 
-                            data-category="${replacement.category}" 
-                            title="${titleText}">${replacement.text}</span>` +
-                        after;
-                    totalReplacements++;
-                }
-
-                if (newText !== text) {
-                    const newElement = document.createElement('span');
-                    newElement.innerHTML = newText;
-                    textNode.parentNode.replaceChild(newElement, textNode);
-                }
-            }
-
-            function traverseNodes(node) {
-                if (node.nodeType === Node.TEXT_NODE) {
-                    processTextNode(node);
-                } else if (node.nodeType === Node.ELEMENT_NODE) {
-                    if (!node.classList || !node.classList.contains('connecteur')) {
-                        const children = Array.from(node.childNodes);
-                        children.forEach(child => traverseNodes(child));
-                    }
-                }
-            }
-
-            traverseNodes(tempDiv);
-
-            editor.innerHTML = tempDiv.innerHTML;
-            updateContentTextarea();
-
-            afficherLegendeConnecteurs(connecteursTrouves);
-
-            if (totalReplacements > 0) {
-                showMessage(`${totalReplacements} connecteur(s) détecté(s) dans ${Object.keys(connecteursTrouves).length} catégorie(s)`);
-            } else {
-                showMessage('Aucun connecteur détecté dans le texte', 'warning');
-            }
-        }
-
-        // FONCTION MODIFIÉE POUR LA DÉTECTION SUR UN TEXTE UNIQUE - avec la même correction
-        function detectConnecteursForSingleText(textId) {
-            if (!connecteurs || Object.keys(connecteurs).length === 0) {
-                showMessage('Aucun connecteur chargé. Importez d\'abord un fichier connecteurs.js', 'warning');
-                return;
-            }
-
-            const contentElement = document.getElementById(`content-${textId}`);
-            const legendContainer = document.getElementById(`single-line-legend-${textId}`);
-
-            if (!contentElement) return;
-
-            let htmlContent = contentElement.innerHTML;
-
-            htmlContent = htmlContent.replace(/<span class="connecteur[^"]*"[^>]*>(.*?)<\/span>/gi, '$1');
-
-            let normalizedContent = htmlContent
-                .replace(/’/g, "'")
-                .replace(/‘/g, "'")
-                .replace(/’/g, "'");
-
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = normalizedContent;
-
-            let connecteursTrouves = {};
-            let replacementsCount = 0;
-
-            let allConnectors = [];
-
-            Object.keys(connecteurs).forEach(category => {
-                const connecteursList = connecteurs[category];
-                if (!Array.isArray(connecteursList)) return;
-
-                connecteursList.forEach(connector => {
-                    const normalizedConnector = connector.replace(/’/g, "'");
-
-                    allConnectors.push({
-                        connector: normalizedConnector,
-                        category: category,
-                        length: normalizedConnector.length,
-                        hasEllipsis: normalizedConnector.includes('...')
-                    });
-                });
-            });
-
-            allConnectors.sort((a, b) => {
-                if (b.length !== a.length) {
-                    return b.length - a.length;
-                }
-                if (a.hasEllipsis && !b.hasEllipsis) return 1;
-                if (!a.hasEllipsis && b.hasEllipsis) return -1;
-                return 0;
-            });
-
-            function processTextNode(textNode) {
-                let text = textNode.textContent;
-                let parent = textNode.parentNode;
-
-                if (parent.classList && parent.classList.contains('connecteur')) {
-                    return;
-                }
-
-                let replacements = [];
-
-                for (let connData of allConnectors) {
-                    const connector = connData.connector;
-                    const category = connData.category;
-                    const hasEllipsis = connData.hasEllipsis;
-
-                    let color = connecteursColors[category];
-                    if (!color) {
-                        const hue = Math.floor(Math.random() * 360);
-                        color = `hsl(${hue}, 70%, 50%)`;
-                    }
-                    const textColor = 'white';
-
-                    if (hasEllipsis) {
-                        const connectorParts = connector.split(/\s*\.\.\.\s*/);
-
-                        if (connectorParts.length > 1) {
-                            const escapedPart1 = escapeRegExp(connectorParts[0]);
-                            const escapedPart2 = escapeRegExp(connectorParts[1] || "");
-
-                            // CORRECTION CRUCIALE : AUCUN signe de ponctuation autorisé entre les deux parties
-                            const regexPattern = `(^|[^\\w'\\-])(${escapedPart1})[^,;:!?\\.]*(${escapedPart2})([^\\w'\\-]|$)`;
-                            const regex = new RegExp(regexPattern, 'gi');
-
-                            let match;
-                            while ((match = regex.exec(text)) !== null) {
-                                const connectorPart1 = match[2];
-                                const connectorPart2 = match[3];
-                                const fullMatch = match[0];
-                                const startIndex = match.index + match[1].length;
-                                const endIndex = startIndex + fullMatch.length - match[4].length;
-
-                                let overlap = false;
-                                for (let r of replacements) {
-                                    if (startIndex < r.end && endIndex > r.start) {
-                                        overlap = true;
-                                        break;
-                                    }
-                                }
-
-                                if (!overlap) {
-                                    if (!connecteursTrouves[category]) {
-                                        connecteursTrouves[category] = {
-                                            count: 0,
-                                            color: color,
-                                            connecteursUniques: new Set()
-                                        };
-                                    }
-                                    connecteursTrouves[category].count++;
-                                    connecteursTrouves[category].connecteursUniques.add(connector.toLowerCase());
-
-                                    const fullConnectorText = fullMatch.substring(match[1].length, fullMatch.length - match[4].length);
-                                    
-                                    replacements.push({
-                                        start: startIndex,
-                                        end: endIndex,
-                                        text: fullConnectorText,
-                                        category: category,
-                                        color: color,
-                                        textColor: textColor,
-                                        isMultiPart: true,
-                                        fullConnector: connector
-                                    });
-                                }
-                            }
-                        }
-                    } else {
-                        const escapedConnector = escapeRegExp(connector);
-                        
-                        const regex = new RegExp(`(^|[^\\w'\\-])(${escapedConnector})`, 'gi');
-
-                        let match;
-                        while ((match = regex.exec(text)) !== null) {
-                            const connectorMatch = match[2];
-                            const connectorStart = match.index + match[1].length;
-                            const connectorEnd = connectorStart + connectorMatch.length;
-
-                            let overlap = false;
-                            for (let r of replacements) {
-                                if (connectorStart < r.end && connectorEnd > r.start) {
-                                    overlap = true;
-                                    break;
-                                }
-                            }
-
-                            if (!overlap) {
-                                if (!connecteursTrouves[category]) {
-                                    connecteursTrouves[category] = {
-                                        count: 0,
-                                        color: color,
-                                        connecteursUniques: new Set()
-                                    };
-                                }
-                                connecteursTrouves[category].count++;
-                                connecteursTrouves[category].connecteursUniques.add(connectorMatch.toLowerCase());
-
-                                replacements.push({
-                                    start: connectorStart,
-                                    end: connectorEnd,
-                                    text: connectorMatch,
-                                    category: category,
-                                    color: color,
-                                    textColor: textColor
-                                });
-                            }
-                        }
-                    }
-                }
-
-                replacements.sort((a, b) => b.start - a.start);
-
-                let newText = text;
-                for (let replacement of replacements) {
-                    const before = newText.substring(0, replacement.start);
-                    const after = newText.substring(replacement.end);
-
-                    const titleText = replacement.isMultiPart
-                        ? `Catégorie: ${replacement.category.replace('_', ' ')} (${replacement.fullConnector})`
-                        : `Catégorie: ${replacement.category.replace('_', ' ')}`;
-
-                    newText = before +
-                        `<span class="connecteur connecteur-${replacement.category}" 
-                            style="background-color: ${replacement.color}; color: ${replacement.textColor}; padding: 2px 6px; border-radius: 4px; font-weight: 600; border: 1px solid rgba(0,0,0,0.3); margin: 0 1px;" 
-                            data-category="${replacement.category}" 
-                            title="${titleText}">${replacement.text}</span>` +
-                        after;
-                    replacementsCount++;
-                }
-
-                if (newText !== text) {
-                    const newElement = document.createElement('span');
-                    newElement.innerHTML = newText;
-                    textNode.parentNode.replaceChild(newElement, textNode);
-                }
-            }
-
-            function traverseNodes(node) {
-                if (node.nodeType === Node.TEXT_NODE) {
-                    processTextNode(node);
-                } else if (node.nodeType === Node.ELEMENT_NODE) {
-                    if (!node.classList || !node.classList.contains('connecteur')) {
-                        const children = Array.from(node.childNodes);
-                        children.forEach(child => traverseNodes(child));
-                    }
-                }
-            }
-
-            traverseNodes(tempDiv);
-            contentElement.innerHTML = tempDiv.innerHTML;
-
-            if (Object.keys(connecteursTrouves).length > 0) {
-                afficherLegendePourTexte(textId, connecteursTrouves);
-            }
-
-            if (replacementsCount > 0) {
-                showMessage(`${replacementsCount} connecteur(s) détecté(s) dans ce texte`);
-            }
-        }
-
-        function toggleDetectSingleText(textId) {
-            const contentElement = document.getElementById(`content-${textId}`);
-            const legendContainer = document.getElementById(`single-line-legend-${textId}`);
-            const button = document.getElementById(`detect-single-${textId}`);
-
-            if (!contentElement) return;
-
-            if (textesAvecConnecteurs.has(textId)) {
-                textesAvecConnecteurs.delete(textId);
-                
-                const text = textData.texts.find(t => t.id === textId);
-                if (text) {
-                    let displayContent = text.content
-                        .replace(/\*\*(.*?)\*\*/g, '$1')
-                        .replace(/\\n/g, '<br>');
-                    contentElement.innerHTML = displayContent;
-                }
-
-                if (legendContainer) {
-                    legendContainer.style.display = 'none';
-                    legendContainer.innerHTML = '';
-                }
-
-                button.innerHTML = '<i class="fas fa-search"></i>afficher connecteurs';
-                button.classList.remove('active');
-
-                showMessage('Connecteurs masqués pour ce texte');
-            } else {
-                if (!connecteurs || Object.keys(connecteurs).length === 0) {
-                    showMessage('Aucun connecteur chargé. Importez d\'abord un fichier connecteurs.js', 'warning');
-                    return;
-                }
-
-                let htmlContent = contentElement.innerHTML;
-                htmlContent = htmlContent.replace(/<span class="connecteur[^"]*"[^>]*>(.*?)<\/span>/gi, '$1');
-
-                let normalizedContent = htmlContent
-                    .replace(/’/g, "'")
-                    .replace(/‘/g, "'")
-                    .replace(/’/g, "'");
-
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = normalizedContent;
-
-                let connecteursTrouves = {};
-                let replacementsCount = 0;
-
-                let allConnectors = [];
-
-                Object.keys(connecteurs).forEach(category => {
-                    const connecteursList = connecteurs[category];
-                    if (!Array.isArray(connecteursList)) return;
-
-                    connecteursList.forEach(connector => {
-                        const normalizedConnector = connector.replace(/’/g, "'");
-
-                        allConnectors.push({
-                            connector: normalizedConnector,
-                            category: category,
-                            length: normalizedConnector.length,
-                            hasEllipsis: normalizedConnector.includes('...')
-                        });
-                    });
-                });
-
-                allConnectors.sort((a, b) => {
-                    if (b.length !== a.length) {
-                        return b.length - a.length;
-                    }
-                    if (a.hasEllipsis && !b.hasEllipsis) return 1;
-                    if (!a.hasEllipsis && b.hasEllipsis) return -1;
-                    return 0;
-                });
-
-                function processTextNode(textNode) {
-                    let text = textNode.textContent;
-                    let parent = textNode.parentNode;
-
-                    if (parent.classList && parent.classList.contains('connecteur')) {
-                        return;
-                    }
-
-                    let replacements = [];
-
-                    for (let connData of allConnectors) {
-                        const connector = connData.connector;
-                        const category = connData.category;
-                        const hasEllipsis = connData.hasEllipsis;
-
-                        let color = connecteursColors[category];
-                        if (!color) {
-                            const hue = Math.floor(Math.random() * 360);
-                            color = `hsl(${hue}, 70%, 50%)`;
-                        }
-                        const textColor = 'white';
-
-                        if (hasEllipsis) {
-                            const connectorParts = connector.split(/\s*\.\.\.\s*/);
-
-                            if (connectorParts.length > 1) {
-                                const escapedPart1 = escapeRegExp(connectorParts[0]);
-                                const escapedPart2 = escapeRegExp(connectorParts[1] || "");
-
-                                const regexPattern = `(^|[^\\w'\\-])(${escapedPart1})[^,;:!?\\.]*(${escapedPart2})([^\\w'\\-]|$)`;
-                                const regex = new RegExp(regexPattern, 'gi');
-
-                                let match;
-                                while ((match = regex.exec(text)) !== null) {
-                                    const connectorPart1 = match[2];
-                                    const connectorPart2 = match[3];
-                                    const fullMatch = match[0];
-                                    const startIndex = match.index + match[1].length;
-                                    const endIndex = startIndex + fullMatch.length - match[4].length;
-
-                                    let overlap = false;
-                                    for (let r of replacements) {
-                                        if (startIndex < r.end && endIndex > r.start) {
-                                            overlap = true;
-                                            break;
-                                        }
-                                    }
-
-                                    if (!overlap) {
-                                        if (!connecteursTrouves[category]) {
-                                            connecteursTrouves[category] = {
-                                                count: 0,
-                                                color: color,
-                                                connecteursUniques: new Set()
-                                            };
-                                        }
-                                        connecteursTrouves[category].count++;
-                                        connecteursTrouves[category].connecteursUniques.add(connector.toLowerCase());
-
-                                        const fullConnectorText = fullMatch.substring(match[1].length, fullMatch.length - match[4].length);
-                                        
-                                        replacements.push({
-                                            start: startIndex,
-                                            end: endIndex,
-                                            text: fullConnectorText,
-                                            category: category,
-                                            color: color,
-                                            textColor: textColor,
-                                            isMultiPart: true,
-                                            fullConnector: connector
-                                        });
-                                    }
-                                }
-                            }
-                        } else {
-                            const escapedConnector = escapeRegExp(connector);
-                            
-                            const regex = new RegExp(`(^|[^\\w'\\-])(${escapedConnector})`, 'gi');
-
-                            let match;
-                            while ((match = regex.exec(text)) !== null) {
-                                const connectorMatch = match[2];
-                                const connectorStart = match.index + match[1].length;
-                                const connectorEnd = connectorStart + connectorMatch.length;
-
-                                let overlap = false;
-                                for (let r of replacements) {
-                                    if (connectorStart < r.end && connectorEnd > r.start) {
-                                        overlap = true;
-                                        break;
-                                    }
-                                }
-
-                                if (!overlap) {
-                                    if (!connecteursTrouves[category]) {
-                                        connecteursTrouves[category] = {
-                                            count: 0,
-                                            color: color,
-                                            connecteursUniques: new Set()
-                                        };
-                                    }
-                                    connecteursTrouves[category].count++;
-                                    connecteursTrouves[category].connecteursUniques.add(connectorMatch.toLowerCase());
-
-                                    replacements.push({
-                                        start: connectorStart,
-                                        end: connectorEnd,
-                                        text: connectorMatch,
-                                        category: category,
-                                        color: color,
-                                        textColor: textColor
-                                    });
-                                }
-                            }
-                        }
-                    }
-
-                    replacements.sort((a, b) => b.start - a.start);
-
-                    let newText = text;
-                    for (let replacement of replacements) {
-                        const before = newText.substring(0, replacement.start);
-                        const after = newText.substring(replacement.end);
-
-                        const titleText = replacement.isMultiPart
-                            ? `Catégorie: ${replacement.category.replace('_', ' ')} (${replacement.fullConnector})`
-                            : `Catégorie: ${replacement.category.replace('_', ' ')}`;
-
-                        newText = before +
-                            `<span class="connecteur connecteur-${replacement.category}" 
-                                style="background-color: ${replacement.color}; color: ${replacement.textColor}; padding: 2px 6px; border-radius: 4px; font-weight: 600; border: 1px solid rgba(0,0,0,0.3); margin: 0 1px;" 
-                                data-category="${replacement.category}" 
-                                title="${titleText}">${replacement.text}</span>` +
-                            after;
-                        replacementsCount++;
-                    }
-
-                    if (newText !== text) {
-                        const newElement = document.createElement('span');
-                        newElement.innerHTML = newText;
-                        textNode.parentNode.replaceChild(newElement, textNode);
-                    }
-                }
-
-                function traverseNodes(node) {
-                    if (node.nodeType === Node.TEXT_NODE) {
-                        processTextNode(node);
-                    } else if (node.nodeType === Node.ELEMENT_NODE) {
-                        if (!node.classList || !node.classList.contains('connecteur')) {
-                            const children = Array.from(node.childNodes);
-                            children.forEach(child => traverseNodes(child));
-                        }
-                    }
-                }
-
-                traverseNodes(tempDiv);
-                contentElement.innerHTML = tempDiv.innerHTML;
-
-                if (Object.keys(connecteursTrouves).length > 0) {
-                    afficherLegendePourTexte(textId, connecteursTrouves);
-                    textesAvecConnecteurs.add(textId);
-                }
-
-                button.innerHTML = '<i class="fas fa-eye-slash"></i>masquer connecteurs';
-                button.classList.add('active');
-
-                if (replacementsCount > 0) {
-                    showMessage(`${replacementsCount} connecteur(s) détecté(s) dans ce texte`);
-                } else {
-                    showMessage('Aucun connecteur détecté dans ce texte', 'warning');
-                }
-            }
-
-            saveToStorage();
-        }
-
-        function afficherLegendePourTexte(textId, connecteursTrouves) {
-            const legendContainer = document.getElementById(`single-line-legend-${textId}`);
-            if (!legendContainer) return;
-
-            legendContainer.innerHTML = '';
-
-            const categoriesTriees = Object.keys(connecteursTrouves).sort((a, b) => {
-                return connecteursTrouves[b].count - connecteursTrouves[a].count;
-            });
-
-            if (categoriesTriees.length === 0) return;
-
-            const legendContent = document.createElement('div');
-            legendContent.className = 'single-line-legend';
-
-            categoriesTriees.forEach(category => {
-                const color = connecteursTrouves[category].color;
-                const count = connecteursTrouves[category].count;
-
-                const legendItem = document.createElement('div');
-                legendItem.className = 'single-line-legend-item';
-
-                const colorBox = document.createElement('span');
-                colorBox.className = 'single-line-legend-color';
-                colorBox.style.backgroundColor = color;
-
-                const legendText = document.createElement('span');
-                legendText.className = 'single-line-legend-text';
-                const categoryName = category.replace('_', ' ');
-                legendText.innerHTML = `<strong>${categoryName}</strong> : ${count}`;
-
-                legendItem.appendChild(colorBox);
-                legendItem.appendChild(legendText);
-                legendContent.appendChild(legendItem);
-            });
-
-            legendContainer.appendChild(legendContent);
-            legendContainer.style.display = 'block';
-        }
-
-        function afficherLegendeConnecteurs(connecteursTrouves) {
-            removeLegend();
-
-            if (Object.keys(connecteursTrouves).length === 0) {
-                return;
-            }
-
-            const legendContainer = document.createElement('div');
-            legendContainer.id = 'legende-connecteurs';
-            legendContainer.className = 'single-line-legend';
-
-            const categoriesTriees = Object.keys(connecteursTrouves).sort((a, b) => {
-                return connecteursTrouves[b].count - connecteursTrouves[a].count;
-            });
-
-            categoriesTriees.forEach(category => {
-                const color = connecteursTrouves[category].color;
-                const count = connecteursTrouves[category].count;
-
-                const legendItem = document.createElement('div');
-                legendItem.className = 'single-line-legend-item';
-
-                const colorBox = document.createElement('span');
-                colorBox.className = 'single-line-legend-color';
-                colorBox.style.backgroundColor = color;
-
-                const legendText = document.createElement('span');
-                legendText.className = 'single-line-legend-text';
-                const categoryName = category.replace('_', ' ');
-                legendText.innerHTML = `<strong>${categoryName}</strong> : ${count}`;
-
-                legendItem.appendChild(colorBox);
-                legendItem.appendChild(legendText);
-                legendContainer.appendChild(legendItem);
-            });
-
-            const editorContainer = document.getElementById('textContentEditable').parentNode;
-            editorContainer.insertBefore(legendContainer, editorContainer.querySelector('.buttons-container'));
-
-            currentLegend = legendContainer;
-        }
-
-        function editText(id) {
-            const text = textData.texts.find(t => t.id === id);
-            if (text) {
-                editingTextId = id;
-                document.getElementById('textId').value = text.id;
-                document.getElementById('title').value = text.title;
-
-                let editorContent = text.content
-                    .replace(/\*\*(.*?)\*\*/g, '<span class="highlighted">$1</span>')
-                    .replace(/\\n/g, '<br>')
-                    .replace(/\\\\/g, '\\');
-
-                document.getElementById('textContentEditable').innerHTML = editorContent;
-                document.getElementById('content').value = text.content;
-
-                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save"></i> Enregistrer les modifications';
-
-                goToPhase(3);
-            }
-        }
-
-        function deleteText(id) {
-            if (confirm('Supprimer ce texte ?')) {
-                textData.texts = textData.texts.filter(t => t.id !== id);
-                textesAvecLegend.delete(id);
-                textesAvecConnecteurs.delete(id);
-                updateTextList();
-                updateNextId();
-
-                if (editingTextId === id) {
-                    initForm();
-                }
-
-                showMessage('Texte supprimé.');
-            }
-        }
-
-        function handleUnifiedImport(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            document.getElementById('unifiedFileName').textContent = file.name;
-            document.getElementById('unifiedFileInfo').style.display = 'block';
-
-            const reader = new FileReader();
-
-            reader.onload = function (e) {
-                try {
-                    const fileContent = e.target.result;
-
-                    let cleanedContent = fileContent;
-
-                    let importedTextData = null;
-                    let importedConnecteurs = null;
-
-                    const textDataRegex = /const\s+textData\s*=\s*(\{[\s\S]*?\});/;
-                    const textDataMatch = cleanedContent.match(textDataRegex);
-
-                    if (textDataMatch) {
-                        try {
-                            const textDataStr = textDataMatch[1];
-                            importedTextData = eval(`(${textDataStr})`);
-                        } catch (error) {
-                            console.error("Erreur lors de l'extraction de textData:", error);
-                        }
-                    }
-
-                    const connecteursDataRegex = /const\s+connecteursData\s*=\s*(\{[\s\S]*?\});/;
-                    const connecteursDataMatch = cleanedContent.match(connecteursDataRegex);
-
-                    if (connecteursDataMatch) {
-                        try {
-                            const connecteursDataStr = connecteursDataMatch[1];
-                            const connecteursData = eval(`(${connecteursDataStr})`);
-                            importedConnecteurs = connecteursData.connecteurs;
-                        } catch (error) {
-                            console.error("Erreur lors de l'extraction de connecteursData:", error);
-                        }
-                    }
-
-                    let successMessage = '';
-
-                    if (importedTextData && importedTextData.texts && Array.isArray(importedTextData.texts)) {
-                        textData.texts = importedTextData.texts;
-                        document.getElementById('unifiedTextesCount').textContent = `${textData.texts.length} texte(s)`;
-                        successMessage += `${textData.texts.length} texte(s) `;
-                        updateTextList();
-                        updateNextId();
-                    }
-
-                    if (importedConnecteurs && typeof importedConnecteurs === 'object') {
-                        connecteurs = importedConnecteurs;
-                        const categoriesCount = Object.keys(connecteurs).length;
-                        let totalConnecteurs = 0;
-
-                        Object.values(connecteurs).forEach(category => {
-                            if (Array.isArray(category)) {
-                                totalConnecteurs += category.length;
-                            }
-                        });
-
-                        document.getElementById('unifiedConnecteursCount').textContent = `${categoriesCount} catégories, ${totalConnecteurs} connecteurs`;
-                        successMessage += `et ${categoriesCount} catégories de connecteurs `;
-                        updateConnecteursInfo();
-                    }
-
-                    document.getElementById('unifiedStats').style.display = 'block';
-
-                    if (successMessage) {
-                        showMessage(successMessage + 'importé(s) avec succès !');
-                        saveToStorage();
-                        goToPhase(2);
-                    } else {
-                        try {
-                            const oldTextData = window.textData;
-                            const oldConnecteursData = window.connecteursData;
-
-                            eval(cleanedContent);
-
-                            if (window.textData && window.textData.texts) {
-                                textData = window.textData;
-                                updateTextList();
-                                updateNextId();
-                            }
-
-                            if (window.connecteursData && window.connecteursData.connecteurs) {
-                                connecteurs = window.connecteursData.connecteurs;
-                                updateConnecteursInfo();
-                            }
-
-                            window.textData = oldTextData;
-                            window.connecteursData = oldConnecteursData;
-
-                            showMessage('Fichier importé avec succès via exécution directe !');
-                            goToPhase(2);
-                        } catch (finalError) {
-                            console.error('Erreur finale:', finalError);
-                            throw new Error('Format du fichier non reconnu');
-                        }
-                    }
-
-                } catch (error) {
-                    console.error('Erreur d\'import du fichier unifié :', error);
-                    showMessage('Impossible d\'importer le fichier. Vérifiez le format.', 'error');
-                }
-            };
-
-            reader.readAsText(file);
-        }
-
-        function updateConnecteursInfo() {
-            const connecteursInfo = document.getElementById('connecteursInfo');
-            const connecteursSummary = document.getElementById('connecteursSummary');
-
-            if (Object.keys(connecteurs).length === 0) {
-                connecteursInfo.style.display = 'none';
-                return;
-            }
-
-            connecteursInfo.style.display = 'block';
-
-            const categoriesCount = Object.keys(connecteurs).length;
-            let totalConnecteurs = 0;
-            let categoriesList = [];
-
-            Object.entries(connecteurs).forEach(([category, list]) => {
-                if (Array.isArray(list)) {
-                    totalConnecteurs += list.length;
-                    categoriesList.push(category.replace('_', ' '));
-                }
-            });
-
-            connecteursSummary.innerHTML = `
-                <strong>${categoriesCount} catégories</strong> contenant <strong>${totalConnecteurs} connecteurs</strong> au total.<br>
-                <small>Catégories disponibles : ${categoriesList.slice(0, 5).join(', ')}${categoriesList.length > 5 ? '...' : ''}</small>
-            `;
-        }
-
-        function resetAll() {
-            if (textData.texts.length === 0 && Object.keys(connecteurs).length === 0) {
-                showMessage("Il n'y a déjà aucune donnée.", 'warning');
-                return;
-            }
-
-            if (confirm('Supprimer tous les textes et connecteurs ? Cette action ne peut pas être annulée.')) {
-                textData.texts = [];
-                connecteurs = {};
-                textesAvecLegend.clear();
-                textesAvecConnecteurs.clear();
-
-                document.getElementById('unifiedFileInput').value = '';
-                document.getElementById('unifiedFileInfo').style.display = 'none';
-                document.getElementById('unifiedStats').style.display = 'none';
-                document.getElementById('unifiedFileName').textContent = '';
-
-                initForm();
-                updateTextList();
-                updateConnecteursInfo();
-                localStorage.removeItem('philoTextManager');
-                showMessage('Toutes les données ont été supprimées.');
-            }
-        }
-
-        function loadFromStorage() {
-            const saved = localStorage.getItem('philoTextManager');
-            if (saved) {
-                try {
-                    const data = JSON.parse(saved);
-                    textData = data.textData || { texts: [] };
-                    if (data.connecteurs) {
-                        connecteurs = data.connecteurs;
-                    }
-                    if (data.textesAvecLegend) {
-                        textesAvecLegend = new Set(data.textesAvecLegend);
-                    }
-                    if (data.textesAvecConnecteurs) {
-                        textesAvecConnecteurs = new Set(data.textesAvecConnecteurs);
-                    }
-
-                    if (Object.keys(connecteurs).length > 0) {
-                        const categoriesCount = Object.keys(connecteurs).length;
-                        let totalConnecteurs = 0;
-                        Object.values(connecteurs).forEach(category => {
-                            if (Array.isArray(category)) {
-                                totalConnecteurs += category.length;
-                            }
-                        });
-
-                        document.getElementById('unifiedTextesCount').textContent = `${textData.texts.length}`;
-                        document.getElementById('unifiedConnecteursCount').textContent = `${categoriesCount} catégories de connecteurs logiques et ${totalConnecteurs} connecteurs`;
-                        document.getElementById('unifiedStats').style.display = 'block';
-                        document.getElementById('unifiedFileInfo').style.display = 'block';
-                        document.getElementById('unifiedFileName').textContent = 'sauvegarde locale';
-
-                        showMessage(`${textData.texts.length} texte(s) chargés depuis la sauvegarde locale`);
-                    }
-                } catch (e) {
-                    textData = JSON.parse(saved);
-                    textesAvecLegend = new Set();
-                    textesAvecConnecteurs = new Set();
-                }
-            }
-        }
-
-        function saveToStorage() {
-            const data = {
-                textData: textData,
-                connecteurs: connecteurs,
-                textesAvecLegend: Array.from(textesAvecLegend),
-                textesAvecConnecteurs: Array.from(textesAvecConnecteurs),
-                timestamp: new Date().toISOString()
-            };
-            localStorage.setItem('philoTextManager', JSON.stringify(data));
-        }
-
-        function applyHighlight() {
-            const selection = window.getSelection();
-            if (!selection || selection.isCollapsed) {
-                showMessage('Sélectionnez d\'abord du texte à surligner', 'warning');
-                return;
-            }
-
-            const range = selection.getRangeAt(0);
-            const selectedText = range.toString();
-
-            const ancestor = selection.anchorNode.parentElement;
-            if (ancestor.classList && ancestor.classList.contains('highlighted')) {
-                const textNode = document.createTextNode(selectedText);
-                range.deleteContents();
-                range.insertNode(textNode);
-            } else {
-                const span = document.createElement('span');
-                span.className = 'highlighted';
-                span.textContent = selectedText;
-                range.deleteContents();
-                range.insertNode(span);
-            }
-
-            updateContentTextarea();
-            showMessage('Surlignage appliqué/retiré');
-        }
-
-        function removeHighlight() {
-            const selection = window.getSelection();
-            if (!selection || selection.isCollapsed) {
-                showMessage('Sélectionnez d\'abord du texte à désurligner', 'warning');
-                return;
-            }
-
-            const range = selection.getRangeAt(0);
-            const selectedText = range.toString();
-
-            const textNode = document.createTextNode(selectedText);
-            range.deleteContents();
-            range.insertNode(textNode);
-
-            updateContentTextarea();
-            showMessage('Surlignage retiré');
-        }
-
-        function applyEmphasis() {
-            const selection = window.getSelection();
-            if (!selection || selection.isCollapsed) {
-                showMessage('Sélectionnez d\'abord du texte', 'warning');
-                return;
-            }
-
-            const range = selection.getRangeAt(0);
-            const selectedText = range.toString();
-
-            const ancestor = selection.anchorNode.parentElement;
-            if (ancestor.tagName === 'EM' && ancestor.contains(selection.anchorNode)) {
-                const textNode = document.createTextNode(selectedText);
-                range.deleteContents();
-                range.insertNode(textNode);
-            } else {
-                const em = document.createElement('em');
-                em.textContent = selectedText;
-                range.deleteContents();
-                range.insertNode(em);
-            }
-
-            updateContentTextarea();
-            showMessage('Italique appliqué/retiré');
-        }
-
-        function removeLegend() {
-            if (currentLegend && currentLegend.parentNode) {
-                currentLegend.parentNode.removeChild(currentLegend);
-                currentLegend = null;
-            }
-        }
-
-        function clearAllMarksPhase3() {
-            if (!confirm('Supprimer tous les marqueurs de ce texte ?')) {
-                return;
-            }
-
-            const editor = document.getElementById('textContentEditable');
-            let html = editor.innerHTML;
-
-            html = html.replace(/<span class="connecteur[^"]*"[^>]*>(.*?)<\/span>/gi, '$1');
-            html = html.replace(/<span class="highlighted"[^>]*>(.*?)<\/span>/g, '$1');
-
-            editor.innerHTML = html;
-            updateContentTextarea();
-
-            removeLegend();
-
-            if (editingTextId) {
-                textesAvecLegend.delete(editingTextId);
-                saveToStorage();
-            }
-
-            showMessage('Tous les marqueurs ont été supprimés');
-        }
-
-        function updateContentTextarea() {
-            const editor = document.getElementById('textContentEditable');
-            let html = editor.innerHTML;
-
-            html = html.replace(/<span class="connecteur[^"]*"[^>]*>(.*?)<\/span>/gi, '**$1**');
-            html = html.replace(/<span class="highlighted"[^>]*>(.*?)<\/span>/g, '**$1**');
-            html = html.replace(/<br>/g, '\n');
-            html = html.replace(/&nbsp;/g, ' ');
-
-            document.getElementById('content').value = html;
-        }
-
-        function updateExportStats() {
-            document.getElementById('exportTextCount').textContent = textData.texts.length;
-            document.getElementById('exportConnecteursCount').textContent = Object.keys(connecteurs).length;
-            document.getElementById('exportLastModified').textContent = new Date().toLocaleString();
-        }
-
-        function generateJSCode() {
-            if (textData.texts.length === 0 && Object.keys(connecteurs).length === 0) {
-                return `// Aucune donnée pour le moment
-const textData = {
-    texts: []
-};
-
-const connecteursData = {
-    connecteurs: {}
-};
-
-if (typeof window !== 'undefined') {
-    window.textData = textData;
-    window.connecteursData = connecteursData;
-}`;
-            }
-
-            const sortedTexts = [...textData.texts].sort((a, b) => a.id - b.id);
-            
-            let jsCode = `// textes.js - Fichier de données pour l'application "Repérer les connecteurs logiques"
-// Fichier centralisé contenant toutes les données et configurations
-
-// ============================================
-// CONNECTEURS LOGIQUES PAR CATÉGORIE
-// ============================================
-window.connecteursData = {
-    connecteurs: ${JSON.stringify(connecteurs, null, 2)}
-};
-
-window.textData = {
-    
-    // ============================================
-    // TEXTES PHILOSOPHIQUES
-    // ============================================
-    texts: [`;
-
-            sortedTexts.forEach((text, index) => {
-                const escapedTitle = text.title
-                    .replace(/\\/g, '\\\\')
-                    .replace(/"/g, '\\"')
-                    .replace(/\n/g, '\\n');
-
-                const escapedContent = text.content
-                    .replace(/\\/g, '\\\\')
-                    .replace(/`/g, '\\`')
-                    .replace(/\${/g, '\\${')
-                    .replace(/\n/g, '\\n');
-
-                jsCode += `
-        {
-            id: ${text.id},
-            "title": "${escapedTitle}",
-            "content": \`${escapedContent}\`,
-        }`;
-
-                if (index < sortedTexts.length - 1) jsCode += ',';
-            });
-
-            jsCode += `
-    ],
-
-    // ============================================
-    // CONFIGURATION DES COULEURS PAR CATÉGORIE
-    // ============================================
-    categoryColors: {
-        "but": '#FF0000',
-        "cause": '#00ff00',
-        "changement_d'angle": '#2DDFF3',
-        "commencement": '#FFA500',
-        "comparaison": '#8A2BE2',
-        "concession": '#FF1493',
-        "conclusion": '#FF6347',
-        "conséquence": '#32CD32',
-        "illustration": '#1E90FF',
-        "modalisation": '#FFD700',
-        "opposition": '#9400D3',
-        "poursuite": '#C71585',
-        "précision": '#DC143C',
-        "rectification": '#3CB371',
-        "restriction": '#40E0D0',
-        "supposition": '#FF8C00'
-    },
-
-    // ============================================
-    // CONFIGURATION DES CURSEURS PAR COULEUR
-    // ============================================
-    colorCursors: {
-        '#FFFF00': 'feutrejaune.png',
-        '#FFDF00': 'feutrejaunedor.png',
-        '#FF0000': 'feutrerouge.png',
-        '#2DDFF3': 'feutreturquoise.png',
-        '#F75B14': 'feutreorange.png',
-        '#00ff00': 'feutrevert.png'
-    },
-
-    // ============================================
-    // PARAMÈTRES PAR DÉFAUT DE L'APPLICATION
-    // ============================================
-    defaultSettings: {
-        brushSize: 30,
-        brushColor: '#FFFF00',
-        brushColorHex: '#FFFF00',
-        darkTheme: false,
-        colorblindMode: false,
-        showWordList: false,
-        brushCursor: 'feutrejaune.png'
-    },
-
-    // ============================================
-    // CONFIGURATION D'AFFICHAGE DES TITRES
-    // ============================================
-    titleConfig: {
-        desktop: {
-            baseFontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
-            padding: '0 20px'
-        },
-        mobile: {
-            small: {
-                fontSize: 'clamp(1.1rem, 3.5vw, 1.4rem)',
-                lineHeight: '1.2'
-            },
-            medium: {
-                fontSize: 'clamp(1.3rem, 4vw, 1.6rem)',
-                lineHeight: '1.3'
-            }
-        }
-    },
-
-    // ============================================
-    // MESSAGES D'INTERFACE UTILISATEUR
-    // ============================================
-    messages: {
-        status: {
-            noTextSelected: "surligneur désactivé - cliquez sur le bouton surligneur pour l'activer",
-            highlightMode: "Mode surligneur activé - Maintenez le clic pour surligner",
-            eraseMode: "Mode gomme activé - Maintenez le clic pour effacer",
-            textLoaded: "texte chargé",
-            newGame: "Nouvelle partie - prêt à surligner",
-            selectTextFirst: "Veuillez d'abord sélectionner un texte",
-            revealMode: "Cliquez à nouveau pour masquer les solutions",
-            revealModeOff: "Mode solutions désactivé"
-        },
-        ui: {
-            defaultWordList: "sélectionnez un texte pour voir les mots à trouver",
-            defaultResults: "les résultats s'affichent automatiquement",
-            noTargetWords: "Aucun mot à trouver pour ce texte.",
-            allConnectorsFound: "Tous les connecteurs ont été trouvés !",
-            noConnectors: "Aucun connecteur logique dans ce texte.",
-            noHighlights: "Aucune occurrence surlignée détectée."
-        },
-        titles: {
-            main: "repérer les connecteurs logiques",
-            subtitle: "surlignez les mots dans le texte",
-            results: "Résultats : ",
-            wordList: "mots à trouver :"
-        }
-    },
-
-    // ============================================
-    // INSTRUCTIONS ET TEXTES D'AIDE
-    // ============================================
-    instructions: {
-        main: "INSTRUCTIONS\\n\\n1. Sélectionnez un texte dans le menu déroulant\\n2. Activez le mode surligneur en cliquant sur l'icône du surligneur\\n3. Surlignez les connecteurs logiques dans le texte\\n4. Consultez vos résultats dans le panneau de droite\\n5. Utilisez la gomme pour corriger vos surlignages\\n6. Le mode 'solutions' révèle tous les connecteurs à trouver avec leurs catégories",
-        about: "À PROPOS\\n\\nApplication : Repérer les connecteurs logiques\\nVersion : 2026\\nAuteur : Daniel Boulagnon\\nContact : daniel.boulagnon@ac-lille.fr\\n\\nCette application est destinée à un usage pédagogique. Elle permet de s'entraîner à identifier les connecteurs logiques dans des textes.\\n\\n© Académie de Lille - Tous droits réservés"
-    }
-
-};
-
-// ============================================
-// FONCTIONS UTILITAIRES GLOBALES
-// ============================================
-window.appConfig = {
-    getColorClassForCategory: function(category) {
-        return \`color-highlight-\${category.replace(/'/g, '')}\`;
-    },
-    
-    getListColorClassForCategory: function(category) {
-        return \`connector-category-\${category.replace(/'/g, '')}\`;
-    },
-    
-    getCategoryColor: function(category) {
-        return window.textData.categoryColors[category] || '#FFFF00';
-    },
-    
-    formatTitleForMobile: function() {
-        const titleElement = document.getElementById('mobileTitle');
-        const screenWidth = window.innerWidth;
-        const messages = window.textData?.messages?.titles || {};
-        
-        if (screenWidth <= 400) {
-            titleElement.innerHTML = messages.main || 'repérer les connecteurs logiques';
-            titleElement.style.whiteSpace = 'nowrap';
-            titleElement.style.overflow = 'hidden';
-            titleElement.style.textOverflow = 'ellipsis';
-        } else if (screenWidth <= 768) {
-            titleElement.innerHTML = (messages.main || 'repérer les connecteurs logiques').replace(' ', '<br>');
-            titleElement.style.whiteSpace = 'normal';
-            titleElement.style.overflow = 'visible';
-            titleElement.style.textOverflow = 'clip';
-        } else {
-            titleElement.innerHTML = messages.main || 'repérer les connecteurs logiques';
-            titleElement.style.whiteSpace = 'nowrap';
-        }
-    },
-    
-    getColorName: function(hexColor) {
-        const colorMap = {
-            '#FFFF00': 'color-yellow',
-            '#FFDF00': 'color-gold',
-            '#FF0000': 'color-red',
-            '#2DDFF3': 'color-turquoise',
-            '#F75B14': 'color-orange',
-            '#00ff00': 'color-green'
-        };
-        return colorMap[hexColor] || 'color-yellow';
-    },
-    
-    cleanExpression: function(expression) {
-        return expression.replace(/[.,!?;:()'"«»]/g, '').trim();
-    },
-    
-    normalizeWord: function(word) {
-        if (!word) return '';
-        return word.toLowerCase()
-            .normalize('NFD')
-            .replace(/[\\u0300-\\u036f]/g, '')
-            .replace(/[.,!?;:()'"«»]/g, '')
-            .trim();
-    },
-    
-    normalizeWordKeepAccents: function(word) {
-        if (!word) return '';
-        return word.toLowerCase().trim();
-    },
-    
-    stripHTML: function(text) {
-        if (!text) return '';
-        return text.replace(/<[^>]*>/g, '');
-    },
-    
-    getConnectorCategory: function(connectorText) {
-        if (!window.connecteursData || !window.connecteursData.connecteurs) {
-            return null;
-        }
-        
-        const normalizedText = this.normalizeWord(connectorText);
-        
-        for (const [category, connectors] of Object.entries(window.connecteursData.connecteurs)) {
-            for (const connector of connectors) {
-                const normalizedConnector = this.normalizeWord(connector);
-                if (normalizedText === normalizedConnector) {
-                    return category;
-                }
-                if (connector.includes(' ')) {
-                    const words = connector.toLowerCase().split(' ');
-                    for (const word of words) {
-                        if (normalizedText === this.normalizeWord(word)) {
-                            return category;
-                        }
-                    }
-                }
-            }
-        }
-        return null;
-    }
-};
-
-console.log('Fichier textes.js chargé avec succès');
-console.log(\`Nombre de textes disponibles : \${window.textData.texts.length}\`);
-console.log(\`Nombre de catégories de connecteurs : \${Object.keys(window.connecteursData.connecteurs).length}\`);
-
-window.appConfig.testData = {
-    sampleStats: {
-        totalConnectors: 15,
-        foundConnectors: 10,
-        accuracy: 67,
-        categories: {
-            "cause": { found: 2, total: 3 },
-            "opposition": { found: 3, total: 4 },
-            "conséquence": { found: 5, total: 8 }
-        }
-    },
-    
-    sampleFoundConnectors: [
-        { text: "car", category: "cause", count: 2 },
-        { text: "mais", category: "opposition", count: 3 },
-        { text: "donc", category: "conséquence", count: 1 }
-    ],
-    
-    sampleMissingConnectors: [
-        { text: "parce que", category: "cause", count: 1 },
-        { text: "cependant", category: "opposition", count: 1 },
-        { text: "par conséquent", category: "conséquence", count: 2 }
-    ]
-};`;
-
-            return jsCode;
-        }
-
-        function exportJS() {
-            if (textData.texts.length === 0 && Object.keys(connecteurs).length === 0) {
-                showMessage('Aucune donnée à exporter. Importer d\'abord des textes et/ou connecteurs.', 'warning');
-                return;
-            }
-
-            const jsCode = generateJSCode();
-            const blob = new Blob([jsCode], { type: 'text/javascript;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'textes.js';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            showMessage('Fichier exporté : textes.js');
-        }
-
-        function previewCode() {
-            if (textData.texts.length === 0 && Object.keys(connecteurs).length === 0) {
-                showMessage('Aucune donnée à prévisualiser.', 'warning');
-                return;
-            }
-
-            const jsCode = generateJSCode();
-            document.getElementById('previewContent').textContent = jsCode;
-            document.getElementById('previewModal').style.display = 'block';
-        }
-
-        function closePreview() {
-            document.getElementById('previewModal').style.display = 'none';
-        }
-
-        async function copyCode() {
-            if (textData.texts.length === 0 && Object.keys(connecteurs).length === 0) {
-                showMessage('Aucune donnée à copier.', 'warning');
-                return;
-            }
-
-            const jsCode = generateJSCode();
-
-            try {
-                await navigator.clipboard.writeText(jsCode);
-                showMessage('Code copié dans le presse-papier !');
-            } catch (err) {
-                const textarea = document.createElement('textarea');
-                textarea.value = jsCode;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                showMessage('Code copié dans le presse-papier !');
-            }
-        }
-
-        function copyFromPreview() {
-            const jsCode = document.getElementById('previewContent').textContent;
-
-            navigator.clipboard.writeText(jsCode)
-                .then(() => showMessage('Code copié !'))
-                .catch(() => {
-                    const textarea = document.createElement('textarea');
-                    textarea.value = jsCode;
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textarea);
-                    showMessage('Code copié !');
-                });
-        }
-
-        function exportFromPreview() {
-            const jsCode = document.getElementById('previewContent').textContent;
-            const blob = new Blob([jsCode], { type: 'text/javascript;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'textes.js';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            closePreview();
-            showMessage('Fichier exporté : textes.js');
-        }
-
-        function saveLocal() {
-            saveToStorage();
-            showMessage(`Sauvegarde locale effectuée (${textData.texts.length} texte(s))`);
-        }
-
-        function showMessage(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.textContent = message;
-
-            if (type === 'error') {
-                notification.style.background = '#ff4757';
-            } else if (type === 'warning') {
-                notification.style.background = '#ffa502';
-            }
-
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        document.body.removeChild(notification);
-                    }
-                }, 300);
-            }, 3000);
-        }
-
-        function domReady(callback) {
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', callback);
-            } else {
-                callback();
-            }
-        }
-
-        function startApp() {
-            if (window.appStarted) return;
-            window.appStarted = true;
-            
-            console.log('Démarrage de l\'application...');
-            
-            try {
-                initApp();
-                console.log('Application démarrée avec succès');
-            } catch (e) {
-                console.error('Erreur:', e);
-                setTimeout(startApp, 1000);
-            }
-        }
-
-        domReady(startApp);
-        window.addEventListener('load', startApp);
-        setTimeout(startApp, 2000);
-    </script>
+<div class="container">
+	<div class="header">
+		<h1><i class="fas fa-book-open"></i> gestionnaire de textes à repérer</h1>
+	</div>
+
+	<div class="phases">
+		<div class="phase active" data-phase="1"><i class="fas fa-file-import"></i> 1. importer</div>
+		<div class="phase" data-phase="2"><i class="fas fa-list"></i> 2. lister</div>
+		<div class="phase" data-phase="3"><i class="fas fa-edit"></i> 3. modifier / ajouter</div>
+		<div class="phase" data-phase="4"><i class="fas fa-file-export"></i> 4. exporter</div>
+	</div>
+
+	<!-- PHASE 1 : IMPORTER -->
+	<div class="phase-content active" id="phase1">
+		<div class="card">
+			<div class="card-title"><i class="fas fa-file-import"></i> 1. importer le fichier textes.js</div>
+			<div class="file-input-area" id="fileInputArea">
+				<i class="fas fa-file-code" style="font-size: 3rem; color: #667eea; margin-bottom: 12px; display: block;"></i>
+				<p><strong>cliquez pour importer textes.js</strong></p>
+				<p style="font-size: 0.8rem;">ou glissez-déposez</p>
+				<input type="file" id="fileInput" accept=".js">
+			</div>
+			<div id="importResult" style="display: none; margin-top: 20px; padding: 16px; background: #e6f7e6; border-radius: 16px;">
+				<i class="fas fa-check-circle"></i> <strong id="importSuccessMsg"></strong>
+			</div>
+		</div>
+	</div>
+
+	<!-- PHASE 2 : LISTER -->
+	<div class="phase-content" id="phase2">
+		<div class="card">
+			<div class="card-title"><i class="fas fa-list"></i> 2. lister les textes importés 
+				<span class="badge" id="textCountBadge">0 texte</span>
+				<button id="addNewTextBtn" class="badge" style="background:#48bb78; color:white; margin-left:auto;"><i class="fas fa-plus"></i> nouveau texte</button>
+			</div>
+			<div id="textListContainer" class="text-list">
+				<div class="loading" id="loadingIndicator"><i class="fas fa-spinner fa-pulse"></i> chargement de src/textes.js...</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- PHASE 3 : MODIFIER / AJOUTER -->
+	<div class="phase-content" id="phase3">
+		<div class="card">
+			<div class="card-title"><i class="fas fa-edit"></i> 3. modifier / ajouter un texte</div>
+			
+			<div id="editorPlaceholder" class="card" style="background:#f8fafc; text-align:center;">
+				sélectionnez un texte dans la phase 2, ou utilisez le formulaire ci-dessous pour en ajouter un nouveau.
+			</div>
+			
+			<div id="editorArea" style="display:none; margin-top: 20px;">
+				<div id="editModeIndicator" style="margin-bottom: 16px; padding: 8px; background: #eef2ff; border-radius: 12px; text-align: center;">
+					<i class="fas fa-info-circle"></i> <span id="editModeText">mode modification</span>
+				</div>
+				
+				<div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
+					<div style="flex: 1;">
+						<label style="font-weight: 600;">numéro du texte (ID) :</label>
+						<input type="number" id="editId" style="width:100%; padding:12px; border-radius:16px; border:1px solid #ccc; margin-top: 4px;">
+					</div>
+					<div style="flex: 2;">
+						<label style="font-weight: 600;">référence / titre (avec &lt;em&gt; pour l'italique) :</label>
+						<input type="text" id="editTitle" placeholder="Ex: PLATON, &lt;em&gt;Gorgias&lt;/em&gt;, 482c-484b" style="width:100%; padding:12px; border-radius:16px; border:1px solid #ccc; margin-top: 4px;">
+					</div>
+				</div>
+				
+				<div style="margin-bottom: 16px;">
+					<label style="font-weight: 600;">contenu du texte :</label>
+					<textarea id="editContent" rows="10" style="width:100%; padding:12px; border-radius:16px; border:1px solid #ccc; font-family:monospace;"></textarea>
+				</div>
+				
+				<div style="display: flex; gap: 12px; flex-wrap: wrap;">
+					<button id="saveEditBtn" class="badge" style="background:#667eea; color:white; padding: 10px 20px;">
+						<i class="fas fa-save"></i> enregistrer (modifier)
+					</button>
+					<button id="insertBeforeBtn" class="badge" style="background:#48bb78; color:white; padding: 10px 20px;">
+						<i class="fas fa-arrow-up"></i> insérer avant l'ID
+					</button>
+					<button id="insertAfterBtn" class="badge" style="background:#48bb78; color:white; padding: 10px 20px;">
+						<i class="fas fa-arrow-down"></i> insérer après l'ID
+					</button>
+					<button id="insertAtEndBtn" class="badge" style="background:#ed8936; color:white; padding: 10px 20px;">
+						<i class="fas fa-plus-circle"></i> ajouter à la fin
+					</button>
+					<button id="cancelEditBtn" class="badge" style="background:#e2e8f0; padding: 10px 20px;">
+						<i class="fas fa-times"></i> annuler
+					</button>
+				</div>
+				
+				<div style="margin-top: 16px; padding: 12px; background: #fef3c7; border-radius: 12px; font-size: 0.85rem;">
+					<i class="fas fa-lightbulb"></i> <strong>astuces :</strong><br>
+					• <strong>enregistrer</strong> : modifie le texte existant à l'ID choisi.<br>
+					• <strong>insérer avant/après</strong> : insère un NOUVEAU texte à la position souhaitée (les IDs suivants sont automatiquement décalés).<br>
+					• <strong>ajouter à la fin</strong> : ajoute un nouveau texte avec le prochain ID disponible.<br>
+					• utilisez <strong>**texte**</strong> pour les connecteurs (surlignage jaune) et <strong>&lt;em&gt;texte&lt;/em&gt;</strong> pour l'italique.
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- PHASE 4 : EXPORTER -->
+	<div class="phase-content" id="phase4">
+		<div class="card">
+			<div class="card-title"><i class="fas fa-file-export"></i> exporter le fichier textes.js</div>
+			<div class="stats-grid">
+				<div class="stat-card"><div class="stat-number" id="exportTextCount">0</div><div>textes</div></div>
+				<div class="stat-card"><div class="stat-number" id="exportCategoryCount">0</div><div>catégories</div></div>
+				<div class="stat-card"><div class="stat-number" id="exportConnectorCount">0</div><div>connecteurs</div></div>
+			</div>
+			<div style="display:flex; gap:12px; justify-content:center; margin-top:24px;">
+				<button id="exportBtn" class="badge" style="background:#48bb78; color:white; padding:12px 24px;">exporter textes.js</button>
+				<button id="previewExportBtn" class="badge" style="background:#ed8936; color:white; padding:12px 24px;">prévisualiser</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	// ==================== DONNÉES ====================
+	let importedTexts = [];
+	let importedConnecteurs = {};
+	let currentEditIndex = null;
+	let isNewTextMode = false;
+	let dataLoaded = false;
+
+	// ==================== FONCTIONS DE NETTOYAGE / FORMATAGE ====================
+
+	function removeSpanTags(html) {
+		if (!html) return '';
+		return html.replace(/<\/?span[^>]*>/g, '');
+	}
+
+	function cleanForEditing(html) {
+		if (!html) return '';
+		return html.replace(/<\/?span[^>]*>/g, '');
+	}
+
+	function formatTitleForReference(titleHtml) {
+		if (!titleHtml) return '';
+		return titleHtml.replace(/<\/?span[^>]*>/g, '');
+	}
+
+	function restoreSpansForExport(text) {
+		if (!text) return '';
+		let result = text;
+		
+		const ems = [];
+		result = result.replace(/<em>([\s\S]*?)<\/em>/gi, (match, content) => {
+			ems.push(content);
+			return `__EM_${ems.length-1}__`;
+		});
+		
+		result = result.replace(/\*\*([^*]+)\*\*/g, '<span>**$1**</span>');
+		
+		result = result.replace(/__EM_(\d+)__/g, (match, idx) => {
+			return `<em>${ems[parseInt(idx)]}</em>`;
+		});
+		
+		return result;
+	}
+
+	function formatForDisplay(content) {
+		if (!content) return '';
+		let result = removeSpanTags(content);
+		result = result.replace(/\*\*(.*?)\*\*/g, '<span class="connector">$1</span>');
+		return result;
+	}
+
+	// ==================== DÉTECTION DES CONNECTEURS ====================
+	
+	function extractConnectorsFromText(content) {
+		const regex = /\*\*([^*]+)\*\*/g;
+		const connectors = [];
+		let match;
+		while ((match = regex.exec(content)) !== null) {
+			let connector = match[1].trim();
+			connector = connector.replace(/<[^>]*>/g, '');
+			if (connector) {
+				connectors.push(connector);
+			}
+		}
+		return connectors;
+	}
+
+	function getCategoryForConnector(connectorText, connecteursDict) {
+		if (!connecteursDict || Object.keys(connecteursDict).length === 0) {
+			return "catégorie inconnue";
+		}
+		const lowerConnector = connectorText.toLowerCase();
+		for (const [category, connectors] of Object.entries(connecteursDict)) {
+			if (!Array.isArray(connectors)) continue;
+			for (const conn of connectors) {
+				if (conn.toLowerCase() === lowerConnector) {
+					return category;
+				}
+			}
+		}
+		return "catégorie inconnue";
+	}
+
+	function detectConnectorsInOrder(content, connecteursDict) {
+		const rawConnectors = extractConnectorsFromText(content);
+		
+		if (rawConnectors.length === 0) {
+			return [];
+		}
+		
+		const result = [];
+		for (const connector of rawConnectors) {
+			const category = getCategoryForConnector(connector, connecteursDict);
+			result.push({
+				text: connector,
+				category: category
+			});
+		}
+		
+		return result;
+	}
+
+	// ==================== GESTION DES IDs ====================
+	
+	function reorderIds() {
+		importedTexts.sort((a, b) => (a.id || 0) - (b.id || 0));
+		let newId = 1;
+		for (let i = 0; i < importedTexts.length; i++) {
+			importedTexts[i].id = newId++;
+		}
+	}
+
+	// ==================== INSERTION / AJOUT ====================
+	
+	function insertTextAtPosition(newText, targetId, position) {
+		const targetIndex = importedTexts.findIndex(t => t.id === targetId);
+		if (targetIndex === -1) {
+			showNotification(`ID ${targetId} introuvable`, 'error');
+			return false;
+		}
+		
+		let insertIndex = (position === 'before') ? targetIndex : targetIndex + 1;
+		importedTexts.splice(insertIndex, 0, newText);
+		reorderIds();
+		return true;
+	}
+
+	function addTextAtEnd(newText) {
+		const maxId = importedTexts.length > 0 ? Math.max(...importedTexts.map(t => t.id || 0)) : 0;
+		newText.id = maxId + 1;
+		importedTexts.push(newText);
+		return true;
+	}
+
+	function updateExistingText(id, newTitle, newContent) {
+		const index = importedTexts.findIndex(t => t.id === id);
+		if (index === -1) {
+			showNotification(`ID ${id} introuvable`, 'error');
+			return false;
+		}
+		importedTexts[index] = {
+			...importedTexts[index],
+			title: newTitle,
+			content: newContent
+		};
+		return true;
+	}
+
+	// ==================== AFFICHAGE (PHASE 2) ====================
+	
+	function renderTextList() {
+		const container = document.getElementById('textListContainer');
+		if (!importedTexts.length) {
+			container.innerHTML = '<div class="loading">Aucun texte importé. Utilisez la phase 1 pour importer un fichier textes.js</div>';
+			document.getElementById('textCountBadge').textContent = '0 texte';
+			return;
+		}
+		let html = '';
+		importedTexts.forEach((text, idx) => {
+			const textId = text.id || idx + 1;
+			const titleRaw = text.title || 'Sans titre';
+			const contentRaw = text.content || '';
+			
+			const displayContent = formatForDisplay(contentRaw);
+			const formattedReference = formatTitleForReference(titleRaw);
+			
+			const connectors = detectConnectorsInOrder(contentRaw, importedConnecteurs);
+			const connectorsCount = connectors.length;
+			
+			let connectorsHtml = '';
+			if (connectorsCount > 0) {
+				connectorsHtml = `
+					<div class="connectors-list">
+						<div class="connectors-list-title"><i class="fas fa-link"></i> ${connectorsCount} connecteur${connectorsCount > 1 ? 's' : ''} détecté${connectorsCount > 1 ? 's' : ''} :</div>
+				`;
+				for (const conn of connectors) {
+					connectorsHtml += `
+						<span class="connector-category-tag">
+							<span class="connector-text">« ${escapeHtml(conn.text)} »</span> → 
+							<span class="category-name">${escapeHtml(conn.category)}</span>
+						</span>
+					`;
+				}
+				connectorsHtml += `</div>`;
+			} else {
+				connectorsHtml = `
+					<div class="connectors-list">
+						<div class="connectors-list-title"><i class="fas fa-link"></i> 0 connecteur détecté</div>
+						<span style="color: #888; font-size: 0.75rem;">Aucun **connecteur** trouvé dans ce texte</span>
+					</div>
+				`;
+			}
+			
+			html += `
+				<div class="text-item">
+					<div class="text-number">texte n° ${textId}</div>
+					<div class="text-fullcontent">
+						${displayContent}
+					</div>
+					<div class="text-reference">${formattedReference}</div>
+					${connectorsHtml}
+					<div class="text-buttons">
+						<button class="edit-text-btn" data-index="${idx}" style="background:#eef2ff; padding:8px 20px; border-radius:40px; font-weight:500;">✏️ Modifier</button>
+						<button class="delete-text-btn" data-index="${idx}" style="background:#ffe6e6; padding:8px 20px; border-radius:40px; font-weight:500;">🗑️ Supprimer</button>
+					</div>
+				</div>
+			`;
+		});
+		container.innerHTML = html;
+		document.getElementById('textCountBadge').textContent = `${importedTexts.length} texte${importedTexts.length > 1 ? 's' : ''}`;
+
+		document.querySelectorAll('.edit-text-btn').forEach(btn => {
+			btn.addEventListener('click', () => editTextAtIndex(parseInt(btn.dataset.index)));
+		});
+		document.querySelectorAll('.delete-text-btn').forEach(btn => {
+			btn.addEventListener('click', () => deleteTextAtIndex(parseInt(btn.dataset.index)));
+		});
+	}
+
+	// ==================== ÉDITION ====================
+	
+	function openNewTextEditor() {
+		isNewTextMode = true;
+		currentEditIndex = null;
+		
+		const nextId = importedTexts.length > 0 ? Math.max(...importedTexts.map(t => t.id || 0)) + 1 : 1;
+		
+		document.getElementById('editModeText').innerHTML = '<i class="fas fa-plus-circle"></i> Mode AJOUT - Remplissez le formulaire ci-dessous';
+		document.getElementById('editModeIndicator').style.backgroundColor = '#d1fae5';
+		document.getElementById('editId').value = nextId;
+		document.getElementById('editId').readOnly = false;
+		document.getElementById('editTitle').value = '';
+		document.getElementById('editContent').value = '';
+		document.getElementById('editorPlaceholder').style.display = 'none';
+		document.getElementById('editorArea').style.display = 'block';
+		switchPhase(3);
+	}
+
+	function editTextAtIndex(idx) {
+		isNewTextMode = false;
+		currentEditIndex = idx;
+		const t = importedTexts[idx];
+		const cleanTitle = cleanForEditing(t.title || '');
+		const cleanContent = cleanForEditing(t.content || '');
+		
+		document.getElementById('editModeText').innerHTML = '<i class="fas fa-edit"></i> Mode MODIFICATION - Vous modifiez le texte existant';
+		document.getElementById('editModeIndicator').style.backgroundColor = '#eef2ff';
+		document.getElementById('editId').value = t.id || idx + 1;
+		document.getElementById('editId').readOnly = true;
+		document.getElementById('editTitle').value = cleanTitle;
+		document.getElementById('editContent').value = cleanContent;
+		document.getElementById('editorPlaceholder').style.display = 'none';
+		document.getElementById('editorArea').style.display = 'block';
+		switchPhase(3);
+	}
+
+	function deleteTextAtIndex(idx) {
+		if (confirm('Supprimer ce texte ?')) {
+			importedTexts.splice(idx, 1);
+			if (currentEditIndex === idx) {
+				currentEditIndex = null;
+				document.getElementById('editorArea').style.display = 'none';
+				document.getElementById('editorPlaceholder').style.display = 'block';
+			}
+			reorderIds();
+			renderTextList();
+			updateExportStats();
+			showNotification('Texte supprimé');
+		}
+	}
+
+	// Sauvegarde (modification)
+	document.getElementById('saveEditBtn').addEventListener('click', () => {
+		const id = parseInt(document.getElementById('editId').value);
+		const rawTitle = document.getElementById('editTitle').value;
+		const rawContent = document.getElementById('editContent').value;
+		
+		if (!rawTitle || !rawContent) {
+			showNotification('Le titre et le contenu sont requis', 'error');
+			return;
+		}
+		
+		const finalTitle = restoreSpansForExport(rawTitle);
+		const finalContent = restoreSpansForExport(rawContent);
+		
+		if (isNewTextMode) {
+			showNotification('Utilisez "Ajouter à la fin" ou "Insérer avant/après" pour ajouter un texte', 'warning');
+			return;
+		}
+		
+		if (updateExistingText(id, finalTitle, finalContent)) {
+			renderTextList();
+			updateExportStats();
+			document.getElementById('editorArea').style.display = 'none';
+			document.getElementById('editorPlaceholder').style.display = 'block';
+			currentEditIndex = null;
+			showNotification('Texte modifié');
+			switchPhase(2);
+		}
+	});
+
+	// Insérer avant
+	document.getElementById('insertBeforeBtn').addEventListener('click', () => {
+		const targetId = parseInt(document.getElementById('editId').value);
+		const rawTitle = document.getElementById('editTitle').value;
+		const rawContent = document.getElementById('editContent').value;
+		
+		if (!rawTitle || !rawContent) {
+			showNotification('Le titre et le contenu sont requis', 'error');
+			return;
+		}
+		
+		const finalTitle = restoreSpansForExport(rawTitle);
+		const finalContent = restoreSpansForExport(rawContent);
+		
+		const newText = { id: targetId, title: finalTitle, content: finalContent };
+		
+		if (insertTextAtPosition(newText, targetId, 'before')) {
+			renderTextList();
+			updateExportStats();
+			document.getElementById('editorArea').style.display = 'none';
+			document.getElementById('editorPlaceholder').style.display = 'block';
+			showNotification('Texte inséré avant');
+			switchPhase(2);
+		}
+	});
+
+	// Insérer après
+	document.getElementById('insertAfterBtn').addEventListener('click', () => {
+		const targetId = parseInt(document.getElementById('editId').value);
+		const rawTitle = document.getElementById('editTitle').value;
+		const rawContent = document.getElementById('editContent').value;
+		
+		if (!rawTitle || !rawContent) {
+			showNotification('Le titre et le contenu sont requis', 'error');
+			return;
+		}
+		
+		const finalTitle = restoreSpansForExport(rawTitle);
+		const finalContent = restoreSpansForExport(rawContent);
+		
+		const newText = { id: targetId + 1, title: finalTitle, content: finalContent };
+		
+		if (insertTextAtPosition(newText, targetId, 'after')) {
+			renderTextList();
+			updateExportStats();
+			document.getElementById('editorArea').style.display = 'none';
+			document.getElementById('editorPlaceholder').style.display = 'block';
+			showNotification('Texte inséré après');
+			switchPhase(2);
+		}
+	});
+
+	// Ajouter à la fin
+	document.getElementById('insertAtEndBtn').addEventListener('click', () => {
+		const rawTitle = document.getElementById('editTitle').value;
+		const rawContent = document.getElementById('editContent').value;
+		
+		if (!rawTitle || !rawContent) {
+			showNotification('Le titre et le contenu sont requis', 'error');
+			return;
+		}
+		
+		const finalTitle = restoreSpansForExport(rawTitle);
+		const finalContent = restoreSpansForExport(rawContent);
+		
+		const newText = { title: finalTitle, content: finalContent };
+		
+		if (addTextAtEnd(newText)) {
+			renderTextList();
+			updateExportStats();
+			document.getElementById('editorArea').style.display = 'none';
+			document.getElementById('editorPlaceholder').style.display = 'block';
+			showNotification('Texte ajouté à la fin');
+			switchPhase(2);
+		}
+	});
+
+	document.getElementById('cancelEditBtn').addEventListener('click', () => {
+		document.getElementById('editorArea').style.display = 'none';
+		document.getElementById('editorPlaceholder').style.display = 'block';
+		currentEditIndex = null;
+	});
+
+	document.getElementById('addNewTextBtn').addEventListener('click', openNewTextEditor);
+
+	// ==================== STATS & EXPORT ====================
+	
+	function updateExportStats() {
+		document.getElementById('exportTextCount').innerText = importedTexts.length;
+		const catCount = Object.keys(importedConnecteurs).length;
+		document.getElementById('exportCategoryCount').innerText = catCount;
+		let total = 0;
+		Object.values(importedConnecteurs).forEach(c => { if (Array.isArray(c)) total += c.length; });
+		document.getElementById('exportConnectorCount').innerText = total;
+	}
+
+	function generateJS() {
+		return `// textes.js - généré le ${new Date().toLocaleString()}
+window.connecteursData = { connecteurs: ${JSON.stringify(importedConnecteurs, null, 2)} };
+window.textData = { texts: ${JSON.stringify(importedTexts, null, 2)} };
+console.log('textes.js chargé - ${importedTexts.length} textes');`;
+	}
+
+	function exportToFile() {
+		if (!importedTexts.length && !Object.keys(importedConnecteurs).length) return showNotification('Rien à exporter', 'error');
+		const blob = new Blob([generateJS()], { type: 'text/javascript' });
+		const a = document.createElement('a');
+		a.href = URL.createObjectURL(blob);
+		a.download = 'textes.js';
+		a.click();
+		URL.revokeObjectURL(a.href);
+		showNotification('Export réussi');
+	}
+
+	function previewExport() {
+		if (!importedTexts.length && !Object.keys(importedConnecteurs).length) return showNotification('Rien à prévisualiser', 'error');
+		const modal = document.createElement('div');
+		modal.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;';
+		const pre = document.createElement('pre');
+		pre.style.cssText = 'background:#1e293b; color:#e2e8f0; padding:20px; border-radius:16px; max-width:90%; max-height:80%; overflow:auto; font-size:12px;';
+		pre.textContent = generateJS();
+		modal.appendChild(pre);
+		modal.onclick = () => modal.remove();
+		document.body.appendChild(modal);
+	}
+
+	function showNotification(msg, type = 'success') {
+		const n = document.createElement('div');
+		n.className = 'notification';
+		n.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${msg}`;
+		if (type === 'error') n.style.background = '#dc2626';
+		document.body.appendChild(n);
+		setTimeout(() => n.remove(), 3000);
+	}
+
+	function escapeHtml(str) {
+		if (!str) return '';
+		return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[m]);
+	}
+
+	// ==================== IMPORT (PHASE 1) ====================
+	
+	function extractDataFromJS(content) {
+		let texts = [], connecteurs = {};
+		try {
+			const tm = content.match(/window\.textData\s*=\s*({[\s\S]*?});/);
+			if (tm) { let d = eval('(' + tm[1] + ')'); if (d.texts) texts = d.texts; }
+			const cm = content.match(/window\.connecteursData\s*=\s*({[\s\S]*?});/);
+			if (cm) { let d = eval('(' + cm[1] + ')'); if (d.connecteurs) connecteurs = d.connecteurs; }
+		} catch (e) { console.warn(e); }
+		return { texts, connecteurs };
+	}
+
+	function loadData(texts, connecteurs) {
+		if (!texts.length && !Object.keys(connecteurs).length) {
+			showNotification('Aucune donnée valide', 'error');
+			return false;
+		}
+		importedTexts = texts;
+		importedConnecteurs = connecteurs;
+		document.getElementById('importSuccessMsg').innerHTML = `${importedTexts.length} texte(s), ${Object.keys(importedConnecteurs).length} catégorie(s)`;
+		document.getElementById('importResult').style.display = 'block';
+		renderTextList();
+		updateExportStats();
+		showNotification(`Import réussi : ${importedTexts.length} textes`);
+		dataLoaded = true;
+		return true;
+	}
+
+	function handleFile(file) {
+		if (!file) return;
+		const reader = new FileReader();
+		reader.onload = e => {
+			const { texts, connecteurs } = extractDataFromJS(e.target.result);
+			loadData(texts, connecteurs);
+			switchPhase(2);
+		};
+		reader.readAsText(file);
+	}
+
+	// ==================== CHARGEMENT AUTOMATIQUE ====================
+	
+	function autoLoadFromSrc() {
+		const loadingIndicator = document.getElementById('loadingIndicator');
+		
+		fetch('src/textes.js')
+			.then(response => {
+				if (!response.ok) throw new Error('Fichier non trouvé');
+				return response.text();
+			})
+			.then(content => {
+				const { texts, connecteurs } = extractDataFromJS(content);
+				if (texts.length > 0 || Object.keys(connecteurs).length > 0) {
+					loadData(texts, connecteurs);
+					console.log(`✅ Chargement automatique réussi depuis src/textes.js (${texts.length} textes)`);
+					if (loadingIndicator) loadingIndicator.style.display = 'none';
+				}
+			})
+			.catch(err => {
+				console.log('⚠️ Fetch impossible, tentative avec script tag...');
+				const script = document.createElement('script');
+				script.src = 'src/textes.js';
+				script.onload = () => {
+					if (window.textData && window.textData.texts) {
+						const texts = window.textData.texts;
+						const connecteurs = window.connecteursData ? window.connecteursData.connecteurs : {};
+						if (texts.length > 0) {
+							loadData(texts, connecteurs);
+							console.log(`✅ Chargement via script tag réussi (${texts.length} textes)`);
+							if (loadingIndicator) loadingIndicator.style.display = 'none';
+						} else {
+							if (loadingIndicator) loadingIndicator.innerHTML = '<div class="loading">❌ Aucun texte trouvé dans src/textes.js</div>';
+						}
+					} else {
+						if (loadingIndicator) loadingIndicator.innerHTML = '<div class="loading">❌ Fichier src/textes.js trouvé mais structure invalide</div>';
+					}
+				};
+				script.onerror = () => {
+					console.log('❌ Aucun fichier src/textes.js trouvé');
+					if (loadingIndicator) loadingIndicator.innerHTML = '<div class="loading">❌ Aucun fichier src/textes.js trouvé. Utilisez la phase 1 pour importer.</div>';
+				};
+				document.head.appendChild(script);
+			});
+	}
+
+	// ==================== GESTION DES PHASES ====================
+	
+	function switchPhase(n) {
+		document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
+		document.querySelector(`.phase[data-phase="${n}"]`).classList.add('active');
+		document.querySelectorAll('.phase-content').forEach(c => c.classList.remove('active'));
+		document.getElementById(`phase${n}`).classList.add('active');
+		if (n === 2) renderTextList();
+		if (n === 4) updateExportStats();
+	}
+
+	document.querySelectorAll('.phase').forEach(p => p.addEventListener('click', () => switchPhase(parseInt(p.dataset.phase))));
+
+	// ==================== ÉVÉNEMENTS D'IMPORT ====================
+	
+	const farea = document.getElementById('fileInputArea');
+	const finput = document.getElementById('fileInput');
+	farea.addEventListener('click', () => finput.click());
+	farea.addEventListener('dragover', e => { e.preventDefault(); farea.style.borderColor = '#667eea'; });
+	farea.addEventListener('dragleave', () => farea.style.borderColor = '#cbd5e1');
+	farea.addEventListener('drop', e => {
+		e.preventDefault();
+		farea.style.borderColor = '#cbd5e1';
+		if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+	});
+	finput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+
+	document.getElementById('exportBtn').addEventListener('click', exportToFile);
+	document.getElementById('previewExportBtn').addEventListener('click', previewExport);
+
+	// Lancer le chargement automatique au démarrage
+	autoLoadFromSrc();
+	renderTextList();
+	updateExportStats();
+</script>
 </body>
 </html>
