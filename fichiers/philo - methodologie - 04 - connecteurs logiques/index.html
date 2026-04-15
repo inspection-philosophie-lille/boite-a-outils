@@ -12,7 +12,6 @@
 	<link rel="icon" type="image/svg+xml" href="src/favicon.ico" />
 	<title>repérer les connecteurs logiques</title>
 	<style>
-		/* ... (tout le CSS reste identique) ... */
 		* {
 			box-sizing: border-box;
 			touch-action: manipulation;
@@ -670,7 +669,6 @@
 			flex-shrink: 0;
 		}
 
-		/* Mode normal : liste des connecteurs trouvés avec catégorie */
 		.found-list {
 			display: flex;
 			flex-wrap: wrap;
@@ -706,7 +704,6 @@
 			color: #4299e1;
 		}
 
-		/* Mode évaluation - catégories */
 		.evaluation-list {
 			display: flex;
 			flex-direction: column;
@@ -772,7 +769,6 @@
 			background-color: #38a169;
 		}
 
-		/* Message de réussite en mode évaluation */
 		.evaluation-success-message {
 			text-align: center;
 			font-size: 14px;
@@ -893,14 +889,12 @@
 			flex-shrink: 0;
 		}
 
-		/* Masquage des éléments en mode évaluation */
 		.evaluation-mode .stats,
 		.evaluation-mode #modeReveal,
 		.evaluation-mode #occurrencesMessage {
 			display: none !important;
 		}
 
-		/* Mode daltonien - adaptation des couleurs */
 		body.colorblind-mode .evaluation-category-stats.complete {
 			background-color: #90cdf4;
 			color: #1a365d;
@@ -932,7 +926,6 @@
 			display: none !important;
 		}
 
-		/* Couleurs de catégories pour surlignage solution */
 		.color-highlight-but {
 			background-color: rgba(255, 0, 0, 0.3) !important;
 		}
@@ -1044,20 +1037,43 @@
 			}
 
 			.container {
-				padding: 10px 5px 10px 45px;
+				padding: 10px 5px 10px 40px;
 				margin-top: -15px;
 				margin-bottom: 20px;
+				overflow-x: hidden;
 			}
 
 			.two-columns {
 				grid-template-columns: 1fr;
 				gap: 15px;
+				width: 100%;
+				max-width: 100%;
+				overflow-x: hidden;
+			}
+
+			.text-column {
+				min-height: auto;
+				width: 100%;
+				max-width: 100%;
+				overflow-x: hidden;
+			}
+
+			.content-wrapper {
+				min-height: 200px;
+				width: 100%;
+				max-width: 100%;
+				overflow-x: hidden;
 			}
 
 			.text-content {
 				font-size: 14px;
 				line-height: 1.5;
 				padding: 12px;
+				width: 100%;
+				max-width: 100%;
+				overflow-x: auto;
+				word-wrap: break-word;
+				overflow-wrap: break-word;
 			}
 
 			.button,
@@ -1066,29 +1082,28 @@
 				height: 40px;
 			}
 			
-			/* Correction des marges pour le content-wrapper */
-			.content-wrapper {
-				margin: 0;
-			}
-			
-			/* Correction des marges pour le results-panel */
 			.results-panel {
 				margin: 0;
 				min-height: auto;
 				height: auto;
+				width: 100%;
+				max-width: 100%;
+				overflow-x: hidden;
 			}
 			
-			/* Hauteur adaptative pour les zones */
-			.text-column {
-				min-height: auto;
+			.found-list {
+				width: 100%;
+				max-width: 100%;
+				overflow-x: hidden;
 			}
 			
-			.content-wrapper {
-				min-height: 200px;
+			.found-item {
+				max-width: calc(100% - 10px);
+				word-break: break-word;
 			}
-			
-			.results-panel {
-				min-height: auto;
+
+			#drawingCanvas {
+				max-width: 100%;
 			}
 		}
 
@@ -1106,7 +1121,6 @@
 			}
 		}
 
-		/* MODE SOMBRE - Correction complète */
 		body.dark-theme {
 			background-color: #1a202c;
 		}
@@ -1302,7 +1316,6 @@
 			text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 		}
 
-		/* Style pour les touches de raccourcis */
 		kbd {
 			display: inline-block;
 			padding: 4px 8px;
@@ -1521,13 +1534,11 @@
 				</div>
 				<div id="occurrencesMessage"></div>
 
-				<!-- Mode normal : liste des connecteurs trouvés avec catégorie -->
 				<div id="normalModeContainer">
 					<div class="results-title">connecteurs trouvés :</div>
 					<div id="foundList" class="found-list"></div>
 				</div>
 
-				<!-- Mode évaluation : catégories -->
 				<div id="evaluationModeContainer" style="display: none;">
 					<div class="results-title">catégories de connecteurs :</div>
 					<div id="evaluationList" class="evaluation-list"></div>
@@ -1604,7 +1615,6 @@
 		</div>
 	</div>
 
-	<!-- Input file caché pour charger textes.js -->
 	<input type="file" id="fileInput" accept=".js,.json" style="display: none;">
 
 	<div class="submenu" id="submenuPresentation">
@@ -1629,24 +1639,24 @@
 		<div class="settings-info" style="padding: 10px;">
 			<table style="width:100%">
 				<tr>
-					<td><kbd>H</kbd></td>
-					<td>accueil</kbd></td>
+					<td><kbd>H</kbd></kbd></td>
+					<td>accueil</kbd></kbd></td>
 				</tr>
 				<tr>
-					<td><kbd>R</kbd></td>
-					<td>recharger</kbd></td>
+					<td><kbd>R</kbd></kbd></td>
+					<td>recharger</kbd></kbd></td>
 				</tr>
 				<tr>
-					<td><kbd>F</kbd></td>
-					<td>plein écran</kbd></td>
+					<td><kbd>F</kbd></kbd></td>
+					<td>plein écran</kbd></kbd></td>
 				</tr>
 				<tr>
-					<td><kbd>M</kbd></td>
-					<td>menu</kbd></td>
+					<td><kbd>M</kbd></kbd></td>
+					<td>menu</kbd></kbd></td>
 				</tr>
 				<tr>
-					<td><kbd>ESC</kbd></td>
-					<td>fermer</kbd></td>
+					<td><kbd>ESC</kbd></kbd></td>
+					<td>fermer</kbd></kbd></td>
 				</tr>
 			</table>
 		</div>
@@ -1710,7 +1720,6 @@
 	</div>
 
 	<script>
-		// ====== DONNÉES PAR DÉFAUT (si aucun fichier chargé) ======
 		let defaultTextData = {
 			texts: [
 				{
@@ -1737,11 +1746,9 @@
 			}
 		};
 
-		// Initialisation des variables globales
 		window.textData = defaultTextData;
 		window.connecteursData = defaultConnecteursData;
 
-		// ====== CONFIGURATION ======
 		let evaluationModeActive = false;
 		let revealModeActive = false;
 		let currentTextData = null;
@@ -1750,7 +1757,6 @@
 		let extractedWords = [];
 		let categoryStats = {};
 
-		// Historique pour l'annulation progressive
 		let drawingHistory = [];
 		let historyIndex = -1;
 		const MAX_HISTORY = 30;
@@ -1781,26 +1787,20 @@
 		const resultsPanel = document.getElementById('resultsPanel');
 		const appBody = document.getElementById('appBody');
 
-		// Références aux boutons
 		const highlightBtn = document.getElementById('highlightModeButton');
 		const eraserBtn = document.getElementById('modeEraser');
 		const revealBtn = document.getElementById('modeReveal');
 
 		let cumulativeStats = { totalFound: 0, totalAttempts: 0, textResults: [] };
 
-		// ====== CHARGEMENT AUTOMATIQUE DE textes.js ======
 		function loadTextsFile() {
 			const script = document.createElement('script');
-			script.src = 'src/textes.js?' + new Date().getTime(); // Ajout d'un timestamp pour éviter le cache
+			script.src = 'src/textes.js?' + new Date().getTime();
 			script.onload = function() {
 				console.log('Fichier src/textes.js chargé avec succès');
-				// Mettre à jour les données globales
 				if (window.textData && window.textData.texts) {
 					populateTextSelect();
 					resetApplicationState();
-				}
-				if (window.connecteursData) {
-					// Mise à jour des connecteurs
 				}
 			};
 			script.onerror = function() {
@@ -1810,7 +1810,6 @@
 			document.head.appendChild(script);
 		}
 
-		// ====== UTILITAIRES ======
 		function normalizeWord(w) { return w ? w.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[.,!?;:()'"«»]/g, '').trim() : ''; }
 
 		function getConnectorCategory(connectorText) {
@@ -1889,7 +1888,6 @@
 			} else { drawingLayer.style.cursor = 'default'; drawingLayer.style.opacity = '0'; }
 		}
 
-		// ====== GESTION DE L'HISTORIQUE ======
 		function saveCanvasState() {
 			if (!canvas.width || !canvas.height) return;
 			const currentState = canvas.toDataURL();
@@ -1957,7 +1955,6 @@
 			}
 		}
 
-		// ====== GESTION EXCLUSIVE DES BOUTONS ======
 		function setActiveMode(mode) {
 			currentMode = mode;
 
@@ -1989,7 +1986,6 @@
 			updateDrawingCursor();
 		}
 
-		// ====== MODE ÉVALUATION ======
 		function updateCategoryStats() {
 			if (!currentTextData) return;
 			categoryStats = {};
@@ -2070,7 +2066,6 @@
 			}
 		}
 
-		// ====== MODE NORMAL ======
 		function updateFoundList() {
 			if (!currentTextData || evaluationModeActive) return;
 
@@ -2099,7 +2094,6 @@
 			foundListContainer.innerHTML = html;
 		}
 
-		// ====== MODE SOLUTION ======
 		function applySolutionHighlight() {
 			if (!revealModeActive || !currentTextData || evaluationModeActive) return;
 
@@ -2133,7 +2127,6 @@
 			}
 		}
 
-		// ====== DESSIN ======
 		function drawLine(fromX, fromY, toX, toY) {
 			ctx.lineWidth = settings.brushSize;
 			ctx.lineCap = 'round';
@@ -2166,7 +2159,6 @@
 			ctx.fill();
 		}
 
-		// ====== ANALYSE DES SURlIGNAGES ======
 		function isSpanHighlighted(span) {
 			if (!span || !canvas.width || !canvas.height) return false;
 			const rect = span.getBoundingClientRect();
@@ -2236,7 +2228,6 @@
 			}
 		}
 
-		// ====== STATISTIQUES CUMULÉES ======
 		function updateCumulativeStats() {
 			if (!currentTextData) return;
 			const a = analyzeHighlightedWords();
@@ -2285,7 +2276,6 @@
 			});
 		}
 
-		// ====== GESTION DU TEXTE ======
 		function extractTargetWords(content) {
 			const matches = [];
 			const regex = /\*\*([^*]+(?:\n[^*]+)*?)\*\*/g;
@@ -2319,21 +2309,17 @@
 			}
 		}
 
-		// ====== CHARGEMENT D'UN FICHIER PERSO ======
 		function loadCustomTextsFile(file) {
 			const reader = new FileReader();
 			reader.onload = function(e) {
 				const fileContent = e.target.result;
 				try {
-					// Exécuter le contenu du fichier
 					const script = document.createElement('script');
 					script.textContent = fileContent;
 					document.head.appendChild(script);
 					
-					// Sauvegarder dans localStorage
 					localStorage.setItem('customTextsData', fileContent);
 					
-					// Attendre que les variables globales soient définies
 					setTimeout(() => {
 						if (window.textData && window.textData.texts) {
 							populateTextSelect();
@@ -2430,7 +2416,6 @@
 			updateResultsPanelVisibility();
 			setTimeout(() => { initCanvas(); updateStatsDisplay(); }, 100);
 
-			// Restaurer l'affichage court de l'option sélectionnée
 			const selectedOption = textSelect.options[textSelect.selectedIndex];
 			if (selectedOption && selectedOption.dataset && selectedOption.dataset.shortTitle) {
 				selectedOption.textContent = selectedOption.dataset.shortTitle;
@@ -2453,7 +2438,6 @@
 			saveCanvasState();
 		}
 
-		// ====== GESTION DES ÉVÉNEMENTS DE DESSIN ======
 		function handleDrawStart(clientX, clientY) {
 			if (!drawingEnabled || !currentTextData) return;
 			if (currentMode !== 'highlight' && currentMode !== 'erase') return;
@@ -2517,7 +2501,6 @@
 		drawingLayer.addEventListener('touchend', handleDrawEnd);
 		drawingLayer.addEventListener('touchcancel', handleDrawEnd);
 
-		// ====== CHARGEMENT DES DONNÉES PERSO AU DÉMARRAGE ======
 		function loadStoredCustomData() {
 			const storedData = localStorage.getItem('customTextsData');
 			if (storedData) {
@@ -2534,12 +2517,10 @@
 					console.warn('Impossible de charger les données sauvegardées', e);
 				}
 			} else {
-				// Charger le fichier src/textes.js par défaut
 				loadTextsFile();
 			}
 		}
 
-		// ====== INITIALISATION ======
 		document.addEventListener('DOMContentLoaded', () => {
 			loadSettings();
 			loadCumulativeStats();
@@ -2547,7 +2528,6 @@
 
 			textSelect.addEventListener('change', loadSelectedText);
 
-			// Gestionnaire pour l'affichage des options du select
 			textSelect.addEventListener('mousedown', function () {
 				for (let i = 1; i < this.options.length; i++) {
 					const option = this.options[i];
@@ -2586,10 +2566,8 @@
 				}
 			});
 
-			// Boutons de la toolbar
 			document.getElementById('homeBtnDesktop')?.addEventListener('click', () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'));
 			document.getElementById('reloadButtonDesktop')?.addEventListener('click', () => {
-				// Recharger avec conservation des données personnalisées
 				localStorage.setItem('preserveCustomData', 'true');
 				location.reload();
 			});
@@ -2605,32 +2583,24 @@
 			document.getElementById('menuClose')?.addEventListener('click', closeMenu);
 			document.getElementById('menuOverlay')?.addEventListener('click', closeMenu);
 
-			// Annulation
 			document.getElementById('undoButton')?.addEventListener('click', undoLastAction);
 
-			// Modes exclusifs
 			highlightBtn?.addEventListener('click', () => setActiveMode('highlight'));
 			eraserBtn?.addEventListener('click', () => setActiveMode('erase'));
 			revealBtn?.addEventListener('click', () => setActiveMode('reveal'));
 
-			// Sous-menus
 			document.getElementById('presentationButton')?.addEventListener('click', () => openSubmenu(document.getElementById('submenuPresentation')));
 			document.getElementById('shortcutsButton')?.addEventListener('click', () => openSubmenu(document.getElementById('submenuShortcuts')));
 			document.getElementById('statsButton')?.addEventListener('click', () => { displayStatsInSubmenu(); openSubmenu(document.getElementById('submenuStats')); });
 			document.getElementById('settingsButton')?.addEventListener('click', () => openSubmenu(document.getElementById('submenuSettings')));
-			document.getElementById('loadFileButton')?.addEventListener('click', () => {
-				document.getElementById('fileInput')?.click();
-			});
 			document.getElementById('aboutButton')?.addEventListener('click', () => openSubmenu(document.getElementById('submenuAbout')));
 			document.querySelectorAll('.submenu-close').forEach(btn => btn.addEventListener('click', closeAllSubmenus));
 
-			// Input file
 			document.getElementById('fileInput')?.addEventListener('change', (event) => {
 				const file = event.target.files[0];
 				if (file) loadCustomTextsFile(file);
 			});
 
-			// Toggles
 			document.getElementById('darkModeToggle')?.addEventListener('change', e => { settings.darkTheme = e.target.checked; saveSettings(); });
 			document.getElementById('colorblindToggle')?.addEventListener('change', e => { settings.colorblindMode = e.target.checked; saveSettings(); });
 			document.getElementById('evaluationModeToggle')?.addEventListener('change', e => {
@@ -2640,7 +2610,6 @@
 				if (currentTextData) updateStatsDisplay();
 			});
 
-			// Couleurs
 			document.querySelectorAll('.color-button').forEach(btn => {
 				btn.addEventListener('click', function () {
 					const color = this.dataset.color;
