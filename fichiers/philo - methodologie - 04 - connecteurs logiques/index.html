@@ -12,6 +12,7 @@
 	<link rel="icon" type="image/svg+xml" href="src/favicon.ico" />
 	<title>repérer les connecteurs logiques</title>
 	<style>
+		/* ... (tout le CSS reste identique) ... */
 		* {
 			box-sizing: border-box;
 			touch-action: manipulation;
@@ -865,6 +866,7 @@
 
 		.mobile-title {
 			margin: 0;
+			margin-top: 10px;
 			text-align: center;
 			color: #ff0000 !important;
 			font-size: clamp(1.3rem, 4vw, 1.6rem);
@@ -872,7 +874,7 @@
 		}
 
 		.mobile-subtitle {
-			margin: 2px 0 0 0;
+			margin: 2px 0 6px 0;
 			text-align: center;
 			color: #666;
 			font-size: clamp(0.8rem, 2.5vw, 1rem);
@@ -996,7 +998,7 @@
 
 		@media (max-width: 768px) {
 			body {
-				padding: 0px 20px 20px 20px;  /* Changé: 11px -> 20px pour plus d'espace */
+				padding: 0px 20px 20px 20px;
 			}
 
 			.toolbar-desktop {
@@ -1007,9 +1009,31 @@
 				display: flex !important;
 			}
 
-			.toolbar-btn {
+			.toolbar-mobile .toolbar-btn {
 				width: 50px !important;
 				height: 50px !important;
+				min-width: 50px !important;
+				min-height: 50px !important;
+				border-radius: 50% !important;
+				flex-shrink: 0 !important;
+			}
+			
+			.toolbar-mobile .toolbar-btn svg {
+				width: 24px !important;
+				height: 24px !important;
+			}
+			
+			.toolbar-mobile .home-btn .icon-wrapper {
+				width: 50px !important;
+				height: 50px !important;
+			}
+			
+			.toolbar-mobile .menu-icon span {
+				width: 18px !important;
+			}
+			
+			.mobile-buttons-container {
+				gap: 12px;
 			}
 
 			.mobile-title-wrapper {
@@ -1029,7 +1053,7 @@
 			.text-content {
 				font-size: 14px;
 				line-height: 1.5;
-				padding: 12px 18px;  /* Changé: augmenté le padding horizontal */
+				padding: 12px 18px;
 			}
 
 			.button,
@@ -1116,7 +1140,7 @@
 		body.dark-theme #occurrencesMessage {
 			background-color: #2d3748 !important;
 			color: #e2e8f0 !important;
-			box-shadow: inset 0.2rem 0.2rem 0.3rem #1a202c, inset -0.2rem -0.2rem 0.3rem #4a5568 !important;
+			box-shadow: inset 0.2rem 0.2rem 0.3rem #1a202c, inset -0.3rem -0.3rem 0.3rem #4a5568 !important;
 		}
 
 		body.dark-theme .text-selector select {
@@ -1546,13 +1570,6 @@
 				</svg>
 				paramètres
 			</button>
-			<button class="menu-item" id="loadFileButton">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-					<path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
-					<polyline points="13 2 13 9 20 9"/>
-				</svg>
-				importer textes
-			</button>
 			<button class="menu-item" id="aboutButton">
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -1750,6 +1767,28 @@
 		const revealBtn = document.getElementById('modeReveal');
 
 		let cumulativeStats = { totalFound: 0, totalAttempts: 0, textResults: [] };
+
+		// ====== CHARGEMENT AUTOMATIQUE DE textes.js ======
+		function loadTextsFile() {
+			const script = document.createElement('script');
+			script.src = 'src/textes.js?' + new Date().getTime(); // Ajout d'un timestamp pour éviter le cache
+			script.onload = function() {
+				console.log('Fichier src/textes.js chargé avec succès');
+				// Mettre à jour les données globales
+				if (window.textData && window.textData.texts) {
+					populateTextSelect();
+					resetApplicationState();
+				}
+				if (window.connecteursData) {
+					// Mise à jour des connecteurs
+				}
+			};
+			script.onerror = function() {
+				console.log('Fichier src/textes.js non trouvé, utilisation des données par défaut');
+				populateTextSelect();
+			};
+			document.head.appendChild(script);
+		}
 
 		// ====== UTILITAIRES ======
 		function normalizeWord(w) { return w ? w.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[.,!?;:()'"«»]/g, '').trim() : ''; }
@@ -2475,7 +2514,8 @@
 					console.warn('Impossible de charger les données sauvegardées', e);
 				}
 			} else {
-				populateTextSelect();
+				// Charger le fichier src/textes.js par défaut
+				loadTextsFile();
 			}
 		}
 
