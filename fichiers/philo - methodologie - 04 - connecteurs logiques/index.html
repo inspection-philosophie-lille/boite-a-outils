@@ -851,6 +851,7 @@
 
 		.mobile-buttons-container {
 			display: flex;
+			margin-top: 15px;
 			justify-content: center;
 			gap: 15px;
 			width: 100%;
@@ -996,9 +997,10 @@
 			background-color: rgba(255, 140, 0, 0.3) !important;
 		}
 
+		/* ====== CORRECTIONS POUR MOBILE ====== */
 		@media (max-width: 768px) {
 			body {
-				padding: 0px 20px 20px 20px;
+				padding: 0px 0px 0px 0px;
 			}
 
 			.toolbar-desktop {
@@ -1007,6 +1009,7 @@
 
 			.toolbar-mobile {
 				display: flex !important;
+				padding: 5px 15px 0px 15px;
 			}
 
 			.toolbar-mobile .toolbar-btn {
@@ -1041,8 +1044,9 @@
 			}
 
 			.container {
-				padding: 7px;
+				padding: 10px 5px 10px 45px;
 				margin-top: -15px;
+				margin-bottom: 20px;
 			}
 
 			.two-columns {
@@ -1053,7 +1057,7 @@
 			.text-content {
 				font-size: 14px;
 				line-height: 1.5;
-				padding: 12px 18px;
+				padding: 12px;
 			}
 
 			.button,
@@ -1062,13 +1066,29 @@
 				height: 40px;
 			}
 			
-			/* Ajout de marges pour la zone de dessin */
+			/* Correction des marges pour le content-wrapper */
 			.content-wrapper {
-				margin: 0 8px;
+				margin: 0;
+			}
+			
+			/* Correction des marges pour le results-panel */
+			.results-panel {
+				margin: 0;
+				min-height: auto;
+				height: auto;
+			}
+			
+			/* Hauteur adaptative pour les zones */
+			.text-column {
+				min-height: auto;
+			}
+			
+			.content-wrapper {
+				min-height: 200px;
 			}
 			
 			.results-panel {
-				margin: 0 8px;
+				min-height: auto;
 			}
 		}
 
