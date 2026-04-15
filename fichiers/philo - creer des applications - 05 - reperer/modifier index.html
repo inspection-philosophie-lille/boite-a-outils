@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<!-- Daniel Boulagnon -->
+<!-- daniel.boulagnon@ac-lille.fr -->
+<!-- version 2026 -->
+<!-- Exploitation à but strictement pédagogique et non lucratif -->
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=3.0, user-scalable=no, viewport-fit=cover">
+    <link rel="icon" type="image/svg+xml" href="src/favicon.ico" />
+    <title>gestionnaire de textes à repérer</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+			background: linear-gradient(135deg, #f5f7fa 0%, #e9eef5 100%);
+			min-height: 100vh;
+			padding: 16px;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+		}
+
+		.header {
+			text-align: center;
+			padding: 24px 16px 32px;
+		}
+
+		.header h1 {
+			font-size: clamp(1.8rem, 6vw, 2.5rem);
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			background-clip: text;
+			-webkit-background-clip: text;
+			color: transparent;
+			margin-bottom: 12px;
+		}
+
+		.phases {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 12px;
+			margin-bottom: 32px;
+			background: white;
+			padding: 16px 12px;
+			border-radius: 60px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+		}
+
+		.phase {
+			flex: 1;
+			min-width: 100px;
+			padding: 14px 8px;
+			border-radius: 40px;
+			text-align: center;
+			font-weight: 600;
+			font-size: clamp(0.8rem, 3.5vw, 1rem);
+			cursor: pointer;
+			background: #f0f2f5;
+			color: #5a6e8a;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			transition: all 0.3s ease;
+		}
+
+		.phase.active {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+			box-shadow: 0 6px 14px rgba(102, 126, 234, 0.3);
+		}
+
+		.phase-content {
+			display: none;
+			animation: fadeIn 0.4s ease;
+		}
+
+		.phase-content.active {
+			display: block;
+		}
+
+		@keyframes fadeIn {
+			from { opacity: 0; transform: translateY(15px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		.card {
+			background: white;
+			border-radius: 28px;
+			padding: 24px 20px;
+			margin-bottom: 20px;
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+		}
+
+		.card-title {
+			font-size: 1.4rem;
+			font-weight: 700;
+			color: #333;
+			margin-bottom: 16px;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.badge {
+			background: #eef2ff;
+			color: #4f46e5;
+			padding: 6px 14px;
+			border-radius: 30px;
+			font-size: 0.8rem;
+			font-weight: 500;
+		}
+
+		.file-input-area {
+			border: 2px dashed #cbd5e1;
+			border-radius: 24px;
+			padding: 30px 20px;
+			text-align: center;
+			cursor: pointer;
+			transition: all 0.3s;
+			background: #f8fafc;
+			margin: 20px 0;
+		}
+
+		.file-input-area:hover {
+			border-color: #667eea;
+			background: #f1f5f9;
+		}
+
+		.file-input-area input {
+			display: none;
+		}
+
+		/* PAS de scroll sur la liste des textes */
+		.text-list {
+			overflow: visible;
+		}
+
+		.text-item {
+			border: 1px solid #e2e8f0;
+			border-radius: 20px;
+			padding: 20px;
+			margin-bottom: 24px;
+			background: white;
+		}
+
+		.text-number {
+			font-weight: 700;
+			color: #4f46e5;
+			background: #eef2ff;
+			padding: 4px 12px;
+			border-radius: 30px;
+			font-size: 0.85rem;
+			display: inline-block;
+			margin-bottom: 12px;
+		}
+
+		/* Zone de contenu */
+		.text-fullcontent {
+			background: #fefce8;
+			padding: 12px 12px;
+			border-radius: 16px;
+			font-size: 0.9rem;
+			line-height: 1.6;
+			color: #1e293b;
+			word-break: break-word;
+			text-align: justify;
+			text-indent: 40px;
+		}
+
+		/* Référence - avec espacement augmenté */
+		.text-reference {
+			margin-top: 20px;
+			margin-bottom: 0;
+			padding-top: 8px;
+			padding-bottom: 0;
+			font-size: 0.9rem;
+			color: #1e293b;
+			text-align: right;
+			border-top: 1px solid #e2e8f0;
+		}
+		
+		.text-reference em {
+			font-style: italic;
+		}
+
+		.connectors-list {
+			margin: 12px 0 16px 0;
+			padding: 10px;
+			background: #f1f5f9;
+			border-radius: 12px;
+			font-size: 0.8rem;
+		}
+
+		.connectors-list-title {
+			font-weight: 600;
+			color: #334155;
+			margin-bottom: 6px;
+			font-size: 0.75rem;
+			letter-spacing: 0.5px;
+		}
+
+		.connector-category-tag {
+			display: inline-block;
+			background: white;
+			border-radius: 20px;
+			padding: 4px 10px;
+			margin: 4px 6px 4px 0;
+			font-size: 0.75rem;
+			font-weight: 500;
+			border: 1px solid #e2e8f0;
+		}
+
+		.connector-category-tag span.connector-text {
+			color: #1e293b;
+			font-weight: 600;
+		}
+
+		.connector-category-tag span.category-name {
+			color: #4f46e5;
+		}
+
+		.text-buttons {
+			display: flex;
+			justify-content: flex-end;
+			gap: 10px;
+			margin-top: 0;
+		}
+
+		.connector {
+			background-color: yellow;
+			font-weight: 600;
+			padding: 0 2px;
+			border-radius: 6px;
+		}
+
+		em {
+			font-style: italic;
+		}
+
+		.stats-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+			gap: 16px;
+			margin-top: 16px;
+		}
+
+		.stat-card {
+			background: #f8fafc;
+			padding: 16px;
+			border-radius: 20px;
+			text-align: center;
+		}
+
+		.stat-number {
+			font-size: 2rem;
+			font-weight: 700;
+			color: #667eea;
+		}
+
+		button {
+			background: none;
+			border: none;
+			cursor: pointer;
+		}
+
+		.notification {
+			position: fixed;
+			bottom: 20px;
+			left: 20px;
+			right: 20px;
+			background: #2b6e3c;
+			color: white;
+			padding: 12px 16px;
+			border-radius: 40px;
+			text-align: center;
+			z-index: 1000;
+			animation: slideUp 0.3s ease;
+		}
+
+		@keyframes slideUp {
+			from { transform: translateY(100px); opacity: 0; }
+			to { transform: translateY(0); opacity: 1; }
+		}
+
+		.loading {
+			text-align: center;
+			padding: 40px;
+			color: #667eea;
+		}
+
+		@media (max-width: 640px) {
+			.phases { gap: 8px; padding: 12px 8px; }
+			.phase { min-width: 70px; padding: 10px 4px; font-size: 0.7rem; }
+			.card { padding: 20px 16px; }
+			.text-fullcontent { font-size: 0.8rem; padding: 8px 12px; }
+			.connector-category-tag { font-size: 0.7rem; padding: 3px 8px; }
+		}
+	</style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+	<div class="header">
+		<h1><i class="fas fa-book-open"></i> gestionnaire de textes à repérer</h1>
+	</div>
+
+	<div class="phases">
+		<div class="phase active" data-phase="1"><i class="fas fa-file-import"></i> 1. importer</div>
+		<div class="phase" data-phase="2"><i class="fas fa-list"></i> 2. lister</div>
+		<div class="phase" data-phase="3"><i class="fas fa-edit"></i> 3. modifier / ajouter</div>
+		<div class="phase" data-phase="4"><i class="fas fa-file-export"></i> 4. exporter</div>
+	</div>
+
+	<!-- PHASE 1 : IMPORTER -->
+	<div class="phase-content active" id="phase1">
+		<div class="card">
+			<div class="card-title"><i class="fas fa-file-import"></i> 1. importer le fichier textes.js</div>
+			<div class="file-input-area" id="fileInputArea">
+				<i class="fas fa-file-code" style="font-size: 3rem; color: #667eea; margin-bottom: 12px; display: block;"></i>
+				<p><strong>cliquez pour importer textes.js</strong></p>
+				<p style="font-size: 0.8rem;">ou glissez-déposez</p>
+				<input type="file" id="fileInput" accept=".js">
+			</div>
+			<div id="importResult" style="display: none; margin-top: 20px; padding: 16px; background: #e6f7e6; border-radius: 16px;">
+				<i class="fas fa-check-circle"></i> <strong id="importSuccessMsg"></strong>
+			</div>
+		</div>
+	</div>
+
+	<!-- PHASE 2 : LISTER -->
+	<div class="phase-content" id="phase2">
+		<div class="card">
+			<div class="card-title"><i class="fas fa-list"></i> 2. lister les textes importés 
+				<span class="badge" id="textCountBadge">0 texte</span>
+				<button id="addNewTextBtn" class="badge" style="background:#48bb78; color:white; margin-left:auto;"><i class="fas fa-plus"></i> nouveau texte</button>
+			</div>
+			<div id="textListContainer" class="text-list">
+				<div class="loading" id="loadingIndicator"><i class="fas fa-spinner fa-pulse"></i> chargement de src/textes.js...</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- PHASE 3 : MODIFIER / AJOUTER -->
+	<div class="phase-content" id="phase3">
+		<div class="card">
+			<div class="card-title"><i class="fas fa-edit"></i> 3. modifier / ajouter un texte</div>
+			
+			<div id="editorPlaceholder" class="card" style="background:#f8fafc; text-align:center;">
+				sélectionnez un texte dans la phase 2, ou utilisez le formulaire ci-dessous pour en ajouter un nouveau.
+			</div>
+			
+			<div id="editorArea" style="display:none; margin-top: 20px;">
+				<div id="editModeIndicator" style="margin-bottom: 16px; padding: 8px; background: #eef2ff; border-radius: 12px; text-align: center;">
+					<i class="fas fa-info-circle"></i> <span id="editModeText">mode modification</span>
+				</div>
+				
+				<div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
+					<div style="flex: 1;">
+						<label style="font-weight: 600;">numéro du texte (ID) :</label>
+						<input type="number" id="editId" style="width:100%; padding:12px; border-radius:16px; border:1px solid #ccc; margin-top: 4px;">
+					</div>
+					<div style="flex: 2;">
+						<label style="font-weight: 600;">référence / titre (avec &lt;em&gt; pour l'italique) :</label>
+						<input type="text" id="editTitle" placeholder="Ex: PLATON, &lt;em&gt;Gorgias&lt;/em&gt;, 482c-484b" style="width:100%; padding:12px; border-radius:16px; border:1px solid #ccc; margin-top: 4px;">
+					</div>
+				</div>
+				
+				<div style="margin-bottom: 16px;">
+					<label style="font-weight: 600;">contenu du texte :</label>
+					<textarea id="editContent" rows="10" style="width:100%; padding:12px; border-radius:16px; border:1px solid #ccc; font-family:monospace;"></textarea>
+				</div>
+				
+				<div style="display: flex; gap: 12px; flex-wrap: wrap;">
+					<button id="saveEditBtn" class="badge" style="background:#667eea; color:white; padding: 10px 20px;">
+						<i class="fas fa-save"></i> enregistrer (modifier)
+					</button>
+					<button id="insertBeforeBtn" class="badge" style="background:#48bb78; color:white; padding: 10px 20px;">
+						<i class="fas fa-arrow-up"></i> insérer avant l'ID
+					</button>
+					<button id="insertAfterBtn" class="badge" style="background:#48bb78; color:white; padding: 10px 20px;">
+						<i class="fas fa-arrow-down"></i> insérer après l'ID
+					</button>
+					<button id="insertAtEndBtn" class="badge" style="background:#ed8936; color:white; padding: 10px 20px;">
+						<i class="fas fa-plus-circle"></i> ajouter à la fin
+					</button>
+					<button id="cancelEditBtn" class="badge" style="background:#e2e8f0; padding: 10px 20px;">
+						<i class="fas fa-times"></i> annuler
+					</button>
+				</div>
+				
+				<div style="margin-top: 16px; padding: 12px; background: #fef3c7; border-radius: 12px; font-size: 0.85rem;">
+					<i class="fas fa-lightbulb"></i> <strong>astuces :</strong><br>
+					• <strong>enregistrer</strong> : modifie le texte existant à l'ID choisi.<br>
+					• <strong>insérer avant/après</strong> : insère un NOUVEAU texte à la position souhaitée (les IDs suivants sont automatiquement décalés).<br>
+					• <strong>ajouter à la fin</strong> : ajoute un nouveau texte avec le prochain ID disponible.<br>
+					• utilisez <strong>**texte**</strong> pour les connecteurs (surlignage jaune) et <strong>&lt;em&gt;texte&lt;/em&gt;</strong> pour l'italique.
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- PHASE 4 : EXPORTER -->
+	<div class="phase-content" id="phase4">
+		<div class="card">
+			<div class="card-title"><i class="fas fa-file-export"></i> exporter le fichier textes.js</div>
+			<div class="stats-grid">
+				<div class="stat-card"><div class="stat-number" id="exportTextCount">0</div><div>textes</div></div>
+				<div class="stat-card"><div class="stat-number" id="exportCategoryCount">0</div><div>catégories</div></div>
+				<div class="stat-card"><div class="stat-number" id="exportConnectorCount">0</div><div>connecteurs</div></div>
+			</div>
+			<div style="display:flex; gap:12px; justify-content:center; margin-top:24px;">
+				<button id="exportBtn" class="badge" style="background:#48bb78; color:white; padding:12px 24px;">exporter textes.js</button>
+				<button id="previewExportBtn" class="badge" style="background:#ed8936; color:white; padding:12px 24px;">prévisualiser</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	// ==================== DONNÉES ====================
+	let importedTexts = [];
+	let importedConnecteurs = {};
+	let currentEditIndex = null;
+	let isNewTextMode = false;
+	let dataLoaded = false;
+
+	// ==================== FONCTIONS DE NETTOYAGE / FORMATAGE ====================
+
+	function removeSpanTags(html) {
+		if (!html) return '';
+		return html.replace(/<\/?span[^>]*>/g, '');
+	}
+
+	function cleanForEditing(html) {
+		if (!html) return '';
+		return html.replace(/<\/?span[^>]*>/g, '');
+	}
+
+	function formatTitleForReference(titleHtml) {
+		if (!titleHtml) return '';
+		return titleHtml.replace(/<\/?span[^>]*>/g, '');
+	}
+
+	function restoreSpansForExport(text) {
+		if (!text) return '';
+		let result = text;
+		
+		const ems = [];
+		result = result.replace(/<em>([\s\S]*?)<\/em>/gi, (match, content) => {
+			ems.push(content);
+			return `__EM_${ems.length-1}__`;
+		});
+		
+		result = result.replace(/\*\*([^*]+)\*\*/g, '<span>**$1**</span>');
+		
+		result = result.replace(/__EM_(\d+)__/g, (match, idx) => {
+			return `<em>${ems[parseInt(idx)]}</em>`;
+		});
+		
+		return result;
+	}
+
+	function formatForDisplay(content) {
+		if (!content) return '';
+		let result = removeSpanTags(content);
+		result = result.replace(/\*\*(.*?)\*\*/g, '<span class="connector">$1</span>');
+		return result;
+	}
+
+	// ==================== DÉTECTION DES CONNECTEURS ====================
+	
+	function extractConnectorsFromText(content) {
+		const regex = /\*\*([^*]+)\*\*/g;
+		const connectors = [];
+		let match;
+		while ((match = regex.exec(content)) !== null) {
+			let connector = match[1].trim();
+			connector = connector.replace(/<[^>]*>/g, '');
+			if (connector) {
+				connectors.push(connector);
+			}
+		}
+		return connectors;
+	}
+
+	function getCategoryForConnector(connectorText, connecteursDict) {
+		if (!connecteursDict || Object.keys(connecteursDict).length === 0) {
+			return "catégorie inconnue";
+		}
+		const lowerConnector = connectorText.toLowerCase();
+		for (const [category, connectors] of Object.entries(connecteursDict)) {
+			if (!Array.isArray(connectors)) continue;
+			for (const conn of connectors) {
+				if (conn.toLowerCase() === lowerConnector) {
+					return category;
+				}
+			}
+		}
+		return "catégorie inconnue";
+	}
+
+	function detectConnectorsInOrder(content, connecteursDict) {
+		const rawConnectors = extractConnectorsFromText(content);
+		
+		if (rawConnectors.length === 0) {
+			return [];
+		}
+		
+		const result = [];
+		for (const connector of rawConnectors) {
+			const category = getCategoryForConnector(connector, connecteursDict);
+			result.push({
+				text: connector,
+				category: category
+			});
+		}
+		
+		return result;
+	}
+
+	// ==================== GESTION DES IDs ====================
+	
+	function reorderIds() {
+		importedTexts.sort((a, b) => (a.id || 0) - (b.id || 0));
+		let newId = 1;
+		for (let i = 0; i < importedTexts.length; i++) {
+			importedTexts[i].id = newId++;
+		}
+	}
+
+	// ==================== INSERTION / AJOUT ====================
+	
+	function insertTextAtPosition(newText, targetId, position) {
+		const targetIndex = importedTexts.findIndex(t => t.id === targetId);
+		if (targetIndex === -1) {
+			showNotification(`ID ${targetId} introuvable`, 'error');
+			return false;
+		}
+		
+		let insertIndex = (position === 'before') ? targetIndex : targetIndex + 1;
+		importedTexts.splice(insertIndex, 0, newText);
+		reorderIds();
+		return true;
+	}
+
+	function addTextAtEnd(newText) {
+		const maxId = importedTexts.length > 0 ? Math.max(...importedTexts.map(t => t.id || 0)) : 0;
+		newText.id = maxId + 1;
+		importedTexts.push(newText);
+		return true;
+	}
+
+	function updateExistingText(id, newTitle, newContent) {
+		const index = importedTexts.findIndex(t => t.id === id);
+		if (index === -1) {
+			showNotification(`ID ${id} introuvable`, 'error');
+			return false;
+		}
+		importedTexts[index] = {
+			...importedTexts[index],
+			title: newTitle,
+			content: newContent
+		};
+		return true;
+	}
+
+	// ==================== AFFICHAGE (PHASE 2) ====================
+	
+	function renderTextList() {
+		const container = document.getElementById('textListContainer');
+		if (!importedTexts.length) {
+			container.innerHTML = '<div class="loading">Aucun texte importé. Utilisez la phase 1 pour importer un fichier textes.js</div>';
+			document.getElementById('textCountBadge').textContent = '0 texte';
+			return;
+		}
+		let html = '';
+		importedTexts.forEach((text, idx) => {
+			const textId = text.id || idx + 1;
+			const titleRaw = text.title || 'Sans titre';
+			const contentRaw = text.content || '';
+			
+			const displayContent = formatForDisplay(contentRaw);
+			const formattedReference = formatTitleForReference(titleRaw);
+			
+			const connectors = detectConnectorsInOrder(contentRaw, importedConnecteurs);
+			const connectorsCount = connectors.length;
+			
+			let connectorsHtml = '';
+			if (connectorsCount > 0) {
+				connectorsHtml = `
+					<div class="connectors-list">
+						<div class="connectors-list-title"><i class="fas fa-link"></i> ${connectorsCount} connecteur${connectorsCount > 1 ? 's' : ''} détecté${connectorsCount > 1 ? 's' : ''} :</div>
+				`;
+				for (const conn of connectors) {
+					connectorsHtml += `
+						<span class="connector-category-tag">
+							<span class="connector-text">« ${escapeHtml(conn.text)} »</span> → 
+							<span class="category-name">${escapeHtml(conn.category)}</span>
+						</span>
+					`;
+				}
+				connectorsHtml += `</div>`;
+			} else {
+				connectorsHtml = `
+					<div class="connectors-list">
+						<div class="connectors-list-title"><i class="fas fa-link"></i> 0 connecteur détecté</div>
+						<span style="color: #888; font-size: 0.75rem;">Aucun **connecteur** trouvé dans ce texte</span>
+					</div>
+				`;
+			}
+			
+			html += `
+				<div class="text-item">
+					<div class="text-number">texte n° ${textId}</div>
+					<div class="text-fullcontent">
+						${displayContent}
+					</div>
+					<div class="text-reference">${formattedReference}</div>
+					${connectorsHtml}
+					<div class="text-buttons">
+						<button class="edit-text-btn" data-index="${idx}" style="background:#eef2ff; padding:8px 20px; border-radius:40px; font-weight:500;">✏️ Modifier</button>
+						<button class="delete-text-btn" data-index="${idx}" style="background:#ffe6e6; padding:8px 20px; border-radius:40px; font-weight:500;">🗑️ Supprimer</button>
+					</div>
+				</div>
+			`;
+		});
+		container.innerHTML = html;
+		document.getElementById('textCountBadge').textContent = `${importedTexts.length} texte${importedTexts.length > 1 ? 's' : ''}`;
+
+		document.querySelectorAll('.edit-text-btn').forEach(btn => {
+			btn.addEventListener('click', () => editTextAtIndex(parseInt(btn.dataset.index)));
+		});
+		document.querySelectorAll('.delete-text-btn').forEach(btn => {
+			btn.addEventListener('click', () => deleteTextAtIndex(parseInt(btn.dataset.index)));
+		});
+	}
+
+	// ==================== ÉDITION ====================
+	
+	function openNewTextEditor() {
+		isNewTextMode = true;
+		currentEditIndex = null;
+		
+		const nextId = importedTexts.length > 0 ? Math.max(...importedTexts.map(t => t.id || 0)) + 1 : 1;
+		
+		document.getElementById('editModeText').innerHTML = '<i class="fas fa-plus-circle"></i> Mode AJOUT - Remplissez le formulaire ci-dessous';
+		document.getElementById('editModeIndicator').style.backgroundColor = '#d1fae5';
+		document.getElementById('editId').value = nextId;
+		document.getElementById('editId').readOnly = false;
+		document.getElementById('editTitle').value = '';
+		document.getElementById('editContent').value = '';
+		document.getElementById('editorPlaceholder').style.display = 'none';
+		document.getElementById('editorArea').style.display = 'block';
+		switchPhase(3);
+	}
+
+	function editTextAtIndex(idx) {
+		isNewTextMode = false;
+		currentEditIndex = idx;
+		const t = importedTexts[idx];
+		const cleanTitle = cleanForEditing(t.title || '');
+		const cleanContent = cleanForEditing(t.content || '');
+		
+		document.getElementById('editModeText').innerHTML = '<i class="fas fa-edit"></i> Mode MODIFICATION - Vous modifiez le texte existant';
+		document.getElementById('editModeIndicator').style.backgroundColor = '#eef2ff';
+		document.getElementById('editId').value = t.id || idx + 1;
+		document.getElementById('editId').readOnly = true;
+		document.getElementById('editTitle').value = cleanTitle;
+		document.getElementById('editContent').value = cleanContent;
+		document.getElementById('editorPlaceholder').style.display = 'none';
+		document.getElementById('editorArea').style.display = 'block';
+		switchPhase(3);
+	}
+
+	function deleteTextAtIndex(idx) {
+		if (confirm('Supprimer ce texte ?')) {
+			importedTexts.splice(idx, 1);
+			if (currentEditIndex === idx) {
+				currentEditIndex = null;
+				document.getElementById('editorArea').style.display = 'none';
+				document.getElementById('editorPlaceholder').style.display = 'block';
+			}
+			reorderIds();
+			renderTextList();
+			updateExportStats();
+			showNotification('Texte supprimé');
+		}
+	}
+
+	// Sauvegarde (modification)
+	document.getElementById('saveEditBtn').addEventListener('click', () => {
+		const id = parseInt(document.getElementById('editId').value);
+		const rawTitle = document.getElementById('editTitle').value;
+		const rawContent = document.getElementById('editContent').value;
+		
+		if (!rawTitle || !rawContent) {
+			showNotification('Le titre et le contenu sont requis', 'error');
+			return;
+		}
+		
+		const finalTitle = restoreSpansForExport(rawTitle);
+		const finalContent = restoreSpansForExport(rawContent);
+		
+		if (isNewTextMode) {
+			showNotification('Utilisez "Ajouter à la fin" ou "Insérer avant/après" pour ajouter un texte', 'warning');
+			return;
+		}
+		
+		if (updateExistingText(id, finalTitle, finalContent)) {
+			renderTextList();
+			updateExportStats();
+			document.getElementById('editorArea').style.display = 'none';
+			document.getElementById('editorPlaceholder').style.display = 'block';
+			currentEditIndex = null;
+			showNotification('Texte modifié');
+			switchPhase(2);
+		}
+	});
+
+	// Insérer avant
+	document.getElementById('insertBeforeBtn').addEventListener('click', () => {
+		const targetId = parseInt(document.getElementById('editId').value);
+		const rawTitle = document.getElementById('editTitle').value;
+		const rawContent = document.getElementById('editContent').value;
+		
+		if (!rawTitle || !rawContent) {
+			showNotification('Le titre et le contenu sont requis', 'error');
+			return;
+		}
+		
+		const finalTitle = restoreSpansForExport(rawTitle);
+		const finalContent = restoreSpansForExport(rawContent);
+		
+		const newText = { id: targetId, title: finalTitle, content: finalContent };
+		
+		if (insertTextAtPosition(newText, targetId, 'before')) {
+			renderTextList();
+			updateExportStats();
+			document.getElementById('editorArea').style.display = 'none';
+			document.getElementById('editorPlaceholder').style.display = 'block';
+			showNotification('Texte inséré avant');
+			switchPhase(2);
+		}
+	});
+
+	// Insérer après
+	document.getElementById('insertAfterBtn').addEventListener('click', () => {
+		const targetId = parseInt(document.getElementById('editId').value);
+		const rawTitle = document.getElementById('editTitle').value;
+		const rawContent = document.getElementById('editContent').value;
+		
+		if (!rawTitle || !rawContent) {
+			showNotification('Le titre et le contenu sont requis', 'error');
+			return;
+		}
+		
+		const finalTitle = restoreSpansForExport(rawTitle);
+		const finalContent = restoreSpansForExport(rawContent);
+		
+		const newText = { id: targetId + 1, title: finalTitle, content: finalContent };
+		
+		if (insertTextAtPosition(newText, targetId, 'after')) {
+			renderTextList();
+			updateExportStats();
+			document.getElementById('editorArea').style.display = 'none';
+			document.getElementById('editorPlaceholder').style.display = 'block';
+			showNotification('Texte inséré après');
+			switchPhase(2);
+		}
+	});
+
+	// Ajouter à la fin
+	document.getElementById('insertAtEndBtn').addEventListener('click', () => {
+		const rawTitle = document.getElementById('editTitle').value;
+		const rawContent = document.getElementById('editContent').value;
+		
+		if (!rawTitle || !rawContent) {
+			showNotification('Le titre et le contenu sont requis', 'error');
+			return;
+		}
+		
+		const finalTitle = restoreSpansForExport(rawTitle);
+		const finalContent = restoreSpansForExport(rawContent);
+		
+		const newText = { title: finalTitle, content: finalContent };
+		
+		if (addTextAtEnd(newText)) {
+			renderTextList();
+			updateExportStats();
+			document.getElementById('editorArea').style.display = 'none';
+			document.getElementById('editorPlaceholder').style.display = 'block';
+			showNotification('Texte ajouté à la fin');
+			switchPhase(2);
+		}
+	});
+
+	document.getElementById('cancelEditBtn').addEventListener('click', () => {
+		document.getElementById('editorArea').style.display = 'none';
+		document.getElementById('editorPlaceholder').style.display = 'block';
+		currentEditIndex = null;
+	});
+
+	document.getElementById('addNewTextBtn').addEventListener('click', openNewTextEditor);
+
+	// ==================== STATS & EXPORT ====================
+	
+	function updateExportStats() {
+		document.getElementById('exportTextCount').innerText = importedTexts.length;
+		const catCount = Object.keys(importedConnecteurs).length;
+		document.getElementById('exportCategoryCount').innerText = catCount;
+		let total = 0;
+		Object.values(importedConnecteurs).forEach(c => { if (Array.isArray(c)) total += c.length; });
+		document.getElementById('exportConnectorCount').innerText = total;
+	}
+
+	function generateJS() {
+		return `// textes.js - généré le ${new Date().toLocaleString()}
+window.connecteursData = { connecteurs: ${JSON.stringify(importedConnecteurs, null, 2)} };
+window.textData = { texts: ${JSON.stringify(importedTexts, null, 2)} };
+console.log('textes.js chargé - ${importedTexts.length} textes');`;
+	}
+
+	function exportToFile() {
+		if (!importedTexts.length && !Object.keys(importedConnecteurs).length) return showNotification('Rien à exporter', 'error');
+		const blob = new Blob([generateJS()], { type: 'text/javascript' });
+		const a = document.createElement('a');
+		a.href = URL.createObjectURL(blob);
+		a.download = 'textes.js';
+		a.click();
+		URL.revokeObjectURL(a.href);
+		showNotification('Export réussi');
+	}
+
+	function previewExport() {
+		if (!importedTexts.length && !Object.keys(importedConnecteurs).length) return showNotification('Rien à prévisualiser', 'error');
+		const modal = document.createElement('div');
+		modal.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px;';
+		const pre = document.createElement('pre');
+		pre.style.cssText = 'background:#1e293b; color:#e2e8f0; padding:20px; border-radius:16px; max-width:90%; max-height:80%; overflow:auto; font-size:12px;';
+		pre.textContent = generateJS();
+		modal.appendChild(pre);
+		modal.onclick = () => modal.remove();
+		document.body.appendChild(modal);
+	}
+
+	function showNotification(msg, type = 'success') {
+		const n = document.createElement('div');
+		n.className = 'notification';
+		n.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${msg}`;
+		if (type === 'error') n.style.background = '#dc2626';
+		document.body.appendChild(n);
+		setTimeout(() => n.remove(), 3000);
+	}
+
+	function escapeHtml(str) {
+		if (!str) return '';
+		return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[m]);
+	}
+
+	// ==================== IMPORT (PHASE 1) ====================
+	
+	function extractDataFromJS(content) {
+		let texts = [], connecteurs = {};
+		try {
+			const tm = content.match(/window\.textData\s*=\s*({[\s\S]*?});/);
+			if (tm) { let d = eval('(' + tm[1] + ')'); if (d.texts) texts = d.texts; }
+			const cm = content.match(/window\.connecteursData\s*=\s*({[\s\S]*?});/);
+			if (cm) { let d = eval('(' + cm[1] + ')'); if (d.connecteurs) connecteurs = d.connecteurs; }
+		} catch (e) { console.warn(e); }
+		return { texts, connecteurs };
+	}
+
+	function loadData(texts, connecteurs) {
+		if (!texts.length && !Object.keys(connecteurs).length) {
+			showNotification('Aucune donnée valide', 'error');
+			return false;
+		}
+		importedTexts = texts;
+		importedConnecteurs = connecteurs;
+		document.getElementById('importSuccessMsg').innerHTML = `${importedTexts.length} texte(s), ${Object.keys(importedConnecteurs).length} catégorie(s)`;
+		document.getElementById('importResult').style.display = 'block';
+		renderTextList();
+		updateExportStats();
+		showNotification(`Import réussi : ${importedTexts.length} textes`);
+		dataLoaded = true;
+		return true;
+	}
+
+	function handleFile(file) {
+		if (!file) return;
+		const reader = new FileReader();
+		reader.onload = e => {
+			const { texts, connecteurs } = extractDataFromJS(e.target.result);
+			loadData(texts, connecteurs);
+			switchPhase(2);
+		};
+		reader.readAsText(file);
+	}
+
+	// ==================== CHARGEMENT AUTOMATIQUE ====================
+	
+	function autoLoadFromSrc() {
+		const loadingIndicator = document.getElementById('loadingIndicator');
+		
+		fetch('src/textes.js')
+			.then(response => {
+				if (!response.ok) throw new Error('Fichier non trouvé');
+				return response.text();
+			})
+			.then(content => {
+				const { texts, connecteurs } = extractDataFromJS(content);
+				if (texts.length > 0 || Object.keys(connecteurs).length > 0) {
+					loadData(texts, connecteurs);
+					console.log(`✅ Chargement automatique réussi depuis src/textes.js (${texts.length} textes)`);
+					if (loadingIndicator) loadingIndicator.style.display = 'none';
+				}
+			})
+			.catch(err => {
+				console.log('⚠️ Fetch impossible, tentative avec script tag...');
+				const script = document.createElement('script');
+				script.src = 'src/textes.js';
+				script.onload = () => {
+					if (window.textData && window.textData.texts) {
+						const texts = window.textData.texts;
+						const connecteurs = window.connecteursData ? window.connecteursData.connecteurs : {};
+						if (texts.length > 0) {
+							loadData(texts, connecteurs);
+							console.log(`✅ Chargement via script tag réussi (${texts.length} textes)`);
+							if (loadingIndicator) loadingIndicator.style.display = 'none';
+						} else {
+							if (loadingIndicator) loadingIndicator.innerHTML = '<div class="loading">❌ Aucun texte trouvé dans src/textes.js</div>';
+						}
+					} else {
+						if (loadingIndicator) loadingIndicator.innerHTML = '<div class="loading">❌ Fichier src/textes.js trouvé mais structure invalide</div>';
+					}
+				};
+				script.onerror = () => {
+					console.log('❌ Aucun fichier src/textes.js trouvé');
+					if (loadingIndicator) loadingIndicator.innerHTML = '<div class="loading">❌ Aucun fichier src/textes.js trouvé. Utilisez la phase 1 pour importer.</div>';
+				};
+				document.head.appendChild(script);
+			});
+	}
+
+	// ==================== GESTION DES PHASES ====================
+	
+	function switchPhase(n) {
+		document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
+		document.querySelector(`.phase[data-phase="${n}"]`).classList.add('active');
+		document.querySelectorAll('.phase-content').forEach(c => c.classList.remove('active'));
+		document.getElementById(`phase${n}`).classList.add('active');
+		if (n === 2) renderTextList();
+		if (n === 4) updateExportStats();
+	}
+
+	document.querySelectorAll('.phase').forEach(p => p.addEventListener('click', () => switchPhase(parseInt(p.dataset.phase))));
+
+	// ==================== ÉVÉNEMENTS D'IMPORT ====================
+	
+	const farea = document.getElementById('fileInputArea');
+	const finput = document.getElementById('fileInput');
+	farea.addEventListener('click', () => finput.click());
+	farea.addEventListener('dragover', e => { e.preventDefault(); farea.style.borderColor = '#667eea'; });
+	farea.addEventListener('dragleave', () => farea.style.borderColor = '#cbd5e1');
+	farea.addEventListener('drop', e => {
+		e.preventDefault();
+		farea.style.borderColor = '#cbd5e1';
+		if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+	});
+	finput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+
+	document.getElementById('exportBtn').addEventListener('click', exportToFile);
+	document.getElementById('previewExportBtn').addEventListener('click', previewExport);
+
+	// Lancer le chargement automatique au démarrage
+	autoLoadFromSrc();
+	renderTextList();
+	updateExportStats();
+</script>
+</body>
+</html>
