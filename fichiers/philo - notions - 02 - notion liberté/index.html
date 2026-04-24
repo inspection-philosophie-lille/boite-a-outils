@@ -25,10 +25,9 @@
 			min-height: 100vh;
 			transition: background-color 0.4s, color 0.4s;
 			overflow: hidden;
-			cursor: pointer;
+			cursor: default;
 		}
 
-		/* Variables pour les thèmes */
 		:root {
 			--bg: rgba(255, 255, 255, 0.95);
 			--btn: #fff;
@@ -40,7 +39,6 @@
 			--slider-bg: #ccc;
 		}
 
-		/* Mode sombre */
 		body.dark-mode {
 			--bg: rgba(30, 30, 30, 0.95);
 			--btn: #2d2d2d;
@@ -51,7 +49,6 @@
 			--slider-bg: #555;
 		}
 
-		/* Forcer le canvas à prendre toute la surface */
 		canvas {
 			display: block;
 			width: 100vw;
@@ -62,7 +59,6 @@
 			z-index: 1;
 		}
 
-		/* TOOLBAR - POSITIONNÉE AU-DESSUS DU CANVAS */
 		.toolbar {
 			position: fixed;
 			top: 0;
@@ -93,7 +89,6 @@
 			text-align: center;
 		}
 
-		/* Styles communs pour tous les boutons */
 		.toolbar-btn {
 			width: 60px;
 			height: 60px;
@@ -133,13 +128,11 @@
 			stroke-width: 2;
 		}
 
-		/* SVG du bouton son */
 		.sound-btn svg {
 			width: 38px !important;
 			height: 38px !important;
 		}
 
-		/* Tooltip */
 		.toolbar-btn::after {
 			content: attr(data-title);
 			position: absolute;
@@ -163,7 +156,6 @@
 			opacity: 1;
 		}
 
-		/* Bouton HOME avec animation 3D */
 		.home-btn {
 			perspective: 1200px;
 		}
@@ -187,7 +179,6 @@
 			100% { transform: rotateY(360deg); }
 		}
 
-		/* Bouton RELOAD avec animation */
 		.reload-btn:hover svg {
 			animation: rotate 1s linear;
 		}
@@ -197,7 +188,6 @@
 			to { transform: rotate(360deg); }
 		}
 
-		/* Bouton FULLSCREEN */
 		.fullscreen-icon,
 		.fullscreen-exit-icon {
 			transform-origin: center;
@@ -212,7 +202,6 @@
 			transform: scale(0.8);
 		}
 
-		/* Bouton MENU */
 		.menu-btn {
 			position: relative;
 			z-index: 100;
@@ -237,7 +226,6 @@
 			transition: all 0.3s ease;
 		}
 
-		/* OVERLAY MENU */
 		.menu-overlay {
 			position: fixed;
 			inset: 0;
@@ -252,7 +240,6 @@
 			visibility: visible;
 		}
 
-		/* Menu principal (coulissant) */
 		.slide-menu {
 			position: fixed;
 			top: 0;
@@ -276,7 +263,6 @@
 			right: 0;
 		}
 
-		/* Sous-menu (coulisse depuis le même côté) */
 		.submenu {
 			position: fixed;
 			top: 0;
@@ -305,7 +291,6 @@
 				right: 0;
 			}
 			
-			/* Ajustement pour mobile - également 38px pour uniformisation */
 			.sound-btn svg {
 				width: 38px;
 				height: 38px;
@@ -392,7 +377,6 @@
 			text-align: center;
 		}
 
-		/* SWITCH - MODIFIÉ POUR RAPPROCHER LE TEXTE DE L'INTERRUPTEUR */
 		.toggle-container {
 			display: grid;
 			grid-template-columns: auto auto;
@@ -449,7 +433,6 @@
 			transform: translateX(23px);
 		}
 
-		/* Slider de contrôle dans le menu - version monochrome */
 		.control-slider-container {
 			display: flex;
 			flex-direction: column;
@@ -498,7 +481,6 @@
 			text-align: center;
 		}
 
-		/* Tables pour le mode d'emploi - sans bordures */
 		table {
 			width: 100%;
 			color: var(--font-color);
@@ -599,7 +581,6 @@
 			font-size: 12px;
 		}
 
-		/* Toolbar mobile (cachée par défaut) */
 		.toolbar-mobile {
 			display: none;
 			position: fixed;
@@ -650,8 +631,7 @@
 	</style>
 </head>
 <body>
-	<!-- Élément audio pour le murmure - lecture en boucle avec volume à 50% -->
-	<audio id="murmureAudio" loop preload="auto" volume="0.5">
+	<audio id="murmureAudio" loop preload="auto">
 		<source src="murmure.mp3" type="audio/mpeg">
 		Votre navigateur ne supporte pas l'élément audio.
 	</audio>
@@ -676,9 +656,7 @@
 					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
 				</svg>
 			</button>
-			<!-- Bouton son - SVG avec dimensions augmentées de 35% (38px) -->
 			<button class="toolbar-btn sound-btn" id="soundButton" data-title="activer son (S)">
-				<!-- SVG initial (son inactif) avec width/height="38" pour +35% -->
 				<svg width="38" height="38" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 					<path d="M3 14 L3 14 L7 14 L10 17 L10 7 L7 10 L3 10" stroke="currentColor" stroke-width="1.5" fill="none"/>
 					<path d="M14 8 L22 16 M22 8 L14 16" stroke="currentColor" stroke-width="1.5" fill="none"/>
@@ -725,9 +703,7 @@
 					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
 				</svg>
 			</button>
-			<!-- Bouton son mobile - SVG avec dimensions uniformisées (38px comme desktop) -->
 			<button class="toolbar-btn sound-btn" id="soundButtonMobile" data-title="activer son (S)">
-				<!-- SVG initial (son inactif) avec width/height="38" pour cohérence avec desktop -->
 				<svg width="38" height="38" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 					<path d="M3 14 L3 14 L7 14 L10 17 L10 7 L7 10 L3 10" stroke="currentColor" stroke-width="1.0" fill="none"/>
 					<path d="M14 8 L22 16 M22 8 L14 16" stroke="currentColor" stroke-width="1.0" fill="none"/>
@@ -818,39 +794,33 @@
 		</div>
 		<div class="submenu-title">présentation</div>
 		
-		<!-- Informations générales -->
 		<div class="info-box">
 			<p><strong>🎮 simulation de nuée</strong><br>
 			<span style="font-size: 12px;">les boids ne donnent pas une réponse simple à « qu'est-ce que la liberté ? », ils en illustrent brillamment les paradoxes et les conditions de possibilité.</span></p>
 		</div>
 		
-		<!-- Contrôles 3D -->
 		<div class="instruction-section">
-			<div class="instruction-section-title">🖱️ CONTRÔLES 3D</div>
+			<div class="instruction-section-title">🖱️ CONTRÔLES SOURIS</div>
 			<table>
 				<tr>
-					<td><kbd>clic</kbd> + <kbd>glisser</kbd></td>
-					<td>rotation de la caméra</td>
-				</tr>
-				<tr>
-					<td><kbd>molette</kbd></td>
-					<td>zoom avant/arrière</td>
+					<td><kbd>curseur</kbd></td>
+					<td>attire les boids (quand activé dans paramètres)</td>
 				</tr>
 			</table>
 		</div>
 		
-		<!-- Comportement général (sans les raccourcis) -->
 		<div class="instruction-section">
 			<div class="instruction-section-title">🐦 COMPORTEMENT</div>
 			<div class="instruction-detail">
 				• les oiseaux suivent trois règles : séparation, alignement, cohésion<br>
-				• le curseur de la souris agit comme un prédateur<br>
+				• le curseur peut attirer les oiseaux (option dans paramètres)<br>
+				• les oiseaux maintiennent une distance minimale entre eux même attirés<br>
 				• ajuster le nombre d'oiseaux dans "paramètres"
 			</div>
 		</div>
 	</div>
 
-	<!-- SOUS-MENU Paramètres avec les nouveaux curseurs - SANS TRAITS DE SÉPARATION -->
+	<!-- SOUS-MENU Paramètres -->
 	<div class="submenu" id="submenuSettings">
 		<div class="menu-header">
 			<button class="submenu-close" data-submenu="settings">
@@ -862,7 +832,6 @@
 		</div>
 		<div class="submenu-title">paramètres</div>
 		
-		<!-- Mode sombre -->
 		<div class="toggle-container">
 			<span class="toggle-label">mode sombre :</span>
 			<label class="theme-switch">
@@ -871,10 +840,16 @@
 			</label>
 		</div>
 
-		<!-- Contrôle des paramètres de comportement -->
+		<div class="toggle-container" style="margin-top: 10px;">
+			<span class="toggle-label">curseur attire les boids :</span>
+			<label class="theme-switch">
+				<input type="checkbox" id="attractorToggle">
+				<span class="slider"></span>
+			</label>
+		</div>
+
 		<div style="margin-top: 5px;">
 		
-			<!-- Contrôle du nombre de boids -->		
 			<div class="control-slider-container">
 				<div class="control-slider-label">
 					<span>nombre de boids :</span>
@@ -883,7 +858,6 @@
 				<input type="range" id="boidSlider" min="50" max="20000" step="50" value="8000">
 			</div>
 			
-			<!-- Séparation -->
 			<div class="control-slider-container">
 				<div class="control-slider-label">
 					<span>distance d'évitement entre boids :</span>
@@ -892,7 +866,6 @@
 				<input type="range" id="separationSlider" min="5" max="50" step="0.5" value="16.0">
 			</div>
 
-			<!-- Alignement -->
 			<div class="control-slider-container">
 				<div class="control-slider-label">
 					<span>distance d'influence pour l'alignement :</span>
@@ -901,7 +874,6 @@
 				<input type="range" id="alignmentSlider" min="5" max="50" step="0.5" value="45.0">
 			</div>
 
-			<!-- Cohésion -->
 			<div class="control-slider-container">
 				<div class="control-slider-label">
 					<span>distance d'attraction vers le groupe :</span>
@@ -913,8 +885,9 @@
 		
 		<div class="settings-info">
 			<p><strong>mode sombre :</strong> alterne entre thème clair et sombre</p>
+			<p><strong>curseur attire les boids :</strong> active/désactive l'attraction par la souris</p>
 			<p><strong>boids :</strong> ajuster le nombre d'oiseaux</p>
-			<p><strong>séparation/alignement/cohésion :</strong> ajuster les distances d'influence en temps réel</p>
+			<p><strong>séparation/alignement/cohésion :</strong> ajuster les distances d'influence</p>
 		</div>
 	</div>
 
@@ -930,7 +903,6 @@
 		</div>
 		<div class="submenu-title">raccourcis clavier</div>
 		
-		<!-- Raccourcis clavier -->
 		<div class="instruction-section">
 			<div class="instruction-section-title">⌨️ RACCOURCIS CLAVIER</div>
 			<table>
@@ -955,19 +927,22 @@
 					<td>activer/couper le son</td>
 				</tr>
 				<tr>
+					<td><kbd>A</kbd></td>
+					<td>activer/désactiver l'attraction par la souris</td>
+				</tr>
+				<tr>
 					<td><kbd>ESC</kbd></td>
 					<td>fermer menu/sous-menu</td>
 				</tr>
 			</table>
 		</div>
 		
-		<!-- Comportement souris -->
 		<div class="instruction-section">
 			<div class="instruction-section-title">🖱️ COMPORTEMENT SOURIS</div>
 			<table>
 				<tr>
 					<td><kbd>souris</kbd></td>
-					<td>attire/répulse les oiseaux</td>
+					<td>attire les boids (quand activé)</td>
 				</tr>
 			</table>
 		</div>
@@ -1025,6 +1000,7 @@
 		uniform float alignment_distance;
 		uniform float cohesion_distance;
 		uniform vec3 predator;
+		uniform float attractorEnabled;
 
 		const float width = resolution.x;
 		const float height = resolution.y;
@@ -1063,53 +1039,41 @@
 
 			float limit = SPEED_LIMIT;
 
-			dir = predator * UPPER_bounds - selfPosition;
-			dir.z = 0.0;
-			dist = length(dir);
-			distSquared = dist * dist;
+			// ATTRACTION VERS LE CURSEUR (intensifiée mais avec maintien de la séparation)
+			if (attractorEnabled > 0.5) {
+				vec3 targetPos = predator * UPPER_bounds;
+				targetPos.z = 0.0;
+				
+				dir = targetPos - selfPosition;
+				dist = length(dir);
 
-			float preyRadius = 50.0;
-			float preyRadiusSq = preyRadius * preyRadius;
-
-			// VERSION CORRIGÉE : Gestion améliorée du prédateur pour éviter les blocages
-			if (dist < preyRadius) {
-				// Éviter la division par zéro et les forces trop fortes
-				if (dist > 0.1) {
-					// Force de répulsion plus douce et progressive
-					// Utiliser une courbe en cloche pour éviter les à-coups
-					float strength = 1.0 - (dist / preyRadius);
-					strength = strength * strength; // Courbe quadratique plus douce
+				float attractRadius = 1000.0;
+				if (dist < attractRadius && dist > 0.1) {
+					// Force d'attraction progressive
+					float strength = 1.0 - (dist / attractRadius);
+					strength = strength * strength * 3.0;
 					
-					// Force maximale limitée
-					f = strength * del_change * 80.0;
+					f = strength * del_change * 150.0;
+					velocity += normalize(dir) * f;
 					
-					// Ajouter une petite composante aléatoire pour éviter les blocages
-					vec3 randomJitter = vec3(
-						sin(selfPosition.x * 10.0 + del_change * 100.0) * 0.1,
-						cos(selfPosition.y * 10.0 + del_change * 100.0) * 0.1,
-						sin(selfPosition.z * 10.0 + del_change * 100.0) * 0.1
-					);
-					
-					velocity += normalize(dir + randomJitter) * f;
-					limit += 3.0;
-					
-					// Si très proche, ajouter une force d'échappement radiale
-					if (dist < 5.0) {
-						vec3 escapeDir = cross(normalize(dir), vec3(0.0, 1.0, 0.0));
-						if (length(escapeDir) > 0.1) {
-							velocity += normalize(escapeDir) * del_change * 120.0;
-						}
-					}
+					limit += 10.0;
 				}
 			}
 
+			// Force centripète pour garder les oiseaux dans la zone
 			vec3 central = vec3(0.0, 0.0, 0.0);
 			dir = selfPosition - central;
 			dist = length(dir);
-
 			dir.y *= 2.5;
 			velocity -= normalize(dir) * del_change * 6.0;
 
+			// Interactions entre boids (séparation renforcée pour éviter la concentration)
+			float separationFactor = 1.0;
+			if (attractorEnabled > 0.5) {
+				// Quand l'attraction est activée, on renforce la séparation
+				separationFactor = 2.5;
+			}
+			
 			for (float y = 0.0; y < height; y++) {
 				for (float x = 0.0; x < width; x++) {
 					vec2 ref = vec2(x + 0.6, y + 0.6) / resolution.xy;
@@ -1124,7 +1088,8 @@
 
 					percent = distSquared / zoneRadiusSquared;
 					if (percent < separationThresh) {
-						f = (separationThresh / percent - 1.0) * del_change;
+						// Force de séparation RENFORCÉE
+						f = (separationThresh / percent - 1.0) * del_change * separationFactor;
 						velocity -= normalize(dir) * f;
 					} else if (percent < alignmentThresh) {
 						float threshold = alignmentThresh - separationThresh;
@@ -1145,7 +1110,27 @@
 				}
 			}
 
-			// AJOUT : Petit bruit aléatoire pour éviter les blocages dans les minima locaux
+			// Force de répulsion supplémentaire pour éviter la superposition
+			// Cette boucle supplémentaire crée une répulsion forte à très courte distance
+			for (float y = 0.0; y < height; y++) {
+				for (float x = 0.0; x < width; x++) {
+					vec2 ref = vec2(x + 0.6, y + 0.6) / resolution.xy;
+					birdPosition = texture2D(PositionTexture, ref).xyz;
+
+					dir = birdPosition - selfPosition;
+					dist = length(dir);
+					if (dist < 0.0001) continue;
+					
+					// Répulsion très forte à très courte distance (moins de 10 unités)
+					if (dist < 10.0) {
+						float strength = 1.0 - (dist / 10.0);
+						f = strength * del_change * 50.0 * separationFactor;
+						velocity -= normalize(dir) * f;
+					}
+				}
+			}
+
+			// Petit bruit aléatoire pour éviter les blocages
 			vec3 noise = vec3(
 				sin(selfPosition.x * 0.1 + del_change * 50.0) * 0.05,
 				cos(selfPosition.y * 0.1 + del_change * 50.0) * 0.05,
@@ -1221,19 +1206,15 @@
 	<script>
 		if (!Detector.webgl) Detector.addGetWebGLMessage();
 
-		// Récupérer le nombre de boids depuis le hash ou utiliser la valeur par défaut
 		var hash = document.location.hash.substr(1);
 		if (hash) hash = parseInt(hash, 0);
 		
-		// Valeur initiale - 8000 boids
 		var currentBoidCount = hash || 8000;
-		// S'assurer que c'est un carré parfait pour la texture
 		var argumentHash = Math.floor(Math.sqrt(currentBoidCount));
 		currentBoidCount = argumentHash * argumentHash;
 		
 		var birds = currentBoidCount;
 
-		// Variables globales
 		var half_resolution_windowX = window.innerWidth / 2;
 		var half_resolution_windowY = window.innerHeight / 2;
 		var bounds = 500;
@@ -1251,62 +1232,49 @@
 		var mouseX = 0, mouseY = 0;
 		var birdMesh = null;
 
-		// Variables pour le slider de boids
 		var boidSlider = document.getElementById('boidSlider');
 		var boidCountDisplay = document.getElementById('boidCountDisplay');
 
-		// Variables pour les contrôles de comportement - VOS RÉGLAGES
 		var controller_variables = {
 			separation: 16.0,
 			alignment: 45.0,
 			cohesion: 25.0
 		};
 
-		// Initialiser l'affichage du slider
+		var attractorEnabled = false;
+
 		if (boidSlider) {
 			boidSlider.value = birds;
 			boidCountDisplay.textContent = birds;
 		}
 
-		// Fonction pour recréer la scène avec un nouveau nombre de boids
 		function rebuildSceneWithBoidCount(newCount) {
-			// Mettre à jour la variable globale
 			birds = newCount;
 			argumentHash = Math.floor(Math.sqrt(birds));
-			
-			// Sauvegarder dans le hash
 			document.location.hash = birds;
 			
-			// Supprimer l'ancien mesh des oiseaux
 			if (birdMesh) {
 				scene.remove(birdMesh);
 				birdMesh = null;
 			}
 			
-			// Réinitialiser le compute renderer
 			if (gpu_allocation) {
-				// Recréer le compute renderer
 				initComputeRenderer();
 			}
 			
-			// Recréer les oiseaux
 			initBirds();
 		}
 
-		// Mettre à jour l'affichage du slider et le nombre de boids en temps réel
 		if (boidSlider) {
 			boidSlider.addEventListener('input', function(e) {
-				// Empêcher la propagation pour éviter la fermeture des menus
 				e.stopPropagation();
 				
 				var val = parseInt(this.value);
-				// Ajuster à un carré parfait
 				var sqrtVal = Math.floor(Math.sqrt(val));
 				var perfectSquare = sqrtVal * sqrtVal;
 				boidCountDisplay.textContent = perfectSquare;
 				this.value = perfectSquare;
 				
-				// Mettre à jour le nombre de boids immédiatement
 				rebuildSceneWithBoidCount(perfectSquare);
 			});
 		}
@@ -1330,6 +1298,8 @@
 			renderer.shadowMapSoft = true;
 
 			controls = new THREE.OrbitControls(camera, renderer.domElement);
+			controls.enabled = false;
+			controls.enableZoom = false;
 
 			camera.position.x = 600;
 			camera.position.y = 600;
@@ -1357,7 +1327,6 @@
 			document.addEventListener('touchstart', onDocumentTouchStart, false);
 			document.addEventListener('touchmove', onDocumentTouchMove, false);
 			
-			// Gestionnaire de redimensionnement
 			window.addEventListener('resize', onWindowResize, false);
 
 			initBirds();
@@ -1366,7 +1335,6 @@
 		}
 
 		function initBehaviorControls() {
-			// Récupérer les éléments du DOM
 			var separationSlider = document.getElementById('separationSlider');
 			var alignmentSlider = document.getElementById('alignmentSlider');
 			var cohesionSlider = document.getElementById('cohesionSlider');
@@ -1374,7 +1342,6 @@
 			var alignmentDisplay = document.getElementById('alignmentDisplay');
 			var cohesionDisplay = document.getElementById('cohesionDisplay');
 
-			// Fonction de mise à jour des uniformes
 			function updateBehaviorUniforms() {
 				if (uniform_velocity) {
 					uniform_velocity.seperation_distance.value = controller_variables.separation;
@@ -1383,7 +1350,6 @@
 				}
 			}
 
-			// Gestionnaires d'événements pour les sliders
 			if (separationSlider) {
 				separationSlider.addEventListener('input', function(e) {
 					var val = parseFloat(this.value);
@@ -1411,7 +1377,6 @@
 				});
 			}
 
-			// Initialiser les affichages
 			if (separationDisplay) separationDisplay.textContent = controller_variables.separation.toFixed(1);
 			if (alignmentDisplay) alignmentDisplay.textContent = controller_variables.alignment.toFixed(1);
 			if (cohesionDisplay) cohesionDisplay.textContent = controller_variables.cohesion.toFixed(1);
@@ -1449,7 +1414,8 @@
 				uniform_velocity.seperation_distance = { value: controller_variables.separation };
 				uniform_velocity.alignment_distance = { value: controller_variables.alignment };
 				uniform_velocity.cohesion_distance = { value: controller_variables.cohesion };
-				uniform_velocity.predator = { value: new THREE.Vector3() };
+				uniform_velocity.predator = { value: new THREE.Vector3(0, 0, 0) };
+				uniform_velocity.attractorEnabled = { value: 0.0 };
 				velocity_variable.material.defines.bounds = bounds.toFixed(2);
 
 				velocity_variable.wrapS = THREE.RepeatWrapping;
@@ -1468,7 +1434,6 @@
 
 		function initBirds() {
 			try {
-				// Définir la géométrie dynamiquement
 				THREE.BirdGeometry = function() {
 					var triangles = birds * 3;
 					var points = triangles * 3;
@@ -1600,11 +1565,18 @@
 			if (uniform_bird) uniform_bird.del_change.value = del_change;
 
 			if (uniform_velocity) {
+				var normX = mouseX / half_resolution_windowX;
+				var normY = mouseY / half_resolution_windowY;
+				
+				normX = Math.max(-1.0, Math.min(1.0, normX));
+				normY = Math.max(-1.0, Math.min(1.0, normY));
+				
 				uniform_velocity.predator.value.set(
-					mouseX / half_resolution_windowX,
-					-mouseY / half_resolution_windowY,
+					normX,
+					-normY,
 					0
 				);
+				uniform_velocity.attractorEnabled.value = attractorEnabled ? 1.0 : 0.0;
 			}
 
 			if (gpu_allocation) {
@@ -1624,7 +1596,6 @@
 		}
 
 		function initMenuAndSettings() {
-			// ========== VARIABLES MENU ==========
 			const menuOverlay = document.getElementById('menuOverlay');
 			const slideMenu = document.getElementById('slideMenu');
 			const menuButtons = document.querySelectorAll('#menuButton, #menuButtonMobile');
@@ -1636,7 +1607,8 @@
 			const subShortcuts = document.getElementById('submenuShortcuts');
 			const submenus = [subPresentation, subSettings, subShortcuts, subAbout];
 
-			// Ouvrir/fermer le menu principal
+			const attractorToggle = document.getElementById('attractorToggle');
+
 			function toggleMainMenu(force) {
 				const willOpen = (force !== undefined) ? force : !slideMenu.classList.contains('active');
 				slideMenu.classList.toggle('active', willOpen);
@@ -1655,7 +1627,6 @@
 				if (submenu) submenu.classList.add('active');
 			}
 
-			// Menu
 			menuButtons.forEach(btn => {
 				btn.addEventListener('click', (e) => {
 					e.stopPropagation();
@@ -1665,25 +1636,23 @@
 			menuClose.addEventListener('click', () => toggleMainMenu(false));
 			menuOverlay.addEventListener('click', () => toggleMainMenu(false));
 
-			// Ouverture des sous-menus
 			document.getElementById('openPresentationSub').addEventListener('click', (e) => {
 				e.stopPropagation();
-					openSubmenu(subPresentation);
+				openSubmenu(subPresentation);
 			});
 			document.getElementById('openSettingsSub').addEventListener('click', (e) => {
 				e.stopPropagation();
-					openSubmenu(subSettings);
+				openSubmenu(subSettings);
 			});
 			document.getElementById('openShortcutsSub').addEventListener('click', (e) => {
 				e.stopPropagation();
-					openSubmenu(subShortcuts);
+				openSubmenu(subShortcuts);
 			});
 			document.getElementById('openAboutSub').addEventListener('click', (e) => {
 				e.stopPropagation();
-					openSubmenu(subAbout);
+				openSubmenu(subAbout);
 			});
 
-			// Fermeture des sous-menus
 			document.querySelectorAll('.submenu-close').forEach(btn => {
 				btn.addEventListener('click', (e) => {
 					e.stopPropagation();
@@ -1691,23 +1660,31 @@
 				});
 			});
 
-			// Empêcher propagation dans les menus
 			slideMenu.addEventListener('click', (e) => e.stopPropagation());
 			submenus.forEach(s => s.addEventListener('click', (e) => e.stopPropagation()));
 
-			// Mode sombre uniquement
 			document.getElementById('darkModeToggle').addEventListener('change', function(e) {
 				document.body.classList.toggle('dark-mode', e.target.checked);
 				localStorage.setItem('darkMode', e.target.checked);
 			});
 
-			// Charger les préférences
+			if (attractorToggle) {
+				attractorToggle.addEventListener('change', function(e) {
+					attractorEnabled = e.target.checked;
+					localStorage.setItem('attractorEnabled', attractorEnabled);
+				});
+			}
+
 			if (localStorage.getItem('darkMode') === 'true') {
 				document.body.classList.add('dark-mode');
 				document.getElementById('darkModeToggle').checked = true;
 			}
+			
+			if (localStorage.getItem('attractorEnabled') === 'true') {
+				attractorEnabled = true;
+				if (attractorToggle) attractorToggle.checked = true;
+			}
 
-			// Boutons de la toolbar
 			document.getElementById('reloadButton').addEventListener('click', () => location.reload());
 			document.getElementById('reloadButtonMobile').addEventListener('click', () => location.reload());
 			
@@ -1717,15 +1694,12 @@
 			document.getElementById('homeBtnDesktop').addEventListener('click', () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'));
 			document.getElementById('homeBtnMobile').addEventListener('click', () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'));
 
-			// ========== GESTION DU SON AVEC SVG AGRANDIS DE 35% ==========
 			const audio = document.getElementById('murmureAudio');
 			const soundButtons = document.querySelectorAll('#soundButton, #soundButtonMobile');
 			let isSoundActive = false;
 
-			// Initialiser le volume à 50%
 			audio.volume = 0.5;
 
-			// Définition des icônes SVG avec dimensions augmentées de 35%
 			const SOUND_ICONS = {
 				off: '<svg width="38" height="38" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 14 L3 14 L7 14 L10 17 L10 7 L7 10 L3 10" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M14 8 L22 16 M22 8 L14 16" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>',
 				on: '<svg width="38" height="38" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 14 L3 14 L7 14 L10 17 L10 7 L7 10 L3 10" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M16 9 Q18 12 16 15" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M18 7 Q22 12 18 17" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>'
@@ -1748,7 +1722,6 @@
 						})
 						.catch(error => {
 							console.warn("Erreur de lecture audio:", error);
-							alert("Pour activer le son, cliquez sur le bouton après avoir interagi avec la page.");
 						});
 				}
 				updateSoundButton();
@@ -1844,6 +1817,15 @@
 				if (e.key === 's' || e.key === 'S') {
 					e.preventDefault();
 					toggleSound();
+				}
+				
+				if (e.key === 'a' || e.key === 'A') {
+					e.preventDefault();
+					if (attractorToggle) {
+						attractorEnabled = !attractorEnabled;
+						attractorToggle.checked = attractorEnabled;
+						localStorage.setItem('attractorEnabled', attractorEnabled);
+					}
 				}
 			});
 
