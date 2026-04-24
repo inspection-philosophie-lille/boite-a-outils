@@ -88,7 +88,7 @@ const textes = [
 		reponses: {
 			origine: "Elizabeth ANSCOMBE, <i>Intention</i>, §1-5, et <i>La philosophie morale moderne</i>, Paris : Gallimard, 2016.",
 			theme: "Le devoir",
-			these: "La philosophie morale moderne est dans une impasse ; pour en sortir, il faut fonder l'éthique sur une philosophie de l'esprit (philosophie de l'action) qui renoue avec la notion de vertu.",
+			these: "La philosophie morale moderne est dans une impasse ; pour en sortir, il faut 100 l'éthique sur une philosophie de l'esprit (philosophie de l'action) qui renoue avec la notion de vertu.",
 			interet: "Elle relance l'éthique des vertus au XXe siècle en critiquant le conséquentialisme et le déontologisme.",
 			problematique: "Faut-il fonder la morale sur des règles universelles ou sur l'excellence du caractère ?"
 		}
