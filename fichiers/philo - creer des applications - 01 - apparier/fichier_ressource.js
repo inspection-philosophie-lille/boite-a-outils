@@ -10,7 +10,8 @@ window.argumentsData = [
 	{ colonne_de_gauche: "mot 07", colonne_de_droite: "mot 07'" },
 	{ colonne_de_gauche: "mot 08", colonne_de_droite: "mot 08'" },
 	{ colonne_de_gauche: "mot 09", colonne_de_droite: "mot 09'" },
-	{ colonne_de_gauche: "mot 10", colonne_de_droite: "mot 10'" }
+	{ colonne_de_gauche: "mot 10", colonne_de_droite: "mot 10'" },
+	{ colonne_de_gauche: "mot 11", colonne_de_droite: "mot 11'" }
 ];
 
 window.title = "application «&nbsp;apparier&nbsp;»";
