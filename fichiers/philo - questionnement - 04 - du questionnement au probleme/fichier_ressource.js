@@ -1,7 +1,7 @@
 // Contenu à modifier
 
-window.title = "du problème au questionnement";
-window.subtitle = "interconnecter des problèmes";
+window.title = "du questionnement au problème";
+window.subtitle = "interconnecter des questions";
 
 window.argumentsData = [
     
