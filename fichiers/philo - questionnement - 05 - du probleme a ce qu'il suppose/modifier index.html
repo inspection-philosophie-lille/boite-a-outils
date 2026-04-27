@@ -5,1342 +5,1336 @@
 <!-- Exploitation à but strictement pédagogique et non lucratif -->
 <html lang="fr">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>modifier une application « apparier »</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.rel='stylesheet'">
-    <link rel="icon" href="../../src/favicon.ico" />
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #e0e0e0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            transition: all 0.3s ease;
-        }
-        
-        /* NOUVEAUX STYLES POUR LA TAILLE DE TEXTE PROGRESSIVE */
-        :root {
-            --text-scale: 1;
-            --base-font-size: 16px; /* Nouvelle variable pour la taille de base */
-        }
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>modifier une application « apparier »</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.rel='stylesheet'">
+	<link rel="icon" href="../../src/favicon.ico" />
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+		
+		body {
+			font-family: Arial, sans-serif;
+			max-width: 800px;
+			margin: 20px auto;
+			padding: 20px;
+			background-color: #e0e0e0;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			min-height: 100vh;
+			transition: all 0.3s ease;
+		}
+		
+		/* NOUVEAUX STYLES POUR LA TAILLE DE TEXTE PROGRESSIVE */
+		:root {
+			--text-scale: 1;
+			--base-font-size: 16px; /* Nouvelle variable pour la taille de base */
+		}
 
-        body {
-            font-size: calc(var(--base-font-size) * var(--text-scale));
-        }
+		body {
+			font-size: calc(var(--base-font-size) * var(--text-scale));
+		}
 
-        .title-inputs input,
-        input,
-        select,
-        button,
-        .tooltip,
-        .settings-group h3,
-        .color-label-item,
-        .checkbox-item label,
-        .select-group label,
-        .default-mode-label {
-            font-size: calc(1rem * var(--text-scale));
-        }
+		.title-inputs input,
+		input,
+		select,
+		button,
+		.tooltip,
+		.settings-group h3,
+		.color-label-item,
+		.checkbox-item label,
+		.select-group label,
+		.default-mode-label {
+			font-size: calc(1rem * var(--text-scale));
+		}
 
-        h1 {
-            font-size: calc(clamp(1.8rem, 5vw, 2.5rem) * var(--text-scale));
-        }
+		h1 {
+			font-size: calc(clamp(1.8rem, 5vw, 2.5rem) * var(--text-scale));
+		}
 
-        .loading {
-            font-size: calc(1rem * var(--text-scale));
-        }
-            
-        .entry, .title-inputs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-            width: 100%;
-            max-width: 800px;
-        }
-            
-        .entry-container {
-            width: 100%;
-        }
-            
-        .entry {
-            padding: 0;
-            border: none;
-            box-shadow: none;
-            background-color: transparent;
-        }
-            
-        input, select {
-            padding: 5px;
-            width: 100%;
-            border: none;
-            border-radius: 8px;
-            background-color: #e0e0e0;
-            box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
-            outline: none;
-            transition: all 0.2s ease;
-        }
-            
-        input:focus, select:focus {
-            box-shadow: inset 1px 1px 3px #bebebe, inset -1px -1px 3px #ffffff;
-        }
-            
-        button {
-            padding: 10px;
-            background-color: #e0e0e0;
-            color: #333;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-            
-        button:hover {
-            background-color: #d0d0d0;
-            box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
-        }
-            
-        button:active {
-            box-shadow: inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff;
-        }
-            
-        .remove-button, .add-button, .open-button, .title-button, .settings-button {
-            width: 40px;
-            height: 40px;
-        }
-            
-        .remove-button .cross {
-            color: red;
-            transform: translateY(-1px);
-            font-style: normal;
-        }
-            
-        .add-button .plus {
-            transform: translateY(-1px);
-            font-style: normal;
-        }
-            
-        .open-button .open-icon {
-            transform: translateY(-1px);
-            font-style: normal;
-        }
-            
-        .title-button .title-icon {
-            transform: translateY(-1px);
-            font-style: normal;
-        }
-            
-        .settings-button .settings-icon {
-            transform: translateY(-1px);
-            font-style: normal;
-        }
-            
-        /* Suppression des styles italiques pour les icônes Font Awesome */
-        i.far, i.fas {
-            font-style: normal !important;
-        }
-            
-        h1 {
-            color: red;
-            text-align: center;
-            text-shadow: 1px 1px 2px #bebebe, -1px -1px 2px #ffffff;
-            transition: all 0.3s ease;
-        }
-            
-        .button-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            justify-content: center;
-            width: 100%;
-        }
-            
-        .title-inputs input {
-            width: 100%;
-        }
-            
-        #file-input {
-            display: none;
-        }
-            
-        .loading {
-            display: none;
-            color: #333;
-            margin-top: 10px;
-        }
-            
-        /* Icônes SVG personnalisées */
-        .svg-icon {
-            width: 24px;
-            height: 24px;
-            stroke: #333;
-            stroke-width: 1.5;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-            
-        /* Rendus de secours au cas où FA ne charge pas */
-        .fa-folder-open::before { content: "📂"; font-style: normal; color: #000; }
-        .fa-save::before { content: "💾"; font-style: normal; color: #000; }
-        .fa-times::before { content: "✗"; color: #000; font-style: normal; }
-        .fa-plus::before { content: "+"; font-style: normal; color: #000; }
-        .fa-cog::before { content: "⚙"; font-style: normal; color: #000; }
-            
-        /* Custom tooltip styles */
-        .tooltip {
-            position: absolute;
-            background-color: white;
-            color: black;
-            padding: 5px 10px;
-            border-radius: 4px;
-            white-space: nowrap;
-            z-index: 10;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-            
-        button:hover .tooltip {
-            opacity: 1;
-        }
-            
-        /* Position tooltip above the button */
-        button .tooltip {
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            margin-bottom: 5px;
-        }
-            
-        /* Styles pour les paramètres avancés */
-        .settings-panel {
-            display: none;
-            width: 100%;
-            max-width: 800px;
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #e0e0e0;
-            box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
-        }
-            
-        .settings-group {
-            margin-bottom: 20px;
-        }
-            
-        .settings-group h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
-            color: #333;
-            transition: all 0.3s ease;
-        }
-            
-        .color-picker {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-            
-        .color-picker label {
-            width: 150px;
-            text-align: right; /* Alignement à droite pour les labels */
-        }
-            
-        .color-picker input[type="color"],
-        .color-input-item input[type="color"] {
-            width: 40px;
-            height: 40px;
-            padding: 0;
-            border: none;
-            cursor: pointer;
-            border-radius: 50%; /* Pastilles circulaires */
-            box-shadow: 2px 2px 5px #bebebe, -2px -2px 5px #ffffff;
-        }
-            
-        .color-picker input[type="color"]:hover,
-        .color-input-item input[type="color"]:hover {
-            box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
-        }
-            
-        .checkbox-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-            
-        .checkbox-group label {
-            width: auto;
-        }
-            
-        .checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-        }
-            
-        .select-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-            
-        .select-group label {
-            width: 180px;
-            transition: all 0.3s ease;
-        }
-            
-        .select-group select {
-            flex: 1;
-            min-width: 250px;
-        }
-            
-        /* NOUVEAUX STYLES AMÉLIORÉS pour les colonnes mode clair/sombre */
-        .color-settings-container {
-            display: flex;
-            gap: 0px;
-            width: 100%;
-        }
-            
-        .color-labels-column {
-            flex: 0 0 160px; /* Largeur fixe pour les labels */
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding-right: 15px;
-        }
-            
-        .color-label-item {
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end; /* Alignement à droite */
-            text-align: right;
-            margin-bottom: 10px;
-            font-weight: normal;
-            transition: all 0.3s ease;
-        }
-            
-        .color-modes-columns {
-            flex: 1;
-            display: flex;
-            gap: 20px; /* Espacement augmenté pour maintenir la distance */
-        }
-            
-        .color-mode-column {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center; /* Centrage du contenu */
-        }
-            
-        .color-mode-column h3 {
-            text-align: center;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center; /* Centrage parfait */
-            gap: 8px;
-            height: 40px; /* Hauteur fixe pour aligner avec les labels */
-        }
-            
-        .mode-icon {
-            width: 20px;
-            height: 20px;
-        }
-            
-        .color-input-item {
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center; /* Centrage horizontal */
-            margin-bottom: 10px;
-        }
-            
-        .separator {
-            height: 2px;
-            background: linear-gradient(to right, transparent, #bebebe, transparent);
-            margin: 25px 0;
-            width: 100%;
-        }
-            
-        .checkbox-row {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-            
-        .single-checkbox {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-            
-        .single-checkbox label {
-            width: auto;
-        }
+		.loading {
+			font-size: calc(1rem * var(--text-scale));
+		}
+			
+		.entry, .title-inputs {
+			display: flex;
+			gap: 10px;
+			margin-bottom: 10px;
+			width: 100%;
+			max-width: 800px;
+		}
+			
+		.entry-container {
+			width: 100%;
+		}
+			
+		.entry {
+			padding: 0;
+			border: none;
+			box-shadow: none;
+			background-color: transparent;
+		}
+			
+		input, select {
+			padding: 5px;
+			width: 100%;
+			border: none;
+			border-radius: 8px;
+			background-color: #e0e0e0;
+			box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+			outline: none;
+			transition: all 0.2s ease;
+		}
+			
+		input:focus, select:focus {
+			box-shadow: inset 1px 1px 3px #bebebe, inset -1px -1px 3px #ffffff;
+		}
+			
+		button {
+			padding: 10px;
+			background-color: #e0e0e0;
+			color: #333;
+			border: none;
+			border-radius: 8px;
+			cursor: pointer;
+			box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+			transition: all 0.2s ease;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+		}
+			
+		button:hover {
+			background-color: #d0d0d0;
+			box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+		}
+			
+		button:active {
+			box-shadow: inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff;
+		}
+			
+		.remove-button, .add-button, .open-button, .title-button, .settings-button {
+			width: 40px;
+			height: 40px;
+		}
+			
+		.remove-button .cross {
+			color: red;
+			transform: translateY(-1px);
+			font-style: normal;
+		}
+			
+		.add-button .plus {
+			transform: translateY(-1px);
+			font-style: normal;
+		}
+			
+		.open-button .open-icon {
+			transform: translateY(-1px);
+			font-style: normal;
+		}
+			
+		.title-button .title-icon {
+			transform: translateY(-1px);
+			font-style: normal;
+		}
+			
+		.settings-button .settings-icon {
+			transform: translateY(-1px);
+			font-style: normal;
+		}
+			
+		/* Suppression des styles italiques pour les icônes Font Awesome */
+		i.far, i.fas {
+			font-style: normal !important;
+		}
+			
+		h1 {
+			color: red;
+			text-align: center;
+			text-shadow: 1px 1px 2px #bebebe, -1px -1px 2px #ffffff;
+			transition: all 0.3s ease;
+		}
+			
+		.button-container {
+			display: flex;
+			gap: 10px;
+			margin-bottom: 20px;
+			justify-content: center;
+			width: 100%;
+		}
+			
+		.title-inputs input {
+			width: 100%;
+		}
+			
+		#file-input {
+			display: none;
+		}
+			
+		.loading {
+			display: none;
+			color: #333;
+			margin-top: 10px;
+		}
+			
+		/* Icônes SVG personnalisées */
+		.svg-icon {
+			width: 24px;
+			height: 24px;
+			stroke: #333;
+			stroke-width: 1.5;
+			fill: none;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+		}
+			
+		/* Rendus de secours au cas où FA ne se charge pas */
+		.fa-folder-open::before { content: "📂"; font-style: normal; color: #000; }
+		.fa-save::before { content: "💾"; font-style: normal; color: #000; }
+		.fa-times::before { content: "✗"; color: #000; font-style: normal; }
+		.fa-plus::before { content: "+"; font-style: normal; color: #000; }
+		.fa-cog::before { content: "⚙"; font-style: normal; color: #000; }
+			
+		/* Custom tooltip styles */
+		.tooltip {
+			position: absolute;
+			background-color: white;
+			color: black;
+			padding: 5px 10px;
+			border-radius: 4px;
+			white-space: nowrap;
+			z-index: 10;
+			pointer-events: none;
+			opacity: 0;
+			transition: opacity 0.2s ease;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		}
+			
+		button:hover .tooltip {
+			opacity: 1;
+		}
+			
+		button .tooltip {
+			bottom: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-bottom: 5px;
+		}
+			
+		/* Styles pour les paramètres avancés */
+		.settings-panel {
+			display: none;
+			width: 100%;
+			max-width: 800px;
+			margin-top: 20px;
+			padding: 20px;
+			border-radius: 8px;
+			background-color: #e0e0e0;
+			box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+		}
+			
+		.settings-group {
+			margin-bottom: 20px;
+		}
+			
+		.settings-group h3 {
+			margin-top: 0;
+			margin-bottom: 10px;
+			color: #333;
+			transition: all 0.3s ease;
+		}
+			
+		.color-picker {
+			display: flex;
+			gap: 10px;
+			align-items: center;
+			margin-bottom: 10px;
+		}
+			
+		.color-picker label {
+			width: 150px;
+			text-align: right; /* Alignement à droite pour les labels */
+		}
+			
+		.color-picker input[type="color"],
+		.color-input-item input[type="color"] {
+			width: 40px;
+			height: 40px;
+			padding: 0;
+			border: none;
+			cursor: pointer;
+			border-radius: 50%; /* pastilles circulaires */
+			box-shadow: 2px 2px 5px #bebebe, -2px -2px 5px #ffffff;
+		}
+			
+		.color-picker input[type="color"]:hover,
+		.color-input-item input[type="color"]:hover {
+			box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+		}
+			
+		.checkbox-group {
+			display: flex;
+			gap: 10px;
+			align-items: center;
+			margin-bottom: 10px;
+		}
+			
+		.checkbox-group label {
+			width: auto;
+		}
+			
+		.checkbox-group input[type="checkbox"] {
+			width: 20px;
+			height: 20px;
+		}
+			
+		.select-group {
+			display: flex;
+			gap: 10px;
+			align-items: center;
+			margin-bottom: 10px;
+		}
+			
+		.select-group label {
+			width: 180px;
+			transition: all 0.3s ease;
+		}
+			
+		.select-group select {
+			flex: 1;
+			min-width: 250px;
+		}
+			
+		/* NOUVEAUX STYLES AMÉLIORÉS pour les colonnes mode clair/sombre */
+		.color-settings-container {
+			display: flex;
+			gap: 0px;
+			width: 100%;
+		}
+			
+		.color-labels-column {
+			flex: 0 0 160px; /* Largeur fixe pour les labels */
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			padding-right: 15px;
+		}
+			
+		.color-label-item {
+			height: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: flex-end; /* Alignement à droite */
+			text-align: right;
+			margin-bottom: 10px;
+			font-weight: normal;
+			transition: all 0.3s ease;
+		}
+			
+		.color-modes-columns {
+			flex: 1;
+			display: flex;
+			gap: 20px;
+		}
+			
+		.color-mode-column {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			align-items: center;
+		}
+			
+		.color-mode-column h3 {
+			text-align: center;
+			margin-bottom: 15px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			height: 40px; /* hauteur fixe pour aligner avec les labels */
+		}
 
-        /* Nouveaux styles pour les cases à cocher alignées horizontalement */
-        .checkbox-horizontal {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-            
-        .checkbox-item {
-            display: flex;
-            gap: 5px;
-            align-items: center;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
+		.mode-icon {
+			width: 20px;
+			height: 20px;
+		}
 
-        .checkbox-item label {
-            transition: all 0.3s ease;
-        }
+		.color-input-item {
+			height: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 10px;
+		}
 
-        .default-mode-label {
-            font-weight: bold;
-            margin-right: 5px;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-        }
+		.separator {
+			height: 2px;
+			background: linear-gradient(to right, transparent, #bebebe, transparent);
+			margin: 25px 0;
+			width: 100%;
+		}
 
-        /* NOUVEAUX STYLES POUR LE CONTRÔLE DE TAILLE DE TEXTE */
-        .font-size-control-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
+		.checkbox-row {
+			display: flex;
+			gap: 20px;
+			align-items: center;
+			margin-bottom: 10px;
+		}
 
-        .font-size-display {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #e0e0e0;
-            border-radius: 8px;
-            padding: 4px 8px;
-            box-shadow: inset 2px 2px 4px #bebebe, inset -2px -2px 4px #ffffff;
-            min-width: 70px;
-            justify-content: center;
-            height: 32px;
-        }
+		.single-checkbox {
+			display: flex;
+			gap: 10px;
+			align-items: center;
+		}
 
-        .font-size-value {
-            color: #333;
-            min-width: 40px;
-            text-align: center;
-        }
+		.single-checkbox label {
+			width: auto;
+		}
 
-        .triangle-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            height: 32px;
-        }
+		.checkbox-horizontal {
+			display: flex;
+			gap: 15px;
+			align-items: center;
+			margin-bottom: 10px;
+			flex-wrap: nowrap;
+			overflow-x: auto;
+			padding-bottom: 5px;
+		}
+			
+		.checkbox-item {
+			display: flex;
+			gap: 5px;
+			align-items: center;
+			white-space: nowrap;
+			flex-shrink: 0;
+		}
 
-        .triangle-btn {
-            width: 24px;
-            height: 15px;
-            background: #e0e0e0;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 2px 2px 4px #bebebe, -2px -2px 4px #ffffff;
-            border-radius: 4px;
-            padding: 0;
-            color: #333;
-            transition: all 0.2s ease;
-        }
+		.checkbox-item label {
+			transition: all 0.3s ease;
+		}
 
-        .triangle-btn:hover {
-            box-shadow: 1px 1px 2px #bebebe, -1px -1px 2px #ffffff;
-        }
+		.default-mode-label {
+			font-weight: bold;
+			margin-right: 5px;
+			white-space: nowrap;
+			transition: all 0.3s ease;
+		}
 
-        .triangle-btn:active {
-            box-shadow: inset 1px 1px 2px #bebebe, inset -1px -1px 2px #ffffff;
-        }
+		.font-size-control-group {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			margin-bottom: 10px;
+		}
 
-        .triangle-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+		.font-size-display {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			background: #e0e0e0;
+			border-radius: 8px;
+			padding: 4px 8px;
+			box-shadow: inset 2px 2px 4px #bebebe, inset -2px -2px 4px #ffffff;
+			min-width: 70px;
+			justify-content: center;
+			height: 32px;
+		}
 
-        .triangle-up svg,
-        .triangle-down svg {
-            width: 12px;
-            height: 12px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-            
-        @media (max-width: 768px) {
-            .tooltip {
-                padding: 3px 6px;
-            }
-                
-            .entry, .title-inputs {
-                flex-direction: column;
-            }
-                
-            .color-picker, .checkbox-group, .select-group {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-                
-            .color-picker label, .checkbox-group label, .select-group label {
-                width: 100%;
-                margin-bottom: 5px;
-                text-align: left; /* Retour à l'alignement gauche sur mobile */
-            }
-                
-            .color-settings-container {
-                flex-direction: column;
-            }
-                
-            .color-labels-column {
-                flex: none;
-                width: 100%;
-                padding-right: 0;
-            }
-                
-            .color-label-item {
-                justify-content: flex-start; /* Alignement gauche sur mobile */
-                text-align: left;
-            }
-                
-            .color-modes-columns {
-                flex-direction: column;
-            }
-                
-            .checkbox-horizontal {
-                flex-wrap: wrap;
-                gap: 10px;
-                overflow-x: visible;
-            }
-                
-            .select-group label {
-                width: 100%;
-            }
-                
-            .select-group select {
-                min-width: auto;
-                width: 100%;
-            }
+		.font-size-value {
+			color: #333;
+			min-width: 40px;
+			text-align: center;
+		}
 
-            /* Ajustements responsive pour la taille du texte */
-            h1 {
-                font-size: calc(clamp(1.5rem, 4vw, 2rem) * var(--text-scale));
-            }
-        }
-            
-        @media (max-width: 480px) {
-            .tooltip {
-                padding: 2px 5px;
-            }
-                
-            .checkbox-horizontal {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-        }
-    </style>
+		.triangle-buttons {
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+			height: 32px;
+		}
+
+		.triangle-btn {
+			width: 24px;
+			height: 15px;
+			background: #e0e0e0;
+			border: none;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 2px 2px 4px #bebebe, -2px -2px 4px #ffffff;
+			border-radius: 4px;
+			padding: 0;
+			color: #333;
+			transition: all 0.2s ease;
+		}
+
+		.triangle-btn:hover {
+			box-shadow: 1px 1px 2px #bebebe, -1px -1px 2px #ffffff;
+		}
+
+		.triangle-btn:active {
+			box-shadow: inset 1px 1px 2px #bebebe, inset -1px -1px 2px #ffffff;
+		}
+
+		.triangle-btn:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+
+		.triangle-up svg,
+		.triangle-down svg {
+			width: 12px;
+			height: 12px;
+			fill: none;
+			stroke: currentColor;
+			stroke-width: 2;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+		}
+			
+		@media (max-width: 768px) {
+			.tooltip {
+				padding: 3px 6px;
+			}
+
+			.entry, .title-inputs {
+				flex-direction: column;
+			}
+
+			.color-picker, .checkbox-group, .select-group {
+				flex-direction: column;
+				align-items: flex-start;
+			}
+
+			.color-picker label, .checkbox-group label, .select-group label {
+				width: 100%;
+				margin-bottom: 5px;
+				text-align: left;
+			}
+
+			.color-settings-container {
+				flex-direction: column;
+			}
+
+			.color-labels-column {
+				flex: none;
+				width: 100%;
+				padding-right: 0;
+			}
+
+			.color-label-item {
+				justify-content: flex-start;
+				text-align: left;
+			}
+
+			.color-modes-columns {
+				flex-direction: column;
+			}
+
+			.checkbox-horizontal {
+				flex-wrap: wrap;
+				gap: 10px;
+				overflow-x: visible;
+			}
+
+			.select-group label {
+				width: 100%;
+			}
+
+			.select-group select {
+				min-width: auto;
+				width: 100%;
+			}
+
+			h1 {
+				font-size: calc(clamp(1.5rem, 4vw, 2rem) * var(--text-scale));
+			}
+		}
+
+		@media (max-width: 480px) {
+			.tooltip {
+				padding: 2px 5px;
+			}
+
+			.checkbox-horizontal {
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 8px;
+			}
+		}
+	</style>
 </head>
 <body>
-    <h1>modifier une application «&nbsp;apparier&nbsp;»</h1>
-    
-    <div class="title-inputs">
-        <input type="text" id="app-title" placeholder="titre de l'application">
-        <input type="text" id="app-subtitle" placeholder="sous-titre de l'application">
-    </div>
-    
-    <div id="entries" class="entry-container">
-        <div class="entry">
-            <button onclick="removeEntry(this)" class="remove-button">
-                <i class="far fa-times cross"></i>
-                <span class="tooltip">supprimer cette entrée</span>
-            </button>
-            <input type="text" placeholder="colonne de gauche" class="left">
-            <input type="text" placeholder="colonne de droite" class="right">
-            <button onclick="addEntry()" class="add-button">
-                <i class="far fa-plus plus"></i>
-                <span class="tooltip">ajouter une nouvelle entrée</span>
-            </button>
-        </div>
-    </div>
-    
-    <div class="button-container">
+	<h1>modifier une application «&nbsp;apparier&nbsp;»</h1>
+	
+	<div class="title-inputs">
+		<input type="text" id="app-title" placeholder="titre de l'application">
+		<input type="text" id="app-subtitle" placeholder="sous-titre de l'application">
+	</div>
 
-		<!-- bouton "ouvrir un dossier" -->
-        <button onclick="openFile()" class="open-button">
-			<svg 
-			  xmlns="http://www.w3.org/2000/svg" 
-			  width="24" 
-			  height="24" 
-			  viewBox="0 0 24 24" 
-			  fill="currentColor"
-			  aria-labelledby="open-folder-title"
-			  role="img">			  
-			  <path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V6h5.17l2 2H20v10z"/>
-			</svg>
-            <span class="tooltip">ouvrir un fichier javaScript</span>
-        </button>
+	<div id="entries" class="entry-container">
+		<div class="entry">
+			<button onclick="removeEntry(this)" class="remove-button">
+				<i class="far fa-times cross"></i>
+				<span class="tooltip">supprimer cette entrée</span>
+			</button>
+			<input type="text" placeholder="colonne de gauche" class="left">
+			<input type="text" placeholder="colonne de droite" class="right">
+			<button onclick="addEntry()" class="add-button">
+				<i class="far fa-plus plus"></i>
+				<span class="tooltip">ajouter une nouvelle entrée</span>
+			</button>
+		</div>
+	</div>
+	
+	<div class="button-container">
 
-		<!-- bouton "paramètres" -->
-        <button onclick="toggleSettings()" class="settings-button">
-			<svg 
-			  xmlns="http://www.w3.org/2000/svg" 
-			  width="24" 
-			  height="24" 
-			  viewBox="0 0 24 24" 
-			  fill="none"
-			  stroke="currentColor"
-			  stroke-width="2"
-			  aria-labelledby="settings-title"
-			  role="img">		  
-			  <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.08-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.08.49 0 .61.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
-			</svg>
-            <span class="tooltip">paramètres avancés</span>
-        </button>
+	<!-- bouton "ouvrir un dossier" -->
+		<button onclick="openFile()" class="open-button">
+		<svg 
+		xmlns="http://www.w3.org/2000/svg" 
+		width="24" 
+		height="24" 
+		viewBox="0 0 24 24" 
+		fill="currentColor"
+		aria-labelledby="open-folder-title"
+		role="img">		
+		<path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V6h5.17l2 2H20v10z"/>
+		</svg>
+			<span class="tooltip">ouvrir un fichier javaScript</span>
+		</button>
 
-		<!-- bouton "enregistrer" -->
-        <button onclick="saveTitle()" class="title-button">
-			<svg 
-			  xmlns="http://www.w3.org/2000/svg" 
-			  width="24" 
-			  height="24" 
-			  viewBox="0 0 24 24" 
-			  fill="currentColor"
-			  aria-labelledby="save-title"
-			  role="img">			  
-			  <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zM12 12c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zM6 6h9v4H6z"/>
-			</svg>
-            <span class="tooltip">sauvegarder les données</span>
-        </button>
+	<!-- bouton "paramètres" -->
+		<button onclick="toggleSettings()" class="settings-button">
+		<svg 
+		xmlns="http://www.w3.org/2000/svg" 
+		width="24" 
+		height="24" 
+		viewBox="0 0 24 24" 
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		aria-labelledby="settings-title"
+		role="img">		
+		<path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.08-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.08.49 0 .61.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+		</svg>
+			<span class="tooltip">paramètres avancés</span>
+		</button>
 
-        <input type="file" id="file-input" accept=".js" style="display: none;" onchange="loadFile(event)">
-    </div>
-    
-    <div id="settings-panel" class="settings-panel">
-        <div class="settings-group">
-            <h3>paramètres d'affichage</h3>
-            
-            <div class="select-group">
-                <label for="font-family">police de caractères&nbsp;:</label>
-                <select id="font-family">
-                    <option value="'Muli', Arial, sans-serif">muli (par défaut)</option>
-                    <option value="Arial, sans-serif">arial</option>
-                    <option value="'Helvetica Neue', Helvetica, sans-serif">helvetica</option>
-                    <option value="'Segoe UI', Tahoma, Geneva, sans-serif">segoe ui</option>
-                    <option value="'Times New Roman', Times, serif">times new roman</option>
-                    <option value="'Courier New', Courier, monospace">courier new</option>
-                </select>
-            </div>
-            
-            <div class="select-group">
-                <label for="title-size">taille du titre&nbsp;:</label>
-                <select id="title-size">
-                    <option value="clamp(1.8rem, 5vw, 2.5rem)">normale (par défaut)</option>
-                    <option value="clamp(1.5rem, 4vw, 2rem)">petite</option>
-                    <option value="clamp(2rem, 6vw, 3rem)">grande</option>
-                </select>
-            </div>
-            
-            <div class="select-group">
-                <label for="cell-size">taille des cellules&nbsp;:</label>
-                <select id="cell-size">
-                    <option value="clamp(0.9rem, 2.5vw, 1rem)">normale (par défaut)</option>
-                    <option value="clamp(0.8rem, 2vw, 0.9rem)">petite</option>
-                    <option value="clamp(1rem, 3vw, 1.2rem)">grande</option>
-                </select>
-            </div>
+	<!-- bouton "enregistrer" -->
+		<button onclick="saveTitle()" class="title-button">
+		<svg 
+		xmlns="http://www.w3.org/2000/svg" 
+		width="24" 
+		height="24" 
+		viewBox="0 0 24 24" 
+		fill="currentColor"
+		aria-labelledby="save-title"
+		role="img">		
+		<path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zM12 12c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zM6 6h9v4H6z"/>
+		</svg>
+			<span class="tooltip">sauvegarder les données</span>
+		</button>
 
-            <!-- NOUVEAU: Contrôle de taille de texte global en pixels -->
-            <div class="select-group">
-                <label for="global-text-size">taille du texte global&nbsp;:</label>
-                <div class="font-size-control-group">
-                    <div class="font-size-display">
-                        <span class="font-size-value" id="fontSizeValue">16px</span>
-                    </div>
-                    <div class="triangle-buttons">
-                        <button class="triangle-btn triangle-up" id="fontSizeUpBtn" title="augmenter la taille">
-                            <svg viewBox="0 0 12 12" fill="none">
-                                <path d="M3 7L6 4L9 7" stroke="currentColor" stroke-width="1.5"/>
-                            </svg>
-                        </button>
-                        <button class="triangle-btn triangle-down" id="fontSizeDownBtn" title="diminuer la taille">
-                            <svg viewBox="0 0 12 12" fill="none">
-                                <path d="M3 5L6 8L9 5" stroke="currentColor" stroke-width="1.5"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="checkbox-horizontal">
-                <span class="default-mode-label">mode par défaut&nbsp;:</span>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="enable-animations" checked>
-                    <label for="enable-animations">animations</label>
-                </div>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="enable-dark-mode">
-                    <label for="enable-dark-mode">mode sombre</label>
-                </div>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="enable-colorblind-mode">
-                    <label for="enable-colorblind-mode">mode daltonien</label>
-                </div>
-            </div>
-        </div>
-        
-        <div class="separator"></div>
-        
-        <div class="settings-group">
-            <h3>couleur en fonction du mode clair / sombre</h3>
-            <div class="color-settings-container">
-                <!-- Colonne des labels alignés à droite -->
-                <div class="color-labels-column">
-                    <div class="color-label-item" style="height: 40px; margin-bottom: 15px;"></div> <!-- Espace pour l'en-tête -->
-                    <div class="color-label-item">titre&nbsp;:</div>
-                    <div class="color-label-item">sous-titre&nbsp;:</div>
-                    <div class="color-label-item">texte&nbsp;:</div>
-                    <div class="color-label-item">fond&nbsp;:</div>
-                    <div class="color-label-item">cellules&nbsp;:</div>
-                    <div class="color-label-item">boutons&nbsp;:</div>
-                    <div class="color-label-item">bonnes réponses&nbsp;:</div>
-                    <div class="color-label-item">réponses fausses&nbsp;:</div>
-                </div>
-                
-                <!-- Conteneur pour les deux colonnes de couleurs rapprochées -->
-                <div class="color-modes-columns">
-                    <!-- Colonne mode clair -->
-                    <div class="color-mode-column">
-                        <h3 style="height: 40px; margin-bottom: 15px;">
-                            <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="5"></circle>
-                                <line x1="12" y1="1" x2="12" y2="3"></line>
-                                <line x1="12" y1="21" x2="12" y2="23"></line>
-                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                                <line x1="1" y1="12" x2="3" y2="12"></line>
-                                <line x1="21" y1="12" x2="23" y2="12"></line>
-                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                            </svg>
-                        </h3>
-                            
-                        <div class="color-input-item">
-                            <input type="color" id="title-color" value="#ff0000">
-                        </div>
-                        <div class="color-input-item">
-                            <input type="color" id="subtitle-color" value="#000000">
-                        </div>
-                        <div class="color-input-item">
-                            <input type="color" id="text-color" value="#000000">
-                        </div>
-                        <div class="color-input-item">
-                            <input type="color" id="background-color" value="#f0f0f0">
-                        </div>
-                        <div class="color-input-item">
-                            <input type="color" id="cell-color" value="#e0e0e0">
-                        </div>
-                        <div class="color-input-item">
-                            <input type="color" id="button-color" value="#e0e0e0">
-                        </div>
-                        <div class="color-input-item">
-                            <input type="color" id="correct-color" value="#008000">
-                        </div>
-                        <div class="color-input-item">
-                            <input type="color" id="incorrect-color" value="#ff0000">
-                        </div>
-                    </div>
-                    
-                    <!-- Colonne mode sombre -->
-                    <div class="color-mode-column">
-                        <h3 style="height: 40px; margin-bottom: 15px;">
-                            <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                            </svg>
-                        </h3>
-                            
-                        <div class="color-input-item">
-                            <input type="color" id="title-color-dark" value="#ff6666">
-                        </div>
-                        <div class="color-input-item">
-                            <input type="color" id="subtitle-color-dark" value="#ffffff">
-                        </div>
-                        <div class="color-input-item">
-                            <input type="color" id="text-color-dark" value="#ffffff">
-                        </div>
-                        <div class="color-input-item">
-                            <input type="color" id="background-color-dark" value="#121212">
-                        </div>
-                        <div class="color-input-item">
-                            <input type="color" id="cell-color-dark" value="#2d2d2d">
-                        </div>
-                        <div class="color-input-item">
-                            <input type="color" id="button-color-dark" value="#3d3d3d">
-                        </div>
-                        <div class="color-input-item">
-                            <input type="color" id="correct-color-dark" value="#4CAF50">
-                        </div>
-                        <div class="color-input-item">
-                            <input type="color" id="incorrect-color-dark" value="#f44336">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="separator"></div>
-        
-        <div class="settings-group">
-            <h3>paramètres du jeu</h3>
-            
-            <div class="select-group">
-                <label for="max-pairs">nombre maximum de paires à afficher&nbsp;:</label>
-                <select id="max-pairs">
-                    <option value="5">5 (par défaut)</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-            </div>
-            
-            <div class="checkbox-horizontal">
-                <div class="checkbox-item">
-                    <input type="checkbox" id="show-score" checked>
-                    <label for="show-score">score</label>
-                </div>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="random-order" checked>
-                    <label for="random-order">mélanger l'ordre des éléments</label>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div id="loading" class="loading">chargement...</div>
-    
-    <script>
-        // Variables globales pour les paramètres
-        let settings = {
-            // Mode clair
-            titleColor: "#ff0000",
-            subtitleColor: "#000000",
-            textColor: "#000000",
-            backgroundColor: "#f0f0f0",
-            cellColor: "#e0e0e0",
-            buttonColor: "#e0e0e0",
-            correctColor: "#008000",
-            incorrectColor: "#ff0000",
-                
-            // Mode sombre
-            titleColorDark: "#ff6666",
-            subtitleColorDark: "#ffffff",
-            textColorDark: "#ffffff",
-            backgroundColorDark: "#121212",
-            cellColorDark: "#2d2d2d",
-            buttonColorDark: "#3d3d3d",
-            correctColorDark: "#4CAF50",
-            incorrectColorDark: "#f44336",
-                
-            // Paramètres communs
-            fontFamily: "'Muli', Arial, sans-serif",
-            titleSize: "clamp(1.8rem, 5vw, 2.5rem)",
-            cellSize: "clamp(0.9rem, 2.5vw, 1rem)",
-            enableAnimations: true,
-            enableDarkMode: false,
-            enableColorblindMode: false,
-            maxPairs: 5,
-            showScore: true,
-            randomOrder: true,
-            // NOUVEAU: Taille du texte global en pixels
-            baseFontSize: 16
-        };
+		<input type="file" id="file-input" accept=".js" style="display: none;" onchange="loadFile(event)">
+	</div>
+	
+	<div id="settings-panel" class="settings-panel">
+		<div class="settings-group">
+			<h3>paramètres d'affichage</h3>
+		
+			<div class="select-group">
+				<label for="font-family">police de caractères&nbsp;:</label>
+				<select id="font-family">
+					<option value="'Muli', Arial, sans-serif">muli (par défaut)</option>
+					<option value="Arial, sans-serif">arial</option>
+					<option value="'Helvetica Neue', Helvetica, sans-serif">helvetica</option>
+					<option value="'Segoe UI', Tahoma, Geneva, sans-serif">segoe ui</option>
+					<option value="'Times New Roman', Times, serif">times new roman</option>
+					<option value="'Courier New', Courier, monospace">courier new</option>
+				</select>
+			</div>
+			
+			<div class="select-group">
+				<label for="title-size">taille du titre&nbsp;:</label>
+				<select id="title-size">
+					<option value="clamp(1.8rem, 5vw, 2.5rem)">normale (par défaut)</option>
+					<option value="clamp(1.5rem, 4vw, 2rem)">petite</option>
+					<option value="clamp(2rem, 6vw, 3rem)">grande</option>
+				</select>
+			</div>
+			
+			<div class="select-group">
+				<label for="cell-size">taille des cellules&nbsp;:</label>
+				<select id="cell-size">
+					<option value="clamp(0.9rem, 2.5vw, 1rem)">normale (par défaut)</option>
+					<option value="clamp(0.8rem, 2vw, 0.9rem)">petite</option>
+					<option value="clamp(1rem, 3vw, 1.2rem)">grande</option>
+				</select>
+			</div>
 
-        // NOUVELLE VARIABLE POUR LA TAILLE DU TEXTE GLOBAL EN PIXELS
-        let fontSizePx = 16;
-        
-        function addEntry() {
-            const entriesDiv = document.getElementById('entries');
-            const newEntry = document.createElement('div');
-            newEntry.className = 'entry';
-            newEntry.innerHTML = `
-                <button onclick="removeEntry(this)" class="remove-button">
-                    <i class="far fa-times cross"></i>
-                    <span class="tooltip">Supprimer cette entrée</span>
-                </button>
-                <input type="text" placeholder="colonne de gauche" class="left">
-                <input type="text" placeholder="colonne de droite" class="right">
-                <button onclick="addEntry()" class="add-button">
-                    <i class="far fa-plus plus"></i>
-                    <span class="tooltip">Ajouter une nouvelle entrée</span>
-                </button>
-            `;
-            entriesDiv.appendChild(newEntry);
-        }
+			<div class="select-group">
+				<label for="global-text-size">taille du texte global&nbsp;:</label>
+				<div class="font-size-control-group">
+					<div class="font-size-display">
+						<span class="font-size-value" id="fontSizeValue">16px</span>
+					</div>
+					<div class="triangle-buttons">
+						<button class="triangle-btn triangle-up" id="fontSizeUpBtn" title="augmenter la taille">
+							<svg viewBox="0 0 12 12" fill="none">
+								<path d="M3 7L6 4L9 7" stroke="currentColor" stroke-width="1.5"/>
+							</svg>
+						</button>
+						<button class="triangle-btn triangle-down" id="fontSizeDownBtn" title="diminuer la taille">
+							<svg viewBox="0 0 12 12" fill="none">
+								<path d="M3 5L6 8L9 5" stroke="currentColor" stroke-width="1.5"/>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
 
-        function removeEntry(button) {
-            if (document.querySelectorAll('.entry').length > 1) {
-                button.parentElement.remove();
-            }
-        }
-        
-        function toggleSettings() {
-            const settingsPanel = document.getElementById('settings-panel');
-            if (settingsPanel.style.display === 'block') {
-                settingsPanel.style.display = 'none';
-            } else {
-                settingsPanel.style.display = 'block';
-            }
-        }
-        
-        function setupColorPickers() {
-            // Configurer les écouteurs d'événements pour les sélecteurs de couleur
-            const colorInputs = document.querySelectorAll('input[type="color"]');
-            colorInputs.forEach(input => {
-                input.addEventListener('input', function() {
-                    // Mettre à jour la couleur de survol si c'est la couleur des boutons qui change
-                    if (this.id === 'button-color' || this.id === 'button-color-dark') {
-                        updateHoverColor();
-                    }
-                });
-            });
-        }
-        
-        function updateHoverColor() {
-            const buttonColor = document.getElementById('button-color').value;
-            // Convertir la couleur hex en RGB et assombrir
-            const darkerColor = shadeColor(buttonColor, -20);
-            
-            // Créer ou mettre à jour une style dynamique
-            let style = document.getElementById('dynamic-hover-styles');
-            if (!style) {
-                style = document.createElement('style');
-                style.id = 'dynamic-hover-styles';
-                document.head.appendChild(style);
-            }
-            style.textContent = `
-                button:hover {
-                    background-color: ${darkerColor};
-                    box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
-                }
-            `;
-        }
+			<div class="checkbox-horizontal">
+				<span class="default-mode-label">mode par défaut&nbsp;:</span>
+				<div class="checkbox-item">
+					<input type="checkbox" id="enable-animations" checked>
+					<label for="enable-animations">animations</label>
+				</div>
+				<div class="checkbox-item">
+					<input type="checkbox" id="enable-dark-mode">
+					<label for="enable-dark-mode">mode sombre</label>
+				</div>
+				<div class="checkbox-item">
+					<input type="checkbox" id="enable-colorblind-mode">
+					<label for="enable-colorblind-mode">mode daltonien</label>
+				</div>
+			</div>
+		</div>
 
-        // Fonction pour assombrir/éclaircir une couleur hex
-        function shadeColor(color, percent) {
-            let R = parseInt(color.substring(1,3),16);
-            let G = parseInt(color.substring(3,5),16);
-            let B = parseInt(color.substring(5,7),16);
+		<div class="separator"></div>
+		
+		<div class="settings-group">
+			<h3>couleur en fonction du mode clair / sombre</h3>
+			<div class="color-settings-container">
+				<!-- Colonne des labels alignés à droite -->
+				<div class="color-labels-column">
+					<div class="color-label-item" style="height: 40px; margin-bottom: 15px;"></div> <!-- Espace pour l'en-tête -->
+					<div class="color-label-item">titre&nbsp;:</div>
+					<div class="color-label-item">sous-titre&nbsp;:</div>
+					<div class="color-label-item">texte&nbsp;:</div>
+					<div class="color-label-item">fond&nbsp;:</div>
+					<div class="color-label-item">cellules&nbsp;:</div>
+					<div class="color-label-item">boutons&nbsp;:</div>
+					<div class="color-label-item">bonnes réponses&nbsp;:</div>
+					<div class="color-label-item">réponses fausses&nbsp;:</div>
+				</div>
+		
+				<!-- Conteneur pour les deux colonnes de couleurs rapprochées -->
+				<div class="color-modes-columns">
+					<!-- Colonne mode clair -->
+					<div class="color-mode-column">
+						<h3 style="height: 40px; margin-bottom: 15px;">
+							<svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<circle cx="12" cy="12" r="5"></circle>
+								<line x1="12" y1="1" x2="12" y2="3"></line>
+								<line x1="12" y1="21" x2="12" y2="23"></line>
+								<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+								<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+								<line x1="1" y1="12" x2="3" y2="12"></line>
+								<line x1="21" y1="12" x2="23" y2="12"></line>
+								<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+								<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+							</svg>
+						</h3>
+				
+						<div class="color-input-item">
+							<input type="color" id="title-color" value="#ff0000">
+						</div>
+						<div class="color-input-item">
+							<input type="color" id="subtitle-color" value="#000000">
+						</div>
+						<div class="color-input-item">
+							<input type="color" id="text-color" value="#000000">
+						</div>
+						<div class="color-input-item">
+							<input type="color" id="background-color" value="#f0f0f0">
+						</div>
+						<div class="color-input-item">
+							<input type="color" id="cell-color" value="#e0e0e0">
+						</div>
+						<div class="color-input-item">
+							<input type="color" id="button-color" value="#e0e0e0">
+						</div>
+						<div class="color-input-item">
+							<input type="color" id="correct-color" value="#008000">
+						</div>
+						<div class="color-input-item">
+							<input type="color" id="incorrect-color" value="#ff0000">
+						</div>
+					</div>
 
-            R = parseInt(R * (100 + percent) / 100);
-            G = parseInt(G * (100 + percent) / 100);
-            B = parseInt(B * (100 + percent) / 100);
+					<!-- Colonne mode sombre -->
+					<div class="color-mode-column">
+						<h3 style="height: 40px; margin-bottom: 15px;">
+							<svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+							</svg>
+						</h3>
+							
+						<div class="color-input-item">
+							<input type="color" id="title-color-dark" value="#ff6666">
+						</div>
+						<div class="color-input-item">
+							<input type="color" id="subtitle-color-dark" value="#ffffff">
+						</div>
+						<div class="color-input-item">
+							<input type="color" id="text-color-dark" value="#ffffff">
+						</div>
+						<div class="color-input-item">
+							<input type="color" id="background-color-dark" value="#121212">
+						</div>
+						<div class="color-input-item">
+							<input type="color" id="cell-color-dark" value="#2d2d2d">
+						</div>
+						<div class="color-input-item">
+							<input type="color" id="button-color-dark" value="#3d3d3d">
+						</div>
+						<div class="color-input-item">
+							<input type="color" id="correct-color-dark" value="#4CAF50">
+						</div>
+						<div class="color-input-item">
+							<input type="color" id="incorrect-color-dark" value="#f44336">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-            R = (R<255)?R:255;	
-            G = (G<255)?G:255;	
-            B = (B<255)?B:255;	
+		<div class="separator"></div>
+		
+		<div class="settings-group">
+			<h3>paramètres du jeu</h3>
+			
+			<div class="select-group">
+				<label for="max-pairs">nombre maximum de paires à afficher&nbsp;:</label>
+				<select id="max-pairs">
+					<option value="5">5 (par défaut)</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+				</select>
+			</div>
+	
+			<div class="checkbox-horizontal">
+				<div class="checkbox-item">
+					<input type="checkbox" id="show-score" checked>
+					<label for="show-score">score</label>
+				</div>
+				<div class="checkbox-item">
+					<input type="checkbox" id="random-order" checked>
+					<label for="random-order">mélanger l'ordre des éléments</label>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="loading" class="loading">chargement...</div>
+	
+	<script>
+		// Variables globales pour les paramètres
+		let settings = {
+			// Mode clair
+			titleColor: "#ff0000",
+			subtitleColor: "#000000",
+			textColor: "#000000",
+			backgroundColor: "#f0f0f0",
+			cellColor: "#e0e0e0",
+			buttonColor: "#e0e0e0",
+			correctColor: "#008000",
+			incorrectColor: "#ff0000",
+				
+			// Mode sombre
+			titleColorDark: "#ff6666",
+			subtitleColorDark: "#ffffff",
+			textColorDark: "#ffffff",
+			backgroundColorDark: "#121212",
+			cellColorDark: "#2d2d2d",
+			buttonColorDark: "#3d3d3d",
+			correctColorDark: "#4CAF50",
+			incorrectColorDark: "#f44336",
+				
+			// Paramètres communs
+			fontFamily: "'Muli', Arial, sans-serif",
+			titleSize: "clamp(1.8rem, 5vw, 2.5rem)",
+			cellSize: "clamp(0.9rem, 2.5vw, 1rem)",
+			enableAnimations: true,
+			enableDarkMode: false,
+			enableColorblindMode: false,
+			maxPairs: 5,
+			showScore: true,
+			randomOrder: true,
+			// NOUVEAU: Taille du texte global en pixels
+			baseFontSize: 16
+		};
 
-            R = Math.round(R);
-            G = Math.round(G);
-            B = Math.round(B);
+		// NOUVELLE VARIABLE POUR LA TAILLE DU TEXTE GLOBAL EN PIXELS
+		let fontSizePx = 16;
+		
+		function addEntry() {
+			const entriesDiv = document.getElementById('entries');
+			const newEntry = document.createElement('div');
+			newEntry.className = 'entry';
+			newEntry.innerHTML = `
+				<button onclick="removeEntry(this)" class="remove-button">
+					<i class="far fa-times cross"></i>
+					<span class="tooltip">Supprimer cette entrée</span>
+				</button>
+				<input type="text" placeholder="colonne de gauche" class="left">
+				<input type="text" placeholder="colonne de droite" class="right">
+				<button onclick="addEntry()" class="add-button">
+					<i class="far fa-plus plus"></i>
+					<span class="tooltip">Ajouter une nouvelle entrée</span>
+				</button>
+			`;
+			entriesDiv.appendChild(newEntry);
+		}
 
-            const RR = ((R.toString(16).length==1)?"0"+R.toString(16):R.toString(16));
-            const GG = ((G.toString(16).length==1)?"0"+G.toString(16):G.toString(16));
-            const BB = ((B.toString(16).length==1)?"0"+B.toString(16):B.toString(16));
+		function removeEntry(button) {
+			if (document.querySelectorAll('.entry').length > 1) {
+				button.parentElement.remove();
+			}
+		}
 
-            return "#"+RR+GG+BB;
-        }
-        
-        function loadSettingsFromFile(loadedSettings) {
-            if (loadedSettings) {
-                // Mettre à jour les paramètres
-                settings = { ...settings, ...loadedSettings };
-                
-                // Mettre à jour l'interface - Mode clair
-                document.getElementById('title-color').value = settings.titleColor;
-                document.getElementById('subtitle-color').value = settings.subtitleColor;
-                document.getElementById('text-color').value = settings.textColor || "#000000";
-                document.getElementById('background-color').value = settings.backgroundColor;
-                document.getElementById('cell-color').value = settings.cellColor;
-                document.getElementById('button-color').value = settings.buttonColor;
-                document.getElementById('correct-color').value = settings.correctColor;
-                document.getElementById('incorrect-color').value = settings.incorrectColor;
-                
-                // Mettre à jour l'interface - Mode sombre
-                document.getElementById('title-color-dark').value = settings.titleColorDark || "#ff6666";
-                document.getElementById('subtitle-color-dark').value = settings.subtitleColorDark || "#ffffff";
-                document.getElementById('text-color-dark').value = settings.textColorDark || "#ffffff";
-                document.getElementById('background-color-dark').value = settings.backgroundColorDark || "#121212";
-                document.getElementById('cell-color-dark').value = settings.cellColorDark || "#2d2d2d";
-                document.getElementById('button-color-dark').value = settings.buttonColorDark || "#3d3d3d";
-                document.getElementById('correct-color-dark').value = settings.correctColorDark || "#4CAF50";
-                document.getElementById('incorrect-color-dark').value = settings.incorrectColorDark || "#f44336";
-                
-                // Paramètres communs
-                document.getElementById('font-family').value = settings.fontFamily;
-                document.getElementById('title-size').value = settings.titleSize;
-                document.getElementById('cell-size').value = settings.cellSize;
-                document.getElementById('enable-animations').checked = settings.enableAnimations;
-                document.getElementById('enable-dark-mode').checked = settings.enableDarkMode;
-                document.getElementById('enable-colorblind-mode').checked = settings.enableColorblindMode;
-                document.getElementById('max-pairs').value = settings.maxPairs;
-                document.getElementById('show-score').checked = settings.showScore;
-                document.getElementById('random-order').checked = settings.randomOrder;
-                
-                // NOUVEAU: Charger la taille du texte en pixels
-                if (loadedSettings.baseFontSize) {
-                    fontSizePx = loadedSettings.baseFontSize;
-                    document.getElementById('fontSizeValue').textContent = fontSizePx + 'px';
-                    updateFontSize();
-                    updateTriangleButtons();
-                } else if (loadedSettings.textScale) {
-                    // Compatibilité avec l'ancien système de pourcentage
-                    fontSizePx = Math.round(loadedSettings.textScale * 16);
-                    document.getElementById('fontSizeValue').textContent = fontSizePx + 'px';
-                    updateFontSize();
-                    updateTriangleButtons();
-                }
-                
-                // Mettre à jour la couleur de survol
-                updateHoverColor();
-            }
-        }
+		function toggleSettings() {
+			const settingsPanel = document.getElementById('settings-panel');
+			if (settingsPanel.style.display === 'block') {
+				settingsPanel.style.display = 'none';
+			} else {
+				settingsPanel.style.display = 'block';
+			}
+		}
+		
+		function setupColorPickers() {
+			// Configurer les écouteurs d'événements pour les sélecteurs de couleur
+			const colorInputs = document.querySelectorAll('input[type="color"]');
+			colorInputs.forEach(input => {
+				input.addEventListener('input', function() {
+					// Mettre à jour la couleur de survol si c'est la couleur des boutons qui change
+					if (this.id === 'button-color' || this.id === 'button-color-dark') {
+						updateHoverColor();
+					}
+				});
+			});
+		}
+		
+		function updateHoverColor() {
+			const buttonColor = document.getElementById('button-color').value;
+			// Convertir la couleur hex en RGB et assombrir
+			const darkerColor = shadeColor(buttonColor, -20);
+			
+			// Créer ou mettre à jour une style dynamique
+			let style = document.getElementById('dynamic-hover-styles');
+			if (!style) {
+				style = document.createElement('style');
+				style.id = 'dynamic-hover-styles';
+				document.head.appendChild(style);
+			}
+			style.textContent = `
+				button:hover {
+					background-color: ${darkerColor};
+					box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+				}
+			`;
+		}
 
-        // NOUVELLES FONCTIONS POUR LA GESTION DE LA TAILLE DU TEXTE EN PIXELS
-        function increaseFontSize() {
-            if (fontSizePx < 24) {
-                fontSizePx += 1;
-                document.getElementById('fontSizeValue').textContent = fontSizePx + 'px';
-                updateFontSize();
-                updateTriangleButtons();
-                localStorage.setItem('fontSizePx', fontSizePx.toString());
-            }
-        }
+		// Fonction pour assombrir/éclaircir une couleur hex
+		function shadeColor(color, percent) {
+			let R = parseInt(color.substring(1,3),16);
+			let G = parseInt(color.substring(3,5),16);
+			let B = parseInt(color.substring(5,7),16);
 
-        function decreaseFontSize() {
-            if (fontSizePx > 8) {
-                fontSizePx -= 1;
-                document.getElementById('fontSizeValue').textContent = fontSizePx + 'px';
-                updateFontSize();
-                updateTriangleButtons();
-                localStorage.setItem('fontSizePx', fontSizePx.toString());
-            }
-        }
+			R = parseInt(R * (100 + percent) / 100);
+			G = parseInt(G * (100 + percent) / 100);
+			B = parseInt(B * (100 + percent) / 100);
 
-        function updateFontSize() {
-            // Calculer l'échelle basée sur la taille en pixels (16px = échelle 1)
-            const scale = fontSizePx / 16;
-            
-            // Mettre à jour la variable CSS
-            document.documentElement.style.setProperty('--text-scale', scale.toString());
-            
-            // Mettre à jour le paramètre dans settings
-            settings.baseFontSize = fontSizePx;
-        }
+			R = (R<255)?R:255;	
+			G = (G<255)?G:255;	
+			B = (B<255)?B:255;	
 
-        function updateTriangleButtons() {
-            const fontSizeUpBtn = document.getElementById('fontSizeUpBtn');
-            const fontSizeDownBtn = document.getElementById('fontSizeDownBtn');
-            
-            fontSizeUpBtn.disabled = fontSizePx >= 24;
-            fontSizeDownBtn.disabled = fontSizePx <= 8;
-        }
+			R = Math.round(R);
+			G = Math.round(G);
+			B = Math.round(B);
 
-        function setupFontSizeControls() {
-            const fontSizeUpBtn = document.getElementById('fontSizeUpBtn');
-            const fontSizeDownBtn = document.getElementById('fontSizeDownBtn');
-            
-            fontSizeUpBtn.addEventListener('click', increaseFontSize);
-            fontSizeDownBtn.addEventListener('click', decreaseFontSize);
-            
-            // Charger la taille sauvegardée
-            const savedFontSize = localStorage.getItem('fontSizePx');
-            if (savedFontSize) {
-                fontSizePx = parseInt(savedFontSize);
-                document.getElementById('fontSizeValue').textContent = fontSizePx + 'px';
-                updateFontSize();
-            }
-            
-            updateTriangleButtons();
-        }
+			const RR = ((R.toString(16).length==1)?"0"+R.toString(16):R.toString(16));
+			const GG = ((G.toString(16).length==1)?"0"+G.toString(16):G.toString(16));
+			const BB = ((B.toString(16).length==1)?"0"+B.toString(16):B.toString(16));
 
-        function saveTitle() {
-            const title = document.getElementById('app-title').value.trim();
-            const subtitle = document.getElementById('app-subtitle').value.trim();
-            const entries = document.querySelectorAll('.entry');
-            
-            // Récupérer les paramètres actuels - Mode clair
-            settings.titleColor = document.getElementById('title-color').value;
-            settings.subtitleColor = document.getElementById('subtitle-color').value;
-            settings.textColor = document.getElementById('text-color').value;
-            settings.backgroundColor = document.getElementById('background-color').value;
-            settings.cellColor = document.getElementById('cell-color').value;
-            settings.buttonColor = document.getElementById('button-color').value;
-            settings.correctColor = document.getElementById('correct-color').value;
-            settings.incorrectColor = document.getElementById('incorrect-color').value;
-            
-            // Récupérer les paramètres actuels - Mode sombre
-            settings.titleColorDark = document.getElementById('title-color-dark').value;
-            settings.subtitleColorDark = document.getElementById('subtitle-color-dark').value;
-            settings.textColorDark = document.getElementById('text-color-dark').value;
-            settings.backgroundColorDark = document.getElementById('background-color-dark').value;
-            settings.cellColorDark = document.getElementById('cell-color-dark').value;
-            settings.buttonColorDark = document.getElementById('button-color-dark').value;
-            settings.correctColorDark = document.getElementById('correct-color-dark').value;
-            settings.incorrectColorDark = document.getElementById('incorrect-color-dark').value;
-            
-            // Paramètres communs
-            settings.fontFamily = document.getElementById('font-family').value;
-            settings.titleSize = document.getElementById('title-size').value;
-            settings.cellSize = document.getElementById('cell-size').value;
-            settings.enableAnimations = document.getElementById('enable-animations').checked;
-            settings.enableDarkMode = document.getElementById('enable-dark-mode').checked;
-            settings.enableColorblindMode = document.getElementById('enable-colorblind-mode').checked;
-            settings.maxPairs = parseInt(document.getElementById('max-pairs').value);
-            settings.showScore = document.getElementById('show-score').checked;
-            settings.randomOrder = document.getElementById('random-order').checked;
-            
-            // NOUVEAU: Sauvegarder la taille du texte actuelle en pixels
-            settings.baseFontSize = fontSizePx;
-            
-            // En-tête avec commentaire
-            let jsContent = '// Contenu à modifier\n\n';
-            
-            // Ajouter les paires de données avec window.
-            jsContent += 'window.argumentsData = [\n';
-            
-            const validEntries = [];
-            entries.forEach(entry => {
-                const left = entry.querySelector('.left').value.trim();
-                const right = entry.querySelector('.right').value.trim();
-                if (left && right) {
-                    validEntries.push({ left, right });
-                }
-            });
-            
-            validEntries.forEach((entry, index) => {
-                // Échapper les guillemets dans les chaînes
-                const escapedLeft = entry.left.replace(/"/g, '\\"');
-                const escapedRight = entry.right.replace(/"/g, '\\"');
-                
-                jsContent += `\t{ colonne_de_gauche: "${escapedLeft}", colonne_de_droite: "${escapedRight}" }`;
-                if (index < validEntries.length - 1) {
-                    jsContent += ',';
-                }
-                jsContent += '\n';
-            });
-            
-            jsContent += '];\n\n';
-            
-            // Ajouter le titre et sous-titre avec window.
-            if (title) {
-                jsContent += `window.title = "${title.replace(/"/g, '\\"')}";\n`;
-            } else {
-                jsContent += `window.title = "application « apparier »";\n`;
-            }
-            
-            if (subtitle) {
-                jsContent += `window.subtitle = "${subtitle.replace(/"/g, '\\"')}";\n`;
-            } else {
-                jsContent += `window.subtitle = "associer un élément à un autre";\n`;
-            }
-            
-            // Ajouter les paramètres avec window. et commentaires détaillés
-            jsContent += 'window.settings = {\n';
-            jsContent += '    // MODE CLAIR - Couleurs neumorphiques classiques\n';
-            jsContent += `    "titleColor": "${settings.titleColor}",              // couleur du titre en mode clair\n`;
-            jsContent += `    "subtitleColor": "${settings.subtitleColor}",           // couleur du sous-titre en mode clair\n`;
-            jsContent += `    "textColor": "${settings.textColor}",               // couleur du texte en mode clair\n`;
-            jsContent += `    "backgroundColor": "${settings.backgroundColor}",         // couleur de fond en mode clair\n`;
-            jsContent += `    "cellColor": "${settings.cellColor}",               // couleur des cellules en mode clair\n`;
-            jsContent += `    "buttonColor": "${settings.buttonColor}",             // couleur des boutons en mode clair\n`;
-            jsContent += `    "correctColor": "${settings.correctColor}",            // couleur pour les bonnes réponses en mode clair\n`;
-            jsContent += `    "incorrectColor": "${settings.incorrectColor}",          // couleur pour les mauvaises réponses en mode clair\n`;
-            jsContent += '    \n';
-            jsContent += '    // MODE SOMBRE - Couleurs neumorphiques classiques\n';
-            jsContent += `    "titleColorDark": "${settings.titleColorDark}",          // couleur du titre en mode sombre\n`;
-            jsContent += `    "subtitleColorDark": "${settings.subtitleColorDark}",       // couleur du sous-titre en mode sombre\n`;
-            jsContent += `    "textColorDark": "${settings.textColorDark}",           // couleur du texte en mode sombre\n`;
-            jsContent += `    "backgroundColorDark": "${settings.backgroundColorDark}",     // couleur de fond en mode sombre\n`;
-            jsContent += `    "cellColorDark": "${settings.cellColorDark}",          // couleur des cellules en mode sombre\n`;
-            jsContent += `    "buttonColorDark": "${settings.buttonColorDark}",        // couleur des boutons en mode sombre\n`;
-            jsContent += `    "correctColorDark": "${settings.correctColorDark}",        // couleur pour les bonnes réponses en mode sombre\n`;
-            jsContent += `    "incorrectColorDark": "${settings.incorrectColorDark}",      // couleur pour les mauvaises réponses en mode sombre\n`;
-            jsContent += '    \n';
-            jsContent += `    "fontFamily": "${settings.fontFamily}",\n`;
-            jsContent += `    "titleSize": "${settings.titleSize}",\n`;
-            jsContent += `    "cellSize": "${settings.cellSize}",\n`;
-            jsContent += `    "enableAnimations": ${settings.enableAnimations},\n`;
-            jsContent += `    "enableDarkMode": ${settings.enableDarkMode},\n`;
-            jsContent += `    "enableColorblindMode": ${settings.enableColorblindMode},\n`;
-            jsContent += `    "maxPairs": ${settings.maxPairs},\n`;
-            jsContent += `    "showScore": ${settings.showScore},\n`;
-            jsContent += `    "randomOrder": ${settings.randomOrder},\n`;
-            // NOUVEAU: Ajouter la taille du texte global en pixels
-            jsContent += `    "baseFontSize": ${settings.baseFontSize}                  // taille de base du texte en pixels (16 = 100%)\n`;
-            jsContent += '};';
+			return "#"+RR+GG+BB;
+		}
+		
+		function loadSettingsFromFile(loadedSettings) {
+			if (loadedSettings) {
+				// Mettre à jour les paramètres
+				settings = { ...settings, ...loadedSettings };
+				
+				// Mettre à jour l'interface - Mode clair
+				document.getElementById('title-color').value = settings.titleColor;
+				document.getElementById('subtitle-color').value = settings.subtitleColor;
+				document.getElementById('text-color').value = settings.textColor || "#000000";
+				document.getElementById('background-color').value = settings.backgroundColor;
+				document.getElementById('cell-color').value = settings.cellColor;
+				document.getElementById('button-color').value = settings.buttonColor;
+				document.getElementById('correct-color').value = settings.correctColor;
+				document.getElementById('incorrect-color').value = settings.incorrectColor;
+				
+				// Mettre à jour l'interface - Mode sombre
+				document.getElementById('title-color-dark').value = settings.titleColorDark || "#ff6666";
+				document.getElementById('subtitle-color-dark').value = settings.subtitleColorDark || "#ffffff";
+				document.getElementById('text-color-dark').value = settings.textColorDark || "#ffffff";
+				document.getElementById('background-color-dark').value = settings.backgroundColorDark || "#121212";
+				document.getElementById('cell-color-dark').value = settings.cellColorDark || "#2d2d2d";
+				document.getElementById('button-color-dark').value = settings.buttonColorDark || "#3d3d3d";
+				document.getElementById('correct-color-dark').value = settings.correctColorDark || "#4CAF50";
+				document.getElementById('incorrect-color-dark').value = settings.incorrectColorDark || "#f44336";
+				
+				// Paramètres communs
+				document.getElementById('font-family').value = settings.fontFamily;
+				document.getElementById('title-size').value = settings.titleSize;
+				document.getElementById('cell-size').value = settings.cellSize;
+				document.getElementById('enable-animations').checked = settings.enableAnimations;
+				document.getElementById('enable-dark-mode').checked = settings.enableDarkMode;
+				document.getElementById('enable-colorblind-mode').checked = settings.enableColorblindMode;
+				document.getElementById('max-pairs').value = settings.maxPairs;
+				document.getElementById('show-score').checked = settings.showScore;
+				document.getElementById('random-order').checked = settings.randomOrder;
+				
+				// Charger la taille du texte en pixels
+				if (loadedSettings.baseFontSize) {
+					fontSizePx = loadedSettings.baseFontSize;
+					document.getElementById('fontSizeValue').textContent = fontSizePx + 'px';
+					updateFontSize();
+					updateTriangleButtons();
+				} else if (loadedSettings.textScale) {
+					// Compatibilité avec l'ancien système de pourcentage
+					fontSizePx = Math.round(loadedSettings.textScale * 16);
+					document.getElementById('fontSizeValue').textContent = fontSizePx + 'px';
+					updateFontSize();
+					updateTriangleButtons();
+				}
+				
+				// Mettre à jour la couleur de survol
+				updateHoverColor();
+			}
+		}
 
-            // Créer et télécharger le fichier
-            const blob = new Blob([jsContent], { type: 'text/javascript' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'fichier_ressource.js';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
+		// GESTION DE LA TAILLE DU TEXTE EN PIXELS
+		function increaseFontSize() {
+			if (fontSizePx < 24) {
+				fontSizePx += 1;
+				document.getElementById('fontSizeValue').textContent = fontSizePx + 'px';
+				updateFontSize();
+				updateTriangleButtons();
+				localStorage.setItem('fontSizePx', fontSizePx.toString());
+			}
+		}
 
-        function openFile() {
-            document.getElementById('file-input').click();
-        }
+		function decreaseFontSize() {
+			if (fontSizePx > 8) {
+				fontSizePx -= 1;
+				document.getElementById('fontSizeValue').textContent = fontSizePx + 'px';
+				updateFontSize();
+				updateTriangleButtons();
+				localStorage.setItem('fontSizePx', fontSizePx.toString());
+			}
+		}
 
-        function loadFile(event) {
-            const file = event.target.files[0];
-            if (!file || !file.name.endsWith('.js')) {
-                alert('Veuillez sélectionner un fichier JavaScript (.js).');
-                return;
-            }
+		function updateFontSize() {
+			// Calculer l'échelle basée sur la taille en pixels (16px = échelle 1)
+			const scale = fontSizePx / 16;
+			
+			// Mettre à jour la variable CSS
+			document.documentElement.style.setProperty('--text-scale', scale.toString());
+			
+			// Mettre à jour le paramètre dans settings
+			settings.baseFontSize = fontSizePx;
+		}
 
-            const loadingIndicator = document.getElementById('loading');
-            loadingIndicator.style.display = 'block';
+		function updateTriangleButtons() {
+			const fontSizeUpBtn = document.getElementById('fontSizeUpBtn');
+			const fontSizeDownBtn = document.getElementById('fontSizeDownBtn');
+			
+			fontSizeUpBtn.disabled = fontSizePx >= 24;
+			fontSizeDownBtn.disabled = fontSizePx <= 8;
+		}
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const jsContent = e.target.result;
-                    
-                    // Regex compatibles avec const et window.
-                    const titleMatch = jsContent.match(/(?:const|window\.)\s*title\s*=\s*"([^"]*)"/);
-                    const subtitleMatch = jsContent.match(/(?:const|window\.)\s*subtitle\s*=\s*"([^"]*)"/);
-                    const settingsMatch = jsContent.match(/(?:const|window\.)\s*settings\s*=\s*({[\s\S]*?});/);
-                    const argumentsDataMatch = jsContent.match(/(?:const|window\.)\s*argumentsData\s*=\s*(\[[\s\S]*?\]);/);
-                    
-                    const entriesDiv = document.getElementById('entries');
-                    entriesDiv.innerHTML = '';
-                    
-                    if (titleMatch) {
-                        document.getElementById('app-title').value = titleMatch[1];
-                    } else {
-                        document.getElementById('app-title').value = '';
-                    }
-                    
-                    if (subtitleMatch) {
-                        document.getElementById('app-subtitle').value = subtitleMatch[1];
-                    } else {
-                        document.getElementById('app-subtitle').value = '';
-                    }
-                    
-                    if (settingsMatch) {
-                        try {
-                            const loadedSettings = eval(`(${settingsMatch[1]})`);
-                            loadSettingsFromFile(loadedSettings);
-                        } catch (err) {
-                            console.error('Erreur lors du parsing des paramètres:', err);
-                        }
-                    }
-                    
-                    if (argumentsDataMatch) {
-                        try {
-                            let argumentsData;
-                            try {
-                                // Essayer d'abord avec eval direct (pour const)
-                                argumentsData = eval(`(${argumentsDataMatch[1]})`);
-                            } catch (err) {
-                                // Si échec, essayer avec window (pour window.argumentsData)
-                                eval(`window.tempArgumentsData = ${argumentsDataMatch[1]}`);
-                                argumentsData = window.tempArgumentsData;
-                            }
-                            
-                            if (Array.isArray(argumentsData)) {
-                                argumentsData.forEach(data => {
-                                    const newEntry = document.createElement('div');
-                                    newEntry.className = 'entry';
-                                    newEntry.innerHTML = `
-                                        <button onclick="removeEntry(this)" class="remove-button">
-                                            <i class="far fa-times cross"></i>
-                                            <span class="tooltip">Supprimer cette entrée</span>
-                                        </button>
-                                        <input type="text" placeholder="colonne de gauche" class="left" value="${data.colonne_de_gauche || ''}">
-                                        <input type="text" placeholder="colonne de droite" class="right" value="${data.colonne_de_droite || ''}">
-                                        <button onclick="addEntry()" class="add-button">
-                                            <i class="far fa-plus plus"></i>
-                                            <span class="tooltip">Ajouter une nouvelle entrée</span>
-                                        </button>
-                                    `;
-                                    entriesDiv.appendChild(newEntry);
-                                });
-                            }
-                        } catch (err) {
-                            console.error('Erreur lors du chargement des données:', err);
-                            addEntry();
-                        }
-                    } else {
-                        addEntry();
-                    }
-                    
-                    loadingIndicator.style.display = 'none';
-                    
-                } catch (err) {
-                    loadingIndicator.style.display = 'none';
-                    alert('Erreur lors du chargement du fichier : ' + err.message);
-                    if (document.querySelectorAll('.entry').length === 0) {
-                        addEntry();
-                    }
-                }
-            };
-            reader.readAsText(file);
-        }
-        
-        // Initialiser les sélecteurs de couleur au chargement
-        document.addEventListener('DOMContentLoaded', function() {
-            setupColorPickers();
-            updateHoverColor();
-            setupFontSizeControls(); // NOUVEAU: Initialiser les contrôles de taille de texte
-            
-            // S'assurer qu'il y a au moins une entrée
-            if (document.querySelectorAll('.entry').length === 0) {
-                addEntry();
-            }
-        });
-    </script>
+		function setupFontSizeControls() {
+			const fontSizeUpBtn = document.getElementById('fontSizeUpBtn');
+			const fontSizeDownBtn = document.getElementById('fontSizeDownBtn');
+			
+			fontSizeUpBtn.addEventListener('click', increaseFontSize);
+			fontSizeDownBtn.addEventListener('click', decreaseFontSize);
+			
+			// Charger la taille sauvegardée
+			const savedFontSize = localStorage.getItem('fontSizePx');
+			if (savedFontSize) {
+				fontSizePx = parseInt(savedFontSize);
+				document.getElementById('fontSizeValue').textContent = fontSizePx + 'px';
+				updateFontSize();
+			}
+			
+			updateTriangleButtons();
+		}
+
+		function saveTitle() {
+			const title = document.getElementById('app-title').value.trim();
+			const subtitle = document.getElementById('app-subtitle').value.trim();
+			const entries = document.querySelectorAll('.entry');
+		
+			// Récupérer les paramètres actuels - Mode clair
+			settings.titleColor = document.getElementById('title-color').value;
+			settings.subtitleColor = document.getElementById('subtitle-color').value;
+			settings.textColor = document.getElementById('text-color').value;
+			settings.backgroundColor = document.getElementById('background-color').value;
+			settings.cellColor = document.getElementById('cell-color').value;
+			settings.buttonColor = document.getElementById('button-color').value;
+			settings.correctColor = document.getElementById('correct-color').value;
+			settings.incorrectColor = document.getElementById('incorrect-color').value;
+		
+			// Récupérer les paramètres actuels - Mode sombre
+			settings.titleColorDark = document.getElementById('title-color-dark').value;
+			settings.subtitleColorDark = document.getElementById('subtitle-color-dark').value;
+			settings.textColorDark = document.getElementById('text-color-dark').value;
+			settings.backgroundColorDark = document.getElementById('background-color-dark').value;
+			settings.cellColorDark = document.getElementById('cell-color-dark').value;
+			settings.buttonColorDark = document.getElementById('button-color-dark').value;
+			settings.correctColorDark = document.getElementById('correct-color-dark').value;
+			settings.incorrectColorDark = document.getElementById('incorrect-color-dark').value;
+		
+			// Paramètres communs
+			settings.fontFamily = document.getElementById('font-family').value;
+			settings.titleSize = document.getElementById('title-size').value;
+			settings.cellSize = document.getElementById('cell-size').value;
+			settings.enableAnimations = document.getElementById('enable-animations').checked;
+			settings.enableDarkMode = document.getElementById('enable-dark-mode').checked;
+			settings.enableColorblindMode = document.getElementById('enable-colorblind-mode').checked;
+			settings.maxPairs = parseInt(document.getElementById('max-pairs').value);
+			settings.showScore = document.getElementById('show-score').checked;
+			settings.randomOrder = document.getElementById('random-order').checked;
+
+			// Sauvegarder la taille du texte actuelle en pixels
+			settings.baseFontSize = fontSizePx;
+			
+			// En-tête avec commentaire
+			let jsContent = '// Contenu à modifier\n\n';
+			
+			// Ajouter le titre et sous-titre AVANT les données (window.title et window.subtitle)
+			if (title) {
+				jsContent += `window.title = "${title.replace(/"/g, '\\"')}";\n`;
+			} else {
+				jsContent += `window.title = "application « apparier »";\n`;
+			}
+			
+			if (subtitle) {
+				jsContent += `window.subtitle = "${subtitle.replace(/"/g, '\\"')}";\n\n`;
+			} else {
+				jsContent += `window.subtitle = "associer un élément à un autre";\n\n`;
+			}
+			
+			// Ajouter les paires de données avec window.
+			jsContent += 'window.argumentsData = [\n';
+			
+			const validEntries = [];
+			entries.forEach(entry => {
+				const left = entry.querySelector('.left').value.trim();
+				const right = entry.querySelector('.right').value.trim();
+				if (left && right) {
+					validEntries.push({ left, right });
+				}
+			});
+
+			validEntries.forEach((entry, index) => {
+				// Échapper les guillemets dans les chaînes
+				const escapedLeft = entry.left.replace(/"/g, '\\"');
+				const escapedRight = entry.right.replace(/"/g, '\\"');
+				
+				jsContent += `\t{ colonne_de_gauche: "${escapedLeft}", colonne_de_droite: "${escapedRight}" }`;
+				if (index < validEntries.length - 1) {
+					jsContent += ',';
+				}
+				jsContent += '\n';
+			});
+			
+			jsContent += '];\n\n';
+			
+			// Ajouter les paramètres avec window. et commentaires détaillés
+			jsContent += 'window.settings = {\n';
+			jsContent += '	// MODE CLAIR - Couleurs neumorphiques classiques\n';
+			jsContent += `	"titleColor": "${settings.titleColor}",					// couleur du titre en mode clair\n`;
+			jsContent += `	"subtitleColor": "${settings.subtitleColor}",			// couleur du sous-titre en mode clair\n`;
+			jsContent += `	"textColor": "${settings.textColor}",					// couleur du texte en mode clair\n`;
+			jsContent += `	"backgroundColor": "${settings.backgroundColor}",		// couleur de fond en mode clair\n`;
+			jsContent += `	"cellColor": "${settings.cellColor}",					// couleur des cellules en mode clair\n`;
+			jsContent += `	"buttonColor": "${settings.buttonColor}",				// couleur des boutons en mode clair\n`;
+			jsContent += `	"correctColor": "${settings.correctColor}",				// couleur pour les bonnes réponses en mode clair\n`;
+			jsContent += `	"incorrectColor": "${settings.incorrectColor}",			// couleur pour les mauvaises réponses en mode clair\n`;
+			jsContent += '	\n';
+			jsContent += '	// MODE SOMBRE - Couleurs neumorphiques classiques\n';
+			jsContent += `	"titleColorDark": "${settings.titleColorDark}",			// couleur du titre en mode sombre\n`;
+			jsContent += `	"subtitleColorDark": "${settings.subtitleColorDark}",	// couleur du sous-titre en mode sombre\n`;
+			jsContent += `	"textColorDark": "${settings.textColorDark}",			// couleur du texte en mode sombre\n`;
+			jsContent += `	"backgroundColorDark": "${settings.backgroundColorDark}",// couleur de fond en mode sombre\n`;
+			jsContent += `	"cellColorDark": "${settings.cellColorDark}",			// couleur des cellules en mode sombre\n`;
+			jsContent += `	"buttonColorDark": "${settings.buttonColorDark}",		// couleur des boutons en mode sombre\n`;
+			jsContent += `	"correctColorDark": "${settings.correctColorDark}",		// couleur pour les bonnes réponses en mode sombre\n`;
+			jsContent += `	"incorrectColorDark": "${settings.incorrectColorDark}",	// couleur pour les mauvaises réponses en mode sombre\n`;
+			jsContent += '	\n';
+			jsContent += `	"fontFamily": "${settings.fontFamily}",\n`;
+			jsContent += `	"titleSize": "${settings.titleSize}",\n`;
+			jsContent += `	"cellSize": "${settings.cellSize}",\n`;
+			jsContent += `	"enableAnimations": ${settings.enableAnimations},\n`;
+			jsContent += `	"enableDarkMode": ${settings.enableDarkMode},\n`;
+			jsContent += `	"enableColorblindMode": ${settings.enableColorblindMode},\n`;
+			jsContent += `	"maxPairs": ${settings.maxPairs},\n`;
+			jsContent += `	"showScore": ${settings.showScore},\n`;
+			jsContent += `	"randomOrder": ${settings.randomOrder},\n`;
+			// NOUVEAU: Ajouter la taille du texte global en pixels
+			jsContent += `	"baseFontSize": ${settings.baseFontSize}				// taille de base du texte en pixels (16 = 100%)\n`;
+			jsContent += '};';
+
+			// Créer et télécharger le fichier
+			const blob = new Blob([jsContent], { type: 'text/javascript' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = 'fichier_ressource.js';
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+		}
+
+		function openFile() {
+			document.getElementById('file-input').click();
+		}
+
+		function loadFile(event) {
+			const file = event.target.files[0];
+			if (!file || !file.name.endsWith('.js')) {
+				alert('Veuillez sélectionner un fichier JavaScript (.js).');
+				return;
+			}
+
+			const loadingIndicator = document.getElementById('loading');
+			loadingIndicator.style.display = 'block';
+
+			const reader = new FileReader();
+			reader.onload = function(e) {
+				try {
+					const jsContent = e.target.result;
+
+					// Regex compatibles avec const et window.
+					const titleMatch = jsContent.match(/(?:const|window\.)\s*title\s*=\s*"([^"]*)"/);
+					const subtitleMatch = jsContent.match(/(?:const|window\.)\s*subtitle\s*=\s*"([^"]*)"/);
+					const settingsMatch = jsContent.match(/(?:const|window\.)\s*settings\s*=\s*({[\s\S]*?});/);
+					const argumentsDataMatch = jsContent.match(/(?:const|window\.)\s*argumentsData\s*=\s*(\[[\s\S]*?\]);/);
+					const entriesDiv = document.getElementById('entries');
+					entriesDiv.innerHTML = '';
+					
+					if (titleMatch) {
+						document.getElementById('app-title').value = titleMatch[1];
+					} else {
+						document.getElementById('app-title').value = '';
+					}
+
+					if (subtitleMatch) {
+						document.getElementById('app-subtitle').value = subtitleMatch[1];
+					} else {
+						document.getElementById('app-subtitle').value = '';
+					}
+
+					if (settingsMatch) {
+						try {
+							const loadedSettings = eval(`(${settingsMatch[1]})`);
+							loadSettingsFromFile(loadedSettings);
+						} catch (err) {
+							console.error('Erreur lors du parsing des paramètres:', err);
+						}
+					}
+
+					if (argumentsDataMatch) {
+						try {
+							let argumentsData;
+							try {
+								// Essayer d'abord avec eval direct (pour const)
+								argumentsData = eval(`(${argumentsDataMatch[1]})`);
+							} catch (err) {
+								// Si échec, essayer avec window (pour window.argumentsData)
+								eval(`window.tempArgumentsData = ${argumentsDataMatch[1]}`);
+								argumentsData = window.tempArgumentsData;
+							}
+
+							if (Array.isArray(argumentsData)) {
+								argumentsData.forEach(data => {
+									const newEntry = document.createElement('div');
+									newEntry.className = 'entry';
+									newEntry.innerHTML = `
+										<button onclick="removeEntry(this)" class="remove-button">
+											<i class="far fa-times cross"></i>
+											<span class="tooltip">Supprimer cette entrée</span>
+										</button>
+										<input type="text" placeholder="colonne de gauche" class="left" value="${data.colonne_de_gauche || ''}">
+										<input type="text" placeholder="colonne de droite" class="right" value="${data.colonne_de_droite || ''}">
+										<button onclick="addEntry()" class="add-button">
+											<i class="far fa-plus plus"></i>
+											<span class="tooltip">Ajouter une nouvelle entrée</span>
+										</button>
+									`;
+									entriesDiv.appendChild(newEntry);
+								});
+							}
+						} catch (err) {
+							console.error('Erreur lors du chargement des données:', err);
+							addEntry();
+						}
+					} else {
+						addEntry();
+					}
+
+					loadingIndicator.style.display = 'none';
+					
+				} catch (err) {
+					loadingIndicator.style.display = 'none';
+					alert('Erreur lors du chargement du fichier : ' + err.message);
+					if (document.querySelectorAll('.entry').length === 0) {
+						addEntry();
+					}
+				}
+			};
+			reader.readAsText(file);
+		}
+
+		// Initialiser les sélecteurs de couleur au chargement
+		document.addEventListener('DOMContentLoaded', function() {
+			setupColorPickers();
+			updateHoverColor();
+			setupFontSizeControls(); // Initialiser les contrôles de taille de texte
+			
+			// S'assurer qu'il y a au moins une entrée
+			if (document.querySelectorAll('.entry').length === 0) {
+				addEntry();
+			}
+		});
+	</script>
 </body>
 </html>

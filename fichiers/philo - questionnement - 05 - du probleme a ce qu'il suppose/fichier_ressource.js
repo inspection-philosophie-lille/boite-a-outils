@@ -6,61 +6,306 @@ window.argumentsData = [
 	/* attention aux virgules ! le dernier argument est le seul à ne pas en comporter !*/
 	/* attention aux " dans la définition. A remplacer par '' */
 
-	{colonne_de_gauche: "La raison est-elle un outil d'émancipation ou un instrument de domination ?", colonne_de_droite: "Dans quelle mesure la raison peut-elle à la fois libérer et contraindre l'individu ?"},
-	{colonne_de_gauche: "L'art doit-il représenter la réalité ou créer de nouvelles formes ?", colonne_de_droite: "Quel est le rôle de l'art dans la représentation du réel et de l'imaginaire ?"},
-	{colonne_de_gauche: "La liberté est-elle une illusion ou une réalité tangible ?", colonne_de_droite: "Quels sont les critères qui permettent de distinguer la liberté réelle de son apparence ?"},
-	{colonne_de_gauche: "Le bonheur dépend-il de nous ou des circonstances extérieures ?", colonne_de_droite: "Comment définir la part d'autonomie et de dépendance dans la recherche du bonheur ?"},
-	{colonne_de_gauche: "La morale est-elle universelle ou relative aux cultures ?", colonne_de_droite: "Sur quels fondements peut-on établir des principes moraux valables pour tous ?"},
-	{colonne_de_gauche: "La science nous donne-t-elle accès à la vérité ou à des modèles provisoires ?", colonne_de_droite: "Quelle est la nature de la connaissance scientifique et ses limites ?"},
-	{colonne_de_gauche: "Le langage exprime-t-il la pensée ou la structure-t-il ?", colonne_de_droite: "Comment le langage influence-t-il notre manière de concevoir le monde ?"},
-	{colonne_de_gauche: "La conscience est-elle le propre de l'homme ou partagée avec d'autres espèces ?", colonne_de_droite: "Quels sont les critères permettant d'identifier et de mesurer la conscience ?"},
-	{colonne_de_gauche: "Le travail est-il aliénant ou source d'épanouissement ?", colonne_de_droite: "Quelles conditions rendent le travail libérateur ou asservissant ?"},
-	{colonne_de_gauche: "La démocratie est-elle le meilleur système ou comporte-t-elle des défauts majeurs ?", colonne_de_droite: "Comment concilier l'idéal démocratique avec ses imperfections pratiques ?"},
-	{colonne_de_gauche: "La religion est-elle source de paix ou de conflits ?", colonne_de_droite: "Quel rôle joue la croyance religieuse dans la cohésion sociale et les divisions ?"},
-	{colonne_de_gauche: "Le temps est-il objectif ou une construction subjective ?", colonne_de_droite: "Comment notre perception du temps influence-t-elle notre rapport à l'existence ?"},
-	{colonne_de_gauche: "La violence est-elle naturelle ou culturelle ?", colonne_de_droite: "Quels facteurs déterminent l'émergence et l'expression de la violence ?"},
-	{colonne_de_gauche: "Le libre arbitre existe-t-il ou sommes-nous déterminés ?", colonne_de_droite: "Comment articuler liberté individuelle et déterminismes multiples ?"},
-	{colonne_de_gauche: "L'éducation doit-elle former ou libérer ?", colonne_de_droite: "Quel équilibre trouver entre transmission des savoirs et développement de l'autonomie ?"},
-	{colonne_de_gauche: "La justice est-elle un idéal ou une réalité possible ?", colonne_de_droite: "Quelles conditions rendent possible l'instauration d'une justice véritable ?"},
-	{colonne_de_gauche: "La technique nous libère-t-elle ou nous asservit-elle ?", colonne_de_droite: "Comment évaluer les effets ambivalents du progrès technique sur notre humanité ?"},
-	{colonne_de_gauche: "La vérité est-elle absolue ou relative ?", colonne_de_droite: "Sur quels critères fonder la recherche et la reconnaissance de la vérité ?"},
-	{colonne_de_gauche: "L'amour est-il rationnel ou irrationnel ?", colonne_de_droite: "Comment comprendre la nature paradoxale du sentiment amoureux ?"},
-	{colonne_de_gauche: "La mort donne-t-elle un sens à la vie ou la rend-elle absurde ?", colonne_de_droite: "Comment la conscience de la mortalité influence-t-elle notre existence ?"},
-	{colonne_de_gauche: "La nature doit-elle être dominée ou préservée ?", colonne_de_droite: "Quel rapport l'humanité doit-elle entretenir avec son environnement naturel ?"},
-	{colonne_de_gauche: "La culture nous éloigne-t-elle de la nature ou l'accomplit-elle ?", colonne_de_droite: "Comment articuler nature et culture dans la définition de l'humain ?"},
-	{colonne_de_gauche: "Le désir est-il une force positive ou négative ?", colonne_de_droite: "Quel rôle joue le désir dans l'accomplissement ou la frustration humaine ?"},
-	{colonne_de_gauche: "La connaissance de soi est-elle possible ou illusoire ?", colonne_de_droite: "Quels obstacles et quelles voies pour accéder à une véritable connaissance de soi ?"},
-	{colonne_de_gauche: "L'histoire a-t-elle un sens ou est-elle chaotique ?", colonne_de_droite: "Comment interpréter le cours de l'histoire et sa signification ?"},
-	{colonne_de_gauche: "La beauté est-elle objective ou subjective ?", colonne_de_droite: "Sur quels critères fonder le jugement esthétique ?"},
-	{colonne_de_gauche: "Le pouvoir corrompt-il nécessairement ou peut-il être vertueux ?", colonne_de_droite: "Quelles conditions permettent l'exercice d'un pouvoir éthique ?"},
-	{colonne_de_gauche: "L'État doit-il être fort ou minimal ?", colonne_de_droite: "Comment concilier protection des libertés et nécessité de l'autorité politique ?"},
-	{colonne_de_gauche: "Le progrès est-il inéluctable ou contingent ?", colonne_de_droite: "Quels sont les moteurs et les limites du progrès humain ?"},
-	{colonne_de_gauche: "La science peut-elle tout expliquer ou existe-t-il des limites à la connaissance humaine ?", colonne_de_droite: "Quelles sont les frontières de la connaissance scientifique et comment les appréhender ?"},
-	{colonne_de_gauche: "La liberté d'expression doit-elle être absolue ou peut-elle être limitée dans certains cas ?", colonne_de_droite: "Comment concilier la liberté d'expression avec la protection des individus et de la société ?"},
-	{colonne_de_gauche: "L'inconscient gouverne-t-il nos actions ou pouvons-nous le maîtriser par la raison ?", colonne_de_droite: "Comment l'inconscient influence-t-il notre comportement et nos décisions ?"},
-	{colonne_de_gauche: "La mondialisation est-elle un facteur de progrès ou une menace pour les cultures locales ?", colonne_de_droite: "Quels sont les effets de la mondialisation sur la diversité culturelle et l'identité des peuples ?"},
-	{colonne_de_gauche: "Le corps est-il un simple instrument ou une partie intégrante de notre identité ?", colonne_de_droite: "Quel rôle joue le corps dans la construction de notre identité et de notre rapport au monde ?"},
-	{colonne_de_gauche: "La mémoire est-elle fiable ou sujette à des distorsions et des illusions ?", colonne_de_droite: "Comment la mémoire façonne-t-elle notre identité et notre perception de la réalité ?"},
-	{colonne_de_gauche: "La justice sociale est-elle compatible avec la liberté individuelle ou y a-t-il un conflit inévitable ?", colonne_de_droite: "Comment concilier les exigences de justice sociale avec le respect des libertés individuelles ?"},
-	{colonne_de_gauche: "L'art contemporain est-il une forme d'expression légitime ou une imposture intellectuelle ?", colonne_de_droite: "Quels sont les critères permettant de juger la valeur et la légitimité de l'art contemporain ?"},
-	{colonne_de_gauche: "La conscience animale est-elle comparable à celle de l'homme ou fondamentalement différente ?", colonne_de_droite: "Comment évaluer et comprendre la conscience animale par rapport à la conscience humaine ?"},
-	{colonne_de_gauche: "La désobéissance civile est-elle un devoir moral ou une menace pour l'ordre social ?", colonne_de_droite: "Dans quelles circonstances la désobéissance civile peut-elle être justifiée moralement ?"},
-	{colonne_de_gauche: "Le transhumanisme est-il une évolution souhaitable ou une menace pour notre humanité ?", colonne_de_droite: "Quels sont les enjeux éthiques et philosophiques liés à l'amélioration technologique de l'être humain ?"},
-	{colonne_de_gauche: "La tolérance a-t-elle des limites ou doit-elle s'appliquer à toutes les opinions ?", colonne_de_droite: "Comment définir les limites de la tolérance dans une société pluraliste ?"},
-	{colonne_de_gauche: "Le patriotisme est-il une vertu ou un obstacle à la fraternité universelle ?", colonne_de_droite: "Comment concilier l'attachement à sa nation avec l'idéal d'une humanité unie ?"},
-	{colonne_de_gauche: "La peine de mort est-elle une justice légitime ou une barbarie indigne de nos sociétés ?", colonne_de_droite: "Quels sont les arguments éthiques pour et contre l'application de la peine capitale ?"},
-	{colonne_de_gauche: "L'euthanasie est-elle un droit fondamental ou une atteinte à la sacralité de la vie ?", colonne_de_droite: "Comment aborder la question de la fin de vie d'un point de vue éthique et philosophique ?"},
-	{colonne_de_gauche: "La publicité est-elle une information utile ou une manipulation des consciences ?", colonne_de_droite: "Quel est l'impact de la publicité sur notre liberté de choix et notre perception du monde ?"},
-	{colonne_de_gauche: "L'argent fait-il le bonheur ou est-il source de corruption morale ?", colonne_de_droite: "Quelle est la relation entre la richesse matérielle et le bien-être individuel et collectif ?"},
-	{colonne_de_gauche: "Le rêve est-il une échappatoire à la réalité ou une autre forme de conscience ?", colonne_de_droite: "Quel est le rôle du rêve dans notre compréhension de nous-mêmes et du monde ?"},
-	{colonne_de_gauche: "La mode est-elle une forme d'expression personnelle ou un instrument de conformisme social ?", colonne_de_droite: "Comment la mode influence-t-elle notre identité et nos relations sociales ?"},
-	{colonne_de_gauche: "Le rire est-il libérateur ou peut-il être une forme de cruauté ?", colonne_de_droite: "Quelles sont les fonctions sociales et psychologiques du rire et de l'humour ?"},
-	{colonne_de_gauche: "La solitude est-elle une souffrance ou une condition nécessaire à l'épanouissement personnel ?", colonne_de_droite: "Comment la solitude affecte-t-elle notre développement personnel et nos relations aux autres ?"},
-	{colonne_de_gauche: "Le pardon est-il une faiblesse ou une force morale ?", colonne_de_droite: "Quel est le rôle du pardon dans les relations interpersonnelles et la résolution des conflits ?"},
-	{colonne_de_gauche: "La curiosité est-elle un défaut ou une qualité essentielle pour le développement humain ?", colonne_de_droite: "Comment la curiosité contribue-t-elle à l'acquisition de connaissances et à l'évolution personnelle ?"},
-	{colonne_de_gauche: "Le doute est-il un obstacle à la connaissance ou une condition nécessaire au progrès ?", colonne_de_droite: "Quel est le rôle du doute dans la démarche scientifique et philosophique ?"}
+// n°1
+{colonne_de_gauche: "Le sujet maîtrise-t-il ses pensées ou leur échappe-t-il ?", colonne_de_droite: "Le sujet peut-il se connaître lui-même par transparence ?"},
 
-	/* pas de virgule ! */
+// n°2
+{colonne_de_gauche: "La raison fonde-t-elle une morale universelle ou relative ?", colonne_de_droite: "L'universalité morale est-elle possible ?"},
+
+// n°3
+{colonne_de_gauche: "Le langage traduit-il la pensée ou la trahit-il ?", colonne_de_droite: "La pensée existe-t-elle indépendamment du langage ?"},
+
+// n°4
+{colonne_de_gauche: "La vérité est-elle adéquation au réel ou cohérence logique ?", colonne_de_droite: "La vérité peut-elle être définie hors contexte ?"},
+
+// n°5
+{colonne_de_gauche: "La science doit-elle exclure ou inclure la métaphysique ?", colonne_de_droite: "La métaphysique peut-elle être définie une fois pour toutes ?"},
+
+// n°6
+{colonne_de_gauche: "Le bonheur est-il plaisir ou équilibre intérieur profond ?", colonne_de_droite: "Le bonheur est-il un état subjectif mesurable ?"},
+
+// n°7
+{colonne_de_gauche: "La liberté est-elle faire ce qu'on veut ou vouloir ce qu'on fait ?", colonne_de_droite: "La volonté et l'action sont-elles distinctes ?"},
+
+// n°8
+{colonne_de_gauche: "Le devoir moral vient-il de la raison ou des sentiments ?", colonne_de_droite: "Raison et affectivité sont-elles opposées ?"},
+
+// n°9
+{colonne_de_gauche: "L'inconscient a-t-il une structure langagière ou non ?", colonne_de_droite: "L'inconscient est-il accessible à une analyse structurale ?"},
+
+// n°10
+{colonne_de_gauche: "L'art imite-t-il la nature ou exprime-t-il l'émotion ?", colonne_de_droite: "L'art a-t-il nécessairement une fonction ?"},
+
+// n°11
+{colonne_de_gauche: "La technique libère-t-elle ou asservit-elle l'humain ?", colonne_de_droite: "Libération et asservissement sont-ils exclusifs ?"},
+
+// n°12
+{colonne_de_gauche: "Le temps est-il linéaire ou cyclique ?", colonne_de_droite: "Le temps a-t-il une forme indépendante de notre perception ?"},
+
+// n°13
+{colonne_de_gauche: "La conscience animale est-elle semblable ou différente ?", colonne_de_droite: "Peut-on définir la conscience par des critères universels ?"},
+
+// n°14
+{colonne_de_gauche: "La religion est-elle illusion ou vérité révélée ?", colonne_de_droite: "La croyance religieuse relève-t-elle d'une alternative entre erreur et connaissance ?"},
+
+// n°15
+{colonne_de_gauche: "L'histoire a-t-elle un sens ou est-elle chaotique ?", colonne_de_droite: "Le sens de l'histoire est-il nécessairement téléologique ?"},
+
+// n°16
+{colonne_de_gauche: "La justice est-elle donner son dû ou réduire les inégalités ?", colonne_de_droite: "Le dû de chacun peut-il être défini objectivement ?"},
+
+// n°17
+{colonne_de_gauche: "L'État vise-t-il la liberté ou la sécurité des citoyens ?", colonne_de_droite: "Liberté et sécurité peuvent-elles être dissociées ?"},
+
+// n°18
+{colonne_de_gauche: "La mort donne-t-elle un sens à la vie ou la rend absurde ?", colonne_de_droite: "La vie a-t-elle besoin d'un sens transcendant ?"},
+
+// n°19
+{colonne_de_gauche: "La culture nous arrache-t-elle à la nature ou l'accomplit ?", colonne_de_droite: "Nature et culture sont-elles radicalement opposées ?"},
+
+// n°20
+{colonne_de_gauche: "Le travail est-il aliénant ou émancipateur par essence ?", colonne_de_droite: "Le travail possède-t-il une essence définissable ?"},
+
+// n°21
+{colonne_de_gauche: "La beauté est-elle dans l'objet ou dans le regard ?", colonne_de_droite: "Sujet et objet sont-ils séparés ?"},
+
+// n°22
+{colonne_de_gauche: "La liberté d'expression doit-elle être absolue ou limitée ?", colonne_de_droite: "La liberté est-elle un bien absolu antérieur au droit ?"},
+
+// n°23
+{colonne_de_gauche: "L'inconscient détermine-t-il nos choix ou pouvons-nous le maîtriser ?", colonne_de_droite: "L'inconscient est-il une instance causale ?"},
+
+// n°24
+{colonne_de_gauche: "La mondialisation uniformise ou diversifie-t-elle les cultures ?", colonne_de_droite: "Les cultures étaient-elles pures avant la mondialisation ?"},
+
+// n°25
+{colonne_de_gauche: "Le corps est-il une prison pour l'âme ou son expression ?", colonne_de_droite: "Âme et corps sont-ils deux substances distinctes ?"},
+
+// n°26
+{colonne_de_gauche: "La mémoire est-elle fidèle au passé ou inventrice ?", colonne_de_droite: "La vérité est-elle adéquation à un passé figé ?"},
+
+// n°27
+{colonne_de_gauche: "La justice sociale est-elle compatible avec la propriété privée ?", colonne_de_droite: "La justice sociale a-t-elle une définition stabilisée ?"},
+
+// n°28
+{colonne_de_gauche: "L'art contemporain est-il progrès ou décadence esthétique ?", colonne_de_droite: "L'histoire de l'art est-elle linéaire et normative ?"},
+
+// n°29
+{colonne_de_gauche: "La conscience se réduit-elle au cerveau ou lui échappe-t-elle ?", colonne_de_droite: "Faut-il choisir entre matérialisme et dualisme ?"},
+
+// n°30
+{colonne_de_gauche: "La désobéissance civile est-elle un droit ou une révolte dangereuse ?", colonne_de_droite: "L'ordre légal a-t-il une légitimité par défaut ?"},
+
+// n°31
+{colonne_de_gauche: "Le transhumanisme est-il un humanisme ou un reniement de l'humain ?", colonne_de_droite: "L'humain a-t-il une essence fixe ?"},
+
+// n°32
+{colonne_de_gauche: "La tolérance doit-elle tout tolérer, même l'intolérance ?", colonne_de_droite: "La tolérance est-elle un principe absolu ?"},
+
+// n°33
+{colonne_de_gauche: "Le patriotisme est-il vertueux ou est-ce un préjugé étroit ?", colonne_de_droite: "L'attachement collectif se réduit-il à une dimension rationnelle ?"},
+
+// n°34
+{colonne_de_gauche: "La peine de mort est-elle juste ou barbare ?", colonne_de_droite: "La justice doit-elle exclure toute dimension affective ?"},
+
+// n°35
+{colonne_de_gauche: "L'euthanasie est-elle liberté ou violence contre la vie ?", colonne_de_droite: "Autonomie et sacralité de la vie sont-elles en conflit ?"},
+
+// n°36
+{colonne_de_gauche: "La publicité est-elle information ou manipulation des consciences ?", colonne_de_droite: "Existe-t-il une information pure et neutre ?"},
+
+// n°37
+{colonne_de_gauche: "L'argent fait-il le bonheur ou corrompt-il l'âme ?", colonne_de_droite: "Peut-on distinguer un vrai bonheur d'un faux bonheur ?"},
+
+// n°38
+{colonne_de_gauche: "Le rêve est-il échappatoire ou forme réelle de conscience ?", colonne_de_droite: "Le sens est-il nécessairement conscient ?"},
+
+// n°39
+{colonne_de_gauche: "La mode est-elle expression personnelle ou conformisme social ?", colonne_de_droite: "Le moi a-t-il une authenticité à préserver ?"},
+
+// n°40
+{colonne_de_gauche: "Le rire est-il libérateur ou peut-il être cruel ?", colonne_de_droite: "Le rire a-t-il une fonction identifiable ?"},
+
+// n°41
+{colonne_de_gauche: "La solitude est-elle souffrance ou condition d'épanouissement ?", colonne_de_droite: "L'homme est-il naturellement social ?"},
+
+// n°42
+{colonne_de_gauche: "Le pardon est-il oubli ou reconstruction exigeante ?", colonne_de_droite: "Le pardon entretient-il un rapport déterminé à la mémoire ?"},
+
+// n°43
+{colonne_de_gauche: "La curiosité est-elle désir noble ou simple pulsion ?", colonne_de_droite: "Faut-il choisir entre épistémologie empiriste et rationaliste ?"},
+
+// n°44
+{colonne_de_gauche: "Le doute est-il faiblesse ou force pour la connaissance ?", colonne_de_droite: "Le doute n'est-il qu'un instrument au service de la vérité ?"},
+
+// n°45
+{colonne_de_gauche: "La technique rend-elle l'homme plus humain ou moins humain ?", colonne_de_droite: "Existe-t-il une nature humaine fixe ?"},
+
+// n°46
+{colonne_de_gauche: "L'amour est-il sentiment irréductible ou choix délibéré ?", colonne_de_droite: "Sentiment et volonté sont-ils radicalement distincts ?"},
+
+// n°47
+{colonne_de_gauche: "La philosophie est-elle utile dans la vie ou gratuite ?", colonne_de_droite: "L'utilité se réduit-elle à une dimension pratique immédiate ?"},
+
+// n°48
+{colonne_de_gauche: "La vérité scientifique est-elle définitive ou provisoire ?", colonne_de_droite: "La science progresse-t-elle par cumul ou par révision ?"},
+
+// n°49
+{colonne_de_gauche: "L'éducation forme-t-elle des citoyens dociles ou émancipés ?", colonne_de_droite: "Intérêt privé et bien commun sont-ils opposés ?"},
+
+// n°50
+{colonne_de_gauche: "La démocratie est-elle règne de l'opinion ou de la raison ?", colonne_de_droite: "L'opinion est-elle par nature irrationnelle ?"},
+
+// n°51
+{colonne_de_gauche: "La raison est-elle innée ou acquise par l'éducation ?", colonne_de_droite: "Faut-il trancher entre innéisme et empirisme ?"},
+
+// n°52
+{colonne_de_gauche: "La Nature est-elle indifférente ou bienveillante envers nous ?", colonne_de_droite: "Ne projette-t-on pas des traits humains sur la Nature ?"},
+
+// n°53
+{colonne_de_gauche: "Le libre arbitre est-il compatible avec le déterminisme ?", colonne_de_droite: "La notion de cause a-t-elle été clairement définie ?"},
+
+// n°54
+{colonne_de_gauche: "L'identité personnelle est-elle continue ou fragmentaire ?", colonne_de_droite: "La mémoire est-elle le critère pertinent de l'identité ?"},
+
+// n°55
+{colonne_de_gauche: "La souffrance a-t-elle un sens caché ou est-elle absurde ?", colonne_de_droite: "La douleur a-t-elle besoin d'être légitimée par un récit ?"},
+
+// n°56
+{colonne_de_gauche: "Le rire est-il propre à l'humain ou partagé avec l'animal ?", colonne_de_droite: "L'humain a-t-il une essence propre ?"},
+
+// n°57
+{colonne_de_gauche: "La croyance est-elle un moindre savoir ou un mode légitime ?", colonne_de_droite: "Connaissance et croyance sont-elles hiérarchisées ?"},
+
+// n°58
+{colonne_de_gauche: "La justice est-elle conventionnelle ou fondée sur la nature ?", colonne_de_droite: "Existe-t-il un ordre naturel des valeurs ?"},
+
+// n°59
+{colonne_de_gauche: "Le progrès technique est-il réversible ou définitif ?", colonne_de_droite: "Le progrès est-il nécessairement cumulatif ?"},
+
+// n°60
+{colonne_de_gauche: "La beauté naturelle est-elle supérieure à l'artificielle ?", colonne_de_droite: "Nature et culture sont-elles hiérarchisées ?"},
+
+// n°61
+{colonne_de_gauche: "Le désir est-il manque ou puissance de création ?", colonne_de_droite: "Faut-il adopter la philosophie platonicienne du désir ?"},
+
+// n°62
+{colonne_de_gauche: "La conscience de soi vient-elle de soi ou du regard d'autrui ?", colonne_de_droite: "Le sujet naît-il de lui-même ou du rapport à autrui ?"},
+
+// n°63
+{colonne_de_gauche: "L'écriture pense-t-elle à notre place ou est-ce un outil ?", colonne_de_droite: "La pensée peut-elle être externalisée dans des signes ?"},
+
+// n°64
+{colonne_de_gauche: "La violence est-elle toujours illégitime ou parfois juste ?", colonne_de_droite: "La légitimité se réduit-elle à la légalité étatique ?"},
+
+// n°65
+{colonne_de_gauche: "L'inconscient est-il discours de l'Autre ou pure pulsion ?", colonne_de_droite: "Le sujet est-il structuré par le langage ?"},
+
+// n°66
+{colonne_de_gauche: "La démocratie directe est-elle plus légitime que la représentative ?", colonne_de_droite: "La légitimité dépend-elle de la proximité entre gouvernants et gouvernés ?"},
+
+// n°67
+{colonne_de_gauche: "La mémoire collective est-elle apaisante ou source de conflits ?", colonne_de_droite: "La mémoire a-t-elle une fonction sociale univoque ?"},
+
+// n°68
+{colonne_de_gauche: "L'art doit-il plaire ou instruire et élever l'esprit ?", colonne_de_droite: "Le sensible et l'intelligible sont-ils séparés ?"},
+
+// n°69
+{colonne_de_gauche: "L'opinion est-elle ennemie ou point de départ de la vérité ?", colonne_de_droite: "La connaissance est-elle l'affaire d'une élite ?"},
+
+// n°70
+{colonne_de_gauche: "Le fantasme a-t-il une fonction adaptative ou est-il pathologique ?", colonne_de_droite: "Existe-t-il une norme psychique de santé ?"},
+
+// n°71
+{colonne_de_gauche: "L'égalité est-elle une fin ou un moyen pour d'autres valeurs ?", colonne_de_droite: "L'égalité peut-elle être instrumentalisée ?"},
+
+// n°72
+{colonne_de_gauche: "Le sacré est-il une construction sociale ou une expérience universelle ?", colonne_de_droite: "Le transcendant et l'immanent sont-ils opposés ?"},
+
+// n°73
+{colonne_de_gauche: "La raison calcule-t-elle ou comprend-elle profondément ?", colonne_de_droite: "Raison instrumentale et raison herméneutique sont-elles ennemies ?"},
+
+// n°74
+{colonne_de_gauche: "L'humain est-il perfectible ou limité par sa condition ?", colonne_de_droite: "L'histoire a-t-elle une direction ?"},
+
+// n°75
+{colonne_de_gauche: "Le génie est-il un don inné ou le fruit du travail ?", colonne_de_droite: "La créativité s'explique-t-elle ?"},
+
+// n°76
+{colonne_de_gauche: "La propagande est-elle violence symbolique ou simple persuasion ?", colonne_de_droite: "La violence inclut-elle le symbolique ?"},
+
+// n°77
+{colonne_de_gauche: "L'ennui est-il faiblesse d'imagination ou lucidité sur le vide ?", colonne_de_droite: "L'homme est-il naturellement tourné vers l'action ?"},
+
+// n°78
+{colonne_de_gauche: "Le rire est-il une arme blessante ou un divertissement ?", colonne_de_droite: "Le langage a-t-il un pouvoir performatif ?"},
+
+// n°79
+{colonne_de_gauche: "L'indifférence est-elle mépris ou absence de jugement ?", colonne_de_droite: "L'absence de réponse vaut-elle toujours jugement implicite ?"},
+
+// n°80
+{colonne_de_gauche: "La règle libère-t-elle ou contraint-elle notre action ?", colonne_de_droite: "Contrainte et liberté sont-elles exclusives ?"},
+
+// n°81
+{colonne_de_gauche: "La responsabilité morale est-elle individuelle ou collective ?", colonne_de_droite: "L'agent moral est-il l'individu seul ou le groupe ?"},
+
+// n°82
+{colonne_de_gauche: "Le silence est-il une parole muette ou l'absence de sens ?", colonne_de_droite: "Le langage se réduit-il à la parole explicite ?"},
+
+// n°83
+{colonne_de_gauche: "L'échec est-il une ressource ou une humiliation à éviter ?", colonne_de_droite: "L'échec a-t-il une valeur ?"},
+
+// n°84
+{colonne_de_gauche: "La parole engage-t-elle toujours son auteur ou peut-elle n'être qu'un bruit ?", colonne_de_droite: "Dire, est-ce toujours agir ?"},
+
+// n°85
+{colonne_de_gauche: "Le progrès scientifique garantit-il le bonheur ou nous rend-il plus malheureux ?", colonne_de_droite: "La science peut-elle répondre à toutes les attentes humaines ?"},
+
+// n°86
+{colonne_de_gauche: "La raison comprend-elle l'expérience religieuse ou lui échappe-t-elle ?", colonne_de_droite: "Le religieux est-il réductible à des croyances rationnelles ?"},
+
+// n°87
+{colonne_de_gauche: "La liberté de conscience doit-elle être absolue ou limitée socialement ?", colonne_de_droite: "Les convictions intimes échappent-elles à toute limite sociale ?"},
+
+// n°88
+{colonne_de_gauche: "L'éducation émancipe-t-elle ou aliène-t-elle l'individu ?", colonne_de_droite: "Toute transmission de savoir est-elle libératrice ?"},
+
+// n°89
+{colonne_de_gauche: "Le numérique nous rapproche-t-il ou nous éloigne-t-il des autres ?", colonne_de_droite: "La présence virtuelle est-elle une forme de présence authentique ?"},
+
+// n°90
+{colonne_de_gauche: "Le juste est-il ce que la loi dit ou ce qu'exige la raison morale ?", colonne_de_droite: "La loi positive épuise-t-elle l'idée de justice ?"},
+
+// n°91
+{colonne_de_gauche: "La tradition est-elle un frein au progrès ou une condition de stabilité ?", colonne_de_droite: "Le changement a-t-il toujours une valeur positive ?"},
+
+// n°92
+{colonne_de_gauche: "La beauté artistique est-elle affaire de goût ou jugement universel ?", colonne_de_droite: "Le goût personnel peut-il prétendre à l'universalité ?"},
+
+// n°93
+{colonne_de_gauche: "L'humain peut-il échapper à la croyance ou doit-il toujours croire ?", colonne_de_droite: "La raison pure suffit-elle à guider l'existence ?"},
+
+// n°94
+{colonne_de_gauche: "Le pouvoir est-il corrupteur ou peut-on rester vertueux ?", colonne_de_droite: "La vertu est-elle compatible avec l'exercice du pouvoir ?"},
+
+// n°95
+{colonne_de_gauche: "La laïcité est-elle neutralité bienveillante ou hostilité au religieux ?", colonne_de_droite: "L'État peut-il être véritablement neutre sur le plan spirituel ?"},
+
+// n°96
+{colonne_de_gauche: "L'empathie suffit-elle à fonder la morale ou faut-il des principes ?", colonne_de_droite: "Les sentiments moraux peuvent-ils se passer de la raison ?"},
+
+// n°97
+{colonne_de_gauche: "Le devoir est-il expression de la liberté ou renoncement à elle ?", colonne_de_droite: "Autonomie et obéissance sont-elles conciliables ?"},
+
+// n°98
+{colonne_de_gauche: "L'inconscient nous parle-t-il ou n'est-ce qu'une métaphore ?", colonne_de_droite: "L'inconscient a-t-il une réalité positive ?"},
+
+// n°99
+{colonne_de_gauche: "Le travail est-il contrainte ou activité épanouissante pour l'humain ?", colonne_de_droite: "L'épanouissement par le travail suppose-t-il sa suppression ?"},
+
+// n°100
+{colonne_de_gauche: "L'artiste crée-t-il à partir de rien ou interprète-t-il la tradition ?", colonne_de_droite: "La création artistique relève-t-elle de l'invention absolue ?"}
+/* pas de virgule ! */
 ];
 
 window.settings = {
