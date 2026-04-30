@@ -138,6 +138,24 @@
 			transition: all 0.3s ease;
 		}
 
+		/* Animation pour les boutons fullscreen */
+		.fullscreen-icon, .fullscreen-exit-icon {
+			transform-origin: center;
+			transition: transform 0.3s ease;
+		}
+
+		/* En mode normal (entrée en plein écran) : agrandissement au survol */
+		.btn.fullscreen:not(.fullscreen-active):hover .fullscreen-icon,
+		.toolbar-btn.fullscreen:not(.fullscreen-active):hover svg:not(.fullscreen-exit-icon) {
+			transform: scale(1.3);
+		}
+
+		/* En mode plein écran (sortie) : diminution au survol */
+		.btn.fullscreen.fullscreen-active:hover .fullscreen-exit-icon,
+		.toolbar-btn.fullscreen.fullscreen-active:hover .fullscreen-exit-icon {
+			transform: scale(0.7);
+		}
+
 		:root {
 			--bg: #f0f0f0;
 			--btn: #e0e0e0;
@@ -344,9 +362,6 @@
 		.toolbar-btn svg {
 			width: 28px;
 			height: 28px;
-			fill: none;
-			stroke: currentColor;
-			stroke-width: 2;
 			display: block;
 			margin: 0 auto;
 		}
@@ -849,6 +864,11 @@
 			border-collapse: separate;
 			border-spacing: 0.5rem;
 		}
+		
+		td {
+			padding: 8px 4px;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+		}
 
 		#repereTable td,
 		#definitionTable td {
@@ -1133,10 +1153,10 @@
 				</div>
 			</button>
 			<button class="toolbar-btn reload-btn" id="reloadButton" data-title="recharger (R)">
-				<svg viewBox="0 0 25 25">
-					<polyline points="23 4 23 10 17 10" />
-					<polyline points="1 20 1 14 7 14" />
-					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+				<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<polyline points="23 4 23 10 17 10"></polyline>
+					<polyline points="1 20 1 14 7 14"></polyline>
+					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
 				</svg>
 			</button>
 		</div>
@@ -1149,8 +1169,7 @@
 		</div>
 		<div class="toolbar-right">
 			<button class="toolbar-btn fullscreen" id="fullscreenButton" data-title="plein écran (F)">
-				<svg class="fullscreen-enter-icon" width="28" height="28" viewBox="0 0 24 24" fill="none"
-					stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+				<svg class="fullscreen-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
 					<line x1="4" y1="5" x2="10" y2="5" />
 					<line x1="5" y1="6" x2="5" y2="10" />
 					<line x1="14" y1="5" x2="20" y2="5" />
@@ -1159,17 +1178,6 @@
 					<line x1="6" y1="19" x2="10" y2="19" />
 					<line x1="14" y1="19" x2="20" y2="19" />
 					<line x1="19" y1="14" x2="19" y2="18" />
-				</svg>
-				<svg class="fullscreen-exit-icon" width="28" height="28" viewBox="0 0 24 24" fill="none"
-					stroke="currentColor" stroke-width="2" style="display:none">
-					<line x1="3" y1="10" x2="10" y2="10" />
-					<line x1="9" y1="4" x2="9" y2="11" />
-					<line x1="14" y1="10" x2="21" y2="10" />
-					<line x1="15" y1="4" x2="15" y2="10" />
-					<line x1="3" y1="15.5" x2="10" y2="15.5" />
-					<line x1="9" y1="15" x2="9" y2="21" />
-					<line x1="14" y1="15.5" x2="21" y2="15.5" />
-					<line x1="15" y1="15" x2="15" y2="21" />
 				</svg>
 			</button>
 			<button class="toolbar-btn menu-btn" id="menuButton" data-title="menu (M)">
@@ -1198,8 +1206,7 @@
 				</svg>
 			</button>
 			<button class="toolbar-btn fullscreen" id="fullscreenButtonMobile" data-title="plein écran (F)">
-				<svg class="fullscreen-enter-icon" width="28" height="28" viewBox="0 0 24 24" fill="none"
-					stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+				<svg class="fullscreen-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
 					<line x1="4" y1="5" x2="10" y2="5" />
 					<line x1="5" y1="6" x2="5" y2="10" />
 					<line x1="14" y1="5" x2="20" y2="5" />
@@ -1208,17 +1215,6 @@
 					<line x1="6" y1="19" x2="10" y2="19" />
 					<line x1="14" y1="19" x2="20" y2="19" />
 					<line x1="19" y1="14" x2="19" y2="18" />
-				</svg>
-				<svg class="fullscreen-exit-icon" width="28" height="28" viewBox="0 0 24 24" fill="none"
-					stroke="currentColor" stroke-width="2" style="display:none">
-					<line x1="3" y1="10" x2="10" y2="10" />
-					<line x1="9" y1="4" x2="9" y2="11" />
-					<line x1="14" y1="10" x2="21" y2="10" />
-					<line x1="15" y1="4" x2="15" y2="10" />
-					<line x1="3" y1="15.5" x2="10" y2="15.5" />
-					<line x1="9" y1="15" x2="9" y2="21" />
-					<line x1="14" y1="15.5" x2="21" y2="15.5" />
-					<line x1="15" y1="15" x2="15" y2="21" />
 				</svg>
 			</button>
 			<button class="toolbar-btn menu-btn" id="menuButtonMobile" data-title="menu (M)">
@@ -1382,29 +1378,28 @@
 			<table style="width:100%">
 				<tr>
 					<th><kbd>ctrl</kbd> <kbd>H</kbd><br><kbd>accueil</kbd></th>
-					<td>renvoi au site académique</th>
+					<td>renvoi au site académique</td>
 				</tr>
 				<tr>
 					<th><kbd>ctrl</kbd> <kbd>R</kbd><br><kbd>recharger</kbd></th>
-					<td>recharger la page / nouvelle partie</th>
+					<td>recharger la page / nouvelle partie</td>
 				</tr>
 				<tr>
 					<th><kbd>ctrl</kbd> <kbd>F</kbd><br><kbd>plein écran</kbd></th>
-					<td>entrer / sortir du plein écran</th>
+					<td>entrer / sortir du plein écran</td>
 				</tr>
 				<tr>
 					<th><kbd>ctrl</kbd> <kbd>M</kbd><br><kbd>menu</kbd></th>
-					<td>ouvrir / fermer le menu</th>
+					<td>ouvrir / fermer le menu</td>
 				</tr>
 				<tr>
 					<th><kbd>Suppr</kbd></th>
-					<td>supprimer le lien sélectionné</th>
+					<td>supprimer le lien sélectionné</td>
 				</tr>
 				<tr>
 					<th><kbd>ESC</kbd></th>
-					<td>fermer</th>
+					<td>fermer</td>
 				</tr>
-				 
 			</table>
 		</div>
 	</div>
@@ -1417,7 +1412,7 @@
 				</svg></button></div>
 		<div class="submenu-title">à propos</div>
 		<div class="settings-info">
-			<p>application « apparier » développée par Daniel Boulagnon</p><br>
+			<p>application développée par Daniel Boulagnon</p><br>
 			<p><i class="fas fa-envelope"></i> daniel.boulagnon@ac-lille.fr</p><br>
 			<p>exploitation à but pédagogique et non commercial</p><br>
 			<p>© 2026 – version 2.6.0</p>
@@ -2184,21 +2179,76 @@
 			document.querySelectorAll('#homeBtnDesktop, #homeBtnMobile').forEach(b => b.addEventListener('click', () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank')));
 			document.querySelectorAll('#reloadButton, #reloadButtonMobile').forEach(b => b.addEventListener('click', reload));
 
+			// Fonction toggleFullscreen
 			function toggleFullscreen() {
 				const btns = document.querySelectorAll('.fullscreen');
 				if (!document.fullscreenElement) {
 					document.documentElement.requestFullscreen();
-					btns.forEach(b => { b.querySelector('.fullscreen-enter-icon').style.display = 'none'; b.querySelector('.fullscreen-exit-icon').style.display = 'block'; b.setAttribute('data-title', 'quitter plein écran (F)'); });
+					btns.forEach(btn => {
+						btn.classList.add('fullscreen-active');
+						const svg = btn.querySelector('svg');
+						if (svg) {
+							// SVG de sortie du plein écran (flèches pleines vers l'intérieur)
+							svg.innerHTML = `<svg class="fullscreen-exit-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" style="display: block; margin: 0 auto;">
+							  <line x1="9" y1="9" x2="9" y2="3"></line><line x1="3" y1="9" x2="9" y2="9"></line>
+							  <line x1="15" y1="9" x2="21" y2="9"></line><line x1="15" y1="3" x2="15" y2="9"></line>
+							  <line x1="9" y1="15" x2="9" y2="21"></line><line x1="3" y1="15" x2="9" y2="15"></line>
+							  <line x1="21" y1="15" x2="15" y2="15"></line><line x1="15" y1="15" x2="15" y2="21"></line>
+							</svg>`;}
+						btn.setAttribute('data-title', 'quitter plein écran (F)');
+					});
 				} else {
 					document.exitFullscreen();
-					btns.forEach(b => { b.querySelector('.fullscreen-enter-icon').style.display = 'block'; b.querySelector('.fullscreen-exit-icon').style.display = 'none'; b.setAttribute('data-title', 'plein écran (F)'); });
+					btns.forEach(btn => {
+						btn.classList.remove('fullscreen-active');
+						const svg = btn.querySelector('svg');
+						if (svg) {
+							// SVG d'entrée en plein écran (lignes vers l'extérieur)
+							svg.innerHTML = `<line x1="4" y1="5" x2="10" y2="5" /><line x1="5" y1="6" x2="5" y2="10" /><line x1="14" y1="5" x2="20" y2="5" /><line x1="19" y1="6" x2="19" y2="10" /><line x1="5" y1="14" x2="5" y2="20" /><line x1="6" y1="19" x2="10" y2="19" /><line x1="14" y1="19" x2="20" y2="19" /><line x1="19" y1="14" x2="19" y2="18" />`;
+							svg.setAttribute('fill', 'none');
+							svg.setAttribute('stroke', 'currentColor');
+							svg.setAttribute('stroke-width', '2');
+							svg.setAttribute('viewBox', '0 0 24 24');
+						}
+						btn.setAttribute('data-title', 'plein écran (F)');
+					});
 				}
 			}
+
 			document.querySelectorAll('#fullscreenButton, #fullscreenButtonMobile').forEach(b => b.addEventListener('click', toggleFullscreen));
+			
 			document.addEventListener('fullscreenchange', () => {
 				const btns = document.querySelectorAll('.fullscreen');
 				const fs = !!document.fullscreenElement;
-				btns.forEach(b => { b.querySelector('.fullscreen-enter-icon').style.display = fs ? 'none' : 'block'; b.querySelector('.fullscreen-exit-icon').style.display = fs ? 'block' : 'none'; b.setAttribute('data-title', fs ? 'quitter plein écran (F)' : 'plein écran (F)'); });
+				btns.forEach(btn => {
+					if (fs) {
+						btn.classList.add('fullscreen-active');
+						const svg = btn.querySelector('svg');
+						if (svg) {
+							// SVG de sortie du plein écran (flèches pleines vers l'intérieur)
+							svg.innerHTML = `<svg class="fullscreen-exit-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" style="display: block; margin: 0 auto;">
+							<line x1="9" y1="9" x2="9" y2="3"></line><line x1="3" y1="9" x2="9" y2="9"></line>
+							<line x1="15" y1="9" x2="21" y2="9"></line><line x1="15" y1="3" x2="15" y2="9"></line>
+							<line x1="9" y1="15" x2="9" y2="21"></line><line x1="3" y1="15" x2="9" y2="15"></line>
+							<line x1="21" y1="15" x2="15" y2="15"></line><line x1="15" y1="15" x2="15" y2="21"></line>
+							</svg>`;
+							svg.setAttribute('fill', 'currentColor');
+							svg.removeAttribute('stroke');
+						}
+						btn.setAttribute('data-title', 'quitter plein écran (F)');
+					} else {
+						btn.classList.remove('fullscreen-active');
+						const svg = btn.querySelector('svg');
+						if (svg) {
+							// SVG d'entrée en plein écran (lignes vers l'extérieur)
+							svg.innerHTML = `<line x1="4" y1="5" x2="10" y2="5" /><line x1="5" y1="6" x2="5" y2="10" /><line x1="14" y1="5" x2="20" y2="5" /><line x1="19" y1="6" x2="19" y2="10" /><line x1="5" y1="14" x2="5" y2="20" /><line x1="6" y1="19" x2="10" y2="19" /><line x1="14" y1="19" x2="20" y2="19" /><line x1="19" y1="14" x2="19" y2="18" />`;
+							svg.setAttribute('fill', 'none');
+							svg.setAttribute('stroke', 'currentColor');
+							svg.setAttribute('stroke-width', '2');
+						}
+						btn.setAttribute('data-title', 'plein écran (F)');
+					}
+				});
 			});
 
 			document.addEventListener('keydown', e => {
