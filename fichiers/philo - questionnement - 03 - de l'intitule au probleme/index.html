@@ -139,7 +139,8 @@
 		}
 
 		/* Animation pour les boutons fullscreen */
-		.fullscreen-icon, .fullscreen-exit-icon {
+		.fullscreen-icon,
+		.fullscreen-exit-icon {
 			transform-origin: center;
 			transition: transform 0.3s ease;
 		}
@@ -864,7 +865,7 @@
 			border-collapse: separate;
 			border-spacing: 0.5rem;
 		}
-		
+
 		td {
 			padding: 8px 4px;
 			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -1153,7 +1154,8 @@
 				</div>
 			</button>
 			<button class="toolbar-btn reload-btn" id="reloadButton" data-title="recharger (R)">
-				<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="round" stroke-linejoin="round">
 					<polyline points="23 4 23 10 17 10"></polyline>
 					<polyline points="1 20 1 14 7 14"></polyline>
 					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
@@ -1169,7 +1171,8 @@
 		</div>
 		<div class="toolbar-right">
 			<button class="toolbar-btn fullscreen" id="fullscreenButton" data-title="plein écran (F)">
-				<svg class="fullscreen-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+				<svg class="fullscreen-icon" width="28" height="28" viewBox="0 0 24 24" fill="none"
+					stroke="currentColor" stroke-width="2" stroke-linecap="butt">
 					<line x1="4" y1="5" x2="10" y2="5" />
 					<line x1="5" y1="6" x2="5" y2="10" />
 					<line x1="14" y1="5" x2="20" y2="5" />
@@ -1206,7 +1209,8 @@
 				</svg>
 			</button>
 			<button class="toolbar-btn fullscreen" id="fullscreenButtonMobile" data-title="plein écran (F)">
-				<svg class="fullscreen-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+				<svg class="fullscreen-icon" width="28" height="28" viewBox="0 0 24 24" fill="none"
+					stroke="currentColor" stroke-width="2" stroke-linecap="butt">
 					<line x1="4" y1="5" x2="10" y2="5" />
 					<line x1="5" y1="6" x2="5" y2="10" />
 					<line x1="14" y1="5" x2="20" y2="5" />
@@ -2189,12 +2193,13 @@
 						const svg = btn.querySelector('svg');
 						if (svg) {
 							// SVG de sortie du plein écran (flèches pleines vers l'intérieur)
-							svg.innerHTML = `<svg class="fullscreen-exit-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" style="display: block; margin: 0 auto;">
-							  <line x1="9" y1="9" x2="9" y2="3"></line><line x1="3" y1="9" x2="9" y2="9"></line>
-							  <line x1="15" y1="9" x2="21" y2="9"></line><line x1="15" y1="3" x2="15" y2="9"></line>
-							  <line x1="9" y1="15" x2="9" y2="21"></line><line x1="3" y1="15" x2="9" y2="15"></line>
-							  <line x1="21" y1="15" x2="15" y2="15"></line><line x1="15" y1="15" x2="15" y2="21"></line>
-							</svg>`;}
+							svg.innerHTML = `<svg class="fullscreen-exit-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" style="display: block; margin: 0 auto;">
+								<line x1="9" y1="9" x2="9" y2="3"></line><line x1="3" y1="9" x2="9" y2="9"></line>
+								<line x1="15" y1="9" x2="21" y2="9"></line><line x1="15" y1="3" x2="15" y2="9"></line>
+								<line x1="9" y1="15" x2="9" y2="21"></line><line x1="3" y1="15" x2="9" y2="15"></line>
+								<line x1="21" y1="15" x2="15" y2="15"></line><line x1="15" y1="15" x2="15" y2="21"></line>
+							</svg>`;
+						}
 						btn.setAttribute('data-title', 'quitter plein écran (F)');
 					});
 				} else {
@@ -2216,7 +2221,7 @@
 			}
 
 			document.querySelectorAll('#fullscreenButton, #fullscreenButtonMobile').forEach(b => b.addEventListener('click', toggleFullscreen));
-			
+
 			document.addEventListener('fullscreenchange', () => {
 				const btns = document.querySelectorAll('.fullscreen');
 				const fs = !!document.fullscreenElement;
@@ -2226,7 +2231,7 @@
 						const svg = btn.querySelector('svg');
 						if (svg) {
 							// SVG de sortie du plein écran (flèches pleines vers l'intérieur)
-							svg.innerHTML = `<svg class="fullscreen-exit-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" style="display: block; margin: 0 auto;">
+							svg.innerHTML = `<svg class="fullscreen-exit-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" style="display: block; margin: 0 auto;">
 							<line x1="9" y1="9" x2="9" y2="3"></line><line x1="3" y1="9" x2="9" y2="9"></line>
 							<line x1="15" y1="9" x2="21" y2="9"></line><line x1="15" y1="3" x2="15" y2="9"></line>
 							<line x1="9" y1="15" x2="9" y2="21"></line><line x1="3" y1="15" x2="9" y2="15"></line>
