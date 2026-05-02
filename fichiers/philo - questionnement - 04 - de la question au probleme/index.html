@@ -66,12 +66,10 @@
 			animation: tourne360 2s infinite linear;
 		}
 
-		/* RELOAD : rotation 360° */
 		body:not(.no-animations) .reload-btn:hover svg {
 			animation: rotate 1s linear;
 		}
 
-		/* MENU : rotation 90° avec transition */
 		.menu-btn svg {
 			transition: transform 0.3s ease;
 		}
@@ -202,6 +200,7 @@
 			background-color: #2d2d2d;
 			color: #ffffff;
 			box-shadow: 0.3rem 0.3rem 0.6rem #000000, -0.3rem -0.3rem 0.6rem #4a4a4a;
+			border-bottom: none;
 		}
 
 		body.dark-mode #repereTable td.selected,
@@ -845,6 +844,15 @@
 			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 		}
 
+		/* Styles spécifiques pour le tableau des raccourcis clavier - lignes plus foncées en mode clair */
+		#submenuShortcuts td {
+			border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+		}
+
+		body.dark-mode #submenuShortcuts td {
+			border-bottom-color: rgba(255, 255, 255, 0.25);
+		}
+
 		#repereTable td,
 		#definitionTable td {
 			border-radius: 0.5rem;
@@ -861,6 +869,7 @@
 			line-height: 1.2;
 			display: table-cell;
 			vertical-align: middle;
+			border-bottom: none;
 		}
 
 		#repereTable tr,
@@ -1390,7 +1399,8 @@
 					<th><kbd>ESC</kbd></th>
 					<td>fermer</td>
 				</tr>
-			</table>
+			
+	
 		</div>
 	</div>
 
