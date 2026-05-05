@@ -586,6 +586,39 @@ td {
 	font-weight: bold;
 	font-size: 1.1em;
 }
+/* Titres des colonnes centrés */
+.dropzone strong {
+	text-align: center;
+	display: block;
+	width: 100%;
+}
+/* Style desktop : étiquettes pleine largeur et hauteur fixe pour 2 lignes, police normale */
+@media (min-width: 769px) {
+	.dropzone .draggable {
+		width: calc(100% - 20px);
+		max-width: 100%;
+		box-sizing: border-box;
+		text-align: center;
+		min-height: 3.2rem;
+		height: auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1.3;
+		padding: 0.6rem 1rem;
+		margin: 0 auto;
+		word-break: break-word;
+		font-weight: normal;
+	}
+	.dropzone {
+		align-items: stretch;
+	}
+	.dropzone .draggable {
+		width: 100%;
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
 .draggable {
 	padding: 10px 16px;
 	background: #d1d1d1;
@@ -595,6 +628,7 @@ td {
 	user-select: none;
 	width: fit-content;
 	position: relative;
+	font-weight: normal;
 }
 .draggable:active { cursor: grabbing; }
 .draggable.dragging { opacity: 0.5; }
@@ -710,6 +744,10 @@ body.colorblind-mode .draggable.incorrect::after {
 	}
 	
 	.dropzone { min-height: 260px; }
+	/* Mobile : police normale aussi */
+	.draggable {
+		font-weight: normal;
+	}
 }
 
 @keyframes tourne360 {
@@ -871,7 +909,7 @@ body.colorblind-mode .draggable.incorrect::after {
 <div class="submenu" id="submenuInstructions">
 	<div class="menu-header"><button class="submenu-close" data-submenu="presentation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
 	<div class="submenu-title">présentation</div>
-	<div class="settings-info"><i class="fas fa-bullseye"></i> <strong>objectif</strong><br><br>classer par glisser-déposer des exemples dans la bonne catégorie</div>
+	<div class="settings-info"><i class="fas fa-bullseye"></i> <strong>objectif</strong><br><br>classer par glisser-déposer les exemples sous le bon repère</div>
 	<div class="settings-info"><i class="fas fa-bars"></i> <strong>options</strong><br><br>modes sombre, daltonien, animations</div>
 	<div class="settings-info"><i class="fas fa-chart-line"></i> <strong>statistiques</strong><br><br>score cumulé sauvegardé automatiquement</div>
 </div>
@@ -898,10 +936,10 @@ body.colorblind-mode .draggable.incorrect::after {
 	<div class="toggle-container"><span class="toggle-label"><i class="fas fa-palette"></i>mode daltonien</span><label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label></div>
 			<div class="pairs-slider-container">
 				<div class="pairs-slider-label"><span><i class="fas fa-layer-group"></i> nombre de paires</span><span
-						class="pairs-slider-value" id="pairsCountValue">5</span></div>
-				<input type="range" id="pairsCountSlider" min="3" max="12" step="1" value="5">
+						class="pairs-slider-value" id="pairsCountValue">3</span></div>
+				<input type="range" id="pairsCountSlider" min="1" max="5" step="1" value="3">
 				<div class="slider-graduations">
-					<span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+					<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
 				</div>
 			</div>
 </div>
@@ -909,12 +947,12 @@ body.colorblind-mode .draggable.incorrect::after {
 <div class="submenu" id="submenuShortcuts">
 	<div class="menu-header"><button class="submenu-close" data-submenu="shortcuts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg></button></div>
 	<div class="submenu-title">raccourcis clavier</div>
-	<div class="settings-info"><table style="width:100%"><tr><th><kbd>ctrl</kbd> <kbd>H</kbd></th><td>renvoi au site académique</td></tr>
+	<div class="settings-info"><table style="width:100%"><tr><th><kbd>ctrl</kbd> <kbd>H</kbd></th><td>renvoi au site académique</td><tr>
 					<tr><th><kbd>ctrl</kbd> <kbd>R</kbd></th><td>recharger / nouvelle partie</td></tr>
 					<tr><th><kbd>ctrl</kbd> <kbd>F</kbd></th><td>plein écran</td></tr>
 					<tr><th><kbd>ctrl</kbd> <kbd>M</kbd></th><td>ouvrir / fermer le menu</td></tr>
 					<tr><th><kbd>ESC</kbd></th><td>fermer</td></tr>
-				</table></div>
+				8杉</div>
 </div>
 
 <div class="submenu" id="submenuAbout">
@@ -964,7 +1002,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	let correctCount = 0, totalCount = 0, gamesPlayed = parseInt(localStorage.getItem('gamesPlayed_classer') || '0');
 	let darkMode = false, colorblindMode = false, animationsEnabled = true;
 	let currentCategorySet = null;
-	let currentPairsCount = 5; // Nombre de paires (éléments à classer)
+	let currentPairsCount = 3; // Nombre de paires (éléments à classer) - valeur par défaut 3
 	
 	// Définir le titre et sous-titre
 	const title = "distinguer les repères par l'exemple";
@@ -1035,9 +1073,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	function loadPairsCount() {
 		const saved = localStorage.getItem('classerPairsCount');
 		if (saved !== null) {
-			currentPairsCount = Math.max(3, Math.min(12, parseInt(saved, 10)));
+			currentPairsCount = Math.max(1, Math.min(5, parseInt(saved, 10)));
 		} else {
-			currentPairsCount = 5;
+			currentPairsCount = 3;
 		}
 		document.getElementById('pairsCountSlider').value = currentPairsCount;
 		document.getElementById('pairsCountValue').textContent = currentPairsCount;
