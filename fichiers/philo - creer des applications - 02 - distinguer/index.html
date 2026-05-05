@@ -636,12 +636,21 @@ body.colorblind-mode .draggable.incorrect::after {
 }
 .button:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* MOBILE */
+/* ============================================ */
+/* MOBILE - VERSION CORRIGÉE                   */
+/* ============================================ */
 .toolbar-mobile { display: none; }
+
+/* Par défaut (desktop) : le wrapper mobile est CACHÉ */
 .mobile-title-wrapper { display: none; }
+
 @media (max-width: 768px) {
 	body { padding: 10px; }
+	
+	/* Desktop toolbar cachée */
 	.toolbar-desktop { display: none !important; }
+	
+	/* Mobile toolbar affichée */
 	.toolbar-mobile {
 		display: flex !important;
 		flex-direction: column !important;
@@ -651,6 +660,7 @@ body.colorblind-mode .draggable.incorrect::after {
 		margin-bottom: 5px !important;
 		background: var(--bg);
 	}
+	
 	.mobile-buttons-container {
 		display: flex !important;
 		flex-direction: row !important;
@@ -660,6 +670,8 @@ body.colorblind-mode .draggable.incorrect::after {
 		gap: 15px !important;
 		margin-bottom: 5px !important;
 	}
+	
+	/* Wrapper mobile : affiché sur mobile uniquement */
 	.mobile-title-wrapper {
 		display: flex !important;
 		flex-direction: column;
@@ -667,6 +679,7 @@ body.colorblind-mode .draggable.incorrect::after {
 		width: 100%;
 		margin: 10px 0;
 	}
+	
 	.mobile-title {
 		margin: 0;
 		padding: 0;
@@ -677,6 +690,7 @@ body.colorblind-mode .draggable.incorrect::after {
 		font-weight: bold;
 		width: 100%;
 	}
+	
 	.toolbar-btn {
 		width: 50px !important;
 		height: 50px !important;
@@ -684,14 +698,17 @@ body.colorblind-mode .draggable.incorrect::after {
 		min-height: 50px !important;
 		padding: 0 !important;
 	}
+	
 	.toolbar-btn svg {
 		width: 24px !important;
 		height: 24px !important;
 	}
+	
 	.home-btn .icon-wrapper {
 		width: 24px !important;
 		height: 24px !important;
 	}
+	
 	.dropzone { min-height: 260px; }
 }
 
@@ -787,6 +804,7 @@ body.colorblind-mode .draggable.incorrect::after {
 	</div>
 </div>
 
+<!-- WRAPPER POUR LE TITRE MOBILE (caché sur desktop, visible sur mobile) -->
 <div class="mobile-title-wrapper">
 	<p class="mobile-title" id="mobileTitle"></p>
 </div>
@@ -892,11 +910,11 @@ body.colorblind-mode .draggable.incorrect::after {
 	<div class="menu-header"><button class="submenu-close" data-submenu="shortcuts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg></button></div>
 	<div class="submenu-title">raccourcis clavier</div>
 	<div class="settings-info"><table style="width:100%"><tr><th><kbd>ctrl</kbd> <kbd>H</kbd></th><td>renvoi au site académique</td></tr>
-				<tr><th><kbd>ctrl</kbd> <kbd>R</kbd></th><td>recharger / nouvelle partie</td></tr>
-				<tr><th><kbd>ctrl</kbd> <kbd>F</kbd></th><td>plein écran</td></tr>
-				<tr><th><kbd>ctrl</kbd> <kbd>M</kbd></th><td>ouvrir / fermer le menu</td></tr>
-				<tr><th><kbd>ESC</kbd></th><td>fermer</td></tr>
-			</table></div>
+					char(10)                    <tr><th><kbd>ctrl</kbd> <kbd>R</kbd></th><td>recharger / nouvelle partie</td></tr>
+					char(10)                    <tr><th><kbd>ctrl</kbd> <kbd>F</kbd></th><td>plein écran</td></tr>
+					char(10)                    <tr><th><kbd>ctrl</kbd> <kbd>M</kbd></th><td>ouvrir / fermer le menu</td></tr>
+					char(10)                    <tr><th><kbd>ESC</kbd></th><td>fermer</td></tr>
+				</table></div>
 </div>
 
 <div class="submenu" id="submenuAbout">
