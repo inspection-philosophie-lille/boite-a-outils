@@ -7,9 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-    <link rel="icon" href="../../src/favicon.ico" />
+<link rel="icon" href="favicon.ico" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<title>mise en pratique</title>
+<title id="htmlTitle"></title>
 <style>
 
 * {
@@ -581,14 +581,10 @@ td {
 	box-shadow: var(--shadow-out);
 	display: flex;
 	flex-direction: column;
-	align-items: stretch !important;
+	align-items: center;
 	gap: 15px;
-	font-size: 1.0em;
-}
-.dropzone strong {
-	font-size: 1.2em;
-	margin-bottom: 5px;
-	text-align: center;
+	font-weight: bold;
+	font-size: 1.1em;
 }
 .draggable {
 	padding: 10px 16px;
@@ -597,15 +593,8 @@ td {
 	box-shadow: 4px 4px 8px rgba(0,0,0,0.2), -4px -4px 8px rgba(255,255,255,0.4);
 	cursor: grab;
 	user-select: none;
+	width: fit-content;
 	position: relative;
-	margin: 0 10px;
-	text-align: center;
-	box-sizing: border-box;
-	width: calc(100% - 20px);
-	/* La hauteur sera gérée dynamiquement par JavaScript */
-	display: flex;
-	align-items: center;
-	justify-content: center;
 }
 .draggable:active { cursor: grabbing; }
 .draggable.dragging { opacity: 0.5; }
@@ -647,12 +636,21 @@ body.colorblind-mode .draggable.incorrect::after {
 }
 .button:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* MOBILE */
+/* ============================================ */
+/* MOBILE - VERSION CORRIGÉE                   */
+/* ============================================ */
 .toolbar-mobile { display: none; }
+
+/* Par défaut (desktop) : le wrapper mobile est CACHÉ */
 .mobile-title-wrapper { display: none; }
+
 @media (max-width: 768px) {
 	body { padding: 10px; }
+	
+	/* Desktop toolbar cachée */
 	.toolbar-desktop { display: none !important; }
+	
+	/* Mobile toolbar affichée */
 	.toolbar-mobile {
 		display: flex !important;
 		flex-direction: column !important;
@@ -662,6 +660,7 @@ body.colorblind-mode .draggable.incorrect::after {
 		margin-bottom: 5px !important;
 		background: var(--bg);
 	}
+	
 	.mobile-buttons-container {
 		display: flex !important;
 		flex-direction: row !important;
@@ -671,6 +670,8 @@ body.colorblind-mode .draggable.incorrect::after {
 		gap: 15px !important;
 		margin-bottom: 5px !important;
 	}
+	
+	/* Wrapper mobile : affiché sur mobile uniquement */
 	.mobile-title-wrapper {
 		display: flex !important;
 		flex-direction: column;
@@ -678,6 +679,7 @@ body.colorblind-mode .draggable.incorrect::after {
 		width: 100%;
 		margin: 10px 0;
 	}
+	
 	.mobile-title {
 		margin: 0;
 		padding: 0;
@@ -688,6 +690,7 @@ body.colorblind-mode .draggable.incorrect::after {
 		font-weight: bold;
 		width: 100%;
 	}
+	
 	.toolbar-btn {
 		width: 50px !important;
 		height: 50px !important;
@@ -695,20 +698,18 @@ body.colorblind-mode .draggable.incorrect::after {
 		min-height: 50px !important;
 		padding: 0 !important;
 	}
+	
 	.toolbar-btn svg {
 		width: 24px !important;
 		height: 24px !important;
 	}
+	
 	.home-btn .icon-wrapper {
 		width: 24px !important;
 		height: 24px !important;
 	}
+	
 	.dropzone { min-height: 260px; }
-	.dropzone strong { font-size: 1em; }
-	.draggable {
-		width: calc(100% - 20px);
-		min-width: auto;
-	}
 }
 
 @keyframes tourne360 {
@@ -744,8 +745,8 @@ body.colorblind-mode .draggable.incorrect::after {
 		</button>
 	</div>
 	<div class="toolbar-center">
-		<h1 id="appTitle" style="color:#e74c3c; margin:0;">distinguer les repères par l'exemple</h1>
-		<p id="appSubtitle" class="subtitle" style="margin:5px 0 0;">glissez les exemples dans la bonne colonne</p>
+		<h1 id="appTitle" style="color:#e74c3c; margin:0;"></h1>
+		<p id="appSubtitle" class="subtitle" style="margin:5px 0 0;"></p>
 	</div>
 	<div class="toolbar-right">
 		<button class="toolbar-btn fullscreen" id="fullscreenButton" data-title="plein écran (F)">
@@ -803,6 +804,7 @@ body.colorblind-mode .draggable.incorrect::after {
 	</div>
 </div>
 
+<!-- WRAPPER POUR LE TITRE MOBILE (caché sur desktop, visible sur mobile) -->
 <div class="mobile-title-wrapper">
 	<p class="mobile-title" id="mobileTitle"></p>
 </div>
@@ -869,7 +871,7 @@ body.colorblind-mode .draggable.incorrect::after {
 <div class="submenu" id="submenuInstructions">
 	<div class="menu-header"><button class="submenu-close" data-submenu="presentation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
 	<div class="submenu-title">présentation</div>
-	<div class="settings-info"><i class="fas fa-bullseye"></i> <strong>objectif</strong><br><br>L'élève découvre doucement les repères. Il aquiert aussi des exemples pour les dissertations.</div>
+	<div class="settings-info"><i class="fas fa-bullseye"></i> <strong>objectif</strong><br><br>classer par glisser-déposer des exemples dans la bonne catégorie</div>
 	<div class="settings-info"><i class="fas fa-bars"></i> <strong>options</strong><br><br>modes sombre, daltonien, animations</div>
 	<div class="settings-info"><i class="fas fa-chart-line"></i> <strong>statistiques</strong><br><br>score cumulé sauvegardé automatiquement</div>
 </div>
@@ -894,24 +896,24 @@ body.colorblind-mode .draggable.incorrect::after {
 	<div class="toggle-container"><span class="toggle-label"><i class="fas fa-moon"></i>mode sombre</span><label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label></div>
 	<div class="toggle-container"><span class="toggle-label"><i class="fas fa-play"></i>animations</span><label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label></div>
 	<div class="toggle-container"><span class="toggle-label"><i class="fas fa-palette"></i>mode daltonien</span><label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label></div>
-	<div class="pairs-slider-container">
-		<div class="pairs-slider-label"><span><i class="fas fa-layer-group"></i> nombre d'exemples par colonne</span><span
-				class="pairs-slider-value" id="pairsCountValue">3</span></div>
-		<input type="range" id="pairsCountSlider" min="1" max="5" step="1" value="3">
-		<div class="slider-graduations">
-			<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-		</div>
-	</div>
+			<div class="pairs-slider-container">
+				<div class="pairs-slider-label"><span><i class="fas fa-layer-group"></i> nombre de paires</span><span
+						class="pairs-slider-value" id="pairsCountValue">5</span></div>
+				<input type="range" id="pairsCountSlider" min="3" max="12" step="1" value="5">
+				<div class="slider-graduations">
+					<span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+				</div>
+			</div>
 </div>
 
 <div class="submenu" id="submenuShortcuts">
 	<div class="menu-header"><button class="submenu-close" data-submenu="shortcuts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg></button></div>
 	<div class="submenu-title">raccourcis clavier</div>
 	<div class="settings-info"><table style="width:100%"><tr><th><kbd>ctrl</kbd> <kbd>H</kbd></th><td>renvoi au site académique</td></tr>
-				<tr><th><kbd>ctrl</kbd> <kbd>R</kbd></th><td>recharger / nouvelle partie</td></tr>
-				<tr><th><kbd>ctrl</kbd> <kbd>F</kbd></th><td>plein écran</td></tr>
-				<tr><th><kbd>ctrl</kbd> <kbd>M</kbd></th><td>ouvrir / fermer le menu</td></tr>
-				<tr><th><kbd>ESC</kbd></th><td>fermer</td></tr>
+					<tr><th><kbd>ctrl</kbd> <kbd>R</kbd></th><td>recharger / nouvelle partie</td></tr>
+					<tr><th><kbd>ctrl</kbd> <kbd>F</kbd></th><td>plein écran</td></tr>
+					<tr><th><kbd>ctrl</kbd> <kbd>M</kbd></th><td>ouvrir / fermer le menu</td></tr>
+					<tr><th><kbd>ESC</kbd></th><td>fermer</td></tr>
 				</table></div>
 </div>
 
@@ -925,11 +927,15 @@ body.colorblind-mode .draggable.incorrect::after {
 
 <script src="../../src/reperes.js"></script>
 <script>
+// Le fichier reperes.js doit être chargé AVANT ce script.
+// Il définit window.reperes.
 document.addEventListener("DOMContentLoaded", () => {
-	// === Récupération des données depuis window.reperes ===
-	const repertoire = window.reperes || [];
+	// === Récupération des données depuis les variables globales ===
+	// Le fichier externe reperes.js fournit window.reperes
+	let reperesData = window.reperes || [];
 	
-	if (repertoire.length === 0) {
+	// Vérification si les données sont chargées
+	if (!reperesData || reperesData.length === 0) {
 		console.error("ERREUR: Aucune donnée chargée depuis reperes.js");
 		const errorDiv = document.createElement('div');
 		errorDiv.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:red; color:white; padding:20px; border-radius:10px; z-index:9999; text-align:center;';
@@ -937,32 +943,39 @@ document.addEventListener("DOMContentLoaded", () => {
 		document.body.appendChild(errorDiv);
 	}
 	
-	// Transformation de window.reperes en format utilisable
-	function transformReperesToDropzone(data) {
-		return data.map(item => {
-			const parts = item.parts;
-			if (parts && parts.length >= 2) {
-				return {
-					colonne_gauche: parts[0].name,
-					colonne_droite: parts[1].name,
-					exemples_gauche: parts[0].examples || [],
-					exemples_droite: parts[1].examples || []
-				};
-			}
-			return null;
-		}).filter(item => item !== null);
-	}
-	
-	let dropzoneData = transformReperesToDropzone(repertoire);
+	// Transformation des données reperesData au format attendu par l'application (dropzone)
+	// L'application attend un tableau d'objets avec: colonne_gauche, colonne_droite, exemples_gauche, exemples_droite
+	const dropzoneData = reperesData.map(item => {
+		// Pour chaque paire de concepts (item.parts)
+		// item.parts est un tableau de 2 ou 3 éléments (pour concept/image/métaphore)
+		const parts = item.parts;
+		if (parts.length >= 2) {
+			return {
+				colonne_gauche: parts[0].name,
+				colonne_droite: parts[1].name,
+				exemples_gauche: parts[0].examples || [],
+				exemples_droite: parts[1].examples || []
+			};
+		}
+		// Fallback (ne devrait pas arriver)
+		return null;
+	}).filter(item => item !== null);
 	
 	let correctCount = 0, totalCount = 0, gamesPlayed = parseInt(localStorage.getItem('gamesPlayed_classer') || '0');
 	let darkMode = false, colorblindMode = false, animationsEnabled = true;
 	let currentCategorySet = null;
-	let currentPairsCount = 3; // Nombre d'exemples par colonne
+	let currentPairsCount = 5; // Nombre de paires (éléments à classer)
+	
+	// Définir le titre et sous-titre
+	const title = "distinguer les repères par l'exemple";
+	const subtitle = "glissez les exemples dans la bonne colonne";
 	
 	// Éléments DOM
-	const appTitle = document.getElementById("appTitle");
-	const mobileTitle = document.getElementById("mobileTitle");
+	document.title = title;
+	document.getElementById("appTitle").textContent = title;
+	document.getElementById("appSubtitle").textContent = subtitle;
+	document.getElementById("mobileTitle").textContent = title;
+	
 	const reperesContainer = document.getElementById("reperesContainer");
 	const dropzone1 = document.createElement("div");
 	const dropzone2 = document.createElement("div");
@@ -971,40 +984,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	row.className = "row";
 	row.append(dropzone1, dropzone2); 
 	reperesContainer.appendChild(row);
-	
-	// Fonction pour uniformiser la hauteur des étiquettes
-	function uniformiserHauteurEtiquettes() {
-		const allDraggables = document.querySelectorAll('.draggable');
-		if (allDraggables.length === 0) return;
-		
-		// Réinitialiser les hauteurs pour permettre le recalcul
-		allDraggables.forEach(el => {
-			el.style.height = 'auto';
-			el.style.minHeight = 'auto';
-		});
-		
-		// Attendre le reflow
-		setTimeout(() => {
-			let maxHeight = 0;
-			
-			// Calculer la hauteur maximale
-			allDraggables.forEach(el => {
-				const height = el.offsetHeight;
-				if (height > maxHeight) maxHeight = height;
-			});
-			
-			// Appliquer la même hauteur à toutes les étiquettes
-			allDraggables.forEach(el => {
-				el.style.height = maxHeight + 'px';
-				el.style.minHeight = maxHeight + 'px';
-			});
-		}, 10);
-	}
-	
-	// Observer les changements dans les dropzones pour réappliquer la hauteur
-	const observerHauteur = new MutationObserver(() => {
-		uniformiserHauteurEtiquettes();
-	});
 	
 	// Sauvegarde des stats
 	function saveGameStats() {
@@ -1052,13 +1031,13 @@ document.addEventListener("DOMContentLoaded", () => {
 		return array;
 	}
 	
-	// Chargement du nombre d'exemples par colonne depuis localStorage
+	// Chargement du nombre de paires depuis localStorage
 	function loadPairsCount() {
 		const saved = localStorage.getItem('classerPairsCount');
 		if (saved !== null) {
-			currentPairsCount = Math.max(1, Math.min(5, parseInt(saved, 10)));
+			currentPairsCount = Math.max(3, Math.min(12, parseInt(saved, 10)));
 		} else {
-			currentPairsCount = 3;
+			currentPairsCount = 5;
 		}
 		document.getElementById('pairsCountSlider').value = currentPairsCount;
 		document.getElementById('pairsCountValue').textContent = currentPairsCount;
@@ -1066,7 +1045,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	
 	function savePairsCount() {
 		localStorage.setItem('classerPairsCount', currentPairsCount);
-		showSaveIndicator("nombre d'exemples sauvegardé");
+		showSaveIndicator("nombre de paires sauvegardé");
 	}
 	
 	// Drag & drop
@@ -1078,8 +1057,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	const dragEnd = e => { 
 		e.target.style.display = ""; 
 		e.target.classList.remove("dragging"); 
-		// Réappliquer la hauteur après le drag
-		setTimeout(() => uniformiserHauteurEtiquettes(), 10);
 	};
 	const allowDrop = e => e.preventDefault();
 	const drop = e => { 
@@ -1089,8 +1066,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (zone && el) { 
 			zone.appendChild(el); 
 			el.style.display = ""; 
-			// Réappliquer la hauteur après le drop
-			setTimeout(() => uniformiserHauteurEtiquettes(), 10);
 		} 
 	};
 	
@@ -1110,10 +1085,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		const limitedDroite = exemplesDroite.slice(0, currentPairsCount);
 		const allExamples = [...limitedGauche, ...limitedDroite];
 		
-		// Titres
 		dropzone1.innerHTML = `<strong>exemples de « ${cat1} »</strong>`;
 		dropzone2.innerHTML = `<strong>exemples de « ${cat2} »</strong>`;
-		
+
 		document.querySelectorAll(".draggable").forEach(el => el.remove());
 		
 		const shuffled = shuffleArray([...allExamples]);
@@ -1131,20 +1105,11 @@ document.addEventListener("DOMContentLoaded", () => {
 			el.addEventListener("click", () => { 
 				if (el.parentNode === dropzone1) dropzone2.appendChild(el); 
 				else if (el.parentNode === dropzone2) dropzone1.appendChild(el); 
-				setTimeout(() => uniformiserHauteurEtiquettes(), 10);
 			});
 			(i < itemsInZone1 ? dropzone1 : dropzone2).appendChild(el);
 		});
 		
 		document.getElementById("checkButton").disabled = false;
-		
-		// Uniformiser les hauteurs après l'ajout des étiquettes
-		setTimeout(() => uniformiserHauteurEtiquettes(), 20);
-		
-		// Démarrer l'observation des changements
-		observerHauteur.disconnect();
-		observerHauteur.observe(dropzone1, { childList: true, subtree: true });
-		observerHauteur.observe(dropzone2, { childList: true, subtree: true });
 	}
 	
 	function getNewWords() {
@@ -1156,6 +1121,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		const randomIndex = Math.floor(Math.random() * dropzoneData.length);
 		currentCategorySet = dropzoneData[randomIndex];
 		
+		// Utiliser le nombre de paires limité
 		const totalExamplesInSet = Math.min(currentCategorySet.exemples_gauche.length, currentPairsCount) + 
 		                           Math.min(currentCategorySet.exemples_droite.length, currentPairsCount);
 		totalCount += totalExamplesInSet; 
@@ -1199,9 +1165,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			saveGameStats();
 			updateStatsDisplay();
 			checkButton.textContent = "nouvelle partie";
-			
-			// Maintenir les hauteurs après vérification
-			setTimeout(() => uniformiserHauteurEtiquettes(), 10);
 		} else {
 			document.querySelectorAll(".draggable").forEach(el => el.classList.remove("correct", "incorrect"));
 			checkButton.textContent = "vérifier"; 
@@ -1278,7 +1241,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	
 	function saveSettings() {
 		localStorage.setItem('classerSettings', JSON.stringify({ darkMode, colorblindMode, animationsEnabled }));
-		showSaveIndicator("Paramètres sauvegardés");
+		showSaveIndicator();
 	}
 	
 	darkToggle.addEventListener('change', e => {
@@ -1297,12 +1260,12 @@ document.addEventListener("DOMContentLoaded", () => {
 		saveSettings();
 	});
 	
-	// Gestion du slider du nombre d'exemples
+	// Gestion du slider du nombre de paires
 	pairsSlider.addEventListener('input', e => {
 		currentPairsCount = parseInt(e.target.value, 10);
 		pairsValue.textContent = currentPairsCount;
 		savePairsCount();
-		reload();
+		reload(); // Recharger la partie avec le nouveau nombre de paires
 	});
 	
 	// Plein écran
@@ -1313,9 +1276,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			btns.forEach(btn => {
 				btn.classList.add('fullscreen-active');
 				const svg = btn.querySelector('svg');
-				if (svg && btn.id.includes('fullscreenButton')) {
-					svg.innerHTML = `<line x1="9" y1="9" x2="9" y2="3"></line><line x1="3" y1="9" x2="9" y2="9"></line><line x1="15" y1="9" x2="21" y2="9"></line><line x1="15" y1="3" x2="15" y2="9"></line><line x1="9" y1="15" x2="9" y2="21"></line><line x1="3" y1="15" x2="9" y2="15"></line><line x1="21" y1="15" x2="15" y2="15"></line><line x1="15" y1="15" x2="15" y2="21"></line>`;
-				}
+				if (svg) svg.innerHTML = `<line x1="9" y1="9" x2="9" y2="3"></line><line x1="3" y1="9" x2="9" y2="9"></line><line x1="15" y1="9" x2="21" y2="9"></line><line x1="15" y1="3" x2="15" y2="9"></line><line x1="9" y1="15" x2="9" y2="21"></line><line x1="3" y1="15" x2="9" y2="15"></line><line x1="21" y1="15" x2="15" y2="15"></line><line x1="15" y1="15" x2="15" y2="21"></line>`;
 				btn.setAttribute('data-title', 'quitter plein écran (F)');
 			});
 		} else {
@@ -1323,14 +1284,10 @@ document.addEventListener("DOMContentLoaded", () => {
 			btns.forEach(btn => {
 				btn.classList.remove('fullscreen-active');
 				const svg = btn.querySelector('svg');
-				if (svg && btn.id.includes('fullscreenButton')) {
-					svg.innerHTML = `<line x1="4" y1="5" x2="10" y2="5" /><line x1="5" y1="6" x2="5" y2="10" /><line x1="14" y1="5" x2="20" y2="5" /><line x1="19" y1="6" x2="19" y2="10" /><line x1="5" y1="14" x2="5" y2="20" /><line x1="6" y1="19" x2="10" y2="19" /><line x1="14" y1="19" x2="20" y2="19" /><line x1="19" y1="14" x2="19" y2="18" />`;
-				}
+				if (svg) svg.innerHTML = `<line x1="4" y1="5" x2="10" y2="5" /><line x1="5" y1="6" x2="5" y2="10" /><line x1="14" y1="5" x2="20" y2="5" /><line x1="19" y1="6" x2="19" y2="10" /><line x1="5" y1="14" x2="5" y2="20" /><line x1="6" y1="19" x2="10" y2="19" /><line x1="14" y1="19" x2="20" y2="19" /><line x1="19" y1="14" x2="19" y2="18" />`;
 				btn.setAttribute('data-title', 'plein écran (F)');
 			});
 		}
-		// Réappliquer les hauteurs après changement de plein écran
-		setTimeout(() => uniformiserHauteurEtiquettes(), 100);
 	}
 	
 	document.querySelectorAll('#fullscreenButton, #fullscreenButtonMobile').forEach(b => b.addEventListener('click', toggleFullscreen));
@@ -1341,20 +1298,15 @@ document.addEventListener("DOMContentLoaded", () => {
 			if (fs) {
 				btn.classList.add('fullscreen-active');
 				const svg = btn.querySelector('svg');
-				if (svg && btn.id.includes('fullscreenButton')) {
-					svg.innerHTML = `<line x1="9" y1="9" x2="9" y2="3"></line><line x1="3" y1="9" x2="9" y2="9"></line><line x1="15" y1="9" x2="21" y2="9"></line><line x1="15" y1="3" x2="15" y2="9"></line><line x1="9" y1="15" x2="9" y2="21"></line><line x1="3" y1="15" x2="9" y2="15"></line><line x1="21" y1="15" x2="15" y2="15"></line><line x1="15" y1="15" x2="15" y2="21"></line>`;
-				}
+				if (svg) svg.innerHTML = `<line x1="9" y1="9" x2="9" y2="3"></line><line x1="3" y1="9" x2="9" y2="9"></line><line x1="15" y1="9" x2="21" y2="9"></line><line x1="15" y1="3" x2="15" y2="9"></line><line x1="9" y1="15" x2="9" y2="21"></line><line x1="3" y1="15" x2="9" y2="15"></line><line x1="21" y1="15" x2="15" y2="15"></line><line x1="15" y1="15" x2="15" y2="21"></line>`;
 				btn.setAttribute('data-title', 'quitter plein écran (F)');
 			} else {
 				btn.classList.remove('fullscreen-active');
 				const svg = btn.querySelector('svg');
-				if (svg && btn.id.includes('fullscreenButton')) {
-					svg.innerHTML = `<line x1="4" y1="5" x2="10" y2="5" /><line x1="5" y1="6" x2="5" y2="10" /><line x1="14" y1="5" x2="20" y2="5" /><line x1="19" y1="6" x2="19" y2="10" /><line x1="5" y1="14" x2="5" y2="20" /><line x1="6" y1="19" x2="10" y2="19" /><line x1="14" y1="19" x2="20" y2="19" /><line x1="19" y1="14" x2="19" y2="18" />`;
-				}
+				if (svg) svg.innerHTML = `<line x1="4" y1="5" x2="10" y2="5" /><line x1="5" y1="6" x2="5" y2="10" /><line x1="14" y1="5" x2="20" y2="5" /><line x1="19" y1="6" x2="19" y2="10" /><line x1="5" y1="14" x2="5" y2="20" /><line x1="6" y1="19" x2="10" y2="19" /><line x1="14" y1="19" x2="20" y2="19" /><line x1="19" y1="14" x2="19" y2="18" />`;
 				btn.setAttribute('data-title', 'plein écran (F)');
 			}
 		});
-		setTimeout(() => uniformiserHauteurEtiquettes(), 100);
 	});
 	
 	// Raccourcis clavier
@@ -1391,11 +1343,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	loadGameStats();
 	loadSettings();
 	getNewWords();
-	
-	// Réappliquer les hauteurs lors du redimensionnement de la fenêtre
-	window.addEventListener('resize', () => {
-		setTimeout(() => uniformiserHauteurEtiquettes(), 100);
-	});
 });
 </script>
 </body>
