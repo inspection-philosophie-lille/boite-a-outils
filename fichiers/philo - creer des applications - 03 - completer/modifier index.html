@@ -1,1091 +1,923 @@
 <!DOCTYPE html>
 <!-- Daniel Boulagnon -->
 <!-- daniel.boulagnon@ac-lille.fr -->
-<!-- version 2025 -->
+<!-- version 2026 -->
 <!-- Exploitation à but strictement pédagogique et non lucratif -->
 <html lang="fr">
+
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link rel="icon" href="favicon.ico" />
- <title>application « compléter »</title>
- <style>
- * { box-sizing: border-box; margin: 0; padding: 0; }
- :root {
- --bg-color: #e0e5ec; --primary-light: #ffffff; --primary-dark: #a3b1c6;
- --text-color: #4a5568; --accent-color: #4f46e5; --accent-light: #6366f1;
- --accent-dark: #4338ca; --success-color: #10b981; --warning-color: #f59e0b;
- --danger-color: #ef4444; --shadow-light: rgba(255, 255, 255, 0.8);
- --shadow-dark: rgba(163, 177, 198, 0.6);
- }
- body {
- font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
- line-height: 1.6; color: var(--text-color); background-color: var(--bg-color);
- padding: 20px; max-width: 1400px; margin: 0 auto; min-height: 100vh;
- }
- header { text-align: center; margin-bottom: 10px; padding: 10px 20px;
- background: var(--bg-color); border-radius: 25px; box-shadow: 
- 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light),
- inset 1px 1px 2px var(--shadow-light), inset -1px -1px 2px var(--shadow-dark);
- }
- h1 { color: red; margin-bottom: 0px; font-size: 2.2rem;
- font-weight: 700; text-shadow: 1px 1px 1px var(--shadow-light);
- }
- .subtitle { color: var(--text-color); font-size: 1.1rem; margin-bottom: 0px; opacity: 0.8; }
- .container { display: flex; flex-direction: column; gap: 30px; }
- .panel {
- background: var(--bg-color); border-radius: 25px; padding: 30px; box-shadow: 
- 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light),
- inset 1px 1px 2px var(--shadow-light), inset -1px -1px 2px var(--shadow-dark);
- transition: all 0.3s ease;
- }
- .panel:hover { box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light),
- inset 1px 1px 2px var(--shadow-light), inset -1px -1px 2px var(--shadow-dark); }
- .panel h2 { color: var(--accent-color); margin-bottom: 20px; font-size: 1.5rem;
- padding-bottom: 15px; border-bottom: 2px solid;
- border-image: linear-gradient(to right, var(--accent-color), transparent) 1; font-weight: 600;
- }
- .form-group { margin-bottom: 25px; }
- label { display: block; margin-bottom: 10px; font-weight: 600; color: var(--text-color); }
- input[type="text"], textarea {
- width: 100%; padding: 15px; background: var(--bg-color); border: none; border-radius: 15px;
- font-family: inherit; font-size: 1rem; color: var(--text-color); box-shadow: 
- inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
- transition: all 0.3s ease;
- }
- input[type="text"]:focus, textarea:focus {
- outline: none; box-shadow: inset 6px 6px 12px var(--shadow-dark),
- inset -6px -6px 12px var(--shadow-light), 0 0 0 2px rgba(79, 70, 229, 0.2);
- }
- textarea { min-height: 120px; resize: vertical; }
- .citation-container {
- margin-bottom: 30px; padding: 25px; background: var(--bg-color); border-radius: 20px;
- box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light),
- inset 1px 1px 2px var(--shadow-light), inset -1px -1px 2px var(--shadow-dark);
- border-left: 5px solid var(--accent-color);
- }
- .trou-inputs { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px; }
- .trou-input { flex: 1; min-width: 180px; }
- .button-group { display: flex; gap: 20px; margin-top: 25px; flex-wrap: wrap; }
- button {
- padding: 14px 28px; border: none; border-radius: 15px; font-size: 1rem; cursor: pointer;
- font-weight: 600; transition: all 0.3s ease; color: var(--text-color);
- background: var(--bg-color); box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
- position: relative; overflow: hidden;
- }
- button:active { transform: translateY(2px); box-shadow: 
- 2px 2px 4px var(--shadow-dark), -2px -2px 4px var(--shadow-light),
- inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light); }
- button:hover { transform: translateY(-1px); }
- .btn-primary { color: white; background: linear-gradient(145deg, var(--accent-light), var(--accent-color));
- box-shadow: 4px 4px 8px rgba(79, 70, 229, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.8); }
- .btn-primary:hover { background: linear-gradient(145deg, var(--accent-color), var(--accent-dark));
- box-shadow: 6px 6px 12px rgba(79, 70, 229, 0.4), -6px -6px 12px rgba(255, 255, 255, 0.9); }
- .btn-secondary { color: white; background: linear-gradient(145deg, var(--success-color), #0da271);
- box-shadow: 4px 4px 8px rgba(16, 185, 129, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.8); }
- .btn-secondary:hover { background: linear-gradient(145deg, #0da271, var(--success-color)); }
- .btn-warning { color: white; background: linear-gradient(145deg, var(--warning-color), #d97706);
- box-shadow: 4px 4px 8px rgba(245, 158, 11, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.8); }
- .btn-warning:hover { background: linear-gradient(145deg, #d97706, var(--warning-color)); }
- .btn-danger { color: white; background: linear-gradient(145deg, var(--danger-color), #dc2626);
- box-shadow: 4px 4px 8px rgba(239, 68, 68, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.8); }
- .btn-danger:hover { background: linear-gradient(145deg, #dc2626, var(--danger-color)); }
- .btn-add { color: white; background: linear-gradient(145deg, #8b5cf6, #7c3aed);
- box-shadow: 4px 4px 8px rgba(139, 92, 246, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.8);
- margin-top: 20px; margin-bottom: 20px; }
- .btn-add:hover { background: linear-gradient(145deg, #7c3aed, #6d28d9); }
- 
- /* MODIFICATION : Conteneur principal pour aligner les 4 éléments sur une ligne */
- .file-inputs-container {
- display: flex;
- align-items: stretch;
- gap: 15px;
- margin-bottom: 20px;
- flex-wrap: wrap;
- }
- 
- .file-input-label {
- display: flex;
- align-items: center;
- justify-content: center;
- padding: 15px 25px;
- background: linear-gradient(145deg, var(--accent-light), var(--accent-color));
- color: white;
- border-radius: 15px;
- cursor: pointer;
- font-weight: 600;
- transition: all 0.3s ease;
- box-shadow: 4px 4px 8px rgba(79, 70, 229, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.8);
- height: 52px;
- min-height: 52px;
- box-sizing: border-box;
- text-align: center;
- flex: 1;
- min-width: 200px;
- }
- 
- .file-input-label:hover { 
- transform: translateY(-2px); 
- box-shadow: 
- 6px 6px 12px rgba(79, 70, 229, 0.4), -6px -6px 12px rgba(255, 255, 255, 0.9); 
- }
- 
- .file-input-label:active { transform: translateY(0); }
- .file-input { display: none; }
- 
- .file-name { 
- display: flex;
- align-items: center;
- justify-content: center;
- color: var(--text-color); 
- font-style: italic; 
- padding: 15px 20px;
- background: var(--bg-color);
- border-radius: 15px; 
- box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
- height: 52px;
- min-height: 52px;
- box-sizing: border-box;
- text-align: center;
- flex: 1;
- min-width: 200px;
- white-space: nowrap;
- overflow: hidden;
- text-overflow: ellipsis;
- }
- 
- /* MODIFICATION : Les boutons dans le button-group auront aussi la même largeur */
- .button-group {
- display: flex;
- align-items: stretch;
- gap: 15px;
- margin-top: 25px;
- }
- 
- .button-group button {
- display: flex;
- align-items: center;
- justify-content: center;
- padding: 14px 25px;
- height: 52px;
- box-sizing: border-box;
- flex: 1;
- min-width: 200px;
- text-align: center;
- }
- 
- .counter { display: inline-block; background: linear-gradient(145deg, var(--accent-light), var(--accent-color));
- color: white; border-radius: 50%; width: 28px; height: 28px; text-align: center; line-height: 28px;
- margin-right: 10px; font-size: 0.9rem; font-weight: 600; box-shadow: 
- 2px 2px 4px rgba(79, 70, 229, 0.3), -2px -2px 4px rgba(255, 255, 255, 0.8); }
- .alert { padding: 20px; border-radius: 20px; margin-bottom: 25px; box-shadow: 
- 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); animation: slideIn 0.3s ease; }
- @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); }
- to { opacity: 1; transform: translateY(0); } }
- .alert-success { background: linear-gradient(145deg, #d1fae5, #a7f3d0); color: #065f46; border-left: 5px solid var(--success-color); }
- .alert-error { background: linear-gradient(145deg, #fee2e2, #fecaca); color: #7f1d1d; border-left: 5px solid var(--danger-color); }
- .alert-info { background: linear-gradient(145deg, #dbeafe, #bfdbfe); color: #1e40af; border-left: 5px solid var(--accent-color); }
- .citation-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
- .add-button-container { text-align: center; margin-top: 30px; margin-bottom: 20px; }
- 
- /* Style pour le bouton italique */
- .italic-btn {
- padding: 8px 12px;
- background: linear-gradient(145deg, #f0b429, #d97706);
- color: white;
- border: none;
- border-radius: 8px;
- cursor: pointer;
- font-size: 0.9rem;
- font-weight: 600;
- box-shadow: 2px 2px 4px rgba(209, 119, 6, 0.3);
- transition: all 0.2s ease;
- }
- 
- .italic-btn:hover {
- background: linear-gradient(145deg, #d97706, #b45309);
- transform: translateY(-1px);
- }
- 
- .italic-btn:active {
- transform: translateY(1px);
- }
- 
- .source-help {
- font-size: 0.9rem;
- color: var(--text-color);
- opacity: 0.7;
- margin-top: 5px;
- }
- 
- .italic-example {
- font-style: italic;
- color: var(--accent-color);
- }
-		
-	 .example {
- color: var(--accent-color);
- }	
- 
- .source-header {
- display: flex;
- justify-content: space-between;
- align-items: center;
- margin-bottom: 10px;
- flex-wrap: wrap;
- gap: 10px;
- }
- 
- @media (max-width: 768px) { 
- .container { gap: 20px; } 
- .panel { padding: 20px; border-radius: 20px; }
- 
- /* MODIFICATION : En mobile, les éléments passent en colonne */
- .file-inputs-container {
- flex-direction: column;
- gap: 15px;
- }
- 
- .button-group { 
- flex-direction: column; 
- gap: 15px; 
- } 
- 
- /* MODIFICATION : Assurer que tous les éléments ont la même largeur */
- .file-input-label, 
- .file-name, 
- .button-group button { 
- width: 100%; 
- max-width: none; 
- flex: 1 1 100%;
- }
- 
- .file-name { 
- text-align: center; 
- min-width: auto; 
- } 
- 
- /* MODIFICATION : S'assurer que le bouton de chargement a la même largeur */
- #parseFileBtn {
- width: 100%;
- }
- 
- .trou-inputs { flex-direction: column; }
- .trou-input { min-width: 100%; } 
- h1 { font-size: 1.8rem; } 
- .panel h2 { font-size: 1.3rem; } 
- .source-header { flex-direction: column; align-items: flex-start; }
- }
- 
- @media (min-width: 769px) {
- /* MODIFICATION : En desktop, les 4 éléments sont sur une ligne avec dimensions égales */
- .file-inputs-container {
- flex-direction: row;
- flex-wrap: nowrap;
- align-items: stretch;
- }
- 
- .file-input-label, 
- .file-name,
- .button-group button {
- flex: 1;
- min-width: 0; /* Permet aux éléments de rétrécir si nécessaire */
- width: auto;
- }
- 
- .button-group {
- flex-direction: row;
- flex-wrap: nowrap;
- }
- 
- /* Assurer que tous les éléments ont la même hauteur */
- .file-input-label, 
- .file-name,
- .button-group button {
- height: 52px;
- min-height: 52px;
- display: flex;
- align-items: center;
- justify-content: center;
- }
- }
- 
- @media (max-width: 480px) { 
- body { padding: 15px; } 
- header { padding: 20px 15px; margin-bottom: 30px; }
- h1 { font-size: 1.5rem; } 
- .subtitle { font-size: 1rem; } 
- 
- /* MODIFICATION : S'assurer de la cohérence sur très petits écrans */
- .file-input-label, 
- .file-name, 
- .button-group button {
- width: 100%;
- }
- }
- </style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="favicon.ico" />
+	<title>application « compléter »</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		:root {
+			--bg-color: #e0e5ec;
+			--primary-light: #ffffff;
+			--primary-dark: #a3b1c6;
+			--text-color: #4a5568;
+			--accent-color: #4f46e5;
+			--accent-light: #6366f1;
+			--accent-dark: #4338ca;
+			--success-color: #10b981;
+			--warning-color: #f59e0b;
+			--danger-color: #ef4444;
+			--shadow-light: rgba(255, 255, 255, 0.8);
+			--shadow-dark: rgba(163, 177, 198, 0.6);
+			--highlight-color: #bbf7d0;
+			--highlight-border: #22c55e;
+		}
+
+		body {
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+			line-height: 1.6;
+			color: var(--text-color);
+			background-color: var(--bg-color);
+			padding: 20px;
+			max-width: 1400px;
+			margin: 0 auto;
+			min-height: 100vh;
+		}
+
+		header {
+			text-align: center;
+			margin-bottom: 10px;
+			padding: 10px 20px;
+			background: var(--bg-color);
+			border-radius: 25px;
+			box-shadow:
+				8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light),
+				inset 1px 1px 2px var(--shadow-light), inset -1px -1px 2px var(--shadow-dark);
+		}
+
+		h1 {
+			color: red;
+			margin-bottom: 0px;
+			font-size: 2.2rem;
+			font-weight: 700;
+			text-shadow: 1px 1px 1px var(--shadow-light);
+		}
+
+		.subtitle {
+			color: var(--text-color);
+			font-size: 1.1rem;
+			margin-bottom: 0px;
+			opacity: 0.8;
+		}
+
+		.container {
+			display: flex;
+			flex-direction: column;
+			gap: 30px;
+		}
+
+		.panel {
+			background: var(--bg-color);
+			border-radius: 25px;
+			padding: 30px;
+			box-shadow:
+				8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light),
+				inset 1px 1px 2px var(--shadow-light), inset -1px -1px 2px var(--shadow-dark);
+			transition: all 0.3s ease;
+		}
+
+		.panel:hover {
+			box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light),
+				inset 1px 1px 2px var(--shadow-light), inset -1px -1px 2px var(--shadow-dark);
+		}
+
+		.panel h2 {
+			color: var(--accent-color);
+			margin-bottom: 20px;
+			font-size: 1.5rem;
+			padding-bottom: 15px;
+			border-bottom: 2px solid;
+			border-image: linear-gradient(to right, var(--accent-color), transparent) 1;
+			font-weight: 600;
+		}
+
+		.form-group {
+			margin-bottom: 25px;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 10px;
+			font-weight: 600;
+			color: var(--text-color);
+		}
+
+		input[type="text"],
+		.rich-editor {
+			width: 100%;
+			padding: 15px;
+			background: var(--bg-color);
+			border: none;
+			border-radius: 15px;
+			font-family: 'Inter', sans-serif;
+			font-size: 1rem;
+			color: var(--text-color);
+			box-shadow:
+				inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+			transition: all 0.3s ease;
+		}
+
+		.rich-editor {
+			min-height: 180px;
+			overflow-y: auto;
+			line-height: 1.6;
+		}
+
+		.rich-editor:focus {
+			outline: none;
+			box-shadow: inset 6px 6px 12px var(--shadow-dark),
+				inset -6px -6px 12px var(--shadow-light), 0 0 0 2px rgba(79, 70, 229, 0.2);
+		}
+
+		/* Style pour surlignage des mots manquants */
+		.hl-word {
+			background-color: var(--highlight-color);
+			border-bottom: 2px solid var(--highlight-border);
+			border-radius: 4px;
+			cursor: pointer;
+			transition: all 0.1s ease;
+			display: inline-block;
+			padding: 0 2px;
+		}
+
+		.hl-word:hover {
+			background-color: #a3e9b5;
+			transform: scale(1.01);
+		}
+
+		.citation-container {
+			margin-bottom: 30px;
+			padding: 25px;
+			background: var(--bg-color);
+			border-radius: 20px;
+			box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light),
+				inset 1px 1px 2px var(--shadow-light), inset -1px -1px 2px var(--shadow-dark);
+			border-left: 5px solid var(--accent-color);
+		}
+
+		.citation-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 20px;
+		}
+
+		.citation-title {
+			background: linear-gradient(145deg, var(--accent-light), var(--accent-color));
+			display: inline-flex;
+			align-items: center;
+			padding: 6px 18px;
+			border-radius: 40px;
+			color: white;
+			font-weight: 600;
+			box-shadow: 4px 4px 8px rgba(79, 70, 229, 0.3);
+		}
+
+		.citation-title .counter {
+			background: transparent;
+			color: white;
+			width: auto;
+			height: auto;
+			display: inline;
+			margin-left: 4px;
+			font-weight: bold;
+			box-shadow: none;
+		}
+
+		.delete-citation-btn {
+			padding: 8px 18px;
+			font-size: 0.9rem;
+		}
+
+		.source-line {
+			text-align: right;
+			margin-top: 15px;
+			padding-top: 10px;
+			border-top: 1px dashed rgba(163, 177, 198, 0.4);
+		}
+
+		.manques-list {
+			margin-top: 15px;
+			padding: 12px 15px;
+			background: rgba(79, 70, 229, 0.08);
+			border-radius: 12px;
+			font-size: 0.9rem;
+			border-left: 3px solid var(--accent-color);
+		}
+
+		.manques-list strong {
+			color: var(--accent-color);
+		}
+
+		.manques-list .manque-badge {
+			display: inline-block;
+			background: var(--highlight-color);
+			color: #166534;
+			padding: 4px 10px;
+			border-radius: 20px;
+			margin: 4px 6px 4px 0;
+			font-size: 0.85rem;
+			border: 1px solid var(--highlight-border);
+		}
+
+		.button-group {
+			display: flex;
+			gap: 20px;
+			margin-top: 25px;
+			flex-wrap: wrap;
+		}
+
+		button {
+			padding: 14px 28px;
+			border: none;
+			border-radius: 15px;
+			font-size: 1rem;
+			cursor: pointer;
+			font-weight: 600;
+			transition: all 0.3s ease;
+			color: var(--text-color);
+			background: var(--bg-color);
+			box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+			position: relative;
+			overflow: hidden;
+		}
+
+		button:active {
+			transform: translateY(2px);
+			box-shadow:
+				2px 2px 4px var(--shadow-dark), -2px -2px 4px var(--shadow-light),
+				inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
+		}
+
+		button:hover {
+			transform: translateY(-1px);
+		}
+
+		.btn-primary {
+			color: white;
+			background: linear-gradient(145deg, var(--accent-light), var(--accent-color));
+			box-shadow: 4px 4px 8px rgba(79, 70, 229, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.8);
+		}
+
+		.btn-secondary {
+			color: white;
+			background: linear-gradient(145deg, var(--success-color), #0da271);
+		}
+
+		.btn-warning {
+			color: white;
+			background: linear-gradient(145deg, var(--warning-color), #d97706);
+		}
+
+		.btn-danger {
+			color: white;
+			background: linear-gradient(145deg, var(--danger-color), #dc2626);
+		}
+
+		.btn-add {
+			color: white;
+			background: linear-gradient(145deg, #8b5cf6, #7c3aed);
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+
+		.format-toolbar {
+			display: flex;
+			gap: 8px;
+			margin-bottom: 12px;
+			flex-wrap: wrap;
+		}
+
+		.format-btn {
+			padding: 8px 14px;
+			font-size: 0.85rem;
+			background: var(--bg-color);
+			box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light);
+			border-radius: 12px;
+			cursor: pointer;
+			font-weight: 600;
+		}
+
+		.format-btn:hover {
+			transform: translateY(-1px);
+			background: var(--accent-light);
+			color: white;
+		}
+
+		.file-load-row {
+			display: flex;
+			align-items: stretch;
+			gap: 15px;
+			flex-wrap: wrap;
+			margin-bottom: 20px;
+		}
+
+		.file-input-label {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0 25px;
+			background: linear-gradient(145deg, var(--accent-light), var(--accent-color));
+			color: white;
+			border-radius: 15px;
+			cursor: pointer;
+			font-weight: 600;
+			transition: all 0.3s ease;
+			box-shadow: 4px 4px 8px rgba(79, 70, 229, 0.3);
+			height: 52px;
+			flex: 1;
+			min-width: 200px;
+		}
+
+		.file-input-label:hover {
+			transform: translateY(-2px);
+		}
+
+		.file-input-label input {
+			display: none;
+		}
+
+		.new-file-btn {
+			flex: 1;
+			min-width: 200px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 52px;
+		}
+
+		.new-file-btn button {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 0;
+		}
+
+		.download-section {
+			margin-top: 10px;
+			text-align: center;
+		}
+
+		.download-section button {
+			width: 100%;
+			max-width: 400px;
+			margin: 0 auto;
+		}
+
+		.alert {
+			padding: 20px;
+			border-radius: 20px;
+			margin-bottom: 25px;
+			animation: slideIn 0.3s ease;
+		}
+
+		@keyframes slideIn {
+			from {
+				opacity: 0;
+				transform: translateY(-10px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.alert-success {
+			background: #d1fae5;
+			color: #065f46;
+			border-left: 5px solid var(--success-color);
+		}
+
+		.alert-error {
+			background: #fee2e2;
+			color: #7f1d1d;
+			border-left: 5px solid var(--danger-color);
+		}
+
+		@media (max-width: 768px) {
+
+			.file-load-row {
+				flex-direction: column;
+			}
+
+			.citation-header {
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 12px;
+			}
+
+			.delete-citation-btn {
+				align-self: flex-end;
+			}
+		}
+	</style>
 </head>
+
 <body>
- <header>
- <h1>application « compléter »</h1>
- <p class="subtitle">modifier le fichier « fichier_ressource.js »</p>
- </header>
- 
- <div class="container">
- <div class="panel">
- <h2>charger un fichier existant</h2>
- 
- <!-- MODIFICATION : Nouveau conteneur pour les 4 éléments -->
- <div class="file-inputs-container">
- <label class="file-input-label">
- <input type="file" id="jsFileInput" class="file-input" accept=".js">
- choisir un fichier JS
- </label>
- <span id="fileName" class="file-name">aucun fichier sélectionné</span>
- </div>
- 
- <div class="button-group">
- <button type="button" class="btn-warning" id="parseFileBtn">charger et analyser le fichier</button>
- <button type="button" class="btn-secondary" id="newFileBtn">créer un nouveau fichier</button>
- </div>
- </div>
- 
- <div id="alertContainer"></div>
- 
- <div class="panel">
- <h2>1. titres de l'application</h2>
- <div class="form-group">
- <label for="appTitle">titre</label>
- <input type="text" id="appTitle" value=''>
- </div>
- <div class="form-group">
- <label for="appSubtitle">sous-titre</label>
- <input type="text" id="appSubtitle" value="">
- </div>
- </div>
- 
- <div class="panel">
- <h2>2. citations avec trous prédéfinis</h2>
- <p>Ajoutez des citations, leurs sources (auteur, œuvre) et les mots à remplacer par des trous.</p>
- 
- <div id="citationsContainer">
- <p style="text-align: center; color: var(--text-color); opacity: 0.7; font-style: italic; padding: 20px;">
- Chargez un fichier JS existant ou créez un nouveau fichier pour commencer.
- </p>
- </div>
- 
- <div class="add-button-container">
- <button type="button" class="btn-add" id="addCitation">+ Ajouter une nouvelle citation</button>
- </div>
- </div>
- 
- <div class="download-section">
- <button type="button" class="btn-primary" id="downloadBtn" style="padding: 15px 30px; font-size: 1.1rem;">
- télécharger le fichier_ressource.js
- </button>
- </div>
- </div>
+	<header>
+		<h1>application « compléter »</h1>
+		<p class="subtitle">désigner les mots qui seront à trouver en les surlignant</p>
+	</header>
+	<div class="container">
+		<div class="panel">
+			<h2>charger un fichier existant</h2>
+			<div class="file-load-row">
+				<label class="file-input-label">
+					<input type="file" id="jsFileInput" class="file-input" accept=".js">
+					📂 choisir un fichier JS
+				</label>
+				<div class="new-file-btn">
+					<button type="button" class="btn-secondary" id="newFileBtn">📄 nouveau fichier</button>
+				</div>
+			</div>
+		</div>
+		<div id="alertContainer"></div>
+		<div class="panel">
+			<h2>1. titres de l'application</h2>
+			<div class="form-group"><label>titre</label><input type="text" id="appTitle"
+					placeholder="ex: citations à compléter"></div>
+			<div class="form-group"><label>sous-titre</label><input type="text" id="appSubtitle"
+					placeholder="ex: réviser le cours"></div>
+		</div>
+		<div class="panel">
+			<h2>2. texte avec mots manquants</h2>
+			<div id="citationsContainer"></div>
+			<div class="add-button-container"><button type="button" class="btn-add" id="addCitation">+ ajouter un nouveau texte</button></div>
+		</div>
+		<div class="download-section"><button type="button" class="btn-primary" id="downloadBtn"
+				style="padding:15px 30px; font-size:1.1rem;">📥 exporter fichier JS</button></div>
+	</div>
+	<script>
+		// ---------- État ----------
+		let citations = [];
+		const appTitleInput = document.getElementById('appTitle');
+		const appSubtitleInput = document.getElementById('appSubtitle');
+		const citationsContainer = document.getElementById('citationsContainer');
+		const addCitationBtn = document.getElementById('addCitation');
+		const newFileBtn = document.getElementById('newFileBtn');
+		const downloadBtn = document.getElementById('downloadBtn');
+		const jsFileInput = document.getElementById('jsFileInput');
+		const alertContainer = document.getElementById('alertContainer');
 
- <script>
- // État de l'application
- let citations = [];
- let citationCounter = 0;
+		function showAlert(msg, type = 'info') {
+			const div = document.createElement('div');
+			div.className = `alert alert-${type}`;
+			div.innerHTML = msg;
+			alertContainer.innerHTML = '';
+			alertContainer.appendChild(div);
+			setTimeout(() => { div.style.opacity = '0'; setTimeout(() => { if (div.parentNode) alertContainer.removeChild(div); }, 500); }, 4000);
+		}
 
- // Éléments DOM
- const appTitleInput = document.getElementById('appTitle');
- const appSubtitleInput = document.getElementById('appSubtitle');
- const citationsContainer = document.getElementById('citationsContainer');
- const addCitationBtn = document.getElementById('addCitation');
- const newFileBtn = document.getElementById('newFileBtn');
- const downloadBtn = document.getElementById('downloadBtn');
- const jsFileInput = document.getElementById('jsFileInput');
- const parseFileBtn = document.getElementById('parseFileBtn');
- const fileNameSpan = document.getElementById('fileName');
- const alertContainer = document.getElementById('alertContainer');
+		// Convertir le stockage (avec **) en affichage (sans **, avec spans)
+		function convertStorageToDisplay(storageText) {
+			if (!storageText) return '';
+			return storageText.replace(/\*\*([^*]+)\*\*/g, '<span class="hl-word" data-manque="true">$1</span>');
+		}
 
- // Initialiser l'application
- function init() {
- addCitationBtn.addEventListener('click', addNewCitation);
- newFileBtn.addEventListener('click', createNewFile);
- downloadBtn.addEventListener('click', downloadJSFile);
- parseFileBtn.addEventListener('click', parseSelectedFile);
- 
- jsFileInput.addEventListener('change', function() {
- fileNameSpan.textContent = this.files.length > 0 ? this.files[0].name : "Aucun fichier sélectionné";
- });
- }
+		// Convertir l'affichage (avec spans) en stockage (avec **)
+		function convertDisplayToStorage(displayHtml) {
+			if (!displayHtml) return '';
+			const div = document.createElement('div');
+			div.innerHTML = displayHtml;
+			const spans = div.querySelectorAll('.hl-word');
+			spans.forEach(span => {
+				const text = span.innerText;
+				const replacement = `**${text}**`;
+				span.outerHTML = replacement;
+			});
+			return div.innerHTML;
+		}
 
- // Afficher une alerte
- function showAlert(message, type = 'info') {
- const alertDiv = document.createElement('div');
- alertDiv.className = `alert alert-${type}`;
- alertDiv.innerHTML = message;
- alertContainer.innerHTML = '';
- alertContainer.appendChild(alertDiv);
- 
- setTimeout(() => {
- alertDiv.style.opacity = '0';
- alertDiv.style.transition = 'opacity 0.5s';
- setTimeout(() => {
- if (alertDiv.parentNode) alertContainer.removeChild(alertDiv);
- }, 500);
- }, 5000);
- }
+		// Extraire la liste des mots manquants à partir du texte stocké (avec **)
+		function extractManquesFromStorage(text) {
+			const matches = text.match(/\*\*([^*]+)\*\*/g);
+			if (!matches) return [];
+			return matches.map(m => m.slice(2, -2));
+		}
 
- // Créer un nouveau fichier
- function createNewFile() {
- appTitleInput.value = 'citations à trous';
- appSubtitleInput.value = 'réviser le cours';
- citations = [];
- citationCounter = 0;
- renderCitations();
- showAlert('Nouveau fichier créé. Ajoutez des citations.', 'success');
- }
+		// Appliquer mise en forme classique
+		function applyFormatOnEditor(editor, openTag, closeTag) {
+			if (!editor) return;
+			editor.focus();
+			const selection = window.getSelection();
+			if (selection.rangeCount === 0) return;
+			const range = selection.getRangeAt(0);
+			if (range.collapsed) {
+				showAlert("sélectionner d'abord le texte à mettre en forme.", "info");
+				return;
+			}
+			
+			const selectedHTML = range.extractContents();
+			const wrapper = document.createElement('span');
+			wrapper.appendChild(selectedHTML);
+			const beforeHTML = wrapper.innerHTML;
+			const newContent = openTag + beforeHTML + closeTag;
+			const frag = document.createRange().createContextualFragment(newContent);
+			range.deleteContents();
+			range.insertNode(frag);
+			editor.normalize();
+			editor.dispatchEvent(new Event('input'));
+		}
 
- // Ajouter une nouvelle citation
- function addNewCitation() {
- citationCounter++;
- citations.push({ texte: '', source: '', trous: ['', '', ''] });
- renderCitations();
- const lastCitation = document.querySelector(`.citation-container:last-child`);
- if (lastCitation) lastCitation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
- }
+		// Marquer la sélection comme mot manquant - transformation directe en span.hl-word
+		function markAsManquant(editor, citationIdx, manquesListDiv) {
+			if (!editor) return;
+			editor.focus();
+			const selection = window.getSelection();
+			if (selection.rangeCount === 0) return;
+			const range = selection.getRangeAt(0);
+			if (range.collapsed) {
+				showAlert("sélectionner d'abord le mot ou la portion à marquer comme manquant.", "info");
+				return;
+			}
+			
+			const selectedText = range.toString();
+			if (!selectedText.trim()) {
+				showAlert("sélectionner du texte non vide.", "info");
+				return;
+			}
+			
+			// Vérifier si la sélection est déjà dans un span .hl-word
+			let parent = range.commonAncestorContainer;
+			if (parent.nodeType === Node.TEXT_NODE) parent = parent.parentElement;
+			if (parent.classList && parent.classList.contains('hl-word')) {
+				showAlert("Ce mot est déjà marqué comme manquant.", "info");
+				return;
+			}
+			
+			// Remplacer la sélection par un span.hl-word (pas de ** visibles)
+			const span = document.createElement('span');
+			span.className = 'hl-word';
+			span.setAttribute('data-manque', 'true');
+			span.textContent = selectedText;
+			
+			range.deleteContents();
+			range.insertNode(span);
+			
+			// Mettre à jour le stockage
+			updateCitationFromEditor(editor, citationIdx);
+			
+			// Rafraîchir immédiatement la liste des mots manquants
+			if (manquesListDiv) updateManquesListDisplay(manquesListDiv, citationIdx);
+			
+			showAlert("Mot marqué comme manquant (surligné en vert).", "success");
+		}
 
- // Supprimer une citation
- function deleteCitation(index) {
- if (confirm("Êtes-vous sûr de vouloir supprimer cette citation ?")) {
- citations.splice(index, 1);
- renderCitations();
- }
- }
+		// Enlever le marquage de mot manquant
+		function unmarkManquant(editor, citationIdx, manquesListDiv) {
+			if (!editor) return;
+			editor.focus();
+			const selection = window.getSelection();
+			if (selection.rangeCount === 0) return;
+			const range = selection.getRangeAt(0);
+			
+			if (range.collapsed) {
+				// Pas de sélection : demander confirmation pour tout supprimer
+				const spans = editor.querySelectorAll('.hl-word');
+				if (spans.length === 0) {
+					showAlert("Aucun mot surligné dans ce texte.", "info");
+					return;
+				}
+				if (confirm(`Effacer TOUS les surlignages (${spans.length} mots) de ce texte ?`)) {
+					spans.forEach(span => {
+						const textNode = document.createTextNode(span.textContent);
+						span.parentNode.replaceChild(textNode, span);
+					});
+					editor.normalize();
+					updateCitationFromEditor(editor, citationIdx);
+					if (manquesListDiv) updateManquesListDisplay(manquesListDiv, citationIdx);
+					showAlert("Tous les surlignages supprimés.", "success");
+				}
+				return;
+			}
+			
+			// Avec sélection : ne supprimer que les spans dans la sélection
+			let removed = false;
+			const walker = document.createTreeWalker(
+				range.commonAncestorContainer,
+				NodeFilter.SHOW_ELEMENT,
+				{
+					acceptNode: (node) => {
+						if (node.classList && node.classList.contains('hl-word')) {
+							return NodeFilter.FILTER_ACCEPT;
+						}
+						return NodeFilter.FILTER_SKIP;
+					}
+				}
+			);
+			
+			const spansToRemove = [];
+			while (walker.nextNode()) {
+				if (range.intersectsNode(walker.currentNode)) {
+					spansToRemove.push(walker.currentNode);
+				}
+			}
+			
+			spansToRemove.forEach(span => {
+				const textNode = document.createTextNode(span.textContent);
+				span.parentNode.replaceChild(textNode, span);
+				removed = true;
+			});
+			
+			if (removed) {
+				editor.normalize();
+				updateCitationFromEditor(editor, citationIdx);
+				if (manquesListDiv) updateManquesListDisplay(manquesListDiv, citationIdx);
+				showAlert("Surlignage(s) retiré(s) de la sélection.", "success");
+			} else {
+				showAlert("Aucun mot surligné dans la sélection.", "info");
+			}
+		}
+		
+		function updateCitationFromEditor(editor, citationIdx) {
+			let content = editor.innerHTML;
+			const sourceMatch = content.match(/<div class="source-line">([\s\S]*?)<\/div>/);
+			let source = '';
+			let mainContent = content;
+			if (sourceMatch) {
+				source = sourceMatch[1];
+				mainContent = content.replace(/<div class="source-line">[\s\S]*?<\/div>/, '');
+			}
+			const storageText = convertDisplayToStorage(mainContent);
+			citations[citationIdx].texte = storageText;
+			citations[citationIdx].source = source;
+		}
 
- // Ajouter un trou
- function addTrou(index) {
- if (!citations[index].trous) {
- citations[index].trous = [];
- }
- citations[index].trous.push('');
- renderCitations();
- }
+		// Créer la barre d'outils
+		function createToolbar(editorId, citationIdx, manquesListDiv) {
+			const toolbar = document.createElement('div');
+			toolbar.className = 'format-toolbar';
 
- // Supprimer un trou
- function deleteTrou(citationIndex, trouIndex) {
- if (citations[citationIndex] && citations[citationIndex].trous) {
- citations[citationIndex].trous.splice(trouIndex, 1);
- renderCitations();
- }
- }
+			const italicBtn = document.createElement('button');
+			italicBtn.innerHTML = '<em>I</em> (italique)';
+			italicBtn.classList.add('format-btn');
+			italicBtn.onclick = (e) => {
+				e.preventDefault();
+				const editor = document.getElementById(editorId);
+				if (editor) applyFormatOnEditor(editor, '<em>', '</em>');
+			};
 
- // Configurer le bouton italique
- function setupItalicButton(sourceIndex) {
- const input = document.getElementById(`source${sourceIndex}`);
- const button = document.querySelector(`.italic-btn[data-source-index="${sourceIndex}"]`);
- 
- if (!button) return;
- 
- button.addEventListener('click', function() {
- const currentValue = input.value;
- const selectionStart = input.selectionStart;
- const selectionEnd = input.selectionEnd;
- 
- if (selectionStart !== selectionEnd) {
- // Texte sélectionné : ajouter les balises <em>
- const selectedText = currentValue.substring(selectionStart, selectionEnd);
- const newValue = currentValue.substring(0, selectionStart) + 
- `<em>${selectedText}</em>` + 
- currentValue.substring(selectionEnd);
- input.value = newValue;
- 
- // Mettre à jour les citations
- citations[sourceIndex].source = newValue;
- 
- // Restaurer le focus et la sélection
- input.focus();
- const newCursorPos = selectionEnd + 7; // +7 pour <em></em>
- input.setSelectionRange(newCursorPos, newCursorPos);
- } else {
- // Aucune sélection : suggérer d'ajouter manuellement
- showAlert('Sélectionnez d\'abord le titre à mettre en italique dans le champ source.', 'info');
- }
- });
- }
+			const boldBtn = document.createElement('button');
+			boldBtn.innerHTML = '<strong>G</strong> (gras)';
+			boldBtn.classList.add('format-btn');
+			boldBtn.onclick = (e) => {
+				e.preventDefault();
+				const editor = document.getElementById(editorId);
+				if (editor) applyFormatOnEditor(editor, '<strong>', '</strong>');
+			};
 
- // Afficher les citations - CORRIGÉ POUR ÉVITER citation.trous UNDEFINED
- function renderCitations() {
- citationsContainer.innerHTML = '';
- 
- if (citations.length === 0) {
- citationsContainer.innerHTML = '<p style="text-align: center; color: var(--text-color); opacity: 0.7; font-style: italic; padding: 20px;">Aucune citation ajoutée. Cliquez sur "Ajouter une nouvelle citation" pour en créer une.</p>';
- return;
- }
- 
- citations.forEach((citation, index) => {
- // CORRECTION : S'assurer que citation.trous existe
- if (!citation.trous) {
- citation.trous = [];
- }
- 
- const citationElement = document.createElement('div');
- citationElement.className = 'citation-container';
- citationElement.innerHTML = `
- <div class="citation-header">
- <h3 style="margin: 0; font-weight: 600; color: var(--text-color);">
- <span class="counter">${index + 1}</span> citation ${index + 1}
- </h3>
- <button type="button" class="btn-danger delete-citation-btn" data-index="${index}" 
- style="padding: 10px 18px; font-size: 0.9rem;">
- Supprimer
- </button>
- </div>
- <div class="form-group">
- <label for="citation${index}">Citation</label>
- <textarea id="citation${index}" data-index="${index}" data-type="citation">${citation.texte || ''}</textarea>
- </div>
- <div class="form-group source-group">
- <div class="source-header">
- <label for="source${index}">Source (auteur, œuvre)</label>
- <button type="button" class="italic-btn" data-source-index="${index}" 
- title="Mettre le titre en italique">
- <em>Mettre en italique</em>
- </button>
- </div>
- <input type="text" id="source${index}" data-index="${index}" value="${citation.source || ''}" 
- placeholder="Ex: Platon, La République">
- <div class="source-help">
-							<span class="example">Auteur,</span>
-							<span class="italic-example"><em>Titre de l'œuvre</em></span>
- <br>Utilisez <strong>&lt;em&gt;</strong> autour du titre pour l'italique.
- </div>
- </div>
- <div class="form-group">
- <label>Mots à remplacer par des trous (un par ligne)</label>
- <div class="trou-inputs" id="trousContainer${index}">
- ${citation.trous.map((trou, trouIndex) => `
- <div class="trou-input" style="display: flex; align-items: center; gap: 8px;">
- <input type="text" 
- data-citation-index="${index}" 
- data-trou-index="${trouIndex}"
- value="${trou || ''}"
- placeholder="Mot ${trouIndex + 1}">
- <button type="button" class="btn-danger delete-trou-btn" 
- data-citation-index="${index}" 
- data-trou-index="${trouIndex}"
- style="padding: 8px 12px; font-size: 0.9rem;">
- ×
- </button>
- </div>
- `).join('')}
- </div>
- <button type="button" class="btn-add add-trou-btn" data-index="${index}" 
- style="padding: 10px 18px; font-size: 0.9rem; margin-top: 15px;">
- + Ajouter un mot
- </button>
- </div>
- `;
- 
- citationsContainer.appendChild(citationElement);
- 
- // Configurer le bouton italique
- setupItalicButton(index);
- 
- // Ajouter les écouteurs d'événements
- const citationTextarea = citationElement.querySelector(`textarea[data-type="citation"]`);
- citationTextarea.addEventListener('input', (e) => {
- const idx = parseInt(e.target.dataset.index);
- if (citations[idx]) {
- citations[idx].texte = e.target.value;
- }
- });
- 
- const sourceInput = citationElement.querySelector(`input[data-index]`);
- sourceInput.addEventListener('input', (e) => {
- const idx = parseInt(e.target.dataset.index);
- if (citations[idx]) {
- citations[idx].source = e.target.value;
- }
- });
- 
- const trouInputs = citationElement.querySelectorAll('input[data-citation-index]');
- trouInputs.forEach(input => {
- input.addEventListener('input', (e) => {
- const citationIdx = parseInt(e.target.dataset.citationIndex);
- const trouIdx = parseInt(e.target.dataset.trouIndex);
- if (citations[citationIdx] && citations[citationIdx].trous) {
- citations[citationIdx].trous[trouIdx] = e.target.value;
- }
- });
- });
- 
- const deleteTrouBtns = citationElement.querySelectorAll('.delete-trou-btn');
- deleteTrouBtns.forEach(btn => {
- btn.addEventListener('click', (e) => {
- deleteTrou(parseInt(e.target.dataset.citationIndex), parseInt(e.target.dataset.trouIndex));
- });
- });
- 
- const addTrouBtn = citationElement.querySelector('.add-trou-btn');
- addTrouBtn.addEventListener('click', (e) => {
- addTrou(parseInt(e.target.dataset.index));
- });
- 
- const deleteCitationBtn = citationElement.querySelector('.delete-citation-btn');
- deleteCitationBtn.addEventListener('click', (e) => {
- deleteCitation(parseInt(e.target.dataset.index));
- });
- });
- }
+			const markManquantBtn = document.createElement('button');
+			markManquantBtn.innerHTML = '🟢 surligner comme manquant';
+			markManquantBtn.classList.add('format-btn');
+			markManquantBtn.style.background = '#bbf7d0';
+			markManquantBtn.style.color = '#166534';
+			markManquantBtn.onclick = (e) => {
+				e.preventDefault();
+				const editor = document.getElementById(editorId);
+				if (editor) markAsManquant(editor, citationIdx, manquesListDiv);
+			};
 
- // Analyser un fichier JS sélectionné
- function parseSelectedFile() {
- if (jsFileInput.files.length === 0) {
- showAlert('Veuillez d\'abord sélectionner un fichier JS.', 'error');
- return;
- }
- 
- const file = jsFileInput.files[0];
- const reader = new FileReader();
- 
- reader.onload = function(e) {
- try {
- const fileContent = e.target.result;
- parseJSContentWithApostrophes(fileContent);
- showAlert(`Fichier "${file.name}" chargé avec succès.`, 'success');
- } catch (error) {
- showAlert(`Erreur: ${error.message}`, 'error');
- console.error('Erreur:', error);
- }
- };
- 
- reader.onerror = function() {
- showAlert('Erreur lors de la lecture du fichier.', 'error');
- };
- 
- reader.readAsText(file);
- }
+			const unmarkManquantBtn = document.createElement('button');
+			unmarkManquantBtn.innerHTML = '🧽 enlever le surlignage';
+			unmarkManquantBtn.classList.add('format-btn');
+			unmarkManquantBtn.style.background = '#fecaca';
+			unmarkManquantBtn.style.color = '#991b1b';
+			unmarkManquantBtn.onclick = (e) => {
+				e.preventDefault();
+				const editor = document.getElementById(editorId);
+				if (editor) unmarkManquant(editor, citationIdx, manquesListDiv);
+			};
 
- // Analyser le contenu JS - VERSION AMÉLIORÉE POUR LES APOSTROPHES
- function parseJSContentWithApostrophes(content) {
- // Réinitialiser
- citations = [];
- 
- // Extraire le titre avec gestion des apostrophes
- const title = extractStringWithApostrophes(content, 'title');
- if (title !== null) appTitleInput.value = title;
- 
- // Extraire le sous-titre
- const subtitle = extractStringWithApostrophes(content, 'subtitle');
- if (subtitle !== null) appSubtitleInput.value = subtitle;
- 
- // Trouver le tableau textesAvecTrous
- const arrayStart = content.indexOf('textesAvecTrous = [');
- if (arrayStart === -1) {
- throw new Error('Tableau textesAvecTrous non trouvé.');
- }
- 
- // Extraire tout le tableau
- let arrayContent = '';
- let braceCount = 0;
- let inString = false;
- let quoteChar = null;
- let escapeNext = false;
- let foundStart = false;
- 
- for (let i = arrayStart; i < content.length; i++) {
- const char = content[i];
- 
- if (escapeNext) {
- arrayContent += char;
- escapeNext = false;
- continue;
- }
- 
- if (char === '\\') {
- escapeNext = true;
- arrayContent += char;
- continue;
- }
- 
- if ((char === '"' || char === "'") && !inString) {
- inString = true;
- quoteChar = char;
- arrayContent += char;
- } else if (inString && char === quoteChar) {
- inString = false;
- quoteChar = null;
- arrayContent += char;
- } else if (!inString && char === '[' && !foundStart) {
- foundStart = true;
- braceCount = 1;
- } else if (!inString && char === '[') {
- braceCount++;
- arrayContent += char;
- } else if (!inString && char === ']') {
- braceCount--;
- if (braceCount === 0) {
- // Fin du tableau
- break;
- } else {
- arrayContent += char;
- }
- } else if (foundStart) {
- arrayContent += char;
- }
- }
- 
- // Analyser les objets dans le tableau
- const objects = parseArrayContent(arrayContent);
- citations = objects.filter(obj => obj.texte);
- citationCounter = citations.length;
- renderCitations();
- }
+			const nbspBtn = document.createElement('button');
+			nbspBtn.innerHTML = '␣ espace insécable';
+			nbspBtn.classList.add('format-btn');
+			nbspBtn.onclick = (e) => {
+				e.preventDefault();
+				const editor = document.getElementById(editorId);
+				if (editor) {
+					editor.focus();
+					document.execCommand('insertHTML', false, '&nbsp;');
+					editor.dispatchEvent(new Event('input'));
+				}
+			};
 
- // Extraire une chaîne avec gestion des apostrophes
- function extractStringWithApostrophes(content, variableName) {
- const pattern = `const ${variableName}\\s*=\\s*(["'])((?:\\\\\\1|(?!\\1).)*)\\1`;
- const regex = new RegExp(pattern);
- const match = content.match(regex);
- 
- if (match && match[2]) {
- return decodeJSString(match[2]);
- }
- return null;
- }
+			toolbar.append(italicBtn, boldBtn, markManquantBtn, unmarkManquantBtn, nbspBtn);
+			return toolbar;
+		}
 
- // Parser le contenu d'un tableau
- function parseArrayContent(arrayStr) {
- const objects = [];
- let i = 0;
- 
- while (i < arrayStr.length) {
- // Chercher le prochain objet
- while (i < arrayStr.length && arrayStr[i] !== '{') {
- i++;
- }
- 
- if (i >= arrayStr.length) break;
- 
- // Extraire l'objet complet
- let objStr = '';
- let braceCount = 0;
- let inString = false;
- let quoteChar = null;
- let escapeNext = false;
- 
- for (let j = i; j < arrayStr.length; j++) {
- const char = arrayStr[j];
- 
- if (escapeNext) {
- objStr += char;
- escapeNext = false;
- continue;
- }
- 
- if (char === '\\') {
- escapeNext = true;
- objStr += char;
- continue;
- }
- 
- if ((char === '"' || char === "'") && !inString) {
- inString = true;
- quoteChar = char;
- objStr += char;
- } else if (inString && char === quoteChar) {
- inString = false;
- quoteChar = null;
- objStr += char;
- } else if (!inString && char === '{') {
- braceCount++;
- objStr += char;
- } else if (!inString && char === '}') {
- braceCount--;
- objStr += char;
- if (braceCount === 0) {
- // Parser l'objet
- const obj = parseObjectWithApostrophes(objStr);
- if (obj) objects.push(obj);
- i = j + 1;
- break;
- }
- } else {
- objStr += char;
- }
- }
- }
- 
- return objects;
- }
+		function updateManquesListDisplay(manquesListDiv, idx) {
+			const texteRaw = citations[idx].texte || '';
+			const manques = extractManquesFromStorage(texteRaw);
+			if (manques.length === 0) {
+				manquesListDiv.innerHTML = '<strong>📝 mots manquants :</strong> aucun mot manquant détecté — sélectionner un mot et cliquer sur "🟢 marquer comme manquant"';
+			} else {
+				const badges = manques.map(m => `<span class="manque-badge">${escapeHtml(m)}</span>`).join('');
+				manquesListDiv.innerHTML = `<strong>🔍 mots manquants (${manques.length}) :</strong><br>${badges}`;
+			}
+		}
 
- // Parser un objet avec gestion des apostrophes et balises HTML
- function parseObjectWithApostrophes(objStr) {
- const obj = {};
- 
- // Extraire texte
- const texte = extractPropertyWithApostrophes(objStr, 'texte');
- if (texte !== null) obj.texte = texte;
- 
- // Extraire source - AVEC SUPPORT DES BALISES HTML
- const sourceMatch = objStr.match(/source\s*:\s*["']((?:\\\\["']|(?!["']).)*)["']/);
- if (sourceMatch && sourceMatch[1]) {
- // Décoder ET préserver les balises HTML
- let source = decodeJSString(sourceMatch[1]);
- // Stocker la source avec les balises intactes
- obj.source = source;
- }
- 
- // Extraire trous
- const trous = extractArrayProperty(objStr, 'trous');
- if (trous !== null) obj.trous = trous;
- 
- // CORRECTION : S'assurer que les propriétés essentielles existent
- if (!obj.texte) obj.texte = '';
- if (!obj.source) obj.source = '';
- if (!obj.trous) obj.trous = [];
- 
- return obj;
- }
+		function escapeHtml(str) {
+			return str.replace(/[&<>]/g, function(m) {
+				if (m === '&') return '&amp;';
+				if (m === '<') return '&lt;';
+				if (m === '>') return '&gt;';
+				return m;
+			});
+		}
 
- // Extraire une propriété avec gestion des apostrophes
- function extractPropertyWithApostrophes(objStr, propName) {
- const pattern = `${propName}\\s*:\\s*(["'])((?:\\\\\\1|(?!\\1).)*)\\1`;
- const regex = new RegExp(pattern);
- const match = objStr.match(regex);
- 
- if (match && match[2]) {
- return decodeJSString(match[2]);
- }
- return null;
- }
+		function buildDisplayContent(citation) {
+			let content = convertStorageToDisplay(citation.texte || '');
+			if (citation.source && citation.source.trim()) {
+				content += `<div class="source-line">${citation.source}</div>`;
+			}
+			return content;
+		}
 
- // Extraire une propriété tableau
- function extractArrayProperty(objStr, propName) {
- const pattern = `${propName}\\s*:\\s*\\[(.*?)\\]`;
- const regex = new RegExp(pattern, 's');
- const match = objStr.match(regex);
- 
- if (match && match[1]) {
- const arrayContent = match[1];
- return parseJSArray(arrayContent);
- }
- return null;
- }
+		function renderCitations() {
+			citationsContainer.innerHTML = '';
+			if (citations.length === 0) {
+				citationsContainer.innerHTML = '<p style="text-align:center;padding:20px;">⚠️ aucun texte — cliquer sur "+ ajouter un nouveau texte" pour commencer</p>';
+				return;
+			}
 
- // Parser un tableau JS
- function parseJSArray(arrayStr) {
- const items = [];
- let current = '';
- let inString = false;
- let quoteChar = null;
- let escapeNext = false;
- 
- for (let i = 0; i < arrayStr.length; i++) {
- const char = arrayStr[i];
- 
- if (escapeNext) {
- current += char;
- escapeNext = false;
- continue;
- }
- 
- if (char === '\\') {
- escapeNext = true;
- current += char;
- continue;
- }
- 
- if ((char === '"' || char === "'") && !inString) {
- inString = true;
- quoteChar = char;
- current += char;
- } else if (inString && char === quoteChar) {
- inString = false;
- quoteChar = null;
- current += char;
- } else if (!inString && char === ',') {
- // Fin d'un élément
- items.push(cleanArrayItem(current));
- current = '';
- } else if (!inString && (char === ' ' || char === '\n' || char === '\t')) {
- // Ignorer les espaces hors des chaînes
- continue;
- } else {
- current += char;
- }
- }
- 
- // Ajouter le dernier élément
- if (current.trim()) {
- items.push(cleanArrayItem(current));
- }
- 
- return items;
- }
+			citations.forEach((citation, idx) => {
+				const citationDiv = document.createElement('div');
+				citationDiv.className = 'citation-container';
 
- // Nettoyer un élément de tableau
- function cleanArrayItem(item) {
- let clean = item.trim();
- if ((clean.startsWith('"') && clean.endsWith('"')) || 
- (clean.startsWith("'") && clean.endsWith("'"))) {
- clean = clean.substring(1, clean.length - 1);
- }
- return decodeJSString(clean);
- }
+				const header = document.createElement('div');
+				header.className = 'citation-header';
+				const titleSpan = document.createElement('div');
+				titleSpan.className = 'citation-title';
+				titleSpan.appendChild(document.createTextNode('texte n°'));
+				const counterSpan = document.createElement('span');
+				counterSpan.className = 'counter';
+				counterSpan.textContent = `${idx + 1}`;
+				titleSpan.appendChild(counterSpan);
+				const deleteBtn = document.createElement('button');
+				deleteBtn.type = 'button';
+				deleteBtn.className = 'btn-danger delete-citation-btn';
+				deleteBtn.textContent = '🗑 supprimer';
+				deleteBtn.style.padding = '8px 18px';
+				header.appendChild(titleSpan);
+				header.appendChild(deleteBtn);
+				citationDiv.appendChild(header);
 
- // Décoder une chaîne JS
- function decodeJSString(str) {
- if (!str) return '';
- 
- let result = '';
- let i = 0;
- 
- while (i < str.length) {
- if (str[i] === '\\' && i + 1 < str.length) {
- const next = str[i + 1];
- if (next === '\\') {
- result += '\\';
- i += 2;
- } else if (next === '"') {
- result += '"';
- i += 2;
- } else if (next === "'") {
- result += "'";
- i += 2;
- } else if (next === 'n') {
- result += '\n';
- i += 2;
- } else if (next === 'r') {
- result += '\r';
- i += 2;
- } else if (next === 't') {
- result += '\t';
- i += 2;
- } else if (next === '<') {
- // Garder la balise <
- result += '<';
- i += 2;
- } else if (next === '>') {
- // Garder la balise >
- result += '>';
- i += 2;
- } else if (next === '&') {
- // Garder l'ampersand
- result += '&';
- i += 2;
- } else {
- result += str[i] + next;
- i += 2;
- }
- } else {
- result += str[i];
- i++;
- }
- }
- 
- return result;
- }
+				const contentGroup = document.createElement('div');
+				contentGroup.className = 'form-group';
+				const editor = document.createElement('div');
+				editor.className = 'rich-editor';
+				editor.setAttribute('contenteditable', 'true');
+				editor.setAttribute('data-citation-idx', idx);
+				editor.id = `editor_${idx}`;
 
- // Télécharger le fichier JS
- function downloadJSFile() {
- const title = appTitleInput.value || 'citations à trous';
- const subtitle = appSubtitleInput.value || 'réviser le cours';
- 
- const filteredCitations = citations.filter(c => c.texte && c.texte.trim() !== '');
- 
- if (filteredCitations.length === 0) {
- showAlert('Aucune citation à sauvegarder. Ajoutez au moins une citation.', 'error');
- return;
- }
- 
- let jsContent = `// 1. TITRES DE L'APPLICATION
-const title = "${encodeForJS(title)}";
-const subtitle = "${encodeForJS(subtitle)}";
+				editor.innerHTML = buildDisplayContent(citation);
 
-// 2. CITATIONS AVEC TROUS PRÉDÉFINIS
-const textesAvecTrous = [
-`;
+				// Créer d'abord la div pour la liste des mots manquants
+				const manquesListDiv = document.createElement('div');
+				manquesListDiv.className = 'manques-list';
+				
+				// Créer la toolbar en passant la référence à manquesListDiv
+				const toolbar = createToolbar(`editor_${idx}`, idx, manquesListDiv);
 
- filteredCitations.forEach((citation, index) => {
- // CORRECTION : S'assurer que citation.trous existe
- const cleanTrous = citation.trous ? citation.trous.filter(t => t && t.trim() !== '') : [];
- 
- jsContent += ` {
- texte: "${encodeForJS(citation.texte || '')}",
- source: "${encodeForJS(citation.source || '')}",
- trous: [${cleanTrous.map(t => `"${encodeForJS(t)}"`).join(', ')}]
- }`;
- 
- if (index < filteredCitations.length - 1) {
- jsContent += ',\n';
- } else {
- jsContent += '\n';
- }
- });
- 
- jsContent += `];`;
- 
- const blob = new Blob([jsContent], { type: 'application/javascript' });
- const url = URL.createObjectURL(blob);
- const a = document.createElement('a');
- a.href = url;
- a.download = 'fichier_ressource.js';
- document.body.appendChild(a);
- a.click();
- document.body.removeChild(a);
- URL.revokeObjectURL(url);
- 
- showAlert('Le fichier fichier_ressource.js a été téléchargé avec succès !', 'success');
- }
+				editor.addEventListener('input', () => {
+					updateCitationFromEditor(editor, idx);
+					updateManquesListDisplay(manquesListDiv, idx);
+				});
 
- // Encoder pour JS - Version améliorée pour préserver les balises <em>
- function encodeForJS(text) {
- if (!text) return '';
- 
- let result = '';
- let i = 0;
- 
- while (i < text.length) {
- const char = text[i];
- 
- // Vérifier si c'est le début d'une balise <em>
- if (char === '<' && text.substring(i, i + 4) === '<em>') {
- result += '<em>';
- i += 4;
- }
- // Vérifier si c'est le début d'une balise </em>
- else if (char === '<' && text.substring(i, i + 5) === '</em>') {
- result += '</em>';
- i += 5;
- }
- // Encoder les caractères spéciaux
- else if (char === '\\') {
- result += '\\\\';
- i++;
- } else if (char === '"') {
- result += '\\"';
- i++;
- } else if (char === "'") {
- result += "\\'";
- i++;
- } else if (char === '\n') {
- result += '\\n';
- i++;
- } else if (char === '\r') {
- result += '\\r';
- i++;
- } else if (char === '\t') {
- result += '\\t';
- i++;
- } else {
- result += char;
- i++;
- }
- }
- 
- return result;
- }
+				contentGroup.appendChild(toolbar);
+				contentGroup.appendChild(editor);
+				citationDiv.appendChild(contentGroup);
+				citationDiv.appendChild(manquesListDiv);
+				
+				// Initialiser l'affichage de la liste des mots manquants
+				updateManquesListDisplay(manquesListDiv, idx);
 
- // Initialiser
- document.addEventListener('DOMContentLoaded', init);
- </script>
+				deleteBtn.addEventListener('click', () => deleteCitation(idx));
+				citationsContainer.appendChild(citationDiv);
+			});
+		}
+
+		function deleteCitation(idx) { citations.splice(idx, 1); renderCitations(); }
+		function addNewCitation() {
+			citations.push({ texte: '', source: '' });
+			renderCitations();
+			showAlert("Nouveau texte ajouté → sélectionner un mot et cliquer sur 'marquer comme manquant'", "success");
+		}
+
+		function createNewFile() {
+			appTitleInput.value = 'textes à compléter';
+			appSubtitleInput.value = 'réviser le cours';
+			citations = [];
+			citations.push({ 
+				texte: 'Voici un **exemple** de texte avec un **mot manquant** à compléter.', 
+				source: 'Source : <i>manuel de français</i>, 2026' 
+			});
+			renderCitations();
+			showAlert('nouveau fichier créé → sélectionner un mot et utiliser le bouton vert pour le marquer comme manquant', 'success');
+		}
+
+		function parseJSFile(content) {
+			try {
+				const titleMatch = content.match(/const\s+title\s*=\s*["']([^"']*)["']/);
+				if (titleMatch) appTitleInput.value = titleMatch[1];
+				const subtitleMatch = content.match(/const\s+subtitle\s*=\s*["']([^"']*)["']/);
+				if (subtitleMatch) appSubtitleInput.value = subtitleMatch[1];
+				const tableauMatch = content.match(/const\s+textesAvecTrous\s*=\s*\[([\s\S]*?)\];/);
+				if (!tableauMatch) throw new Error('Tableau textesAvecTrous non trouvé');
+
+				const tableauContent = tableauMatch[1];
+				const nouvellesCitations = [];
+				let i = 0;
+				while (i < tableauContent.length) {
+					let debut = tableauContent.indexOf('{', i);
+					if (debut === -1) break;
+					let profondeur = 0, fin = debut, inString = false, stringChar = '';
+					for (let j = debut; j < tableauContent.length; j++) {
+						const c = tableauContent[j];
+						if (!inString && (c === '"' || c === "'")) { inString = true; stringChar = c; }
+						else if (inString && c === stringChar) { inString = false; }
+						else if (!inString) {
+							if (c === '{') profondeur++;
+							if (c === '}') { profondeur--; if (profondeur === 0) { fin = j; break; } }
+						}
+					}
+					if (fin > debut) {
+						const objetStr = tableauContent.substring(debut, fin + 1);
+						const texteMatch = objetStr.match(/texte\s*:\s*["']([\s\S]*?)(?<!\\)["']\s*,?/);
+						const sourceMatch = objetStr.match(/source\s*:\s*["']([\s\S]*?)(?<!\\)["']\s*,?/);
+						let texte = '', source = '';
+						if (texteMatch) texte = texteMatch[1].replace(/\\n/g, '\n').replace(/\\t/g, '\t').replace(/\\"/g, '"').replace(/\\'/g, "'");
+						if (sourceMatch) source = sourceMatch[1].replace(/\\n/g, '\n').replace(/\\t/g, '\t').replace(/\\"/g, '"').replace(/\\'/g, "'");
+						nouvellesCitations.push({ texte, source });
+						i = fin + 1;
+					} else break;
+				}
+				if (nouvellesCitations.length === 0) throw new Error('Aucun texte trouvé');
+				citations = nouvellesCitations;
+				renderCitations();
+				showAlert(`✅ fichier chargé ! ${citations.length} texte(s)`, 'success');
+			} catch (error) {
+				showAlert(`❌ Erreur : ${error.message}`, 'error');
+			}
+		}
+
+		function loadSelectedFile() {
+			if (jsFileInput.files.length === 0) { showAlert('sélectionner un fichier JS.', 'info'); return; }
+			const file = jsFileInput.files[0];
+			const reader = new FileReader();
+			reader.onload = (e) => parseJSFile(e.target.result);
+			reader.onerror = () => showAlert('Erreur de lecture.', 'error');
+			reader.readAsText(file);
+		}
+
+		function encodeForExport(text) {
+			if (!text) return '';
+			return text.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
+		}
+
+		function downloadJSFile() {
+			const title = appTitleInput.value || 'textes à compléter';
+			const subtitle = appSubtitleInput.value || 'réviser le cours';
+			const validCitations = citations.filter(c => c.texte && c.texte.trim().length > 0);
+			if (validCitations.length === 0) { showAlert('ajouter au moins un texte', 'error'); return; }
+
+			let output = `// 1. TITRES DE L'APPLICATION\nconst title = "${encodeForExport(title)}";\nconst subtitle = "${encodeForExport(subtitle)}";\n\n// 2. CITATIONS AVEC MOTS MANQUANTS MARQUÉS PAR ** **\nconst textesAvecTrous = [\n`;
+			validCitations.forEach((cit, idx) => {
+				let texteRaw = cit.texte || '';
+				let sourceRaw = cit.source || '';
+				output += `\t{\n\t\ttexte: "${encodeForExport(texteRaw)}",\n\t\tsource: "${encodeForExport(sourceRaw)}"\n\t}`;
+				if (idx < validCitations.length - 1) output += ',';
+				output += '\n';
+			});
+			output += `];\n`;
+			const blob = new Blob([output], { type: 'application/javascript' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a'); a.href = url; a.download = 'fichier_ressource.js';
+			document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+			showAlert('✅ Fichier exporté avec les marqueurs ** ** (invisibles pour l\'utilisateur final).', 'success');
+		}
+
+		addCitationBtn.addEventListener('click', addNewCitation);
+		newFileBtn.addEventListener('click', createNewFile);
+		downloadBtn.addEventListener('click', downloadJSFile);
+		jsFileInput.addEventListener('change', loadSelectedFile);
+		
+		createNewFile();
+	</script>
 </body>
+
 </html>
