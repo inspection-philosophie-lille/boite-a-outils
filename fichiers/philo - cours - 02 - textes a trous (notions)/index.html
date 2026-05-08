@@ -816,22 +816,23 @@
 				width: 100%;
 			}
 
-			/* Ligne 2 : sélecteur pleine largeur */
-			.mobile-select-row {
-				display: flex !important;
-				width: 100%;
-				padding-bottom: 5px;
-			}
-			.mobile-select-row .notion-select-wrapper {
-				width: 100%;
-				min-width: 0;
-			}
+/* Ligne 2 : sélecteur avec largeur alignée sur les boutons */
+.mobile-select-row {
+    display: flex !important;
+    justify-content: center !important;  /* Centre le sélecteur */
+    width: 100%;
+    padding-bottom: 5px;
+}
+.mobile-select-row .notion-select-wrapper {
+    width: calc((55px * 4) + (12px * 3)) !important;  /* 256px = largeur des 4 boutons */
+    min-width: 0;
+}
 			.mobile-select-row .notion-select {
 				width: 100%;
 				text-align: center;
 				padding: 0 12px;
 				font-size: 0.85rem;
-				height: 50px;
+				height: 28px;
 			}
 
 			.mobile-title-wrapper {
@@ -865,6 +866,31 @@
 				height: 24px !important;
 			}
 		}
+				
+	/* Largeur fixe pour la colonne des raccourcis */
+		.settings-info table th,
+		.settings-info table td:first-child {
+			white-space: nowrap;
+			width: 1%;
+			text-align: left;
+			padding-left: 0px; /* Espace entre colonnes */
+		}
+
+		.settings-info table td {
+			text-align: left;
+			width: auto;
+		}
+
+	/* Éviter le wrapping sur mobile */
+		@media (max-width: 768px) {
+			.settings-info table th,
+			.settings-info table td:first-child {
+				white-space: normal;
+				padding-left: 0px; /* Espace entre colonnes */
+			}
+		}
+		
+		
 	</style>
 </head>
 <body>
@@ -1077,13 +1103,13 @@
 		</div>
 		<div class="pairs-slider-container">
 			<div class="pairs-slider-label">
-				<span><i class="fas fa-layer-group"></i> nombre de paires</span>
-				<span class="pairs-slider-value" id="pairsCountValue">3</span>
+				<span><i class="fas fa-layer-group"></i> nombre de lacunes</span>
+				<span class="pairs-slider-value" id="pairsCountValue">8</span>
 			</div>
 			<div class="slider-with-labels">
-				<input type="range" id="pairsCountSlider" min="1" max="6" step="1" value="3">
+				<input type="range" id="pairsCountSlider" min="4" max="12" step="1" value="8">
 				<div class="slider-graduations">
-					<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+					<span>4</span><span>6</span><span>8</span><span>10</span><span>12</span>
 				</div>
 			</div>
 		</div>
@@ -1114,6 +1140,7 @@
 		</div>
 	</div>
 
+	<script src="fichier_ressource.js"></script>
 	<script>
 	// ===================================================================
 		// VARIABLES GLOBALES
@@ -1123,7 +1150,7 @@
 		let totalAnswers = 0;
 		let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
 		let darkMode = false, colorblindMode = false, animationsEnabled = true;
-		let pairsCount = 3;
+		let pairsCount = 8;
 		let currentSource = "";
 		let currentFilterNotion = "all";
 
@@ -1283,7 +1310,7 @@
 				darkMode = d.darkMode || false;
 				colorblindMode = d.colorblindMode || false;
 				animationsEnabled = d.animationsEnabled !== undefined ? d.animationsEnabled : true;
-				pairsCount = d.pairsCount || 3;
+				pairsCount = d.pairsCount || 8;
 				if (darkMode) document.body.classList.add('dark-mode');
 				if (colorblindMode) document.body.classList.add('colorblind-mode');
 				applyAnimationsSetting();
@@ -1912,6 +1939,5 @@
 			attendreRessources();
 		});
 	</script>
-	<script src="fichier_ressource.js"></script>
 </body>
 </html>
