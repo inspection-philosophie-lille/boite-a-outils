@@ -1750,9 +1750,9 @@
     function afficherNouvelletexte() {
         const jeu = genererJeu();
         let contenuHTML = jeu.texte;
-        if(jeu.source && jeu.source.trim() !== "") {
-            contenuHTML += `<div class="citation-source">${escapeForAttribute(jeu.source)}</div>`;
-        }
+         if(jeu.source && jeu.source.trim() !== "") {
+            contenuHTML += `<div class="citation-source"></div>`;
+         }
         textContainer.innerHTML = contenuHTML;
         
         wordsContainer.innerHTML = jeu.mots.map(mot => 
