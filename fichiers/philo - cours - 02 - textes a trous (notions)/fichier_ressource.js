@@ -1,3 +1,16 @@
+// REMARQUES
+// Pour mettre le texte en italique			Les bornes <i>...</i> ou <em>...</em>
+// Pour mettre le texte en gras				Les bornes <strong>...</strong> ou <b>...</b>
+// Pour mettre le texte en couleur adaptée	Les bornes <span style="color:red">...</span>
+// Pour mettre un espace insécable			Utiliser &nbsp;
+
+// 1. TITRES DE L'APPLICATION
+
+const title = "textes à trous";
+const subtitle = "réviser le cours sur les notions";
+
+// 2. TEXTES AVEC TROUS PRÉDÉFINIS
+
 const textesAvecTrous = [
 	// ============================================
 	// NOTION : L'ART (10 textes)
