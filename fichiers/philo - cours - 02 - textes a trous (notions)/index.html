@@ -775,6 +775,38 @@
                 padding: 0 0.4rem;
                 font-size: 0.7rem;
             }
+
+            /* Boutons circulaires parfaits pour mobile */
+            .toolbar-btn {
+                width: 55px !important;
+                height: 55px !important;
+                border-radius: 50% !important;
+                min-width: 55px !important;
+                max-width: 55px !important;
+                min-height: 55px !important;
+                max-height: 55px !important;
+                padding: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                flex-shrink: 0 !important;
+            }
+
+            .toolbar-btn svg {
+                width: 24px !important;
+                height: 24px !important;
+                flex-shrink: 0 !important;
+            }
+
+            /* Ajustement de la ligne des boutons pour qu'ils restent alignés */
+            .mobile-buttons-row {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 12px !important;
+                width: 100%;
+            }
         }
 
         #action-button.reload-mode {
@@ -854,16 +886,6 @@
 
             .main-title, .subtitle {
                 display: none;
-            }
-
-            .toolbar-btn {
-                width: 55px !important;
-                height: 55px !important;
-            }
-
-            .toolbar-btn svg {
-                width: 24px !important;
-                height: 24px !important;
             }
         }
                 
@@ -1204,7 +1226,7 @@
         
         let optionsHTML = '<option value="all">✨ toutes les notions</option>';
         for (const notion of notions) {
-            optionsHTML += `<option value="${escapeForAttribute(notion)}">${notion}</option>`;
+				optionsHTML += `<option value="${escapeForAttribute(notion)}">${notion}</option>`;
         }
         selectDesktop.innerHTML = optionsHTML;
         selectMobile.innerHTML = optionsHTML;
@@ -1750,9 +1772,7 @@
     function afficherNouvelletexte() {
         const jeu = genererJeu();
         let contenuHTML = jeu.texte;
-         if(jeu.source && jeu.source.trim() !== "") {
-            contenuHTML += `<div class="citation-source"></div>`;
-         }
+
         textContainer.innerHTML = contenuHTML;
         
         wordsContainer.innerHTML = jeu.mots.map(mot => 
