@@ -830,47 +830,38 @@
 			showAlert('nouveau fichier créé → sélectionner un mot et utiliser le bouton vert pour le marquer comme manquant', 'success');
 		}
 
+		// Nouvelle version de parseJSFile qui gère correctement les apostrophes et les guillemets
 		function parseJSFile(content) {
 			try {
-				const titleMatch = content.match(/const\s+title\s*=\s*["']([^"']*)["']/);
+				// Extraction du titre
+				const titleMatch = content.match(/const\s+title\s*=\s*["'](.+?)["']\s*;/s);
 				if (titleMatch) appTitleInput.value = titleMatch[1];
-				const subtitleMatch = content.match(/const\s+subtitle\s*=\s*["']([^"']*)["']/);
+				
+				// Extraction du sous-titre
+				const subtitleMatch = content.match(/const\s+subtitle\s*=\s*["'](.+?)["']\s*;/s);
 				if (subtitleMatch) appSubtitleInput.value = subtitleMatch[1];
-				const tableauMatch = content.match(/const\s+textesAvecTrous\s*=\s*\[([\s\S]*?)\];/);
+				
+				// Extraction du tableau textesAvecTrous
+				const tableauMatch = content.match(/const\s+textesAvecTrous\s*=\s*(\[[\s\S]*?\])\s*;/);
 				if (!tableauMatch) throw new Error('Tableau textesAvecTrous non trouvé');
-
-				const tableauContent = tableauMatch[1];
-				const nouvellesCitations = [];
-				let i = 0;
-				while (i < tableauContent.length) {
-					let debut = tableauContent.indexOf('{', i);
-					if (debut === -1) break;
-					let profondeur = 0, fin = debut, inString = false, stringChar = '';
-					for (let j = debut; j < tableauContent.length; j++) {
-						const c = tableauContent[j];
-						if (!inString && (c === '"' || c === "'")) { inString = true; stringChar = c; }
-						else if (inString && c === stringChar) { inString = false; }
-						else if (!inString) {
-							if (c === '{') profondeur++;
-							if (c === '}') { profondeur--; if (profondeur === 0) { fin = j; break; } }
-						}
-					}
-					if (fin > debut) {
-						const objetStr = tableauContent.substring(debut, fin + 1);
-						const texteMatch = objetStr.match(/texte\s*:\s*["']([\s\S]*?)(?<!\\)["']\s*,?/);
-						const sourceMatch = objetStr.match(/source\s*:\s*["']([\s\S]*?)(?<!\\)["']\s*,?/);
-						let texte = '', source = '';
-						if (texteMatch) texte = texteMatch[1].replace(/\\n/g, '\n').replace(/\\t/g, '\t').replace(/\\"/g, '"').replace(/\\'/g, "'");
-						if (sourceMatch) source = sourceMatch[1].replace(/\\n/g, '\n').replace(/\\t/g, '\t').replace(/\\"/g, '"').replace(/\\'/g, "'");
-						nouvellesCitations.push({ texte, source });
-						i = fin + 1;
-					} else break;
+				
+				// Utiliser Function pour évaluer le tableau JavaScript en toute sécurité
+				const tableauStr = tableauMatch[1];
+				const parsedArray = Function('"use strict"; return (' + tableauStr + ')')();
+				
+				if (!Array.isArray(parsedArray) || parsedArray.length === 0) {
+					throw new Error('Aucun texte trouvé ou format invalide');
 				}
-				if (nouvellesCitations.length === 0) throw new Error('Aucun texte trouvé');
-				citations = nouvellesCitations;
+				
+				citations = parsedArray.map(item => ({
+					texte: item.texte || '',
+					source: item.source || ''
+				}));
+				
 				renderCitations();
 				showAlert(`✅ fichier chargé ! ${citations.length} texte(s)`, 'success');
 			} catch (error) {
+				console.error('Erreur de parsing:', error);
 				showAlert(`❌ Erreur : ${error.message}`, 'error');
 			}
 		}
@@ -881,12 +872,17 @@
 			const reader = new FileReader();
 			reader.onload = (e) => parseJSFile(e.target.result);
 			reader.onerror = () => showAlert('Erreur de lecture.', 'error');
-			reader.readAsText(file);
+			reader.readAsText(file, 'UTF-8');
 		}
 
 		function encodeForExport(text) {
 			if (!text) return '';
-			return text.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
+			// Gestion des caractères spéciaux pour l'export
+			return text.replace(/\\/g, '\\\\')
+					   .replace(/"/g, '\\"')
+					   .replace(/\n/g, '\\n')
+					   .replace(/\r/g, '\\r')
+					   .replace(/\t/g, '\\t');
 		}
 
 		function downloadJSFile() {
@@ -895,7 +891,17 @@
 			const validCitations = citations.filter(c => c.texte && c.texte.trim().length > 0);
 			if (validCitations.length === 0) { showAlert('ajouter au moins un texte', 'error'); return; }
 
-			let output = `// 1. TITRES DE L'APPLICATION\nconst title = "${encodeForExport(title)}";\nconst subtitle = "${encodeForExport(subtitle)}";\n\n// 2. CITATIONS AVEC MOTS MANQUANTS MARQUÉS PAR ** **\nconst textesAvecTrous = [\n`;
+			let output = `// REMARQUES\n`;
+			output += `// Pour mettre le texte en italique\t\t\tLes bornes <i>...</i> ou <em>...</em>\n`;
+			output += `// Pour mettre le texte en gras\t\t\t\tLes bornes <strong>...</strong> ou <b>...</b>\n`;
+			output += `// Pour mettre le texte en couleur adaptée\tLes bornes <span style="color:red">...<span style="color:red">...</span>\n`;
+			output += `// Pour mettre un espace insécable\t\t\tUtiliser &nbsp;\n\n`;
+			output += `// 1. TITRES DE L'APPLICATION\n\n`;
+			output += `const title = "${encodeForExport(title)}";\n`;
+			output += `const subtitle = "${encodeForExport(subtitle)}";\n\n`;
+			output += `// 2. TEXTES AVEC TROUS PRÉDÉFINIS\n\n`;
+			output += `const textesAvecTrous = [\n`;
+			
 			validCitations.forEach((cit, idx) => {
 				let texteRaw = cit.texte || '';
 				let sourceRaw = cit.source || '';
@@ -904,10 +910,16 @@
 				output += '\n';
 			});
 			output += `];\n`;
-			const blob = new Blob([output], { type: 'application/javascript' });
+			
+			const blob = new Blob([output], { type: 'application/javascript;charset=utf-8' });
 			const url = URL.createObjectURL(blob);
-			const a = document.createElement('a'); a.href = url; a.download = 'fichier_ressource.js';
-			document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+			const a = document.createElement('a'); 
+			a.href = url; 
+			a.download = 'fichier_ressource.js';
+			document.body.appendChild(a); 
+			a.click(); 
+			document.body.removeChild(a); 
+			URL.revokeObjectURL(url);
 			showAlert('✅ Fichier exporté avec les marqueurs ** ** (invisibles pour l\'utilisateur final).', 'success');
 		}
 
