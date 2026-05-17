@@ -7,8 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <link rel="icon" href="favicon.ico" />
-    <title id="htmlTitle"></title>
+    <link rel="icon" href="../../src/favicon.ico">
+    <title>texte à trous - réviser les auteurs</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -224,6 +224,37 @@
 
         .toolbar-btn:hover::after {
             opacity: 1;
+        }
+
+        /* Style pour le sélecteur de notions */
+        .notion-select-wrapper {
+            position: relative;
+            width: auto;
+            min-width: 180px;
+        }
+        .notion-select {
+            width: 100%;
+            padding: 0 12px;
+            height: 60px;
+            background: var(--btn);
+            border: none;
+            border-radius: 30px;
+            box-shadow: var(--shadow-out);
+            color: var(--font-color);
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-family: inherit;
+            appearance: none;
+            -webkit-appearance: none;
+            text-align: center;
+            font-weight: bold;
+        }
+        .notion-select option {
+            background: var(--bg);
+            color: var(--font-color);
+        }
+        .toolbar-right {
+            gap: 12px;
         }
 
         .main-title {
@@ -744,6 +775,38 @@
                 padding: 0 0.4rem;
                 font-size: 0.7rem;
             }
+
+            /* Boutons circulaires parfaits pour mobile */
+            .toolbar-btn {
+                width: 55px !important;
+                height: 55px !important;
+                border-radius: 50% !important;
+                min-width: 55px !important;
+                max-width: 55px !important;
+                min-height: 55px !important;
+                max-height: 55px !important;
+                padding: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                flex-shrink: 0 !important;
+            }
+
+            .toolbar-btn svg {
+                width: 24px !important;
+                height: 24px !important;
+                flex-shrink: 0 !important;
+            }
+
+            /* Ajustement de la ligne des boutons pour qu'ils restent alignés */
+            .mobile-buttons-row {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 12px !important;
+                width: 100%;
+            }
         }
 
         #action-button.reload-mode {
@@ -772,14 +835,36 @@
                 padding: 5px 15px 0px 15px !important;
                 margin-bottom: 5px !important;
                 background: var(--bg);
+                gap: 8px;
             }
 
-            .mobile-buttons-container {
+            /* Ligne 1 : 4 boutons centrés */
+            .mobile-buttons-row {
                 display: flex !important;
                 flex-direction: row !important;
                 justify-content: center !important;
-                gap: 15px !important;
-                margin-bottom: 5px !important;
+                align-items: center !important;
+                gap: 12px !important;
+                width: 100%;
+            }
+
+            /* Ligne 2 : sélecteur avec largeur alignée sur les boutons */
+            .mobile-select-row {
+                display: flex !important;
+                justify-content: center !important;
+                width: 100%;
+                padding-bottom: 5px;
+            }
+            .mobile-select-row .notion-select-wrapper {
+                width: calc((55px * 4) + (12px * 3)) !important;
+                min-width: 0;
+            }
+            .mobile-select-row .notion-select {
+                width: 100%;
+                text-align: center;
+                padding: 0 12px;
+                font-size: 0.85rem;
+                height: 28px;
             }
 
             .mobile-title-wrapper {
@@ -802,15 +887,28 @@
             .main-title, .subtitle {
                 display: none;
             }
+        }
+                
+        /* Largeur fixe pour la colonne des raccourcis */
+        .settings-info table th,
+        .settings-info table td:first-child {
+            white-space: nowrap;
+            width: 1%;
+            text-align: left;
+            padding-left: 0px;
+        }
 
-            .toolbar-btn {
-                width: 50px !important;
-                height: 50px !important;
-            }
+        .settings-info table td {
+            text-align: left;
+            width: auto;
+        }
 
-            .toolbar-btn svg {
-                width: 24px !important;
-                height: 24px !important;
+        /* Éviter le wrapping sur mobile */
+        @media (max-width: 768px) {
+            .settings-info table th,
+            .settings-info table td:first-child {
+                white-space: normal;
+                padding-left: 0px;
             }
         }
     </style>
@@ -841,6 +939,11 @@
             <p class="subtitle" id="appSubtitle"></p>
         </div>
         <div class="toolbar-right">
+            <div class="notion-select-wrapper">
+                <select id="notionFilter" class="notion-select" data-title="filtrer par auteur">
+                    <option value="all">📚 toutes les sources</option>
+                </select>
+            </div>
             <button class="toolbar-btn fullscreen" id="fullscreenButton" data-title="plein écran (F)">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
                     <line x1="4" y1="5" x2="10" y2="5" />
@@ -865,7 +968,7 @@
 
     <!-- TOOLBAR MOBILE -->
     <div class="toolbar-mobile">
-        <div class="mobile-buttons-container">
+        <div class="mobile-buttons-row">
             <button class="toolbar-btn home-btn" id="homeBtnMobile" data-title="accueil">
                 <div class="icon-wrapper">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -902,6 +1005,13 @@
                 </svg>
             </button>
         </div>
+        <div class="mobile-select-row">
+            <div class="notion-select-wrapper">
+                <select id="notionFilterMobile" class="notion-select" data-title="auteur">
+                    <option value="all">📚 toutes les sources</option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <div class="mobile-title-wrapper">
@@ -929,843 +1039,839 @@
             </button>
         </div>
         <div class="menu-content">
-            <button class="menu-item" id="openInstructionsSub">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>présentation
-            </button>
-            <button class="menu-item" id="openStatsSub">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M 3 3 L 3 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
-                    <path d="M 3 22 L 22 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
-                    <path d="M 7 18 L 11 12 L 15 15 L 21 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-                </svg>statistiques
-            </button>
-            <button class="menu-item" id="openSettingsSub">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                </svg>paramètres
-            </button>
-            <button class="menu-item" id="openShortcutsSub">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                    <line x1="6" y1="8" x2="10" y2="8"></line>
-                    <line x1="14" y1="8" x2="18" y2="8"></line>
-                    <line x1="6" y1="12" x2="10" y2="12"></line>
-                    <line x1="14" y1="12" x2="18" y2="12"></line>
-                    <line x1="6" y1="16" x2="10" y2="16"></line>
-                    <line x1="14" y1="16" x2="18" y2="16"></line>
-                </svg>raccourcis clavier
-            </button>
-            <button class="menu-item" id="openAboutSub">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>à propos
-            </button>
+            <button class="menu-item" id="openInstructionsSub"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>présentation</button>
+            <button class="menu-item" id="openStatsSub"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M 3 3 L 3 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" /><path d="M 3 22 L 22 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" /><path d="M 7 18 L 11 12 L 15 15 L 21 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>statistiques</button>
+            <button class="menu-item" id="openSettingsSub"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>paramètres</button>
+            <button class="menu-item" id="openShortcutsSub"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="6" y1="8" x2="10" y2="8"></line><line x1="14" y1="8" x2="18" y2="8"></line><line x1="6" y1="12" x2="10" y2="12"></line><line x1="14" y1="12" x2="18" y2="12"></line><line x1="6" y1="16" x2="10" y2="16"></line><line x1="14" y1="16" x2="18" y2="16"></line></svg>raccourcis clavier</button>
+            <button class="menu-item" id="openAboutSub"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>à propos</button>
         </div>
     </div>
 
     <!-- SOUS-MENUS -->
-    <div class="submenu" id="submenuInstructions">
-        <div class="menu-header"><button class="submenu-close" data-submenu="presentation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
-        <div class="submenu-title">présentation</div>
-        <div class="settings-info"><i class="fas fa-bullseye"></i><strong> objectif</strong><br><br>compléter un texte à trous par glisser-déposer des mots manquants.</div><br>
-        <div class="settings-info"><i class="fas fa-bars"></i><strong> options</strong><br><br>modes sombre, daltonien, animations</div><br>
-        <div class="settings-info"><i class="fas fa-chart-line"></i><strong> statistiques</strong><br><br>score cumulé sauvegardé automatiquement</div>
-    </div>
+    <div class="submenu" id="submenuInstructions"><div class="menu-header"><button class="submenu-close" data-submenu="presentation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div><div class="submenu-title">présentation</div><div class="settings-info"><i class="fas fa-bullseye"></i><strong> objectif</strong><br><br>compléter un texte à trous par glisser-déposer des mots manquants.</div><br><div class="settings-info"><i class="fas fa-bars"></i><strong> options</strong><br><br>modes sombre, daltonien, animations</div><br><div class="settings-info"><i class="fas fa-chart-line"></i><strong> statistiques</strong><br><br>score cumulé sauvegardé automatiquement</div></div>
+    <div class="submenu" id="submenuStats"><div class="menu-header"><button class="submenu-close" data-submenu="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div><div class="submenu-title">statistiques</div><div class="stats-info"><p><i class="fas fa-chart-line"></i><strong> quelques chiffres :</strong></p><br><p>• score actuel : <span class="stat-value" id="statTotalCorrect">0</span> / <span id="statTotalAnswers">0</span></p><p>• taux de réussite : <span class="stat-value" id="statSuccessRate">0</span> %</p><p>• parties jouées : <span class="stat-value" id="statGamesPlayed">0</span></p></div><br><div class="stats-info"><p><i class="fas fa-save"></i><strong> sauvegarde :</strong><br> les statistiques sont automatiquement sauvegardées</p></div><button class="stats-reload-btn" id="resetStatsBtn" style="width:100%;margin-top:15px;padding:8px 16px;background:var(--btn);border:none;border-radius:0.5rem;box-shadow:var(--shadow-out);color:var(--font-color);cursor:pointer;"><i class="fas fa-sync-alt"></i> réinitialiser les statistiques</button></div>
+    <div class="submenu" id="submenuSettings"><div class="menu-header"><button class="submenu-close" data-submenu="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg></button></div><div class="submenu-title">paramètres</div><div class="toggle-container"><span class="toggle-label"><i class="fas fa-moon"></i>mode sombre</span><label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label></div><div class="toggle-container"><span class="toggle-label"><i class="fas fa-play"></i>animations</span><label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label></div><div class="toggle-container"><span class="toggle-label"><i class="fas fa-palette"></i>mode daltonien</span><label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label></div><div class="pairs-slider-container"><div class="pairs-slider-label"><span><i class="fas fa-layer-group"></i> nombre de lacunes</span><span class="pairs-slider-value" id="pairsCountValue">8</span></div><div class="slider-with-labels"><input type="range" id="pairsCountSlider" min="4" max="12" step="1" value="8"><div class="slider-graduations"><span>4</span><span>6</span><span>8</span><span>10</span><span>12</span></div></div></div></div>
+    <div class="submenu" id="submenuShortcuts"><div class="menu-header"><button class="submenu-close" data-submenu="shortcuts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg></button></div><div class="submenu-title">raccourcis clavier</div><div class="settings-info"><table style="width:100%"><tr><th><kbd>ctrl</kbd> <kbd>H</kbd></th><td>renvoi au site académique</td></tr><tr><th><kbd>ctrl</kbd> <kbd>R</kbd></th><td>recharger / nouvelle partie</td></tr><tr><th><kbd>ctrl</kbd> <kbd>F</kbd></th><td>plein écran</td></tr><tr><th><kbd>ctrl</kbd> <kbd>M</kbd></th><td>ouvrir / fermer le menu</td></tr><tr><th><kbd>ESC</kbd></th><td>fermer</td></tr></table></div></div>
+    <div class="submenu" id="submenuAbout"><div class="menu-header"><button class="submenu-close" data-submenu="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg></button></div><div class="submenu-title">à propos</div><div class="settings-info"><p>application développée par Daniel Boulagnon</p><br><p><i class="fas fa-envelope"></i> daniel.boulagnon@ac-lille.fr</p><br><p>exploitation à but pédagogique et non commercial</p><br><p>© 2026 – version 2.1.2</p></div></div>
 
-    <div class="submenu" id="submenuStats">
-        <div class="menu-header"><button class="submenu-close" data-submenu="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
-        <div class="submenu-title">statistiques</div>
-        <div class="stats-info">
-            <p><i class="fas fa-chart-line"></i><strong> quelques chiffres :</strong></p><br>
-            <p>• score actuel : <span class="stat-value" id="statTotalCorrect">0</span> / <span id="statTotalAnswers">0</span></p>
-            <p>• taux de réussite : <span class="stat-value" id="statSuccessRate">0</span> %</p>
-            <p>• parties jouées : <span class="stat-value" id="statGamesPlayed">0</span></p>
-        </div><br>
-        <div class="stats-info">
-            <p><i class="fas fa-save"></i><strong> sauvegarde :</strong><br> les statistiques sont automatiquement sauvegardées</p>
-        </div>
-        <button class="stats-reload-btn" id="resetStatsBtn" style="width:100%;margin-top:15px;padding:8px 16px;background:var(--btn);border:none;border-radius:0.5rem;box-shadow:var(--shadow-out);color:var(--font-color);cursor:pointer;"><i class="fas fa-sync-alt"></i> réinitialiser les statistiques</button>
-    </div>
 
-    <div class="submenu" id="submenuSettings">
-        <div class="menu-header"><button class="submenu-close" data-submenu="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg></button></div>
-        <div class="submenu-title">paramètres</div>
-        <div class="toggle-container">
-            <span class="toggle-label"><i class="fas fa-moon"></i>mode sombre</span>
-            <label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
-        </div>
-        <div class="toggle-container">
-            <span class="toggle-label"><i class="fas fa-play"></i>animations</span>
-            <label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label>
-        </div>
-        <div class="toggle-container">
-            <span class="toggle-label"><i class="fas fa-palette"></i>mode daltonien</span>
-            <label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label>
-        </div>
-        <div class="pairs-slider-container">
-            <div class="pairs-slider-label">
-                <span><i class="fas fa-layer-group"></i> nombre de paires</span>
-                <span class="pairs-slider-value" id="pairsCountValue">3</span>
-            </div>
-            <div class="slider-with-labels">
-                <input type="range" id="pairsCountSlider" min="1" max="6" step="1" value="3">
-                <div class="slider-graduations">
-                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="submenu" id="submenuShortcuts">
-        <div class="menu-header"><button class="submenu-close" data-submenu="shortcuts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg></button></div>
-        <div class="submenu-title">raccourcis clavier</div>
-        <div class="settings-info">
-            <table style="width:100%">
-                <tr><th><kbd>ctrl</kbd> <kbd>H</kbd></th><td>renvoi au site académique</td>
-                <tr><th><kbd>ctrl</kbd> <kbd>R</kbd></th><td>recharger / nouvelle partie</td>
-                <tr><th><kbd>ctrl</kbd> <kbd>F</kbd></th><td>plein écran</td>
-                <tr><th><kbd>ctrl</kbd> <kbd>M</kbd></th><td>ouvrir / fermer le menu</td>
-                <tr><th><kbd>ESC</kbd></th><td>fermer</td>
-            </table>
-        </div>
-    </div>
-
-    <div class="submenu" id="submenuAbout">
-        <div class="menu-header"><button class="submenu-close" data-submenu="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg></button></div>
-        <div class="submenu-title">à propos</div>
-        <div class="settings-info">
-            <p>application développée par Daniel Boulagnon</p><br>
-            <p><i class="fas fa-envelope"></i> daniel.boulagnon@ac-lille.fr</p><br>
-            <p>exploitation à but pédagogique et non commercial</p><br>
-            <p>© 2026 – version 2.1.2</p>
-        </div>
-    </div>
-
+<script src="fichier_ressource.js"></script>
     <script>
-        // ===================================================================
-        // VARIABLES GLOBALES
-        // ===================================================================
-        let currentState = "verify";
-        let correctAnswers = 0;
-        let totalAnswers = 0;
-        let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
-        let darkMode = false, colorblindMode = false, animationsEnabled = true;
-        let pairsCount = 3;
-        let currentSource = "";
+    // ===================================================================
+    // VARIABLES GLOBALES
+    // ===================================================================
+    let currentState = "verify";
+    let correctAnswers = 0;
+    let totalAnswers = 0;
+    let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
+    let darkMode = false, colorblindMode = false, animationsEnabled = true;
+    let pairsCount = 8;
+    let currentSource = "";
+    let currentFilterNotion = "all";
 
-        // ===================================================================
-        // DÉTECTION DE L'INTERFACE
-        // ===================================================================
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+        document.body.classList.add('touch-interface');
+        document.body.classList.remove('mouse-interface');
+    } else {
+        document.body.classList.add('mouse-interface');
+        document.body.classList.remove('touch-interface');
+    }
+
+    let selectedWord = null;
+    let touchTimeout = null;
+
+    const textContainer = document.getElementById("text-container");
+    const wordsContainer = document.getElementById("words-container");
+    const actionButton = document.getElementById("action-button");
+    const scoreButton = document.getElementById("score-button");
+
+    // ===================================================================
+    // FONCTIONS DE RENDU ET FILTRES (basées sur le champ "source" = auteur)
+    // ===================================================================
+    
+    function extraireListeAuteurs() {
+        const auteursSet = new Set();
+        for (const texte of textesAvecTrous) {
+            if (texte.source && texte.source.trim()) {
+                auteursSet.add(texte.source.trim());
+            }
+        }
+        return Array.from(auteursSet).sort((a,b) => a.localeCompare(b));
+    }
+
+    function remplirMenusAuteurs() {
+        const auteurs = extraireListeAuteurs();
+        const selectDesktop = document.getElementById('notionFilter');
+        const selectMobile = document.getElementById('notionFilterMobile');
+        if (!selectDesktop || !selectMobile) return;
         
-        const isMobile = window.innerWidth <= 768;
-
-        if (isMobile) {
-            document.body.classList.add('touch-interface');
-            document.body.classList.remove('mouse-interface');
+        let optionsHTML = '<option value="all">📚 toutes les sources</option>';
+        for (const auteur of auteurs) {
+            optionsHTML += `<option value="${escapeForAttribute(auteur)}">${auteur}</option>`;
+        }
+        selectDesktop.innerHTML = optionsHTML;
+        selectMobile.innerHTML = optionsHTML;
+        
+        const savedFilter = localStorage.getItem('selectedAuthorFilter');
+        if (savedFilter && auteurs.includes(savedFilter)) {
+            selectDesktop.value = savedFilter;
+            selectMobile.value = savedFilter;
+            currentFilterNotion = savedFilter;
         } else {
-            document.body.classList.add('mouse-interface');
-            document.body.classList.remove('touch-interface');
+            selectDesktop.value = "all";
+            selectMobile.value = "all";
+            currentFilterNotion = "all";
         }
-
-        let selectedWord = null;
-
-        const textContainer = document.getElementById("text-container");
-        const wordsContainer = document.getElementById("words-container");
-        const actionButton = document.getElementById("action-button");
-        const scoreButton = document.getElementById("score-button");
-
-        // ===================================================================
-        // FONCTIONS DE RENDU
-        // ===================================================================
-        
-        function escapeForAttribute(text) {
-            if (!text) return '';
-            return text
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;');
+    }
+    
+    function getTextesFiltres() {
+        if (currentFilterNotion === "all") return textesAvecTrous;
+        return textesAvecTrous.filter(txt => txt.source === currentFilterNotion);
+    }
+    
+    function escapeForAttribute(text) {
+        if (!text) return '';
+        return text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+    
+    function extraireMotsEntreAsterisques(texte) {
+        const regex = /\*\*(.*?)\*\*/g;
+        const mots = [];
+        let match;
+        while ((match = regex.exec(texte)) !== null) {
+            mots.push(match[1]);
         }
-        
-        function extraireMotsEntreAsterisques(texte) {
-            const regex = /\*\*(.*?)\*\*/g;
-            const mots = [];
-            let match;
-            while ((match = regex.exec(texte)) !== null) {
-                mots.push(match[1]);
-            }
-            return mots;
+        return mots;
+    }
+
+    function applyAnimationsSetting() {
+        if (!animationsEnabled) document.body.classList.add('no-animations');
+        else document.body.classList.remove('no-animations');
+    }
+
+    function saveGameStats() {
+        localStorage.setItem('gameStats', JSON.stringify({ correctAnswers, totalAnswers, gamesPlayed }));
+    }
+
+    function loadGameStats() {
+        const s = localStorage.getItem('gameStats');
+        if (s) {
+            const d = JSON.parse(s);
+            correctAnswers = d.correctAnswers || 0;
+            totalAnswers = d.totalAnswers || 0;
+            gamesPlayed = d.gamesPlayed || 0;
         }
+        scoreButton.textContent = `score : ${correctAnswers} / ${totalAnswers}`;
+        updateStatsDisplay();
+    }
 
-        function applyAnimationsSetting() {
-            if (!animationsEnabled) document.body.classList.add('no-animations');
-            else document.body.classList.remove('no-animations');
-        }
+    function updateStatsDisplay() {
+        const statCorrect = document.getElementById('statTotalCorrect');
+        const statAnswers = document.getElementById('statTotalAnswers');
+        const statRate = document.getElementById('statSuccessRate');
+        const statGames = document.getElementById('statGamesPlayed');
+        if (statCorrect) statCorrect.textContent = correctAnswers;
+        if (statAnswers) statAnswers.textContent = totalAnswers;
+        const percentage = totalAnswers > 0 ? Math.round((correctAnswers / totalAnswers) * 100) : 0;
+        if (statRate) statRate.textContent = percentage;
+        if (statGames) statGames.textContent = gamesPlayed;
+    }
 
-        function saveGameStats() {
-            localStorage.setItem('gameStats', JSON.stringify({ correctAnswers, totalAnswers, gamesPlayed }));
-        }
-
-        function loadGameStats() {
-            const s = localStorage.getItem('gameStats');
-            if (s) {
-                const d = JSON.parse(s);
-                correctAnswers = d.correctAnswers || 0;
-                totalAnswers = d.totalAnswers || 0;
-                gamesPlayed = d.gamesPlayed || 0;
-            }
-            scoreButton.textContent = `score : ${correctAnswers} / ${totalAnswers}`;
-            updateStatsDisplay();
-        }
-
-        function updateStatsDisplay() {
-            const statCorrect = document.getElementById('statTotalCorrect');
-            const statAnswers = document.getElementById('statTotalAnswers');
-            const statRate = document.getElementById('statSuccessRate');
-            const statGames = document.getElementById('statGamesPlayed');
-            if (statCorrect) statCorrect.textContent = correctAnswers;
-            if (statAnswers) statAnswers.textContent = totalAnswers;
-            const percentage = totalAnswers > 0 ? Math.round((correctAnswers / totalAnswers) * 100) : 0;
-            if (statRate) statRate.textContent = percentage;
-            if (statGames) statGames.textContent = gamesPlayed;
-        }
-
-        function resetStats() {
-            if (confirm('Réinitialiser les statistiques ?')) {
-                correctAnswers = 0;
-                totalAnswers = 0;
-                gamesPlayed = 0;
-                saveGameStats();
-                updateStatsDisplay();
-                scoreButton.textContent = `score : 0 / 0`;
-            }
-        }
-
-        function saveSettings() {
-            localStorage.setItem('appSettings', JSON.stringify({ darkMode, colorblindMode, animationsEnabled, pairsCount }));
-        }
-
-        function loadSettings() {
-            const s = localStorage.getItem('appSettings');
-            if (s) {
-                const d = JSON.parse(s);
-                darkMode = d.darkMode || false;
-                colorblindMode = d.colorblindMode || false;
-                animationsEnabled = d.animationsEnabled !== undefined ? d.animationsEnabled : true;
-                pairsCount = d.pairsCount || 3;
-                if (darkMode) document.body.classList.add('dark-mode');
-                if (colorblindMode) document.body.classList.add('colorblind-mode');
-                applyAnimationsSetting();
-                const darkToggle = document.getElementById('darkModeToggle');
-                const colorblindToggle = document.getElementById('colorblindToggle');
-                const animationsToggle = document.getElementById('animationsToggle');
-                const pairsSlider = document.getElementById('pairsCountSlider');
-                if (darkToggle) darkToggle.checked = darkMode;
-                if (colorblindToggle) colorblindToggle.checked = colorblindMode;
-                if (animationsToggle) animationsToggle.checked = animationsEnabled;
-                if (pairsSlider) pairsSlider.value = pairsCount;
-                const pairsValue = document.getElementById('pairsCountValue');
-                if (pairsValue) pairsValue.textContent = pairsCount;
-            }
-        }
-
-        function getRandomIndex(max) { return Math.floor(Math.random() * max); }
-        
-        function melangerTableau(tableau) {
-            const resultat = [...tableau];
-            for (let i = resultat.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [resultat[i], resultat[j]] = [resultat[j], resultat[i]];
-            }
-            return resultat;
-        }
-
-        function genererJeu() {
-            if (typeof textesAvecTrous === 'undefined' || !textesAvecTrous || textesAvecTrous.length === 0) {
-                console.error("Erreur : Aucun texte défini dans textesAvecTrous");
-                return { texte: "Erreur : Veuillez définir des textes", mots: ["erreur"], reponses: ["erreur"], source: "" };
-            }
-            const texteConfig = textesAvecTrous[getRandomIndex(textesAvecTrous.length)];
-            let texteOriginale = texteConfig.texte;
-            const sourceCitation = texteConfig.source || "";
-            
-            const tousLesMots = extraireMotsEntreAsterisques(texteOriginale);
-            
-            const indicesDisponibles = [...Array(tousLesMots.length).keys()];
-            const indicesChoisis = [];
-            const nbASelectionner = Math.min(pairsCount, tousLesMots.length);
-            
-            for (let i = 0; i < nbASelectionner; i++) {
-                const idxAleatoire = Math.floor(Math.random() * indicesDisponibles.length);
-                indicesChoisis.push(indicesDisponibles[idxAleatoire]);
-                indicesDisponibles.splice(idxAleatoire, 1);
-            }
-            
-            indicesChoisis.sort((a, b) => a - b);
-            const sequencesTrous = indicesChoisis.map(i => tousLesMots[i]);
-            let texteFinal = texteOriginale;
-            
-            for (let i = tousLesMots.length - 1; i >= 0; i--) {
-                const mot = tousLesMots[i];
-                const motAvecAsterisques = `**${mot}**`;
-                
-                if (indicesChoisis.includes(i)) {
-                    const zoneDepot = `<span class="dropzone" data-answer="${escapeForAttribute(mot)}"></span>`;
-                    texteFinal = texteFinal.replace(motAvecAsterisques, zoneDepot);
-                } else {
-                    texteFinal = texteFinal.replace(motAvecAsterisques, mot);
-                }
-            }
-            
-            currentSource = sourceCitation;
-            
-            if (sequencesTrous.length === 0) {
-                return { texte: "Erreur : Aucun trou trouvé", mots: ["erreur"], reponses: ["erreur"], source: "" };
-            }
-            
-            const motsPourJeu = melangerTableau([...sequencesTrous]);
-            return { texte: texteFinal, mots: motsPourJeu, reponses: sequencesTrous, source: sourceCitation };
-        }
-
-        // ===================================================================
-        // FONCTIONS COMMUNES
-        // ===================================================================
-        
-        function updateButtonState() {
-            const dropzones = textContainer.querySelectorAll(".dropzone");
-            const allFilled = Array.from(dropzones).every(zone => zone.textContent.trim() !== "");
-            actionButton.disabled = !allFilled;
-        }
-
-        function updateDropzoneState() {
-            const dropzones = textContainer.querySelectorAll(".dropzone");
-            dropzones.forEach(zone => {
-                if (zone.textContent.trim() !== "") {
-                    zone.classList.add("filled");
-                } else {
-                    zone.classList.remove("filled");
-                }
-            });
-        }
-
-        function verifierReponses() {
-            const dropzones = textContainer.querySelectorAll(".dropzone");
-            let correctCount = 0;
-            dropzones.forEach(zone => {
-                zone.classList.remove("correct", "incorrect");
-                if (zone.textContent.trim() === zone.dataset.answer) {
-                    zone.classList.add("correct");
-                    correctCount++;
-                } else {
-                    zone.classList.add("incorrect");
-                }
-            });
-            correctAnswers += correctCount;
-            totalAnswers += dropzones.length;
-            scoreButton.textContent = `score : ${correctAnswers} / ${totalAnswers}`;
-            saveGameStats();
-            updateStatsDisplay();
-            return correctCount === dropzones.length;
-        }
-
-        function montrerCorrections() {
-            const dropzones = textContainer.querySelectorAll(".dropzone");
-            dropzones.forEach(zone => {
-                const correctWord = zone.dataset.answer;
-                if (zone.textContent.trim() !== correctWord) {
-                    zone.textContent = correctWord;
-                    zone.classList.add("correct");
-                    zone.classList.remove("incorrect");
-                }
-            });
-            updateDropzoneState();
-        }
-
-        function reinitialiserDropzones() {
-            const dropzones = textContainer.querySelectorAll(".dropzone");
-            dropzones.forEach(zone => {
-                zone.textContent = "";
-                zone.classList.remove("filled", "correct", "incorrect");
-            });
-            updateButtonState();
-            updateDropzoneState();
-        }
-
-        // ===================================================================
-        // INTERFACE DRAG & DROP (Desktop)
-        // ===================================================================
-        
-        let draggedItem = null;
-
-        function dragStartHandler(e) {
-            const target = e.target;
-            if (target.classList.contains('draggable-word')) {
-                draggedItem = target;
-                e.dataTransfer.setData('text/plain', target.textContent);
-                e.dataTransfer.effectAllowed = 'copy';
-                e.dataTransfer.setData('type', 'word');
-            } else if (target.classList.contains('dropzone') && target.textContent.trim() !== "") {
-                draggedItem = target;
-                e.dataTransfer.setData('text/plain', target.textContent);
-                e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData('type', 'zone');
-            }
-        }
-
-        function dragEndHandler(e) {
-            draggedItem = null;
-            document.querySelectorAll('.dropzone').forEach(zone => zone.classList.remove('drag-over'));
-        }
-
-        function dragOverHandler(e) {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = 'copy';
-        }
-
-        function dragEnterHandler(e) {
-            if (e.target.classList.contains('dropzone')) {
-                e.target.classList.add('drag-over');
-            }
-        }
-
-        function dragLeaveHandler(e) {
-            if (e.target.classList.contains('dropzone')) {
-                e.target.classList.remove('drag-over');
-            }
-        }
-
-        function dropHandler(e) {
-            e.preventDefault();
-            const dropzone = e.target.closest('.dropzone');
-            if (!dropzone) return;
-            
-            dropzone.classList.remove('drag-over');
-            const draggedText = e.dataTransfer.getData('text/plain');
-            const type = e.dataTransfer.getData('type');
-            
-            if (type === 'zone' && draggedItem && draggedItem.classList.contains('dropzone')) {
-                if (dropzone.textContent.trim() === "") {
-                    dropzone.textContent = draggedText;
-                    draggedItem.textContent = "";
-                    draggedItem.classList.remove('filled', 'correct', 'incorrect');
-                } else {
-                    const temp = dropzone.textContent;
-                    dropzone.textContent = draggedText;
-                    draggedItem.textContent = temp;
-                }
-            } else if (type === 'word' && draggedItem) {
-                if (dropzone.textContent.trim() === "") {
-                    dropzone.textContent = draggedText;
-                    draggedItem.remove();
-                } else {
-                    const existingWord = dropzone.textContent;
-                    dropzone.textContent = draggedText;
-                    draggedItem.textContent = existingWord;
-                }
-            }
-            
-            updateDropzoneState();
-            updateButtonState();
-            initDragAndDrop();
-        }
-
-        function dropOnContainerHandler(e) {
-            e.preventDefault();
-            const type = e.dataTransfer.getData('type');
-            const draggedText = e.dataTransfer.getData('text/plain');
-            
-            if (type === 'zone' && draggedItem && draggedItem.classList.contains('dropzone')) {
-                const newWord = document.createElement('span');
-                newWord.className = 'draggable-word';
-                newWord.textContent = draggedText;
-                wordsContainer.appendChild(newWord);
-                draggedItem.textContent = "";
-                draggedItem.classList.remove('filled', 'correct', 'incorrect');
-                initDragAndDrop();
-            }
-            
-            updateDropzoneState();
-            updateButtonState();
-        }
-
-        function initDragAndDrop() {
-            document.querySelectorAll('.draggable-word').forEach(word => {
-                word.setAttribute('draggable', 'true');
-                word.removeEventListener('dragstart', dragStartHandler);
-                word.removeEventListener('dragend', dragEndHandler);
-                word.addEventListener('dragstart', dragStartHandler);
-                word.addEventListener('dragend', dragEndHandler);
-            });
-            
-            document.querySelectorAll('.dropzone').forEach(zone => {
-                zone.removeEventListener('dragover', dragOverHandler);
-                zone.removeEventListener('dragenter', dragEnterHandler);
-                zone.removeEventListener('dragleave', dragLeaveHandler);
-                zone.removeEventListener('drop', dropHandler);
-                zone.addEventListener('dragover', dragOverHandler);
-                zone.addEventListener('dragenter', dragEnterHandler);
-                zone.addEventListener('dragleave', dragLeaveHandler);
-                zone.addEventListener('drop', dropHandler);
-            });
-            
-            wordsContainer.removeEventListener('dragover', dragOverHandler);
-            wordsContainer.removeEventListener('drop', dropOnContainerHandler);
-            wordsContainer.addEventListener('dragover', dragOverHandler);
-            wordsContainer.addEventListener('drop', dropOnContainerHandler);
-        }
-
-        // ===================================================================
-        // INTERFACE TACTILE
-        // ===================================================================
-        
-        function clearSelection() {
-            if (selectedWord) {
-                selectedWord.classList.remove('selected');
-                selectedWord = null;
-            }
-        }
-
-        function findFirstEmptyDropzone() {
-            return Array.from(document.querySelectorAll('.dropzone')).find(zone => zone.textContent.trim() === "");
-        }
-
-        function placeWordInDropzone(wordElement, dropzone) {
-            const wordText = wordElement.textContent;
-            const existingText = dropzone.textContent;
-            
-            if (existingText && existingText.trim() !== "") {
-                const newWordElement = document.createElement('span');
-                newWordElement.className = 'draggable-word';
-                newWordElement.textContent = existingText;
-                wordsContainer.appendChild(newWordElement);
-                addTouchListenersToWord(newWordElement);
-            }
-            
-            dropzone.textContent = wordText;
-            dropzone.classList.add("filled");
-            wordElement.remove();
-            
-            updateButtonState();
-            updateDropzoneState();
-            clearSelection();
-        }
-
-        function removeWordFromDropzone(dropzone) {
-            const wordText = dropzone.textContent;
-            if (wordText && wordText.trim() !== "") {
-                const newWordElement = document.createElement('span');
-                newWordElement.className = 'draggable-word';
-                newWordElement.textContent = wordText;
-                wordsContainer.appendChild(newWordElement);
-                addTouchListenersToWord(newWordElement);
-                
-                dropzone.textContent = "";
-                dropzone.classList.remove("filled", "correct", "incorrect");
-            }
-            updateButtonState();
-            updateDropzoneState();
-            clearSelection();
-        }
-
-        function onWordTouch(e) {
-            e.stopPropagation();
-            const word = e.currentTarget;
-            
-            if (e.detail === 2) {
-                const emptyDropzone = findFirstEmptyDropzone();
-                if (emptyDropzone) {
-                    placeWordInDropzone(word, emptyDropzone);
-                }
-                return;
-            }
-            
-            clearSelection();
-            selectedWord = word;
-            selectedWord.classList.add('selected');
-            
-            if (window.navigator && window.navigator.vibrate) {
-                window.navigator.vibrate(50);
-            }
-        }
-
-        function onDropzoneTouch(e) {
-            e.stopPropagation();
-            const dropzone = e.currentTarget;
-            const isFilled = dropzone.textContent && dropzone.textContent.trim() !== "";
-            
-            if (isFilled) {
-                removeWordFromDropzone(dropzone);
-                return;
-            }
-            
-            if (selectedWord) {
-                placeWordInDropzone(selectedWord, dropzone);
-            } else {
-                clearSelection();
-            }
-        }
-
-        function addTouchListenersToWord(wordElement) {
-            wordElement.removeEventListener('click', onWordTouch);
-            wordElement.removeEventListener('touchend', onWordTouch);
-            wordElement.addEventListener('click', onWordTouch);
-            wordElement.addEventListener('touchend', onWordTouch);
-        }
-
-        function addTouchListenersToDropzone(dropzone) {
-            dropzone.removeEventListener('click', onDropzoneTouch);
-            dropzone.removeEventListener('touchend', onDropzoneTouch);
-            dropzone.addEventListener('click', onDropzoneTouch);
-            dropzone.addEventListener('touchend', onDropzoneTouch);
-        }
-
-        // ===================================================================
-        // AFFICHAGE DU JEU
-        // ===================================================================
-        
-        function afficherNouvelletexte() {
-            const jeu = genererJeu();
-            let contenuHTML = jeu.texte;
-            if (jeu.source) contenuHTML += `<div class="citation-source">${jeu.source}</div>`;
-            textContainer.innerHTML = contenuHTML;
-            
-            wordsContainer.innerHTML = jeu.mots.map(mot => 
-                `<span class="draggable-word">${escapeForAttribute(mot)}</span>`
-            ).join("");
-            
-            if (isMobile) {
-                document.querySelectorAll('.draggable-word').forEach(word => {
-                    addTouchListenersToWord(word);
-                });
-                document.querySelectorAll('.dropzone').forEach(zone => {
-                    addTouchListenersToDropzone(zone);
-                });
-            } else {
-                initDragAndDrop();
-            }
-            
-            updateButtonState();
-            updateDropzoneState();
-            gamesPlayed++;
-            saveGameStats();
-            updateStatsDisplay();
-            clearSelection();
-        }
-
-        function reload() {
-            clearSelection();
+    function resetStats() {
+        if (confirm('Réinitialiser les statistiques ?')) {
             correctAnswers = 0;
             totalAnswers = 0;
-            scoreButton.textContent = "score : 0 / 0";
-            document.querySelectorAll(".dropzone").forEach(el => el.classList.remove("correct", "incorrect"));
-            actionButton.textContent = "vérifier";
-            actionButton.classList.remove('reload-mode');
-            currentState = "verify";
-            afficherNouvelletexte();
-            reinitialiserDropzones();
+            gamesPlayed = 0;
             saveGameStats();
             updateStatsDisplay();
+            scoreButton.textContent = `score : 0 / 0`;
         }
+    }
 
-        // ===================================================================
-        // MENU ET PARAMÈTRES
-        // ===================================================================
-        
-        function setupMenuAndSettings() {
-            const menuButtons = [document.getElementById('menuButton'), document.getElementById('menuButtonMobile')];
-            const menuOverlay = document.getElementById('menuOverlay');
-            const slideMenu = document.getElementById('slideMenu');
-            const submenus = document.querySelectorAll('.submenu');
+    function saveSettings() {
+        localStorage.setItem('appSettings', JSON.stringify({ darkMode, colorblindMode, animationsEnabled, pairsCount }));
+        localStorage.setItem('selectedAuthorFilter', currentFilterNotion);
+    }
 
-            function closeAllSubmenus() { submenus.forEach(s => s.classList.remove('active')); }
-            function openSubmenu(id) { closeAllSubmenus(); const el = document.getElementById(id); if(el) el.classList.add('active'); }
-            function closeMenu() { slideMenu.classList.remove('open'); menuOverlay.classList.remove('open'); document.body.style.overflow = ''; closeAllSubmenus(); }
-            function toggleMenu() { slideMenu.classList.contains('open') ? closeMenu() : (menuOverlay.classList.add('open'), slideMenu.classList.add('open'), document.body.style.overflow = 'hidden'); }
-
-            menuButtons.forEach(b => b && b.addEventListener('click', toggleMenu));
-            const menuClose = document.getElementById('menuClose');
-            if(menuClose) menuClose.addEventListener('click', closeMenu);
-            if(menuOverlay) menuOverlay.addEventListener('click', closeMenu);
-            document.querySelectorAll('.submenu-close').forEach(b => b.addEventListener('click', closeAllSubmenus));
-            
-            const openInstructions = document.getElementById('openInstructionsSub');
-            const openStats = document.getElementById('openStatsSub');
-            const openSettings = document.getElementById('openSettingsSub');
-            const openShortcuts = document.getElementById('openShortcutsSub');
-            const openAbout = document.getElementById('openAboutSub');
-            const resetStatsBtn = document.getElementById('resetStatsBtn');
-            
-            if(openInstructions) openInstructions.addEventListener('click', () => openSubmenu('submenuInstructions'));
-            if(openStats) openStats.addEventListener('click', () => { updateStatsDisplay(); openSubmenu('submenuStats'); });
-            if(openSettings) openSettings.addEventListener('click', () => openSubmenu('submenuSettings'));
-            if(openShortcuts) openShortcuts.addEventListener('click', () => openSubmenu('submenuShortcuts'));
-            if(openAbout) openAbout.addEventListener('click', () => openSubmenu('submenuAbout'));
-            if(resetStatsBtn) resetStatsBtn.addEventListener('click', resetStats);
-
+    function loadSettings() {
+        const s = localStorage.getItem('appSettings');
+        if (s) {
+            const d = JSON.parse(s);
+            darkMode = d.darkMode || false;
+            colorblindMode = d.colorblindMode || false;
+            animationsEnabled = d.animationsEnabled !== undefined ? d.animationsEnabled : true;
+            pairsCount = d.pairsCount || 8;
+            if (darkMode) document.body.classList.add('dark-mode');
+            if (colorblindMode) document.body.classList.add('colorblind-mode');
+            applyAnimationsSetting();
             const darkToggle = document.getElementById('darkModeToggle');
             const colorblindToggle = document.getElementById('colorblindToggle');
             const animationsToggle = document.getElementById('animationsToggle');
             const pairsSlider = document.getElementById('pairsCountSlider');
+            if (darkToggle) darkToggle.checked = darkMode;
+            if (colorblindToggle) colorblindToggle.checked = colorblindMode;
+            if (animationsToggle) animationsToggle.checked = animationsEnabled;
+            if (pairsSlider) pairsSlider.value = pairsCount;
             const pairsValue = document.getElementById('pairsCountValue');
+            if (pairsValue) pairsValue.textContent = pairsCount;
+        }
+        const savedFilter = localStorage.getItem('selectedAuthorFilter');
+        if (savedFilter && savedFilter !== "all") {
+            const auteurs = extraireListeAuteurs();
+            if (auteurs.includes(savedFilter)) currentFilterNotion = savedFilter;
+            else currentFilterNotion = "all";
+        } else {
+            currentFilterNotion = "all";
+        }
+    }
 
-            if(darkToggle) darkToggle.addEventListener('change', e => {
-                darkMode = e.target.checked;
-                document.body.classList.toggle('dark-mode', darkMode);
-                saveSettings();
-            });
-            if(colorblindToggle) colorblindToggle.addEventListener('change', e => {
-                colorblindMode = e.target.checked;
-                document.body.classList.toggle('colorblind-mode', colorblindMode);
-                saveSettings();
-            });
-            if(animationsToggle) animationsToggle.addEventListener('change', e => {
-                animationsEnabled = e.target.checked;
-                applyAnimationsSetting();
-                saveSettings();
-            });
-            if(pairsSlider && pairsValue) {
-                pairsSlider.addEventListener('input', (e) => {
-                    pairsCount = parseInt(e.target.value);
-                    pairsValue.textContent = pairsCount;
-                    saveSettings();
-                    reload();
-                });
-            }
+    function getRandomIndex(max) { return Math.floor(Math.random() * max); }
+    
+    function melangerTableau(tableau) {
+        const resultat = [...tableau];
+        for (let i = resultat.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [resultat[i], resultat[j]] = [resultat[j], resultat[i]];
+        }
+        return resultat;
+    }
 
-            const homeBtns = [document.getElementById('homeBtnDesktop'), document.getElementById('homeBtnMobile')];
-            homeBtns.forEach(btn => btn && btn.addEventListener('click', () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank')));
+    function genererJeu() {
+        const textesFiltres = getTextesFiltres();
+        if (!textesFiltres || textesFiltres.length === 0) {
+            console.error("Erreur : Aucun texte défini ou filtré");
+            return { texte: "Erreur : Veuillez sélectionner un autre auteur", mots: ["erreur"], reponses: ["erreur"], source: "" };
+        }
+        const texteConfig = textesFiltres[getRandomIndex(textesFiltres.length)];
+        let texteOriginale = texteConfig.texte;
+        const sourceCitation = texteConfig.source || "";
+        
+        const tousLesMots = extraireMotsEntreAsterisques(texteOriginale);
+        
+        const indicesDisponibles = [...Array(tousLesMots.length).keys()];
+        const indicesChoisis = [];
+        const nbASelectionner = Math.min(pairsCount, tousLesMots.length);
+        
+        for (let i = 0; i < nbASelectionner; i++) {
+            const idxAleatoire = Math.floor(Math.random() * indicesDisponibles.length);
+            indicesChoisis.push(indicesDisponibles[idxAleatoire]);
+            indicesDisponibles.splice(idxAleatoire, 1);
+        }
+        
+        indicesChoisis.sort((a, b) => a - b);
+        const sequencesTrous = indicesChoisis.map(i => tousLesMots[i]);
+        let texteFinal = texteOriginale;
+        
+        for (let i = tousLesMots.length - 1; i >= 0; i--) {
+            const mot = tousLesMots[i];
+            const motAvecAsterisques = `**${mot}**`;
             
-            const reloadBtns = [document.getElementById('reloadButton'), document.getElementById('reloadButtonMobile')];
-            reloadBtns.forEach(btn => btn && btn.addEventListener('click', reload));
-
-            function toggleFullscreen() {
-                const btns = document.querySelectorAll('.fullscreen');
-                if (!document.fullscreenElement) {
-                    document.documentElement.requestFullscreen();
-                    btns.forEach(btn => {
-                        btn.classList.add('fullscreen-active');
-                        btn.setAttribute('data-title', 'quitter plein écran (F)');
-                    });
-                } else {
-                    document.exitFullscreen();
-                    btns.forEach(btn => {
-                        btn.classList.remove('fullscreen-active');
-                        btn.setAttribute('data-title', 'plein écran (F)');
-                    });
-                }
+            if (indicesChoisis.includes(i)) {
+                const zoneDepot = `<span class="dropzone" data-answer="${escapeForAttribute(mot)}"></span>`;
+                texteFinal = texteFinal.replace(motAvecAsterisques, zoneDepot);
+            } else {
+                texteFinal = texteFinal.replace(motAvecAsterisques, mot);
             }
+        }
+        
+        currentSource = sourceCitation;
 
-            const fullscreenBtns = [document.getElementById('fullscreenButton'), document.getElementById('fullscreenButtonMobile')];
-            fullscreenBtns.forEach(btn => btn && btn.addEventListener('click', toggleFullscreen));
+        if (sequencesTrous.length === 0) {
+            return { texte: "Erreur : Aucun trou trouvé", mots: ["erreur"], reponses: ["erreur"], source: "" };
+        }
+        
+        const motsPourJeu = melangerTableau([...sequencesTrous]);
+        return { texte: texteFinal, mots: motsPourJeu, reponses: sequencesTrous, source: sourceCitation };
+    }
 
-            document.addEventListener('fullscreenchange', () => {
-                const btns = document.querySelectorAll('.fullscreen');
-                const fs = !!document.fullscreenElement;
-                btns.forEach(btn => {
-                    if (fs) {
-                        btn.classList.add('fullscreen-active');
-                        btn.setAttribute('data-title', 'quitter plein écran (F)');
-                    } else {
-                        btn.classList.remove('fullscreen-active');
-                        btn.setAttribute('data-title', 'plein écran (F)');
-                    }
-                });
+    // ===================================================================
+    // FONCTIONS COMMUNES
+    // ===================================================================
+    
+    function updateButtonState() {
+        const dropzones = textContainer.querySelectorAll(".dropzone");
+        const allFilled = Array.from(dropzones).every(zone => zone.textContent.trim() !== "");
+        actionButton.disabled = !allFilled;
+    }
+
+    function updateDropzoneState() {
+        const dropzones = textContainer.querySelectorAll(".dropzone");
+        dropzones.forEach(zone => {
+            if (zone.textContent.trim() !== "") {
+                zone.classList.add("filled");
+            } else {
+                zone.classList.remove("filled");
+            }
+        });
+    }
+
+    function verifierReponses() {
+        const dropzones = textContainer.querySelectorAll(".dropzone");
+        let correctCount = 0;
+        dropzones.forEach(zone => {
+            zone.classList.remove("correct", "incorrect");
+            if (zone.textContent.trim() === zone.dataset.answer) {
+                zone.classList.add("correct");
+                correctCount++;
+            } else {
+                zone.classList.add("incorrect");
+            }
+        });
+        correctAnswers += correctCount;
+        totalAnswers += dropzones.length;
+        scoreButton.textContent = `score : ${correctAnswers} / ${totalAnswers}`;
+        saveGameStats();
+        updateStatsDisplay();
+        return correctCount === dropzones.length;
+    }
+
+    function montrerCorrections() {
+        const dropzones = textContainer.querySelectorAll(".dropzone");
+        dropzones.forEach(zone => {
+            const correctWord = zone.dataset.answer;
+            if (zone.textContent.trim() !== correctWord) {
+                zone.textContent = correctWord;
+                zone.classList.add("correct");
+                zone.classList.remove("incorrect");
+            }
+        });
+        updateDropzoneState();
+    }
+
+    function reinitialiserDropzones() {
+        const dropzones = textContainer.querySelectorAll(".dropzone");
+        dropzones.forEach(zone => {
+            zone.textContent = "";
+            zone.classList.remove("filled", "correct", "incorrect");
+        });
+        updateButtonState();
+        updateDropzoneState();
+    }
+
+    // ===================================================================
+    // INTERFACE DRAG & DROP (Desktop)
+    // ===================================================================
+    
+    let draggedItem = null;
+
+    function dragStartHandler(e) {
+        const target = e.target.closest('.draggable-word, .dropzone');
+        if (!target) return;
+        
+        draggedItem = target;
+        e.dataTransfer.setData('text/plain', target.textContent);
+        e.dataTransfer.effectAllowed = 'move';
+        
+        if (target.classList.contains('draggable-word')) {
+            e.dataTransfer.setData('type', 'word');
+        } else if (target.classList.contains('dropzone')) {
+            e.dataTransfer.setData('type', 'zone');
+        }
+        e.target.style.opacity = '0.5';
+    }
+
+    function dragEndHandler(e) {
+        if (e.target.style) e.target.style.opacity = '';
+        draggedItem = null;
+        document.querySelectorAll('.dropzone').forEach(zone => zone.classList.remove('drag-over'));
+    }
+
+    function dragOverHandler(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+    }
+
+    function dragEnterHandler(e) {
+        const dropzone = e.target.closest('.dropzone');
+        if (dropzone) {
+            dropzone.classList.add('drag-over');
+        }
+    }
+
+    function dragLeaveHandler(e) {
+        const dropzone = e.target.closest('.dropzone');
+        if (dropzone) {
+            dropzone.classList.remove('drag-over');
+        }
+    }
+
+    function dropHandler(e) {
+        e.preventDefault();
+        const targetDropzone = e.target.closest('.dropzone');
+        if (!targetDropzone) return;
+        
+        targetDropzone.classList.remove('drag-over');
+        
+        if (!draggedItem) return;
+        
+        const draggedText = draggedItem.textContent;
+        const type = e.dataTransfer.getData('type');
+        
+        if (type === 'word' && draggedItem.classList.contains('draggable-word')) {
+            if (targetDropzone.textContent.trim() === "") {
+                targetDropzone.textContent = draggedText;
+                draggedItem.remove();
+            } else {
+                const existingWord = targetDropzone.textContent;
+                targetDropzone.textContent = draggedText;
+                draggedItem.textContent = existingWord;
+            }
+        }
+        else if (type === 'zone' && draggedItem.classList.contains('dropzone')) {
+            if (targetDropzone === draggedItem) return;
+            
+            const sourceText = draggedItem.textContent;
+            const targetText = targetDropzone.textContent;
+            
+            if (targetDropzone.textContent.trim() === "") {
+                targetDropzone.textContent = sourceText;
+                draggedItem.textContent = "";
+            } else {
+                draggedItem.textContent = targetText;
+                targetDropzone.textContent = sourceText;
+            }
+            draggedItem.classList.remove('filled', 'correct', 'incorrect');
+            targetDropzone.classList.remove('filled', 'correct', 'incorrect');
+        }
+        
+        draggedItem.style.opacity = '';
+        draggedItem = null;
+        updateDropzoneState();
+        updateButtonState();
+        initDragAndDrop();
+    }
+    
+    function dropOnContainerHandler(e) {
+        e.preventDefault();
+        if (!draggedItem) return;
+        
+        const type = e.dataTransfer.getData('type');
+        
+        if (type === 'zone' && draggedItem.classList.contains('dropzone') && draggedItem.textContent.trim() !== "") {
+            const wordToMove = draggedItem.textContent;
+            const newWord = document.createElement('span');
+            newWord.className = 'draggable-word';
+            newWord.textContent = wordToMove;
+            wordsContainer.appendChild(newWord);
+            draggedItem.textContent = "";
+            draggedItem.classList.remove('filled', 'correct', 'incorrect');
+            draggedItem.style.opacity = '';
+            draggedItem = null;
+            initDragAndDrop();
+        } else if (type === 'word' && draggedItem) {
+            draggedItem.style.opacity = '';
+            draggedItem = null;
+        } else {
+            if(draggedItem) draggedItem.style.opacity = '';
+            draggedItem = null;
+        }
+        
+        updateDropzoneState();
+        updateButtonState();
+    }
+
+    function initDragAndDrop() {
+        const draggables = document.querySelectorAll('.draggable-word');
+        const dropzones = document.querySelectorAll('.dropzone');
+        
+        draggables.forEach(word => {
+            word.setAttribute('draggable', 'true');
+            word.removeEventListener('dragstart', dragStartHandler);
+            word.removeEventListener('dragend', dragEndHandler);
+            word.addEventListener('dragstart', dragStartHandler);
+            word.addEventListener('dragend', dragEndHandler);
+        });
+        
+        dropzones.forEach(zone => {
+            zone.setAttribute('draggable', 'true');
+            zone.removeEventListener('dragstart', dragStartHandler);
+            zone.removeEventListener('dragend', dragEndHandler);
+            zone.removeEventListener('dragover', dragOverHandler);
+            zone.removeEventListener('dragenter', dragEnterHandler);
+            zone.removeEventListener('dragleave', dragLeaveHandler);
+            zone.removeEventListener('drop', dropHandler);
+            
+            zone.addEventListener('dragstart', dragStartHandler);
+            zone.addEventListener('dragend', dragEndHandler);
+            zone.addEventListener('dragover', dragOverHandler);
+            zone.addEventListener('dragenter', dragEnterHandler);
+            zone.addEventListener('dragleave', dragLeaveHandler);
+            zone.addEventListener('drop', dropHandler);
+        });
+        
+        wordsContainer.removeEventListener('dragover', dragOverHandler);
+        wordsContainer.removeEventListener('drop', dropOnContainerHandler);
+        wordsContainer.addEventListener('dragover', dragOverHandler);
+        wordsContainer.addEventListener('drop', dropOnContainerHandler);
+    }
+
+    // ===================================================================
+    // INTERFACE TACTILE
+    // ===================================================================
+
+    function clearSelection() {
+        if (selectedWord) {
+            selectedWord.classList.remove('selected');
+            selectedWord = null;
+        }
+        if (touchTimeout) {
+            clearTimeout(touchTimeout);
+            touchTimeout = null;
+        }
+    }
+
+    function findFirstEmptyDropzone() {
+        return Array.from(document.querySelectorAll('.dropzone')).find(zone => zone.textContent.trim() === "");
+    }
+
+    function placeWordInDropzone(wordElement, dropzone) {
+        const wordText = wordElement.textContent;
+        const existingText = dropzone.textContent;
+        
+        if (existingText && existingText.trim() !== "") {
+            const newWordElement = document.createElement('span');
+            newWordElement.className = 'draggable-word';
+            newWordElement.textContent = existingText;
+            wordsContainer.appendChild(newWordElement);
+            if(isMobile) addTouchListenersToWord(newWordElement);
+        }
+        
+        dropzone.textContent = wordText;
+        dropzone.classList.add("filled");
+        wordElement.remove();
+        
+        updateButtonState();
+        updateDropzoneState();
+        clearSelection();
+    }
+
+    function removeWordFromDropzone(dropzone) {
+        const wordText = dropzone.textContent;
+        if (wordText && wordText.trim() !== "") {
+            const newWordElement = document.createElement('span');
+            newWordElement.className = 'draggable-word';
+            newWordElement.textContent = wordText;
+            wordsContainer.appendChild(newWordElement);
+            if(isMobile) addTouchListenersToWord(newWordElement);
+            
+            dropzone.textContent = "";
+            dropzone.classList.remove("filled", "correct", "incorrect");
+        }
+        updateButtonState();
+        updateDropzoneState();
+        clearSelection();
+    }
+
+    function onWordTouch(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        
+        const word = e.currentTarget;
+        
+        if (e.detail === 2) {
+            const emptyDropzone = findFirstEmptyDropzone();
+            if (emptyDropzone) {
+                placeWordInDropzone(word, emptyDropzone);
+            }
+            return;
+        }
+        
+        if (selectedWord === word) {
+            clearSelection();
+        } else {
+            clearSelection();
+            selectedWord = word;
+            selectedWord.classList.add('selected');
+            
+            touchTimeout = setTimeout(() => {
+                clearSelection();
+            }, 3000);
+        }
+    }
+
+    function onDropzoneTouch(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        
+        const dropzone = e.currentTarget;
+        const isFilled = dropzone.textContent && dropzone.textContent.trim() !== "";
+        
+        if (isFilled) {
+            removeWordFromDropzone(dropzone);
+            return;
+        }
+        
+        if (selectedWord) {
+            placeWordInDropzone(selectedWord, dropzone);
+        } else {
+            clearSelection();
+        }
+    }
+
+    function addTouchListenersToWord(wordElement) {
+        wordElement.removeEventListener('click', onWordTouch);
+        wordElement.removeEventListener('touchend', onWordTouch);
+        wordElement.addEventListener('click', onWordTouch);
+        wordElement.addEventListener('touchend', onWordTouch);
+    }
+
+    function addTouchListenersToDropzone(dropzone) {
+        dropzone.removeEventListener('click', onDropzoneTouch);
+        dropzone.removeEventListener('touchend', onDropzoneTouch);
+        dropzone.addEventListener('click', onDropzoneTouch);
+        dropzone.addEventListener('touchend', onDropzoneTouch);
+    }
+
+    function setupGlobalTouchHandler() {
+        document.addEventListener('click', (e) => {
+            if (!e.target.classList || 
+                (!e.target.classList.contains('draggable-word') && 
+                 !e.target.classList.contains('dropzone'))) {
+                clearSelection();
+            }
+        });
+    }
+
+    // ===================================================================
+    // AFFICHAGE DU JEU
+    // ===================================================================
+    
+    function afficherNouvelletexte() {
+        const jeu = genererJeu();
+        textContainer.innerHTML = jeu.texte;
+        
+        wordsContainer.innerHTML = jeu.mots.map(mot => 
+            `<span class="draggable-word">${escapeForAttribute(mot)}</span>`
+        ).join("");
+        
+        if (isMobile) {
+            document.querySelectorAll('.draggable-word').forEach(word => {
+                addTouchListenersToWord(word);
             });
+            document.querySelectorAll('.dropzone').forEach(zone => {
+                addTouchListenersToDropzone(zone);
+            });
+            setupGlobalTouchHandler();
+        } else {
+            initDragAndDrop();
+        }
+        
+        updateButtonState();
+        updateDropzoneState();
+        gamesPlayed++;
+        saveGameStats();
+        updateStatsDisplay();
+        clearSelection();
+    }
 
-            if (isMobile) {
-                document.addEventListener('click', (e) => {
-                    if (!e.target.classList || 
-                        (!e.target.classList.contains('draggable-word') && 
-                         !e.target.classList.contains('dropzone'))) {
-                        clearSelection();
-                    }
-                });
-            }
+    function reload() {
+        clearSelection();
+        actionButton.textContent = "vérifier";
+        actionButton.classList.remove('reload-mode');
+        currentState = "verify";
+        afficherNouvelletexte();
+        reinitialiserDropzones();
+        saveGameStats();
+        updateStatsDisplay();
+    }
 
-            document.addEventListener('keydown', e => {
-                if (e.target.matches('input, textarea, select')) return;
-                if (e.key === 'Escape') {
-                    clearSelection();
-                    if (document.querySelector('.submenu.active')) closeAllSubmenus();
-                    else if (slideMenu.classList.contains('open')) closeMenu();
-                }
-                if (e.key === 'm' || e.key === 'M') { e.preventDefault(); toggleMenu(); }
-                if (e.key === 'h' || e.key === 'H') { e.preventDefault(); window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); }
-                if (e.key === 'r' || e.key === 'R') { e.preventDefault(); reload(); }
-                if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFullscreen(); }
+    function setAuthorFilter(value) {
+        currentFilterNotion = value;
+        saveSettings();
+        reload();
+    }
+
+    // ===================================================================
+    // MENU ET PARAMÈTRES
+    // ===================================================================
+    
+    function setupMenuAndSettings() {
+        const menuButtons = [document.getElementById('menuButton'), document.getElementById('menuButtonMobile')];
+        const menuOverlay = document.getElementById('menuOverlay');
+        const slideMenu = document.getElementById('slideMenu');
+        const submenus = document.querySelectorAll('.submenu');
+
+        function closeAllSubmenus() { submenus.forEach(s => s.classList.remove('active')); }
+        function openSubmenu(id) { closeAllSubmenus(); const el = document.getElementById(id); if(el) el.classList.add('active'); }
+        function closeMenu() { slideMenu.classList.remove('open'); menuOverlay.classList.remove('open'); document.body.style.overflow = ''; closeAllSubmenus(); }
+        function toggleMenu() { slideMenu.classList.contains('open') ? closeMenu() : (menuOverlay.classList.add('open'), slideMenu.classList.add('open'), document.body.style.overflow = 'hidden'); }
+
+        menuButtons.forEach(b => b && b.addEventListener('click', toggleMenu));
+        const menuClose = document.getElementById('menuClose');
+        if(menuClose) menuClose.addEventListener('click', closeMenu);
+        if(menuOverlay) menuOverlay.addEventListener('click', closeMenu);
+        document.querySelectorAll('.submenu-close').forEach(b => b.addEventListener('click', closeAllSubmenus));
+        
+        const openInstructions = document.getElementById('openInstructionsSub');
+        const openStats = document.getElementById('openStatsSub');
+        const openSettings = document.getElementById('openSettingsSub');
+        const openShortcuts = document.getElementById('openShortcutsSub');
+        const openAbout = document.getElementById('openAboutSub');
+        const resetStatsBtn = document.getElementById('resetStatsBtn');
+        
+        if(openInstructions) openInstructions.addEventListener('click', () => openSubmenu('submenuInstructions'));
+        if(openStats) openStats.addEventListener('click', () => { updateStatsDisplay(); openSubmenu('submenuStats'); });
+        if(openSettings) openSettings.addEventListener('click', () => openSubmenu('submenuSettings'));
+        if(openShortcuts) openShortcuts.addEventListener('click', () => openSubmenu('submenuShortcuts'));
+        if(openAbout) openAbout.addEventListener('click', () => openSubmenu('submenuAbout'));
+        if(resetStatsBtn) resetStatsBtn.addEventListener('click', resetStats);
+
+        const darkToggle = document.getElementById('darkModeToggle');
+        const colorblindToggle = document.getElementById('colorblindToggle');
+        const animationsToggle = document.getElementById('animationsToggle');
+        const pairsSlider = document.getElementById('pairsCountSlider');
+        const pairsValue = document.getElementById('pairsCountValue');
+
+        if(darkToggle) darkToggle.addEventListener('change', e => {
+            darkMode = e.target.checked;
+            document.body.classList.toggle('dark-mode', darkMode);
+            saveSettings();
+        });
+        if(colorblindToggle) colorblindToggle.addEventListener('change', e => {
+            colorblindMode = e.target.checked;
+            document.body.classList.toggle('colorblind-mode', colorblindMode);
+            saveSettings();
+        });
+        if(animationsToggle) animationsToggle.addEventListener('change', e => {
+            animationsEnabled = e.target.checked;
+            applyAnimationsSetting();
+            saveSettings();
+        });
+        if(pairsSlider && pairsValue) {
+            pairsSlider.addEventListener('input', (e) => {
+                pairsCount = parseInt(e.target.value);
+                pairsValue.textContent = pairsCount;
+                saveSettings();
+                reload();
             });
         }
 
-        function initialiserEvenements() {
-            actionButton.addEventListener("click", () => {
-                switch (currentState) {
-                    case "verify":
-                        if (verifierReponses()) {
-                            actionButton.innerHTML = "<div>↻</div>";
-                            actionButton.classList.add('reload-mode');
-                            currentState = "change";
-                        } else {
-                            actionButton.textContent = "correction";
-                            currentState = "correct";
-                        }
-                        break;
-                    case "correct":
-                        montrerCorrections();
+        const homeBtns = [document.getElementById('homeBtnDesktop'), document.getElementById('homeBtnMobile')];
+        homeBtns.forEach(btn => btn && btn.addEventListener('click', () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank')));
+        
+        const reloadBtns = [document.getElementById('reloadButton'), document.getElementById('reloadButtonMobile')];
+        reloadBtns.forEach(btn => btn && btn.addEventListener('click', reload));
+
+        function toggleFullscreen() {
+            const btns = document.querySelectorAll('.fullscreen');
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+                btns.forEach(btn => {
+                    btn.classList.add('fullscreen-active');
+                    btn.setAttribute('data-title', 'quitter plein écran (F)');
+                });
+            } else {
+                document.exitFullscreen();
+                btns.forEach(btn => {
+                    btn.classList.remove('fullscreen-active');
+                    btn.setAttribute('data-title', 'plein écran (F)');
+                });
+            }
+        }
+
+        const fullscreenBtns = [document.getElementById('fullscreenButton'), document.getElementById('fullscreenButtonMobile')];
+        fullscreenBtns.forEach(btn => btn && btn.addEventListener('click', toggleFullscreen));
+
+        document.addEventListener('fullscreenchange', () => {
+            const btns = document.querySelectorAll('.fullscreen');
+            const fs = !!document.fullscreenElement;
+            btns.forEach(btn => {
+                if (fs) {
+                    btn.classList.add('fullscreen-active');
+                    btn.setAttribute('data-title', 'quitter plein écran (F)');
+                } else {
+                    btn.classList.remove('fullscreen-active');
+                    btn.setAttribute('data-title', 'plein écran (F)');
+                }
+            });
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.target.matches('input, textarea, select')) return;
+            if (e.key === 'Escape') {
+                clearSelection();
+                if (document.querySelector('.submenu.active')) closeAllSubmenus();
+                else if (slideMenu.classList.contains('open')) closeMenu();
+            }
+            if (e.key === 'm' || e.key === 'M') { e.preventDefault(); toggleMenu(); }
+            if (e.key === 'h' || e.key === 'H') { e.preventDefault(); window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); }
+            if (e.key === 'r' || e.key === 'R') { e.preventDefault(); reload(); }
+            if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFullscreen(); }
+        });
+
+        const notionSelectDesktop = document.getElementById('notionFilter');
+        const notionSelectMobile = document.getElementById('notionFilterMobile');
+        const updateNotion = (value) => {
+            if (value !== currentFilterNotion) {
+                setAuthorFilter(value);
+                if (notionSelectDesktop) notionSelectDesktop.value = value;
+                if (notionSelectMobile) notionSelectMobile.value = value;
+            }
+        };
+        if (notionSelectDesktop) notionSelectDesktop.addEventListener('change', (e) => updateNotion(e.target.value));
+        if (notionSelectMobile) notionSelectMobile.addEventListener('change', (e) => updateNotion(e.target.value));
+    }
+
+    function initialiserEvenements() {
+        actionButton.addEventListener("click", () => {
+            switch (currentState) {
+                case "verify":
+                    if (verifierReponses()) {
                         actionButton.innerHTML = "<div>↻</div>";
                         actionButton.classList.add('reload-mode');
                         currentState = "change";
-                        break;
-                    case "change":
-                        afficherNouvelletexte();
-                        reinitialiserDropzones();
-                        actionButton.textContent = "vérifier";
-                        actionButton.classList.remove('reload-mode');
-                        currentState = "verify";
-                        break;
-                }
-            });
-        }
-
-        function chargerTitres() {
-            if (typeof title !== 'undefined') {
-                const titleHtml = title.replace(/&nbsp;/g, ' ');
-                document.title = titleHtml.replace(/<[^>]*>/g, '');
-                const appTitle = document.getElementById("appTitle");
-                const mobileTitle = document.getElementById("mobileTitle");
-                if(appTitle) appTitle.innerHTML = titleHtml;
-                if(mobileTitle) mobileTitle.innerHTML = titleHtml.replace(/<[^>]*>/g, '');
+                    } else {
+                        actionButton.textContent = "correction";
+                        currentState = "correct";
+                    }
+                    break;
+                case "correct":
+                    montrerCorrections();
+                    actionButton.innerHTML = "<div>↻</div>";
+                    actionButton.classList.add('reload-mode');
+                    currentState = "change";
+                    break;
+                case "change":
+                    afficherNouvelletexte();
+                    reinitialiserDropzones();
+                    actionButton.textContent = "vérifier";
+                    actionButton.classList.remove('reload-mode');
+                    currentState = "verify";
+                    break;
             }
-            if (typeof subtitle !== 'undefined') {
-                const appSubtitle = document.getElementById("appSubtitle");
-                if(appSubtitle) appSubtitle.innerHTML = subtitle;
-            }
-        }
-
-        function attendreRessources() {
-            if (typeof textesAvecTrous !== 'undefined') {
-                chargerTitres();
-                loadSettings();
-                loadGameStats();
-                afficherNouvelletexte();
-                initialiserEvenements();
-                setupMenuAndSettings();
-            } else {
-                setTimeout(attendreRessources, 50);
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            attendreRessources();
         });
+    }
+
+    function chargerTitres() {
+        const titleHtml = title.replace(/&nbsp;/g, ' ');
+        document.title = titleHtml.replace(/<[^>]*>/g, '');
+        const appTitle = document.getElementById("appTitle");
+        const mobileTitle = document.getElementById("mobileTitle");
+        if(appTitle) appTitle.innerHTML = titleHtml;
+        if(mobileTitle) mobileTitle.innerHTML = titleHtml.replace(/<[^>]*>/g, '');
+        
+        const appSubtitle = document.getElementById("appSubtitle");
+        if(appSubtitle) appSubtitle.innerHTML = subtitle;
+    }
+
+    function demarrerApplication() {
+        chargerTitres();
+        remplirMenusAuteurs();
+        loadSettings();
+        loadGameStats();
+        afficherNouvelletexte();
+        initialiserEvenements();
+        setupMenuAndSettings();
+    }
+
+    document.addEventListener("DOMContentLoaded", demarrerApplication);
     </script>
-    <script src="fichier_ressource.js"></script>
 </body>
 </html>
