@@ -1,372 +1,253 @@
+// REMARQUES
+// Pour mettre le texte en italique			Les bornes &lt;i&gt;...&lt;/i&gt; ou &lt;em&gt;...&lt;/em&gt;
+// Pour mettre le texte en gras				Les bornes &lt;strong&gt;...&lt;/strong&gt; ou &lt;b&gt;...&lt;/b&gt;
+// Pour mettre le texte en couleur adaptée	Les bornes &lt;span style="color:red"&gt;...&lt;/span&gt;
+// Pour mettre un espace insécable			Utiliser &amp;nbsp;
+
 // 1. TITRES DE L'APPLICATION
+// Généré le 07/06/2026 06:36:31
 const title = "citations à trous";
-const subtitle = "réviser le cours";
+const subtitle = "réviser le cours par les citations";
 
 // 2. CITATIONS AVEC TROUS PRÉDÉFINIS
 const textesAvecTrous = [
-    {
-        texte: "La psychologie est l'étude de l'esprit, des émotions et du comportement humains, ainsi que des relations complexes qui nous influencent au quotidien. Comprendre ces dynamiques nous aide à mieux appréhender notre réalité et à naviguer dans nos interactions.",
-        source: "Citation n°1",
-        trous: ["psychologie", "esprit", "émotions", "comportement", "relations", "dynamiques", "réalité", "interactions"]
-    },
-    {
-        texte: "L'art est une forme d'expression qui touche les sens et évoque des réactions uniques. Il nous transporte à travers des mélodies, des couleurs et des formes qui défient les conventions culturelles et interpellent notre âme.",
-        source: "Citation n°2",
-        trous: ["art", "expression", "sens", "réactions", "mélodies", "couleurs", "formes", "âme"]
-    },
-    {
-        texte: "La sociologie examine les rapports humains au sein des sociétés contemporaines, mettant en lumière comment la culture et les normes façonnent notre comportement ainsi que nos choix de vie au quotidien.",
-        source: "Citation n°3",
-        trous: ["sociologie", "rapports", "sociétés", "culture", "normes", "comportement"]
-    },
-    {
-        texte: "La musique possède le pouvoir d'influencer nos émotions, de créer des souvenirs profonds et de transformer les ambiance au sein de nos vies. Les compositeurs et les paroles touchent notre esprit et évoquent des moments nostalgiques.",
-        source: "Citation n°4",
-        trous: ["musique", "influencer", "émotions", "souvenirs", "ambiance", "vies", "esprit"]
-    },
-    {
-        texte: "L'éducation est la clé des opportunités dans notre monde moderne. Elle favorise la connaissance, la compréhension et l'esprit critique, ouvrant des portes vers l'autonomie et l'inclusion de chacun à travers des valeurs fondamentales.",
-        source: "Citation n°5",
-        trous: ["éducation", "opportunités", "monde", "connaissance", "compréhension", "esprit", "valeurs"]
-    },
-    {
-        texte: "La nature nous rappelle la beauté du monde vivant avec ses paysages diversifiés, ses animaux fascinants et les écosystèmes qui interagissent. Elle nous enseigne des leçons sur la patience, le respect et l'harmonie à travers ses cycles.",
-        source: "Citation n°6",
-        trous: ["nature", "monde", "paysages", "animaux", "écosystèmes", "patience"]
-    },
-    {
-        texte: "L'amour est un sentiment complexe, constitué de passion, d'engagement et de partage réel. Une véritable aventure humaine pleine de joies et de défis quotidiens qui enrichit notre existence.",
-        source: "Citation n°7",
-        trous: ["amour", "passion", "engagement", "partage", "joies"]
-    },
-    {
-        texte: "La technologie redéfinit nos vies à travers des outils de communication et d'information. Elle nous offre de nouvelles possibilités tout en soulevant des questions éthiques qui méritent d'être examinées en profondeur.",
-        source: "Citation n°8",
-        trous: ["technologie", "vies", "outils", "possibilités"]
-    },
-    {
-        texte: "La bienveillance est une valeur fondamentale dans nos relations humaines, nous rappelant l'importance de l'empathie, de la compassion et de l'écoute attentive envers autrui pour créer des liens sacrés.",
-        source: "Citation n°9",
-        trous: ["bienveillance", "relations", "empathie", "compassion", "écoute"]
-    },
-    {
-        texte: "Le sport est un excellent moyen de développer la discipline, la confiance et la cohésion. Pratiquer une activité physique peut non seulement améliorer notre santé physique mais également notre bien-être mental.",
-        source: "Citation n°10",
-        trous: ["sport", "développer", "discipline", "confiance", "cohésion", "santé"]
-    },
-    {
-        texte: "L'innovation est le moteur de changement dans notre société moderne. Elle pousse les individus à remettre en question les normes établies et à imaginer des solutions créatives devant chaque défi rencontré.",
-        source: "Citation n°11",
-        trous: ["innovation", "changement", "individus", "solutions"]
-    },
-    {
-        texte: "La lecture est une porte d'entrée vers d'autres mondes et d'autres croyances. S'immerger dans un livre enrichit nos horizons et stimule notre imagination tout en nous ouvrant à de nouvelles perspectives.",
-        source: "Citation n°12",
-        trous: ["lecture", "entrée", "mondes", "croyances", "horizons", "imagination"]
-    },
-    {
-        texte: "Le leadership repose sur la capacité à inspirer et à guider un groupe vers un objectif commun. Un bon leader sait écouter, valoriser les idées de chacun et favoriser la collaboration au sein de l'équipe.",
-        source: "Citation n°13",
-        trous: ["leadership", "objectif", "idées", "collaboration"]
-    },
-    {
-        texte: "L'histoire est un miroir de notre passé, offrant les clés pour comprendre notre présent et orienter notre futur. Elle nous apprend que chaque événement historique a façonné nos sociétés modernes.",
-        source: "Citation n°14",
-        trous: ["histoire", "passé", "comprendre", "présent"]
-    },
-    {
-        texte: "Le bonheur est un état d'être que chaque individu recherche dans sa vie. Il se manifeste souvent à travers des relations humaines épanouissantes, le succès personnel et des moments de joie authentique.",
-        source: "Citation n°15",
-        trous: ["bonheur", "être", "individu", "relations"]
-    },
-    {
-        texte: "L'écologie étudie les interactions entre les êtres vivants et leur environnement naturel. Cette science met en lumière les conséquences des actions humaines sur la nature et appelle à un changement de comportement.",
-        source: "Citation n°16",
-        trous: ["écologie", "êtres", "environnement", "nature"]
-    },
-    {
-        texte: "La découverte est un moteur de curiosité et d'exploration dans notre monde. Chaque expérience nouvelle nous offre des occasions d'apprendre davantage sur notre environnement et notre place dans l'univers.",
-        source: "Citation n°17",
-        trous: ["découverte", "curiosité", "exploration", "monde", "expérience"]
-    },
-    {
-        texte: "Le temps est un concept précieux qui régit notre existence. Il nous rappelle que chaque instant est unique et éphémère, à apprécier pleinement et savourer les petits plaisirs de la vie.",
-        source: "Citation n°18",
-        trous: ["temps", "existence", "instant"]
-    },
-    {
-        texte: "Les rêves constituent des manifestations de nos aspirations profondes, de nos désirs et de nos plus grands espoirs. Ils nous encouragent à agir et à rechercher un sens plus profond dans notre quotidien.",
-        source: "Citation n°19",
-        trous: ["rêves", "aspirations", "désirs"]
-    },
-    {
-        texte: "La spiritualité est un voyage intérieur qui nous connecte à des réalités plus grandes. Ce chemin nous pousse à réfléchir, à explorer des questions existentielles et à chercher un sens dans notre existence.",
-        source: "Citation n°20",
-        trous: ["spiritualité", "questions"]
-    },
-    {
-        texte: "L'engagement civique est essentiel pour faire entendre nos voix dans la société. Participer à des initiatives renforce la communauté et favorise la prise de conscience sur les enjeux qui nous entourent.",
-        source: "Citation n°21",
-        trous: ["engagement", "voix", "société", "communauté"]
-    },
-    {
-        texte: "L'espoir est une lumière dans l'obscurité qui nous pousse à croire en de meilleurs jours à venir. Cultiver cet espoir permet de surmonter des obstacles et de garder notre foi en l'avenir.",
-        source: "Citation n°22",
-        trous: ["espoir", "meilleurs", "obstacles"]
-    },
-    {
-        texte: "La mémoire collective façonne notre identité culturelle et historique. Elle nous connecte aux générations passées et transmet des enseignements précieux qui éclairent notre chemin.",
-        source: "Citation n°23",
-        trous: ["mémoire", "identité", "générations", "enseignements"]
-    },
-    {
-        texte: "La mode constitue un moyen puissant d'expression personnelle, un reflet des cultures contemporaines. Elle permet à chacun de se démarquer et d'affirmer son identité unique dans un monde diversifié.",
-        source: "Citation n°24",
-        trous: ["mode", "expression", "cultures", "identité"]
-    },
-    {
-        texte: "La science est une démarche d'étude qui repose sur l'observation et l'expérimentation. Elle nous permet d'explorer les lois de l'Univers, de comprendre notre existence et d'améliorer notre qualité de vie.",
-        source: "Citation n°25",
-        trous: ["science", "étude", "existence"]
-    },
-    {
-        texte: "L'humour est un antidote à la tristesse et à la frustration qui limite les conflits. Il favorise les connections humaines et peut apporter légèreté et bonheur dans les moments difficiles.",
-        source: "Citation n°26",
-        trous: ["humour", "tristesse", "conflits", "connections"]
-    },
-    {
-        texte: "L'optimisme est une attitude qui nous pousse à voir le verre à moitié plein. Cultiver cet esprit positif permet d'affronter les défis tout en explorant des possibilités nouvelles.",
-        source: "Citation n°27",
-        trous: ["optimisme", "verre", "défis", "possibilités"]
-    },
-    {
-        texte: "Le changement est inévitable et souvent difficile à accepter. Cependant, il représente aussi une opportunité de croissance, qu'elle soit personnelle, sociale ou professionnelle.",
-        source: "Citation n°28",
-        trous: ["changement", "croissance"]
-    },
-    {
-        texte: "La compassion est la capacité de ressentir la souffrance d'autrui et de vouloir apporter du soulagement. Elle favorise des interactions humaines empreintes d'empathie et de solidarité.",
-        source: "Citation n°29",
-        trous: ["compassion", "souffrance", "interactions"]
-    },
-    {
-        texte: "La méditation est une pratique qui nous aide à trouver la tranquillité d'esprit. Elle permet de recentrer nos pensées et de gérer nos émotions de manière apaisante.",
-        source: "Citation n°30",
-        trous: ["méditation", "tranquillité", "recentrer", "émotions"]
-    },
-    {
-        texte: "L'altruisme est un acte désintéressé qui vise à aider les autres sans rien attendre en retour. Ce comportement améliore non seulement la vie des autres, mais aussi notre propre existence.",
-        source: "Citation n°31",
-        trous: ["altruisme", "comportement", "existence"]
-    },
-    {
-        texte: "Les valeurs et les principes guident nos décisions et nos comportements. Les vivre au quotidien renforce notre intégrité, nous permettant d'agir en accord avec nos croyances.",
-        source: "Citation n°32",
-        trous: ["valeurs", "principes", "intégrité"]
-    },
-    {
-        texte: "L'équilibre est essentiel pour mener une vie harmonieuse. Trouver cet équilibre entre le travail et la vie personnelle est un défi, mais une nécessité pour notre bien-être.",
-        source: "Citation n°33",
-        trous: ["équilibre", "harmonieuse", "travail", "bien-être"]
-    },
-    {
-        texte: "La patience est une vertu qui demande du temps et de l'engagement. Savoir attendre sans frustration et accepter que certains changements nécessitent des efforts importants.",
-        source: "Citation n°34",
-        trous: ["patience", "temps", "efforts"]
-    },
-    {
-        texte: "La créativité est le moteur de l'innovation et de l'expression artistique. Elle nous permet d'imaginer des idées originales et de dépasser les conventions dans nos projets.",
-        source: "Citation n°35",
-        trous: ["créativité", "innovation", "idées", "conventions"]
-    },
-    {
-        texte: "L'égalité est un principe fondamental qui garantit les mêmes droits et opportunités à toutes les personnes. Promouvoir cette valeur est essentiel pour construire des sociétés justes et inclusives.",
-        source: "Citation n°36",
-        trous: ["égalité", "droits", "personnes", "sociétés"]
-    },
-    {
-        texte: "La résilience est la capacité à rebondir après des épreuves. Adopter une attitude résiliente nous aide face aux défis et nous pousse à rester fidèles à nos objectifs.",
-        source: "Citation n°37",
-        trous: ["résilience", "épreuves", "objectifs"]
-    },
-    {
-        texte: "Les décisions que nous prenons façonnent notre chemin dans la vie. Nos choix ont des conséquences qui impactent non seulement notre avenir, mais aussi celui des autres.",
-        source: "Citation n°38",
-        trous: ["décisions", "chemin", "choix"]
-    },
-    {
-        texte: "La diversité enrichit notre société en intégrant une variété de perspectives et d'expériences uniques. Reconnaître cette richesse favorise l'inclusion et l'harmonie au sein de nos communautés.",
-        source: "Citation n°39",
-        trous: ["diversité", "société", "perspectives", "inclusion"]
-    },
-    {
-        texte: "La nature nous enseigne des leçons cruciales sur la résilience, l'équilibre et l'interconnexion de toutes les espèces. Elle rappelle que chaque élément est essentiel pour l'ensemble.",
-        source: "Citation n°40",
-        trous: ["nature", "leçons", "équilibre", "élément"]
-    },
-    {
-        texte: "Le voyage est une aventure unique qui élargit nos horizons. Chaque expérience nous confronte à de nouvelles cultures, traduisant ainsi notre rapport aux gens et aux paysages variés.",
-        source: "Citation n°41",
-        trous: ["voyage", "horizons", "expérience", "cultures", "gens"]
-    },
-    {
-        texte: "L'honnêteté est une valeur qui renforce la confiance dans nos relations. Faire preuve de transparence et d'authenticité crée des liens solides et durables avec autrui.",
-        source: "Citation n°42",
-        trous: ["honnêteté", "confiance", "relations", "liens"]
-    },
-    {
-        texte: "La tranquillité d'esprit est un état recherché par quiconque pour vivre une vie équilibrée. Cette tranquillité aide également à gérer le stress et savourer les petits joies.",
-        source: "Citation n°43",
-        trous: ["tranquillité", "vie", "stress", "joies"]
-    },
-    {
-        texte: "L'apprentissage est un processus continu qui débute dès notre naissance. Acquérir des compétences diverses et développer la curiosité sont essentiels pour notre épanouissement.",
-        source: "Citation n°44",
-        trous: ["apprentissage", "naissance", "compétences", "épanouissement"]
-    },
-    {
-        texte: "La collaboration est vitale pour la réalisation de projets significatifs. Coopérer ensemble vers un même objectif favorise les liens qui mènent à des réussites partagées.",
-        source: "Citation n°45",
-        trous: ["collaboration", "projets", "objectif", "liens"]
-    },
-    {
-        texte: "L'amitié est un précieux cadeau qui embellit nos vies. Elle nous accompagne dans les moments de joie ainsi que les épreuves, offrant soutien et réconfort.",
-        source: "Citation n°46",
-        trous: ["amitié", "cadeau", "vies", "moments"]
-    },
-    {
-        texte: "Le respect est au cœur de toutes nos interactions humaines. Traiter les autres avec dignité fait partie intégrante de la construction de relations saines et positives.",
-        source: "Citation n°47",
-        trous: ["respect", "humaines", "autres", "relations"]
-    },
-    {
-        texte: "L'imagination est le terrain de jeu de notre esprit. Elle nous permet d'inventer, de créer et de penser en dehors des normes établies, enrichissant ainsi notre parcours.",
-        source: "Citation n°48",
-        trous: ["imagination", "esprit", "normes"]
-    },
-    {
-        texte: "La technologie continue d'influencer nos vies à un rythme rapide et changeant. Elle nous offre des solutions innovantes, mais entraîne aussi des défis éthiques à prendre en compte.",
-        source: "Citation n°49",
-        trous: ["technologie", "vies", "solutions"]
-    },
-    {
-        texte: "La réflexion est cruciale pour notre croissance. Prendre le temps d'évaluer nos choix et nos actions favorise une meilleure compréhension de nous-mêmes et des autres.",
-        source: "Citation n°50",
-        trous: ["réflexion", "croissance", "choix", "actions"]
-    },
-    {
-        texte: "L'humanité est souvent définie par notre capacité à ressentir et à établir des liens. C'est cette empathie qui nous unit en tant qu'espèce sur cette planète.",
-        source: "Citation n°51",
-        trous: ["humanité", "liens", "espèce"]
-    },
-    {
-        texte: "La trahison est l'une des blessures les plus douloureuses que l'on puisse infliger à une relation. Cela remet en question la confiance et laisse des marques durables.",
-        source: "Citation n°52",
-        trous: ["trahison", "relation", "confiance"]
-    },
-    {
-        texte: "Le succès est une notion multiple qui varie d'une personne à l'autre. Chaque individu définit son propre succès selon ses critères et ses aspirations personnelles.",
-        source: "Citation n°53",
-        trous: ["succès", "personne", "individu"]
-    },
-    {
-        texte: "La générosité est un acte pur de don qui élève à la fois celui qui donne et celui qui reçoit. Elle crée un sentiment d'abondance dans nos vies au sein de nos échanges.",
-        source: "Citation n°54",
-        trous: ["générosité", "don", "abondance"]
-    },
-    {
-        texte: "La persévérance est la qualité qui nous permet de continuer, même face aux obstacles. En surmontant nos épreuves avec détermination, nous prouvons que rien n'est impossible.",
-        source: "Citation n°55",
-        trous: ["persévérance", "obstacles"]
-    },
-    {
-        texte: "Le respect de soi est fondamental pour construire une image positive. Acceptons-nous tel que nous sommes, le renforcement de l'estime de soi favorise une plus grande confiance.",
-        source: "Citation n°56",
-        trous: ["respect", "image", "estime"]
-    },
-    {
-        texte: "La curiosité est l'énergie motrice de l'apprentissage et de la découverte. Elle incite chaque individu à explorer, à poser des questions et à découvrir de nouvelles idées.",
-        source: "Citation n°57",
-        trous: ["curiosité", "apprentissage", "individu", "questions"]
-    },
-    {
-        texte: "Le sentiment d'appartenance est essentiel pour notre bien-être social. Établir des connexions authentiques avec les autres favorise un climat de solidarité dans notre communauté.",
-        source: "Citation n°58",
-        trous: ["sentiment", "bien-être", "connexions"]
-    },
-    {
-        texte: "La philosophie de vie que l'on choisit influe profondément sur notre manière de percevoir le monde. Chaque croyance façonne nos habitudes et guide nos réponses face aux défis.",
-        source: "Citation n°59",
-        trous: ["philosophie", "monde", "croyance"]
-    },
-    {
-        texte: "La spontanéité infuse une énergie nouvelle dans notre quotidien souvent prévisible. Être réceptif aux moments de surprise et saisir des occasions enrichit notre existence.",
-        source: "Citation n°60",
-        trous: ["spontanéité", "prévisible", "occasions"]
-    },
-    {
-        texte: "Le dialogue est crucial pour résoudre des conflits et établir des relations saines. Écouter les autres nous aide à créer un pont vers une meilleure compréhension mutuelle.",
-        source: "Citation n°61",
-        trous: ["dialogue", "conflits", "compréhension"]
-    },
-    {
-        texte: "L'authenticité est la capacité d'être vrai envers soi-même et les autres. Être authentique dans toutes nos relations est essentiel pour construire la confiance et l'honnêteté.",
-        source: "Citation n°62",
-        trous: ["authenticité", "autres", "relations"]
-    },
-    {
-        texte: "Le travail d'équipe est indispensable pour atteindre des objectifs communs et réaliser des projets ambitieux. Chaque membre contribue avec ses compétences uniques qui enrichissent le processus.",
-        source: "Citation n°63",
-        trous: ["travail", "objectifs", "compétences"]
-    },
-    {
-        texte: "La nature nous rappelle l'importance de chaque élément dans l'équilibre de notre écosystème. Elle nous enseigne que la diversité des espèces est essentielle à la survie de la planète.",
-        source: "Citation n°64",
-        trous: ["nature", "élément", "espèces"]
-    },
-    {
-        texte: "Le progrès humain repose sur notre capacité à innover et à améliorer notre condition de vie. Chaque avancée contribue positivement à notre futur et à celui de nos enfants.",
-        source: "Citation n°65",
-        trous: ["progrès", "condition", "futur"]
-    },
-    {
-        texte: "Le plaisir des petites choses de la vie quotidienne nous rappelle d'apprécier chaque instant. Que ce soit un bon repas ou une douce mélodie, ces joies enrichissent notre existence.",
-        source: "Citation n°66",
-        trous: ["plaisir", "vie", "instant"]
-    },
-    {
-        texte: "L'optimisme est une attitude qui nous pousse à voir le verre à moitié plein. Cultiver cette vision positive permet d'affronter les épreuves avec force et confiance.",
-        source: "Citation n°67",
-        trous: ["optimisme", "verre", "épreuves"]
-    },
-    {
-        texte: "L'excellence est une quête permanente pour nous surpasser dans toutes nos actions. Chercher à être le meilleur dans nos différents domaines enrichit notre parcours de vie.",
-        source: "Citation n°68",
-        trous: ["excellence", "surpasser"]
-    },
-    {
-        texte: "La santé mentale est une composante essentielle de notre bien-être global. Prendre soin de notre esprit est aussi crucial que veiller sur notre santé physique et sociale.",
-        source: "Citation n°69",
-        trous: ["santé", "bien-être"]
-    },
-    {
-        texte: "La nostalgie évoque des souvenirs du passé qui peuvent mélanger joie et mélancolie. Accepter ces sentiments fait partie intégrante de notre expérience humaine.",
-        source: "Citation n°70",
-        trous: ["nostalgie", "passé"]
-    },
-    {
-        texte: "La littérature nous ouvre des portes vers des univers infinis d'imaginaire et de sagesse. Les auteurs nous racontent des histoires qui enrichissent notre esprit et notre moralité.",
-        source: "Citation n°71",
-        trous: ["littérature", "univers", "histoires"]
-    },
-    {
-        texte: "L'acceptation est une étape cruciale dans le processus de la guérison. Apprendre à accueillir ce qui ne peut être changé est essentiel pour avancer sereinement dans nos vies.",
-        source: "Citation n°72",
-        trous: ["acceptation", "guérison"]
-    },
-    {
-        texte: "La responsabilité envers nous-mêmes et les autres est primordiale. Chaque action a des conséquences, il est donc fondamental d'en être conscient et d'agir en conséquence.",
-        source: "Citation n°73",
-        trous: ["responsabilité", "autres", "action"]
-    }
+
+	// ============================================
+	// ART (10 citations)
+	// ============================================
+
+	{ texte: "« L’**art** est l’**expression** de la **société**. »<BR><BR>Hippolyte TAINE, <em>Philosophie de l’art</em>, 1re partie", source: "art" },
+	{ texte: "« L’art ne **reproduit** pas le **visible**, il **rend** visible. »<BR><BR>Paul KLEE, <em>Théorie de l’art moderne</em>", source: "art" },
+	{ texte: "« Le **beau** est l’**éclat** du **vrai**. »<BR><BR>Platon, <em>Phèdre</em>, 250d", source: "art" },
+	{ texte: "« L’art est un **mensonge** qui nous fait **prendre conscience** de la **vérité**. »<BR><BR>Friedrich NIETZSCHE, <em>fragments posthumes</em>, 1872", source: "art" },
+	{ texte: "« L’**œuvre** d’art est une **idée** qu’on **rend** sensible. »<BR><BR>Georg Wilhelm Friedrich HEGEL, <em>Esthétique</em>, Introduction", source: "art" },
+	{ texte: "« L’art **imite** la **nature** dans sa manière d’**opérer**. »<BR><BR>Aristote, <em>Physique</em>, livre II, chapitre 8", source: "art" },
+	{ texte: "« La **poésie** est plus **philosophique** et plus **sérieuse** que l’histoire. »<BR><BR>Aristote, <em>Poétique</em>, chapitre 9", source: "art" },
+	{ texte: "« L’art **délivre** de la **souffrance** par la **représentation**. »<BR><BR>Arthur SCHOPENHAUER, <em>Le Monde comme volonté et comme représentation</em>, livre III", source: "art" },
+	{ texte: "« L’art est le **jeu** de la **raison**. »<BR><BR>Emmanuel KANT, <em>Critique de la faculté de juger</em>, § 43", source: "art" },
+	{ texte: "« La **technique** sans l’art est **vide**, l’art sans la technique est **aveugle**. »<BR><BR>Denis DIDEROT, <em>Encyclopédie</em>, article « Art »", source: "art" },
+
+	// ============================================
+	// BONHEUR (10 citations)
+	// ============================================
+	{ texte: "« Le **bonheur** est le **souverain** **bien**. »<BR><BR>Aristote, <em>Éthique à Nicomaque</em>, livre I, chapitre 7", source: "bonheur" },
+	{ texte: "« Le **plaisir** est le **commencement** et la **fin** de la vie heureuse. »<BR><BR>Épicure, <em>Lettre à Ménécée</em>", source: "bonheur" },
+	{ texte: "« Le bonheur n’est pas un **idéal** de la raison, mais de l’**imagination**. »<BR><BR>Emmanuel KANT, <em>Critique de la raison pratique</em>, livre I", source: "bonheur" },
+	{ texte: "« Le bonheur **suppose** une certaine **disposition** à se **suffire** à soi-même. »<BR><BR>Sénèque, <em>De la vie heureuse</em>, chapitre 4", source: "bonheur" },
+	{ texte: "« Le souverain bien **consiste** à **vivre** conformément à la **nature**. »<BR><BR>Marc AURÈLE, <em>Pensées</em>, livre VIII", source: "bonheur" },
+	{ texte: "« La **recherche** du bonheur est le **mobile** de toute **action** humaine. »<BR><BR>John LOCKE, <em>Essai concernant l’entendement humain</em>, livre II, chapitre 21", source: "bonheur" },
+	{ texte: "« Le bonheur est un **art** à **pratiquer** au **quotidien**. »<BR><BR>Émile CHARTIER (Alain), <em>Propos sur le bonheur</em>, propos 1", source: "bonheur" },
+	{ texte: "« Le bonheur est ce qui **rend** la vie **désirable** et la **mort** facile. »<BR><BR>Lucrèce, <em>De la nature des choses</em>, chant III", source: "bonheur" },
+	{ texte: "« Le **premier devoir** de l’homme est d’être **heureux**. »<BR><BR>Jean-Jacques ROUSSEAU, <em>Les Rêveries du promeneur solitaire</em>, 5e promenade", source: "bonheur" },
+	{ texte: "« La **vertu** **suffit** au **bonheur**. »<BR><BR>Cicéron, <em>Tusculanes</em>, livre V", source: "bonheur" },
+	
+	// ============================================
+	// CONSCIENCE (10 citations)
+	// ============================================
+	{ texte: "« La **raison** est une **lumière** **naturelle**. »<BR><BR>René DESCARTES, <em>Règles pour la direction de l’esprit</em>, règle 1", source: "conscience" },
+	{ texte: "« La **conscience** est la **voix** de l’**âme**. »<BR><BR>Jean-Jacques ROUSSEAU, <em>Émile ou De l’éducation</em>, livre IV", source: "conscience" },
+	{ texte: "« La conscience est la **représentation** de ce qui se **passe** dans notre **esprit**. »<BR><BR>John LOCKE, <em>Essai concernant l’entendement humain</em>, livre II, chapitre 1", source: "conscience" },
+	{ texte: "« La conscience **morale** est la **crainte** de la **société**. »<BR><BR>Friedrich NIETZSCHE, <em>Par-delà bien et mal</em>, § 199", source: "conscience" },
+	{ texte: "« La conscience est une **lumière** **naturelle**. »<BR><BR>René DESCARTES, <em>Règles pour la direction de l’esprit</em>, règle 1", source: "conscience" },
+	{ texte: "« La conscience est le **noyau** de l’**être**. »<BR><BR>Martin HEIDEGGER, <em>Être et temps</em>, § 54", source: "conscience" },
+	{ texte: "« **Avoir** conscience, c’est **avoir** une **intention**. »<BR><BR>Edmund HUSSERL, <em>Idées directrices pour une phénoménologie</em>, § 84", source: "conscience" },
+	{ texte: "« La conscience est un **fait** **indéniable**. »<BR><BR>Henri BERGSON, <em>Essai sur les données immédiates de la conscience</em>, chapitre 1", source: "conscience" },
+	{ texte: "« **Dieu** a **donné** à l’homme la conscience pour être son **juge**. »<BR><BR>Blaise PASCAL, <em>Pensées</em>, fragment 131", source: "conscience" },
+	{ texte: "« La conscience n’est **jamais** **adéquate** à elle-**même**. »<BR><BR>Jean-Paul SARTRE, <em>L’Être et le Néant</em>, Introduction", source: "conscience" },
+	
+	// ============================================
+	// DEVOIR (10 citations)
+	// ============================================
+	{ texte: "« **Agis** de telle **sorte** que ta **volonté** puisse toujours valoir en même temps comme principe d’une législation universelle. »<BR><BR>Emmanuel KANT, <em>Fondation de la métaphysique des mœurs</em>, 1re section", source: "devoir" },
+	{ texte: "« Le **devoir** est la **nécessité** d’**agir** par respect pour la loi. »<BR><BR>Emmanuel KANT, <em>Critique de la raison pratique</em>, livre I", source: "devoir" },
+	{ texte: "« Le devoir de l’homme est d’**obéir** aux **lois** de la **cité**. »<BR><BR>Platon, <em>Criton</em>, 51b", source: "devoir" },
+	{ texte: "« **L’homme** est **condamné** à être **libre**. »<BR><BR>Jean-Paul SARTRE, <em>L’Existentialisme est un humanisme</em>", source: "devoir" },
+	{ texte: "« Le devoir est le **sentiment** de l’**obligation**. »<BR><BR>David HUME, <em>Traité de la nature humaine</em>, livre III, partie 2", source: "devoir" },
+	{ texte: "« Le **premier devoir** est de **vivre** conformément à la **nature**. »<BR><BR>Épictète, <em>Entretiens</em>, livre I, chapitre 26", source: "devoir" },
+	{ texte: "« Le devoir est la **matière** **première** de la **vertu**. »<BR><BR>Cicéron, <em>Les Devoirs</em>, livre I", source: "devoir" },
+	{ texte: "« Le devoir s’**oppose** au **désir**. »<BR><BR>Spinoza, <em>Éthique</em>, partie IV, proposition 15", source: "devoir" },
+	{ texte: "« Le devoir est un **principe** **pratique** qui **commande** sans promettre de bonheur. »<BR><BR>Emmanuel KANT, <em>Critique de la raison pratique</em>, livre II", source: "devoir" },
+	{ texte: "« Le devoir est la **représentation** de la **loi** **morale**. »<BR><BR>Emmanuel KANT, <em>Métaphysique des mœurs</em>, Introduction", source: "devoir" },
+
+	// ============================================
+	// ETAT (10 citations)
+	// ============================================
+	{ texte: "« L’**homme** est un **animal** **politique**. »<BR><BR>Aristote, <em>Politique</em>, livre I, chapitre 2", source: "etat" },
+	{ texte: "« L’**État** est la **chose** du **peuple**. »<BR><BR>Cicéron, <em>De la République</em>, livre I, 25", source: "etat" },
+	{ texte: "« L’État est le **Léviathan**, c’est-à-dire l’homme **artificiel**. »<BR><BR>Thomas HOBBES, <em>Léviathan</em>, Introduction", source: "etat" },
+	{ texte: "« L’État est la **raison** en **acte**. »<BR><BR>Georg Wilhelm Friedrich HEGEL, <em>Principes de la philosophie du droit</em>, § 258", source: "etat" },
+	{ texte: "« L’État est la **forme** la plus **achevée** de la **communauté**. »<BR><BR>Aristote, <em>Politique</em>, livre III, chapitre 6", source: "etat" },
+	{ texte: "« L’État est l’**instrument** de l’**oppression** d’une **classe** par une autre. »<BR><BR>Karl MARX, <em>Le Capital</em>, livre I, chapitre 32", source: "etat" },
+	{ texte: "« L’État doit se **borner** à **garantir** la **liberté**. »<BR><BR>John LOCKE, <em>Traité du gouvernement civil</em>, chapitre 9", source: "etat" },
+	{ texte: "« L’État est une **communauté** d’**hommes** **libres**. »<BR><BR>Montesquieu, <em>De l’esprit des lois</em>, livre XI, chapitre 3", source: "etat" },
+	{ texte: "« L’État est la **séparation** de la **société** **civile** et de la communauté politique. »<BR><BR>Karl MARX, <em>La Question juive</em>", source: "etat" },
+	{ texte: "« L’État **moderne** est **fondé** sur le **contrat social**. »<BR><BR>Jean-Jacques ROUSSEAU, <em>Du contrat social</em>, livre I, chapitre 6", source: "etat" },
+
+	// ============================================
+	// INCONSCIENT (10 citations)
+	// ============================================
+	{ texte: "« L’**inconscient** est le **véritable** **psychique**. »<BR><BR>Sigmund FREUD, <em>L’Interprétation du rêve</em>, chapitre 7", source: "inconscient" },
+	{ texte: "« L’inconscient **parle** en **rêves**. »<BR><BR>Sigmund FREUD, <em>Introduction à la psychanalyse</em>, chapitre 5", source: "inconscient" },
+	{ texte: "« Le **moi** n’est pas **maître** dans sa **propre** maison. »<BR><BR>Sigmund FREUD, <em>Nouvelles conférences sur la psychanalyse</em>, 31e conférence", source: "inconscient" },
+	{ texte: "« L’inconscient **ignore** la **contradiction**. »<BR><BR>Sigmund FREUD, <em>L’Inconscient</em>", source: "inconscient" },
+	{ texte: "« L’inconscient est **structuré** comme un **langage**. »<BR><BR>Jacques LACAN, <em>Écrits</em>, « Fonction et champ de la parole »", source: "inconscient" },
+	{ texte: "« L’inconscient est le **discours** de l’**Autre**. »<BR><BR>Jacques LACAN, <em>Écrits</em>, « Subversion du sujet »", source: "inconscient" },
+	{ texte: "« Il n’y a pas de **pensée** sans **inconscient**. »<BR><BR>Henri BERGSON, <em>L’Énergie spirituelle</em>, chapitre 5", source: "inconscient" },
+	{ texte: "« L’inconscient est la **mémoire** **organique**. »<BR><BR>Henri BERGSON, <em>Matériau et mémoire</em>, chapitre 3", source: "inconscient" },
+	{ texte: "« **L’homme** est **condamné** à être **libre**. »<BR><BR>Jean-Paul SARTRE, <em>L’Existentialisme est un humanisme</em>", source: "inconscient" },
+	{ texte: "« L’inconscient est une **hypothèse** **nécessaire**. »<BR><BR>Arthur SCHOPENHAUER, <em>Le Monde comme volonté et comme représentation</em>, livre II", source: "inconscient" },
+
+	// ============================================
+	// JUSTICE (10 citations)
+	// ============================================
+	{ texte: "« La **justice** est la **vertu** des **cités**. »<BR><BR>Platon, <em>La République</em>, livre IV, 433a", source: "justice" },
+	{ texte: "« La justice est de **rendre** à **chacun** son **dû**. »<BR><BR>Cicéron, <em>Les Devoirs</em>, livre I, chapitre 15", source: "justice" },
+	{ texte: "« La justice est la **première vertu** des **institutions** **sociales**. »<BR><BR>John RAWLS, <em>Théorie de la justice</em>, chapitre 1", source: "justice" },
+	{ texte: "« La justice est l’**avantage** du **plus fort**. »<BR><BR>Platon, <em>La République</em>, livre I, 338c (Thrasymaque)", source: "justice" },
+	{ texte: "« La justice est une **modération**. »<BR><BR>Aristote, <em>Éthique à Nicomaque</em>, livre V", source: "justice" },
+	{ texte: "« La justice n’est que la **convention** **humaine**. »<BR><BR>Épicure, <em>Maximes capitales</em>, maxime 31", source: "justice" },
+	{ texte: "« La justice est la **volonté** **constante** de **donner** à chacun son droit. »<BR><BR>Ulpien, <em>Digeste</em>, livre I", source: "justice" },
+	{ texte: "« La justice est un **fruit** de la **raison**. »<BR><BR>Montesquieu, <em>De l’esprit des lois</em>, livre XXVI, chapitre 15", source: "justice" },
+	{ texte: "« La justice **commande** de **respecter** les **droits** d’autrui. »<BR><BR>John LOCKE, <em>Traité du gouvernement civil</em>, chapitre 2", source: "justice" },
+	{ texte: "« La justice est une **construction** **sociale**. »<BR><BR>Blaise PASCAL, <em>Pensées</em>, fragment 60", source: "justice" },
+
+	// ============================================
+	// LANGAGE (10 citations)
+	// ============================================
+	{ texte: "« La **limite** de mon **langage** est la **limite** de mon monde. »<BR><BR>Ludwig WITTGENSTEIN, <em>Tractatus logico-philosophicus</em>, proposition 5.6", source: "langage" },
+	{ texte: "« Le langage est une **forme** de **vie**. »<BR><BR>Ludwig WITTGENSTEIN, <em>Recherches philosophiques</em>, § 23", source: "langage" },
+	{ texte: "« Le langage est le **miroir** de la **pensée**. »<BR><BR>Aristote, <em>De l’interprétation</em>, chapitre 1", source: "langage" },
+	{ texte: "« Le langage est un **système** de **signes**. »<BR><BR>Ferdinand de SAUSSURE, <em>Cours de linguistique générale</em>, 1re partie", source: "langage" },
+	{ texte: "« Le langage est la **maison** de l’**être**. »<BR><BR>Martin HEIDEGGER, <em>Lettre sur l’humanisme</em>", source: "langage" },
+	{ texte: "« Le langage est une **convention** **sociale**. »<BR><BR>Jean-Jacques ROUSSEAU, <em>Essai sur l’origine des langues</em>, chapitre 1", source: "langage" },
+	{ texte: "« Le langage **distingue** l’**homme** de l’**animal**. »<BR><BR>René DESCARTES, <em>Lettre au marquis de Newcastle</em>", source: "langage" },
+	{ texte: "« Le langage est une **technique**. »<BR><BR>Platon, <em>Cratyle</em>, 388c", source: "langage" },
+	{ texte: "« Le langage n’est pas seulement **communication** mais **expression**. »<BR><BR>Henri BERGSON, <em>La Pensée et le Mouvant</em>, chapitre 4", source: "langage" },
+	{ texte: "« Le langage **trompe**. »<BR><BR>Blaise PASCAL, <em>Pensées</em>, fragment 44", source: "langage" },
+
+	// ============================================
+	// LIBERTÉ (10 citations)
+	// ============================================
+	{ texte: "« L’**homme** est **né** **libre**, et partout il est dans les fers. »<BR><BR>Jean-Jacques ROUSSEAU, <em>Du contrat social</em>, livre I, chapitre 1", source: "liberté" },
+	{ texte: "« La **liberté** est le **pouvoir** de **faire** ce que l’on doit vouloir. »<BR><BR>Emmanuel KANT, <em>Métaphysique des mœurs</em>, Introduction", source: "liberté" },
+	{ texte: "« La liberté est le **fondement** de la **morale**. »<BR><BR>Jean-Paul SARTRE, <em>L’Existentialisme est un humanisme</em>", source: "liberté" },
+	{ texte: "« La liberté **consiste** à **obéir** aux **lois** qu’on s’est prescrites. »<BR><BR>Jean-Jacques ROUSSEAU, <em>Du contrat social</em>, livre I, chapitre 8", source: "liberté" },
+	{ texte: "« La liberté est l’**absence** d’**obstacle**. »<BR><BR>Thomas HOBBES, <em>Léviathan</em>, chapitre 21", source: "liberté" },
+	{ texte: "« La liberté est un **droit** **naturel**. »<BR><BR>John LOCKE, <em>Traité du gouvernement civil</em>, chapitre 4", source: "liberté" },
+	{ texte: "« La liberté est la **condition** de la **dignité** **humaine**. »<BR><BR>Emmanuel KANT, <em>Fondation de la métaphysique des mœurs</em>, 3e section", source: "liberté" },
+	{ texte: "« La liberté est une **illusion** **nécessaire**. »<BR><BR>Spinoza, <em>Éthique</em>, partie II, proposition 35", source: "liberté" },
+	{ texte: "« La liberté est le **pouvoir** de **dire** **non**. »<BR><BR>Henri BERGSON, <em>Les Deux Sources de la morale et de la religion</em>, chapitre 1", source: "liberté" },
+	{ texte: "« La liberté, c’est la **conscience**. »<BR><BR>Georg Wilhelm Friedrich HEGEL, <em>Leçons sur la philosophie de l’histoire</em>, Introduction", source: "liberté" },
+
+	// ============================================
+	// NATURE (10 citations)
+	// ============================================
+	{ texte: "« La **nature** ne **fait** rien en **vain**. »<BR><BR>Aristote, <em>La Politique</em>, livre I, chapitre 8", source: "nature" },
+	{ texte: "« **Reviens** à la **nature**. »<BR><BR>Épicure, <em>Maximes capitales</em>, maxime 29", source: "nature" },
+	{ texte: "« La nature est un **livre** **écrit** en **langage** mathématique. »<BR><BR>Galileo GALILEI, <em>L’Essayeur</em>", source: "nature" },
+	{ texte: "« La nature est la **volonté** de **vivre**. »<BR><BR>Arthur SCHOPENHAUER, <em>Le Monde comme volonté et comme représentation</em>, livre II", source: "nature" },
+	{ texte: "« La nature a **horreur** du **vide**. »<BR><BR>Aristote, <em>Physique</em>, livre IV", source: "nature" },
+	{ texte: "« La nature est l’**œuvre** de **Dieu**. »<BR><BR>Thomas d’AQUIN, <em>Somme théologique</em>, 1re partie, question 47", source: "nature" },
+	{ texte: "« La nature ne **fait** pas de **saut**. »<BR><BR>Gottfried Wilhelm LEIBNIZ, <em>Nouveaux essais sur l’entendement humain</em>, préface", source: "nature" },
+	{ texte: "« La nature est la **mère** et la **maîtresse**. »<BR><BR>Michel de MONTAIGNE, <em>Essais</em>, livre III, chapitre 13", source: "nature" },
+	{ texte: "« La nature **humaine** ne **change** pas. »<BR><BR>Blaise PASCAL, <em>Pensées</em>, fragment 131", source: "nature" },
+	{ texte: "« La nature est une **puissance** **créatrice**. »<BR><BR>Henri BERGSON, <em>L’Évolution créatrice</em>, chapitre 1", source: "nature" },
+
+	// ============================================
+	// RAISON (10 citations)
+	// ============================================
+	{ texte: "« La **raison** est la **faculté** des **principes**. »<BR><BR>Emmanuel KANT, <em>Critique de la raison pure</em>, Introduction", source: "raison" },
+	{ texte: "« La raison est le **propre** de l’**homme**. »<BR><BR>Aristote, <em>Politique</em>, livre I, chapitre 13", source: "raison" },
+	{ texte: "« La raison est l’**esclave** des **passions**. »<BR><BR>David HUME, <em>Traité de la nature humaine</em>, livre II, partie 3", source: "raison" },
+	{ texte: "« La raison ne peut rien sans l’**expérience**. »<BR><BR>John LOCKE, <em>Essai concernant l’entendement humain</em>, livre II, chapitre 1", source: "raison" },
+	{ texte: "« La raison est la **lumière** **naturelle**. »<BR><BR>René DESCARTES, <em>Règles pour la direction de l’esprit</em>, règle 1", source: "raison" },
+	{ texte: "« La raison est la **seule** **chose** qui nous **rende** semblables à Dieu. »<BR><BR>Thomas d’AQUIN, <em>Somme théologique</em>, 1re partie, question 79", source: "raison" },
+	{ texte: "« La raison a **toujours** **tort** face au **cœur**. »<BR><BR>Blaise PASCAL, <em>Pensées</em>, fragment 277", source: "raison" },
+	{ texte: "« La raison est le **logos** **universel**. »<BR><BR>Marc AURÈLE, <em>Pensées</em>, livre IV", source: "raison" },
+	{ texte: "« La raison **libère** l’homme des **passions**. »<BR><BR>Spinoza, <em>Éthique</em>, partie V, proposition 42", source: "raison" },
+	{ texte: "« **Penser** **raison** **exister**. »<BR><BR>René DESCARTES, <em>Discours de la méthode</em>", source: "raison" },
+
+	// ============================================
+	// RELIGION (10 citations)
+	// ============================================
+	{ texte: "« **Dieu** est **mort**. »<BR><BR>Friedrich NIETZSCHE, <em>Le Gai Savoir</em>, §125", source: "religion" },
+	{ texte: "« La **religion** est l’**opium** du **peuple**. »<BR><BR>Karl MARX, <em>Critique de la philosophie du droit de Hegel</em>, Introduction", source: "religion" },
+	{ texte: "« La religion est le **sentiment** d’une **dépendance** **absolue**. »<BR><BR>Friedrich SCHLEIERMACHER, <em>Discours sur la religion</em>", source: "religion" },
+	{ texte: "« La religion est une **illusion**. »<BR><BR>Sigmund FREUD, <em>L’Avenir d’une illusion</em>, chapitre 8", source: "religion" },
+	{ texte: "« La religion **naturelle** est la plus **ancienne**. »<BR><BR>David HUME, <em>Histoire naturelle de la religion</em>, section 1", source: "religion" },
+	{ texte: "« La religion est la **reconnaissance** de **Dieu**. »<BR><BR>Thomas d’AQUIN, <em>Somme théologique</em>, 2e partie, question 81", source: "religion" },
+	{ texte: "« La religion est un **fait** **social**. »<BR><BR>Émile DURKHEIM, <em>Les Formes élémentaires de la vie religieuse</em>, Introduction", source: "religion" },
+	{ texte: "« La **foi** est **supérieure** à la **raison**. »<BR><BR>Blaise PASCAL, <em>Pensées</em>, fragment 277", source: "religion" },
+	{ texte: "« Dieu est la **substance** **infinie**. »<BR><BR>Spinoza, <em>Éthique</em>, partie I, définition 6", source: "religion" },
+	{ texte: "« La religion est le **refuge** de l’**ignorance**. »<BR><BR>Lucrèce, <em>De la nature des choses</em>, chant I", source: "religion" },
+
+	// ============================================
+	// SCIENCE (10 citations)
+	// ============================================
+	{ texte: "« Le **doute** est le **commencement** de la **science**. »<BR><BR>René DESCARTES, <em>Méditations métaphysiques</em>, Méditation 1", source: "science" },
+	{ texte: "« **Savoir**, c’est **savoir** par les **causes**. »<BR><BR>Aristote, <em>Métaphysique</em>, livre I, chapitre 1", source: "science" },
+	{ texte: "« La science **progresse** par **révolutions**. »<BR><BR>Thomas KUHN, <em>La Structure des révolutions scientifiques</em>, chapitre 9", source: "science" },
+	{ texte: "« La science est un **langage** **bien** **fait**. »<BR><BR>Émile MEYERSON, <em>Identité et réalité</em>, chapitre 1", source: "science" },
+	{ texte: "« La science ne **rend** pas **heureux**. »<BR><BR>Jean-Jacques ROUSSEAU, <em>Discours sur les sciences et les arts</em>, 2e partie", source: "science" },
+	{ texte: "« La science est une **entreprise** **essentiellement** **critique**. »<BR><BR>Karl POPPER, <em>La Logique de la découverte scientifique</em>, chapitre 1", source: "science" },
+	{ texte: "« La science est la **mesure** de **toutes** **choses**. »<BR><BR>Protagoras, fragment B1", source: "science" },
+	{ texte: "« La science est une **connaissance** **certaine** par les **causes**. »<BR><BR>Spinoza, <em>Traité de la réforme de l’entendement</em>, § 85", source: "science" },
+	{ texte: "« La science **humaine** n’est que la **copie** de la science divine. »<BR><BR>Francis BACON, <em>Novum Organum</em>, livre I, aphorisme 1", source: "science" },
+	{ texte: "« La science **moderne** est **fille** de la **technique**. »<BR><BR>Martin HEIDEGGER, <em>La Question de la technique</em>", source: "science" },
+
+	// ============================================
+	// TECHNIQUE (10 citations)
+	// ============================================
+	{ texte: "« La **technique** est une **forme** de la **poésie**. »<BR><BR>Martin HEIDEGGER, <em>La Question de la technique</em>", source: "technique" },
+	{ texte: "« La technique est une **prothèse**. »<BR><BR>Ernst KAPP, <em>Principes d’une philosophie de la technique</em>", source: "technique" },
+	{ texte: "« La technique **transforme** le **monde**. »<BR><BR>Gilbert SIMONDON, <em>Du mode d’existence des objets techniques</em>, Introduction", source: "technique" },
+	{ texte: "« La technique est la **plus grande** **puissance** de **destruction**. »<BR><BR>Friedrich NIETZSCHE, <em>Fragments posthumes</em>", source: "technique" },
+	{ texte: "« La technique est la **révélation** de la **nature**. »<BR><BR>Francis BACON, <em>Novum Organum</em>, livre I, aphorisme 3", source: "technique" },
+	{ texte: "« La technique est une **activité** de l’**esprit**. »<BR><BR>Émile CHARTIER (Alain), <em>Propos sur la technique</em>", source: "technique" },
+	{ texte: "« La technique **prolonge** les **organes**. »<BR><BR>Karl MARX, <em>Le Capital</em>, livre I, chapitre 13", source: "technique" },
+	{ texte: "« La technique est un **danger** pour l’**homme**. »<BR><BR>Hans JONAS, <em>Le Principe responsabilité</em>, chapitre 1", source: "technique" },
+	{ texte: "« La technique est l’**expression** de la **volonté** de **puissance**. »<BR><BR>Friedrich NIETZSCHE, <em>La Volonté de puissance</em>, § 366", source: "technique" },
+	{ texte: "« La technique n’est **ni** **bonne** **ni** mauvaise. »<BR><BR>Bertrand RUSSELL, <em>Science et Bonheur</em>", source: "technique" },
+
+	// ============================================
+	// TEMPS (10 citations)
+	// ============================================
+	{ texte: "« Le **temps** est la **mesure** du **mouvement**. »<BR><BR>Aristote, <em>Physique</em>, livre IV, chapitre 11", source: "temps" },
+	{ texte: "« Le temps est une **image** **mobile** de l’**éternité**. »<BR><BR>Platon, <em>Timée</em>, 37d", source: "temps" },
+	{ texte: "« Le **passé** n’est plus, l’**avenir** n’est pas encore. »<BR><BR>Augustin, <em>Confessions</em>, livre XI", source: "temps" },
+	{ texte: "« Le temps est la **forme** **a priori** du **sens** interne. »<BR><BR>Emmanuel KANT, <em>Critique de la raison pure</em>, Esthétique transcendantale", source: "temps" },
+	{ texte: "« Le temps est la **condition** de l’**existence**. »<BR><BR>Martin HEIDEGGER, <em>Être et temps</em>, § 65", source: "temps" },
+	{ texte: "« Le temps est le **nombre** du **mouvement**. »<BR><BR>Aristote, <em>Physique</em>, livre IV, chapitre 14", source: "temps" },
+	{ texte: "« Le temps est la **substance** de l’**homme**. »<BR><BR>Henri BERGSON, <em>La Pensée et le Mouvant</em>, chapitre 5", source: "temps" },
+	{ texte: "« Le temps est l’**étoffe** dont la **vie** est faite. »<BR><BR>Henri BERGSON, <em>L’Évolution créatrice</em>, chapitre 3", source: "temps" },
+	{ texte: "« Le temps n’existe pas en **soi**. »<BR><BR>Gottfried Wilhelm LEIBNIZ, <em>Cinquième écrit à Clarke</em>, § 47", source: "temps" },
+	{ texte: "« Le **temps** **passe** **irréversiblement**. »<BR><BR>Anonyme", source: "temps" },
+
+	// ============================================
+	// TRAVAIL (10 citations)
+	// ============================================
+	{ texte: "« Le **travail** est une **nécessité** **naturelle**. »<BR><BR>Aristote, <em>Éthique à Nicomaque</em>, livre X, chapitre 6", source: "travail" },
+	{ texte: "« Le travail **rend** l’homme **maître** de la **nature**. »<BR><BR>Francis BACON, <em>Novum Organum</em>, livre I, aphorisme 3", source: "travail" },
+	{ texte: "« Le travail est le **père** de la **richesse**. »<BR><BR>William PETTY, <em>Traité des impôts</em>", source: "travail" },
+	{ texte: "« Le travail est la **mesure** de la **valeur**. »<BR><BR>Adam SMITH, <em>La Richesse des nations</em>, livre I, chapitre 5", source: "travail" },
+	{ texte: "« Le travail est l’**essence** de l’**homme**. »<BR><BR>Karl MARX, <em>Le Capital</em>, livre I, chapitre 7", source: "travail" },
+	{ texte: "« Le travail **aliène** **l’homme** **social**. »<BR><BR>Karl MARX, <em>Manuscrits de 1844</em>", source: "travail" },
+	{ texte: "« Le travail est une **peine** **nécessaire**. »<BR><BR>Jean-Jacques ROUSSEAU, <em>Émile ou De l’éducation</em>, livre III", source: "travail" },
+	{ texte: "« Le travail **divise** l’**homme**. »<BR><BR>Karl MARX, <em>Manuscrits de 1844</em>, 1er manuscrit", source: "travail" },
+	{ texte: "« Le travail est la **fin** de la **liberté**. »<BR><BR>Georg Wilhelm Friedrich HEGEL, <em>Principes de la philosophie du droit</em>, § 194", source: "travail" },
+	{ texte: "« Le travail est une **activité** **aliénante**. »<BR><BR>Karl MARX, <em>Manuscrits de 1844</em>, 1er manuscrit", source: "travail" },
+
+	// ============================================
+	// VÉRITÉ (10 citations)
+	// ============================================
+	{ texte: "« La **vérité** est la **conformité** de l’**intellect** à la chose. »<BR><BR>Thomas d’AQUIN, <em>Somme théologique</em>, 1re partie, question 16", source: "vérité" },
+	{ texte: "« La vérité est **fille** du **temps**. »<BR><BR>Francis BACON, <em>Novum Organum</em>, livre I, aphorisme 84", source: "vérité" },
+	{ texte: "« La vérité est la **plus grande** des **puissances**. »<BR><BR>Spinoza, <em>Traité théologico-politique</em>, chapitre 20", source: "vérité" },
+	{ texte: "« La vérité n’existe pas en **soi**. »<BR><BR>Friedrich NIETZSCHE, <em>Fragments posthumes</em>", source: "vérité" },
+	{ texte: "« La vérité est une **idole**. »<BR><BR>Blaise PASCAL, <em>Pensées</em>, fragment 44", source: "vérité" },
+	{ texte: "« La vérité est une **puissance**. »<BR><BR>Georg Wilhelm Friedrich HEGEL, <em>Phénoménologie de l’esprit</em>, Préface", source: "vérité" },
+	{ texte: "« La vérité est **relative** au **langage**. »<BR><BR>Ludwig WITTGENSTEIN, <em>Tractatus logico-philosophicus</em>, proposition 4.001", source: "vérité" },
+	{ texte: "« La vérité est ce qu’on ne peut pas ne pas **penser**. »<BR><BR>Henri BERGSON, <em>La Pensée et le Mouvant</em>, chapitre 1", source: "vérité" },
+	{ texte: "« La **vérité** est le **fondement** de toute **connaissance**. »<BR><BR>Emmanuel KANT, <em>Critique de la raison pure</em>", source: "vérité" }
+	
 ];
