@@ -1,3 +1,10 @@
+// REMARQUES
+// Pour mettre le texte en italique			Les bornes &lt;i&gt;...&lt;/i&gt; ou &lt;em&gt;...&lt;/em&gt;
+// Pour mettre le texte en gras				Les bornes &lt;strong&gt;...&lt;/strong&gt; ou &lt;b&gt;...&lt;/b&gt;
+// Pour mettre le texte en couleur adaptée	Les bornes &lt;span style="color:red"&gt;...&lt;/span&gt;
+// Pour mettre un espace insécable			Utiliser &amp;nbsp;
+
+// 1. TITRES DE L'APPLICATION
 // Généré le 07/06/2026 06:36:31
 const title = "textes à trous";
 const subtitle = "réviser le cours par les auteurs";

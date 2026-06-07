@@ -662,9 +662,9 @@
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            min-width: 40px;
+            min-width: 60px;
             width: auto;
-            height: clamp(24px, 5vw, 28px);
+            height: clamp(28px, 5vw, 32px);
             border: none;
             background-color: rgba(255, 255, 255, 0.05);
             margin: 0 0.2rem;
@@ -822,9 +822,9 @@
             }
 
             .dropzone {
-                height: 25px;
-                min-height: 25px;
-                min-width: 40px;
+                height: 28px;
+                min-height: 28px;
+                min-width: 50px;
                 width: auto;
                 padding: 0 0.4rem;
                 font-size: 0.7rem;
@@ -1036,7 +1036,7 @@
         <div class="toolbar-right">
             <div class="notion-select-wrapper">
                 <select id="notionFilter" class="notion-select" data-title="filtrer par auteur">
-                    <option value="all">📚 tous les auteurs</option>
+                    <option value="all">toutes les notions</option>
                 </select>
             </div>
             <button class="toolbar-btn fullscreen" id="fullscreenButton" data-title="plein écran (F)">
@@ -1109,7 +1109,7 @@
         <div class="mobile-select-row">
             <div class="notion-select-wrapper">
                 <select id="notionFilterMobile" class="notion-select" data-title="auteur">
-                    <option value="all">📚 tous les auteurs</option>
+                    <option value="all">toutes les notions</option>
                 </select>
             </div>
         </div>
@@ -1325,6 +1325,15 @@
         const toasterScoreDiv = document.getElementById("toaster-score-button");
 
         // ===================================================================
+        // FONCTION UTILITAIRE : extraire le texte brut d'un HTML
+        // ===================================================================
+        function extractPlainText(html) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            return tempDiv.textContent || tempDiv.innerText || '';
+        }
+
+        // ===================================================================
         // FONCTIONS DE RENDU ET FILTRES
         // ===================================================================
 
@@ -1344,7 +1353,7 @@
             const selectMobile = document.getElementById('notionFilterMobile');
             if (!selectDesktop || !selectMobile) return;
 
-            let optionsHTML = '<option value="all">📚 tous les auteurs</option>';
+            let optionsHTML = '<option value="all">toutes les notions</option>';
             for (const auteur of auteurs) {
                 optionsHTML += `<option value="${escapeForAttribute(auteur)}">${auteur}</option>`;
             }
@@ -1378,12 +1387,14 @@
                 .replace(/'/g, '&#39;');
         }
 
+        // Extrait les mots entre ** en ignorant les balises HTML
         function extraireMotsEntreAsterisques(texte) {
             const regex = /\*\*(.*?)\*\*/g;
             const mots = [];
             let match;
             while ((match = regex.exec(texte)) !== null) {
-                mots.push(match[1]);
+                // Extraire le texte brut du contenu entre ** ** (qui peut contenir du HTML)
+                mots.push(extractPlainText(match[1]));
             }
             return mots;
         }
@@ -1496,12 +1507,23 @@
             return resultat;
         }
 
+        // GÉNÉRATION DU JEU - Remplace correctement les ** ** par des zones de dépôt
         function genererJeuDepuisTexte(texteConfig, preserveContent = false) {
             let texteOriginale = texteConfig.texte;
             const sourceCitation = texteConfig.source || "";
 
+            // Extraire tous les mots entre ** ** (en texte brut)
             const tousLesMots = extraireMotsEntreAsterisques(texteOriginale);
+            
+            // Trouver tous les motifs **...** avec leur contenu original
+            const regexPattern = /\*\*([^*]+)\*\*/g;
+            const matches = [];
+            let match;
+            while ((match = regexPattern.exec(texteOriginale)) !== null) {
+                matches.push({ fullMatch: match[0], innerHtml: match[1] });
+            }
 
+            // Sélectionner aléatoirement les indices à transformer en trous
             const indicesDisponibles = [...Array(tousLesMots.length).keys()];
             const indicesChoisis = [];
             const nbASelectionner = Math.min(pairsCount, tousLesMots.length);
@@ -1513,18 +1535,26 @@
             }
 
             indicesChoisis.sort((a, b) => a - b);
+            
+            // Les réponses sont les mots en texte brut
             const sequencesTrous = indicesChoisis.map(i => tousLesMots[i]);
+            
+            // Construire le texte final en remplaçant les **...**
             let texteFinal = texteOriginale;
-
-            for (let i = tousLesMots.length - 1; i >= 0; i--) {
-                const mot = tousLesMots[i];
-                const motAvecAsterisques = `**${mot}**`;
-
+            let replacementIndex = 0;
+            
+            // Parcourir tous les matches et remplacer selon qu'ils sont choisis ou non
+            for (let i = 0; i < matches.length; i++) {
+                const motBrut = tousLesMots[i];
+                const pattern = matches[i].fullMatch;
+                
                 if (indicesChoisis.includes(i)) {
-                    const zoneDepot = `<span class="dropzone" data-answer="${escapeForAttribute(mot)}"></span>`;
-                    texteFinal = texteFinal.replace(motAvecAsterisques, zoneDepot);
+                    // Transformer en zone de dépôt
+                    const zoneDepot = `<span class="dropzone" data-answer="${escapeForAttribute(motBrut)}"></span>`;
+                    texteFinal = texteFinal.replace(pattern, zoneDepot);
                 } else {
-                    texteFinal = texteFinal.replace(motAvecAsterisques, mot);
+                    // Remplacer par le texte brut (sans les **)
+                    texteFinal = texteFinal.replace(pattern, motBrut);
                 }
             }
 
@@ -1532,7 +1562,9 @@
                 return { texte: "Erreur : Aucun trou trouvé", mots: ["erreur"], reponses: ["erreur"], source: "" };
             }
 
+            // Mélanger les mots pour l'affichage dans le toaster
             const motsPourJeu = melangerTableau([...sequencesTrous]);
+            
             return { texte: texteFinal, mots: motsPourJeu, reponses: sequencesTrous, source: sourceCitation };
         }
 
@@ -1614,7 +1646,6 @@
 
                 toasterWordsDiv.innerHTML = jeu.mots.map(mot => `<span class="draggable-word">${escapeForAttribute(mot)}</span>`).join("");
 
-                // Réattacher les écouteurs tactiles pour le nouveau contenu
                 if (isMobile) {
                     disableNativeDragOnMobile();
                     attachMobileEventListeners();
@@ -2063,7 +2094,7 @@
         }
 
         // ===================================================================
-        // INTERFACE TACTILE (MOBILE) - VERSION CORRIGÉE
+        // INTERFACE TACTILE (MOBILE)
         // ===================================================================
 
         function clearSelection() {
@@ -2233,7 +2264,6 @@
 
             toasterWordsDiv.innerHTML = jeu.mots.map(mot => `<span class="draggable-word">${escapeForAttribute(mot)}</span>`).join("");
 
-            // Attacher correctement les événements selon le type d'appareil
             if (isMobile) {
                 disableNativeDragOnMobile();
                 attachMobileEventListeners();
