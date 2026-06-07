@@ -631,18 +631,19 @@
             font-size: calc(12px + 0.5vw);
         }
 
-        .text-header-info {
-            font-weight: bold;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--font-color);
-            color: var(--font-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+		.text-header-info {
+			font-weight: bold;
+			margin-bottom: 1rem;
+			padding-bottom: 0.5rem;
+			border-bottom: 2px solid var(--font-color);
+			color: var(--font-color);
+			display: flex;
+			justify-content: space-between;
+			align-items: baseline;
+			flex-wrap: wrap;
+			gap: 10px;
+			font-size: calc(12px + 0.5vw); /* Même taille que le texte */
+		}
 
         .text-number {
             font-size: 0.9rem;
@@ -1792,7 +1793,7 @@
                     const currentBtnText = toasterActionBtn ? toasterActionBtn.textContent : "";
                     if (currentBtnText === "corriger") {
                         showAllCorrectAnswers();
-                    } else if (currentBtnText === "texte suivant") {
+                    } else if (currentBtnText === "citation suivante") {
                         goToNextText();
                     }
                 }
@@ -1831,9 +1832,9 @@
             const message = document.createElement('div');
             message.className = 'feedback-message';
             if (correctCount === totalCount) {
-                message.textContent = `🎉 PARFAIT ! ${correctCount} / ${totalCount} bonnes réponses 🎉`;
+                message.textContent = `${correctCount} / ${totalCount} bonnes réponses`;
             } else {
-                message.textContent = `📝 ${correctCount} / ${totalCount} bonnes réponses. Cliquez sur "corriger" pour voir les solutions.`;
+                message.textContent = `${correctCount} / ${totalCount} bonnes réponses`;
             }
             document.body.appendChild(message);
 
@@ -1874,7 +1875,7 @@
 
             const message = document.createElement('div');
             message.className = 'feedback-message';
-            message.textContent = `✅ Correction appliquée : ${correctedCount} réponse(s) corrigée(s) sur ${totalCount}`;
+            message.textContent = `correction appliquée`;
             document.body.appendChild(message);
 
             setTimeout(() => {
@@ -1882,7 +1883,7 @@
             }, 2500);
 
             if (toasterActionBtn) {
-                toasterActionBtn.textContent = "texte suivant";
+                toasterActionBtn.textContent = "citation suivante";
                 toasterActionBtn.disabled = false;
             }
         }
