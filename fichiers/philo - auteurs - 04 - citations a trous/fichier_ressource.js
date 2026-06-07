@@ -61,7 +61,7 @@ const textesAvecTrous = [
 	{ texte: "« **Agis** de telle **sorte** que ta **volonté** puisse toujours valoir en même temps comme principe d’une législation universelle. »<BR><BR>Emmanuel KANT, <em>Fondation de la métaphysique des mœurs</em>, 1re section", source: "devoir" },
 	{ texte: "« Le **devoir** est la **nécessité** d’**agir** par respect pour la loi. »<BR><BR>Emmanuel KANT, <em>Critique de la raison pratique</em>, livre I", source: "devoir" },
 	{ texte: "« Le devoir de l’homme est d’**obéir** aux **lois** de la **cité**. »<BR><BR>Platon, <em>Criton</em>, 51b", source: "devoir" },
-	{ texte: "« **L’homme** est **condamné** à être **libre**. »<BR><BR>Jean-Paul SARTRE, <em>L’Existentialisme est un humanisme</em>", source: "devoir" },
+	{ texte: "« **L’homme** est **condamné** à être **libre**. »<BR><BR>Jean-Paul SARTRE, <em>L’existentialisme est un humanisme</em>", source: "devoir" },
 	{ texte: "« Le devoir est le **sentiment** de l’**obligation**. »<BR><BR>David HUME, <em>Traité de la nature humaine</em>, livre III, partie 2", source: "devoir" },
 	{ texte: "« Le **premier devoir** est de **vivre** conformément à la **nature**. »<BR><BR>Épictète, <em>Entretiens</em>, livre I, chap. 26", source: "devoir" },
 	{ texte: "« Le devoir est la **matière** **première** de la **vertu**. »<BR><BR>Cicéron, <em>Les Devoirs</em>, livre I", source: "devoir" },
