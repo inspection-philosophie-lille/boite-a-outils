@@ -164,9 +164,10 @@ const textesAvecTrous = [
 	{ texte: "« La raison est la **seule** **chose** qui nous **rende** semblables à Dieu. »<BR><BR>Thomas d’AQUIN, <em>Somme théologique</em>, 1re partie, question 79", source: "raison" },
 	{ texte: "« La raison a **toujours** **tort** face au **cœur**. »<BR><BR>Blaise PASCAL, <em>Pensées</em>, fragment 277", source: "raison" },
 	{ texte: "« La raison est le **logos** **universel**. »<BR><BR>Marc AURÈLE, <em>Pensées</em>, livre IV", source: "raison" },
-	{ texte: "« La raison **libère** l’homme des **passions**. »<BR><BR>Spinoza, <em>Éthique</em>, partie V, proposition 42", source: "raison" },
-	{ texte: "« **Penser** **raison** **exister**. »<BR><BR>René DESCARTES, <em>Discours de la méthode</em>", source: "raison" },
+	{ texte: "« La raison **libère** l’homme des **passions**. »<BR><BR>Spinoza, <em>Éthique</em>, partie V, proposition 42", source: "raison" },	
+	{ texte: "« La **raison** n'est que raison, et elle ne peut **convaincre** que par ses propres **forces**. »<BR><BR>Nicolas Malebranche, <em>De la recherche de la vérité</em>, livre I, chap. 1", source: "raison" },
 
+	
 	// ============================================
 	// RELIGION (10 citations)
 	// ============================================
