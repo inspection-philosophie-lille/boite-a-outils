@@ -112,7 +112,7 @@ window.reperes = [
 	parts: [
 	{
 	name: "concept",
-	definition: "Une idée abstraite qui représente un ensemble de propriétés ou de caractéristiques",
+	definition: "idée abstraite qui représente un ensemble de propriétés ou de caractéristiques",
 	examples: [
 		"La notion de démocratie comme un système de gouvernement",
 		"L'idée de développement durable pour une croissance respectueuse de l'environnement",
@@ -123,7 +123,7 @@ window.reperes = [
 	},
 	{
 	name: "image",
-	definition: "Une représentation visuelle d'une idée ou d'un concept",
+	definition: "représentation visuelle d'une idée ou d'un concept",
 	examples: [
 		"Une peinture qui évoque la nature",
 		"Une photo d'un moment marquant de l'histoire",
@@ -134,7 +134,7 @@ window.reperes = [
 	},
 	{
 	name: "métaphore",
-	definition: "Une figure de style qui compare deux choses sans utiliser 'comme'",
+	definition: "figure de style qui compare deux choses sans utiliser 'comme'",
 	examples: [
 		"Le temps est un voleur qui nous dérobe nos moments",
 		"Une mer de problèmes à surmonter",
@@ -231,7 +231,7 @@ window.reperes = [
 	parts: [
 	{
 	name: "exemple",
-	definition: "Un cas spécifique qui illustre un point ou une idée",
+	definition: "un cas spécifique qui illustre un point ou une idée",
 	examples: [
 		"Un article de loi utilisé pour illustrer un droit",
 		"Une anecdote racontée pour clarifier un concept",
@@ -242,7 +242,7 @@ window.reperes = [
 	},
 	{
 	name: "preuve",
-	definition: "Une information ou un fait qui confirme la véracité d'une affirmation",
+	definition: "information ou fait qui confirme la véracité d'une affirmation",
 	examples: [
 		"Un document officiel attestant d'un événement",
 		"Des résultats d'expériences scientifiques validés",
@@ -312,7 +312,7 @@ window.reperes = [
 	parts: [
 	{
 	name: "formel",
-	definition: "cohérence logique : ensemble des traits caractéristiques qui permettent de reconnaître une réalité (concrète ou abstraite)",
+	definition: "cohérence logique, ensemble des traits caractéristiques qui permettent de reconnaître une réalité (concrète ou abstraite)",
 	examples: [
 		"Une procédure administrative à suivre pour un dossier",
 		"Un document officiel avec tous les tampons nécessaires",
@@ -377,7 +377,7 @@ window.reperes = [
 	parts: [
 	{
 	name: "hypothèse",
-	definition: "Une supposition ou proposition à tester",
+	definition: "supposition ou proposition à tester",
 	examples: [
 		"Une idée sur l'impact d'un changement climatique sur les écosystèmes",
 		"Une proposition sur les effets d'un nouveau médicament",
@@ -399,7 +399,7 @@ window.reperes = [
 	},
 	{
 	name: "conclusion",
-	definition: "La décision ou l'opinion tirée après réflexion",
+	definition: "décision ou opinion tirée après réflexion",
 	examples: [
 		"Une synthèse des résultats d'une étude",
 		"Les implications d'une recherche scientifique",
@@ -610,7 +610,7 @@ window.reperes = [
 	},
 	{
 	name: "intersubjectif",
-	definition: "Ce qui est partagé entre plusieurs sujets ou individus",
+	definition: "ce qui est partagé entre plusieurs sujets ou individus",
 	examples: [
 		"Un accord social sur des normes et des valeurs",
 		"Une compréhension commune d'une situation",
@@ -745,7 +745,7 @@ window.reperes = [
 	parts: [
 	{
 	name: "public",
-	definition: "Ce qui est accessible à tous, sans restriction",
+	definition: "ce qui est accessible à tous, sans restriction",
 	examples: [
 		"Les parcs ouverts où chacun peut se rendre",
 		"Les bibliothèques municipales qui offrent des services gratuits",
@@ -756,7 +756,7 @@ window.reperes = [
 	},
 	{
 	name: "privé",
-	definition: "Ce qui est réservé à un individu ou à un groupe restreint",
+	definition: "ce qui est réservé à un individu ou à un groupe restreint",
 	examples: [
 		"Les conversations personnelles entre amis",
 		"Les données sensibles protégées par des lois",
@@ -799,7 +799,7 @@ window.reperes = [
 	parts: [
 	{
 	name: "théorie",
-	definition: "Un ensemble d'idées ou de principes qui expliquent un phénomène",
+	definition: "ensemble d'idées ou de principes qui expliquent un phénomène",
 	examples: [
 		"La théorie de l'évolution qui décrit le développement des espèces",
 		"La théorie de l'économie qui analyse les marchés",
@@ -810,7 +810,7 @@ window.reperes = [
 	},
 	{
 	name: "pratique",
-	definition: "L'application réelle des connaissances ou des théories",
+	definition: "application réelle des connaissances ou des théories",
 	examples: [
 		"Un stage en entreprise pour acquérir des compétences professionnelles",
 		"L'utilisation de techniques dans un laboratoire scientifique",
@@ -853,7 +853,7 @@ window.reperes = [
 	parts: [
 	{
 	name: "universel",
-	definition: "Ce qui est valable pour tous et en tout lieu",
+	definition: "ce qui est valable pour tous et en tout lieu",
 	examples: [
 		"Les droits de l'homme reconnus par tous les pays",
 		"Les principes de la physique qui s'appliquent dans l'ensemble de l'univers",
@@ -864,7 +864,7 @@ window.reperes = [
 	},
 	{
 	name: "général",
-	definition: "Ce qui concerne un grand ensemble sans spécificité",
+	definition: "ce qui concerne un grand ensemble sans spécificité",
 	examples: [
 		"Des lois qui s'appliquent à toute la population",
 		"Des tendances sociales observées dans un pays",
@@ -875,7 +875,7 @@ window.reperes = [
 	},
 	{
 	name: "particulier",
-	definition: "Ce qui est spécifique et peut ne pas s'appliquer à d'autres",
+	definition: "ce qui est spécifique et peut ne pas s'appliquer à d'autres",
 	examples: [
 		"Un cas juridique unique qui nécessite une attention spéciale",
 		"Les préférences individuelles qui diffèrent des normes sociales",
@@ -886,7 +886,7 @@ window.reperes = [
 	},
 	{
 	name: "singulier",
-	definition: "Ce qui est unique et distinct des autres",
+	definition: "ce qui est unique et distinct des autres",
 	examples: [
 		"Un chef-d'œuvre artistique qui se démarque",
 		"Une invention originale qui change le monde",
@@ -902,7 +902,7 @@ window.reperes = [
 	parts: [
 	{
 	name: "vrai",
-	definition: "Ce qui est conforme à la réalité et vérifiable",
+	definition: "ce qui est conforme à la réalité et vérifiable",
 	examples: [
 		"Une information corroborée par des sources fiables",
 		"Un témoignage direct d'un témoin oculaire",
@@ -913,7 +913,7 @@ window.reperes = [
 	},
 	{
 	name: "probable",
-	definition: "Ce qui a des chances de se réaliser mais n'est pas garanti",
+	definition: "ce qui a des chances de se réaliser mais n'est pas garanti",
 	examples: [
 		"Les prévisions météorologiques qui se basent sur des tendances",
 		"Les résultats d'une étude qui suggèrent une tendance",
@@ -924,7 +924,7 @@ window.reperes = [
 	},
 	{
 	name: "certain",
-	definition: "Ce qui est établi comme vrai sans aucun doute",
+	definition: "ce qui est établi comme vrai sans aucun doute",
 	examples: [
 		"Une loi de la nature qui a été prouvée",
 		"Un fait historique bien documenté",
