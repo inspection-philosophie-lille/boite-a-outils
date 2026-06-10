@@ -562,77 +562,6 @@ body.dark-mode .quiz-btn--fill {
 body.dark-mode .quiz-btn--fill:hover {
     box-shadow: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.3), inset -0.2rem -0.2rem 0.4rem rgba(40, 40, 40, 0.5);
 }
-/* Menu déroulant GitHub */
-.github-select-container {
-    width: 100%;
-    text-align: center;
-    margin-top: 10px;
-}
-.github-select-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: var(--font-color);
-    font-size: 14px;
-}
-.github-select {
-    width: 80%;
-    max-width: 320px;
-    padding: 12px 15px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.95);
-    border: 2px solid #666;
-    color: #333;
-    font-size: 15px;
-    cursor: pointer;
-    margin-bottom: 15px;
-    text-align: left;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    font-family: Arial, sans-serif;
-    transition: all 0.3s ease;
-}
-.github-select:hover {
-    border-color: red;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-body.dark-mode .github-select {
-    background: rgba(40, 40, 40, 0.95);
-    color: #e0e0e0;
-    border-color: #888;
-}
-.github-select option {
-    background: white;
-    color: #333;
-    padding: 8px;
-}
-body.dark-mode .github-select option {
-    background: #2d2d2d;
-    color: #e0e0e0;
-}
-.github-load-btn {
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    padding: 12px 25px;
-    border-radius: 27px;
-    border: none;
-    cursor: pointer;
-    font-size: 15px;
-    margin-top: 5px;
-    min-width: 200px;
-    transition: all 0.3s ease;
-}
-.github-load-btn:hover:not(:disabled) {
-    background: rgba(0, 0, 0, 0.8);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-.github-load-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
 /* Bouton de chargement de fichier local */
 .file-load-container {
     width: 100%;
@@ -1115,15 +1044,6 @@ body.dark-mode .philosophy-text-source {
         word-wrap: break-word !important;
         overflow-wrap: break-word !important;
     }
-    .github-select {
-        width: 90%;
-        font-size: 14px;
-        padding: 10px 12px;
-    }
-    .github-load-btn {
-        min-width: 180px;
-        padding: 10px 20px;
-    }
     .toolbar-btn:hover::after {
         display: none; /* Cacher les tooltips sur mobile */
     }
@@ -1199,7 +1119,6 @@ body.dark-mode .philosophy-text-source {
     .quiz-btn--large { font-size: 15px; padding: 12px 25px; min-width: 200px; }
     .quiz-start__button { padding-bottom: 30px; gap: 15px; }
     .file-load-btn { font-size: 14px; padding: 12px 18px; }
-    .github-select { width: 95%; max-width: 95%; }
     .philosophy-paragraph {
         text-indent: 1em;
     }
@@ -1316,22 +1235,15 @@ body.dark-mode .philosophy-text-source {
                             <div class="quiz-start__opacity"></div>
                             <div class="quiz-start__content">
                                 <div class="quiz-start__button">
-                                    <!-- Menu déroulant GitHub -->
-                                    <div class="github-select-container">
-                                        <select id="githubFileSelect" class="github-select">
-                                            <option value="">-- Sélectionner un quiz --</option>
-                                            <option value="loading">Chargement de la liste...</option>
-                                        </select>
-                                        <button id="loadFromGithubBtn" class="github-load-btn" disabled>
-                                            Charger le quiz sélectionné
+                                    <!-- Bouton de chargement local -->
+                                    <div class="file-load-container">
+                                        <input type="file" id="fileInput" accept=".js" />
+                                        <button id="fileLoadButton" class="file-load-btn">
+                                            📂 Choisir un fichier .js de quiz
                                         </button>
                                     </div>
-                                    <!-- Bouton de chargement local -->
-                                    <div class="file-load-container" style="margin-top: 20px;">
-                                        <input type="file" id="fileInput" accept=".js" />
-                                    </div>
                                     <div id="fileStatus" class="file-status">
-                                        <em>Sélectionner un quiz pour commencer</em>
+                                        <em>Choisissez un fichier .js contenant un quiz pour commencer</em>
                                     </div>
                                 </div>
                             </div>
@@ -1536,9 +1448,9 @@ let philosophyData = {
 };
 let questions = Array(10).fill({
   question: "Aucun fichier de questions chargé",
-  answers: ["Utilisez le bouton sur l'accueil", "Ouvrez le dossier /quiz", "Sélectionnez un fichier .js"],
+  answers: ["Utilisez le bouton sur l'accueil", "Choisissez un fichier .js", "Sélectionnez un fichier contenant des questions"],
   correct: 0,
-  explanation: "Chargez votre fichier .js depuis le dossier /quiz pour jouer avec vos propres questions."
+  explanation: "Chargez votre fichier .js contenant des questions pour jouer avec vos propres quiz."
 });
 
 let currentQuestionIndex = 0;
@@ -1551,11 +1463,6 @@ let totalQuestionsAnswered = parseInt(localStorage.getItem('totalQuestionsAnswer
 let userAnswers = [];
 let isDeferredEvaluation = localStorage.getItem('deferredEvaluation') === 'true';
 
-// ======= VALEURS CORRIGÉES =======
-const GITHUB_REPO = 'inspection-philosophie-lille/boite-a-outils';
-const GITHUB_PATH = 'fichiers/philo - cours - 05 - quiz sur des textes/textes';
-const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/contents/${encodeURIComponent(GITHUB_PATH)}`;
-
 // Stocker les indices originaux des questions
 let originalQuestionIndices = [];
 
@@ -1563,6 +1470,7 @@ let originalQuestionIndices = [];
 const quizRetry = document.getElementById('quizRetry');
 const showReview = document.getElementById('showReview');
 const fileInput = document.getElementById('fileInput');
+const fileLoadButton = document.getElementById('fileLoadButton');
 const fileStatus = document.getElementById('fileStatus');
 
 // Boutons toolbar
@@ -1580,12 +1488,34 @@ const animationsToggle = document.getElementById('animationsToggle');
 const colorblindToggle = document.getElementById('colorblindToggle');
 const deferredEvaluationToggle = document.getElementById('deferredEvaluationToggle');
 
-// Éléments du menu GitHub
-const githubFileSelect = document.getElementById('githubFileSelect');
-const loadFromGithubBtn = document.getElementById('loadFromGithubBtn');
-
-// Stocker la liste des fichiers GitHub
-let githubFiles = [];
+// NOUVELLE FONCTION : Supprimer "QUIZ HLP TERM - " du titre pour la barre de progression
+function removeQuizPrefixFromTitle(titre) {
+    if (!titre) return "";
+    
+    // Retirer "QUIZ HLP TERM - " du début du titre
+    const prefix = "QUIZ HLP TERM - ";
+    if (titre.startsWith(prefix)) {
+        return titre.substring(prefix.length);
+    }
+    
+    // Retirer aussi "Quiz HLP Term - " (avec différentes capitalisations)
+    const variations = [
+        "QUIZ HLP TERM - ",
+        "Quiz HLP Term - ",
+        "QUIZ HLP Term - ",
+        "Quiz HLP TERM - ",
+        "QUIZ HLP - ",
+        "Quiz HLP - "
+    ];
+    
+    for (const variation of variations) {
+        if (titre.startsWith(variation)) {
+            return titre.substring(variation.length);
+        }
+    }
+    
+    return titre;
+}
 
 // NOUVELLE FONCTION : Ajuste la largeur du titre dans la barre de progression
 function updateProgressBarTitleWidth() {
@@ -1700,8 +1630,8 @@ function updateQuizTitles(titre, sousTitre) {
         formattedTitreMain = removeLastDashFromFirstLine(formattedTitreMain);
     }
     
-    // TITRE BARRE DE PROGRESSION : D'abord essayer sans couper
-    let formattedTitreProgress = titre || "";
+    // TITRE BARRE DE PROGRESSION : Retirer le préfixe "QUIZ HLP TERM - "
+    let formattedTitreProgress = removeQuizPrefixFromTitle(titre || "");
     
     // Mettre à jour le titre temporairement pour vérifier s'il passe
     if (quizTitle && titre) {
@@ -1733,81 +1663,6 @@ function updateQuizTitles(titre, sousTitre) {
     setTimeout(() => {
         updateProgressBarTitleWidth();
     }, 100);
-}
-
-async function fetchGitHubFiles() {
-    try {
-        fileStatus.textContent = 'Connexion à GitHub...';
-        fileStatus.style.color = '#666';
-
-        const response = await fetch(GITHUB_API_URL);
-        if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
-
-        const files = await response.json();
-        const jsFiles = files.filter(file => file.type === 'file' && file.name.endsWith('.js'));
-
-        if (jsFiles.length === 0) throw new Error('Aucun fichier .js trouvé');
-
-        githubFiles = jsFiles;
-        updateGitHubSelect(jsFiles);
-
-        fileStatus.textContent = `${jsFiles.length} quiz disponible(s)`;
-        fileStatus.style.color = '#28a745';
-    } catch (error) {
-        console.error('Erreur lors de la récupération des fichiers GitHub:', error);
-        fileStatus.textContent = `Erreur: ${error.message}`;
-        fileStatus.style.color = '#dc3545';
-        githubFileSelect.innerHTML = `<option value="">-- Erreur de connexion --</option><option value="error">Impossible de charger la liste</option>`;
-    }
-}
-
-function updateGitHubSelect(files) {
-    githubFileSelect.innerHTML = '<option value="">-- Sélectionner un quiz --</option>';
-    files.sort((a, b) => a.name.localeCompare(b.name));
-    files.forEach(file => {
-        const option = document.createElement('option');
-        option.value = file.download_url;
-        option.textContent = file.name.replace('.js', '');
-        githubFileSelect.appendChild(option);
-    });
-}
-
-async function loadFromGitHub(url) {
-    try {
-        fileStatus.textContent = 'Téléchargement en cours...';
-        fileStatus.style.color = '#666';
-        loadFromGithubBtn.disabled = true;
-
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
-
-        const code = await response.text();
-        const func = new Function(code + '\nreturn {titre, sousTitre, philosophyData, questions};');
-        const result = func();
-
-        if (result.philosophyData && Array.isArray(result.questions) && result.questions.length >= TOTAL_QUESTIONS) {
-            philosophyData = result.philosophyData;
-            questions = result.questions;
-
-            if (result.titre) {
-                currentTitre = result.titre;
-                currentSousTitre = result.sousTitre || currentSousTitre;
-                updateQuizTitles(currentTitre, currentSousTitre);
-            }
-
-            const fileName = url.split('/').pop().replace('.js', '');
-            fileStatus.textContent = `Quiz "${fileName}" chargé avec succès ! Démarrage...`;
-            fileStatus.style.color = '#28a745';
-            setTimeout(startQuiz, 1200);
-        } else {
-            throw new Error('Données incomplètes dans le fichier');
-        }
-    } catch (err) {
-        fileStatus.textContent = `Erreur: ${err.message}`;
-        fileStatus.style.color = '#dc3545';
-        loadFromGithubBtn.disabled = false;
-        console.error('Erreur lors du chargement depuis GitHub:', err);
-    }
 }
 
 // FONCTION POUR PRÉSERVER LES ESPACES AUTOUR DES BALISES
@@ -1866,16 +1721,8 @@ document.addEventListener('DOMContentLoaded', () => {
         deferredEvaluationToggle.checked = true;
     }
 
-    fetchGitHubFiles();
-
-    githubFileSelect.addEventListener('change', () => {
-        const selectedUrl = githubFileSelect.value;
-        loadFromGithubBtn.disabled = !selectedUrl;
-    });
-
-    loadFromGithubBtn.addEventListener('click', () => {
-        const selectedUrl = githubFileSelect.value;
-        if (selectedUrl) loadFromGitHub(selectedUrl);
+    fileLoadButton.addEventListener('click', () => {
+        fileInput.click();
     });
 
     fileInput.addEventListener('change', (e) => {
@@ -1891,6 +1738,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fileStatus.textContent = `Chargement de ${file.name}...`;
         fileStatus.classList.remove('hidden');
+        fileStatus.style.color = '#666';
 
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -1912,10 +1760,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     fileStatus.style.color = '#28a745';
                     setTimeout(startQuiz, 1200);
                 } else {
-                    throw new Error('Données incomplètes');
+                    throw new Error('Données incomplètes: le fichier doit contenir philosophyData et questions (minimum 10)');
                 }
             } catch (err) {
-                fileStatus.textContent = 'Erreur : fichier invalide ou variables manquantes';
+                fileStatus.textContent = `Erreur : ${err.message}`;
                 fileStatus.style.color = '#dc3545';
                 console.error(err);
             }
