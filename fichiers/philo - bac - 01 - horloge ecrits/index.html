@@ -623,7 +623,7 @@
         .time { gap: 4px; padding: 10px 15px; }
     }
 
-    /* ===== RESPONSIVE POUR LA TOOLBAR MOBILE ===== */
+    /* ===== RESPONSIVE POUR LA TOOLBAR MOBILE ET HORLOGE RESSERRÉE ===== */
     @media (max-width: 768px) {
         .toolbar {
             display: none !important;
@@ -645,9 +645,23 @@
             justify-content: center;
             align-items: center;
             min-height: 0;
+            padding: 20px 12px;
         }
         body {
             height: 100vh;
+        }
+        /* Version très resserrée pour mobile */
+        .time {
+            gap: 2px;
+            padding: 15px 8px;
+            width: 100%;
+            max-width: 100%;
+        }
+        .time__hours, .time__minutes, .time__seconds {
+            gap: 2px;
+        }
+        .separator {
+            margin: 0 0px;
         }
     }
 
@@ -662,6 +676,66 @@
         }
         .mobile-buttons-container {
             gap: 12px;
+        }
+        /* Ajustement supplémentaire pour très petits écrans */
+        .clock-container {
+            padding: 15px 8px;
+        }
+        .time {
+            gap: 1px;
+            padding: 10px 5px;
+        }
+        .time__hours, .time__minutes, .time__seconds {
+            gap: 1px;
+        }
+    }
+
+    /* Pour les écrans très étroits (moins de 400px) */
+    @media (max-width: 400px) {
+        .first, .second {
+            width: 42px;
+            height: 60px;
+        }
+        .roller .number, .static-number {
+            height: 60px;
+            font-size: 2.8rem;
+        }
+        .roller .number:last-child {
+            bottom: -60px;
+        }
+        .separator {
+            font-size: 2.5rem;
+        }
+        .time {
+            gap: 1px;
+            padding: 8px 3px;
+        }
+        .time__hours, .time__minutes, .time__seconds {
+            gap: 1px;
+        }
+        .clock-container {
+            padding: 10px 5px;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .first, .second {
+            width: 38px;
+            height: 54px;
+        }
+        .roller .number, .static-number {
+            height: 54px;
+            font-size: 2.5rem;
+        }
+        .roller .number:last-child {
+            bottom: -54px;
+        }
+        .separator {
+            font-size: 2.2rem;
+        }
+        .time {
+            gap: 0px;
+            padding: 8px 2px;
         }
     }
 
