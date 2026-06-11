@@ -22,6 +22,7 @@
         transition: background-color 0.3s ease;
     }
 
+    /* ===== VERSION ORIGINALE DE LA TOOLBAR (DESKTOP) ===== */
     .toolbar {
         display: flex;
         justify-content: space-between;
@@ -187,6 +188,55 @@
         transform: rotate(90deg);
     }
 
+    /* ===== TOOLBAR MOBILE ===== */
+    .toolbar-mobile {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 8px 15px;
+        flex-shrink: 0;
+    }
+
+    .mobile-buttons-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        gap: 15px;
+    }
+
+    .mobile-title-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .mobile-title {
+        margin: 0;
+        line-height: 1.2;
+        text-align: center;
+        color: #ff0000 !important;
+        font-size: clamp(1.3rem, 4vw, 1.6rem);
+        font-weight: bold;
+        white-space: normal;
+        overflow: visible;
+        max-width: 100%;
+        word-break: break-word;
+    }
+
+    .mobile-subtitle {
+        margin: 2px 0 0 0;
+        line-height: 1.2;
+        text-align: center;
+        color: #666;
+        font-size: clamp(0.8rem, 2.5vw, 1rem);
+    }
+
+    /* ===== MENUS ===== */
     .menu-overlay {
         position: fixed;
         top: 0;
@@ -428,15 +478,15 @@
         margin: 2px;
     }
 
+    /* ===== HORLOGE ===== */
     .clock-container {
         flex: 1;
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 40px 20px;
+        padding: 20px;
     }
 
-    /* ===== STYLES HORLOGE - TAILLE INTERMÉDIAIRE ===== */
     .time {
         display: flex;
         justify-content: center;
@@ -508,7 +558,6 @@
         letter-spacing: 2px;
     }
 
-    /* Heures et minutes : NOIR en mode clair */
     .time__hours .static-number,
     .time__hours .roller .number,
     .time__minutes .static-number,
@@ -517,7 +566,6 @@
         text-shadow: none;
     }
 
-    /* Secondes : grises */
     .time__seconds .static-number,
     .time__seconds .roller .number {
         color: #999;
@@ -536,10 +584,6 @@
         justify-content: center;
         line-height: 1;
         height: auto;
-    }
-
-    /* Tous les séparateurs : noir en mode clair */
-    .separator {
         color: #000000;
         text-shadow: none;
     }
@@ -549,7 +593,6 @@
         50% { opacity: 0.6; }
     }
 
-    /* Adaptation responsive proportionnelle */
     @media (max-width: 1000px) {
         .first, .second { width: 100px; height: 140px; }
         .roller .number, .static-number { height: 140px; font-size: 8rem; }
@@ -580,7 +623,49 @@
         .time { gap: 4px; padding: 10px 15px; }
     }
 
-    /* Adaptation thème sombre pour l'horloge */
+    /* ===== RESPONSIVE POUR LA TOOLBAR MOBILE ===== */
+    @media (max-width: 768px) {
+        .toolbar {
+            display: none !important;
+        }
+        .toolbar-mobile {
+            display: flex !important;
+        }
+        .toolbar-mobile .toolbar-btn {
+            width: 50px;
+            height: 50px;
+        }
+        .toolbar-mobile .toolbar-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+        .clock-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 0;
+        }
+        body {
+            height: 100vh;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .toolbar-mobile .toolbar-btn {
+            width: 45px;
+            height: 45px;
+        }
+        .toolbar-mobile .toolbar-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+        .mobile-buttons-container {
+            gap: 12px;
+        }
+    }
+
+    /* ===== THEME SOMBRE ===== */
     body.dark-theme .time__hours .static-number,
     body.dark-theme .time__hours .roller .number,
     body.dark-theme .time__minutes .static-number,
@@ -593,7 +678,6 @@
         color: #777;
     }
     
-    /* En mode sombre, les séparateurs (tous) deviennent blancs */
     body.dark-theme .separator {
         color: #ffffff;
     }
@@ -625,47 +709,87 @@
     }
     body.dark-theme .submenu-content { color: #e2e8f0; }
     body.dark-theme .toggle-label { color: #e2e8f0; }
+    body.dark-theme .mobile-title { color: #ff0000 !important; }
+    body.dark-theme .mobile-subtitle { color: #a0aec0; }
     </style>
 </head>
 <body>
 
+<!-- TOOLBAR ORIGINALE (DESKTOP) -->
 <div class="toolbar">
     <div class="toolbar-left">
-    <button class="toolbar-btn home-btn" id="homeBtn" data-title="accueil (H)">
-        <div class="icon-wrapper">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
-        </svg>
-        </div>
-    </button>
-    <button class="toolbar-btn reload-btn" id="reloadBtn" data-title="recharger (R)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="23 4 23 10 17 10"></polyline>
-            <polyline points="1 20 1 14 7 14"></polyline>
-            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-        </svg>
-    </button>
+        <button class="toolbar-btn home-btn" id="homeBtn" data-title="accueil (H)">
+            <div class="icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    <polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    <polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+                </svg>
+            </div>
+        </button>
+        <button class="toolbar-btn reload-btn" id="reloadBtn" data-title="recharger (R)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+        </button>
     </div>
     <div class="toolbar-center">
-    <div class="title-container">
-        <p class="toolbar-title">écrits φ</p>
-        <p class="toolbar-subtitle">garder le rythme, maîtriser son temps</p>
-    </div>
+        <div class="title-container">
+            <p class="toolbar-title">écrits φ</p>
+            <p class="toolbar-subtitle">garder le rythme, maîtriser son temps</p>
+        </div>
     </div>
     <div class="toolbar-right">
-    <button class="toolbar-btn fullscreen-btn" id="fullscreenBtn" data-title="plein écran (F)">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
-            <line x1="4" y1="5" x2="10" y2="5" /><line x1="5" y1="6" x2="5" y2="10" />
-            <line x1="14" y1="5" x2="20" y2="5" /><line x1="19" y1="6" x2="19" y2="10" />
-            <line x1="5" y1="14" x2="5" y2="20" /><line x1="6" y1="19" x2="10" y2="19" />
-            <line x1="14" y1="19" x2="20" y2="19" /><line x1="19" y1="14" x2="19" y2="18" />
-        </svg>
-    </button>
-    <button class="toolbar-btn menu-btn" id="menuBtn" data-title="menu (M)">
-        <div class="menu-icon"><span></span><span></span><span></span></div>
-    </button>
+        <button class="toolbar-btn fullscreen-btn" id="fullscreenBtn" data-title="plein écran (F)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+                <line x1="4" y1="5" x2="10" y2="5" /><line x1="5" y1="6" x2="5" y2="10" />
+                <line x1="14" y1="5" x2="20" y2="5" /><line x1="19" y1="6" x2="19" y2="10" />
+                <line x1="5" y1="14" x2="5" y2="20" /><line x1="6" y1="19" x2="10" y2="19" />
+                <line x1="14" y1="19" x2="20" y2="19" /><line x1="19" y1="14" x2="19" y2="18" />
+            </svg>
+        </button>
+        <button class="toolbar-btn menu-btn" id="menuBtn" data-title="menu (M)">
+            <div class="menu-icon"><span></span><span></span><span></span></div>
+        </button>
+    </div>
+</div>
+
+<!-- TOOLBAR MOBILE -->
+<div class="toolbar-mobile">
+    <div class="mobile-buttons-container">
+        <button class="toolbar-btn home-btn" id="homeBtnMobile" data-title="accueil">
+            <div class="icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    <polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    <polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+                </svg>
+            </div>
+        </button>
+        <button class="toolbar-btn reload-btn" id="reloadBtnMobile" data-title="recharger">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+        </button>
+        <button class="toolbar-btn fullscreen-btn" id="fullscreenBtnMobile" data-title="plein écran">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+                <line x1="4" y1="5" x2="10" y2="5" /><line x1="5" y1="6" x2="5" y2="10" />
+                <line x1="14" y1="5" x2="20" y2="5" /><line x1="19" y1="6" x2="19" y2="10" />
+                <line x1="5" y1="14" x2="5" y2="20" /><line x1="6" y1="19" x2="10" y2="19" />
+                <line x1="14" y1="19" x2="20" y2="19" /><line x1="19" y1="14" x2="19" y2="18" />
+            </svg>
+        </button>
+        <button class="toolbar-btn menu-btn" id="menuBtnMobile" data-title="menu">
+            <div class="menu-icon"><span></span><span></span><span></span></div>
+        </button>
+    </div>
+    <div class="mobile-title-wrapper">
+        <p class="mobile-title">écrits φ</p>
+        <p class="mobile-subtitle">garder le rythme, maîtriser son temps</p>
     </div>
 </div>
 
@@ -691,12 +815,12 @@
 <div class="menu-overlay" id="menuOverlay"></div>
 <div class="slide-menu" id="slideMenu">
     <div class="menu-header">
-    <button class="menu-close" id="menuClose">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-    </button>
+        <button class="menu-close" id="menuClose">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
     </div>
     <button class="menu-item" id="presentationBtn">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -717,14 +841,6 @@
             <line x1="14" y1="16" x2="18" y2="16"></line>
         </svg>
         raccourcis clavier
-    </button>
-    <button class="menu-item" id="statsBtn">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 20V10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M12 20V4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M6 20V14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        statistiques
     </button>
     <button class="menu-item" id="settingsBtn">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -761,8 +877,8 @@
         <p>• Menu de navigation intuitif</p>
         <br>
         <p><strong>Conseils d'utilisation :</strong></p>
-        <p>• Raccourcis clavier pour accéder rapidement aux fonctions principales. 
-		<p>• Mode plein écran pour une visualisation optimale.</p>
+        <p>• Raccourcis clavier pour accéder rapidement aux fonctions principales.</p>
+        <p>• Mode plein écran pour une visualisation optimale.</p>
     </div>
 </div>
 
@@ -777,17 +893,6 @@
     <div class="submenu-content"><p><kbd>H</kbd> accueil</p><p><kbd>R</kbd> recharger</p><p><kbd>F</kbd> plein écran</p><p><kbd>M</kbd> menu</p><p><kbd>ESC</kbd> fermer</p></div>
 </div>
 
-<div class="submenu" id="submenuStats">
-    <button class="submenu-close" data-submenu="stats">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-    </button>
-    <div class="submenu-title">statistiques</div>
-    <div class="submenu-content"><p id="statsContent">Connecteurs trouvés : 0 / 0</p></div>
-</div>
-
 <div class="submenu" id="submenuSettings">
     <button class="submenu-close" data-submenu="settings">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -797,14 +902,14 @@
     </button>
     <div class="submenu-title">paramètres</div>
     <div class="submenu-content">
-    <div class="toggle-container">
-        <span class="toggle-label">mode sombre</span>
-        <label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
-    </div>
-    <div class="toggle-container">
-        <span class="toggle-label">afficher les secondes</span>
-        <label class="theme-switch"><input type="checkbox" id="secondsToggle"><span class="slider"></span></label>
-    </div>
+        <div class="toggle-container">
+            <span class="toggle-label">mode sombre</span>
+            <label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
+        </div>
+        <div class="toggle-container">
+            <span class="toggle-label">afficher les secondes</span>
+            <label class="theme-switch"><input type="checkbox" id="secondsToggle"><span class="slider"></span></label>
+        </div>
     </div>
 </div>
 
@@ -816,11 +921,11 @@
         </svg>
     </button>
     <div class="submenu-title">à propos</div>
-    <div class="submenu-content"><p>Daniel Boulagnon</p><p>daniel.boulagnon@ac-lille.fr</p><p>© 2026 – version 2.1.5</p><p>Usage pédagogique non lucratif</p></div>
+    <div class="submenu-content"><p>Daniel Boulagnon</p><p>daniel.boulagnon@ac-lille.fr</p><p>© 2026 – version 2.1.6</p><p>Usage pédagogique non lucratif</p></div>
 </div>
 
 <script>
-    // ========== HORLOGE (ROULEAUX MÉCANIQUES, TAILLE INTERMÉDIAIRE) ==========
+    // ========== HORLOGE ==========
     
     const hourTensBox = document.getElementById('hourTensBox');
     const hourUnitsBox = document.getElementById('hourUnitsBox');
@@ -957,7 +1062,7 @@
     const slideMenu = document.getElementById('slideMenu');
     const menuBtn = document.getElementById('menuBtn');
     const menuClose = document.getElementById('menuClose');
-    const allSubmenus = ['presentation', 'shortcuts', 'stats', 'settings', 'about'].map(s => document.getElementById(`submenu${s.charAt(0).toUpperCase() + s.slice(1)}`));
+    const allSubmenus = ['presentation', 'shortcuts', 'settings', 'about'].map(s => document.getElementById(`submenu${s.charAt(0).toUpperCase() + s.slice(1)}`));
     
     function closeAllSubmenus() { allSubmenus.forEach(s => s && s.classList.remove('active')); }
     function closeMenu() { 
@@ -977,6 +1082,8 @@
     }
     
     if (menuBtn) menuBtn.onclick = toggleMenu;
+    const menuBtnMobile = document.getElementById('menuBtnMobile');
+    if (menuBtnMobile) menuBtnMobile.onclick = toggleMenu;
     if (menuClose) menuClose.onclick = closeMenu;
     if (menuOverlay) menuOverlay.onclick = closeMenu;
     
@@ -985,7 +1092,6 @@
             let sub = null;
             if (btn.id === 'presentationBtn') sub = document.getElementById('submenuPresentation');
             else if (btn.id === 'shortcutsBtn') sub = document.getElementById('submenuShortcuts');
-            else if (btn.id === 'statsBtn') sub = document.getElementById('submenuStats');
             else if (btn.id === 'settingsBtn') sub = document.getElementById('submenuSettings');
             else if (btn.id === 'aboutBtn') sub = document.getElementById('submenuAbout');
             closeAllSubmenus();
@@ -1017,35 +1123,69 @@
             document.exitFullscreen();
         }
     }
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    
     function updateFullscreenIcon() {
-        if (!fullscreenBtn) return;
-        if (document.fullscreenElement) {
-            fullscreenBtn.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
-            <line x1="3" y1="10" x2="10" y2="10" /><line x1="9" y1="4" x2="9" y2="11" />
-            <line x1="14" y1="10" x2="21" y2="10" /><line x1="15" y1="4" x2="15" y2="10" />
-            <line x1="3" y1="15.5" x2="10" y2="15.5" /><line x1="9" y1="15" x2="9" y2="21" />
-            <line x1="14" y1="15.5" x2="21" y2="15.5" /><line x1="15" y1="15" x2="15" y2="21" />
-            </svg>`;
-            fullscreenBtn.setAttribute('data-title', 'quitter plein écran (F)');
-        } else {
-            fullscreenBtn.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
-            <line x1="4" y1="5" x2="10" y2="5" /><line x1="5" y1="6" x2="5" y2="10" />
-            <line x1="14" y1="5" x2="20" y2="5" /><line x1="19" y1="6" x2="19" y2="10" />
-            <line x1="5" y1="14" x2="5" y2="20" /><line x1="6" y1="19" x2="10" y2="19" />
-            <line x1="14" y1="19" x2="20" y2="19" /><line x1="19" y1="14" x2="19" y2="18" />
-            </svg>`;
-            fullscreenBtn.setAttribute('data-title', 'plein écran (F)');
+        const isFullscreen = !!document.fullscreenElement;
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const fullscreenBtnMobile = document.getElementById('fullscreenBtnMobile');
+        
+        if (fullscreenBtn) {
+            if (isFullscreen) {
+                fullscreenBtn.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+                    <line x1="3" y1="10" x2="10" y2="10" /><line x1="9" y1="4" x2="9" y2="11" />
+                    <line x1="14" y1="10" x2="21" y2="10" /><line x1="15" y1="4" x2="15" y2="10" />
+                    <line x1="3" y1="15.5" x2="10" y2="15.5" /><line x1="9" y1="15" x2="9" y2="21" />
+                    <line x1="14" y1="15.5" x2="21" y2="15.5" /><line x1="15" y1="15" x2="15" y2="21" />
+                </svg>`;
+                fullscreenBtn.setAttribute('data-title', 'quitter plein écran (F)');
+            } else {
+                fullscreenBtn.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+                    <line x1="4" y1="5" x2="10" y2="5" /><line x1="5" y1="6" x2="5" y2="10" />
+                    <line x1="14" y1="5" x2="20" y2="5" /><line x1="19" y1="6" x2="19" y2="10" />
+                    <line x1="5" y1="14" x2="5" y2="20" /><line x1="6" y1="19" x2="10" y2="19" />
+                    <line x1="14" y1="19" x2="20" y2="19" /><line x1="19" y1="14" x2="19" y2="18" />
+                </svg>`;
+                fullscreenBtn.setAttribute('data-title', 'plein écran (F)');
+            }
+        }
+        
+        if (fullscreenBtnMobile) {
+            if (isFullscreen) {
+                fullscreenBtnMobile.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+                    <line x1="3" y1="10" x2="10" y2="10" /><line x1="9" y1="4" x2="9" y2="11" />
+                    <line x1="14" y1="10" x2="21" y2="10" /><line x1="15" y1="4" x2="15" y2="10" />
+                    <line x1="3" y1="15.5" x2="10" y2="15.5" /><line x1="9" y1="15" x2="9" y2="21" />
+                    <line x1="14" y1="15.5" x2="21" y2="15.5" /><line x1="15" y1="15" x2="15" y2="21" />
+                </svg>`;
+                fullscreenBtnMobile.setAttribute('data-title', 'quitter plein écran');
+            } else {
+                fullscreenBtnMobile.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+                    <line x1="4" y1="5" x2="10" y2="5" /><line x1="5" y1="6" x2="5" y2="10" />
+                    <line x1="14" y1="5" x2="20" y2="5" /><line x1="19" y1="6" x2="19" y2="10" />
+                    <line x1="5" y1="14" x2="5" y2="20" /><line x1="6" y1="19" x2="10" y2="19" />
+                    <line x1="14" y1="19" x2="20" y2="19" /><line x1="19" y1="14" x2="19" y2="18" />
+                </svg>`;
+                fullscreenBtnMobile.setAttribute('data-title', 'plein écran');
+            }
         }
     }
+    
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const fullscreenBtnMobile = document.getElementById('fullscreenBtnMobile');
     if (fullscreenBtn) fullscreenBtn.onclick = toggleFullscreen;
+    if (fullscreenBtnMobile) fullscreenBtnMobile.onclick = toggleFullscreen;
     document.addEventListener('fullscreenchange', updateFullscreenIcon);
     
     // ========== HOME ET RELOAD ==========
     const homeBtn = document.getElementById('homeBtn');
     const reloadBtn = document.getElementById('reloadBtn');
+    const homeBtnMobile = document.getElementById('homeBtnMobile');
+    const reloadBtnMobile = document.getElementById('reloadBtnMobile');
+    
     if (homeBtn) homeBtn.onclick = () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+    if (homeBtnMobile) homeBtnMobile.onclick = () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
     if (reloadBtn) reloadBtn.onclick = () => location.reload();
+    if (reloadBtnMobile) reloadBtnMobile.onclick = () => location.reload();
     
     // ========== MODE SOMBRE ==========
     const darkToggle = document.getElementById('darkModeToggle');
@@ -1064,16 +1204,6 @@
             }
         };
     }
-    
-    // ========== STATISTIQUES SIMULÉES ==========
-    let foundCount = 0, totalCount = 12;
-    setInterval(() => {
-        foundCount = Math.min(totalCount, foundCount + (Math.random() > 0.7 ? 1 : 0));
-        const statsContent = document.getElementById('statsContent');
-        if (statsContent) {
-            statsContent.innerHTML = `<p>Connecteurs trouvés : ${foundCount} / ${totalCount}</p><p>Précision : ${Math.round(foundCount/totalCount*100)}%</p>`;
-        }
-    }, 3000);
 </script>
 </body>
 </html>
