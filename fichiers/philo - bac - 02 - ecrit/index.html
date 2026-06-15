@@ -286,12 +286,12 @@
         .menu {
             position: fixed;
             top: 0;
-            right: -320px;
+            right: -100%;
             width: 70%;
             max-width: 300px;
             height: 100%;
             background-color: var(--bg-light);
-            box-shadow: var(--shadow-out);
+            box-shadow: none;
             z-index: 10000;
             transition: right 0.6s ease;
             padding: 2rem;
@@ -304,6 +304,7 @@
 
         .menu.active {
             right: 0;
+            box-shadow: var(--shadow-out);
         }
 
         .menu-header {
@@ -393,13 +394,13 @@
         .submenu {
             position: fixed;
             top: 0;
-            right: -340px;
+            right: -100%;
             width: 70%;
             max-width: 300px;
             height: 100%;
             background: var(--bg-light);
             z-index: 10010;
-            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            box-shadow: none;
             transition: right 0.5s ease;
             border-radius: 20px 0 0 20px;
             padding: 2rem 1.5rem;
@@ -408,18 +409,13 @@
         
         .submenu.active {
             right: 0;
-            padding-left: 17px;
-            padding-right: 5px;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
         }
         
         @media (max-width: 768px) {
             .submenu {
                 width: 70%;
                 max-width: 300px;
-                right: -280px;
-            }
-            .submenu.active {
-                right: 0;
             }
         }
         
@@ -724,11 +720,10 @@
             width: 100%;
             background: transparent;
             flex-shrink: 0;
-            /* border-top supprimée pour ne pas avoir de trait */
             box-sizing: border-box;
-            position: absolute;
-            bottom: 0;
-            left: 0;
+            position: relative;
+            bottom: auto;
+            left: auto;
             z-index: 10;
         }
 
@@ -764,7 +759,6 @@
             justify-content: space-between;
             height: auto;
             min-height: 150px;
-            max-height: none;
             width: 100%;
             background-color: var(--bg-light);
             color: var(--text-light);
@@ -1380,15 +1374,15 @@
         </div>
         <div class="submenu-title">raccourcis clavier</div>
         <table style="width:100%; margin-bottom:1rem;">
-            <tr><td style="padding:5px;"><kbd>accueil</kbd> <kbd>H</kbd></td><td style="font-size:12px;">renvoi au site académique</td></tr>
-            <tr><td style="padding:5px;"><kbd>recharger</kbd> <kbd>R</kbd></td><td style="font-size:12px;">recharger la page</td></tr>
-            <tr><td style="padding:5px;"><kbd>plein écran</kbd> <kbd>F</kbd></td><td style="font-size:12px;">entrer/sortir du plein écran</td></tr>
-            <tr><td style="padding:5px;"><kbd>menu</kbd> <kbd>M</kbd></td><td style="font-size:12px;">ouvrir/fermer le menu</td></tr>
-            <tr><td style="padding:5px;"><kbd>dissertation</kbd> <kbd>D</kbd></td><td style="font-size:12px;">basculer vers le mode dissertation</td></tr>
-            <tr><td style="padding:5px;"><kbd>explication</kbd> <kbd>E</kbd></td><td style="font-size:12px;">basculer vers le mode explication</td></tr>
-            <tr><td style="padding:5px;"><kbd>ESC</kbd></td><td style="font-size:12px;">fermer les menus / sortir du plein écran</td></tr>
-            <tr><td style="padding:5px;"><kbd>1</kbd> à <kbd>6</kbd></td><td style="font-size:12px;">accéder à un palier de notation</td></tr>
-            <tr><td style="padding:5px;"><kbd>←</kbd> <kbd>→</kbd></td><td style="font-size:12px;">faire défiler les paliers</td></tr>
+            <tr><td style="padding:5px;"><kbd>accueil</kbd> <kbd>H</kbd></td><td style="font-size:12px;">renvoi au site académique<\/td></tr>
+            <tr><td style="padding:5px;"><kbd>recharger</kbd> <kbd>R</kbd></td><td style="font-size:12px;">recharger la page<\/td></tr>
+            <tr><td style="padding:5px;"><kbd>plein écran</kbd> <kbd>F</kbd></td><td style="font-size:12px;">entrer/sortir du plein écran<\/td></tr>
+            <tr><td style="padding:5px;"><kbd>menu</kbd> <kbd>M</kbd></td><td style="font-size:12px;">ouvrir/fermer le menu<\/td></tr>
+            <tr><td style="padding:5px;"><kbd>dissertation</kbd> <kbd>D</kbd></td><td style="font-size:12px;">basculer vers le mode dissertation<\/td></tr>
+            <tr><td style="padding:5px;"><kbd>explication</kbd> <kbd>E</kbd></td><td style="font-size:12px;">basculer vers le mode explication<\/td></tr>
+            <tr><td style="padding:5px;"><kbd>ESC</kbd></td><td style="font-size:12px;">fermer les menus / sortir du plein écran<\/td></tr>
+            <tr><td style="padding:5px;"><kbd>1</kbd> à <kbd>6</kbd></td><td style="font-size:12px;">accéder à un palier de notation<\/td></tr>
+            <tr><td style="padding:5px;"><kbd>←</kbd> <kbd>→</kbd></td><td style="font-size:12px;">faire défiler les paliers<\/td></tr>
         </table>
         <div class="settings-info">
             <p><strong>Mode sombre :</strong> cf. menu/paramètres</p>
@@ -1478,37 +1472,33 @@
     </main>
 
     <script>
-        // Fonction d'ajustement des hauteurs : sur mobile, on ne force plus la hauteur pour permettre le centrage vertical
+        // Fonction pour ajuster la hauteur des cartes à la fenêtre
         function adjustCardHeights() {
             const isMobile = window.innerWidth < 768;
-            if (isMobile) {
-                // Sur mobile, on laisse les cartes s'adapter naturellement avec le centrage vertical
-                const cards = document.querySelectorAll('.card');
-                cards.forEach(card => {
-                    card.style.height = 'auto';
-                    card.style.maxHeight = '80vh';
-                });
-                return;
-            }
             
-            // Comportement desktop original
-            const carousels = ['carousel-1', 'carousel-2'];
-            const bottomSpacing = 40;
-            carousels.forEach(carouselId => {
-                const carousel = document.getElementById(carouselId);
-                if (!carousel) return;
-                const cards = carousel.querySelectorAll('.card');
-                if (cards.length === 0) return;
-                const viewportHeight = window.innerHeight;
-                const toolbar = document.querySelector('.toolbar');
-                const header = document.querySelector('header');
-                const progressFooter = document.querySelector('.progress-footer');
-                const toolbarHeight = toolbar ? toolbar.offsetHeight : 80;
-                const headerHeight = header ? header.offsetHeight : 70;
-                const progressHeight = progressFooter ? progressFooter.offsetHeight : 20;
-                const fixedElementsHeight = toolbarHeight + headerHeight + progressHeight + bottomSpacing;
-                const availableHeight = viewportHeight - fixedElementsHeight;
-                cards.forEach(card => { card.style.height = availableHeight + 'px'; card.style.maxHeight = availableHeight + 'px'; });
+            // Calcul de la hauteur disponible
+            const toolbar = document.querySelector('.toolbar');
+            const header = document.querySelector('header');
+            const progressFooter = document.querySelector('.progress-footer');
+            
+            const toolbarHeight = toolbar ? toolbar.offsetHeight : 80;
+            const headerHeight = header ? header.offsetHeight : 70;
+            const progressHeight = progressFooter ? progressFooter.offsetHeight : 20;
+            const bottomSpacing = 30;
+            
+            const availableHeight = window.innerHeight - toolbarHeight - headerHeight - progressHeight - bottomSpacing;
+            
+            // Appliquer la hauteur à toutes les cartes
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach(card => {
+                if (isMobile) {
+                    card.style.height = 'auto';
+                    card.style.maxHeight = '70vh';
+                } else {
+                    card.style.height = availableHeight + 'px';
+                    card.style.maxHeight = availableHeight + 'px';
+                    card.style.minHeight = '200px';
+                }
             });
         }
 
@@ -1565,7 +1555,7 @@
         document.querySelectorAll('.submenu-close').forEach(btn => { btn.addEventListener('click', (e) => { e.stopPropagation(); closeAllSubmenus(); }); });
         if (slideMenu) slideMenu.addEventListener('click', (e) => e.stopPropagation());
         submenus.forEach(s => { if (s) s.addEventListener('click', (e) => e.stopPropagation()); });
-        if (darkModeToggle) darkModeToggle.addEventListener('change', function(e) { body.classList.toggle('dark-mode', e.target.checked); localStorage.setItem('darkMode', e.target.checked); });
+        if (darkModeToggle) darkModeToggle.addEventListener('change', function(e) { body.classList.toggle('dark-mode', e.target.checked); localStorage.setItem('darkMode', e.target.checked); setTimeout(adjustCardHeights, 50); });
         
         function toggleFullscreen() { if (!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
         if (fullscreenBtn) fullscreenBtn.addEventListener('click', toggleFullscreen);
@@ -1587,7 +1577,7 @@
         function scrollCarousel(carouselId, direction) { const carousel = document.getElementById(carouselId); if (!carousel) return; const items = carousel.querySelectorAll('.carousel-item'); if (items.length === 0) return; const itemWidth = items[0].offsetWidth; const gap = parseFloat(getComputedStyle(carousel).gap) || (window.innerWidth < 768 ? 0 : 8); const scrollAmount = (itemWidth + gap) * (direction === 'left' ? -1 : 1); carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' }); setTimeout(() => { const leftBtnId = carouselId === 'carousel-1' ? 'scroll-left-1' : 'scroll-left-2'; const rightBtnId = carouselId === 'carousel-1' ? 'scroll-right-1' : 'scroll-right-2'; updateButtonsVisibility(carouselId, leftBtnId, rightBtnId); updateProgress(); }, 10); }
         function scrollToPalier(palierIndex) { const activeOnglet = document.querySelector('.onglet.active'); if (!activeOnglet) return; const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2'; const carousel = document.getElementById(carouselId); if (!carousel) return; const items = carousel.querySelectorAll('.carousel-item'); if (palierIndex < 0 || palierIndex >= items.length) return; const itemWidth = items[0].offsetWidth; const gap = parseFloat(getComputedStyle(carousel).gap) || (window.innerWidth < 768 ? 0 : 8); const scrollPosition = (itemWidth + gap) * palierIndex; carousel.scrollTo({ left: scrollPosition, behavior: 'smooth' }); const card = items[palierIndex].querySelector('.card'); if (card) { card.classList.add('keyboard-highlight'); setTimeout(() => card.classList.remove('keyboard-highlight'), 1000); } setTimeout(() => { const leftBtnId = carouselId === 'carousel-1' ? 'scroll-left-1' : 'scroll-left-2'; const rightBtnId = carouselId === 'carousel-1' ? 'scroll-right-1' : 'scroll-right-2'; updateButtonsVisibility(carouselId, leftBtnId, rightBtnId); updateProgress(); }, 10); }
         
-        // Fonction de mise à jour de la barre de progression simplifiée et fiable
+        // Fonction updateProgress simplifiée et CORRIGÉE pour qu'elle se remplisse correctement
         function updateProgress() {
             const activeOnglet = document.querySelector('.onglet.active');
             if (!activeOnglet || !progressBar) return;
@@ -1596,7 +1586,7 @@
             const carousel = document.getElementById(carouselId);
             if (!carousel) return;
             
-            // Calcul précis du pourcentage de défilement
+            // Calcul simple et fiable du pourcentage de défilement
             const scrollLeft = carousel.scrollLeft;
             const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
             
@@ -1640,7 +1630,6 @@
             leftBtn.addEventListener('click', () => scrollCarousel(carouselId, 'left'));
             rightBtn.addEventListener('click', () => scrollCarousel(carouselId, 'right'));
             
-            // Mise à jour lors du défilement
             carousel.addEventListener('scroll', () => {
                 updateButtonsVisibility(carouselId, leftBtnId, rightBtnId);
                 updateProgress();
