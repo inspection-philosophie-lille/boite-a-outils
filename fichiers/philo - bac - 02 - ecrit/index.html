@@ -722,16 +722,12 @@
             width: 100%;
             background: transparent;
             flex-shrink: 0;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            /* La ligne de séparation a été supprimée pour éviter toute bordure */
             box-sizing: border-box;
             position: relative;
             bottom: auto;
             left: auto;
             z-index: 10;
-        }
-
-        body.dark-mode .progress-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .progress-bar-container {
@@ -1155,6 +1151,8 @@
             }
             .progress-footer {
                 height: 20px;
+                background: transparent; /* Assure que le fond est transparent */
+                border-top: none; /* Supprime toute bordure */
             }
             .switch-button {
                 margin: 20px auto -20px auto;
