@@ -1484,6 +1484,79 @@
 				height: 30px;
 			}
 		}
+		
+		/* ===========================
+   CORRECTION MOBILE LAYOUT
+   =========================== */
+@media screen and (max-width: 767px) {
+
+    /* Le body ne doit pas bloquer la hauteur */
+    html, body {
+        height: 100dvh;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Structure principale en colonne */
+    main {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .div_onglets {
+        flex: 1;
+        display: flex;
+    }
+
+    /* Le carousel prend toute la zone dispo */
+    .carousel {
+        flex: 1;
+        display: flex;
+    }
+
+    .carousel-container {
+        flex: 1;
+        display: flex;
+        align-items: center; /* ✅ centrage vertical */
+    }
+
+    .carousel-items {
+        display: flex;
+        align-items: center; /* ✅ centrage vertical de la carte */
+        height: 100%;
+    }
+
+    /* Carte centrée entre header (switch) et barre */
+    .carousel-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .card {
+        margin: auto;
+    }
+
+    /* ✅ Barre de progression FIXE en bas */
+    .progress-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 30px;
+        z-index: 1000;
+        background: transparent;
+    }
+
+    /* ✅ éviter que le contenu passe dessous */
+    main {
+        padding-bottom: 35px; /* hauteur barre */
+    }
+}
+		
+		
 	</style>
 </head>
 
@@ -2089,3 +2162,4 @@
 	</script>
 </body>
 </html>
+
