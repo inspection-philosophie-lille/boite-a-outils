@@ -710,7 +710,6 @@
 			width: 100%;
 			background: transparent;
 			flex-shrink: 0;
-			border-top: 1px solid rgba(0, 0, 0, 0.05);
 			box-sizing: border-box;
 			position: absolute;
 			bottom: 0;
@@ -754,7 +753,7 @@
 			height: auto;
 			min-height: 150px;
 			max-height: none;
-			width: 97%;
+			width: 100%;
 			background-color: var(--bg-light);
 			color: var(--text-light);
 			overflow-y: auto;
@@ -1061,6 +1060,22 @@
 			}
 		}
 
+		/* MODIFICATION POUR TELEPHONE PORTABLE - Centrage parfait */
+		@media screen and (max-width: 575px) {
+			.carousel-items {
+				gap: 0.5rem;
+				padding: 0.1rem 10px 0 10px;
+				scroll-snap-type: x mandatory;
+			}
+
+			.carousel-item {
+				width: calc(100% - 20px);
+				flex: 0 0 calc(100% - 20px);
+				min-width: 280px;
+				scroll-snap-align: center;
+			}
+		}
+
 		@media screen and (max-width: 991px) {
 			.toolbar {
 				flex-direction: column;
@@ -1074,6 +1089,7 @@
 				gap: 0.5rem;
 				width: 100%;
 				order: -1;
+				margin-top: 20px;
 			}
 
 			.toolbar-right {
@@ -1084,6 +1100,7 @@
 				order: 1;
 				width: 100%;
 				margin-bottom: -15px;
+				margin-top: 5px;
 			}
 
 			.toolbar h1 {
@@ -1137,18 +1154,6 @@
 			
 			.toolbar-right {
 				justify-content: flex-end;
-			}
-		}
-
-		@media screen and (max-width: 575px) {
-			.carousel-items {
-				gap: 0.3rem;
-				padding: 0.1rem 30px 0 30px;
-			}
-
-			.carousel-item {
-				width: 320px;
-				flex: 0 0 320px;
 			}
 		}
 
@@ -1433,7 +1438,7 @@
 			<input id="switch" class="switch-button-checkbox" type="checkbox">
 			<label class="switch-button-label" for="switch">
 				<span class="label-essai">essai</span>
-				<span class="label-interpretation">interprétation</span>
+				<span class="label-interprétation">interprétation</span>
 			</label>
 		</div>
 	</header>
