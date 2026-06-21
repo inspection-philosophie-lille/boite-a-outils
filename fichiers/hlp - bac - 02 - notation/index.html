@@ -1393,8 +1393,8 @@
 				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">fermer les menus</td>
 			</tr>
 			<tr>
-				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>1</kbd> à <kbd>6</kbd></td>
-				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">accéder à un palier de notation</td>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>0</kbd> à <kbd>5</kbd></td>
+				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1); font-size: 12px;">accéder à un palier de notation (0 → palier 1, 5 → palier 6)</td>
 			</tr>
 			<tr>
 				<td style="padding:5px; border-bottom:1px solid rgba(0,0,0,0.1);"><kbd>E</kbd> / <kbd>I</kbd></td>
@@ -1429,7 +1429,7 @@
 			<p>application développée par Daniel Boulagnon</p>
 			<p>daniel.boulagnon@ac-lille.fr</p>
 			<p>exploitation à but pédagogique et non commercial</p>
-			<p>© 2026 – version 2.1.8</p>
+			<p>© 2026 – version 2.1.9</p>
 		</div>
 	</div>
 
@@ -1453,7 +1453,7 @@
 								<path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
 							</svg>
 						</button>
-						<ul class="carousel-items" id="carousel-1">
+						<ul class="carousel-items" id="carousel-1" tabindex="0" role="listbox">
 							<li class="carousel-item">
 								<div class="card">
 									<h1 class="card-title">00-01</h1>
@@ -1554,7 +1554,7 @@
 								<path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
 							</svg>
 						</button>
-						<ul class="carousel-items" id="carousel-2">
+						<ul class="carousel-items" id="carousel-2" tabindex="0" role="listbox">
 							<li class="carousel-item">
 								<div class="card">
 									<h1 class="card-title">00-01</h1>
@@ -1914,6 +1914,16 @@
 				updateButtonsVisibilityForActiveCarousel();
 				updateProgress();
 				adjustCardHeights();
+				
+				// 👇 NOUVEAU : Forcer le focus sur le carrousel actif
+				const activeOnglet = document.querySelector('.onglet.active');
+				if (activeOnglet) {
+					const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
+					const carousel = document.getElementById(carouselId);
+					if (carousel) {
+						carousel.focus();
+					}
+				}
 			}, 100);
 		}
 
@@ -1924,6 +1934,22 @@
 				switchOnglet(this.checked);
 			});
 		}
+
+		// 👇 NOUVEAU : Gérer le focus perdu quand on clique sur le switch
+		document.addEventListener('click', function(e) {
+			if (e.target.closest('.switch-button') || e.target.closest('.switch-button-label') || e.target.closest('.switch-button-checkbox')) {
+				setTimeout(() => {
+					const activeOnglet = document.querySelector('.onglet.active');
+					if (activeOnglet) {
+						const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
+						const carousel = document.getElementById(carouselId);
+						if (carousel) {
+							carousel.focus();
+						}
+					}
+				}, 50);
+			}
+		});
 
 		function getActiveCarouselId() {
 			const activeOnglet = document.querySelector('.onglet.active');
@@ -2200,9 +2226,10 @@
 				e.preventDefault();
 				scrollCarousel(carouselId, 'right');
 			}
-			else if (!isNaN(parseInt(key)) && parseInt(key) >= 1 && parseInt(key) <= 6) {
+			// Raccourcis 0 à 5 pour les paliers (0 → palier 1, 5 → palier 6)
+			else if (!isNaN(parseInt(e.key)) && parseInt(e.key) >= 0 && parseInt(e.key) <= 5) {
 				e.preventDefault();
-				const palierIndex = parseInt(key) - 1;
+				const palierIndex = parseInt(e.key);
 				const carousel = document.getElementById(carouselId);
 				if (carousel && palierIndex < carousel.children.length) {
 					scrollToPalier(palierIndex);

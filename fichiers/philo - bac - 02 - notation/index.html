@@ -194,7 +194,6 @@
 			transform: translateY(1px);
 		}
 
-		/* Animation de rotation pour le bouton info */
 		.info-btn:hover svg {
 			animation: rotate 1s linear;
 		}
@@ -811,7 +810,6 @@
 			color: var(--switch-text-inactive);
 		}
 
-		/* Toast / Toaster - style cohérent avec l'ambiance générale */
 		.toast-container {
 			position: fixed;
 			top: 80px;
@@ -1144,7 +1142,6 @@
 			font-size: 13px !important;
 		}
 
-		/* Ajustements pour mobile - hauteur augmentée légèrement */
 		@media screen and (max-width: 767px) {
 			.switch-button-label span {
 				font-size: 1rem;
@@ -1489,10 +1486,6 @@
 		}
 
 		@media screen and (max-width: 400px) {
-		
-		
-
-
 			.carousel-nav-btn {
 				width: 42px;
 				height: 42px;
@@ -1517,18 +1510,16 @@ padding-bottom: 45px;
 		}
 		
 		/* ===========================
-	 CORRECTION MOBILE LAYOUT
-	 =========================== */
+	CORRECTION MOBILE LAYOUT
+	=========================== */
 @media screen and (max-width: 767px) {
 
-	/* Le body ne doit pas bloquer la hauteur */
 	html, body {
 		height: 100dvh;
 		position: relative;
 		overflow: hidden;
 	}
 
-	/* Structure principale en colonne */
 	main {
 		display: flex;
 		flex-direction: column;
@@ -1540,7 +1531,6 @@ padding-bottom: 45px;
 		display: flex;
 	}
 
-	/* Le carousel prend toute la zone dispo */
 	.carousel {
 		flex: 1;
 		display: flex;
@@ -1549,16 +1539,15 @@ padding-bottom: 45px;
 	.carousel-container {
 		flex: 1;
 		display: flex;
-		align-items: center; /* ✅ centrage vertical */
+		align-items: center;
 	}
 
 	.carousel-items {
 		display: flex;
-		align-items: center; /* ✅ centrage vertical de la carte */
+		align-items: center;
 		height: 100%;
 	}
 
-	/* Carte centrée entre header (switch) et barre */
 	.carousel-item {
 		display: flex;
 		align-items: center;
@@ -1570,7 +1559,6 @@ padding-bottom: 45px;
 		margin: auto;
 	}
 
-	/* ✅ Barre de progression FIXE en bas */
 	.progress-footer {
 		position: fixed;
 		bottom: 0;
@@ -1581,12 +1569,11 @@ padding-bottom: 45px;
 		background: transparent;
 	}
 
-	/* ✅ éviter que le contenu passe dessous */
 	main {
-		padding-bottom: 35px; /* hauteur barre */
+		padding-bottom: 35px;
 	}
 	
-		header {
+	header {
 		margin-top: 6px;
 		margin-bottom: 6px;
 	}
@@ -1761,7 +1748,7 @@ padding-bottom: 45px;
 			<tr><td style="padding:5px;"><kbd>explication</kbd> <kbd>E</kbd></td><td style="font-size:12px;">basculer vers le mode explication</td></tr>
 			<tr><td style="padding:5px;"><kbd>critères</kbd> <kbd>I</kbd></td><td style="font-size:12px;">afficher les critères valorisés</td></tr>
 			<tr><td style="padding:5px;"><kbd>ESC</kbd></td><td style="font-size:12px;">fermer les menus / sortir du plein écran</td></tr>
-			<tr><td style="padding:5px;"><kbd>1</kbd> à <kbd>6</kbd></td><td style="font-size:12px;">accéder à un palier de notation</td></tr>
+			<tr><td style="padding:5px;"><kbd>0</kbd> à <kbd>9</kbd></td><td style="font-size:12px;">accéder à un palier de notation (0 → palier 1, 9 → palier 10)</td></tr>
 			<tr><td style="padding:5px;"><kbd>←</kbd> <kbd>→</kbd></td><td style="font-size:12px;">faire défiler les paliers</td></tr>
 		</table>
 		<div class="settings-info">
@@ -1817,7 +1804,7 @@ padding-bottom: 45px;
 						<button class="carousel-nav-btn hidden" id="scroll-left-1" aria-label="Précédent">
 							<svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" /></svg>
 						</button>
-						<ul class="carousel-items" id="carousel-1">
+						<ul class="carousel-items" id="carousel-1" tabindex="0" role="listbox">
 							<li class="carousel-item"><div class="card"><h1 class="card-title">00</h1><h2>Copie très insuffisante</h2><div class="card-content"><p>• Copie blanche<br>• Copie insultante...</p></div></div></li>
 							<li class="carousel-item"><div class="card"><h1 class="card-title">01-05</h1><h2>Copie très insuffisante</h2><div class="card-content"><p>• Copie inintelligible<br>• Copie non structurée<br>• Copie excessivement brève<br>• Copie marquant un refus manifeste de faire l'exercice</p></div></div></li>
 							<li class="carousel-item"><div class="card"><h1 class="card-title">06-09</h1><h2>Copie intelligible mais qui ne répond pas aux critères</h2><div class="card-content"><p>• Propos excessivement général ou restant sans rapport avec la question posée<br>• Juxtaposition d'exemples sommaires ou anecdotiques<br>• Accumulation de lieux communs<br>• Récitation de cours sans traitement du sujet<br>• Copie qui aurait pu être rédigée au début de l'année, sans aucun cours de philosophie ou connaissances acquises</p></div></div></li>
@@ -1840,7 +1827,7 @@ padding-bottom: 45px;
 						<button class="carousel-nav-btn hidden" id="scroll-left-2" aria-label="Précédent">
 							<svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" /></svg>
 						</button>
-						<ul class="carousel-items" id="carousel-2">
+						<ul class="carousel-items" id="carousel-2" tabindex="0" role="listbox">
 							<li class="carousel-item"><div class="card"><h1 class="card-title">00</h1><h2>Copie très insuffisante</h2><div class="card-content"><p>• Copie blanche<br>• Copie insultante...</p></div></div></li>
 							<li class="carousel-item"><div class="card"><h1 class="card-title">01-05</h1><h2>Copie très insuffisante</h2><div class="card-content"><p>• Copie inintelligible<br>• Copie non structurée<br>• Copie excessivement brève<br>• Copie marquant un refus manifeste de faire l'exercice</p></div></div></li>
 							<li class="carousel-item"><div class="card"><h1 class="card-title">06-09</h1><h2>Copie intelligible mais qui ne répond pas aux critères</h2><div class="card-content"><p>• Propos excessivement général ou restant sans rapport avec la question posée<br>• Juxtaposition d'exemples sommaires ou anecdotiques<br>• Accumulation de lieux communs<br>• Paraphrase ou répétition du texte<br>• Récitation de cours sans traitement du sujet<br>• Copie qui aurait pu être rédigée au début de l'année, sans aucun cours de philosophie ou connaissances acquises</p></div></div></li>
@@ -1899,13 +1886,10 @@ padding-bottom: 45px;
 			toastTitle.textContent = data.title;
 			toastList.innerHTML = data.items.map(item => `<li>${item}</li>`).join('');
 			
-			// Reset animation
 			toast.classList.remove('show', 'hide');
-			// Force reflow
 			void toast.offsetWidth;
 			toast.classList.add('show');
 			
-			// Auto-hide after 6s
 			clearTimeout(toastTimeout);
 			toastTimeout = setTimeout(() => {
 				hideToast();
@@ -1918,7 +1902,6 @@ padding-bottom: 45px;
 			clearTimeout(toastTimeout);
 		}
 
-		// Événements - on utilise la délégation d'événements pour le bouton info
 		document.addEventListener('click', function(e) {
 			const target = e.target.closest('.info-btn');
 			if (target) {
@@ -1930,14 +1913,12 @@ padding-bottom: 45px;
 
 		toastClose.addEventListener('click', hideToast);
 
-		// Fermer le toast en cliquant ailleurs
 		document.addEventListener('click', function(e) {
 			if (!e.target.closest('.toast') && !e.target.closest('.info-btn')) {
 				hideToast();
 			}
 		});
 
-		// Changer le contenu du toast quand on change d'onglet
 		document.getElementById('switch').addEventListener('change', function() {
 			if (toast.classList.contains('show')) {
 				showToast(this.checked ? 'explication' : 'dissertation');
@@ -1948,7 +1929,6 @@ padding-bottom: 45px;
 		function adjustCardHeights() {
 			const isMobile = window.innerWidth < 768;
 			if (isMobile) {
-				// En mobile, on laisse le CSS gérer les hauteurs
 				const cards = document.querySelectorAll('.card');
 				cards.forEach(card => {
 					card.style.height = 'auto';
@@ -1991,7 +1971,6 @@ padding-bottom: 45px;
 			
 			const windowWidth = window.innerWidth;
 			
-			// Créer le bouton info s'il n'existe pas déjà
 			let infoBtnElement = document.querySelector('.info-btn');
 			if (!infoBtnElement) {
 				infoBtnElement = document.createElement('button');
@@ -2001,7 +1980,6 @@ padding-bottom: 45px;
 			}
 			
 			if (windowWidth < 992) {
-				// Mode portable : le bouton info est après les 4 boutons dans toolbar-left
 				toolbarLeft.innerHTML = '';
 				toolbarLeft.appendChild(homeBtn);
 				toolbarLeft.appendChild(reloadBtn);
@@ -2010,7 +1988,6 @@ padding-bottom: 45px;
 				toolbarLeft.appendChild(infoBtnElement);
 				toolbarRight.innerHTML = '';
 			} else {
-				// Mode desktop : le bouton info est à gauche du bouton plein écran dans toolbar-right
 				toolbarLeft.innerHTML = '';
 				toolbarLeft.appendChild(homeBtn);
 				toolbarLeft.appendChild(reloadBtn);
@@ -2087,11 +2064,37 @@ padding-bottom: 45px;
 			setTimeout(() => { 
 				updateButtonsVisibilityForActiveCarousel(); 
 				updateProgress(); 
-				adjustCardHeights(); 
+				adjustCardHeights();
+				
+				// 👇 NOUVEAU : Forcer le focus sur le carrousel actif
+				const activeOnglet = document.querySelector('.onglet.active');
+				if (activeOnglet) {
+					const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
+					const carousel = document.getElementById(carouselId);
+					if (carousel) {
+						carousel.focus();
+					}
+				}
 			}, 100); 
 		}
 		switchOnglet(false);
 		if (switchInput) switchInput.addEventListener('change', function () { switchOnglet(this.checked); });
+		
+		// 👇 NOUVEAU : Gérer le focus perdu quand on clique sur le switch
+		document.addEventListener('click', function(e) {
+			if (e.target.closest('.switch-button') || e.target.closest('.switch-button-label') || e.target.closest('.switch-button-checkbox')) {
+				setTimeout(() => {
+					const activeOnglet = document.querySelector('.onglet.active');
+					if (activeOnglet) {
+						const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
+						const carousel = document.getElementById(carouselId);
+						if (carousel) {
+							carousel.focus();
+						}
+					}
+				}, 50);
+			}
+		});
 		
 		function getActiveCarouselId() { const activeOnglet = document.querySelector('.onglet.active'); return activeOnglet ? (activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2') : null; }
 		function updateButtonsVisibilityForActiveCarousel() { const carouselId = getActiveCarouselId(); if (!carouselId) return; const leftBtnId = carouselId === 'carousel-1' ? 'scroll-left-1' : 'scroll-left-2'; const rightBtnId = carouselId === 'carousel-1' ? 'scroll-right-1' : 'scroll-right-2'; updateButtonsVisibility(carouselId, leftBtnId, rightBtnId); }
@@ -2190,13 +2193,12 @@ padding-bottom: 45px;
 			const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
 			if (e.key === 'ArrowLeft') { e.preventDefault(); scrollCarousel(carouselId, 'left'); }
 			else if (e.key === 'ArrowRight') { e.preventDefault(); scrollCarousel(carouselId, 'right'); }
-			else if (!isNaN(parseInt(key)) && parseInt(key) >= 1 && parseInt(key) <= 6) {
+			// Raccourcis 0 à 9 pour les paliers (0 → palier 1, 9 → palier 10)
+			else if (!isNaN(parseInt(e.key)) && parseInt(e.key) >= 0 && parseInt(e.key) <= 9) {
 				e.preventDefault();
-				scrollToPalier(parseInt(key)-1);
+				scrollToPalier(parseInt(e.key));
 			}
 		});
-		
-
 	</script>
 </body>
 </html>
