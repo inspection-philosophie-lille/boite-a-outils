@@ -5,8 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 	<title>horloge</title>
 	<style>
-		* {
-		box-sizing: border-box;
+	* {
+			box-sizing: border-box;
 			margin: 0;
 			padding: 0;
 			user-select: none;
@@ -73,6 +73,7 @@
 			flex-shrink: 0;
 			height: 80px;
 			position: relative;
+		top: 5px;
 		}
 
 		.toolbar-left,
@@ -250,6 +251,7 @@
 			width: 100%;
 			padding: 8px 15px;
 			flex-shrink: 0;
+		padding-top: 20px;
 		}
 
 		.mobile-buttons-container {
@@ -555,11 +557,12 @@
 		.time__minutes,
 		.time__seconds {
 			display: flex;
-			gap: 8px;
+			gap: 0px;
 			background: transparent;
 			padding: 0;
 			border-radius: 0;
 			box-shadow: none;
+		margin-left: -10px;margin-right: -10px;
 		}
 
 		.first,
@@ -577,7 +580,7 @@
 			position: relative;
 			width: 100%;
 			height: 100%;
-			transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			will-change: transform;
 		}
 
 		.roller .number {
@@ -690,7 +693,7 @@
 			.time__hours,
 			.time__minutes,
 			.time__seconds {
-				gap: 5px;
+				gap: 0px;
 			}
 		}
 
@@ -731,7 +734,7 @@
 				font-size: 3.5rem;
 			}
 			.time {
-				gap: 4px;
+				gap: 0px;
 				padding: 10px 15px;
 			}
 		}
@@ -758,14 +761,14 @@
 				justify-content: center;
 				align-items: center;
 				min-height: 0;
-				padding: 20px 8px;
+				padding: 10px 4px;
 			}
 			body {
 				height: 100vh;
 			}
 			.time {
 				gap: 0px;
-				padding: 15px 12px;
+				padding: 10px 8px;
 				width: 100%;
 				max-width: 100%;
 			}
@@ -775,44 +778,45 @@
 				gap: 0px;
 			}
 			.separator {
-				margin: 0 0px;
+				margin: 0 2px;
 			}
 
 			.first,
 			.second {
-				margin-left: -10px;
-				margin-right: -10px;
+				margin-left: 0;
+				margin-right: 0;
 			}
 			.separator {
-				margin-left: -10px;
-				margin-right: -10px;
+				margin-left: 0;
+				margin-right: 0;
 			}
 			.time {
-				padding-left: 15px;
-				padding-right: 15px;
+				padding-left: 8px;
+				padding-right: 8px;
 			}
 		}
 
-		/* ===== MOBILE : TAILLE DES CHIFFRES DOUBLÉE ===== */
+		/* ===== MOBILE : TAILLE DES CHIFFRES AJUSTÉE ===== */
 		@media (max-width: 768px) {
 			.first,
 			.second {
-				width: 130px;
-				height: 180px;
+				width: 110px;
+				height: 150px;
 			}
 			.roller .number,
 			.static-number {
-				height: 180px;
-				font-size: 12.5rem;
+				height: 150px;
+				font-size: 10rem;
 			}
 			.roller .number:last-child {
-				bottom: -180px;
+				bottom: -150px;
 			}
 			.separator {
-				font-size: 9rem;
+				font-size: 7.5rem;
+				margin: 0 1px;
 			}
 			.time {
-				padding: 10px 15px;
+				padding: 8px 10px;
 				gap: 0px;
 			}
 			.time__hours,
@@ -821,29 +825,30 @@
 				gap: 0px;
 			}
 			.clock-container {
-				padding: 10px 6px;
+				padding: 8px 4px;
 			}
 		}
 
-		@media (max-width: 550px) {
+		@media (max-width: 600px) {
 			.first,
 			.second {
-				width: 100px;
-				height: 140px;
+				width: 85px;
+				height: 115px;
 			}
 			.roller .number,
 			.static-number {
-				height: 140px;
-				font-size: 7.5rem;
+				height: 115px;
+				font-size: 8rem;
 			}
 			.roller .number:last-child {
-				bottom: -140px;
+				bottom: -115px;
 			}
 			.separator {
-				font-size: 7rem;
+				font-size: 6rem;
+				margin: 0 0px;
 			}
 			.time {
-				padding: 8px 12px;
+				padding: 6px 6px;
 				gap: 0px;
 			}
 			.time__hours,
@@ -851,74 +856,28 @@
 			.time__seconds {
 				gap: 0px;
 			}
-			.first,
-			.second {
-				margin-left: -20px;
-				margin-right: -20px;
-			}
-			.separator {
-				margin-left: -12px;
-				margin-right: -7px;
-				margin-top: 0px;
-			}
 		}
 
-		@media (max-width: 420px) {
-			.first,
-			.second {
-				width: 75px;
-				height: 105px;
-			}
-			.roller .number,
-			.static-number {
-				height: 105px;
-				font-size: 7rem;
-			}
-			.roller .number:last-child {
-				bottom: -105px;
-			}
-			.separator {
-				font-size: 5.5rem;
-			}
-			.time {
-				padding: 6px 10px;
-				gap: 0px;
-			}
-			.time__hours,
-			.time__minutes,
-			.time__seconds {
-				gap: 0px;
-			}
-			.first,
-			.second {
-				margin-left: -3px;
-				margin-right: -3px;
-			}
-			.separator {
-				margin-left: -3px;
-				margin-right: -3px;
-			}
-		}
-
-		@media (max-width: 360px) {
+		@media (max-width: 480px) {
 			.first,
 			.second {
 				width: 65px;
-				height: 90px;
+				height: 88px;
 			}
 			.roller .number,
 			.static-number {
-				height: 90px;
+				height: 88px;
 				font-size: 6rem;
 			}
 			.roller .number:last-child {
-				bottom: -90px;
+				bottom: -88px;
 			}
 			.separator {
 				font-size: 4.5rem;
+				margin: 0 0px;
 			}
 			.time {
-				padding: 4px 8px;
+				padding: 4px 4px;
 				gap: 0px;
 			}
 			.time__hours,
@@ -926,14 +885,66 @@
 			.time__seconds {
 				gap: 0px;
 			}
+			.clock-container {
+				padding: 4px 2px;
+			}
+		}
+
+		@media (max-width: 380px) {
 			.first,
 			.second {
-				margin-left: -2px;
-				margin-right: -2px;
+				width: 52px;
+				height: 70px;
+			}
+			.roller .number,
+			.static-number {
+				height: 70px;
+				font-size: 4.5rem;
+			}
+			.roller .number:last-child {
+				bottom: -70px;
 			}
 			.separator {
-				margin-left: -2px;
-				margin-right: -2px;
+				font-size: 3.5rem;
+				margin: 0 0px;
+			}
+			.time {
+				padding: 3px 2px;
+				gap: 0px;
+			}
+			.time__hours,
+			.time__minutes,
+			.time__seconds {
+				gap: 0px;
+			}
+		}
+
+		@media (max-width: 320px) {
+			.first,
+			.second {
+				width: 42px;
+				height: 58px;
+			}
+			.roller .number,
+			.static-number {
+				height: 58px;
+				font-size: 3.5rem;
+			}
+			.roller .number:last-child {
+				bottom: -58px;
+			}
+			.separator {
+				font-size: 2.8rem;
+				margin: 0 0px;
+			}
+			.time {
+				padding: 2px 2px;
+				gap: 0px;
+			}
+			.time__hours,
+			.time__minutes,
+			.time__seconds {
+				gap: 0px;
 			}
 		}
 
@@ -1230,69 +1241,37 @@
 	</div>
 
 	<script>
-		// ========== HORLOGE (MÉCANIQUE ROLLER) ==========
+		// ========== HORLOGE MÉCANIQUE CONTINUE ==========
+
 		const hourTensBox = document.getElementById('hourTensBox');
 		const hourUnitsBox = document.getElementById('hourUnitsBox');
 		const minTensBox = document.getElementById('minTensBox');
 		const minUnitsBox = document.getElementById('minUnitsBox');
 		const secTensBox = document.getElementById('secTensBox');
 		const secUnitsBox = document.getElementById('secUnitsBox');
+
 		const secondsBlock = document.getElementById('secondsBlock');
 		const secondsSep = document.getElementById('secondsSep');
 		const sep1 = document.getElementById('sep1');
 
+		// Durée du défilement = durée exacte d'une seconde
+		// (1000 ms) pour que le roulement des unités de secondes
+		// soit parfaitement continu, sans pause au passage du chiffre.
+		const ROLL_DURATION = 1000;
+
 		let showSeconds = true;
 		let blinkState = true;
 
-		function applyMechanicalRoll(container, newDigit) {
-			const currentContent = container.innerHTML;
-			const currentNumber = currentContent.match(/\d/)?.[0];
-			if (currentNumber == newDigit) return;
-
-			container.innerHTML = `
-				<div class="roller" style="transform: translateY(-100%);">
-					<div class="number">${newDigit}</div>
-					<div class="number">${currentNumber}</div>
-				</div>
-			`;
-			const roller = container.querySelector('.roller');
-			roller.offsetHeight;
-			roller.style.transition = 'transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-			roller.style.transform = 'translateY(0%)';
-
-			setTimeout(() => {
-				container.innerHTML = `<div class="static-number">${newDigit}</div>`;
-			}, 450);
-		}
-
-		function applySecondsMechanicalRoll(container, newDigit) {
-			const currentContent = container.innerHTML;
-			const currentNumber = currentContent.match(/\d/)?.[0];
-			if (currentNumber == newDigit) return;
-
-			container.innerHTML = `
-				<div class="roller" style="transform: translateY(-100%);">
-					<div class="number">${newDigit}</div>
-					<div class="number">${currentNumber}</div>
-				</div>
-			`;
-			const roller = container.querySelector('.roller');
-			roller.offsetHeight;
-			roller.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-			roller.style.transform = 'translateY(0%)';
-
-			setTimeout(() => {
-				container.innerHTML = `<div class="static-number">${newDigit}</div>`;
-			}, 300);
-		}
-
 		function updateBlink() {
-			blinkState = !blinkState;
+			const ms = Date.now();
+			const visible =
+				Math.floor(ms / 1000) % 2 === 0;
 			if (sep1) {
-				sep1.style.opacity = blinkState ? '1' : '0';
+				sep1.style.opacity = visible ? '1' : '0';
 			}
 			if (secondsSep && showSeconds) {
-				secondsSep.style.opacity = blinkState ? '1' : '0';
+				secondsSep.style.opacity =
+					visible ? '1' : '0';
 			}
 		}
 
@@ -1301,64 +1280,162 @@
 			if (show) {
 				if (secondsSep) {
 					secondsSep.style.display = 'inline-flex';
-					secondsSep.style.opacity = blinkState ? '1' : '0';
 				}
-				if (secondsBlock) secondsBlock.style.display = 'flex';
+				if (secondsBlock) {
+					secondsBlock.style.display = 'flex';
+				}
 			} else {
 				if (secondsSep) {
 					secondsSep.style.display = 'none';
 				}
-				if (secondsBlock) secondsBlock.style.display = 'none';
+				if (secondsBlock) {
+					secondsBlock.style.display = 'none';
+				}
 			}
+		}
+
+		// ===== Fonction de rendu continu =====
+		function renderRollingDigit(container, current, next, progress) {
+			const h = container.clientHeight;
+			progress = Math.max(0, Math.min(1, progress));
+			container.innerHTML = `
+				<div class="roller"
+					 style="transform:translateY(-${progress * h}px);transition:none;">
+					<div class="number">${current}</div>
+					<div class="number">${next}</div>
+				</div>
+			`;
+		}
+
+		function computeProgress(timeToChange) {
+			if (timeToChange > ROLL_DURATION) return 0;
+			return (ROLL_DURATION - timeToChange) / ROLL_DURATION;
 		}
 
 		function updateClock() {
 			const now = new Date();
-			const hours = now.getHours();
-			const minutes = now.getMinutes();
-			const seconds = now.getSeconds();
+			updateBlink();
 
-			const hourTens = Math.floor(hours / 10);
-			const hourUnits = hours % 10;
-			const minTens = Math.floor(minutes / 10);
-			const minUnits = minutes % 10;
-			const secTens = Math.floor(seconds / 10);
-			const secUnits = seconds % 10;
-
-			applyMechanicalRoll(hourTensBox, hourTens);
-			applyMechanicalRoll(hourUnitsBox, hourUnits);
-			applyMechanicalRoll(minTensBox, minTens);
-			applyMechanicalRoll(minUnitsBox, minUnits);
-
-			if (showSeconds) {
-				applySecondsMechanicalRoll(secTensBox, secTens);
-				applySecondsMechanicalRoll(secUnitsBox, secUnits);
+			// ===== UNITÉS DE SECONDES =====
+			{
+				const current = now.getSeconds() % 10;
+				const next = (current + 1) % 10;
+				const timeToChange =
+					1000 - now.getMilliseconds();
+				renderRollingDigit(
+					secUnitsBox,
+					current,
+					next,
+					computeProgress(timeToChange)
+				);
 			}
 
-			updateBlink();
+			// ===== DIZAINES DE SECONDES =====
+			{
+				const current =
+					Math.floor(now.getSeconds() / 10);
+				const next =
+					(current + 1) % 6;
+				const elapsed =
+					(now.getSeconds() % 10) * 1000 +
+					now.getMilliseconds();
+				const timeToChange =
+					10000 - elapsed;
+				renderRollingDigit(
+					secTensBox,
+					current,
+					next,
+					computeProgress(timeToChange)
+				);
+			}
+
+			// ===== UNITÉS DE MINUTES =====
+			{
+				const current =
+					now.getMinutes() % 10;
+				const next =
+					(current + 1) % 10;
+				const elapsed =
+					now.getSeconds() * 1000 +
+					now.getMilliseconds();
+				const timeToChange =
+					60000 - elapsed;
+				renderRollingDigit(
+					minUnitsBox,
+					current,
+					next,
+					computeProgress(timeToChange)
+				);
+			}
+
+			// ===== DIZAINES DE MINUTES =====
+			{
+				const current =
+					Math.floor(now.getMinutes() / 10);
+				const next =
+					(current + 1) % 6;
+				const elapsed =
+					(now.getMinutes() % 10) * 60000 +
+					now.getSeconds() * 1000 +
+					now.getMilliseconds();
+				const timeToChange =
+					600000 - elapsed;
+				renderRollingDigit(
+					minTensBox,
+					current,
+					next,
+					computeProgress(timeToChange)
+				);
+			}
+
+			// ===== UNITÉS D'HEURES =====
+			{
+				const h = now.getHours();
+				const current = h % 10;
+				const next =
+					((h + 1) % 24) % 10;
+				const elapsed =
+					now.getMinutes() * 60000 +
+					now.getSeconds() * 1000 +
+					now.getMilliseconds();
+				const timeToChange =
+					3600000 - elapsed;
+				renderRollingDigit(
+					hourUnitsBox,
+					current,
+					next,
+					computeProgress(timeToChange)
+				);
+			}
+
+			// ===== DIZAINES D'HEURES =====
+			{
+				const h = now.getHours();
+				const current =
+					Math.floor(h / 10);
+				const next =
+					Math.floor(((h + 1) % 24) / 10);
+				const elapsed =
+					now.getMinutes() * 60000 +
+					now.getSeconds() * 1000 +
+					now.getMilliseconds();
+				const timeToChange =
+					3600000 - elapsed;
+				renderRollingDigit(
+					hourTensBox,
+					current,
+					next,
+					computeProgress(timeToChange)
+				);
+			}
+
+			requestAnimationFrame(updateClock);
 		}
 
-		function initDisplay() {
-			const now = new Date();
-			const hours = now.getHours();
-			const minutes = now.getMinutes();
-			const seconds = now.getSeconds();
+		// ===== DÉMARRAGE =====
+		requestAnimationFrame(updateClock);
 
-			hourTensBox.innerHTML = `<div class="static-number">${Math.floor(hours / 10)}</div>`;
-			hourUnitsBox.innerHTML = `<div class="static-number">${hours % 10}</div>`;
-			minTensBox.innerHTML = `<div class="static-number">${Math.floor(minutes / 10)}</div>`;
-			minUnitsBox.innerHTML = `<div class="static-number">${minutes % 10}</div>`;
-			secTensBox.innerHTML = `<div class="static-number">${Math.floor(seconds / 10)}</div>`;
-			secUnitsBox.innerHTML = `<div class="static-number">${seconds % 10}</div>`;
-			
-			blinkState = true;
-			if (sep1) sep1.style.opacity = '1';
-			if (secondsSep) secondsSep.style.opacity = '1';
-		}
-
-		initDisplay();
-		setInterval(updateClock, 1000);
-
+		// ===== RESTE DU CODE (menus, paramètres, etc.) =====
 		const savedSeconds = localStorage.getItem('showSeconds');
 		if (savedSeconds === null) {
 			setSecondsDisplay(true);
