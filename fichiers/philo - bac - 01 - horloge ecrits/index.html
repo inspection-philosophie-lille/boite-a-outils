@@ -6,7 +6,7 @@
 	<title>horloge</title>
 	<style>
 	* {
-			box-sizing: border-box;
+		box-sizing: border-box;
 			margin: 0;
 			padding: 0;
 			user-select: none;
@@ -569,7 +569,7 @@
 		.second {
 			position: relative;
 			width: 120px;
-			height: 170px;
+			height: 120px;
 			background: transparent;
 			border-radius: 0;
 			overflow: hidden;
@@ -578,6 +578,7 @@
 
 		.roller {
 			position: relative;
+			top: -1px;
 			width: 100%;
 			height: 100%;
 			will-change: transform;
@@ -588,7 +589,9 @@
 			align-items: center;
 			justify-content: center;
 			width: 100%;
-			height: 170px;
+			height: 120px;
+			line-height: 1;
+			padding-bottom: 0.1em;
 			font-size: 10rem;
 			font-weight: 400;
 			background: transparent;
@@ -602,7 +605,7 @@
 		}
 		.roller .number:last-child {
 			position: absolute;
-			bottom: -170px;
+			bottom: -120px;
 			left: 0;
 		}
 
@@ -612,6 +615,8 @@
 			justify-content: center;
 			width: 100%;
 			height: 100%;
+			line-height: 1;
+			padding-bottom: 0.1em;
 			font-size: 10rem;
 			font-weight: 400;
 			background: transparent;
@@ -658,15 +663,15 @@
 			.first,
 			.second {
 				width: 100px;
-				height: 140px;
+				height: 96px;
 			}
 			.roller .number,
 			.static-number {
-				height: 140px;
+				height: 96px;
 				font-size: 8rem;
 			}
 			.roller .number:last-child {
-				bottom: -140px;
+				bottom: -96px;
 			}
 			.separator {
 				font-size: 6.5rem;
@@ -677,15 +682,15 @@
 			.first,
 			.second {
 				width: 85px;
-				height: 120px;
+				height: 78px;
 			}
 			.roller .number,
 			.static-number {
-				height: 120px;
+				height: 78px;
 				font-size: 6.5rem;
 			}
 			.roller .number:last-child {
-				bottom: -120px;
+				bottom: -78px;
 			}
 			.separator {
 				font-size: 5.5rem;
@@ -701,15 +706,15 @@
 			.first,
 			.second {
 				width: 70px;
-				height: 100px;
+				height: 60px;
 			}
 			.roller .number,
 			.static-number {
-				height: 100px;
+				height: 60px;
 				font-size: 5rem;
 			}
 			.roller .number:last-child {
-				bottom: -100px;
+				bottom: -60px;
 			}
 			.separator {
 				font-size: 4.5rem;
@@ -720,15 +725,15 @@
 			.first,
 			.second {
 				width: 55px;
-				height: 80px;
+				height: 46px;
 			}
 			.roller .number,
 			.static-number {
-				height: 80px;
+				height: 46px;
 				font-size: 3.8rem;
 			}
 			.roller .number:last-child {
-				bottom: -80px;
+				bottom: -46px;
 			}
 			.separator {
 				font-size: 3.5rem;
@@ -801,15 +806,15 @@
 			.first,
 			.second {
 				width: 110px;
-				height: 150px;
+				height: 120px;
 			}
 			.roller .number,
 			.static-number {
-				height: 150px;
+				height: 120px;
 				font-size: 10rem;
 			}
 			.roller .number:last-child {
-				bottom: -150px;
+				bottom: -120px;
 			}
 			.separator {
 				font-size: 7.5rem;
@@ -833,15 +838,15 @@
 			.first,
 			.second {
 				width: 85px;
-				height: 115px;
+				height: 96px;
 			}
 			.roller .number,
 			.static-number {
-				height: 115px;
+				height: 96px;
 				font-size: 8rem;
 			}
 			.roller .number:last-child {
-				bottom: -115px;
+				bottom: -96px;
 			}
 			.separator {
 				font-size: 6rem;
@@ -862,15 +867,15 @@
 			.first,
 			.second {
 				width: 65px;
-				height: 88px;
+				height: 72px;
 			}
 			.roller .number,
 			.static-number {
-				height: 88px;
+				height: 72px;
 				font-size: 6rem;
 			}
 			.roller .number:last-child {
-				bottom: -88px;
+				bottom: -72px;
 			}
 			.separator {
 				font-size: 4.5rem;
@@ -894,15 +899,15 @@
 			.first,
 			.second {
 				width: 52px;
-				height: 70px;
+				height: 54px;
 			}
 			.roller .number,
 			.static-number {
-				height: 70px;
+				height: 54px;
 				font-size: 4.5rem;
 			}
 			.roller .number:last-child {
-				bottom: -70px;
+				bottom: -54px;
 			}
 			.separator {
 				font-size: 3.5rem;
@@ -923,15 +928,15 @@
 			.first,
 			.second {
 				width: 42px;
-				height: 58px;
+				height: 42px;
 			}
 			.roller .number,
 			.static-number {
-				height: 58px;
+				height: 42px;
 				font-size: 3.5rem;
 			}
 			.roller .number:last-child {
-				bottom: -58px;
+				bottom: -42px;
 			}
 			.separator {
 				font-size: 2.8rem;
