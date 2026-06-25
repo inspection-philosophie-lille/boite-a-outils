@@ -69,15 +69,15 @@
 			justify-content: space-between;
 			margin-bottom: 16px;
 			position: relative;
-			padding: 0 4px;
+			padding: 0;
 		}
 
 		.workflow-progress:before {
 			content: '';
 			position: absolute;
 			top: 15px;
-			left: 8px;
-			right: 8px;
+			left: 14px;
+			right: 14px;
 			height: 2px;
 			background-color: #e0e0e0;
 			z-index: 1;
@@ -89,10 +89,9 @@
 			align-items: center;
 			position: relative;
 			z-index: 2;
-			width: 20%;
 			cursor: pointer;
 			transition: transform 0.2s;
-			min-width: 0;
+			flex: 0 0 auto;  /* Ne pas s'étirer */
 		}
 		.progress-step:hover {
 			transform: scale(1.03);
@@ -132,7 +131,7 @@
 			font-weight: 500;
 			line-height: 1.2;
 			word-break: break-word;
-			max-width: 60px;
+			max-width: 80px;
 		}
 
 		.progress-step.active .step-label {
@@ -210,13 +209,8 @@
 			white-space: nowrap;
 		}
 
-		/* ===== CORRECTION : empêcher la coupure entre texte et badge ===== */
-		.step-card p {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			gap: 4px 6px;
-		}
+		/* ===== SUPPRESSION DE LA RÈGLE .step-card p ===== */
+		/* La règle qui causait le problème a été supprimée */
 
 		/* ===== STEP CARD ===== */
 		.step-card {
@@ -362,9 +356,9 @@
 			h1 small { font-size: 0.8rem; }
 			.description { font-size: 0.85rem; }
 
-			.workflow-progress:before { top: 13px; left: 4px; right: 4px; }
+			.workflow-progress:before { top: 13px; left: 12px; right: 12px; }
 			.progress-step .step-icon { width: 24px; height: 24px; font-size: 0.65rem; }
-			.progress-step .step-label { font-size: 0.55rem; max-width: 44px; }
+			.progress-step .step-label { font-size: 0.55rem; max-width: 60px; }
 
 			.workflow-step { padding: 10px 12px; margin-bottom: 8px; border-left-width: 4px; }
 			h2 { font-size: 1rem; gap: 8px; margin-bottom: 6px; }
@@ -380,9 +374,9 @@
 		}
 
 		@media (max-width: 480px) {
-			.progress-step .step-label { font-size: 0.5rem; max-width: 36px; }
+			.progress-step .step-label { font-size: 0.5rem; max-width: 50px; }
 			.progress-step .step-icon { width: 20px; height: 20px; font-size: 0.55rem; }
-			.workflow-progress:before { top: 10px; }
+			.workflow-progress:before { top: 10px; left: 10px; right: 10px; }
 		}
 	</style>
 </head>
@@ -408,7 +402,7 @@
 		</div>
 		<div class="progress-step" data-step="3" id="ps-3">
 			<div class="step-icon">4</div>
-			<div class="step-label">Portail d'accès aux missions</div>
+			<div class="step-label">Accès aux missions</div>
 		</div>
 		<div class="progress-step" data-step="4" id="ps-4">
 			<div class="step-icon">5</div>
@@ -484,13 +478,13 @@
 	<div class="workflow-step" id="step-4">
 		<h2><span class="step-number">5</span>Ouvrir « Santorin »</h2>
 		<div class="step-card">
-			<p>Cliquez sur <span class="badge">✉</span> (en haut de page). Il apparaît trois onglets :</p>
+			<p>Cliquer <span class="badge">✉</span> (en haut). Il apparaît :</p>
 			<div class="screenshot-mock" style="background:#2c3e50; border-left-color:#27ae60;">
 				🗂️ Demandes 🗂️ <span style="background:#f1c40f; color:#2c3e50; padding:0 4px; border-radius:4px;"> Lots</span> 🗂️ Discussions et consignes
 			</div>
-			<p>Cliquez sur <span class="badge">Lots</span> pour faire apparaître la cellule « Correction partagée - EDS - Humanités, littérature et philosophie ».<br>
-			Cliquez sur <span class="badge">Correction partagée - EDS - HLP</span><br>
-			Cliquez sur <span class="badge"><span class="material-icons group-icon">group</span></span> : la zone de message apparaît en bas de page</p>
+			<p>Cliquer sur <span class="badge">Lots</span> pour faire apparaître la cellule « Correction partagée - EDS - HLP ».<br>
+			Cliquer sur <span class="badge">Correction partagée - EDS - HLP</span><br>
+			Cliquer sur <span class="badge"><span class="material-icons group-icon">group</span></span> : la zone de message apparaît en bas de page !</p>
 		</div>
 	</div>
 
