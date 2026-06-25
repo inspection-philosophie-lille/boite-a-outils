@@ -210,6 +210,14 @@
 			white-space: nowrap;
 		}
 
+		/* ===== CORRECTION : empêcher la coupure entre texte et badge ===== */
+		.step-card p {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 4px 6px;
+		}
+
 		/* ===== STEP CARD ===== */
 		.step-card {
 			background: #f8f9fa;
@@ -338,7 +346,6 @@
 			gap: 8px;
 			flex-wrap: wrap;
 			justify-content: center;
-			border-top: 1px solid #ecf0f1;
 			padding-top: 14px;
 		}
 		.nav-buttons .btn {
