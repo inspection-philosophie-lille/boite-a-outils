@@ -281,12 +281,6 @@
 				width: 24px !important;
 				height: 24px !important;
 			}
-			
-			.card-front .line, .card-back .line2 {
-				width: 8rem;
-				margin: 15px 0;      /* ← Hauteur verticale gérée ici */
-				position: relative;
-			}
 		}
 
 		main {
@@ -481,6 +475,7 @@
 			padding: 1rem;
 		}
 
+		/* Mobile : positionnement de la flèche remontée */
 		@media (max-width: 768px) {
 			.card-wrapper {
 				max-width: 90%;
@@ -489,16 +484,39 @@
 			.card {
 				min-height: 260px;
 			}
+			
+			/* Le trait noir est positionné au milieu entre "question/réponse" et la phrase */
+			.line, .line2 {
+				width: 10rem !important;
+				height: 0.2rem !important;
+				margin-top: -3rem !important;
+				margin-bottom: 3rem !important;
+			}
+			
+			/* La flèche rouge est remontée plus haut dans la vignette */
+			.arrow {
+				width: 1.5rem !important;
+				height: 0.1rem !important;
+				top: 6.5rem !important;
+				margin-right: 1rem !important;
+				margin-top: 1rem !important;
+				margin-bottom: 0.5rem !important;
+			}
+			.arrow::before, .arrow::after {
+				height: 0.1rem !important;
+				width: 0.6rem !important;
+			}
+			
 			.card-back p, .Dicover {
 				top: 6rem;
 			}
-			.line, .line2 {
-				width: 8rem;
-				margin-top: -4.3rem;
-				margin-bottom: 4.3rem;
+			
+			.card-back p .reponse-label,
+			.card-back p .reponse {
+				font-size: 14px;
 			}
-			.arrow {
-				top: 9.86rem;
+			.Dicover h4 {
+				font-size: 14px;
 			}
 		}
 
@@ -510,16 +528,39 @@
 			.card {
 				min-height: 220px;
 			}
+			
+			/* Le trait noir est positionné au milieu entre "question/réponse" et la phrase */
+			.line, .line2 {
+				width: 10rem !important;
+				height: 0.2rem !important;
+				margin-top: -2.5rem !important;
+				margin-bottom: 2.5rem !important;
+			}
+			
+			/* La flèche rouge est remontée plus haut dans la vignette */
+			.arrow {
+				width: 1.5rem !important;
+				height: 0.1rem !important;
+				top: 5.5rem !important;
+				margin-right: 1rem !important;
+				margin-top: 1rem !important;
+				margin-bottom: 0.5rem !important;
+			}
+			.arrow::before, .arrow::after {
+				height: 0.1rem !important;
+				width: 0.6rem !important;
+			}
+			
 			.card-back p, .Dicover {
 				top: 5rem;
 			}
-			.line, .line2 {
-				width: 6rem;
-				margin-top: -3.57rem;
-				margin-bottom: 3.57rem;
+			
+			.card-back p .reponse-label,
+			.card-back p .reponse {
+				font-size: 13px;
 			}
-			.arrow {
-				top: 8.21rem;
+			.Dicover h4 {
+				font-size: 13px;
 			}
 		}
 
@@ -618,8 +659,8 @@
 		.submenu {
 			position: fixed;
 			top: 0;
-			right: -360px;
-			width: 340px;
+			right: -300px;
+			width: 280px;
 			height: 100%;
 			background: #e0e5ec;
 			z-index: 10010;
