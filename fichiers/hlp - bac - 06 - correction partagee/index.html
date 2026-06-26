@@ -149,6 +149,11 @@
 			opacity: 1;
 		}
 
+		/* ===== SUPPRESSION DES TOOLTIPS VIDES POUR LES BOUTONS DE NAVIGATION ===== */
+		.nav-buttons .btn::after {
+			display: none !important;
+		}
+
 		.btn-home .icon-wrapper {
 			width: 60px;
 			height: 60px;
@@ -1249,9 +1254,9 @@
 		<div class="workflow-step" id="step-2">
 			<h2><span class="step-number">3</span>Ouvrir « Imag'in »</h2>
 			<div class="step-card">
-				<p>Dans l'application Imag'in, un menu latéral s'affiche :</p>
+				<p>📌 Dans l'application Imag'in, un menu latéral s'affiche :</p>
 				<div class="screenshot-mock" style="background:#2c3e50;">
-					<span style="color:#f1c40f;">📌 Menu</span><br>
+					<span style="color:#f1c40f;">Menu</span><br>
 					Mes missions<br>
 					• Consultation des missions<br>
 					• Saisie/Consultation des états de frais<br>
@@ -1265,7 +1270,7 @@
 		<div class="workflow-step" id="step-3">
 			<h2><span class="step-number">4</span>Ouvrir « Portail d'accès aux missions »</h2>
 			<div class="step-card">
-				<p>Chercher « Correction de copies » de « Spé : HLP »</p>
+				<p>📌 Chercher « Correction de copies » de « Spé : HLP »</p>
 				<div class="screenshot-mock" style="background:#2c3e50;">
 					<span class="highlight">• 🗂️ Mission X : </span>détails de la mission (Accès Cyclades)<br>
 					<span class="highlight">• 🗂️ Mission Y : </span>détails de la mission (Accès Santorin)<br>
@@ -1279,7 +1284,7 @@
 		<div class="workflow-step" id="step-4">
 			<h2><span class="step-number">5</span>Ouvrir « Santorin »</h2>
 			<div class="step-card">
-				<p>Dans Santorin cliquer sur <span class="badge">Lots</span>.</p>
+				<p>📌 Dans Santorin cliquer sur <span class="badge">Lots</span>.</p>
 				<div class="screenshot-mock" style="background:#2c3e50; border-left-color:#27ae60;">
 					🗂️ Demandes 🗂️ <span style="background:#f1c40f; color:#2c3e50; padding:0 4px; border-radius:4px;"> Lots</span> 🗂️ Discussions et consignes
 				</div>
@@ -1363,7 +1368,7 @@
 			<p><strong>Conseil :</strong></p>
 			<p>• Utilisez les flèches <kbd>←</kbd> <kbd>→</kbd> pour naviguer</p>
 			<p>• Cliquez sur les pastilles numérotées pour sauter une étape</p>
-			<p>• Le guide PDF (icône 📄) reprend tout le chemin</p>
+			<p>• Le guide PDF (icône 📄) renvoie à des copies écran</p>
 		</div>
 	</div>
 
