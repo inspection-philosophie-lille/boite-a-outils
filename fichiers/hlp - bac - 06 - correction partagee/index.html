@@ -1057,6 +1057,13 @@
                 width: 24px;
                 height: 24px;
             }
+            
+            /* Ajout des marges latérales pour les boutons mobiles */
+            .mobile-buttons-container {
+                padding-left: 10px;
+                padding-right: 10px;
+                gap: 8px;
+            }
         }
 
         @media (max-width: 700px) {
@@ -1141,6 +1148,13 @@
             .group-icon {
                 font-size: 1rem;
             }
+            
+            /* Ajustement supplémentaire pour les très petits écrans */
+            .mobile-buttons-container {
+                padding-left: 5px;
+                padding-right: 5px;
+                gap: 5px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1157,6 +1171,21 @@
                 top: 10px;
                 left: 10px;
                 right: 10px;
+            }
+            
+            /* Réduire encore les boutons si nécessaire */
+            .toolbar-mobile .toolbar-btn {
+                width: 44px;
+                height: 44px;
+            }
+            .toolbar-mobile .toolbar-btn svg {
+                width: 20px;
+                height: 20px;
+            }
+            .mobile-buttons-container {
+                padding-left: 4px;
+                padding-right: 4px;
+                gap: 4px;
             }
         }
     </style>
@@ -1191,17 +1220,17 @@
             <div class="toolbar-center">
                 <div class="title-container">
                     <p class="toolbar-title">correction partagée</p>
-                    <p class="toolbar-subtitle">comment contacter la/le collègue de correction</p>
+                    <p class="toolbar-subtitle">comment contacter l'autre correcteur ?</p>
                 </div>
             </div>
             <div class="toolbar-right">
-                <!-- NOUVELLE ICÔNE PDF POUR LE BOUTON GUIDE -->
                 <button class="toolbar-btn guide-btn" id="guideBtn" data-title="guide (G)">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                        <polyline points="14 2 14 8 20 8" />
-                        <!-- Ajout du texte "PDF" dans l'icône -->
-                        <text x="7" y="17" font-family="Arial, sans-serif" font-weight="bold" font-size="8" fill="currentColor" stroke="none">PDF</text>
+					<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- Document PDF -->
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"></path>
+                        <path d="M14 2v6h6"></path>
+                        <!-- Texte PDF -->
+                        <text x="6" y="17" font-family="Arial, sans-serif" font-weight="bold" font-size="6" fill="currentColor" stroke="none">PDF</text>
                     </svg>
                 </button>
                 <button class="toolbar-btn fullscreen" id="fullscreenBtn" data-title="plein écran (F)">
@@ -1245,12 +1274,12 @@
                         <line x1="14" y1="19" x2="20" y2="19" /><line x1="19" y1="14" x2="19" y2="18" />
                     </svg>
                 </button>
-                <!-- ICÔNE PDF POUR LE BOUTON GUIDE SUR MOBILE -->
+                <!-- ICÔNE PDF POUR LE BOUTON GUIDE SUR MOBILE (redimensionnée et recentrée) -->
                 <button class="toolbar-btn guide-btn" id="guideBtnMobile" data-title="guide">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                         <polyline points="14 2 14 8 20 8" />
-                        <text x="7" y="17" font-family="Arial, sans-serif" font-weight="bold" font-size="8" fill="currentColor" stroke="none">PDF</text>
+                        <text x="6" y="17" font-family="Arial, sans-serif" font-weight="bold" font-size="6" fill="currentColor" stroke="none">PDF</text>	
                     </svg>
                 </button>
                 <button class="toolbar-btn menu-btn" id="menuBtnMobile" data-title="menu">
@@ -1343,7 +1372,7 @@
         <div class="workflow-step" id="step-3">
             <h2><span class="step-number">4</span>Ouvrir « Portail d'accès aux missions »</h2>
             <div class="step-card">
-                <p>Chercher « Correction de copies » de « Spé : Huma. littérature philo »</p>
+                <p>Chercher « Correction de copies » de « Spé : HLP »</p>
                 <div class="screenshot-mock" style="background:#2c3e50;">
                     <span class="highlight">• 🗂️ Mission X : </span>détails de la mission (Accès Cyclades)<br>
                     <span class="highlight">• 🗂️ Mission Y : </span>détails de la mission (Accès Santorin)<br>
@@ -1422,6 +1451,7 @@
         </button>
     </div>
 
+    <!-- SOUS-MENU PRÉSENTATION RÉÉCRIT -->
     <div class="submenu" id="submenuPresentation">
         <button class="submenu-close" data-submenu="presentation">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1429,19 +1459,23 @@
                 <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
         </button>
-        <div class="submenu-title">présentation</div>
+        <div class="submenu-title">correction partagée</div>
         <div class="submenu-content">
-            <p>Cette application est conçue pour aider à gérer le temps de l'épreuve écrite.</p>
+            <p><strong>Objectif :</strong></p>
+            <p>Ce guide vous accompagne pour <strong>contacter l'autre correcteur</strong> dans le cadre de l'épreuve écrite de HLP.</p>
             <br>
-            <p><strong>Fonctionnalités :</strong></p>
-            <p>• Affichage clair de l'heure</p>
-            <p>• Mode sombre pour une meilleure lisibilité</p>
-            <p>• Possibilité de masquer les secondes</p>
-            <p>• Menu de navigation intuitif</p>
+            <p><strong>Parcours en 5 étapes :</strong></p>
+            <p><strong>1.</strong> Se connecter à Aréna</p>
+            <p><strong>2.</strong> Accéder à Évaluation et examens</p>
+            <p><strong>3.</strong> Ouvrir Imag'in</p>
+            <p><strong>4.</strong> Portail d'accès aux missions</p>
+            <p><strong>5.</strong> Dans Santorin, trouver l'onglet "Lots" et l'icône 👥</p>
             <br>
-            <p><strong>Conseils d'utilisation :</strong></p>
-            <p>• Raccourcis clavier pour accéder rapidement aux fonctions principales.</p>
-            <p>• Mode plein écran pour une visualisation optimale.</p>
+            <p><strong>Conseil :</strong></p>
+            <p>• Utilisez les flèches <kbd>←</kbd> <kbd>→</kbd> pour naviguer</p>
+            <p>• Cliquez sur les pastilles numérotées pour sauter une étape</p>
+            <p>• Le guide PDF (icône 📄) reprend tout le chemin</p>
+            <br>
         </div>
     </div>
 
