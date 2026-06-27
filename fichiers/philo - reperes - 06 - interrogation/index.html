@@ -115,7 +115,7 @@
 			min-height: 60px;
 		}
 
-		/* --- Boutons circulaires parfaits --- */
+		/* --- Boutons circulaires --- */
 		.toolbar-btn {
 			width: 60px;
 			height: 60px;
@@ -366,7 +366,6 @@
 			flex-shrink: 0;
 		}
 
-		/* Ligne unifiée */
 		.card-divider {
 			width: 10rem;
 			height: 0.2rem;
@@ -378,7 +377,6 @@
 			flex-shrink: 0;
 		}
 
-		/* Conteneur unifié pour le contenu */
 		.card-content {
 			flex: 1;
 			display: flex;
@@ -393,7 +391,7 @@
 		.card-content p, .card-content h4 {
 			font-size: 16px;
 			font-family: Arial, Helvetica, sans-serif;
-			text-align: justify;
+			text-align: center;
 			color: black;
 			margin: 0 0.5rem;
 			width: 100%;
@@ -416,7 +414,6 @@
 			color: black;
 		}
 
-		/* Flèche unifiée - positionnée en bas */
 		.arrow {
 			position: absolute;
 			bottom: -2rem;
@@ -438,7 +435,7 @@
 			background: red;
 		}
 
-		/* Flèche vers la droite (face avant) */
+		/* Flèche face avant */
 		.arrow-right::before {
 			right: 0;
 			transform: rotate(45deg);
@@ -453,7 +450,7 @@
 			width: 5rem;
 		}
 
-		/* Flèche vers la gauche (face arrière) */
+		/* Flèche face arrière */
 		.arrow-left::before {
 			left: 0;
 			transform: rotate(-45deg);
@@ -490,6 +487,7 @@
 			
 			.card-content p, .card-content h4 {
 				font-size: 14px;
+				text-align: center;  /* MODIFICATION ICI */
 			}
 			.card-content .reponse-label,
 			.card-content .reponse {
@@ -528,6 +526,7 @@
 			
 			.card-content p, .card-content h4 {
 				font-size: 13px;
+				text-align: center;
 			}
 			.card-content .reponse-label,
 			.card-content .reponse {
