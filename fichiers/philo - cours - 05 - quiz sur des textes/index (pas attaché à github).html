@@ -20,7 +20,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: #f5f5f5;
+    background: #f3f3f3;
     transition: background-color 0.4s, color 0.4s;
     min-height: 100vh;
     overflow-x: hidden;
@@ -97,7 +97,6 @@ body.dark-mode.colorblind-mode {
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 .toolbar-left,
 .toolbar-right {
@@ -199,11 +198,11 @@ body.dark-mode h1 {
 #quizTitle {
     color: var(--font-color) !important;
 }
-/* Styles corrigés pour la barre de progression - TITRE SUR UNE LIGNE QUAND POSSIBLE */
+/* Styles corrigés pour la barre de progression */
 .progress-bar__title {
     display: flex;
     align-items: center;
-    flex: 0 1 auto; /* Ne pas s'étirer automatiquement */
+    flex: 0 1 auto;
     min-width: 120px;
     gap: 4px;
     position: relative;
@@ -214,37 +213,23 @@ body.dark-mode h1 {
     font-size: 14px !important;
     line-height: 1.2 !important;
     margin: 0;
-    white-space: nowrap; /* Une ligne par défaut */
-    overflow: visible; /* Pas de tronquage */
-    text-overflow: clip; /* Pas de points de suspension */
-    flex: 0 1 auto; /* S'adapte au contenu */
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+    flex: 0 1 auto;
     min-width: 0;
-    max-width: none; /* Supprimer toute limite */
+    max-width: none;
     text-align: left;
 }
 
-/* Quand le titre doit passer à la ligne */
 .progress-bar__title h1.force-wrap {
     white-space: normal !important;
     word-wrap: break-word !important;
     overflow-wrap: break-word !important;
-    flex: 1; /* Prendre l'espace disponible */
+    flex: 1;
     min-width: 0;
 }
 
-/* Style spécial pour le titre principal (toolbar) - supprime le tiret de fin de ligne */
-.toolbar-center h1::first-line {
-    position: relative;
-}
-.toolbar-center h1::first-line::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 10px;
-    height: 2px;
-    background: transparent;
-}
 /* MENU COULISSANT */
 .menu-overlay {
     position: fixed;
@@ -368,7 +353,7 @@ input:checked+.slider {
 input:checked+.slider:before {
     transform: translateX(20px);
 }
-/* Layout principal responsive */
+/* Layout principal */
 .content--v2 {
     padding: 5px 10px 30px;
     width: 100%;
@@ -417,7 +402,7 @@ input:checked+.slider:before {
 .grid-area--playlist {
     display: none;
 }
-/* Conteneur quiz uniforme */
+/* Conteneur quiz */
 .container--quiz {
     background: #f3f3f3;
     border: 15px solid #fff;
@@ -434,18 +419,11 @@ input:checked+.slider:before {
     display: flex;
     flex-direction: column;
 }
-/* Largeur augmentée en desktop */
 @media (min-width: 1024px) {
-    .container--quiz {
-        max-width: 90%;
-        width: 90%;
-    }
+    .container--quiz { max-width: 90%; width: 90%; }
 }
 @media (min-width: 1200px) {
-    .container--quiz {
-        max-width: 1100px;
-        width: 90%;
-    }
+    .container--quiz { max-width: 1100px; width: 90%; }
 }
 body.dark-mode .container--quiz {
     border-color: #2d2d2d;
@@ -509,7 +487,7 @@ body.dark-mode .container--quiz {
     align-items: center;
     gap: 20px;
 }
-/* Boutons responsive */
+/* Boutons */
 .quiz-btn {
     border: 1px solid var(--font-color);
     color: var(--font-color);
@@ -559,10 +537,71 @@ body.dark-mode .quiz-btn--fill {
     color: #e0e0e0;
     box-shadow: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.3), -0.3rem -0.3rem 0.6rem rgba(40, 40, 40, 0.5);
 }
-body.dark-mode .quiz-btn--fill:hover {
-    box-shadow: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.3), inset -0.2rem -0.2rem 0.4rem rgba(40, 40, 40, 0.5);
+/* Sélecteur local */
+.local-select-container {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
 }
-/* Bouton de chargement de fichier local */
+.local-select {
+    width: 80%;
+    max-width: 320px;
+    padding: 12px 15px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #666;
+    color: #333;
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    text-align: left;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Arial, sans-serif;
+    transition: all 0.3s ease;
+}
+.local-select:hover {
+    border-color: red;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+body.dark-mode .local-select {
+    background: rgba(40, 40, 40, 0.95);
+    color: #e0e0e0;
+    border-color: #888;
+}
+.local-select option {
+    background: white;
+    color: #333;
+    padding: 8px;
+}
+body.dark-mode .local-select option {
+    background: #2d2d2d;
+    color: #e0e0e0;
+}
+.local-load-btn {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 27px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    margin-top: 5px;
+    min-width: 200px;
+    transition: all 0.3s ease;
+}
+.local-load-btn:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.local-load-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+/* Chargement fichier */
 .file-load-container {
     width: 100%;
     text-align: center;
@@ -591,10 +630,6 @@ body.dark-mode .file-load-btn {
     color: #e0e0e0;
     border-color: #888;
 }
-body.dark-mode .file-load-btn:hover {
-    background: #333;
-    border-color: red;
-}
 #fileInput {
     display: none;
 }
@@ -608,7 +643,7 @@ body.dark-mode .file-load-btn:hover {
 body.dark-mode .file-status {
     color: #aaa;
 }
-/* Barre de progression responsive */
+/* Barre de progression */
 .progress-bar {
     align-items: center;
     width: 95%;
@@ -623,7 +658,6 @@ body.dark-mode .file-status {
     margin: 0 auto;
     max-width: 95%;
 }
-/* MODIFIÉ : Ajuster le conteneur principal de la barre de progression */
 .progress-bar__info {
     align-items: center;
     display: flex;
@@ -633,11 +667,10 @@ body.dark-mode .file-status {
     line-height: 26px;
     text-transform: uppercase;
     padding: 0 0 10px 0;
-    flex-wrap: nowrap; /* Éviter le passage à la ligne */
-    gap: 10px; /* Espacement entre les éléments */
+    flex-wrap: nowrap;
+    gap: 10px;
     width: 100%;
 }
-
 .progress-bar__title .phi-symbol {
     margin-right: 4px;
     font-family: 'Times New Roman', serif;
@@ -652,7 +685,6 @@ body.dark-mode .file-status {
     line-height: 1;
     flex-shrink: 0;
 }
-
 .progress-bar__count {
     display: flex;
     font-size: 14px;
@@ -675,7 +707,7 @@ body.dark-mode .file-status {
     background: red;
     transition: width 0.3s ease;
 }
-/* QUESTIONS - MODIFICATION : RETOUR À LA LIGNE SEULEMENT SI DÉBORDE */
+/* Questions */
 .container--question {
     padding: 10px 15px;
     text-align: left;
@@ -685,26 +717,6 @@ body.dark-mode .file-status {
     overflow-y: visible;
     position: relative;
     padding-bottom: 0;
-}
-.quiz__question {
-    margin-bottom: 15px;
-    font-size: 16px;
-    line-height: 24px;
-    text-align: left;
-    font-weight: bold;
-    padding: 0 15px;
-    flex-shrink: 0;
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 95%;
-    white-space: nowrap;
-    overflow: visible;
-}
-.question-too-long {
-    white-space: normal !important;
-    word-wrap: break-word !important;
-    overflow-wrap: break-word !important;
 }
 fieldset {
     margin-bottom: 0;
@@ -795,7 +807,7 @@ body.colorblind-mode .quiz-answer .answer-icon {
 body.colorblind-mode .quiz-answer .answer-icon.hidden {
     display: none;
 }
-/* Explications responsive */
+/* Explications */
 .quiz-explanation {
     position: relative;
     margin: 10px auto 10px;
@@ -825,7 +837,6 @@ body.colorblind-mode .quiz-answer .answer-icon.hidden {
     height: 20px;
     vertical-align: middle;
 }
-/* Zone pour le bouton "question suivante" */
 .next-button-container {
     text-align: center;
     padding: 10px 0 20px;
@@ -842,7 +853,7 @@ body.colorblind-mode .quiz-answer .answer-icon.hidden {
     display: block;
     min-width: 180px;
 }
-/* Résultats responsive */
+/* Résultats */
 .container--quiz-end {
     min-height: 300px;
     height: 100%;
@@ -871,64 +882,7 @@ body.colorblind-mode .quiz-answer .answer-icon.hidden {
     flex-wrap: wrap;
     gap: 10px;
 }
-/* MOBILE */
-.mobile-title-wrapper {
-    text-align: center;
-    margin: 10px 0 20px;
-    display: none;
-    flex-shrink: 0;
-}
-.mobile-title {
-    font-size: 1.4em;
-    font-weight: bold;
-    color: red !important;
-    margin: 0;
-    text-transform: uppercase;
-}
-.mobile-subtitle {
-    font-size: 0.9em;
-    color: #555;
-    margin: 0;
-    text-transform: lowercase;
-}
-body.dark-mode .mobile-title {
-    color: red !important;
-}
-body.dark-mode .mobile-subtitle {
-    color: #aaa;
-}
-.toolbar-mobile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 10px;
-    flex-shrink: 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: var(--bg);
-    padding: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-.mobile-buttons-container {
-    display: flex;
-    gap: 15px;
-    margin: 10px 0;
-}
-/* Animations */
-@keyframes shakeX {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-    20%, 40%, 60%, 80% { transform: translateX(5px); }
-}
-@keyframes shakeY {
-    0%, 100% { transform: translateY(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateY(-5px); }
-    20%, 40%, 60%, 80% { transform: translateY(5px); }
-}
-.shake-x { animation: shakeX 0.9s ease; }
-.shake-y { animation: shakeY 0.9s ease; }
-/* Styles pour le texte philosophique - MODIFICATIONS */
+/* Texte philosophique */
 .philosophy-text-container {
     background: var(--btn);
     border: 1px solid #ddd;
@@ -939,9 +893,6 @@ body.dark-mode .mobile-subtitle {
     box-shadow: var(--shadow-out);
     overflow: hidden;
 }
-body.dark-mode .philosophy-text-container {
-    border-color: #444;
-}
 .philosophy-text-header {
     display: flex;
     justify-content: space-between;
@@ -949,10 +900,6 @@ body.dark-mode .philosophy-text-container {
     padding: 10px 15px;
     background: rgba(0, 0, 0, 0.05);
     border-bottom: 1px solid #ddd;
-}
-body.dark-mode .philosophy-text-header {
-    background: rgba(255, 255, 255, 0.05);
-    border-bottom-color: #444;
 }
 .philosophy-text-header h3 {
     margin: 0;
@@ -997,19 +944,10 @@ body.dark-mode .philosophy-text-header {
     padding-left: 15px;
     text-align: justify;
 }
-body.dark-mode .philosophy-text-content blockquote {
-    border-left-color: #666;
-}
 .philosophy-paragraph {
     margin-bottom: 0;
     text-indent: 1.5em;
     text-align: justify;
-}
-.philosophy-paragraph:first-child {
-    text-indent: 1.5em;
-}
-.philosophy-paragraph:last-child {
-    margin-bottom: 0;
 }
 .philosophy-text-source {
     font-size: 12px;
@@ -1019,145 +957,24 @@ body.dark-mode .philosophy-text-content blockquote {
     margin-top: 15px;
     padding-top: 15px;
 }
-body.dark-mode .philosophy-text-source {
-    color: #aaa;
-}
-/* CORRECTION DÉFINITIVE : Style pour la source */
-.philosophy-text-source cite {
-    font-style: normal !important;
-}
-.philosophy-text-source .italic-part {
-    font-style: italic !important;
-}
-.philosophy-text-source .year-part {
-    font-style: normal !important;
-}
-/* Styles pour les réponses (explications) - MODIFICATION */
-.quiz-explanation__detail {
-    text-align: justify;
-}
-/* Responsive - Sur mobile, toujours retour à la ligne */
+/* Mobile */
 @media (max-width: 768px) {
-    .quiz__question,
-    legend p {
-        white-space: normal !important;
-        word-wrap: break-word !important;
-        overflow-wrap: break-word !important;
-    }
-    .toolbar-btn:hover::after {
-        display: none; /* Cacher les tooltips sur mobile */
-    }
-    /* Titre dans la barre de progression - mobile */
-    .progress-bar__title h1 {
-        font-size: 12px !important;
-    }
+    .legend p, .quiz__question { white-space: normal !important; word-wrap: break-word !important; }
+    .local-select { width: 90%; font-size: 14px; padding: 10px 12px; }
+    .local-load-btn { min-width: 180px; padding: 10px 20px; }
+    .toolbar-btn:hover::after { display: none; }
 }
-/* MODIFICATIONS POUR MOBILE - SUPPRESSION COMPLÈTE DES CADRES ET OMBRES EXTERNES */
 @media (max-width: 600px) {
     .toolbar-desktop { display: none; }
-    .toolbar-mobile { display: flex; }
-    .mobile-title-wrapper { display: block; }
+    .toolbar-mobile { display: flex; flex-direction: column; align-items: center; margin-bottom: 10px; background: var(--bg); padding: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .mobile-title-wrapper { display: block; text-align: center; margin: 10px 0 20px; }
+    .mobile-buttons-container { display: flex; gap: 15px; margin: 10px 0; }
     .toolbar-btn { width: 48px; height: 48px; }
     .toolbar-btn svg { width: 24px; height: 24px; }
-    
-    /* SUPPRESSION COMPLÈTE DU CADRE ET OMBRE EXTERNE */
-    .container--quiz {
-        width: 100% !important;
-        margin: 0 auto 20px !important;
-        border: none !important; /* Supprimer la bordure de 15px */
-        min-height: 400px;
-        max-width: 100% !important;
-        border-radius: 0 !important; /* Pas de coins arrondis externes */
-        box-shadow: none !important; /* Pas d'ombre externe */
-        background: var(--bg) !important; /* Fond direct sans effet */
-    }
-    
-    /* Élargir les éléments internes */
-    .quiz__question,
-    legend p,
-    .quiz-answer,
-    .quiz-explanation,
-    .next-button-container,
-    .philosophy-text-container {
-        width: 98% !important;
-        max-width: 98% !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-    
-    /* Ajuster les padding pour optimiser l'espace */
-    .quiz-answer {
-        padding: 10px 12px !important;
-        border-radius: 8px !important; /* Conserver les coins arrondis internes */
-        box-shadow: var(--shadow-out) !important; /* Conserver l'ombre interne */
-    }
-    
-    .quiz-explanation {
-        padding: 12px !important;
-        border-radius: 8px !important; /* Conserver les coins arrondis internes */
-        box-shadow: var(--shadow-out) !important; /* Conserver l'ombre interne */
-    }
-    
-    /* Réduire légèrement la barre de progression */
-    .progress-bar {
-        width: 98% !important;
-        max-width: 98% !important;
-        padding: 8px 10px !important;
-        box-shadow: none !important; /* Pas d'ombre sur la barre de progression */
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important; /* Ligne de séparation subtile */
-    }
-    
-    /* Écran de démarrage - ajuster pour l'affichage plein */
-    .quiz-start__img img {
-        border-radius: 0 !important;
-    }
-    
-    .quiz-start__opacity {
-        border-radius: 0 !important;
-    }
-    
+    .container--quiz { width: 100% !important; margin: 0 auto 20px !important; border: none !important; min-height: 400px; max-width: 100% !important; border-radius: 0 !important; box-shadow: none !important; }
+    .quiz-answer, .quiz-explanation, .philosophy-text-container { width: 98% !important; max-width: 98% !important; }
+    .progress-bar { width: 98% !important; max-width: 98% !important; padding: 8px 10px !important; }
     .quiz-btn--large { font-size: 15px; padding: 12px 25px; min-width: 200px; }
-    .quiz-start__button { padding-bottom: 30px; gap: 15px; }
-    .file-load-btn { font-size: 14px; padding: 12px 18px; }
-    .philosophy-paragraph {
-        text-indent: 1em;
-    }
-    .philosophy-paragraph:first-child {
-        text-indent: 1em;
-    }
-    /* Titre dans la barre de progression - très petit écran */
-    .progress-bar__title h1 {
-        font-size: 11px !important;
-    }
-    /* Sur mobile, le titre principal n'a pas de tiret à supprimer car il est en une seule ligne */
-    .toolbar-center h1::first-line::after {
-        display: none;
-    }
-    
-    /* Écran de résultats - ajuster */
-    .container--quiz-end {
-        padding: 15px !important;
-    }
-    
-    .container--quiz-results {
-        padding: 15px !important;
-    }
-    
-    /* Garder les ombres internes mais supprimer tout effet externe */
-    .philosophy-text-container {
-        border: 1px solid #ddd !important;
-        border-radius: 8px !important;
-        box-shadow: var(--shadow-out) !important;
-    }
-    
-    body.dark-mode .philosophy-text-container {
-        border-color: #444 !important;
-    }
-    
-    /* Écran d'accueil - ajuster */
-    .container--quiz-start {
-        border-radius: 0 !important;
-    }
 }
 @media (min-width: 601px) {
     .toolbar-mobile, .mobile-title-wrapper { display: none; }
@@ -1235,22 +1052,28 @@ body.dark-mode .philosophy-text-source {
                             <div class="quiz-start__opacity"></div>
                             <div class="quiz-start__content">
                                 <div class="quiz-start__button">
-                                    <!-- Bouton de chargement local -->
-                                    <div class="file-load-container">
-                                        <input type="file" id="fileInput" accept=".js" />
-                                        <button id="fileLoadButton" class="file-load-btn">
-                                            📂 Choisir un fichier .js de quiz
+                                    <!-- Menu déroulant local (rempli automatiquement) -->
+                                    <div class="local-select-container">
+                                        <select id="localFileSelect" class="local-select">
+                                            <option value="">-- Recherche des quiz --</option>
+                                        </select>
+                                        <button id="loadLocalQuizBtn" class="local-load-btn" disabled>
+                                            Charger le quiz sélectionné
                                         </button>
                                     </div>
+                                    <!-- Bouton de chargement local -->
+                                    <div class="file-load-container" style="margin-top: 20px;">
+                                        <button class="file-load-btn" id="fileLoadBtn">📁 Charger un fichier .js local</button>
+                                        <input type="file" id="fileInput" accept=".js" style="display: none;" />
+                                    </div>
                                     <div id="fileStatus" class="file-status">
-                                        <em>Choisissez un fichier .js contenant un quiz pour commencer</em>
+                                        <em>Chargement de la liste des quiz...</em>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div id="quizQuestions" class="hidden" data-reviewing="false">
-                        <!-- SECTION TEXTE PHILOSOPHIQUE - SERA CACHÉE SI TEXTE OU SOURCE VIDE -->
                         <div id="philosophyText" class="hidden">
                             <div class="philosophy-text-container">
                                 <div class="philosophy-text-header">
@@ -1272,7 +1095,6 @@ body.dark-mode .philosophy-text-source {
                         <div class="progress-bar">
                             <div class="progress-bar__info">
                                 <div class="progress-bar__title">
-                                    <!-- MODIFICATION : φ et QUIZ de la même couleur et alignés -->
                                     <div style="display: flex; align-items: center; gap: 4px;">
                                         <span class="phi-symbol" style="color: var(--font-color); font-family: 'Times New Roman', serif; font-size: 40px; line-height: 1; display: flex; align-items: center; justify-content: center; height: 100%;">φ</span>
                                         <h1 id="quizTitle" style="color: var(--font-color); margin: 0; margin-top: 10px;">QUIZ</h1>
@@ -1306,12 +1128,8 @@ body.dark-mode .philosophy-text-source {
                                 </div>
                                 <br><br>
                                 <div class="container--quiz-btn">
-                                    <button id="quizRetry" class="quiz-btn quiz-btn--default quiz-btn--fill quiz-btn-retry" type="button">
-                                        réessayer
-                                    </button>
-                                    <button id="showReview" class="quiz-btn quiz-btn--default quiz-btn--fill" type="button" style="display: none;">
-                                        voir les réponses
-                                    </button>
+                                    <button id="quizRetry" class="quiz-btn quiz-btn--default quiz-btn--fill quiz-btn-retry" type="button">réessayer</button>
+                                    <button id="showReview" class="quiz-btn quiz-btn--default quiz-btn--fill" type="button" style="display: none;">voir les réponses</button>
                                 </div>
                             </div>
                         </div>
@@ -1325,43 +1143,23 @@ body.dark-mode .philosophy-text-source {
 <div class="slide-menu" id="slideMenu">
     <div class="menu-content">
         <button class="menu-item" id="instructionsButton">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
             règles du jeu
         </button>
         <button class="menu-item" id="statsButton">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="20" x2="18" y2="10"></line>
-                <line x1="12" y1="20" x2="12" y2="4"></line>
-                <line x1="6" y1="20" x2="6" y2="14"></line>
-            </svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
             statistiques
         </button>
         <button class="menu-item" id="settingsButton">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-            </svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
             paramètres
         </button>
         <button class="menu-item" id="resetButton">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 2v6h6"></path>
-                <path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
-                <path d="M21 22v-6h-6"></path>
-                <path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path>
-            </svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v6h6"></path><path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path><path d="M21 22v-6h-6"></path><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path></svg>
             réinitialiser
         </button>
         <button class="menu-item" id="aboutButton">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-            </svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
             à propos
         </button>
     </div>
@@ -1374,7 +1172,7 @@ body.dark-mode .philosophy-text-source {
             <button class="close-modal" data-modal="instructionsModal" style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--font-color);">×</button>
         </div>
         <div style="text-align: left; line-height: 1.6;">
-            <p>1. réponder aux questions.</p>
+            <p>1. répondre aux questions.</p>
             <p>2. <strong>cliquer</strong> sur la réponse correcte.</p>
             <p>3. la bonne réponse devient verte, les mauvaises deviennent rouges.</p>
             <p>4. une explication est fournie pour chaque bonne réponse.</p>
@@ -1393,15 +1191,9 @@ body.dark-mode .philosophy-text-source {
             <button class="close-modal" data-modal="statsModal" style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--font-color);">×</button>
         </div>
         <div style="text-align: center;">
-            <div style="font-size: 2em; font-weight: bold; margin: 20px 0;">
-                <span id="statsCorrectCount">0</span> / <span id="statsTotalCount">0</span>
-            </div>
-            <div style="margin: 20px 0;">
-                <strong>taux de réussite :</strong> <span id="statsPercentage">0%</span>
-            </div>
-            <div style="margin: 20px 0;">
-                <strong>parties jouées :</strong> <span id="gamesPlayed">0</span>
-            </div>
+            <div style="font-size: 2em; font-weight: bold; margin: 20px 0;"><span id="statsCorrectCount">0</span> / <span id="statsTotalCount">0</span></div>
+            <div style="margin: 20px 0;"><strong>taux de réussite :</strong> <span id="statsPercentage">0%</span></div>
+            <div style="margin: 20px 0;"><strong>parties jouées :</strong> <span id="gamesPlayed">0</span></div>
         </div>
     </div>
 </div>
@@ -1411,46 +1203,27 @@ body.dark-mode .philosophy-text-source {
             <h2 style="margin:0;color:red;">paramètres</h2>
             <button class="close-modal" data-modal="settingsModal" style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--font-color);">×</button>
         </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0;">
-            <span>mode sombre</span>
-            <label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0;">
-            <span>animations</span>
-            <label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0;">
-            <span>mode daltonien</span>
-            <label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0;">
-            <span>mode évaluation</span>
-            <label class="theme-switch"><input type="checkbox" id="deferredEvaluationToggle"><span class="slider"></span></label>
-        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0;"><span>mode sombre</span><label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0;"><span>animations</span><label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0;"><span>mode daltonien</span><label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0;"><span>mode évaluation</span><label class="theme-switch"><input type="checkbox" id="deferredEvaluationToggle"><span class="slider"></span></label></div>
         <div style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.05); border-radius: 10px;">
-            <p style="margin: 0; font-size: 0.9em; color: var(--font-color);">
-                <strong>mode daltonien :</strong> affiche des icônes ✓ / ✗ et utilise des couleurs bleu / rouge au lieu de vert / rouge.
-            </p>
-            <p style="margin: 10px 0 0; font-size: 0.9em; color: var(--font-color);">
-                <strong>mode évaluation :</strong> les réponses sont évaluées uniquement à la fin du quiz. Le bouton "question suivante" apparaît systématiquement dès le début.
-            </p>
+            <p style="margin: 0; font-size: 0.9em;"><strong>mode daltonien :</strong> affiche des icônes ✓ / ✗ et utilise des couleurs bleu / rouge.</p>
+            <p style="margin: 10px 0 0; font-size: 0.9em;"><strong>mode évaluation :</strong> les réponses sont évaluées uniquement à la fin du quiz.</p>
         </div>
     </div>
 </div>
 
 <script>
-// Données par défaut (si aucun fichier n'est chargé)
+// Données par défaut
 let currentTitre = "QUIZ";
 let currentSousTitre = "tester ses connaissances";
-let philosophyData = {
-  texte: "",
-  source: ""
-};
+let philosophyData = { texte: "", source: "" };
 let questions = Array(10).fill({
   question: "Aucun fichier de questions chargé",
-  answers: ["Utilisez le bouton sur l'accueil", "Choisissez un fichier .js", "Sélectionnez un fichier contenant des questions"],
+  answers: ["Utilisez le sélecteur ci-dessus", "Ou chargez un fichier .js", "Pour jouer avec vos propres questions"],
   correct: 0,
-  explanation: "Chargez votre fichier .js contenant des questions pour jouer avec vos propres quiz."
+  explanation: "Chargez votre fichier .js depuis le dossier /textes pour jouer avec vos propres questions."
 });
 
 let currentQuestionIndex = 0;
@@ -1463,17 +1236,15 @@ let totalQuestionsAnswered = parseInt(localStorage.getItem('totalQuestionsAnswer
 let userAnswers = [];
 let isDeferredEvaluation = localStorage.getItem('deferredEvaluation') === 'true';
 
-// Stocker les indices originaux des questions
 let originalQuestionIndices = [];
 
-// Éléments du DOM
+// Éléments DOM
 const quizRetry = document.getElementById('quizRetry');
 const showReview = document.getElementById('showReview');
 const fileInput = document.getElementById('fileInput');
-const fileLoadButton = document.getElementById('fileLoadButton');
 const fileStatus = document.getElementById('fileStatus');
+const fileLoadBtn = document.getElementById('fileLoadBtn');
 
-// Boutons toolbar
 const reloadButton = document.getElementById('reloadButton');
 const reloadButtonMobile = document.getElementById('reloadButtonMobile');
 const fullscreenButton = document.getElementById('fullscreenButton');
@@ -1488,128 +1259,101 @@ const animationsToggle = document.getElementById('animationsToggle');
 const colorblindToggle = document.getElementById('colorblindToggle');
 const deferredEvaluationToggle = document.getElementById('deferredEvaluationToggle');
 
-// NOUVELLE FONCTION : Supprimer "QUIZ HLP TERM - " du titre pour la barre de progression
-function removeQuizPrefixFromTitle(titre) {
-    if (!titre) return "";
-    
-    // Retirer "QUIZ HLP TERM - " du début du titre
-    const prefix = "QUIZ HLP TERM - ";
-    if (titre.startsWith(prefix)) {
-        return titre.substring(prefix.length);
-    }
-    
-    // Retirer aussi "Quiz HLP Term - " (avec différentes capitalisations)
-    const variations = [
-        "QUIZ HLP TERM - ",
-        "Quiz HLP Term - ",
-        "QUIZ HLP Term - ",
-        "Quiz HLP TERM - ",
-        "QUIZ HLP - ",
-        "Quiz HLP - "
-    ];
-    
-    for (const variation of variations) {
-        if (titre.startsWith(variation)) {
-            return titre.substring(variation.length);
+const localFileSelect = document.getElementById('localFileSelect');
+const loadLocalQuizBtn = document.getElementById('loadLocalQuizBtn');
+
+// ========== FONCTION : LISTER LES FICHIERS DU DOSSIER "textes" ==========
+async function listQuizFiles() {
+    try {
+        fileStatus.textContent = 'Recherche des quiz dans le dossier "textes"...';
+        fileStatus.style.color = '#666';
+        
+        // Utilisation d'une API PHP si disponible, sinon fallback sur une liste prédéfinie
+        // Pour une solution sans serveur, on utilise un fichier index.json ou on demande à l'utilisateur
+        // Solution : on tente de charger un fichier "liste.json" généré par un script PHP ou manuel
+        
+        // Essayer de charger un fichier JSON contenant la liste des quiz
+        let fileList = [];
+        let usePhpList = false;
+        
+        try {
+            const response = await fetch('textes/liste.json');
+            if (response.ok) {
+                fileList = await response.json();
+                usePhpList = true;
+            }
+        } catch(e) {
+            console.log('Pas de fichier liste.json, utilisation de la méthode alternative');
         }
-    }
-    
-    return titre;
-}
-
-// NOUVELLE FONCTION : Ajuste la largeur du titre dans la barre de progression
-function updateProgressBarTitleWidth() {
-    const progressBar = document.querySelector('.progress-bar');
-    const titleContainer = document.querySelector('.progress-bar__title');
-    const titleElement = document.querySelector('#quizTitle');
-    const countElement = document.querySelector('.progress-bar__count');
-    
-    if (!progressBar || !titleContainer || !titleElement || !countElement) return;
-    
-    // Calculer l'espace disponible
-    const progressBarWidth = progressBar.offsetWidth;
-    const countWidth = countElement.offsetWidth;
-    const phiSymbolWidth = 40; // Largeur du φ
-    const paddingTotal = 30; // Espacement interne
-    
-    // Espace disponible pour le titre
-    const availableWidth = progressBarWidth - countWidth - phiSymbolWidth - paddingTotal;
-    
-    // Mesurer la largeur du texte
-    const temp = document.createElement('span');
-    temp.style.fontSize = window.getComputedStyle(titleElement).fontSize;
-    temp.style.fontFamily = window.getComputedStyle(titleElement).fontFamily;
-    temp.style.fontWeight = window.getComputedStyle(titleElement).fontWeight;
-    temp.style.visibility = 'hidden';
-    temp.style.position = 'absolute';
-    temp.style.whiteSpace = 'nowrap';
-    temp.textContent = titleElement.textContent || titleElement.innerText;
-    document.body.appendChild(temp);
-    const titleWidth = temp.offsetWidth;
-    document.body.removeChild(temp);
-    
-    // Ajuster le style en fonction de l'espace
-    if (titleWidth <= availableWidth) {
-        // Suffisamment d'espace : une ligne
-        titleElement.style.whiteSpace = 'nowrap';
-        titleElement.style.overflow = 'visible';
-        titleElement.style.textOverflow = 'clip';
-        titleElement.style.flex = '0 1 auto'; // Ne pas prendre tout l'espace
-        titleContainer.style.flex = '0 1 auto'; // Conteneur ne s'étire pas
-        titleElement.classList.remove('force-wrap');
-    } else {
-        // Pas assez d'espace : passer à plusieurs lignes
-        titleElement.style.whiteSpace = 'normal';
-        titleElement.style.overflow = 'hidden';
-        titleElement.style.textOverflow = 'ellipsis';
-        titleElement.classList.add('force-wrap');
+        
+        if (!usePhpList) {
+            // Méthode alternative : l'utilisateur doit sélectionner ses fichiers manuellement
+            fileStatus.innerHTML = '💡 <strong>Aucune liste automatique trouvée.</strong><br>Uutilisez le bouton "Charger un fichier js"';
+            fileStatus.style.color = '#ffffff';
+            localFileSelect.innerHTML = '<option value="">-- Aucun quiz détecté --</option><option value="manual">Utiliser le chargement manuel</option>';
+            loadLocalQuizBtn.disabled = true;
+            return;
+        }
+        
+        // Trier les fichiers
+        fileList.sort();
+        
+        // Remplir le select
+        localFileSelect.innerHTML = '<option value="">-- Sélectionner un quiz --</option>';
+        fileList.forEach(file => {
+            const option = document.createElement('option');
+            option.value = `textes/${file}`;
+            option.textContent = file.replace('.js', '').replace(/_/g, ' ');
+            localFileSelect.appendChild(option);
+        });
+        
+        fileStatus.textContent = `${fileList.length} quiz trouvé(s) dans le dossier "textes"`;
+        fileStatus.style.color = '#28a745';
+        loadLocalQuizBtn.disabled = true;
+        
+    } catch (error) {
+        console.error('Erreur:', error);
+        fileStatus.innerHTML = `⚠️ Erreur lors de la recherche des quiz.<br>Assurez-vous que le dossier "textes" existe et contient un fichier "liste.json".<br><br>Exemple de création : créez un fichier "textes/liste.json" contenant :<br><code>["quiz1.js", "quiz2.js"]</code>`;
+        fileStatus.style.color = '#dc3545';
     }
 }
 
-function checkTitleFitsInProgressBar(titleElement) {
-    if (!titleElement) return false;
-    
-    // Récupérer l'élément parent qui contient le titre et le φ
-    const progressTitleContainer = titleElement.closest('.progress-bar__title');
-    if (!progressTitleContainer) return false;
-    
-    // Récupérer l'élément qui contient le compteur (à droite)
-    const progressCount = progressTitleContainer.nextElementSibling;
-    if (!progressCount || !progressCount.classList.contains('progress-bar__count')) return false;
-    
-    // Calculer l'espace disponible
-    const containerWidth = progressTitleContainer.parentElement.offsetWidth;
-    const countWidth = progressCount.offsetWidth;
-    const phiSymbolWidth = 40; // Largeur fixe du φ
-    const paddingGap = 16; // Espacement entre les éléments
-    
-    // Espace disponible pour le titre
-    const availableWidth = containerWidth - countWidth - phiSymbolWidth - paddingGap;
-    
-    // Mesurer la largeur réelle du titre
-    const temp = document.createElement('span');
-    temp.style.fontSize = window.getComputedStyle(titleElement).fontSize;
-    temp.style.fontFamily = window.getComputedStyle(titleElement).fontFamily;
-    temp.style.fontWeight = window.getComputedStyle(titleElement).fontWeight;
-    temp.style.visibility = 'hidden';
-    temp.style.position = 'absolute';
-    temp.style.whiteSpace = 'nowrap';
-    temp.textContent = titleElement.textContent || titleElement.innerText;
-    document.body.appendChild(temp);
-    const titleWidth = temp.offsetWidth;
-    document.body.removeChild(temp);
-    
-    // Vérifier si le titre passe
-    return titleWidth <= availableWidth;
-}
+async function loadLocalQuiz(filePath) {
+    try {
+        fileStatus.textContent = 'Chargement en cours...';
+        fileStatus.style.color = '#666';
+        loadLocalQuizBtn.disabled = true;
 
-function removeLastDashFromFirstLine(text) {
-    // Fonction pour supprimer le tiret à la fin de la première ligne
-    // Exemple: "Philosophie -<br>La morale kantienne" devient "Philosophie<br>La morale kantienne"
-    if (!text || text.indexOf(' -<br>') === -1) return text;
-    
-    // Remplacer " -<br>" par "<br>"
-    return text.replace(' -<br>', '<br>');
+        const response = await fetch(filePath);
+        if (!response.ok) throw new Error(`Fichier non trouvé: ${filePath}`);
+
+        const code = await response.text();
+        const func = new Function(code + '\nreturn {titre, sousTitre, philosophyData, questions};');
+        const result = func();
+
+        if (result.philosophyData && Array.isArray(result.questions) && result.questions.length >= TOTAL_QUESTIONS) {
+            philosophyData = result.philosophyData;
+            questions = result.questions;
+
+            if (result.titre) {
+                currentTitre = result.titre;
+                currentSousTitre = result.sousTitre || currentSousTitre;
+                updateQuizTitles(currentTitre, currentSousTitre);
+            }
+
+            const fileName = filePath.split('/').pop().replace('.js', '');
+            fileStatus.textContent = `Quiz "${fileName}" chargé avec succès ! Démarrage...`;
+            fileStatus.style.color = '#28a745';
+            setTimeout(startQuiz, 1200);
+        } else {
+            throw new Error('Données incomplètes dans le fichier');
+        }
+    } catch (err) {
+        fileStatus.textContent = `Erreur: ${err.message}`;
+        fileStatus.style.color = '#dc3545';
+        loadLocalQuizBtn.disabled = false;
+        console.error('Erreur:', err);
+    }
 }
 
 function updateQuizTitles(titre, sousTitre) {
@@ -1619,127 +1363,79 @@ function updateQuizTitles(titre, sousTitre) {
     const mobileTitle = document.getElementById('mobileTitle');
     const mobileSubtitle = document.getElementById('mobileSubtitle');
     
-    // TITRE PRINCIPAL (toolbar) : Couper après le tiret MAIS supprimer le tiret de fin de ligne
     let formattedTitreMain = titre || "";
     const dashIndexMain = formattedTitreMain.indexOf(' - ');
-    
     if (dashIndexMain !== -1) {
-        // Pour le titre principal : couper après le tiret
         formattedTitreMain = formattedTitreMain.replace(' - ', ' -<br>');
-        // Supprimer le tiret à la fin de la première ligne
-        formattedTitreMain = removeLastDashFromFirstLine(formattedTitreMain);
+        formattedTitreMain = formattedTitreMain.replace(' -<br>', '<br>');
     }
     
-    // TITRE BARRE DE PROGRESSION : Retirer le préfixe "QUIZ HLP TERM - "
-    let formattedTitreProgress = removeQuizPrefixFromTitle(titre || "");
-    
-    // Mettre à jour le titre temporairement pour vérifier s'il passe
-    if (quizTitle && titre) {
-        quizTitle.textContent = formattedTitreProgress;
-        quizTitle.classList.remove('force-wrap');
-        
-        // Appliquer le format final
-        quizTitle.innerHTML = formattedTitreProgress;
-    }
-    
-    // TITRE MOBILE : Même traitement que le titre principal
-    let formattedMobileTitle = titre || "";
-    const dashIndexMobile = formattedMobileTitle.indexOf(' - ');
-    
-    if (dashIndexMobile !== -1) {
-        // Pour le titre mobile : couper après le tiret
-        formattedMobileTitle = formattedMobileTitle.replace(' - ', ' -<br>');
-        // Supprimer le tiret à la fin de la première ligne
-        formattedMobileTitle = removeLastDashFromFirstLine(formattedMobileTitle);
-    }
-    
-    // Mettre à jour les autres titres
     if (appTitle && titre) appTitle.innerHTML = formattedTitreMain;
     if (appSubtitle && sousTitre) appSubtitle.textContent = sousTitre;
-    if (mobileTitle && titre) mobileTitle.innerHTML = formattedMobileTitle;
+    if (mobileTitle && titre) mobileTitle.innerHTML = formattedTitreMain;
     if (mobileSubtitle && sousTitre) mobileSubtitle.textContent = sousTitre;
-    
-    // Mettre à jour la largeur du titre dans la barre de progression
-    setTimeout(() => {
-        updateProgressBarTitleWidth();
-    }, 100);
+    if (quizTitle && titre) quizTitle.innerHTML = titre;
 }
 
-// FONCTION POUR PRÉSERVER LES ESPACES AUTOUR DES BALISES
 function protectSpacesAroundTags(text) {
     if (!text) return text;
-    
-    return text
-        // Protéger les espaces avant les balises ouvrantes
-        .replace(/(\s+)<(\/?\w+)([^>]*)>/g, (match, spaces, tag, attributes) => {
-            // Remplacer les espaces par &nbsp; avant une balise
-            const protectedSpaces = spaces.replace(/ /g, '&nbsp;');
-            return protectedSpaces + `<${tag}${attributes}>`;
-        })
-        // Protéger les espaces après les balises fermantes
-        .replace(/<\/(\w+)>(\s+)/g, (match, tag, spaces) => {
-            // Remplacer les espaces par &nbsp; après une balise
-            const protectedSpaces = spaces.replace(/ /g, '&nbsp;');
-            return `</${tag}>` + protectedSpaces;
-        });
+    return text.replace(/(\s+)<(\/?\w+)([^>]*)>/g, (match, spaces, tag, attributes) => {
+        return spaces.replace(/ /g, '&nbsp;') + `<${tag}${attributes}>`;
+    }).replace(/<\/(\w+)>(\s+)/g, (match, tag, spaces) => {
+        return `</${tag}>` + spaces.replace(/ /g, '&nbsp;');
+    });
 }
 
-// FONCTION POUR PROTÉGER LES ESPACES DANS LES RÉPONSES (version simplifiée)
 function protectSpacesInAnswers(answers) {
     return answers.map(answer => protectSpacesAroundTags(answer));
 }
 
-// FONCTION POUR OBTENIR LE TEXTE D'UNE RÉPONSE AVEC ESPACES PRÉSERVÉS
-function getAnswerTextWithSpaces(answerElement) {
-    // Récupérer le HTML interne
-    const html = answerElement.innerHTML;
-    
-    // Si l'élément a stocké le texte original, l'utiliser
-    if (answerElement.dataset.originalText) {
-        return protectSpacesAroundTags(answerElement.dataset.originalText);
-    }
-    
-    // Sinon, utiliser le HTML et le protéger
-    return protectSpacesAroundTags(html);
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     updateQuizTitles(currentTitre, currentSousTitre);
+    
+    // Charger la liste des quiz
+    listQuizFiles();
 
     if (localStorage.getItem('darkMode') === 'true') {
         document.body.classList.add('dark-mode');
         darkModeToggle.checked = true;
     }
-    if (localStorage.getItem('animations') === 'false') {
-        animationsToggle.checked = false;
-    }
+    if (localStorage.getItem('animations') === 'false') animationsToggle.checked = false;
     if (localStorage.getItem('colorblindMode') === 'true') {
         document.body.classList.add('colorblind-mode');
         colorblindToggle.checked = true;
     }
-    if (isDeferredEvaluation) {
-        deferredEvaluationToggle.checked = true;
+    if (isDeferredEvaluation) deferredEvaluationToggle.checked = true;
+
+    // Écouteurs
+    if (localFileSelect) {
+        localFileSelect.addEventListener('change', () => {
+            const selectedPath = localFileSelect.value;
+            loadLocalQuizBtn.disabled = !selectedPath || selectedPath === 'manual';
+        });
     }
 
-    fileLoadButton.addEventListener('click', () => {
-        fileInput.click();
-    });
+    if (loadLocalQuizBtn) {
+        loadLocalQuizBtn.addEventListener('click', () => {
+            const selectedPath = localFileSelect.value;
+            if (selectedPath && selectedPath !== 'manual') loadLocalQuiz(selectedPath);
+        });
+    }
+
+    if (fileLoadBtn) {
+        fileLoadBtn.addEventListener('click', () => fileInput.click());
+    }
 
     fileInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (!file) return;
-
         if (!file.name.endsWith('.js')) {
             fileStatus.textContent = '❌ Veuillez sélectionner un fichier .js';
             fileStatus.style.color = '#dc3545';
-            fileStatus.classList.remove('hidden');
             return;
         }
 
         fileStatus.textContent = `Chargement de ${file.name}...`;
-        fileStatus.classList.remove('hidden');
-        fileStatus.style.color = '#666';
-
         const reader = new FileReader();
         reader.onload = (event) => {
             try {
@@ -1749,35 +1445,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (result.philosophyData && Array.isArray(result.questions) && result.questions.length >= TOTAL_QUESTIONS) {
                     philosophyData = result.philosophyData;
                     questions = result.questions;
-
                     if (result.titre) {
                         currentTitre = result.titre;
                         currentSousTitre = result.sousTitre || currentSousTitre;
                         updateQuizTitles(currentTitre, currentSousTitre);
                     }
-
-                    fileStatus.textContent = `${file.name} chargé avec succès ! Démarrage du quiz...`;
+                    fileStatus.textContent = `${file.name} chargé ! Démarrage...`;
                     fileStatus.style.color = '#28a745';
                     setTimeout(startQuiz, 1200);
-                } else {
-                    throw new Error('Données incomplètes: le fichier doit contenir philosophyData et questions (minimum 10)');
-                }
+                } else throw new Error('Données incomplètes');
             } catch (err) {
-                fileStatus.textContent = `Erreur : ${err.message}`;
+                fileStatus.textContent = 'Erreur : fichier invalide';
                 fileStatus.style.color = '#dc3545';
-                console.error(err);
             }
-        };
-        reader.onerror = () => {
-            fileStatus.textContent = 'Erreur de lecture du fichier';
-            fileStatus.style.color = '#dc3545';
         };
         reader.readAsText(file);
     });
 
     if (quizRetry) quizRetry.addEventListener('click', startQuiz);
     if (showReview) showReview.addEventListener('click', showDetailedReview);
-
     if (reloadButton) reloadButton.addEventListener('click', startQuiz);
     if (reloadButtonMobile) reloadButtonMobile.addEventListener('click', startQuiz);
 
@@ -1786,7 +1472,6 @@ document.addEventListener('DOMContentLoaded', () => {
         else document.exitFullscreen();
         updateFullscreenIcon();
     });
-
     if (fullscreenButtonMobile) fullscreenButtonMobile.addEventListener('click', () => {
         if (!document.fullscreenElement) document.documentElement.requestFullscreen();
         else document.exitFullscreen();
@@ -1795,7 +1480,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (menuButton) menuButton.addEventListener('click', toggleMenu);
     if (menuButtonMobile) menuButtonMobile.addEventListener('click', toggleMenu);
-
     if (menuOverlay) menuOverlay.addEventListener('click', () => {
         menuOverlay.classList.remove('open');
         slideMenu.classList.remove('open');
@@ -1805,78 +1489,31 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.toggle('dark-mode', e.target.checked);
         localStorage.setItem('darkMode', e.target.checked);
     });
-
     if (animationsToggle) animationsToggle.addEventListener('change', (e) => {
         localStorage.setItem('animations', e.target.checked);
     });
-
     if (colorblindToggle) colorblindToggle.addEventListener('change', (e) => {
         document.body.classList.toggle('colorblind-mode', e.target.checked);
         localStorage.setItem('colorblindMode', e.target.checked);
     });
-
     if (deferredEvaluationToggle) deferredEvaluationToggle.addEventListener('change', (e) => {
         isDeferredEvaluation = e.target.checked;
         localStorage.setItem('deferredEvaluation', e.target.checked);
     });
 
-    document.getElementById('instructionsButton')?.addEventListener('click', () => {
-        closeMenu();
-        openModal('instructionsModal');
-    });
-
-    document.getElementById('statsButton')?.addEventListener('click', () => {
-        closeMenu();
-        updateStats();
-        openModal('statsModal');
-    });
-
-    document.getElementById('settingsButton')?.addEventListener('click', () => {
-        closeMenu();
-        openModal('settingsModal');
-    });
-
-    document.getElementById('resetButton')?.addEventListener('click', () => {
-        if (confirm('Réinitialiser toutes les statistiques ?')) {
-            localStorage.clear();
-            location.reload();
-        }
-    });
-
-    document.getElementById('aboutButton')?.addEventListener('click', () => {
-        closeMenu();
-        showAboutModal();
-    });
+    document.getElementById('instructionsButton')?.addEventListener('click', () => { closeMenu(); openModal('instructionsModal'); });
+    document.getElementById('statsButton')?.addEventListener('click', () => { closeMenu(); updateStats(); openModal('statsModal'); });
+    document.getElementById('settingsButton')?.addEventListener('click', () => { closeMenu(); openModal('settingsModal'); });
+    document.getElementById('resetButton')?.addEventListener('click', () => { if(confirm('Réinitialiser toutes les statistiques ?')){localStorage.clear(); location.reload();} });
+    document.getElementById('aboutButton')?.addEventListener('click', () => { closeMenu(); showAboutModal(); });
 
     document.querySelectorAll('.close-modal').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const modalId = btn.dataset.modal;
-            closeModal(modalId);
-        });
+        btn.addEventListener('click', () => closeModal(btn.dataset.modal));
     });
-
     document.querySelectorAll('.modal').forEach(modal => {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) modal.classList.remove('open');
-        });
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
     });
-
     document.getElementById('toggleTextBtn')?.addEventListener('click', togglePhilosophyText);
-
-    // Réappliquer le calcul du titre après le chargement complet
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            updateQuizTitles(currentTitre, currentSousTitre);
-            updateProgressBarTitleWidth();
-        }, 100);
-    });
-    
-    // Réappliquer aussi lors du redimensionnement
-    window.addEventListener('resize', () => {
-        setTimeout(() => {
-            updateProgressBarTitleWidth();
-        }, 100);
-    });
 
     updateFullscreenIcon();
 });
@@ -1884,83 +1521,35 @@ document.addEventListener('DOMContentLoaded', () => {
 function formatSource(source) {
     const commaIndex = source.indexOf(',');
     if (commaIndex === -1) return source;
-
     const author = source.substring(0, commaIndex);
-    const restAfterFirstComma = source.substring(commaIndex + 1).trim();
-    const secondCommaIndex = restAfterFirstComma.indexOf(',');
-    const yearMatch = restAfterFirstComma.match(/\((\d{4})\)/);
-
+    const rest = source.substring(commaIndex + 1).trim();
+    const yearMatch = rest.match(/\((\d{4})\)/);
     if (yearMatch) {
+        const beforeYear = rest.substring(0, yearMatch.index).trim();
         const year = yearMatch[0];
-        const beforeYear = restAfterFirstComma.substring(0, yearMatch.index).trim();
-        let afterYear = restAfterFirstComma.substring(yearMatch.index + year.length).trim();
-
-        if (secondCommaIndex !== -1 && secondCommaIndex < yearMatch.index) {
-            const beforeSecondComma = beforeYear.substring(0, secondCommaIndex).trim();
-            const afterSecondComma = beforeYear.substring(secondCommaIndex + 1).trim();
-            return `${author}, <span class="italic-part">${beforeSecondComma}</span>, ${afterSecondComma} <span class="year-part">${year}</span> ${afterYear}`;
-        } else {
-            return `${author}, <span class="italic-part">${beforeYear}</span> <span class="year-part">${year}</span> ${afterYear}`;
-        }
-    } else {
-        if (secondCommaIndex !== -1) {
-            const beforeSecondComma = restAfterFirstComma.substring(0, secondCommaIndex).trim();
-            const afterSecondComma = restAfterFirstComma.substring(secondCommaIndex + 1).trim();
-            return `${author}, <span class="italic-part">${beforeSecondComma}</span>, ${afterSecondComma}`;
-        } else {
-            return `${author}, <span class="italic-part">${restAfterFirstComma}</span>`;
-        }
+        const afterYear = rest.substring(yearMatch.index + year.length).trim();
+        return `${author}, <span class="italic-part">${beforeYear}</span> <span class="year-part">${year}</span> ${afterYear}`;
     }
+    return `${author}, <span class="italic-part">${rest}</span>`;
 }
 
 function formatPhilosophyText(text) {
     if (!text) return '';
-    return text.split('\n')
-        .filter(p => p.trim() !== '')
-        .map(p => {
-            // Préserver les espaces autour des balises HTML
-            let paragraph = p.trim();
-            
-            // Remplacer les espaces avant <em> par &nbsp; (espace insécable)
-            paragraph = paragraph.replace(/(\s+)<em>/g, '&nbsp;<em>');
-            
-            // Remplacer les espaces après </em> par &nbsp;
-            paragraph = paragraph.replace(/<\/em>(\s+)/g, '</em>&nbsp;');
-            
-            // Remplacer les espaces avant </em> par &nbsp; (cas rare)
-            paragraph = paragraph.replace(/(\s+)<\/em>/g, '&nbsp;</em>');
-            
-            // Remplacer les espaces après <em> par &nbsp; (cas rare)
-            paragraph = paragraph.replace(/<em>(\s+)/g, '<em>&nbsp;');
-            
-            // Pour d'autres balises HTML potentielles
-            paragraph = paragraph.replace(/(\s+)<(\/?\w+)>/g, '&nbsp;<$2>');
-            paragraph = paragraph.replace(/<\/(\w+)>(\s+)/g, '</$1>&nbsp;');
-            
-            return `<p class="philosophy-paragraph">${paragraph}</p>`;
-        })
-        .join('');
+    return text.split('\n').filter(p => p.trim()).map(p => `<p class="philosophy-paragraph">${p.trim()}</p>`).join('');
 }
 
 function displayPhilosophyText() {
     const textContent = document.getElementById('philosophyTextContent');
     const sourceContent = document.getElementById('philosophyTextSource');
     const philosophyTextSection = document.getElementById('philosophyText');
-
     const isTextEmpty = !philosophyData.texte || philosophyData.texte.trim() === '';
     if (isTextEmpty) philosophyTextSection.classList.add('hidden');
     else {
         philosophyTextSection.classList.remove('hidden');
         textContent.innerHTML = formatPhilosophyText(philosophyData.texte);
-        if (philosophyData.source && philosophyData.source.trim() !== '') {
-            // Préserver les espaces dans la source aussi
-            let sourceText = philosophyData.source;
-            sourceText = sourceText.replace(/(\s+)<span/g, '&nbsp;<span');
-            sourceText = sourceText.replace(/span>(\s+)/g, 'span>&nbsp;');
-            sourceContent.innerHTML = formatSource(sourceText);
-        } else {
-            sourceContent.innerHTML = '';
-        }
+        if (philosophyData.source && philosophyData.source.trim()) {
+            sourceContent.innerHTML = formatSource(philosophyData.source);
+        } else sourceContent.innerHTML = '';
     }
 }
 
@@ -1980,19 +1569,14 @@ function hidePhilosophyText() {
 
 function startQuiz() {
     updateQuizTitles(currentTitre, currentSousTitre);
-
     originalQuestionIndices = [];
     shuffledQuestions = [];
-
     const availableIndices = Array.from({length: questions.length}, (_, i) => i);
     shuffleArray(availableIndices);
-
     for (let i = 0; i < TOTAL_QUESTIONS && i < availableIndices.length; i++) {
-        const originalIndex = availableIndices[i];
-        originalQuestionIndices.push(originalIndex);
-        shuffledQuestions.push(questions[originalIndex]);
+        originalQuestionIndices.push(availableIndices[i]);
+        shuffledQuestions.push(questions[availableIndices[i]]);
     }
-
     currentQuestionIndex = 0;
     score = 0;
     userAnswers = [];
@@ -2000,17 +1584,13 @@ function startQuiz() {
     document.getElementById('quizEnd').classList.add('hidden');
     document.getElementById('quizQuestions').classList.remove('hidden');
     document.getElementById('detailedResults').classList.add('hidden');
-
     const showReviewBtn = document.getElementById('showReview');
     if (showReviewBtn) showReviewBtn.style.display = 'none';
-
     displayPhilosophyText();
-
     const toggleBtn = document.getElementById('toggleTextBtn');
     const textContent = document.querySelector('.philosophy-text-content');
     if (toggleBtn) toggleBtn.classList.remove('collapsed');
     if (textContent) textContent.classList.remove('collapsed');
-
     displayNextQuestion();
     gamesPlayed++;
     localStorage.setItem('gamesPlayed', gamesPlayed);
@@ -2019,131 +1599,61 @@ function startQuiz() {
 function displayNextQuestion() {
     const container = document.getElementById('questionsContainer');
     if (!container) return;
-
     container.innerHTML = '';
     if (currentQuestionIndex < TOTAL_QUESTIONS) {
         const q = shuffledQuestions[currentQuestionIndex];
-        const originalQuestionNumber = originalQuestionIndices[currentQuestionIndex] + 1;
-
-        const questionText = q.question;
         const shuffledAnswers = [...q.answers];
         shuffleArray(shuffledAnswers);
-
-        // Protéger les espaces dans les réponses pour l'affichage
         const protectedAnswers = protectSpacesInAnswers(shuffledAnswers);
-
         const el = document.createElement('div');
         el.innerHTML = `
             <div class="container--question">
                 <fieldset>
-                    <legend><p>${questionText}</p></legend>
-                    <ul>${protectedAnswers.map((a, i) => `
-                        <li class="quiz-answer" data-index="${i}" data-original-text="${shuffledAnswers[i].replace(/"/g, '&quot;')}">
-                            ${a}
-                            <img src="src/false.svg" alt="" class="answer-icon hidden">
-                        </li>`).join('')}
-                    </ul>
+                    <legend><p>${q.question}</p></legend>
+                    <ul>${protectedAnswers.map((a, i) => `<li class="quiz-answer" data-index="${i}" data-original-text="${shuffledAnswers[i].replace(/"/g, '&quot;')}">${a}<img src="src/false.svg" alt="" class="answer-icon hidden"></li>`).join('')}</ul>
                 </fieldset>
-                <div class="quiz-explanation hidden">
-                    <div class="quiz-explanation__label"><span></span></div>
-                    <p class="quiz-explanation__detail"><strong>Explication : </strong>${q.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>')}</p>
-                </div>
-                <div class="next-button-container">
-                    <button class="quiz-btn quiz-btn--default quiz-btn--fill next-question-btn">
-                        question suivante
-                    </button>
-                </div>
+                <div class="quiz-explanation hidden"><div class="quiz-explanation__label"><span></span></div><p class="quiz-explanation__detail"><strong>Explication : </strong>${q.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>')}</p></div>
+                <div class="next-button-container"><button class="quiz-btn quiz-btn--default quiz-btn--fill next-question-btn">${currentQuestionIndex === TOTAL_QUESTIONS - 1 ? 'votre score' : 'question suivante'}</button></div>
             </div>`;
         container.appendChild(el);
-
-        setTimeout(() => {
-            const questionTextEl = el.querySelector('legend p');
-            if (questionTextEl) {
-                const containerWidth = el.querySelector('.container--question').offsetWidth;
-                const textWidth = questionTextEl.scrollWidth;
-                if (textWidth > containerWidth - 20) questionTextEl.classList.add('question-too-long');
-            }
-        }, 50);
-
-        // Stocker les réponses originales et ajouter les événements
         el.querySelectorAll('.quiz-answer').forEach((answerEl, i) => {
-            // Stocker le texte original
             answerEl.dataset.originalText = shuffledAnswers[i];
-            
             answerEl.addEventListener('click', () => {
-                if (isDeferredEvaluation) {
-                    selectAnswer(answerEl, shuffledAnswers[i]);
-                } else {
-                    checkAnswer(answerEl, shuffledAnswers[i], shuffledAnswers);
-                }
+                if (isDeferredEvaluation) selectAnswer(answerEl, shuffledAnswers[i]);
+                else checkAnswer(answerEl, shuffledAnswers[i], shuffledAnswers);
             });
         });
-
         const nextBtn = el.querySelector('.next-question-btn');
         if (nextBtn) {
-            // MODIFICATION : Changer le texte en "votre score" pour la dernière question
-            if (currentQuestionIndex === TOTAL_QUESTIONS - 1) {
-                nextBtn.textContent = 'votre score';
-            } else {
-                nextBtn.textContent = 'question suivante';
-            }
-            
             nextBtn.onclick = () => {
                 if (!isDeferredEvaluation) {
-                    const hasAnswer = el.querySelector('.correct') || el.querySelector('.incorrect');
-                    if (!hasAnswer) {
+                    if (!el.querySelector('.correct') && !el.querySelector('.incorrect')) {
                         alert('Veuillez sélectionner une réponse avant de continuer.');
                         return;
                     }
-                } else {
-                    if (!userAnswers[currentQuestionIndex]) {
-                        userAnswers[currentQuestionIndex] = {
-                            question: q.question,
-                            userAnswer: null,
-                            correctAnswer: '',
-                            explanation: q.explanation,
-                            allAnswers: shuffledAnswers,
-                            originalQuestionNumber: originalQuestionNumber,
-                            originalIndex: originalQuestionIndices[currentQuestionIndex]
-                        };
-                    }
+                } else if (!userAnswers[currentQuestionIndex]) {
+                    userAnswers[currentQuestionIndex] = {
+                        question: q.question, userAnswer: null, correctAnswer: '', explanation: q.explanation, allAnswers: shuffledAnswers, originalIndex: originalQuestionIndices[currentQuestionIndex]
+                    };
                 }
-
                 currentQuestionIndex++;
                 displayNextQuestion();
             };
         }
-
-        const currentQuestionEl = document.getElementById('currentQuestion');
-        if (currentQuestionEl) currentQuestionEl.textContent = currentQuestionIndex + 1;
-
+        document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
         updateProgressBar();
-    } else {
-        endQuiz();
-    }
+    } else endQuiz();
 }
 
 function selectAnswer(selected, selectedText) {
     const answers = selected.parentNode.children;
     Array.from(answers).forEach(a => a.classList.remove('selected'));
     selected.classList.add('selected');
-
     const currentQuestion = shuffledQuestions[currentQuestionIndex];
-    const originalQuestionNumber = originalQuestionIndices[currentQuestionIndex] + 1;
-    const shuffledAnswers = Array.from(selected.parentNode.children).map(el => 
-        el.dataset.originalText || el.textContent
-    );
-    const originalCorrectIndex = currentQuestion.correct;
-    const adjustedCorrectIndex = originalCorrectIndex - 1;
-
+    const shuffledAnswers = Array.from(selected.parentNode.children).map(el => el.dataset.originalText || el.textContent);
     userAnswers[currentQuestionIndex] = {
-        question: currentQuestion.question,
-        userAnswer: selectedText,
-        correctAnswerIndex: adjustedCorrectIndex,
-        explanation: currentQuestion.explanation,
-        allAnswers: shuffledAnswers,
-        originalQuestionNumber: originalQuestionNumber,
-        originalIndex: originalQuestionIndices[currentQuestionIndex]
+        question: currentQuestion.question, userAnswer: selectedText, correctAnswerIndex: currentQuestion.correct - 1,
+        explanation: currentQuestion.explanation, allAnswers: shuffledAnswers, originalIndex: originalQuestionIndices[currentQuestionIndex]
     };
 }
 
@@ -2152,27 +1662,12 @@ function checkAnswer(selected, selectedText, shuffledAnswers) {
     const label = selected.closest('.container--question').querySelector('.quiz-explanation__label span');
     totalQuestionsAnswered++;
     localStorage.setItem('totalQuestionsAnswered', totalQuestionsAnswered);
-
     const currentQuestion = shuffledQuestions[currentQuestionIndex];
-    const originalQuestionNumber = originalQuestionIndices[currentQuestionIndex] + 1;
-    const originalCorrectIndex = currentQuestion.correct;
-    const adjustedCorrectIndex = originalCorrectIndex - 1;
-    const adjustedCorrectText = currentQuestion.answers[adjustedCorrectIndex] || currentQuestion.answers[0];
-
-    // Stocker les informations avec le texte original
-    const answerObj = {
-        question: currentQuestion.question,
-        userAnswer: selectedText,  // Texte original avec espaces
-        correctAnswerIndex: adjustedCorrectIndex,
-        explanation: currentQuestion.explanation,
-        allAnswers: shuffledAnswers,  // Textes originaux
-        originalQuestionNumber: originalQuestionNumber,
-        originalIndex: originalQuestionIndices[currentQuestionIndex]
+    const adjustedCorrectText = currentQuestion.answers[currentQuestion.correct - 1] || currentQuestion.answers[0];
+    userAnswers[currentQuestionIndex] = {
+        question: currentQuestion.question, userAnswer: selectedText, correctAnswerIndex: currentQuestion.correct - 1,
+        explanation: currentQuestion.explanation, allAnswers: shuffledAnswers, originalIndex: originalQuestionIndices[currentQuestionIndex]
     };
-
-    userAnswers[currentQuestionIndex] = answerObj;
-
-    // COMPARAISON : comparer les textes ORIGINAUX exactement
     if (selectedText === adjustedCorrectText) {
         selected.classList.add('correct');
         selected.querySelector('.answer-icon').src = 'src/true.svg';
@@ -2187,51 +1682,31 @@ function checkAnswer(selected, selectedText, shuffledAnswers) {
         selected.querySelector('.answer-icon').classList.remove('hidden');
         if (label) label.innerHTML = '<img src="src/emoji-sad.gif" alt="emoji" class="emoji"> mauvaise réponse !';
         if (animationsToggle && animationsToggle.checked) selected.classList.add('shake-x');
-        
-        // Marquer la réponse correcte
         Array.from(answers).forEach(a => {
-            const answerIndex = parseInt(a.dataset.index);
-            if (shuffledAnswers[answerIndex] === adjustedCorrectText) {
+            if ((a.dataset.originalText || a.textContent) === adjustedCorrectText) {
                 a.classList.add('correct');
                 a.querySelector('.answer-icon').src = 'src/true.svg';
                 a.querySelector('.answer-icon').classList.remove('hidden');
             }
         });
     }
-    
-    // Marquer toutes les autres réponses comme incorrectes
     Array.from(answers).forEach(a => {
-        const answerIndex = parseInt(a.dataset.index);
-        if (shuffledAnswers[answerIndex] !== adjustedCorrectText && a !== selected) {
+        if ((a.dataset.originalText || a.textContent) !== adjustedCorrectText && a !== selected) {
             a.classList.add('incorrect');
             a.querySelector('.answer-icon').classList.remove('hidden');
         }
     });
-
     const explanation = selected.closest('.container--question').querySelector('.quiz-explanation');
     if (explanation) explanation.classList.remove('hidden');
-
-    setTimeout(() => {
-        const nextContainer = selected.closest('.container--question').querySelector('.next-button-container');
-        if (nextContainer) nextContainer.scrollIntoView({behavior: 'smooth', block: 'end'});
-    }, 300);
 }
 
 function endQuiz() {
-    const quizQuestions = document.getElementById('quizQuestions');
-    const quizEnd = document.getElementById('quizEnd');
-
-    if (quizQuestions) quizQuestions.classList.add('hidden');
-    if (quizEnd) quizEnd.classList.remove('hidden');
-
+    document.getElementById('quizQuestions').classList.add('hidden');
+    document.getElementById('quizEnd').classList.remove('hidden');
     if (isDeferredEvaluation) calculateDeferredScore();
-
-    const scoreElement = document.querySelector('.quiz-end__score');
-    if (scoreElement) scoreElement.textContent = score;
-
+    document.querySelector('.quiz-end__score').textContent = score;
     const showReviewBtn = document.getElementById('showReview');
     if (showReviewBtn) showReviewBtn.style.display = score < TOTAL_QUESTIONS ? 'inline-block' : 'none';
-
     hidePhilosophyText();
     updateStats();
 }
@@ -2240,15 +1715,8 @@ function calculateDeferredScore() {
     score = 0;
     userAnswers.forEach((answer, index) => {
         const currentQuestion = shuffledQuestions[index];
-        const originalCorrectIndex = currentQuestion.correct;
-        const adjustedCorrectIndex = originalCorrectIndex - 1;
-        const adjustedCorrectText = currentQuestion.answers[adjustedCorrectIndex] || currentQuestion.answers[0];
-
-        // Comparaison exacte des textes originaux
-        if (answer.userAnswer === adjustedCorrectText) {
-            score++;
-            totalCorrectAnswers++;
-        }
+        const adjustedCorrectText = currentQuestion.answers[currentQuestion.correct - 1] || currentQuestion.answers[0];
+        if (answer && answer.userAnswer === adjustedCorrectText) { score++; totalCorrectAnswers++; }
         if (answer && answer.userAnswer !== null) totalQuestionsAnswered++;
     });
     localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
@@ -2259,57 +1727,31 @@ function showDetailedReview() {
     const reviewContainer = document.getElementById('questionsReview');
     const detailedResults = document.getElementById('detailedResults');
     const showReviewBtn = document.getElementById('showReview');
-
     if (!reviewContainer) return;
-
     reviewContainer.innerHTML = '';
-
     userAnswers.forEach((answer, index) => {
         if (answer) {
             const currentQuestion = shuffledQuestions[index];
-            let questionNumber = "?";
-            const match = answer.question.match(/Question n°(\d+)/);
-            if (match && match[1]) questionNumber = match[1];
-            else questionNumber = (index + 1).toString();
-
-            let questionContent = answer.question;
-            questionContent = questionContent.replace(/^Question n°\d+ :\s*/, '');
-
-            const originalCorrectIndex = currentQuestion.correct;
-            const adjustedCorrectIndex = originalCorrectIndex - 1;
-            const adjustedCorrectText = currentQuestion.answers[adjustedCorrectIndex] || currentQuestion.answers[0];
-
+            const adjustedCorrectText = currentQuestion.answers[currentQuestion.correct - 1] || currentQuestion.answers[0];
             const isCorrect = answer.userAnswer === adjustedCorrectText;
-
             const questionDiv = document.createElement('div');
             questionDiv.style.marginBottom = '25px';
             questionDiv.style.padding = '15px';
             questionDiv.style.borderRadius = '8px';
             questionDiv.style.background = isCorrect ? 'rgba(40, 167, 69, 0.1)' : 'rgba(220, 53, 69, 0.1)';
             questionDiv.style.borderLeft = `4px solid ${isCorrect ? 'var(--color-correct)' : 'var(--color-incorrect)'}`;
-
-            // Afficher les réponses avec espaces protégés
-            const answersList = answer.allAnswers ? answer.allAnswers.map(a => {
-                const protectedAnswer = protectSpacesAroundTags(a);
-                return `<li>${protectedAnswer}</li>`;
-            }).join('') : 'Informations non disponibles';
-
-            const protectedUserAnswer = protectSpacesAroundTags(answer.userAnswer || 'Non répondue');
-            const protectedCorrectAnswer = protectSpacesAroundTags(adjustedCorrectText);
-
+            const answersList = answer.allAnswers ? answer.allAnswers.map(a => `<li>${protectSpacesAroundTags(a)}</li>`).join('') : '';
             questionDiv.innerHTML = `
-                <p style="font-weight: bold; margin-bottom: 10px;">Question n°${questionNumber} : ${questionContent}</p>
+                <p style="font-weight: bold; margin-bottom: 10px;">${answer.question}</p>
                 <p style="margin-bottom: 8px;"><strong>Réponses proposées :</strong></p>
                 <ul style="margin-left: 20px; margin-bottom: 12px;">${answersList}</ul>
-                <p style="margin-bottom: 8px;"><strong>Votre réponse :</strong> ${protectedUserAnswer}</p>
-                <p style="margin-bottom: 8px;"><strong>Réponse correcte :</strong> ${protectedCorrectAnswer}</p>
+                <p style="margin-bottom: 8px;"><strong>Votre réponse :</strong> ${protectSpacesAroundTags(answer.userAnswer || 'Non répondue')}</p>
+                <p style="margin-bottom: 8px;"><strong>Réponse correcte :</strong> ${protectSpacesAroundTags(adjustedCorrectText)}</p>
                 <p style="margin-top: 10px; font-size: 0.9em;"><strong>Explication :</strong>${answer.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>')}</p>
             `;
-
             reviewContainer.appendChild(questionDiv);
         }
     });
-
     if (detailedResults) detailedResults.classList.remove('hidden');
     if (showReviewBtn) showReviewBtn.style.display = 'none';
 }
@@ -2323,84 +1765,37 @@ function shuffleArray(array) {
 
 function updateProgressBar() {
     const bar = document.querySelector('.progress-bar__cursor--dynamic');
-    if (bar) {
-        const progress = ((currentQuestionIndex + 1) / TOTAL_QUESTIONS) * 100;
-        bar.style.width = `${progress}%`;
-    }
+    if (bar) bar.style.width = `${((currentQuestionIndex + 1) / TOTAL_QUESTIONS) * 100}%`;
 }
 
-function toggleMenu() {
-    if (menuOverlay) menuOverlay.classList.toggle('open');
-    if (slideMenu) slideMenu.classList.toggle('open');
-}
-
-function closeMenu() {
-    if (menuOverlay) menuOverlay.classList.remove('open');
-    if (slideMenu) slideMenu.classList.remove('open');
-}
-
-function openModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) modal.classList.add('open');
-}
-
-function closeModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) modal.classList.remove('open');
-}
+function toggleMenu() { menuOverlay.classList.toggle('open'); slideMenu.classList.toggle('open'); }
+function closeMenu() { menuOverlay.classList.remove('open'); slideMenu.classList.remove('open'); }
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
 function updateStats() {
-    const statsCorrectCount = document.getElementById('statsCorrectCount');
-    const statsTotalCount = document.getElementById('statsTotalCount');
-    const statsPercentage = document.getElementById('statsPercentage');
-    const gamesPlayedElement = document.getElementById('gamesPlayed');
-
-    if (statsCorrectCount) statsCorrectCount.textContent = totalCorrectAnswers;
-    if (statsTotalCount) statsTotalCount.textContent = totalQuestionsAnswered;
-
+    document.getElementById('statsCorrectCount').textContent = totalCorrectAnswers;
+    document.getElementById('statsTotalCount').textContent = totalQuestionsAnswered;
     const percent = totalQuestionsAnswered ? Math.round((totalCorrectAnswers / totalQuestionsAnswered) * 100) : 0;
-    if (statsPercentage) statsPercentage.textContent = percent + '%';
-    if (gamesPlayedElement) gamesPlayedElement.textContent = gamesPlayed;
+    document.getElementById('statsPercentage').textContent = percent + '%';
+    document.getElementById('gamesPlayed').textContent = gamesPlayed;
 }
 
 function showAboutModal() {
     const modal = document.createElement('div');
     modal.className = 'modal open';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-                <h2 style="margin:0;color:red;">à propos</h2>
-                <button style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--font-color)" onclick="this.closest('.modal').remove()">×</button>
-            </div>
-            <p style="text-align:center;line-height:1.6;">
-                <strong>${currentTitre}</strong><br><br>
-                développé par Daniel Boulagnon<br>
-                daniel.boulagnon@ac-lille.fr<br><br>
-                version 2025<br><br>
-                exploitation à but pédagogique et non commercial<br><br>
-                <small>accessibilité : mode daltonien disponible dans les paramètres</small>
-            </p>
-        </div>`;
+    modal.innerHTML = `<div class="modal-content"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;"><h2 style="margin:0;color:red;">à propos</h2><button style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--font-color)" onclick="this.closest('.modal').remove()">×</button></div><p style="text-align:center;line-height:1.6;"><strong>${currentTitre}</strong><br><br>développé par Daniel Boulagnon<br>daniel.boulagnon@ac-lille.fr<br><br>version 2025<br><br>exploitation à but pédagogique et non commercial</p></div>`;
     document.body.appendChild(modal);
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.remove();
-    });
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
 }
 
 function updateFullscreenIcon() {
     const svgFull = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path></svg>`;
     const svgNormal = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path></svg>`;
-
-    const fullscreenButtons = [
-        document.getElementById('fullscreenButton'),
-        document.getElementById('fullscreenButtonMobile')
-    ];
-
-    fullscreenButtons.forEach(btn => {
+    [document.getElementById('fullscreenButton'), document.getElementById('fullscreenButtonMobile')].forEach(btn => {
         if (btn) btn.innerHTML = document.fullscreenElement ? svgFull : svgNormal;
     });
 }
-
 document.addEventListener('fullscreenchange', updateFullscreenIcon);
 </script>
 </body>
