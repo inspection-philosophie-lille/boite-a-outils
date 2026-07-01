@@ -13,7 +13,7 @@ const sousTitre = "Tester ses connaissances sur un texte de Kant";
 const philosophyData = {
 	texte: `« [1] Qu'est-ce que les Lumières ? [2] La sortie de l'homme de sa minorité dont il est lui-même responsable. [3] Minorité, c'est-à-dire incapacité de se servir de son entendement sans la direction d'autrui. [4] Minorité dont il est lui-même responsable, puisque la cause en réside non dans un défaut de l'entendement, mais dans un manque de décision et de courage de s'en servir sans la direction d'autrui. [5] Sapere aude ! [6] Aie le courage de te servir de ton propre entendement. [7] Voilà la devise des Lumières. [8] La paresse et la lâcheté sont les causes qui expliquent qu'un si grand nombre d'hommes, après que la nature les a affranchis depuis longtemps d'une direction étrangère… restent cependant volontiers leur vie durant mineurs, et qu'ils soient si facile à d'autres de se poser en tuteur des premiers. [9] Il est si aisé d'être mineur ! [10] Si j'ai un livre qui me tient lieu d'entendement, un directeur qui me tient lieu de conscience, un médecin qui décide pour moi de mon régime etc., je n'ai vraiment pas besoin de me donner de peine moi-même. [11] Je n'ai pas besoin de penser, pourvu que je puisse payer ; d'autres se chargeront bien de ce travail ennuyeux. [12] Il est donc difficile pour chaque individu de sortir tout seul de la minorité qui est presque pour lui devenue un état naturel »`,
 
-	source: "KANT, Réponse à la question : Qu'est-ce que les Lumières ? [1784], trad. J.-F. Poirier et F. Proust, Paris, Flammarion, 1991, p. 43"
+	source: "KANT, Réponse à la question : Qu'est-ce que les Lumières ? [1784], trad. J.-F. Poirier et F. Proust, Paris, Flammarion, 1991, p.43"
 };
 
 // ============================================

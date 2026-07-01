@@ -15,7 +15,7 @@ const philosophyData = {
 
 [7] Il en va tout autrement du beau. [8] Il serait (tout juste à l'inverse) ridicule que quelqu'un, s'imaginant avoir du goût, songe en faire la preuve en déclarant : cet objet (l'édifice que nous voyons, le vêtement que porte celui-ci, le concert que nous entendons, le poème que l'on soumet à notre appréciation) est beau pour moi. [9] Car il ne doit pas appeler beau, ce qui ne plaît qu'à lui. [10] Beaucoup de choses peuvent avoir pour lui du charme ou de l'agrément ; personne ne s'en soucie ; toutefois lorsqu'il dit qu'une chose est belle, il attribue aux autres la même satisfaction ; il ne juge pas seulement pour lui, mais aussi pour autrui et parle alors de la beauté comme si elle était une propriété des choses. [11] C'est pourquoi il dit : la chose est belle et dans son jugement exprimant sa satisfaction, il exige l'adhésion des autres, loin de compter sur leur adhésion, parce qu'il a constaté maintes fois que leur jugement s'accordait avec le sien. [12] Il les blâme s'ils jugent autrement et leur dénie un goût, qu'ils devraient cependant posséder d'après ses exigences ; et ainsi on ne peut dire : « À chacun son goût ». [13] Cela reviendrait à dire : le goût n'existe pas, il n'existe pas de jugement esthétique qui pourrait légitimement prétendre à l'assentiment de tous. »`,
     
-    source: "KANT, Critique de la faculté de juger (1790), §7, trad. A. Philonenko, Vrin, (1993), pp.74-75."
+    source: "KANT, Critique de la faculté de juger [1790], §7, trad. A. Philonenko, Vrin, (1993), pp.74-75."
 };
 
 // ============================================
