@@ -16,9 +16,9 @@ const philosophyData = {
 // QUESTIONS DU QUIZ (1 à 100)
 // ============================================
 const questions = [
-  // Question n°1
+  // Question n°01
   {
-    question: "Question 1 : Quel est l'enjeu principal soulevé par la formule de Gorgias <em>La parole est un grand souverain</em> ?",
+    question: "Question n°01 : Quel est l'enjeu principal soulevé par la formule de Gorgias <em>La parole est un grand souverain</em> ?",
     answers: [
       "Elle affirme que la parole doit être réservée aux rois et aux dirigeants politiques.",
       "Elle réduit la parole à un simple outil de communication dépourvu de tout pouvoir réel.",
@@ -27,9 +27,9 @@ const questions = [
     correct: 3,
     explanation: `La réponse correcte saisit l'essence de la pensée sophistique. Pour Gorgias, la parole (λόγος) n'est pas un reflet passif de la réalité, mais une force active capable de modeler les perceptions, les émotions et les convictions. Ce pouvoir quasi magique fait d'elle un <em>souverain</em> qui peut produire les effets les plus puissants, comme la persuasion en politique ou la catharsis en tragédie. Cette vision fonde la rhétorique comme <em>technè</em> (art) du discours persuasif, indépendante de la vérité du contenu.\nExemple : Un avocat plaidant pour son client utilise cet art pour créer chez les juges la conviction de son innocence, agissant directement sur leur âme (psychagogie) par la seule puissance de son discours, indépendamment des faits bruts.`
   },
-  // Question n°2
+  // Question n°02
   {
-    question: "Question 2 : Comment définir la <em>doxa</em> (δόξα) dans le contexte du débat entre Platon et les sophistes ?",
+    question: "Question n°02 : Comment définir la <em>doxa</em> (δόξα) dans le contexte du débat entre Platon et les sophistes ?",
     answers: [
       "La connaissance certaine et démontrée, fondée sur la raison pure et les Idées.",
       "L'opinion commune, instable et changeante, qui sert de matière première à la persuasion rhétorique.",
@@ -38,9 +38,9 @@ const questions = [
     correct: 2,
     explanation: `La <em>doxa</em> désigne le domaine de l'opinion, du semblant et de l'apparence, par opposition à l'<em>epistémè</em> (ἐπιστήμη), la science vraie. Pour les sophistes, c'est le terrain de jeu naturel de la rhétorique, qui vise à flatter et orienter les opinions de la foule. Pour Platon, c'est un monde trompeur dont il faut se libérer par la dialectique. La critique platonicienne de la rhétorique sophistique repose sur ce refus de prendre la <em>doxa</em> pour cible, lui préférant la quête d'une vérité absolue.\nExemple : Un homme politique promettant la prospérité pendant une campagne électorale s'adresse à la <em>doxa</em> de l'électorat, à ses désirs et ses craintes immédiats, sans nécessairement fonder son discours sur une analyse économique rigoureuse (épistémè).`
   },
-  // Question n°3
+  // Question n°03
   {
-    question: "Question 3 : Que signifie l'expression <em>faire croire</em> par opposition à <em>faire savoir</em> dans l'art de la persuasion ?",
+    question: "Question n°03 : Que signifie l'expression <em>faire croire</em> par opposition à <em>faire savoir</em> dans l'art de la persuasion ?",
     answers: [
       "<em>Faire croire</em> relève de la démonstration scientifique, tandis que <em>faire savoir</em> relève de la croyance religieuse.",
       "<em>Faire croire</em> vise à produire une conviction par des moyens non rationnels, <em>faire savoir</em> implique une démonstration logique et vérifiable.",
@@ -49,9 +49,9 @@ const questions = [
     correct: 2,
     explanation: `Cette distinction est au cœur de la différence entre persuader et convaincre. <em>Faire croire</em> opère sur le registre de l'adhésion psychologique et émotionnelle ; il s'agit d'installer une certitude subjective. <em>Faire savoir</em> implique au contraire de fournir des preuves, des raisons objectives qui peuvent être examinées et critiquées. La rhétorique sophistique, et souvent politique, privilégie le premier versant, utilisant le pathos et l'ethos pour créer la croyance, parfois au détriment de la vérité.\nExemple : Une publicité pour une voiture de luxe ne cherche pas à <em>faire savoir</em> des caractéristiques techniques (logos), mais à <em>faire croire</em> qu'elle confèrera à son possesseur un statut social supérieur et du succès, jouant sur les désirs et l'image de soi (pathos/ethos).`
   },
-  // Question n°4
+  // Question n°04
   {
-    question: "Question 4 : Quelle est la fonction première de la <em>parole performative</em> telle que théorisée par John L. Austin ?",
+    question: "Question n°04 : Quelle est la fonction première de la <em>parole performative</em> telle que théorisée par John L. Austin ?",
     answers: [
       "Décrire un état de fait ou rapporter une information de manière neutre et objective.",
       "Accomplir une action par le fait même de son énonciation dans des conditions appropriées.",
@@ -60,9 +60,9 @@ const questions = [
     correct: 2,
     explanation: `Austin opère une rupture en distinguant les énoncés constatifs (qui décrivent) des énoncés performatifs. Un performatif ne décrit pas une action, il <em>est</em> l'action. Dire <em>Je te promets</em> ou <em>Je déclare la séance ouverte</em>, dans le contexte adéquat, c'est instantanément promettre ou ouvrir la séance. L'efficacité de la parole réside alors dans son énonciation même, selon des règles conventionnelles (loi, rituel). Cela élargit considérablement le pouvoir de la parole au-delà de la simple persuasion.\nExemple : Lorsqu'un maire dit <em>Je vous déclare unis par les liens du mariage</em>, il ne décrit pas un mariage, il le réalise institutionnellement par l'autorité de sa parole, pourvu que les conditions légales soient remplies.`
   },
-  // Question n°5
+  // Question n°05
   {
-    question: "Question 5 : Quelle critique fondamentale Platon adresse-t-il aux sophistes dans des dialogues comme le <em>Gorgias</em> ?",
+    question: "Question n°05 : Quelle critique fondamentale Platon adresse-t-il aux sophistes dans des dialogues comme le <em>Gorgias</em> ?",
     answers: [
       "Ils sont de mauvais orateurs techniques, incapables de structurer un discours.",
       "Ils pratiquent une rhétorique immorale, flattant la foule pour le pouvoir et l'argent, sans souci de la vérité ni de la justice.",
@@ -71,9 +71,9 @@ const questions = [
     correct: 2,
     explanation: `Pour Platon, la rhétorique sophistique est une <em>contrefaçon</em> de la vraie politique et de la vraie justice. C'est un art de la cuisine (<em>psopologie</em>) qui flatte les appétits de l'âme (la <em>doxa</em>) comme le cuisinier flatte les appétits du corps, sans se soucier de sa santé. En séparant la persuasion de la recherche du vrai et du bien, les sophistes corrompent la cité. Socrate leur oppose la dialectique, dialogue visant à accoucher les âmes de la vérité (maïeutique).\nExemple : Un sophiste défendant un client riche et coupable en manipulant l'émotion des juges incarne cette critique : il utilise son art pour une victoire personnelle et lucrative, détournant la justice de sa fin qui est de dire le droit.`
   },
-  // Question n°6
+  // Question n°06
   {
-    question: "Question 6 : À quels éléments correspond la triade aristotélicienne des preuves techniques du discours (pistis) ?",
+    question: "Question n°06 : À quels éléments correspond la triade aristotélicienne des preuves techniques du discours (pistis) ?",
     answers: [
       "Le locuteur, l'auditeur et le sujet traité.",
       "L'ethos (caractère de l'orateur), le pathos (émotions de l'auditoire) et le logos (argumentation du discours).",
@@ -82,9 +82,9 @@ const questions = [
     correct: 2,
     explanation: `Aristote, dans sa <em>Rhétorique</em>, systématise l'art de persuader autour de trois leviers essentiels. L'<em>ethos</em> (ἦθος) est la preuve tirée du caractère moral que l'orateur manifeste dans son discours (sagesse, vertu, bienveillance). Le <em>pathos</em> (πάθος) est la preuve par les émotions que l'orateur sait susciter chez son auditoire (pitié, colère, crainte). Le <em>logos</em> (λόγος) est la preuve contenue dans le discours lui-même, par l'argumentation logique (enthymèmes, exemples). Une persuasion efficace combine ces trois registres.\nExemple : Dans un discours écologique, l'<em>ethos</em> sera l'image d'intégrité et d'expertise du militant ; le <em>pathos</em>, l'émotion provoquée par des images d'animaux souffrants ; le <em>logos</em>, les données scientifiques sur le réchauffement climatique.`
   },
-  // Question n°7
+  // Question n°07
   {
-    question: "Question 7 : Que désigne précisément le terme de <em>psychagogie</em> (ψυχαγωγία) ?",
+    question: "Question n°07 : Que désigne précisément le terme de <em>psychagogie</em> (ψυχαγωγία) ?",
     answers: [
       "L'étude scientifique du fonctionnement du cerveau humain.",
       "L'art de <em>conduire les âmes</em>, c'est-à-dire de guider les esprits et les émotions des auditeurs par la parole.",
@@ -93,9 +93,9 @@ const questions = [
     correct: 2,
     explanation: `La psychagogie est la finalité même de la rhétorique entendue comme pouvoir d'influence. Littéralement <em>conduite de l'âme</em>, elle décrit la capacité du discours à orienter, séduire, entraîner l'auditeur. C'est un concept central chez Gorgias et les sophistes, pour qui la parole est une force quasi physique agissant sur l'âme comme un médicament ou un poison. Cette conception fait de l'orateur un guide, mais aussi un manipulateur potentiel, d'où les craintes éthiques qu'elle suscite.\nExemple : Un grand orateur politique, lors d'un meeting, pratique la psychagogie : par son débit, ses silences, ses images, il <em>conduit</em> l'émotion collective de la foule, de la curiosité à l'enthousiasme, puis à l'adhésion fervente.`
   },
-  // Question n°8
+  // Question n°08
   {
-    question: "Question 8 : Comment Hannah Arendt distingue-t-elle la <em>violence</em> et le <em>pouvoir</em> dans le champ politique ?",
+    question: "Question n°08 : Comment Hannah Arendt distingue-t-elle la <em>violence</em> et le <em>pouvoir</em> dans le champ politique ?",
     answers: [
       "La violence est l'essence du politique, le pouvoir n'en étant qu'une forme dérivée et affaiblie.",
       "Le pouvoir correspond à la capacité d'agir de concert, la violence est un moyen non politique de contraindre par la force.",
@@ -104,9 +104,9 @@ const questions = [
     correct: 2,
     explanation: `Pour Arendt, le pouvoir (Macht) naît de la capacité des hommes à agir et parler ensemble. Il est de l'ordre du commun et du consensus. La violence (Gewalt) apparaît là où le pouvoir est en défaillance ; elle est instrumentale, solitaire et détruit l'espace politique. Le vrai politique repose donc sur la puissance de la parole et de la persuasion pour créer du lien et de l'action commune, non sur la menace ou la force physique. Cette distinction réhabilite la parole comme fondement de la cité.\nExemple : Un mouvement de grève qui obtient gain de cause par la négociation et la force de son discours public exerce un <em>pouvoir</em>. Si le gouvernement répond par la répression policière (matraques, gaz), il a recours à la <em>violence</em>, signe qu'il a perdu le pouvoir de persuader.`
   },
-  // Question n°9
+  // Question n°09
   {
-    question: "Question 9 : Quelle est la caractéristique principale du <em>genre épidictique</em> (ou démonstratif) du discours selon Aristote ?",
+    question: "Question n°09 : Quelle est la caractéristique principale du <em>genre épidictique</em> (ou démonstratif) du discours selon Aristote ?",
     answers: [
       "Il vise à délibérer sur l'avenir, à conseiller ou dissuader (comme au parlement).",
       "Il vise à juger le passé, à accuser ou défendre (comme au tribunal).",
@@ -117,7 +117,7 @@ const questions = [
   },
   // Question n°10
   {
-    question: "Question 10 : Que signifie l'<em>auctoritas</em> dans la Rome antique, par opposition à la <em>potestas</em> ?",
+    question: "Question n°10 : Que signifie l'<em>auctoritas</em> dans la Rome antique, par opposition à la <em>potestas</em> ?",
     answers: [
       "L'<em>auctoritas </em> est le pouvoir de commandement légal et coercitif, tandis que la <em>potestas </em> est l'influence morale et le prestige.",
       "La<em>potestas </em> est le pouvoir de commandement légal et coercitif, tandis que l'<em>auctoritas </em> est l'influence morale et le prestige.",
@@ -128,7 +128,7 @@ const questions = [
   },
   // Question n°11
   {
-    question: "Question 11 : Quelle est l'idée centrale du mythe de <em>l'anneau de Gygès</em> raconté par Platon dans la <em>République</em> ?",
+    question: "Question n°11 : Quelle est l'idée centrale du mythe de <em>l'anneau de Gygès</em> raconté par Platon dans la <em>République</em> ?",
     answers: [
       "Il montre que la justice est un bien en soi, précieux pour l'âme, même si on peut être injuste en toute impunité.",
       "Il prouve que tout homme, dès qu'il peut être injuste sans en subir les conséquences, choisit naturellement l'injustice pour son profit.",
@@ -139,7 +139,7 @@ const questions = [
   },
   // Question n°12
   {
-    question: "Question 12 : Que désigne le concept de <em>parole anonyme</em> critiqué par le philosophe Jacques Ellul ?",
+    question: "Question n°12 : Que désigne le concept de <em>parole anonyme</em> critiqué par le philosophe Jacques Ellul ?",
     answers: [
       "La parole écrite, jugée froide et impersonnelle par rapport à la parole vivante.",
       "La parole des médias de masse et de la propagande, qui ne semble venir de personne en particulier et s'impose ainsi comme une évidence indiscutable.",
@@ -150,7 +150,7 @@ const questions = [
   },
   // Question n°13
   {
-    question: "Question 13 : Comment Judith Butler étend-elle la notion de performativité à la construction des identités de genre ?",
+    question: "Question n°13 : Comment Judith Butler étend-elle la notion de performativité à la construction des identités de genre ?",
     answers: [
       "Elle affirme que le genre est une essence biologique fixe, simplement exprimée par la parole.",
       "Elle soutient que le genre est une performance répétée, un <em>faire</em> stylisé et contraint par des normes sociales.",
@@ -161,7 +161,7 @@ const questions = [
   },
   // Question n°14
   {
-    question: "Question 14 : Quelle distinction fondamentale Saussure établit-il entre la <em>langue</em> et la <em>parole</em> ?",
+    question: "Question n°14 : Quelle distinction fondamentale Saussure établit-il entre la <em>langue</em> et la <em>parole</em> ?",
     answers: [
       "La <em>langue</em> est l'acte individuel de communication, la <em>parole</em> est le système social de signes.",
       "La <em>langue</em> est un système social (le code), tandis que la <em>parole</em> est un acte individuel d'utilisation de ce système.",
@@ -172,7 +172,7 @@ const questions = [
   },
   // Question n°15
   {
-    question: "Question 15 : À quelle partie du discours classique correspond la <em>narratio</em> ?",
+    question: "Question n°15 : À quelle partie du discours classique correspond la <em>narratio</em> ?",
     answers: [
       "À l'exorde, qui vise à capter l'attention et la bienveillance de l'auditoire.",
       "À la narration, qui expose les faits de manière claire et ordonnée, en préparation aux arguments.",
@@ -183,7 +183,7 @@ const questions = [
   },
   // Question n°16
   {
-    question: "Question 16 : Qu'est-ce qu'un <em>enthymème</em> (ἐνθύμημα) dans la théorie rhétorique d'Aristote ?",
+    question: "Question n°16 : Qu'est-ce qu'un <em>enthymème</em> (ἐνθύμημα) dans la théorie rhétorique d'Aristote ?",
     answers: [
       "Une métaphore particulièrement frappante et émouvante, destinée à toucher le pathos.",
       "Un syllogisme rhétorique, c'est-à-dire un raisonnement dont une des prémisses est tirée de l'opinion commune.",
@@ -194,7 +194,7 @@ const questions = [
   },
   // Question n°17
   {
-    question: "Question 17 : Quelle est la fonction principale de l'<em>exorde</em> dans la structure classique du discours ?",
+    question: "Question n°17 : Quelle est la fonction principale de l'<em>exorde</em> dans la structure classique du discours ?",
     answers: [
       "Développer les preuves et arguments de façon détaillée et ordonnée.",
       "Exposer les faits de l'affaire de manière neutre et chronologique.",
@@ -205,7 +205,7 @@ const questions = [
   },
   // Question n°18
   {
-    question: "Question 18 : Comment Platon, dans le <em>Phèdre</em>, critique-t-il l'écriture par rapport à la parole vivante ?",
+    question: "Question n°18 : Comment Platon, dans le <em>Phèdre</em>, critique-t-il l'écriture par rapport à la parole vivante ?",
     answers: [
       "Il la loue comme un progrès décisif permettant la diffusion exacte et durable de la connaissance.",
       "Il la considère comme un pharmakon (remède/poison) incapable de répondre aux questions.",
@@ -216,7 +216,7 @@ const questions = [
   },
   // Question n°19
   {
-    question: "Question 19 : Que signifie l'expression <em>parole vide</em> souvent associée à la critique de la communication politique contemporaine ?",
+    question: "Question n°19 : Que signifie l'expression <em>parole vide</em> souvent associée à la critique de la communication politique contemporaine ?",
     answers: [
       "Une parole qui utilise un vocabulaire technique et précis, incompréhensible au grand public.",
       "Une parole qui promet des actions mais n'engage à rien de concret, se contentant de formules creuses et de slogans sans substance.",
@@ -227,7 +227,7 @@ const questions = [
   },
   // Question n°20
   {
-    question: "Question 20 : Quelle est la différence entre <em>parole authentique</em> et <em>parole inauthentique</em> dans l'analyse du <em>on</em> par Heidegger ?",
+    question: "Question n°20 : Quelle est la différence entre <em>parole authentique</em> et <em>parole inauthentique</em> dans l'analyse du <em>on</em> par Heidegger ?",
     answers: [
       "La parole authentique est celle des grands auteurs, la parole inauthentique est celle de la conversation quotidienne.",
       "La parole authentique engage l'existence de celui qui parle, la parole inauthentique répète les lieux communs anonymes du <em>on</em>.",
@@ -238,7 +238,7 @@ const questions = [
   },
   // Question n°21
   {
-    question: "Question 21 : Que permet de comprendre l'analyse du discours de Marc Antoine dans <em>Jules César</em> de Shakespeare ?",
+    question: "Question n°21 : Que permet de comprendre l'analyse du discours de Marc Antoine dans <em>Jules César</em> de Shakespeare ?",
     answers: [
       "Elle montre la supériorité de l'argumentation logique sur l'appel aux émotions.",
       "Elle illustre la puissance de la parole pour retourner l'opinion en jouant sur le pathos et en feignant de respecter les convenances.",
@@ -249,7 +249,7 @@ const questions = [
   },
   // Question n°22
   {
-    question: "Question 22 : Quel rôle joue le <em>silence</em> dans l'art de la parole, notamment dans la rhétorique ?",
+    question: "Question n°22 : Quel rôle joue le <em>silence</em> dans l'art de la parole, notamment dans la rhétorique ?",
     answers: [
       "Le silence est toujours un échec de la parole, un vide à combler à tout prix.",
       "Le silence peut être un moment de respiration, mais il n'a aucune valeur persuasive en lui-même.",
@@ -260,7 +260,7 @@ const questions = [
   },
   // Question n°23
   {
-    question: "Question 23 : Qu'est-ce que la <em>captatio benevolentiae</em>, technique souvent utilisée dans l'exorde ?",
+    question: "Question n°23 : Qu'est-ce que la <em>captatio benevolentiae</em>, technique souvent utilisée dans l'exorde ?",
     answers: [
       "Une technique pour discréditer l'adversaire en exposant ses fautes passées.",
       "Une technique pour résumer de manière percutante tous les arguments à la fin du discours.",
@@ -271,7 +271,7 @@ const questions = [
   },
   // Question n°24
   {
-    question: "Question 24 : Comment la publicité utilise-t-elle typiquement les ressorts de la rhétorique aristotélicienne ?",
+    question: "Question n°24 : Comment la publicité utilise-t-elle typiquement les ressorts de la rhétorique aristotélicienne ?",
     answers: [
       "Elle se limite à fournir des informations techniques et objectives sur le produit (logos pur).",
       "Elle ignore délibérément l'ethos et le pathos pour se concentrer sur le prix, argument purement rationnel.",
@@ -282,7 +282,7 @@ const questions = [
   },
   // Question n°25
   {
-    question: "Question 25 : Quelle est la thèse de Gorgias dans son traité <em>Sur le non-être</em> concernant la communication ?",
+    question: "Question n°25 : Quelle est la thèse de Gorgias dans son traité <em>Sur le non-être</em> concernant la communication ?",
     answers: [
       "La parole transmet parfaitement la pensée et la réalité telle qu'elle est.",
       "Si quelque chose existait, on ne pourrait le connaître ; si on pouvait le connaître, on ne pourrait le communiquer.",
@@ -293,7 +293,7 @@ const questions = [
   },
   // Question n°26
   {
-    question: "Question 26 : Que signifie la formule de La Boétie sur la servitude volontaire : <em>Soyez résolus à ne plus servir, et vous voilà libres</em> ?",
+    question: "Question n°26 : Que signifie la formule de La Boétie sur la servitude volontaire : <em>Soyez résolus à ne plus servir, et vous voilà libres</em> ?",
     answers: [
       "Elle affirme que la liberté est un don des dieux ou des rois, qu'on ne peut acquérir par soi-même.",
       "Elle souligne que l'asservissement politique repose sur le consentement actif des dominés.",
@@ -304,7 +304,7 @@ const questions = [
   },
   // Question n°27
   {
-    question: "Question 27 : Quel est le rôle de la <em>métaphore</em> dans un discours persuasif selon la rhétorique classique ?",
+    question: "Question n°27 : Quel est le rôle de la <em>métaphore</em> dans un discours persuasif selon la rhétorique classique ?",
     answers: [
       "Elle est déconseillée car elle obscurcit le sens et nuit à la clarté logique du discours.",
       "Elle permet d'habiller une idée abstraite dans une image concrète et frappante.",
@@ -315,7 +315,7 @@ const questions = [
   },
   // Question n°28
   {
-    question: "Question 28 : Comment définir la notion de <em>violence symbolique</em> développée par Pierre Bourdieu ?",
+    question: "Question n°28 : Comment définir la notion de <em>violence symbolique</em> développée par Pierre Bourdieu ?",
     answers: [
       "Une violence physique déguisée en rituel ou en cérémonie traditionnelle.",
       "Une violence exercée à travers des symboles culturels, comme les drapeaux ou les hymnes, lors de conflits ouverts.",
@@ -326,7 +326,7 @@ const questions = [
   },
   // Question n°29
   {
-    question: "Question 29 : À quelle situation correspond le <em>genre judiciaire</em> du discours selon la classification d'Aristote ?",
+    question: "Question n°29 : À quelle situation correspond le <em>genre judiciaire</em> du discours selon la classification d'Aristote ?",
     answers: [
       "Il vise à délibérer sur les avantages et inconvénients d'une future décision (assemblée).",
       "Il vise à établir la justice en accusant ou en défendant concernant des actes passés (tribunal).",
@@ -337,7 +337,7 @@ const questions = [
   },
   // Question n°30
   {
-    question: "Question 30 : Quel est le sens de l'expression <em>faire autorité</em> appliquée à une parole ou à un texte ?",
+    question: "Question n°30 : Quel est le sens de l'expression <em>faire autorité</em> appliquée à une parole ou à un texte ?",
     answers: [
       "Être écrit par une personne occupant un poste de pouvoir officiel.",
       "Être considéré comme source légitime et digne de foi.",
@@ -348,7 +348,7 @@ const questions = [
   },
   // Question n°31
   {
-    question: "Question 31 : Que désigne le concept de <em>parole située</em> par opposition à une prétendue neutralité du discours ?",
+    question: "Question n°31 : Que désigne le concept de <em>parole située</em> par opposition à une prétendue neutralité du discours ?",
     answers: [
       "Une parole prononcée dans un lieu géographique précis, comme une place publique.",
       "Une parole qui reconnaît et assume la position de celui qui parle.",
@@ -359,7 +359,7 @@ const questions = [
   },
   // Question n°32
   {
-    question: "Question 32 : Comment Cicéron définit-il l'orateur idéal dans le <em>De Oratore</em> ?",
+    question: "Question n°32 : Comment Cicéron définit-il l'orateur idéal dans le <em>De Oratore</em> ?",
     answers: [
       "Un technicien spécialisé maîtrisant seulement les règles de l'éloquence.",
       "Un philosophe qui méprise les techniques de persuasion et ne cherche que la vérité abstraite.",
@@ -370,7 +370,7 @@ const questions = [
   },
   // Question n°33
   {
-    question: "Question 33 : Qu'est-ce qu'un <em>lieu commun</em> (topos) en rhétorique ?",
+    question: "Question n°33 : Qu'est-ce qu'un <em>lieu commun</em> (topos) en rhétorique ?",
     answers: [
       "Un endroit géographique souvent cité dans les discours, comme Rome ou Athènes.",
       "Un argument banal et éculé, dépourvu de toute originalité et donc à éviter absolument.",
@@ -381,7 +381,7 @@ const questions = [
   },
   // Question n°34
   {
-    question: "Question 34 : Quelle est la fonction de la <em>péroraison</em> dans la structure d'un discours classique ?",
+    question: "Question n°34 : Quelle est la fonction de la <em>péroraison</em> dans la structure d'un discours classique ?",
     answers: [
       "Exposer les faits de manière claire et ordonnée pour préparer l'auditoire.",
       "Développer les preuves et les arguments principaux de manière détaillée.",
@@ -392,7 +392,7 @@ const questions = [
   },
   // Question n°35
   {
-    question: "Question 35 : En quoi consiste la <em>parole prophétique</em> telle qu'analysée dans les traditions religieuses ?",
+    question: "Question n°35 : En quoi consiste la <em>parole prophétique</em> telle qu'analysée dans les traditions religieuses ?",
     answers: [
       "Une parole qui prédit l'avenir avec une précision scientifique infaillible.",
       "Une parole qui dénonce les injustices présentes au nom d'une Loi ou d'une Vérité.",
@@ -403,7 +403,7 @@ const questions = [
   },
   // Question n°36
   {
-    question: "Question 36 : Comment le philosophe Jürgen Habermas conçoit-il l'idéal d'une <em>situation de parole idéale</em> ?",
+    question: "Question n°36 : Comment le philosophe Jürgen Habermas conçoit-il l'idéal d'une <em>situation de parole idéale</em> ?",
     answers: [
       "Une situation où seul un expert détenteur du savoir a le droit de parler, les autres écoutant passivement.",
       "Une situation de communication où seuls comptent la force du meilleur argument et la volonté de coopération.",
@@ -414,7 +414,7 @@ const questions = [
   },
   // Question n°37
   {
-    question: "Question 37 : Que signifie l'expression <em>agir en paroles</em> dans le vocabulaire d'Hannah Arendt ?",
+    question: "Question n°37 : Que signifie l'expression <em>agir en paroles</em> dans le vocabulaire d'Hannah Arendt ?",
     answers: [
       "Mentir ou tromper par des promesses qu'on ne tiendra pas.",
       "Se révéler aux autres, débattre et inaugurer du nouveau dans l'espace public.",
@@ -425,7 +425,7 @@ const questions = [
   },
   // Question n°38
   {
-    question: "Question 38 : Quelle est la différence entre un <em>dialogue</em> philosophique (comme chez Platon) et un <em>débat</em> rhétorique ?",
+    question: "Question n°38 : Quelle est la différence entre un <em>dialogue</em> philosophique (comme chez Platon) et un <em>débat</em> rhétorique ?",
     answers: [
       "Le dialogue vise à faire triompher une opinion par tous les moyens, le débat vise à trouver la vérité ensemble.",
       "Le dialogue vise la victoire d'un interlocuteur sur l'autre par la persuasion et l'éloquence.",
@@ -436,7 +436,7 @@ const questions = [
   },
   // Question n°39
   {
-    question: "Question 39 : Que désigne le concept de <em>double contrainte</em> (double bind) dans la communication, analysé par l'école de Palo Alto ?",
+    question: "Question n°39 : Que désigne le concept de <em>double contrainte</em> (double bind) dans la communication, analysé par l'école de Palo Alto ?",
     answers: [
       "Une situation où deux interlocuteurs se contredisent mutuellement de manière constructive.",
       "Une situation où un même message transmet deux ordres ou significations contradictoires et impossibles à satisfaire simultanément, générant une impasse psychologique.",
@@ -447,7 +447,7 @@ const questions = [
   },
   // Question n°40
   {
-    question: "Question 40 : Comment la notion de <em>parole donnée</em> fonde-t-elle un engagement moral particulier ?",
+    question: "Question n°40 : Comment la notion de <em>parole donnée</em> fonde-t-elle un engagement moral particulier ?",
     answers: [
       "La parole donnée est un simple signal de bonne intention, sans valeur contraignante si les circonstances changent.",
       "La parole donnée est un acte performatif qui engage l'honneur et la fiabilité de celui qui parle.",
@@ -458,7 +458,7 @@ const questions = [
   },
   // Question n°41
   {
-    question: "Question 41 : Quel est le sens de la distinction entre <em>langage</em>, <em>langue</em> et <em>parole</em> dans une approche intégrée ?",
+    question: "Question n°41 : Quel est le sens de la distinction entre <em>langage</em>, <em>langue</em> et <em>parole</em> dans une approche intégrée ?",
     answers: [
       "Le <em>langage</em> est la faculté humaine, la <em>langue</em> est sa réalisation historique, la <em>parole</em> est son usage individuel.",
       "La <em>langue</em> est le style personnel, la <em>parole</em> est la grammaire, le <em>langage</em> est le vocabulaire.",
@@ -469,7 +469,7 @@ const questions = [
   },
   // Question n°42
   {
-    question: "Question 42 : Que signifie l'idée que la parole peut être un <em>acte</em> et non seulement une description ?",
+    question: "Question n°42 : Que signifie l'idée que la parole peut être un <em>acte</em> et non seulement une description ?",
     answers: [
       "Que parler demande un effort physique (bouger la langue, les cordes vocales) comparable à un travail manuel.",
       "Que certaines paroles réalisent immédiatement ce qu'elles disent (comme promettre, ordonner, baptiser).",
@@ -480,7 +480,7 @@ const questions = [
   },
   // Question n°43
   {
-    question: "Question 43 : Quel est le rôle de l'<em>aposiopèse</em> comme figure de rhétorique ?",
+    question: "Question n°43 : Quel est le rôle de l'<em>aposiopèse</em> comme figure de rhétorique ?",
     answers: [
       "Répéter un mot ou une phrase pour insister et renforcer l'argument.",
       "Interrompre brusquement son discours, laissant une phrase inachevée pour suggérer une émotion trop forte ou une idée qu'on ne peut/veut dire.",
@@ -491,7 +491,7 @@ const questions = [
   },
   // Question n°44
   {
-    question: "Question 44 : Comment le philosophe Paul Ricœur analyse-t-il le rapport entre <em>parole</em> et <em>confiance</em> ?",
+    question: "Question n°44 : Comment le philosophe Paul Ricœur analyse-t-il le rapport entre <em>parole</em> et <em>confiance</em> ?",
     answers: [
       "La parole est par essence mensongère, elle détruit nécessairement la confiance.",
       "La confiance est un préalable nécessaire à tout échange.",
@@ -502,7 +502,7 @@ const questions = [
   },
   // Question n°45
   {
-    question: "Question 45 : Quelle est la caractéristique d'un <em>discours délibératif</em> selon Aristote ?",
+    question: "Question n°45 : Quelle est la caractéristique d'un <em>discours délibératif</em> selon Aristote ?",
     answers: [
       "Il vise à juger des actions passées, pour attribuer un blâme ou une louange.",
       "Il vise à délibérer sur l'avenir, à conseiller (exhorter) ou dissuader (détourner) une assemblée sur une décision à prendre.",
@@ -513,7 +513,7 @@ const questions = [
   },
   // Question n°46
   {
-    question: "Question 46 : Que signifie l'expression <em>perte d'autorité de la parole</em> dans le monde contemporain ?",
+    question: "Question n°46 : Que signifie l'expression <em>perte d'autorité de la parole</em> dans le monde contemporain ?",
     answers: [
       "Le fait que les gens parlent moins qu'avant, par manque de temps ou d'intérêt.",
       "La diminution du crédit accordé aux paroles des institutions et des experts, perçues comme mensongères ou incompétentes.",
@@ -524,7 +524,7 @@ const questions = [
   },
   // Question n°47
   {
-    question: "Question 47 : Comment la <em>propagande</em> moderne utilise-t-elle systématiquement les ressorts de la persuasion ?",
+    question: "Question n°47 : Comment la <em>propagande</em> moderne utilise-t-elle systématiquement les ressorts de la persuasion ?",
     answers: [
       "Elle présente des arguments complexes et contradictoires pour forcer à la réflexion critique.",
       "Elle repose sur la simplification, la mobilisation d'émotions primaires et la création d'un adversaire.",
@@ -535,7 +535,7 @@ const questions = [
   },
   // Question n°48
   {
-    question: "Question 48 : Quelle est la signification de la formule <em>La parole est moitié à celui qui parle, moitié à celui qui l'écoute</em> (Montaigne) ?",
+    question: "Question n°48 : Quelle est la signification de la formule <em>La parole est moitié à celui qui parle, moitié à celui qui l'écoute</em> (Montaigne) ?",
     answers: [
       "Le sens d'une parole est entièrement déterminé par l'intention de celui qui la prononce.",
       "Le sens d'une parole dépend de l'intention de l'émetteur et de l'interprétation de l'auditeur.",
@@ -546,7 +546,7 @@ const questions = [
   },
   // Question n°49
   {
-    question: "Question 49 : Que permet de comprendre l'analyse des discours d'Adolf Hitler par les chercheurs ?",
+    question: "Question n°49 : Que permet de comprendre l'analyse des discours d'Adolf Hitler par les chercheurs ?",
     answers: [
       "Qu'il était un orateur médiocre, dont le succès tenait uniquement à la contrainte policière.",
       "Qu'il maîtrisait parfaitement les techniques de la rhétorique et de la psychologie des foules.",
@@ -557,7 +557,7 @@ const questions = [
   },
   // Question n°50
   {
-    question: "Question 50 : Qu'est-ce que la <em>parole indirecte</em> ou le <em>langage oblique</em> dans des contextes de censure ou de domination ?",
+    question: "Question n°50 : Qu'est-ce que la <em>parole indirecte</em> ou le <em>langage oblique</em> dans des contextes de censure ou de domination ?",
     answers: [
       "Une parole qui utilise des moyens pour dire ce qui ne peut être dit ouvertement.",
       "Une parole prononcée dans une langue étrangère que les dominants ne comprennent pas.",
@@ -568,7 +568,7 @@ const questions = [
   },
   // Question n°51
   {
-    question: "Question 51 : Comment la <em>parole poétique</em> se distingue-t-elle de la parole utilitaire ou informative ?",
+    question: "Question n°51 : Comment la <em>parole poétique</em> se distingue-t-elle de la parole utilitaire ou informative ?",
     answers: [
       "La parole poétique vise uniquement à transmettre une information factuelle avec la plus grande précision possible.",
       "La parole poétique travaille le langage et touche à la dimension sensible et symbolique de l'existence.",
@@ -579,7 +579,7 @@ const questions = [
   },
   // Question n°52
   {
-    question: "Question 52 : Quel est l'enjeu du concept de <em>parole juste</em> dans la philosophie morale et politique ?",
+    question: "Question n°52 : Quel est l'enjeu du concept de <em>parole juste</em> dans la philosophie morale et politique ?",
     answers: [
       "Trouver les mots exacts et techniques pour désigner une réalité sans équivoque.",
       "Prononcer des paroles qui soient vraies et ajustées au contexte.",
@@ -590,7 +590,7 @@ const questions = [
   },
   // Question n°53
   {
-    question: "Question 53 : Que signifie l'idée d'une <em>éloquence du silence</em> ?",
+    question: "Question n°53 : Que signifie l'idée d'une <em>éloquence du silence</em> ?",
     answers: [
       "Le fait que les silencieux sont toujours plus éloquents que les bavards, car ils réfléchissent avant de parler.",
       "La capacité du silence à communiquer plus intensément qu'un flot de paroles.",
@@ -601,7 +601,7 @@ const questions = [
   },
   // Question n°54
   {
-    question: "Question 54 : Comment la <em>parole juridique</em> (droit, verdict) se caractérise-t-elle par rapport à la parole ordinaire ?",
+    question: "Question n°54 : Comment la <em>parole juridique</em> (droit, verdict) se caractérise-t-elle par rapport à la parole ordinaire ?",
     answers: [
       "C'est une parole libre, créative, qui invente les règles au fur et à mesure des cas.",
       "C'est une parole contrainte par des textes, des procédures et une autorité institutionnelle.",
@@ -612,7 +612,7 @@ const questions = [
   },
   // Question n°55
   {
-    question: "Question 55 : Quelle est la fonction du <em>mythe</em> comme récit fondateur dans une communauté ?",
+    question: "Question n°55 : Quelle est la fonction du <em>mythe</em> comme récit fondateur dans une communauté ?",
     answers: [
       "Rapporter avec exactitude scientifique les origines historiques d'un peuple.",
       "Fonder, sous forme narrative et symbolique une identité collective et une cohésion.",
@@ -623,7 +623,7 @@ const questions = [
   },
   // Question n°56
   {
-    question: "Question 56 : Que permet d'analyser le concept de <em>parole aliénée</em> chez Marx et les théoriciens critiques ?",
+    question: "Question n°56 : Que permet d'analyser le concept de <em>parole aliénée</em> chez Marx et les théoriciens critiques ?",
     answers: [
       "Le fait de parler une langue étrangère que l'on maîtrise mal, conduisant à des malentendus.",
       "Le fait que la parole devient un instrument de domination masquant les rapports d'exploitation réels.",
@@ -634,7 +634,7 @@ const questions = [
   },
   // Question n°57
   {
-    question: "Question 57 : Comment définir l'<em>ironie socratique</em> ?",
+    question: "Question n°57 : Comment définir l'<em>ironie socratique</em> ?",
     answers: [
       "Une moquerie méchante et blessante destinée à humilier l'interlocuteur.",
       "Une figure où l'on dit le contraire de ce que l'on pense, pour se moquer ou critiquer de manière indirecte.",
@@ -645,7 +645,7 @@ const questions = [
   },
   // Question n°58
   {
-    question: "Question 58 : Quelle est la thèse de Walter Benjamin dans <em>Le Narrateur</em> concernant la modernité ?",
+    question: "Question n°58 : Quelle est la thèse de Walter Benjamin dans <em>Le Narrateur</em> concernant la modernité ?",
     answers: [
       "La modernité invente de nouvelles formes de narration bien supérieures aux anciennes.",
       "La modernité, avec le règne de l'information (presse) et du roman, voit le déclin de l'art de narrer.",
@@ -656,7 +656,7 @@ const questions = [
   },
   // Question n°59
   {
-    question: "Question 59 : Que signifie l'expression <em>prendre la parole</em> dans un contexte politique ou militant ?",
+    question: "Question n°59 : Que signifie l'expression <em>prendre la parole</em> dans un contexte politique ou militant ?",
     answers: [
       "Attendre poliment que l'on vous donne la permission de parler lors d'une réunion officielle.",
       "S'emparer activement du droit de s'exprimer et se constituer en sujet politique.",
@@ -667,7 +667,7 @@ const questions = [
   },
   // Question n°60
   {
-    question: "Question 60 : Comment la <em>parole amoureuse</em> se distingue-t-elle des autres formes de discours ?",
+    question: "Question n°60 : Comment la <em>parole amoureuse</em> se distingue-t-elle des autres formes de discours ?",
     answers: [
       "Elle est purement utilitaire et vise à obtenir des faveurs sexuelles de l'autre.",
       "Elle vise moins à informer qu'à créer et entretenir un lien unique, à travers des formules ritualisées.",
@@ -678,7 +678,7 @@ const questions = [
   },
   // Question n°61
   {
-    question: "Question 61 : Quel est le rôle des <em>connecteurs logiques</em> dans l'argumentation d'un discours ?",
+    question: "Question n°61 : Quel est le rôle des <em>connecteurs logiques</em> dans l'argumentation d'un discours ?",
     answers: [
       "Ils servent uniquement à embellir le style et à montrer la culture de l'orateur.",
       "Ils sont superflus et alourdissent le discours, il vaut mieux s'en passer pour être direct.",
@@ -689,7 +689,7 @@ const questions = [
   },
   // Question n°62
   {
-    question: "Question 62 : Que signifie l'idée d'une <em>crise de la parole</em> dans la société contemporaine ?",
+    question: "Question n°62 : Que signifie l'idée d'une <em>crise de la parole</em> dans la société contemporaine ?",
     answers: [
       "Une pénurie physique de mots nouveaux dans la langue française.",
       "Un sentiment que le lien social se défait au profit de la violence ou du silence.",
@@ -700,7 +700,7 @@ const questions = [
   },
   // Question n°63
   {
-    question: "Question 63 : Comment l'<em>apologie</em> (discours de défense) se distingue-t-elle de la simple justification ?",
+    question: "Question n°63 : Comment l'<em>apologie</em> (discours de défense) se distingue-t-elle de la simple justification ?",
     answers: [
       "L'apologie est une justification écrite, tandis que la justification est orale.",
       "L'apologie est un discours public et structuré pour défendre des actes, une personne...",
@@ -711,7 +711,7 @@ const questions = [
   },
   // Question n°64
   {
-    question: "Question 64 : Quelle est la fonction de la <em>rhétorique des chiffres</em> dans le discours politique ou médiatique ?",
+    question: "Question n°64 : Quelle est la fonction de la <em>rhétorique des chiffres</em> dans le discours politique ou médiatique ?",
     answers: [
       "Les chiffres permettent d'impressionner l'auditoire par leur complexité et de le décourager de réfléchir.",
       "Les chiffres donnent une apparence d'objectivité scientifique et de neutralité au discours.",
@@ -722,7 +722,7 @@ const questions = [
   },
   // Question n°65
   {
-    question: "Question 65 : Comment la <em>parole testimonial</em> (témoignage) acquiert-elle une autorité particulière ?",
+    question: "Question n°65 : Comment la <em>parole testimonial</em> (témoignage) acquiert-elle une autorité particulière ?",
     answers: [
       "Par la beauté de son style et la maîtrise de l'art oratoire de celui qui témoigne.",
       "Par la position institutionnelle prestigieuse du témoin (expert, ministre).",
@@ -733,7 +733,7 @@ const questions = [
   },
   // Question n°66
   {
-    question: "Question 66 : Que désigne l'expression <em>parole d'ordre</em> dans le vocabulaire politique et militant ?",
+    question: "Question n°66 : Que désigne l'expression <em>parole d'ordre</em> dans le vocabulaire politique et militant ?",
     answers: [
       "Un ordre militaire donné à voix haute sur un champ de bataille.",
       "Un slogan synthétique et incisif qui sert à mobiliser et unifier un groupe.",
@@ -744,7 +744,7 @@ const questions = [
   },
   // Question n°67
   {
-    question: "Question 67 : Comment le philosophe Emmanuel Levinas conçoit-il la parole dans la relation éthique à autrui ?",
+    question: "Question n°67 : Comment le philosophe Emmanuel Levinas conçoit-il la parole dans la relation éthique à autrui ?",
     answers: [
       "La parole est d'abord un outil pour imposer sa volonté à l'autre et affirmer son moi.",
       "La parole est accueil, responsabilité et engagement avant d'être échange d'informations.",
@@ -755,7 +755,7 @@ const questions = [
   },
   // Question n°68
   {
-    question: "Question 68 : Qu'est-ce qu'un <em>paradoxe</em> dans un discours, et quel effet peut-il produire ?",
+    question: "Question n°68 : Qu'est-ce qu'un <em>paradoxe</em> dans un discours, et quel effet peut-il produire ?",
     answers: [
       "Une affirmation manifestement fausse et absurde, qui discrédite immédiatement celui qui la prononce.",
       "Une affirmation qui contient une vérité profonde, visant à surprendre et à faire réfléchir.",
@@ -766,7 +766,7 @@ const questions = [
   },
   // Question n°69
   {
-    question: "Question 69 : Comment la <em>parole proverbiale</em> ou la maxime transmet-elle une sagesse pratique ?",
+    question: "Question n°69 : Comment la <em>parole proverbiale</em> ou la maxime transmet-elle une sagesse pratique ?",
     answers: [
       "Elle donne une règle de conduite universelle et absolue, valable en tout temps et en tout lieu.",
       "Elle offre un guide pour l'action dans des situations typiques.",
@@ -777,7 +777,7 @@ const questions = [
   },
   // Question n°70
   {
-    question: "Question 70 : Quelle est la différence entre <em>débattre</em> et <em>dialoguer</em> selon une conception exigeante de la parole ?",
+    question: "Question n°70 : Quelle est la différence entre <em>débattre</em> et <em>dialoguer</em> selon une conception exigeante de la parole ?",
     answers: [
       "Débattre, c'est chercher à avoir raison ; dialoguer, c'est chercher à comprendre l'autre.",
       "Débattre est une pratique pacifique, le dialogue est une forme de combat verbal violent.",
@@ -788,7 +788,7 @@ const questions = [
   },
   // Question n°71
   {
-    question: "Question 71 : Que signifie l'idée d'une <em>parole libératrice</em> ou <em>émancipatrice</em> ?",
+    question: "Question n°71 : Que signifie l'idée d'une <em>parole libératrice</em> ou <em>émancipatrice</em> ?",
     answers: [
       "Une parole qui libère de l'obligation d'écouter les autres, permettant de ne faire que ce qu'on veut.",
       "Une parole qui, en nommant l'oppression, permet d'imaginer un autre possible.",
@@ -799,7 +799,7 @@ const questions = [
   },
   // Question n°72
   {
-    question: "Question 72 : Comment l'<em>humour</em> et l'<em>ironie</em> peuvent-ils être des armes critiques dans un discours ?",
+    question: "Question n°72 : Comment l'<em>humour</em> et l'<em>ironie</em> peuvent-ils être des armes critiques dans un discours ?",
     answers: [
       "Ils discréditent toujours celui qui les utilise, le faisant passer pour frivole ou peu sérieux.",
       "Ils permettent de faire passer une critique de manière indirecte et plus acceptable.",
@@ -810,7 +810,7 @@ const questions = [
   },
   // Question n°73
   {
-    question: "Question 73 : Quelle est la fonction de la <em>prétermission</em> (ou prétérition) comme figure de rhétorique ?",
+    question: "Question n°73 : Quelle est la fonction de la <em>prétermission</em> (ou prétérition) comme figure de rhétorique ?",
     answers: [
       "Affirmer que l'on va passer sous silence un point, pour en fait le mentionner et lui donner ainsi plus d'importance.",
       "Commettre volontairement une faute de grammaire pour montrer son naturel et sa spontanéité.",
@@ -821,7 +821,7 @@ const questions = [
   },
   // Question n°74
   {
-    question: "Question 74 : Comment la <em>parole sacrée</em> (texte religieux, serment) se distingue-t-elle de la parole profane ?",
+    question: "Question n°74 : Comment la <em>parole sacrée</em> (texte religieux, serment) se distingue-t-elle de la parole profane ?",
     answers: [
       "Elle est toujours prononcée dans une langue ancienne et incompréhensible pour les fidèles.",
       "Elle est considérée comme investie d'une autorité absolue, et son énonciation est soumise à des rites stricts.",
@@ -832,7 +832,7 @@ const questions = [
   },
   // Question n°75
   {
-    question: "Question 75 : Que signifie l'expression <em>la parole est d'argent, le silence est d'or</em> dans une perspective éthique ?",
+    question: "Question n°75 : Que signifie l'expression <em>la parole est d'argent, le silence est d'or</em> dans une perspective éthique ?",
     answers: [
       "Il faut toujours se taire, car parler coûte de l'argent et peut rapporter des ennuis.",
       "Il est souvent préférable de se taire que de parler à tort et à travers.",
@@ -843,7 +843,7 @@ const questions = [
   },
   // Question n°76
   {
-    question: "Question 76 : Comment le concept de <em>parole plurielle</em> s'oppose-t-il à celui de parole unique et autoritaire ?",
+    question: "Question n°76 : Comment le concept de <em>parole plurielle</em> s'oppose-t-il à celui de parole unique et autoritaire ?",
     answers: [
       "Il désigne le fait de parler plusieurs langues couramment, ce qui est un signe d'ouverture d'esprit.",
       "Il valorise la coexistence et le dialogue de paroles différentes, issues de points de vue multiples.",
@@ -854,7 +854,7 @@ const questions = [
   },
   // Question n°77
   {
-    question: "Question 77 : Quel est le rôle de l'<em>exemple</em> (paradeigma) dans l'argumentation rhétorique selon Aristote ?",
+    question: "Question n°77 : Quel est le rôle de l'<em>exemple</em> (paradeigma) dans l'argumentation rhétorique selon Aristote ?",
     answers: [
       "Il sert uniquement à divertir l'auditoire et à le détendre entre deux arguments sérieux.",
       "Il illustre et concrétise un argument général, le rendant plus compréhensible et plus frappant ; il peut aussi servir d'induction rhétorique (passer d'un cas particulier à une conclusion générale).",
@@ -865,7 +865,7 @@ const questions = [
   },
   // Question n°78
   {
-    question: "Question 78 : Que signifie l'expression <em>perdre la parole</em> (aphasie, sidération) dans une perspective existentielle ?",
+    question: "Question n°78 : Que signifie l'expression <em>perdre la parole</em> (aphasie, sidération) dans une perspective existentielle ?",
     answers: [
       "Ne plus savoir parler une langue étrangère qu'on avait apprise.",
       "Être privé, temporairement ou définitivement, de la capacité de parler.",
@@ -876,7 +876,7 @@ const questions = [
   },
   // Question n°79
   {
-    question: "Question 79 : Comment la <em>parole diplomatique</em> utilise-t-elle le sous-entendu et la litote ?",
+    question: "Question n°79 : Comment la <em>parole diplomatique</em> utilise-t-elle le sous-entendu et la litote ?",
     answers: [
       "Elle dit toujours exactement ce qu'elle pense, avec une franchise totale, car la confiance est essentielle en diplomatie.",
       "Elle est souvent mesurée, sans rupture ouverte, laissant une porte de sortie à l'interlocuteur.",
@@ -887,7 +887,7 @@ const questions = [
   },
   // Question n°80
   {
-    question: "Question 80 : Quel est l'enjeu de la <em>citation</em> et de la <em>référence</em> dans un discours savant ou politique ?",
+    question: "Question n°80 : Quel est l'enjeu de la <em>citation</em> et de la <em>référence</em> dans un discours savant ou politique ?",
     answers: [
       "Elles servent uniquement à montrer l'érudition de l'orateur et à impressionner un public ignorant.",
       "Elles permettent de s'appuyer sur une autorité reconnue pour renforcer son propre argument.",
@@ -898,7 +898,7 @@ const questions = [
   },
   // Question n°81
   {
-    question: "Question 81 : Comment la <em>parole médiatique</em> (journalistique) est-elle contrainte par ses formats et ses impératifs ?",
+    question: "Question n°81 : Comment la <em>parole médiatique</em> (journalistique) est-elle contrainte par ses formats et ses impératifs ?",
     answers: [
       "Elle est totalement libre et créative, les journalistes disent exactement ce qu'ils pensent sans pression.",
       "Elle est soumise à la recherche de l'immédiateté, ce qui peut nuire à la profondeur de l'analyse.",
@@ -909,7 +909,7 @@ const questions = [
   },
   // Question n°82
   {
-    question: "Question 82 : Qu'est-ce que la <em>maïeutique</em> (μαιευτικὴ τέχνη) socratique ?",
+    question: "Question n°82 : Qu'est-ce que la <em>maïeutique</em> (μαιευτικὴ τέχνη) socratique ?",
     answers: [
       "L'art d'accoucher les esprits, c'est-à-dire d'aider l'interlocuteur à découvrir les vérités qu'il porte.",
       "L'art de séduire par la parole, en utilisant des métaphores flatteuses et des arguments émotionnels.",
@@ -920,7 +920,7 @@ const questions = [
   },
   // Question n°83
   {
-    question: "Question 83 : Comment la <em>parole artistique</em> se distingue-t-elle d'un simple mode d'emploi ?",
+    question: "Question n°83 : Comment la <em>parole artistique</em> se distingue-t-elle d'un simple mode d'emploi ?",
     answers: [
       "Elle donne des instructions techniques précises et impersonnelles aux interprètes, comme un manuel d'assemblage.",
       "Elle vise à éveiller la créativité et l'interprétation personnelle plutôt qu'à imposer un geste unique.",
@@ -931,7 +931,7 @@ const questions = [
   },
   // Question n°84
   {
-    question: "Question 84 : Que signifie l'expression <em>faire taire</em> ou <em>réduire au silence</em> dans un rapport de pouvoir ?",
+    question: "Question n°84 : Que signifie l'expression <em>faire taire</em> ou <em>réduire au silence</em> dans un rapport de pouvoir ?",
     answers: [
       "Empêcher quelqu'un de s'exprimer, ce qui nie son humanité et sa dignité.",
       "Écouter poliment quelqu'un sans l'interrompre, par respect pour sa parole.",
@@ -942,7 +942,7 @@ const questions = [
   },
   // Question n°85
   {
-    question: "Question 85 : Comment le concept de <em>parole vraie</em> (alètheia) chez les Grecs diffère-t-il d'une simple exactitude factuelle ?",
+    question: "Question n°85 : Comment le concept de <em>parole vraie</em> (alètheia) chez les Grecs diffère-t-il d'une simple exactitude factuelle ?",
     answers: [
       "La parole vraie est celle qui flatte l'auditoire et lui procure du plaisir, indépendamment des faits.",
       "La parole vraie est une manifestation de l'être même des choses, plutôt que l'apparence trompeuse (doxa).",
@@ -953,7 +953,7 @@ const questions = [
   },
   // Question n°86
   {
-    question: "Question 86 : Quelle est la fonction de l'<em>apostrophe</em> dans un discours ?",
+    question: "Question n°86 : Quelle est la fonction de l'<em>apostrophe</em> dans un discours ?",
     answers: [
       "Introduire une citation longue d'un auteur célèbre pour étayer son argument.",
       "Interpeller pour créer un effet de proximité, d'accusation ou de solennité.",
@@ -964,7 +964,7 @@ const questions = [
   },
   // Question n°87
   {
-    question: "Question 87 : Comment la <em>parole judiciaire du verdict</em> produit-elle ses effets sociaux ?",
+    question: "Question n°87 : Comment la <em>parole judiciaire du verdict</em> produit-elle ses effets sociaux ?",
     answers: [
       "Elle constate un état de fait sans rien changer à la réalité.",
       "Elle réaffirme la loi comme norme collective.",
@@ -975,7 +975,7 @@ const questions = [
   },
   // Question n°88
   {
-    question: "Question 88 : Que signifie l'idée d'une <em>parole qui engage</em> au-delà de l'instant où elle est prononcée ?",
+    question: "Question n°88 : Que signifie l'idée d'une <em>parole qui engage</em> au-delà de l'instant où elle est prononcée ?",
     answers: [
       "Une parole dont on se souvient longtemps parce qu'elle était drôle ou surprenante.",
       "Une parole qui crée une obligation durable pour celui qui l'a émise.",
@@ -986,7 +986,7 @@ const questions = [
   },
   // Question n°89
   {
-    question: "Question 89 : Comment la <em>parole de l'enseignant</em> se distingue-t-elle d'autres formes de parole ?",
+    question: "Question n°89 : Comment la <em>parole de l'enseignant</em> se distingue-t-elle d'autres formes de parole ?",
     answers: [
       "Elle est une parole d'autorité qui ne doit jamais être contestée ou questionnée par les élèves.",
       "Elle est une parole dont l'autorité repose sur la compétence reconnue et le souci de l'émancipation de l'élève.",
@@ -997,7 +997,7 @@ const questions = [
   },
   // Question n°90
   {
-    question: "Question 90 : Qu'est-ce que la <em>parole intérieure</em> ou le <em>monologue intérieur</em> en littérature et en philosophie ?",
+    question: "Question n°90 : Qu'est-ce que la <em>parole intérieure</em> ou le <em>monologue intérieur</em> en littérature et en philosophie ?",
     answers: [
       "Une parole prononcée à voix basse pour ne pas être entendu des autres.",
       "La représentation du flux de pensées de la conscience d'un personnage.",
@@ -1008,7 +1008,7 @@ const questions = [
   },
   // Question n°91
   {
-    question: "Question 91 : Comment la <em>parole d'excuse</em> peut-elle être un acte de réparation symbolique ?",
+    question: "Question n°91 : Comment la <em>parole d'excuse</em> peut-elle être un acte de réparation symbolique ?",
     answers: [
       "Elle ne répare rien, c'est juste des mots qui coûtent moins cher qu'une réparation matérielle.",
       "En reconnaissant la faute et la souffrance de l'autre, elle restaure la dignité de la victime.",
@@ -1019,7 +1019,7 @@ const questions = [
   },
   // Question n°92
   {
-    question: "Question 92 : Que signifie l'expression <em>rendre la parole</em> à quelqu'un ou à un groupe ?",
+    question: "Question n°92 : Que signifie l'expression <em>rendre la parole</em> à quelqu'un ou à un groupe ?",
     answers: [
       "Lui donner la réplique dans une pièce de théâtre.",
       "Créer les conditions d'expression et d'écoute dans l'espace public.",
@@ -1030,7 +1030,7 @@ const questions = [
   },
   // Question n°93
   {
-    question: "Question 93 : Comment le concept de <em>dialogisme</em> chez Bakhtine éclaire-t-il la nature de toute parole ?",
+    question: "Question n°93 : Comment le concept de <em>dialogisme</em> chez Bakhtine éclaire-t-il la nature de toute parole ?",
     answers: [
       "Toute parole est un monologue pur, émanant d'une conscience souveraine et autonome.",
       "Toute parole porte en elle les traces d'autres voix sociales (hétéroglossie).",
@@ -1041,7 +1041,7 @@ const questions = [
   },
   // Question n°94
   {
-    question: "Question 94 : Quelle est la fonction de l'<em>hyperbole</em> dans un discours persuasif ?",
+    question: "Question n°94 : Quelle est la fonction de l'<em>hyperbole</em> dans un discours persuasif ?",
     answers: [
       "Minimiser une chose pour paraître modeste et raisonnable.",
       "Susciter l'admiration ou l'indignation, et marquer fortement les esprits.",
@@ -1052,7 +1052,7 @@ const questions = [
   },
   // Question n°95
   {
-    question: "Question 95 : Que signifie l'idée de <em>parole fondatrice</em> dans l'histoire d'une communauté ou d'une institution ?",
+    question: "Question n°95 : Que signifie l'idée de <em>parole fondatrice</em> dans l'histoire d'une communauté ou d'une institution ?",
     answers: [
       "Une parole qui établit par déclaration les principes, les lois ou l'identité d'un groupe.",
       "Le premier mot prononcé par le fondateur d'une entreprise lors de son assemblée générale constitutive.",
@@ -1063,7 +1063,7 @@ const questions = [
   },
   // Question n°96
   {
-    question: "Question 96 : Comment la <em>parole chantée</em> (chant, opéra) diffère-t-elle de la parole parlée ?",
+    question: "Question n°96 : Comment la <em>parole chantée</em> (chant, opéra) diffère-t-elle de la parole parlée ?",
     answers: [
       "Elle est identique, sauf qu'elle est faite sur des notes de musique.",
       "Elle peut en renforcer le sens émotionnel, le magnifier ou entrer en tension avec lui.",
@@ -1074,7 +1074,7 @@ const questions = [
   },
   // Question n°97
   {
-    question: "Question 97 : Quel est l'enjeu de la <em>traduction</em> comme acte de parole entre les cultures ?",
+    question: "Question n°97 : Quel est l'enjeu de la <em>traduction</em> comme acte de parole entre les cultures ?",
     answers: [
       "C'est une opération mécanique et neutre de substitution mot à mot d'une langue à une autre.",
       "C'est un acte qui fait passer un sens d'un univers linguistique et culturel à un autre.",
@@ -1085,7 +1085,7 @@ const questions = [
   },
   // Question n°98
   {
-    question: "Question 98 : Comment la <em>parole d'aveu</em> (dans le cadre religieux, psychanalytique, judiciaire) fonctionne-t-elle ?",
+    question: "Question n°98 : Comment la <em>parole d'aveu</em> (dans le cadre religieux, psychanalytique, judiciaire) fonctionne-t-elle ?",
     answers: [
       "Elle est une simple narration d'un fait passé, sans conséquence pour celui qui parle.",
       "Elle transforme la relation à soi en se disant à un autre et peut avoir un effet de libération ou de sanction.",
@@ -1096,7 +1096,7 @@ const questions = [
   },
   // Question n°99
   {
-    question: "Question 99 : Quelle est la différence entre <em>convaincre</em> et <em>persuader</em> selon une distinction classique ?",
+    question: "Question n°99 : Quelle est la différence entre <em>convaincre</em> et <em>persuader</em> selon une distinction classique ?",
     answers: [
       "Convaincre fait appel à la raison (logos), persuader fait appel aux passions (pathos).",
       "Convaincre s'adresse à un individu, persuader s'adresse à une foule.",
@@ -1107,7 +1107,7 @@ const questions = [
   },
   // Question n°100
   {
-    question: "Question 100 : Quel enseignement principal peut-on tirer de l'étude de <em>L'art de la parole</em> sur le pouvoir et la responsabilité de celui qui parle ?",
+    question: "Question n°100 : Quel enseignement principal peut-on tirer de l'étude de <em>L'art de la parole</em> sur le pouvoir et la responsabilité de celui qui parle ?",
     answers: [
       "La parole est un outil neutre, son usage ne pose aucun problème moral, seul compte le résultat.",
       "Celui qui prend la parole a donc la responsabilité de l'effet de ses mots sur autrui.",

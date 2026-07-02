@@ -16,9 +16,9 @@ const philosophyData = {
 // QUESTIONS DU QUIZ (1 à 100)
 // ============================================
 const questions = [
-  // Question n°1
+  // Question n°01
   {
-    question: "Question 1 : Quelle pratique spectaculaire du XVIe au XIXe siècle a contribué à diffuser une vision raciste de l'humanité en exhibant les corps comme des curiosités ?",
+    question: "Question n°01 : Quelle pratique spectaculaire du XVIe au XIXe siècle a contribué à diffuser une vision raciste de l'humanité en exhibant les corps comme des curiosités ?",
     answers: [
       "La publication d'atlas géographiques de plus en plus précis et détaillés.",
       "Les débats théologiques sur l'âme des peuples nouvellement découverts.",
@@ -27,9 +27,9 @@ const questions = [
     correct: 3,
     explanation: `La réponse correcte identifie une pratique concrète de réification et de domination culturelle. L'exhibition publique de personnes non-européennes, présentées comme des curiosités exotiques ou des intermédiaires entre l'homme et l'animal, a joué un rôle crucial dans la banalisation sociale du racisme. En mettant en scène la différence dans un cadre de spectacle et de domination, ces pratiques transformaient la diversité en infériorité, légitimant dans l'imaginaire populaire les discours sur les <em>races</em> et le colonialisme.\nExemple : L'exhibition et l'étude post-mortem de Saartjie Baartman, dont le corps fut transformé en objet scientifique, illustrent l'extrême réification de l'autre, niant son humanité et sa dignité au profit d'une fascination morbide et d'une pseudo-science.`
   },
-  // Question n°2
+  // Question n°02
   {
-    question: "Question 2 : Comment Blaise Pascal, dans le fragment des <em>Deux infinis</em>, décrit-il l'expérience de l'homme face au nouvel univers infini ?",
+    question: "Question n°02 : Comment Blaise Pascal, dans le fragment des <em>Deux infinis</em>, décrit-il l'expérience de l'homme face au nouvel univers infini ?",
     answers: [
       "Il y voit une confirmation éclatante de la toute-puissance et de la gloire de la raison humaine.",
       "Il en tire un sentiment d'effroi et de néant pour l'homme, perdu entre l'infiniment grand et l'infiniment petit.",
@@ -38,9 +38,9 @@ const questions = [
     correct: 2,
     explanation: `Contrairement à un optimisme scientifique naïf, Pascal éprouve l'angoisse métaphysique que provoque le décentrement copernicien. L'homme n'est plus au centre d'un cosmos rassurant et clos ; il est un point perdu dans l'immensité indifférente de l'espace et du temps. La raison, confrontée à ces abîmes, éprouve ses limites et son impuissance. Pour Pascal, cette disproportion révèle la misère de l'homme sans Dieu et rend d'autant plus nécessaire la foi comme seul refuge et seul sens face au silence du cosmos.\nExemple : La célèbre formule <em>Le silence éternel de ces espaces infinis m'effraie</em> résume ce sentiment pascalien d'être jeté dans un monde indifférent, où la science, en élargissant l'univers, a paradoxalement rendu l'homme plus seul et plus démuni.`
   },
-  // Question n°3
+  // Question n°03
   {
-    question: "Question 3 : Quelle analogie biologique, héritée de l'Antiquité, les humanistes utilisent-ils pour comprendre le monde à la Renaissance ?",
+    question: "Question n°03 : Quelle analogie biologique, héritée de l'Antiquité, les humanistes utilisent-ils pour comprendre le monde à la Renaissance ?",
     answers: [
       "L'analogie avec un livre dont il faut déchiffrer le code secret pour accéder à la vérité divine.",
       "L'analogie avec un corps vivant ou un organisme, où chaque partie a une fonction dans un tout harmonieux.",
@@ -49,9 +49,9 @@ const questions = [
     correct: 2,
     explanation: `La vision du κόσμος comme un <em>grand vivant</em> (ζώον) est un héritage majeur de la philosophie antique, notamment stoïcienne, repris par les humanistes. Comparer la Terre à un corps humain (ses veines sont les rivières, son sang est l'eau) permet de la penser comme une totalité organisée, finalisée et intelligible. Cette analogie <em>corporifiante</em> rapproche la géographie de la biologie et fonde une médecine du globe, inscrivant l'homme dans une relation organique avec son environnement.\nExemple : Léonard de Vinci ou Athanasius Kircher décrivaient longuement cette analogie entre le <em>microcosme</em> (l'homme) et le <em>macrocosme</em> (le monde), une idée qui unifiait les savoirs sur la nature et le corps humain.`
   },
-  // Question n°4
+  // Question n°04
   {
-    question: "Question 4 : Quel principe émerge progressivement des débats sur la pluralité des cultures, défendu par des penseurs comme Montaigne ou Pierre Bayle ?",
+    question: "Question n°04 : Quel principe émerge progressivement des débats sur la pluralité des cultures, défendu par des penseurs comme Montaigne ou Pierre Bayle ?",
     answers: [
       "Le principe de la supériorité naturelle du christianisme sur toutes les autres formes de croyance religieuse.",
       "Le principe d'assimilation forcée des cultures jugées inférieures à la civilisation européenne considérée comme modèle.",
@@ -60,9 +60,9 @@ const questions = [
     correct: 3,
     explanation: `La confrontation avec la diversité irréductible des mœurs et des croyances rend caduque l'idée d'une vérité unique imposable par la force. Le scepticisme de Montaigne montre la relativité des coutumes. De cette prise de conscience naît l'exigence politique de tolérance : l'État doit garantir la liberté de conscience, dans la mesure où elle ne nuit pas à l'ordre public. Ce n'est plus un simple constat, mais un droit fondant les libertés individuelles face au pouvoir religieux et politique.\nExemple : Alors que Montaigne défend une tolérance par défaut, Locke en fera plus tard un principe politique positif, jetant les bases intellectuelles de la laïcité et des droits de l'individu.`
   },
-  // Question n°5
+  // Question n°05
   {
-    question: "Question 5 : Quelle distinction opère la pensée humaniste critique concernant les figures du <em>civilisé sauvage</em> et du <em>sauvage civilisé</em> ?",
+    question: "Question n°05 : Quelle distinction opère la pensée humaniste critique concernant les figures du <em>civilisé sauvage</em> et du <em>sauvage civilisé</em> ?",
     answers: [
       "Une distinction géographique entre les sauvages des forêts et ceux des plaines côtières.",
       "Une distinction morale entre l'inhumanité des colonisateurs et l'humanité des peuples colonisés.",
@@ -71,9 +71,9 @@ const questions = [
     correct: 2,
     explanation: `Cette distinction est au cœur de la critique humaniste de la colonisation. Le <em>civilisé sauvage</em> désigne l'Européen qui, sous couvert de civilisation, commet les pires atrocités, révélant ainsi sa propre barbarie. Le <em>sauvage civilisé</em> désigne l'indigène dont les mœurs, bien que différentes, sont souvent plus humaines que celles des prétendus civilisateurs. Ce renversement de perspective sert à disqualifier moralement le projet colonial et à universaliser le jugement éthique.\nExemple : Marc Lescarbot et Bartolomé de Las Casas opposent systématiquement la cruauté raffinée des Européens à la douceur et à l'hospitalité des peuples amérindiens, renversant ainsi le stéréotype du sauvage barbare.`
   },
-  // Question n°6
+  // Question n°06
   {
-    question: "Question 6 : Comment le mythe du <em>Paradis terrestre</em> a-t-il influencé la perception du Nouveau Monde par Christophe Colomb ?",
+    question: "Question n°06 : Comment le mythe du <em>Paradis terrestre</em> a-t-il influencé la perception du Nouveau Monde par Christophe Colomb ?",
     answers: [
       "Il l'a convaincu d'avoir trouvé, dans les îles des Caraïbes, le lieu biblique de l'innocence originelle.",
       "Il l'a conduit à mépriser les terres découvertes, jugées trop éloignées et indignes du jardin d'Eden.",
@@ -82,9 +82,9 @@ const questions = [
     correct: 1,
     explanation: `Colomb, déçu de ne pas avoir trouvé les Indes, réinterprète sa découverte à travers le prisme théologique. Il pense avoir atteint <em>le bout de l'Orient</em>, lieu du Paradis terrestre selon certains théologiens. Les paysages idylliques, le climat doux et le comportement apparemment innocent des indigènes confortent cette vision. Le <em>sauvage</em> devient alors l'Adam d'avant le péché, et le Nouveau Monde un éden à évangéliser, mais aussi paradoxalement à exploiter.\nExemple : Dans son journal, Colomb décrit les Indiens comme des êtres sans malice, donnant tout ce qu'ils possèdent, incarnant ainsi une humanité préservée de la corruption de la propriété, caractéristique de l'état édénique qu'il croyait avoir retrouvé.`
   },
-  // Question n°7
+  // Question n°07
   {
-    question: "Question 7 : Quelle est la thèse de Thomas Kuhn sur les <em>révolutions scientifiques</em> développée dans <em>La Structure des révolutions scientifiques</em> ?",
+    question: "Question n°07 : Quelle est la thèse de Thomas Kuhn sur les <em>révolutions scientifiques</em> développée dans <em>La Structure des révolutions scientifiques</em> ?",
     answers: [
       "Les révolutions scientifiques sont toujours provoquées par des découvertes techniques accidentelles, et non par des élaborations théoriques.",
       "Le progrès scientifique est un processus linéaire et cumulatif d'accumulation progressive de vérités définitives.",
@@ -93,9 +93,9 @@ const questions = [
     correct: 3,
     explanation: `Kuhn s'oppose à l'idée d'une science qui progresserait tranquillement par additions. Il distingue la <em>science normale</em> (travail dans le cadre d'un paradigme accepté) des <em>révolutions scientifiques</em> (moments de crise où le paradigme en place montre ses limites et est remplacé par un autre incommensurable avec le premier). Un changement de paradigme est un bouleversement des catégories de pensée, qui rend les théories antérieures obsolètes et redéfinit les problèmes scientifiques légitimes.\nExemple : Le passage du géocentrisme (paradigme ptoléméen) à l'héliocentrisme (paradigme copernicien) n'est pas une simple correction, mais un changement complet de vision du monde, qui redéfinit ce qu'est un corps céleste, un mouvement, et la place de l'homme dans l'univers.`
   },
-  // Question n°8
+  // Question n°08
   {
-    question: "Question 8 : Comment Jean-Jacques Rousseau, dans <em>Émile</em>, fonde-t-il l'universalité de la morale ?",
+    question: "Question n°08 : Comment Jean-Jacques Rousseau, dans <em>Émile</em>, fonde-t-il l'universalité de la morale ?",
     answers: [
       "Uniquement sur les calculs rationnels de l'intérêt bien compris et des conséquences des actions.",
       "Sur les commandements explicites de la religion révélée et l'autorité des Écritures.",
@@ -104,9 +104,9 @@ const questions = [
     correct: 3,
     explanation: `Rousseau rompt avec une tradition qui faisait de la raison le fondement de la loi naturelle. Pour lui, c'est un sentiment inné, antérieur à la raison, qui nous lie aux autres : la pitié. <em>Tant qu'il ne résistera point à l'impulsion intérieure de la commisération, il ne fera jamais du mal à un autre homme.</em> Cette sensibilité est universelle parce qu'elle est naturelle. Elle constitue le noyau moral de l'humanité, que la société et la raison développée ont souvent étouffé. L'éducation doit donc préserver et cultiver cette bonté naturelle.\nExemple : Pour Rousseau, l'enfant qui pleure en voyant souffrir un animal, avant même de savoir raisonner, manifeste ce fondement universel de la morale. C'est sur cette base naturelle que la raison pourra ensuite construire les règles du droit naturel.`
   },
-  // Question n°9
+  // Question n°09
   {
-    question: "Question 9 : Quelle critique Rousseau adresse-t-il à la société civile dans son <em>Discours sur l'inégalité</em> à travers la figure de l'homme primitif ?",
+    question: "Question n°09 : Quelle critique Rousseau adresse-t-il à la société civile dans son <em>Discours sur l'inégalité</em> à travers la figure de l'homme primitif ?",
     answers: [
       "Elle a heureusement domestiqué la violence naturelle de l'homme par l'établissement salutaire des lois et de la justice.",
       "Elle a perfectionné l'homme en le dotant de sciences et d'arts qui améliorent considérablement son bien-être matériel.",
@@ -117,7 +117,7 @@ const questions = [
   },
   // Question n°10
   {
-    question: "Question 10 : Quel est le sens de l'expression <em>ethnocentrisme</em> ?",
+    question: "Question n°10 : Quel est le sens de l'expression <em>ethnocentrisme</em> ?",
     answers: [
       "L'étude scientifique et objective des différentes cultures humaines, aussi appelée ethnologie.",
       "L'idéologie selon laquelle on juge à l'aune de sa culture les autres cultures pour les dévaluer.",
@@ -128,7 +128,7 @@ const questions = [
   },
   // Question n°11
   {
-    question: "Question 11 : Quel changement fondamental la Renaissance opère-t-elle dans la conception du rapport de l'homme au monde ?",
+    question: "Question n°11 : Quel changement fondamental la Renaissance opère-t-elle dans la conception du rapport de l'homme au monde ?",
     answers: [
       "Elle le réduit à un simple observateur passif d'un monde entièrement déterminé par des lois divines immuables.",
       "Elle le pense comme un sujet face à un monde devenu une somme d'objets, un environnement à mesurer et à dominer.",
@@ -139,7 +139,7 @@ const questions = [
   },
   // Question n°12
   {
-    question: "Question 12 : Comment la <em>Projection Hobo-Dyer</em> interroge-t-elle notre représentation habituelle du monde ?",
+    question: "Question n°12 : Comment la <em>Projection Hobo-Dyer</em> interroge-t-elle notre représentation habituelle du monde ?",
     answers: [
       "En supprimant toute déformation, offrant pour la première fois une vision parfaitement fidèle de la surface terrestre.",
       "En montrant de manière neutre que toutes les projections cartographiques sont parfaitement objectives et interchangeables.",
@@ -150,7 +150,7 @@ const questions = [
   },
   // Question n°13
   {
-    question: "Question 13 : Quel auteur et quel concept philosophique Montaigne redécouvre-t-il à travers la confrontation avec les cultures du Nouveau Monde ?",
+    question: "Question n°13 : Quel auteur et quel concept philosophique Montaigne redécouvre-t-il à travers la confrontation avec les cultures du Nouveau Monde ?",
     answers: [
       "Platon et la théorie des Idées comme réalités éternelles et parfaites, modèles du monde sensible.",
       "Pyrrhon et le scepticisme radical conduisant à la suspension du jugement.",
@@ -161,7 +161,7 @@ const questions = [
   },
   // Question n°14
   {
-    question: "Question 14 : Dans le texte de Bartolomé de Las Casas, quel argument utilise-t-il pour disqualifier moralement la conquête espagnole ?",
+    question: "Question n°14 : Dans le texte de Bartolomé de Las Casas, quel argument utilise-t-il pour disqualifier moralement la conquête espagnole ?",
     answers: [
       "Le Pape n'avait pas explicitement autorisé ces expéditions particulières de conquête et de pillage.",
       "Les Espagnols ont agi contre la raison et la loi naturelle en massacrant des êtres créés <em>à l'image de Dieu</em>.",
@@ -172,7 +172,7 @@ const questions = [
   },
   // Question n°15
   {
-    question: "Question 15 : Quelle est la différence majeure entre l'exotisme naïf et l'exotisme ethnologique dans la représentation de l'autre ?",
+    question: "Question n°15 : Quelle est la différence majeure entre l'exotisme naïf et l'exotisme ethnologique dans la représentation de l'autre ?",
     answers: [
       "L'exotisme naïf intéresse les savants, l'exotisme ethnologique vise le divertissement du grand public.",
       "L'exotisme naïf est véridique, l'exotisme ethnologique est mensonger et construit de toutes pièces.",
@@ -183,7 +183,7 @@ const questions = [
   },
   // Question n°16
   {
-    question: "Question 16 : Pourquoi la cartographie de la Renaissance est-elle qualifiée d'<em>humaniste</em> ?",
+    question: "Question n°16 : Pourquoi la cartographie de la Renaissance est-elle qualifiée d'<em>humaniste</em> ?",
     answers: [
       "Parce qu'elle est réalisée par des artistes peintres et non par des scientifiques.",
       "Parce qu'elle ne s'intéresse qu'aux régions habitées par l'homme, ignorant volontairement celles qui ne le sont pas.",
@@ -194,7 +194,7 @@ const questions = [
   },
   // Question n°17
   {
-    question: "Question 17 : Comment la lettre de Christophe Colomb aux Rois d'Espagne illustre-t-elle l'ambiguïté entre <em>découvrir</em> et <em>conquérir</em> ?",
+    question: "Question n°17 : Comment la lettre de Christophe Colomb aux Rois d'Espagne illustre-t-elle l'ambiguïté entre <em>découvrir</em> et <em>conquérir</em> ?",
     answers: [
       "Colomb décrit uniquement les paysages et évite soigneusement toute mention politique ou économique des habitants.",
       "Il insiste sur le fait qu'il a acheté chaque parcelle de terre dans le strict respect du droit commercial et coutumier.",
@@ -205,7 +205,7 @@ const questions = [
   },
   // Question n°18
   {
-    question: "Question 18 : Comment Eratosthène de Cyrène a-t-il réussi à calculer la circonférence de la Terre avec une remarquable précision au IIIe siècle av. J.-C. ?",
+    question: "Question n°18 : Comment Eratosthène de Cyrène a-t-il réussi à calculer la circonférence de la Terre avec une remarquable précision au IIIe siècle av. J.-C. ?",
     answers: [
       "En mesurant l'angle d'ombre d'un obélisque à Alexandrie au solstice d'été, alors que le soleil était au zénith à Syène.",
       "En estimant le temps moyen mis par un navire rapide pour faire le tour complet de la Méditerranée.",
@@ -216,7 +216,7 @@ const questions = [
   },
   // Question n°19
   {
-    question: "Question 19 : Au XVIe siècle, comment les humanistes comme José de Acosta justifient-ils l'étude géographique du monde ?",
+    question: "Question n°19 : Au XVIe siècle, comment les humanistes comme José de Acosta justifient-ils l'étude géographique du monde ?",
     answers: [
       "Par la nécessité impérieuse de découvrir de nouvelles ressources à exploiter sans considération morale ou écologique.",
       "Par une curiosité purement scientifique et désintéressée pour les lois abstraites de la nature et du cosmos.",
@@ -227,7 +227,7 @@ const questions = [
   },
   // Question n°20
   {
-    question: "Question 20 : Quelle était la fonction principale de la représentation cartographique au Moyen Âge, comme le montre la Mappa Mundi ?",
+    question: "Question n°20 : Quelle était la fonction principale de la représentation cartographique au Moyen Âge, comme le montre la Mappa Mundi ?",
     answers: [
       "Servir d'outil de navigation précis pour les marchands et les explorateurs médiévaux.",
       "Donner une description géométriquement exacte des contours des continents et des océans.",
@@ -238,7 +238,7 @@ const questions = [
   },
   // Question n°21
   {
-    question: "Question 21 : Quel savant antique, redécouvert à la Renaissance, a posé les bases mathématiques de la cartographie avec des projections ?",
+    question: "Question n°21 : Quel savant antique, redécouvert à la Renaissance, a posé les bases mathématiques de la cartographie avec des projections ?",
     answers: [
       "Sénèque, avec ses réflexions stoïciennes sur la nature et la sagesse.",
       "Eratosthène de Cyrène, célèbre pour le calcul de la circonférence terrestre.",
@@ -249,7 +249,7 @@ const questions = [
   },
   // Question n°22
   {
-    question: "Question 22 : Quelle position Sebastian Münster adopte-t-il face à la diversité humaine dans sa <em>Cosmographie universelle</em> ?",
+    question: "Question n°22 : Quelle position Sebastian Münster adopte-t-il face à la diversité humaine dans sa <em>Cosmographie universelle</em> ?",
     answers: [
       "Il établit une hiérarchie claire et naturelle des races, plaçant les Blancs européens au sommet de l'évolution humaine.",
       "Il justifie la diversité des peuples comme un ordre voulu par Dieu, et en tire un principe de non-reproche mutuel.",
@@ -260,7 +260,7 @@ const questions = [
   },
   // Question n°23
   {
-    question: "Question 23 : Comment la <em>révolution cartographique</em> a-t-elle participé à l'invention de l'idée de <em>paysage</em> ?",
+    question: "Question n°23 : Comment la <em>révolution cartographique</em> a-t-elle participé à l'invention de l'idée de <em>paysage</em> ?",
     answers: [
       "Elle a supprimé toute représentation visuelle au profit de coordonnées mathématiques abstraites et de listes.",
       "Elle a imposé l'idée que seuls les éléments utiles à l'homme (ports, mines) méritaient d'être représentés sur une carte.",
@@ -271,7 +271,7 @@ const questions = [
   },
   // Question n°24
   {
-    question: "Question 24 : Quelle est la portée philosophique de l'image pascalienne de l'homme comme <em>roseau pensant</em> dans le contexte des révolutions scientifiques ?",
+    question: "Question n°24 : Quelle est la portée philosophique de l'image pascalienne de l'homme comme <em>roseau pensant</em> dans le contexte des révolutions scientifiques ?",
     answers: [
       "Elle démontre que l'homme, en tant que roseau, fait partie intégrante et harmonieuse de la nature, à l'image des stoïciens.",
       "Elle célèbre le triomphe absolu de la pensée humaine capable de comprendre et de dominer l'univers infini.",
@@ -282,7 +282,7 @@ const questions = [
   },
   // Question n°25
   {
-    question: "Question 25 : Quelle est la signification de l'inscription grecque γνῶθι σεαυτόν (connais-toi toi-même) sur le temple d'Apollon à Delphes ?",
+    question: "Question n°25 : Quelle est la signification de l'inscription grecque γνῶθι σεαυτόν (connais-toi toi-même) sur le temple d'Apollon à Delphes ?",
     answers: [
       "Un encouragement à développer ses talents personnels uniques pour réussir dans la vie sociale et politique.",
       "Une incitation à l'introspection psychologique moderne pour découvrir sa personnalité profonde et singulière.",
@@ -293,7 +293,7 @@ const questions = [
   },
   // Question n°26
   {
-    question: "Question 26 : Que signifie l'expression <em>faire monde</em>, tirée de la philosophie du XXe siècle ?",
+    question: "Question n°26 : Que signifie l'expression <em>faire monde</em>, tirée de la philosophie du XXe siècle ?",
     answers: [
       "Dessiner une carte complète et définitive de l'ensemble du globe terrestre dans ses moindres détails.",
       "Fabriquer matériellement une planète ou un environnement à partir de rien, comme un démiurge.",
@@ -304,7 +304,7 @@ const questions = [
   },
   // Question n°27
   {
-    question: "Question 27 : Quel rôle joue la figure de la femme <em>sauvage</em> dans les récits des voyageurs de la Renaissance ?",
+    question: "Question n°27 : Quel rôle joue la figure de la femme <em>sauvage</em> dans les récits des voyageurs de la Renaissance ?",
     answers: [
       "Elle est systématiquement décrite comme laide et repoussante, symbole de la dégénérescence morale et physique.",
       "Elle est totalement absente des récits, les voyageurs ne s'intéressant qu'aux hommes guerriers et aux chefs.",
@@ -315,7 +315,7 @@ const questions = [
   },
   // Question n°28
   {
-    question: "Question 28 : Quelle position Montaigne adopte-t-il finalement face au cercle du scepticisme et de l'universalisme ?",
+    question: "Question n°28 : Quelle position Montaigne adopte-t-il finalement face au cercle du scepticisme et de l'universalisme ?",
     answers: [
       "Un renoncement total à toute vie en société pour cultiver un doute absolu et une sagesse solitaire.",
       "Un dogmatisme affirmé : il faut choisir une vérité religieuse ou morale et s'y tenir contre vents et marées.",
@@ -326,7 +326,7 @@ const questions = [
   },
   // Question n°29
   {
-    question: "Question 29 : Comment Montaigne, dans ses <em>Essais</em>, utilise-t-il la découverte du Nouveau Monde pour nourrir sa réflexion sceptique ?",
+    question: "Question n°29 : Comment Montaigne, dans ses <em>Essais</em>, utilise-t-il la découverte du Nouveau Monde pour nourrir sa réflexion sceptique ?",
     answers: [
       "Il soutient que les cultures européennes et amérindiennes sont fondamentalement incomparables et incommunicables.",
       "Il affirme que les <em>sauvages</em> confirment la décadence morale de l'humanité loin de Dieu et de la civilisation.",
@@ -337,7 +337,7 @@ const questions = [
   },
   // Question n°30
   {
-    question: "Question 30 : Quel est le sens de l'expression <em>bon sauvage</em> telle qu'elle émerge au XVIIIe siècle, notamment chez Diderot ou Rousseau ?",
+    question: "Question n°30 : Quel est le sens de l'expression <em>bon sauvage</em> telle qu'elle émerge au XVIIIe siècle, notamment chez Diderot ou Rousseau ?",
     answers: [
       "Une description ethnographique précise et objective des mœurs réelles des peuples amérindiens.",
       "Un terme utilisé par les colons pour désigner les indigènes dociles, collaboratifs et facilement exploitables.",
@@ -348,7 +348,7 @@ const questions = [
   },
   // Question n°31
   {
-    question: "Question 31 : Que désigne la <em>révolution copernicienne</em> dans son sens philosophique, repris par Kant ?",
+    question: "Question n°31 : Que désigne la <em>révolution copernicienne</em> dans son sens philosophique, repris par Kant ?",
     answers: [
       "Le simple remplacement technique du géocentrisme par l'héliocentrisme dans le modèle astronomique.",
       "L'idée que l'univers est infini et que la Terre n'y occupe qu'une place marginale et sans importance.",
@@ -359,7 +359,7 @@ const questions = [
   },
   // Question n°32
   {
-    question: "Question 32 : Dans la <em>Controverse de Valladolid</em>, que dénonce principalement Bartolomé de Las Casas ?",
+    question: "Question n°32 : Dans la <em>Controverse de Valladolid</em>, que dénonce principalement Bartolomé de Las Casas ?",
     answers: [
       "L'idolâtrie et les pratiques païennes jugées barbares des peuples amérindiens.",
       "L'incapacité présumée des Indiens à recevoir la foi chrétienne en raison de leur nature inférieure.",
@@ -370,7 +370,7 @@ const questions = [
   },
   // Question n°33
   {
-    question: "Question 33 : Pourquoi peut-on dire que la carte d'Abraham Ortelius, <em>Theatrum orbis terrarum</em>, est une <em>mise en scène</em> du savoir ?",
+    question: "Question n°33 : Pourquoi peut-on dire que la carte d'Abraham Ortelius, <em>Theatrum orbis terrarum</em>, est une <em>mise en scène</em> du savoir ?",
     answers: [
       "Parce qu'elle utilise des couleurs vives et des illustrations fantastiques qui n'ont aucune valeur scientifique réelle.",
       "Parce qu'elle expose différentes représentations pour montrer l'évolution et les progrès de la connaissance humaine.",
@@ -381,7 +381,7 @@ const questions = [
   },
   // Question n°34
   {
-    question: "Question 34 : Comment Marc Lescarbot met-il en avant une conséquence majeure de la révolution cartographique dans son <em>Histoire de la Nouvelle France</em> ?",
+    question: "Question n°34 : Comment Marc Lescarbot met-il en avant une conséquence majeure de la révolution cartographique dans son <em>Histoire de la Nouvelle France</em> ?",
     answers: [
       "Elle prouve définitivement la supériorité technique et morale incontestable de l'Europe sur le reste du monde.",
       "Elle démontre que toutes les cultures sont identiques et qu'aucune différence substantielle n'existe entre les peuples.",
@@ -392,7 +392,7 @@ const questions = [
   },
   // Question n°35
   {
-    question: "Question 35 : Comment le traitement de la nudité des peuples découverts révèle-t-il les préjugés des observateurs européens ?",
+    question: "Question n°35 : Comment le traitement de la nudité des peuples découverts révèle-t-il les préjugés des observateurs européens ?",
     answers: [
       "Elle n'est jamais commentée, car considérée comme un détail sans importance anthropologique ou morale.",
       "Elle est unanimement interprétée comme un signe incontestable de dégradation morale et de promiscuité animale.",
@@ -403,7 +403,7 @@ const questions = [
   },
   // Question n°36
   {
-    question: "Question 36 : Quelle conception de l'histoire suppose le discours à Dakar de Nicolas Sarkozy en 2007 ?",
+    question: "Question n°36 : Quelle conception de l'histoire suppose le discours à Dakar de Nicolas Sarkozy en 2007 ?",
     answers: [
       "Une histoire multipolaire, faite d'échanges et d'influences réciproques entre toutes les cultures du monde.",
       "Une histoire linéaire et téléologique, dont le modèle est l'Europe et dont l'Afrique est restée en dehors.",
@@ -414,7 +414,7 @@ const questions = [
   },
   // Question n°37
   {
-    question: "Question 37 : Que signifie le terme <em>occidentalisation</em> du monde dans le contexte de l'ethnocentrisme ?",
+    question: "Question n°37 : Que signifie le terme <em>occidentalisation</em> du monde dans le contexte de l'ethnocentrisme ?",
     answers: [
       "L'adoption spontanée et sans contrainte des technologies occidentales par le reste du monde par simple pragmatisme.",
       "Le simple fait de voyager et d'échanger des biens et des idées avec les pays d'Occident de manière équilibrée.",
@@ -425,7 +425,7 @@ const questions = [
   },
   // Question n°38
   {
-    question: "Question 38 : Comment le concept de <em>race</em> a-t-il été scientifiquement construit aux XVIIIe et XIXe siècles ?",
+    question: "Question n°38 : Comment le concept de <em>race</em> a-t-il été scientifiquement construit aux XVIIIe et XIXe siècles ?",
     answers: [
       "Comme une catégorie politique et sociale sans aucun fondement dans la nature, inventée pour justifier l'esclavage.",
       "Comme une réalité biologique objective et immuable, découverte par l'anatomie comparée et la mesure des crânes.",
@@ -436,7 +436,7 @@ const questions = [
   },
   // Question n°39
   {
-    question: "Question 39 : Quelle est la signification politique du traité de Tordesillas de 1494 ?",
+    question: "Question n°39 : Quelle est la signification politique du traité de Tordesillas de 1494 ?",
     answers: [
       "Il fixe les règles du commerce des épices en Asie, au bénéfice exclusif des marchands italiens et hanséatiques.",
       "Il établit une alliance militaire défensive entre l'Espagne et le Portugal contre les puissances musulmanes en Méditerranée.",
@@ -447,7 +447,7 @@ const questions = [
   },
   // Question n°40
   {
-    question: "Question 40 : En quoi l'épisode des trois Tupinambás à Rouen, rapporté par Montaigne, constitue-t-il un renversement des valeurs ?",
+    question: "Question n°40 : En quoi l'épisode des trois Tupinambás à Rouen, rapporté par Montaigne, constitue-t-il un renversement des valeurs ?",
     answers: [
       "Montaigne a converti les trois Indiens au christianisme, renversant ainsi leur système de valeurs traditionnel.",
       "Les Tupinambás ont été impressionnés par la technologie militaire française et ont demandé à devenir soldats mercenaires.",
@@ -458,7 +458,7 @@ const questions = [
   },
   // Question n°41
   {
-    question: "Question 41 : Quelle est la grande leçon épistémologique sur la connaissance que l'on peut tirer des révolutions scientifiques de cette période ?",
+    question: "Question n°41 : Quelle est la grande leçon épistémologique sur la connaissance que l'on peut tirer des révolutions scientifiques de cette période ?",
     answers: [
       "La vérité scientifique est éternelle et immuable, une fois qu'elle a été découverte et rigoureusement démontrée.",
       "La science et la religion finissent toujours par se réconcilier dans une vérité supérieure et harmonieuse.",
@@ -469,7 +469,7 @@ const questions = [
   },
   // Question n°42
   {
-    question: "Question 42 : Comment le concept de <em>nature humaine</em> est-il travaillé par la découverte de la pluralité des cultures ?",
+    question: "Question n°42 : Comment le concept de <em>nature humaine</em> est-il travaillé par la découverte de la pluralité des cultures ?",
     answers: [
       "Il est remplacé par le concept de <em>race</em>, qui explique mieux et plus scientifiquement les différences observées.",
       "Il est abandonné, car les différences culturelles radicales prouvent qu'il n'existe pas de nature commune à l'humanité.",
@@ -480,7 +480,7 @@ const questions = [
   },
   // Question n°43
   {
-    question: "Question 43 : Quelle vision du corps féminin l'observation des femmes <em>sauvages</em> qui enfantent sans douleur remet-elle en question ?",
+    question: "Question n°43 : Quelle vision du corps féminin l'observation des femmes <em>sauvages</em> qui enfantent sans douleur remet-elle en question ?",
     answers: [
       "La vision médicale de l'accouchement comme un processus purement mécanique, dénué de toute dimension subjective.",
       "L'idée que les femmes européennes sont physiologiquement plus robustes et résistantes que les femmes des autres continents.",
@@ -491,7 +491,7 @@ const questions = [
   },
   // Question n°44
   {
-    question: "Question 44 : Comment l'humanisme de la Renaissance définit-il généralement le rapport entre les textes antiques et l'observation directe du monde ?",
+    question: "Question n°44 : Comment l'humanisme de la Renaissance définit-il généralement le rapport entre les textes antiques et l'observation directe du monde ?",
     answers: [
       "Il considère les textes antiques comme des autorités absolues et infaillibles, qu'il faut recopier sans les critiquer.",
       "Il rejette catégoriquement les textes antiques au profit de l'observation seule et de l'expérience immédiate.",
@@ -502,7 +502,7 @@ const questions = [
   },
   // Question n°45
   {
-    question: "Question 45 : Quelle est la signification de la phrase de Pascal : <em>Vérité au‑deçà des Pyrénées, erreur au‑delà</em> ?",
+    question: "Question n°45 : Quelle est la signification de la phrase de Pascal : <em>Vérité au‑deçà des Pyrénées, erreur au‑delà</em> ?",
     answers: [
       "Une affirmation que la vraie religion catholique s'arrête aux Pyrénées, au-delà commençant l'hérésie.",
       "Une description géographique neutre des différences climatiques et culturelles entre la France et l'Espagne.",
@@ -513,7 +513,7 @@ const questions = [
   },
   // Question n°46
   {
-    question: "Question 46 : Quel est l'enjeu philosophique de la question <em>Qu'est-ce qui est premier entre les représentations du monde et le rapport au monde ?</em>",
+    question: "Question n°46 : Quel est l'enjeu philosophique de la question <em>Qu'est-ce qui est premier entre les représentations du monde et le rapport au monde ?</em>",
     answers: [
       "Une question purement rhétorique sans réponse possible et sans implication réelle.",
       "Une question technique sur la priorité chronologique de la carte ou du territoire dans l'histoire de la géographie.",
@@ -524,7 +524,7 @@ const questions = [
   },
   // Question n°47
   {
-    question: "Question 47 : Comment la découverte de la civilisation chinoise par les missionnaires jésuites a-t-elle complexifié la vision européenne ?",
+    question: "Question n°47 : Comment la découverte de la civilisation chinoise par les missionnaires jésuites a-t-elle complexifié la vision européenne ?",
     answers: [
       "Elle a prouvé que la Chine était une société complètement barbare et désorganisée, justifiant une intervention coloniale.",
       "Elle a confirmé l'idée que seuls les Européens étaient capables de vertu, de haute culture et de gouvernement raffiné.",
@@ -535,7 +535,7 @@ const questions = [
   },
   // Question n°48
   {
-    question: "Question 48 : Quelle est la fonction de l'analogie entre microcosme (l'homme) et macrocosme (le monde) dans la pensée de la Renaissance ?",
+    question: "Question n°48 : Quelle est la fonction de l'analogie entre microcosme (l'homme) et macrocosme (le monde) dans la pensée de la Renaissance ?",
     answers: [
       "Une simple métaphore poétique sans portée cognitive réelle, purement décorative.",
       "Comprendre l'un permet de comprendre l'autre, car ils sont structurés de manière similaire.",
@@ -546,7 +546,7 @@ const questions = [
   },
   // Question n°49
   {
-    question: "Question 49 : En quoi le scepticisme de Montaigne diffère-t-il du doute méthodique de Descartes ?",
+    question: "Question n°49 : En quoi le scepticisme de Montaigne diffère-t-il du doute méthodique de Descartes ?",
     answers: [
       "Descartes doute des sens seulement, Montaigne doute de la raison seulement, leurs cibles sont opposées.",
       "Ils sont identiques : tous deux doutent de tout pour trouver une certitude indubitable et fonder la science.",
@@ -557,7 +557,7 @@ const questions = [
   },
   // Question n°50
   {
-    question: "Question 50 : Quel est le statut de l'écrit (le livre, la carte) par rapport à l'expérience directe dans la culture humaniste ?",
+    question: "Question n°50 : Quel est le statut de l'écrit (le livre, la carte) par rapport à l'expérience directe dans la culture humaniste ?",
     answers: [
       "L'expérience directe est la seule source de connaissance valable, les livres étant des obstacles à la vérité.",
       "L'écrit est toujours supérieur à l'expérience, car il transmet la sagesse éprouvée des Anciens et des autorités.",
@@ -568,7 +568,7 @@ const questions = [
   },
   // Question n°51
   {
-    question: "Question 51 : Quelle est la signification politique de l'expression <em>maître et possesseur de la nature</em> que l'on peut associer à Descartes ?",
+    question: "Question n°51 : Quelle est la signification politique de l'expression <em>maître et possesseur de la nature</em> que l'on peut associer à Descartes ?",
     answers: [
       "Une simple métaphore poétique sur la beauté sublime et inspirante de la nature sauvage.",
       "Une critique de l'orgueil humain qui veut s'approprier ce qui appartient en propre à Dieu, le seul vrai créateur.",
@@ -579,7 +579,7 @@ const questions = [
   },
   // Question n°52
   {
-    question: "Question 52 : Comment définir le <em>relativisme anthropologique</em> tel que pratiqué par Montaigne ?",
+    question: "Question n°52 : Comment définir le <em>relativisme anthropologique</em> tel que pratiqué par Montaigne ?",
     answers: [
       "La croyance que les différences culturelles sont insignifiantes car tous les hommes sont fondamentalement identiques.",
       "La doctrine selon laquelle toutes les cultures se valent et qu'aucun jugement de valeur n'est possible entre elles.",
@@ -590,7 +590,7 @@ const questions = [
   },
   // Question n°53
   {
-    question: "Question 53 : Quelle était la fonction des <em>bématistes</em> dans l'expérience d'Ératosthène pour calculer la circonférence terrestre ?",
+    question: "Question n°53 : Quelle était la fonction des <em>bématistes</em> dans l'expérience d'Ératosthène pour calculer la circonférence terrestre ?",
     answers: [
       "Des prêtres égyptiens qui gardaient le secret de la mesure du temps et des saisons dans les temples.",
       "Des astronomes chargés de mesurer avec précision l'angle du soleil à midi aux solstices.",
@@ -601,7 +601,7 @@ const questions = [
   },
   // Question n°54
   {
-    question: "Question 54 : Selon la vision finaliste du monde défendue par Louis Richeome, à quoi servent les vents ?",
+    question: "Question n°54 : Selon la vision finaliste du monde défendue par Louis Richeome, à quoi servent les vents ?",
     answers: [
       "À rien de précis, ce sont des phénomènes chaotiques et dangereux qu'il faut simplement subir.",
       "Uniquement à pousser les navires, favorisant ainsi l'exploration et le commerce providentiel.",
@@ -612,7 +612,7 @@ const questions = [
   },
   // Question n°55
   {
-    question: "Question 55 : Comment le mythe du <em>bon sauvage</em> a-t-il été utilisé pour critiquer la notion de propriété privée ?",
+    question: "Question n°55 : Comment le mythe du <em>bon sauvage</em> a-t-il été utilisé pour critiquer la notion de propriété privée ?",
     answers: [
       "Il a montré que les sauvages avaient un système de propriété privée plus avancé et plus juste que celui de l'Europe.",
       "Il a prouvé que l'absence de propriété privée conduisait inévitablement à la paresse, à la misère et à la violence.",
@@ -623,7 +623,7 @@ const questions = [
   },
   // Question n°56
   {
-    question: "Question 56 : Quelle est la portée critique de l'œuvre de Théodore de Bry, qui illustre les récits de Las Casas ?",
+    question: "Question n°56 : Quelle est la portée critique de l'œuvre de Théodore de Bry, qui illustre les récits de Las Casas ?",
     answers: [
       "Ses gravures embellissent la conquête pour la rendre plus glorieuse et séduisante aux yeux du public européen.",
       "Ses gravures, d'une violence graphique extrême, visent à provoquer l'indignation contre la barbarie des conquistadors.",
@@ -634,7 +634,7 @@ const questions = [
   },
   // Question n°57
   {
-    question: "Question 57 : Que signifie l'affirmation selon laquelle la géographie humaniste est une science de l'<em>homme humaniste</em> ?",
+    question: "Question n°57 : Que signifie l'affirmation selon laquelle la géographie humaniste est une science de l'<em>homme humaniste</em> ?",
     answers: [
       "Qu'elle s'intéresse exclusivement aux grandes figures historiques et ignore complètement le peuple et les sociétés.",
       "Qu'elle n'est pratiquée que par des lettrés coupés des réalités du terrain et des pratiques des marins.",
@@ -645,7 +645,7 @@ const questions = [
   },
   // Question n°58
   {
-    question: "Question 58 : Comment l'Église a-t-elle initialement réagi face à la découverte de peuples ignorants du Christ ?",
+    question: "Question n°58 : Comment l'Église a-t-elle initialement réagi face à la découverte de peuples ignorants du Christ ?",
     answers: [
       "Elle a refusé de se prononcer, laissant la question aux rois et aux conquistadors sur le terrain.",
       "Elle a immédiatement décrété qu'ils n'avaient pas d'âme et pouvaient être réduits en esclavage comme des bêtes.",
@@ -656,7 +656,7 @@ const questions = [
   },
   // Question n°59
   {
-    question: "Question 59 : Que désigne le terme <em>οίκουμένη</em> (oikoumenè) dans la géographie antique et médiévale ?",
+    question: "Question n°59 : Que désigne le terme <em>οίκουμένη</em> (oikoumenè) dans la géographie antique et médiévale ?",
     answers: [
       "Le nom grec spécifique de la carte en T-O utilisée au Moyen Âge dans les monastères.",
       "L'univers tout entier, y compris les espaces célestes et les sphères des planètes dans le système ptoléméen.",
@@ -667,7 +667,7 @@ const questions = [
   },
   // Question n°60
   {
-    question: "Question 60 : Comment la conception du temps a-t-elle été affectée par les découvertes géographiques et la redécouverte de l'Antiquité ?",
+    question: "Question n°60 : Comment la conception du temps a-t-elle été affectée par les découvertes géographiques et la redécouverte de l'Antiquité ?",
     answers: [
       "Le temps a été considéré comme immobile, les changements n'étant qu'à la surface des choses.",
       "Les Modernes ne sont plus dans la continuité des Anciens, ils peuvent les dépasser et les corriger.",
@@ -678,7 +678,7 @@ const questions = [
   },
   // Question n°61
   {
-    question: "Question 61 : Quelle est la différence entre <em>potentia</em> et <em>potestas</em> dans la réflexion sur le pouvoir à travers la cartographie ?",
+    question: "Question n°61 : Quelle est la différence entre <em>potentia</em> et <em>potestas</em> dans la réflexion sur le pouvoir à travers la cartographie ?",
     answers: [
       "<em>Potentia</em> est le pouvoir spirituel de l'Église, <em>potestas</em> le pouvoir temporel des rois, deux pouvoirs distincts.",
       "Ce sont deux synonymes parfaits pour désigner la domination coloniale et l'impérialisme européen.",
@@ -689,7 +689,7 @@ const questions = [
   },
   // Question n°62
   {
-    question: "Question 62 : En quoi l'épistémologie de Karl Popper rejoint-elle les réflexions de Montaigne sur la connaissance ?",
+    question: "Question n°62 : En quoi l'épistémologie de Karl Popper rejoint-elle les réflexions de Montaigne sur la connaissance ?",
     answers: [
       "Popper rejette totalement le scepticisme de Montaigne comme stérile et anti-scientifique.",
       "Tous deux croient en une vérité absolue et révélée, soit par Dieu, soit par la méthode scientifique infaillible.",
@@ -700,7 +700,7 @@ const questions = [
   },
   // Question n°63
   {
-    question: "Question 63 : Quel est l'enjeu de la représentation du monde ?",
+    question: "Question n°63 : Quel est l'enjeu de la représentation du monde ?",
     answers: [
       "Une question économique sur le coût de production des cartes et leur rentabilité pour les éditeurs.",
       "Une interrogation philosophique sur le statut de la représentation comme fiction ou moyen de comprendre le monde ?",
@@ -711,7 +711,7 @@ const questions = [
   },
   // Question n°64
   {
-    question: "Question 64 : Comment la <em>révolution cartographique</em> a-t-elle modifié la perception de l'espace et du mouvement ?",
+    question: "Question n°64 : Comment la <em>révolution cartographique</em> a-t-elle modifié la perception de l'espace et du mouvement ?",
     answers: [
       "Elle a figé l'espace en une image immobile et définitive, supprimant toute idée de dynamisme ou de voyage.",
       "Elle a renforcé l'idée que l'espace était sacré et imprévisible, gouverné par des forces divines qu'on ne peut cartographier.",
@@ -722,7 +722,7 @@ const questions = [
   },
   // Question n°65
   {
-    question: "Question 65 : Quelle est la fonction du silence dans la réflexion sur la parole et le monde, à travers l'expérience pascalienne ?",
+    question: "Question n°65 : Quelle est la fonction du silence dans la réflexion sur la parole et le monde, à travers l'expérience pascalienne ?",
     answers: [
       "Le silence est toujours signe d'ignorance, de soumission ou d'incapacité à s'exprimer et à comprendre.",
       "Le silence des espaces infinis prouve de manière scientifique que l'univers est vide, sans vie et sans intelligence.",
@@ -733,7 +733,7 @@ const questions = [
   },
   // Question n°66
   {
-    question: "Question 66 : Comment le concept de <em>paradigme</em> chez Kuhn permet-il de comprendre la résistance au changement scientifique ?",
+    question: "Question n°66 : Comment le concept de <em>paradigme</em> chez Kuhn permet-il de comprendre la résistance au changement scientifique ?",
     answers: [
       "La résistance est uniquement due à l'opposition religieuse obscurantiste, sans dimension intellectuelle propre.",
       "Les scientifiques sont par nature conservateurs, peureux et hostiles à toute nouveauté par principe.",
@@ -744,7 +744,7 @@ const questions = [
   },
   // Question n°67
   {
-    question: "Question 67 : Quelle est la postérité intellectuelle du débat entre Las Casas et Sepúlveda à Valladolid ?",
+    question: "Question n°67 : Quelle est la postérité intellectuelle du débat entre Las Casas et Sepúlveda à Valladolid ?",
     answers: [
       "Aucune, il est resté un épisode isolé sans influence sur la pensée politique ultérieure.",
       "Il a définitivement établi la supériorité légale et morale des Européens sur les peuples conquis, closant le débat.",
@@ -755,7 +755,7 @@ const questions = [
   },
   // Question n°68
   {
-    question: "Question 68 : Comment la pratique médicale antique (Hippocrate) et renaissante est-elle liée à la géographie ?",
+    question: "Question n°68 : Comment la pratique médicale antique (Hippocrate) et renaissante est-elle liée à la géographie ?",
     answers: [
       "Les géographes soignaient les maladies des explorateurs pendant leurs longs voyages maritimes.",
       "La médecine et la géographie étaient considérées comme deux disciplines totalement étrangères et sans rapport.",
@@ -766,7 +766,7 @@ const questions = [
   },
   // Question n°69
   {
-    question: "Question 69 : Quelle critique peut-on faire à l'idée de <em>progrès</em> linéaire et uniforme ?",
+    question: "Question n°69 : Quelle critique peut-on faire à l'idée de <em>progrès</em> linéaire et uniforme ?",
     answers: [
       "Le progrès moral suit automatiquement et nécessairement le progrès technique, ils sont indissociables.",
       "Le progrès est une illusion totale, l'histoire n'est qu'un éternel recommencement sans avancée réelle.",
@@ -777,7 +777,7 @@ const questions = [
   },
   // Question n°70
   {
-    question: "Question 70 : Comment l'idée de <em>cosmos</em> (κόσμος) dans l'Antiquité diffère-t-elle de l'idée de <em>monde</em> à la Renaissance ?",
+    question: "Question n°70 : Comment l'idée de <em>cosmos</em> (κόσμος) dans l'Antiquité diffère-t-elle de l'idée de <em>monde</em> à la Renaissance ?",
     answers: [
       "Le κόσμος est chaotique et désordonné, le monde de la Renaissance est ordonné et harmonieux.",
       "Ce sont des synonymes parfaits désignant la même réalité, seule l'époque et la langue changent.",
@@ -788,7 +788,7 @@ const questions = [
   },
   // Question n°71
   {
-    question: "Question 71 : Quel rôle joue la <em>psychagogie</em> (conduite des âmes) dans l'art de la parole, à travers les pratiques des missionnaires ?",
+    question: "Question n°71 : Quel rôle joue la <em>psychagogie</em> (conduite des âmes) dans l'art de la parole, à travers les pratiques des missionnaires ?",
     answers: [
       "C'est la technique utilisée par les <em>sauvages</em> pour convertir les Européens à leurs croyances animistes par le rêve.",
       "Les missionnaires utilisent la parole pour convertir les âmes, mais leur message est discrédité par l'action des conquistadors.",
@@ -799,7 +799,7 @@ const questions = [
   },
   // Question n°72
   {
-    question: "Question 72 : Comment la figure de l'<em>errance</em> s'oppose-t-elle à celle de l'<em>enracinement</em> dans la réflexion sur l'habitation du monde ?",
+    question: "Question n°72 : Comment la figure de l'<em>errance</em> s'oppose-t-elle à celle de l'<em>enracinement</em> dans la réflexion sur l'habitation du monde ?",
     answers: [
       "L'errance est le propre du colonisateur aventurier, l'enracinement celui de l'indigène attaché à sa terre.",
       "L'errance est toujours un signe de désordre et de folie, l'enracinement est la seule attitude sage et vertueuse.",
@@ -810,7 +810,7 @@ const questions = [
   },
   // Question n°73
   {
-    question: "Question 73 : Quelle est l'importance de la figure de Gérard Mercator dans l'histoire de la cartographie ?",
+    question: "Question n°73 : Quelle est l'importance de la figure de Gérard Mercator dans l'histoire de la cartographie ?",
     answers: [
       "Il a inventé la première carte du monde, une innovation sans précédent dans l'histoire humaine.",
       "Il a prouvé de manière définitive et scientifique que la Terre était plate, contrairement aux idées reçues.",
@@ -821,7 +821,7 @@ const questions = [
   },
   // Question n°74
   {
-    question: "Question 74 : Comment les récits de voyage ont-ils contribué à alimenter l'imaginaire européen et à façonner des stéréotypes ?",
+    question: "Question n°74 : Comment les récits de voyage ont-ils contribué à alimenter l'imaginaire européen et à façonner des stéréotypes ?",
     answers: [
       "Ils ont toujours donné une image parfaitement exacte et objective des peuples découverts, sans déformation.",
       "Ils ont été ignorés du grand public et réservés aux savants, n'ayant donc aucune influence culturelle.",
@@ -832,7 +832,7 @@ const questions = [
   },
   // Question n°75
   {
-    question: "Question 75 : Quel lien faire entre connaissance et pouvoir à travers l'exemple de la cartographie ?",
+    question: "Question n°75 : Quel lien faire entre connaissance et pouvoir à travers l'exemple de la cartographie ?",
     answers: [
       "La connaissance est toujours pure et désintéressée, elle n'a rien à voir avec le pouvoir politique ou économique.",
       "Le pouvoir politique a toujours empêché et freiné le progrès de la connaissance par peur des changements.",
@@ -843,7 +843,7 @@ const questions = [
   },
   // Question n°76
   {
-    question: "Question 76 : Comment la question de l'esclavage est-elle abordée dans les textes étudiés, notamment chez Las Casas ?",
+    question: "Question n°76 : Comment la question de l'esclavage est-elle abordée dans les textes étudiés, notamment chez Las Casas ?",
     answers: [
       "Las Casas la défend comme nécessaire à l'économie des colonies, à condition d'être menée avec humanité et modération.",
       "Elle est totalement absente, personne ne la remet en cause à cette époque, elle est considérée comme naturelle.",
@@ -854,7 +854,7 @@ const questions = [
   },
   // Question n°77
   {
-    question: "Question 77 : Quel est le sens de l'expression <em>l'homme se représente le monde (comme une 2e fois)</em> utilisée dans l'introduction ?",
+    question: "Question n°77 : Quel est le sens de l'expression <em>l'homme se représente le monde (comme une 2e fois)</em> utilisée dans l'introduction ?",
     answers: [
       "Cela signifie que Dieu a créé le monde une première fois, et l'homme le recrée en le détruisant par la technique.",
       "L'homme n'est plus seulement présent au monde ; il a la capacité de former des des cartes, des théories sur ce monde.",
@@ -865,7 +865,7 @@ const questions = [
   },
   // Question n°78
   {
-    question: "Question 78 : Comment la philosophie des Lumières du XVIIIe siècle hérite-t-elle des débats ouverts par les découvertes des siècles précédents ?",
+    question: "Question n°78 : Comment la philosophie des Lumières du XVIIIe siècle hérite-t-elle des débats ouverts par les découvertes des siècles précédents ?",
     answers: [
       "Elle les ignore complètement pour se concentrer sur des questions purement métaphysiques abstraites.",
       "Elle rejette en bloc l'humanisme de la Renaissance comme trop religieux et pas assez rationnel.",
@@ -876,7 +876,7 @@ const questions = [
   },
   // Question n°79
   {
-    question: "Question 79 : Quelle est la différence entre <em>convaincre</em> et <em>persuader</em> dans le contexte des débats sur la conversion ?",
+    question: "Question n°79 : Quelle est la différence entre <em>convaincre</em> et <em>persuader</em> dans le contexte des débats sur la conversion ?",
     answers: [
       "Convaincre, c'est pour les savants ; persuader, c'est pour le peuple ignorant, la distinction est sociale.",
       "C'est la même chose, deux synonymes pour désigner le fait de faire adhérer quelqu'un à une idée.",
@@ -887,7 +887,7 @@ const questions = [
   },
   // Question n°80
   {
-    question: "Question 80 : Comment analyser le rapport entre langue, parole et langage à travers l'exemple de la rencontre avec les autres cultures ?",
+    question: "Question n°80 : Comment analyser le rapport entre langue, parole et langage à travers l'exemple de la rencontre avec les autres cultures ?",
     answers: [
       "Les Européens considéraient que les <em>sauvages</em> n'avaient pas de langage articulé, juste des cris d'animaux.",
       "La difficulté de communication est un obstacle majeur conduisant souvent à la violence ou au malentendu.",
@@ -898,7 +898,7 @@ const questions = [
   },
   // Question n°81
   {
-    question: "Question 81 : Quelle est la signification du terme <em>βάρϐαρος</em> (barbaros) dans l'Antiquité grecque ?",
+    question: "Question n°81 : Quelle est la signification du terme <em>βάρϐαρος</em> (barbaros) dans l'Antiquité grecque ?",
     answers: [
       "Un mot pour désigner les peuples particulièrement civilisés et raffinés venus d'Orient.",
       "Un terme désignant spécifiquement les Perses, grands ennemis des cités grecques durant les guerres médiques.",
@@ -909,7 +909,7 @@ const questions = [
   },
   // Question n°82
   {
-    question: "Question 82 : En quoi l'expérience des <em>berdaches</em> (Amérindiens transgenres) rapportée par Théodore de Bry illustre-t-elle un choc des normes culturelles ?",
+    question: "Question n°82 : En quoi l'expérience des <em>berdaches</em> (Amérindiens transgenres) rapportée par Théodore de Bry illustre-t-elle un choc des normes culturelles ?",
     answers: [
       "Elle prouve que les Amérindiens rejetaient eux-mêmes ces personnes, que les Espagnols ont juste aidé à éliminer.",
       "Elle montre que les Européens ont facilement accepté et compris la diversité des identités de genre.",
@@ -920,7 +920,7 @@ const questions = [
   },
   // Question n°83
   {
-    question: "Question 83 : Comment la notion de <em>décentrement</em> (de la Terre, de l'homme) affecte-t-elle la recherche de sens à l'époque moderne ?",
+    question: "Question n°83 : Comment la notion de <em>décentrement</em> (de la Terre, de l'homme) affecte-t-elle la recherche de sens à l'époque moderne ?",
     answers: [
       "Elle ne change rien, car le sens de la vie était déjà introuvable et absurde avant ces découvertes.",
       "Elle conduit à un nihilisme absolu et à un désespoir généralisé, détruisant toute possibilité de sens.",
@@ -931,7 +931,7 @@ const questions = [
   },
   // Question n°84
   {
-    question: "Question 84 : Quel est le statut de la <em>fiction</em> (littéraire, cartographique) dans la découverte et la transformation du monde ?",
+    question: "Question n°84 : Quel est le statut de la <em>fiction</em> (littéraire, cartographique) dans la découverte et la transformation du monde ?",
     answers: [
       "Seule la science décrit la réalité, la fiction ne sert à rien et est un divertissement inutile.",
       "La fiction est une fuite face à un monde insatisfaisant, un simple loisir sans portée transformative.",
@@ -942,7 +942,7 @@ const questions = [
   },
   // Question n°85
   {
-    question: "Question 85 : Comment la vision organiciste du monde (monde-corps) influence-t-elle la médecine de la Renaissance ?",
+    question: "Question n°85 : Comment la vision organiciste du monde (monde-corps) influence-t-elle la médecine de la Renaissance ?",
     answers: [
       "Elle interdit toute pratique médicale, considérant que la maladie est une punition divine qu'il faut accepter.",
       "Elle conduit à soigner les maladies de la Terre comme on soigne un corps humain, et inversement.",
@@ -953,7 +953,7 @@ const questions = [
   },
   // Question n°86
   {
-    question: "Question 86 : Quelle est la position de Montaigne sur la loi et la coutume dans le contexte du relativisme culturel ?",
+    question: "Question n°86 : Quelle est la position de Montaigne sur la loi et la coutume dans le contexte du relativisme culturel ?",
     answers: [
       "Il faut imposer les lois françaises à tous les peuples du monde, car elles sont les meilleures et les plus rationnelles.",
       "Il faut rejeter toutes les lois de son pays car elles sont arbitraires et contraires à la liberté naturelle.",
@@ -964,7 +964,7 @@ const questions = [
   },
   // Question n°87
   {
-    question: "Question 87 : Comment la <em>projection conique</em> de Ptolémée cherche-t-elle à résoudre le problème de la représentation d'une sphère sur un plan ?",
+    question: "Question n°87 : Comment la <em>projection conique</em> de Ptolémée cherche-t-elle à résoudre le problème de la représentation d'une sphère sur un plan ?",
     answers: [
       "En dessinant simplement la Terre comme un disque plat, solution simple mais inexacte.",
       "En découpant la Terre en fuseaux comme une orange, qu'on peut ensuite aplatir séparément.",
@@ -975,7 +975,7 @@ const questions = [
   },
   // Question n°88
   {
-    question: "Question 88 : Quel est le rôle des <em>passions</em> (étonnement, horreur, pitié) dans la rencontre avec l'autre selon les récits analysés ?",
+    question: "Question n°88 : Quel est le rôle des <em>passions</em> (étonnement, horreur, pitié) dans la rencontre avec l'autre selon les récits analysés ?",
     answers: [
       "Les passions brouillent toujours le jugement et doivent être éliminées pour une connaissance objective et froide.",
       "Seuls les récits scientifiques, dépourvus de passion, sont dignes de foi et constituent une source fiable.",
@@ -986,7 +986,7 @@ const questions = [
   },
   // Question n°89
   {
-    question: "Question 89 : Comment le concept de <em>modernité</em> est-il problématisé à travers les révolutions scientifiques et géographiques ?",
+    question: "Question n°89 : Comment le concept de <em>modernité</em> est-il problématisé à travers les révolutions scientifiques et géographiques ?",
     answers: [
       "La modernité n'est qu'un mot, rien ne change vraiment dans les structures profondes des sociétés humaines.",
       "La modernité est présentée comme un âge d'or de progrès continu et sans ombre, libéré des superstitions.",
@@ -997,7 +997,7 @@ const questions = [
   },
   // Question n°90
   {
-    question: "Question 90 : Quelle est l'importance de la <em>sensibilité</em> par rapport à la <em>raison</em> dans la fondation de la morale selon Rousseau ?",
+    question: "Question n°90 : Quelle est l'importance de la <em>sensibilité</em> par rapport à la <em>raison</em> dans la fondation de la morale selon Rousseau ?",
     answers: [
       "La sensibilité et la raison sont strictement équivalentes et interchangeables dans le jugement moral.",
       "La raison seule fonde la morale ; la sensibilité est source d'erreur, de partialité et de passion désordonnée.",
@@ -1008,7 +1008,7 @@ const questions = [
   },
   // Question n°91
   {
-    question: "Question 91 : Comment aborder la question de la <em>vérité</em> face à la pluralité des croyances religieuses révélées ?",
+    question: "Question n°91 : Comment aborder la question de la <em>vérité</em> face à la pluralité des croyances religieuses révélées ?",
     answers: [
       "On doit affirmer que la vérité est du côté du christianisme et que les autres religions sont des erreurs à combattre.",
       "Il faut éviter soigneusement cette question, trop polémique et dangereuse pour l'ordre social et religieux.",
@@ -1019,7 +1019,7 @@ const questions = [
   },
   // Question n°92
   {
-    question: "Question 92 : Quel est le sens de la phrase de Bertrand Russell : <em>L’ennui dans ce monde, c’est que les idiots sont sûrs d’eux et les gens sensés pleins de doutes</em> ?",
+    question: "Question n°92 : Quel est le sens de la phrase de Bertrand Russell : <em>L’ennui dans ce monde, c’est que les idiots sont sûrs d’eux et les gens sensés pleins de doutes</em> ?",
     answers: [
       "Une simple boutade humoristique sans portée philosophique sérieuse.",
       "Une attaque contre les intellectuels, accusés de manquer de courage et de conviction.",
@@ -1030,7 +1030,7 @@ const questions = [
   },
   // Question n°93
   {
-    question: "Question 93 : Comment l'idée de <em>guerre juste</em> est-elle mise en cause par les écrits de Las Casas ?",
+    question: "Question n°93 : Comment l'idée de <em>guerre juste</em> est-elle mise en cause par les écrits de Las Casas ?",
     answers: [
       "Une guerre rapide et totale peut être juste pour soumettre les païens et imposer la foi.",
       "Les Indiens ne faisaient que défendre leurs terres contre des envahisseurs.",
@@ -1041,7 +1041,7 @@ const questions = [
   },
   // Question n°94
   {
-    question: "Question 94 : Quelle est la fonction du <em>miroir</em> dans la construction des figures de l'autre (le sauvage miroir de l'Occident) ?",
+    question: "Question n°94 : Quelle est la fonction du <em>miroir</em> dans la construction des figures de l'autre (le sauvage miroir de l'Occident) ?",
     answers: [
       "Le miroir est un objet technologique que les sauvages ne possédaient pas, signe de leur infériorité technique.",
       "L'autre est un miroir qui ne renvoie aucune image de nous-mêmes, il reste radicalement opaque et étranger.",
@@ -1052,7 +1052,7 @@ const questions = [
   },
   // Question n°95
   {
-    question: "Question 95 : Comment définir le <em>polygénisme</em> évoqué à propos des théories raciales ?",
+    question: "Question n°95 : Comment définir le <em>polygénisme</em> évoqué à propos des théories raciales ?",
     answers: [
       "La pratique d'avoir plusieurs épouses, commune chez les <em>sauvages</em> et condamnée par les chrétiens.",
       "La théorie selon laquelle les différentes <em>races</em> humaines ont des origines distinctes et séparées.",
@@ -1063,7 +1063,7 @@ const questions = [
   },
   // Question n°96
   {
-    question: "Question 96 : Quel est l'apport de la <em>géographie mathématique</em> de Ptolémée par rapport aux descriptions littéraires antérieures ?",
+    question: "Question n°96 : Quel est l'apport de la <em>géographie mathématique</em> de Ptolémée par rapport aux descriptions littéraires antérieures ?",
     answers: [
       "Elle se contente de recopier les cartes dessinées par les marins phéniciens sans rien y ajouter.",
       "Elle est moins précise car elle ignore volontairement les récits oraux des voyageurs et des marchands.",
@@ -1074,7 +1074,7 @@ const questions = [
   },
   // Question n°97
   {
-    question: "Question 97 : Comment la notion d'<em>a priori</em> chez Kant, dans le contexte de la révolution copernicienne, redéfinit-elle la connaissance ?",
+    question: "Question n°97 : Comment la notion d'<em>a priori</em> chez Kant, dans le contexte de la révolution copernicienne, redéfinit-elle la connaissance ?",
     answers: [
       "L'a priori désigne la connaissance révélée par Dieu, antérieure et supérieure à toute expérience humaine.",
       "La connaissance vient entièrement de l'expérience sensible (a posteriori), il n'y a pas de connaissances a priori.",
@@ -1085,7 +1085,7 @@ const questions = [
   },
   // Question n°98
   {
-    question: "Question 98 : Quelle est la portée de la formule de Montaigne : <em>Chacun appelle barbarie ce qui n’est pas de son usage</em> ?",
+    question: "Question n°98 : Quelle est la portée de la formule de Montaigne : <em>Chacun appelle barbarie ce qui n’est pas de son usage</em> ?",
     answers: [
       "Une simple constatation sans conséquence, une remarque anecdotique sur les différences culturelles.",
       "Une invitation à adopter les coutumes des autres pour ne pas être soi-même qualifié de barbare.",
@@ -1096,7 +1096,7 @@ const questions = [
   },
   // Question n°99
   {
-    question: "Question 99 : Comment la dénonciation de la conquête par Las Casas s'appuie-t-elle sur un argument d'efficacité, et pas seulement de moralité ?",
+    question: "Question n°99 : Comment la dénonciation de la conquête par Las Casas s'appuie-t-elle sur un argument d'efficacité, et pas seulement de moralité ?",
     answers: [
       "Il ne donne aucun argument d'efficacité, seulement des arguments moraux et théologiques purs.",
       "Il affirme que les massacres sont trop lents et qu'il faut des méthodes plus radicales pour soumettre les Indiens.",
@@ -1107,7 +1107,7 @@ const questions = [
   },
   // Question n°100
   {
-    question: "Question 100 : Quel est le principal enseignement philosophique que l'on peut tirer de cette séquence ?",
+    question: "Question n°100 : Quel est le principal enseignement philosophique que l'on peut tirer de cette séquence ?",
     answers: [
       "L'Europe a toujours eu raison et a apporté la civilisation au reste du monde, malgré quelques excès qui restent regrettables.",
       "Toutes les cultures se valent et il est impossible de les comparer ou de les juger en aucune manière, c'est le relativisme absolu.",

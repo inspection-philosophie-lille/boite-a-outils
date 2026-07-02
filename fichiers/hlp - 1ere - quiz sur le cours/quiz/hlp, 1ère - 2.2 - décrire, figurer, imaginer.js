@@ -16,9 +16,9 @@ const philosophyData = {
 // QUESTIONS DU QUIZ (1 à 100)
 // ============================================
 const questions = [
-  // Question n°1
+  // Question n°01
   {
-    question: "Question 1 : Comment Gorgias, dans l'<em>Éloge d'Hélène</em>, justifie-t-il l'innocence d'Hélène, ayant quitté son mari pour suivre Pâris ?",
+    question: "Question n°01 : Comment Gorgias, dans l'<em>Éloge d'Hélène</em>, justifie-t-il l'innocence d'Hélène, ayant quitté son mari pour suivre Pâris ?",
     answers: [
       "Il démontre qu'elle fut persuadée par le discours de Pâris.",
       "En soutenant qu'elle obéissait à la volonté des dieux, supérieure aux lois humaines.",
@@ -28,9 +28,9 @@ const questions = [
     explanation: `Gorgias défend Hélène en présentant le logos (λόγος) comme une puissance (δύναμις) contraignante, comparable à la violence physique. Si elle a cédé à la persuasion, c'est qu'elle a subi une force majeure, ce qui l'absout de toute responsabilité morale. Cette thèse fonde la sophistique en érigeant la parole en instrument de pouvoir capable de dominer l'âme (psychagogie). L'efficacité du discours prime sur la vérité de son contenu.
 Exemple : Un discours publicitaire sophistiqué peut nous persuader d'acheter un objet dont nous n'avons pas besoin, en agissant sur nos désirs et nos peurs, tout comme le discours de Pâris a agi sur Hélène.`
   },
-  // Question n°2
+  // Question n°02
   {
-    question: "Question 2 : Quelle distinction fondamentale la rhétorique classique établit-elle entre les genres de discours ?",
+    question: "Question n°02 : Quelle distinction fondamentale la rhétorique classique établit-elle entre les genres de discours ?",
     answers: [
       "Le discours politique, le discours philosophique et le discours poétique.",
       "Le discours judiciaire, le discours délibératif et le discours épidictique.",
@@ -40,9 +40,9 @@ Exemple : Un discours publicitaire sophistiqué peut nous persuader d'acheter un
     explanation: `Aristote, dans sa <em>Rhétorique</em>, distingue trois genres correspondant à trois situations d'énonciation et trois temporalités. Le judiciaire (passé : accuser/défendre) vise à établir la justice, le délibératif (futur : conseiller/dissuader) vise l'utile, et l'épidictique (présent : louer/blâmer) vise le beau ou le laid. Chaque genre requiert des arguments et un style spécifiques, structurant toute l'éloquence antique et moderne.
 Exemple : Le réquisitoire d'un procureur est un discours judiciaire, un débat parlementaire est délibératif, et l'éloge funèbre d'un soldat inconnu est un discours épidictique.`
   },
-  // Question n°3
+  // Question n°03
   {
-    question: "Question 3 : Que signifie l'expression <em>parole performative</em>, conceptualisée par le philosophe du langage J.L. Austin ?",
+    question: "Question n°03 : Que signifie l'expression <em>parole performative</em>, conceptualisée par le philosophe du langage J.L. Austin ?",
     answers: [
       "Une parole particulièrement bien articulée et scénarisée pour la scène.",
       "Une parole utilisée par les performeurs et artistes contemporains.",
@@ -52,9 +52,9 @@ Exemple : Le réquisitoire d'un procureur est un discours judiciaire, un débat 
     explanation: `Une parole est performative quand dire, c'est faire. L'énonciation elle-même constitue l'acte. Austin oppose ces énoncés performatifs (ex: « Je te promets », « Je vous déclare mari et femme ») aux énoncés constatatifs qui se contentent de décrire un état de fait (« Il pleut »). Cette théorie montre que le langage n'est pas qu'un outil de description, mais un outil d'action sur le monde et sur les relations sociales.
 Exemple : Lorsqu'un maire dit « Je déclare la séance ouverte », il ne décrit pas une ouverture, il l'accomplit. De même, le « Oui » des époux lors d'un mariage civil est un acte performatif qui les unit légalement.`
   },
-  // Question n°4
+  // Question n°04
   {
-    question: "Question 4 : Dans le <em>Gorgias</em> de Platon, quelle métaphore Socrate utilise-t-il pour disqualifier la rhétorique des sophistes ?",
+    question: "Question n°04 : Dans le <em>Gorgias</em> de Platon, quelle métaphore Socrate utilise-t-il pour disqualifier la rhétorique des sophistes ?",
     answers: [
       "Il la compare à la navigation, un art hasardeux, par opposition à l'astronomie qui est une science exacte.",
       "Il la compare à la cuisine, un art de flatter les appétits, par opposition à la médecine qui soigne vraiment.",
@@ -64,9 +64,9 @@ Exemple : Lorsqu'un maire dit « Je déclare la séance ouverte », il ne décri
     explanation: `Socrate oppose la rhétorique, simple knack (ἐμπειρία) de flatterie (κολακεία), à la véritable politique, soin de l'âme. La cuisine flatte le corps par des saveurs agréables sans se soucier de la santé, tout comme la rhétorique sophistique flatte l'âme de la foule par des discours agréables sans se soucier de la vérité ou de la justice. La médecine, elle, soigne même si c'est amer. Cette analogie condamne la sophistique comme pratique immorale et anti-philosophique.
 Exemple : Un discours populiste promettant des solutions simples et gratifiantes à des problèmes complexes flatte l'auditoire (comme la cuisine grasse), tandis qu'un discours politique responsable expose les difficultés et les efforts nécessaires (comme un traitement médical).`
   },
-  // Question n°5
+  // Question n°05
   {
-    question: "Question 5 : Quelle est la différence entre <em>persuader</em> et <em>convaincre</em> selon une distinction classique héritée de la pensée pascalienne ?",
+    question: "Question n°05 : Quelle est la différence entre <em>persuader</em> et <em>convaincre</em> selon une distinction classique héritée de la pensée pascalienne ?",
     answers: [
       "Persuader s'appuie sur les passions, convaincre sur les preuves logiques.",
       "Persuader s'adresse à la raison, convaincre aux passions.",
@@ -76,9 +76,9 @@ Exemple : Un discours populiste promettant des solutions simples et gratifiantes
     explanation: `Bien que les termes soient souvent confondus, une tradition philosophique (de Pascal à Perelman) distingue la persuasion, qui agit sur les affects, les préjugés et l'imaginaire (le cœur), de la conviction, qui s'obtient par la démonstration rationnelle et l'adhésion intellectuelle (l'esprit). La rhétorique sophistique vise la persuasion, la philosophie et la science visent la conviction. Cette distinction souligne la dualité de l'âme humaine, à la fois raisonnable et passionnée.
 Exemple : Un avocat peut chercher à convaincre le jury par des preuves matérielles (conviction), mais aussi à le persuader par un plaidoyer émouvant sur la détresse de son client (persuasion).`
   },
-  // Question n°6
+  // Question n°06
   {
-    question: "Question 6 : Quels sont les trois « preuves » ou « moyens de persuasion » (πίστεις) qu'Aristote identifie comme fondements de l'art rhétorique ?",
+    question: "Question n°06 : Quels sont les trois « preuves » ou « moyens de persuasion » (πίστεις) qu'Aristote identifie comme fondements de l'art rhétorique ?",
     answers: [
       "L'induction, la déduction et l'exemple.",
       "L'ethos, le pathos et le logos.",
@@ -88,9 +88,9 @@ Exemple : Un avocat peut chercher à convaincre le jury par des preuves matérie
     explanation: `Pour Aristote, l'art du rhéteur consiste à maîtriser trois types de preuves techniques (c'est-à-dire construites par l'orateur). Le logos (λόγος) est la preuve par le raisonnement et les arguments. Le pathos (πάθος) est la preuve par l'émotion suscitée chez l'auditeur. L'ethos (ἦθος) est la preuve par le caractère moral que l'orateur manifeste dans son discours (sagesse, vertu, bienveillance). Un discours efficace combine harmonieusement ces trois leviers.
 Exemple : Dans un discours sur l'écologie, un scientifique utilisera des données (logos), manifestera sa compétence et son intégrité (ethos), et pourra évoquer l'amour pour les générations futures pour émouvoir (pathos).`
   },
-  // Question n°7
+  // Question n°07
   {
-    question: "Question 7 : Pourquoi Platon, dans le <em>Phèdre</em>, critique-t-il l'écriture, lui préférant la parole vivante du dialogue ?",
+    question: "Question n°07 : Pourquoi Platon, dans le <em>Phèdre</em>, critique-t-il l'écriture, lui préférant la parole vivante du dialogue ?",
     answers: [
       "Parce que l'écriture, invention récente, corrompt la mémoire naturelle et affaiblit l'intelligence.",
       "Parce que l'écriture fixe la pensée, la rendant vulnérable aux contresens.",
@@ -100,9 +100,9 @@ Exemple : Dans un discours sur l'écologie, un scientifique utilisera des donné
     explanation: `Platon compare l'écrit à une peinture : silencieux, il donne l'illusion de la pensée vivante mais reste figé. Jeté au monde, il est à la merci de tous les lecteurs, ne pouvant choisir son public ni répondre aux questions. À l'inverse, la parole philosophique, incarnée dans le dialogue (διαλέγεσθαι), est vivante, adaptée à l'interlocuteur, capable de se corriger et de défendre son sens. L'écriture est donc un pharmakon (φάρμακον) à la fois remède (pour la mémoire) et poison (pour la pensée vraie).
 Exemple : Un texte philosophique peut être interprété de mille façons, parfois contraires, sans que l'auteur puisse intervenir. Une discussion en classe permet, elle, de préciser, nuancer et approfondir la compréhension en direct.`
   },
-  // Question n°8
+  // Question n°08
   {
-    question: "Question 8 : Qu'est-ce que la <em>doxa</em> (δόξα) dans le vocabulaire platonicien, et pourquoi est-elle le terrain de prédilection du sophiste ?",
+    question: "Question n°08 : Qu'est-ce que la <em>doxa</em> (δόξα) dans le vocabulaire platonicien, et pourquoi est-elle le terrain de prédilection du sophiste ?",
     answers: [
       "L'opinion commune, instable et relative, que le sophiste flatte et manipule.",
       "La doctrine officielle de la cité, que le sophiste doit enseigner aux jeunes citoyens.",
@@ -112,9 +112,9 @@ Exemple : Un texte philosophique peut être interprété de mille façons, parfo
     explanation: `La doxa est le monde des apparences et des opinions non fondées, par opposition à l'epistémè (ἐπιστήμη), la connaissance vraie et certaine. Le sophiste, selon Platon, est un « marchand de science apparente » qui se complait dans ce domaine flou. Il ne vise pas à instruire mais à persuader, en s'adaptant aux préjugés du plus grand nombre. Sa compétence est de faire paraître le plus faible raison le plus fort, dans l'économie de l'opinion.
 Exemple : En politique, un démagogue base son discours sur les préjugés populaires du moment (la doxa) plutôt que sur une analyse factuelle et raisonnée de la situation.`
   },
-  // Question n°9
+  // Question n°09
   {
-    question: "Question 9 : Selon Cicéron, quelles sont les cinq parties canoniques de l'art oratoire (les officia oratoris) ?",
+    question: "Question n°09 : Selon Cicéron, quelles sont les cinq parties canoniques de l'art oratoire (les officia oratoris) ?",
     answers: [
       "L'exorde, la narration, la confirmation, la réfutation et la péroraison.",
       "Le logos, le pathos, l'ethos, le kairos et le topos.",
@@ -126,7 +126,7 @@ Exemple : Pour préparer un discours, on trouve d'abord des idées et des preuve
   },
   // Question n°10
   {
-    question: "Question 10 : Quelle est la fonction du <em>kairos</em> (καιρός) dans la pratique rhétorique des sophistes ?",
+    question: "Question n°10 : Quelle est la fonction du <em>kairos</em> (καιρός) dans la pratique rhétorique des sophistes ?",
     answers: [
       "Il désigne le moment opportun auquel le discours doit s'adapter pour être efficace.",
       "Il désigne le lieu commun, le thème universel sur lequel bâtir un discours.",
@@ -138,7 +138,7 @@ Exemple : Un leader politique qui adapte son discours (ton, arguments, exemples)
   },
   // Question n°11
   {
-    question: "Question 11 : Que signifie l'expression <em>psychagogie</em> (ψυχαγωγία), souvent associée à la rhétorique de Gorgias ?",
+    question: "Question n°11 : Que signifie l'expression <em>psychagogie</em> (ψυχαγωγία), souvent associée à la rhétorique de Gorgias ?",
     answers: [
       "L'art de <em>conduire les âmes</em> par la parole, de les influencer et de les manipuler.",
       "L'étude scientifique de l'esprit humain (psychologie).",
@@ -150,7 +150,7 @@ Exemple : Un conteur qui captive son auditoire, le faisant rire, trembler ou rê
   },
   // Question n°12
   {
-    question: "Question 12 : Quelle critique majeure le philosophe Jacques Ellul adresse-t-il à la « parole anonyme » dans la société technicienne ?",
+    question: "Question n°12 : Quelle critique majeure le philosophe Jacques Ellul adresse-t-il à la « parole anonyme » dans la société technicienne ?",
     answers: [
       "Elle est émise par des médias impersonnels, s'adressant à des masses indifférenciées.",
       "Elle est trop coûteuse à produire et nécessite des moyens techniques disproportionnés.",
@@ -162,7 +162,7 @@ Exemple : Un spot publicitaire télévisé (parole anonyme de la marque) ne dial
   },
   // Question n°13
   {
-    question: "Question 13 : Dans la tragédie <em>Antigone</em> de Sophocle, quel est l'enjeu du conflit entre la parole de Créon (édit royal) et celle d'Antigone (loi divine et familiale) ?",
+    question: "Question n°13 : Dans la tragédie <em>Antigone</em> de Sophocle, quel est l'enjeu du conflit entre la parole de Créon (édit royal) et celle d'Antigone (loi divine et familiale) ?",
     answers: [
       "Un conflit entre la parole écrite de la loi humaine et la parole non-écrite mais sacrée des rites familiaux.",
       "Un conflit générationnel entre l'autorité d'un vieux roi et la rébellion d'une jeune femme.",
@@ -174,7 +174,7 @@ Exemple : Un lanceur d'alerte qui désobéit à une loi qu'il estime injuste (se
   },
   // Question n°14
   {
-    question: "Question 14 : Comment appelle-t-on, en rhétorique, le fait d'anticiper et de réfuter par avance les arguments de l'adversaire ?",
+    question: "Question n°14 : Comment appelle-t-on, en rhétorique, le fait d'anticiper et de réfuter par avance les arguments de l'adversaire ?",
     answers: [
       "L'ironie socratique.",
       "L'occupation ou préoccupation.",
@@ -186,7 +186,7 @@ Exemple : Un candidat politique disant : « On me reprochera de trop taxer les r
   },
   // Question n°15
   {
-    question: "Question 15 : Quelle est la position d'Isocrate concernant l'enseignement de la vertu et du savoir politique ?",
+    question: "Question n°15 : Quelle est la position d'Isocrate concernant l'enseignement de la vertu et du savoir politique ?",
     answers: [
       "Il croit que la rhétorique est le moyen de former des citoyens éclairés et capables d'agir dans la cité.",
       "Il pense que seuls les philosophes-rois, formés par la dialectique, peuvent accéder à la science politique.",
@@ -198,7 +198,7 @@ Exemple : Les <em>humanités</em> classiques (littérature, histoire, philosophi
   },
   // Question n°16
   {
-    question: "Question 16 : Selon la théorie d'Austin, quelles conditions doivent être remplies pour qu'un énoncé performatif soit réussi (ou « heureux ») ?",
+    question: "Question n°16 : Selon la théorie d'Austin, quelles conditions doivent être remplies pour qu'un énoncé performatif soit réussi (ou « heureux ») ?",
     answers: [
       "Il doit s'inscrire dans une procédure conventionnelle et suivi des comportements conséquents.",
       "Il doit être prononcé avec force et conviction par une personne ayant une belle voix.",
@@ -210,7 +210,7 @@ Exemple : Si un enfant dit à ses copains « Je vous déclare mari et femme », 
   },
   // Question n°17
   {
-    question: "Question 17 : Que représente la figure mythologique de Protagoras, avec sa fameuse phrase « L'homme est la mesure de toute chose » ?",
+    question: "Question n°17 : Que représente la figure mythologique de Protagoras, avec sa fameuse phrase « L'homme est la mesure de toute chose » ?",
     answers: [
       "La naissance de l'humanisme, plaçant l'être humain au centre de la réflexion.",
       "L'affirmation de la supériorité de l'homme sur la nature et les dieux.",
@@ -222,7 +222,7 @@ Exemple : L'idée que « la beauté est dans l'œil de celui qui regarde » est 
   },
   // Question n°18
   {
-    question: "Question 18 : Dans l'analyse du discours de Marc Antoine dans <em>Jules César</em> de Shakespeare, quel procédé rhétorique utilise-t-il pour retourner la foule contre Brutus ?",
+    question: "Question n°18 : Dans l'analyse du discours de Marc Antoine dans <em>Jules César</em> de Shakespeare, quel procédé rhétorique utilise-t-il pour retourner la foule contre Brutus ?",
     answers: [
       "Il promet à la foule des avantages matériels si elle se retourne contre les conspirateurs.",
       "Il utilise massivement l'ironie et la litote et joue sur les émotions.",
@@ -234,7 +234,7 @@ Exemple : C'est une technique courante en communication politique : reprendre le
   },
   // Question n°19
   {
-    question: "Question 19 : Quelle distinction la linguistique (F. de Saussure) établit-elle entre « langage », « langue » et « parole » ?",
+    question: "Question n°19 : Quelle distinction la linguistique (F. de Saussure) établit-elle entre « langage », « langue » et « parole » ?",
     answers: [
       "Le langage est la faculté de communiquer, la langue est le système de signes d'une communauté, la parole est l'usage de ce système.",
       "Le langage est l'acte concret, la langue est la capacité biologique, la parole est le système abstrait.",
@@ -246,7 +246,7 @@ Exemple : Quand on apprend l'anglais, on apprend une <em>langue</em> (son vocabu
   },
   // Question n°20
   {
-    question: "Question 20 : Que signifie l'idée de <em>violence symbolique</em> développée par le sociologue Pierre Bourdieu ?",
+    question: "Question n°20 : Que signifie l'idée de <em>violence symbolique</em> développée par le sociologue Pierre Bourdieu ?",
     answers: [
       "La violence physique justifiée par des discours symboliques (comme les rites de guerre).",
       "Une violence douce et invisible qui s'exerce par le langage, la culture et les classements sociaux.",
@@ -258,7 +258,7 @@ Exemple : Le fait de considérer certains accents régionaux ou de banlieue comm
   },
   // Question n°21
   {
-    question: "Question 21 : Quelle est la fonction principale de l'<em>exorde</em> dans la structure classique d'un discours ?",
+    question: "Question n°21 : Quelle est la fonction principale de l'<em>exorde</em> dans la structure classique d'un discours ?",
     answers: [
       "Exposer les faits de manière claire et neutre.",
       "Résumer les arguments et appeler à l'action ou à l'émotion.",
@@ -270,7 +270,7 @@ Exemple : Un avocat commençant son plaidoirie par « Mesdames, Messieurs les ju
   },
   // Question n°22
   {
-    question: "Question 22 : Comment peut-on définir un <em>sophisme</em> ?",
+    question: "Question n°22 : Comment peut-on définir un <em>sophisme</em> ?",
     answers: [
       "Un argument logiquement valide mais moralement répréhensible.",
       "Un argument propre aux sophistes grecs, aujourd'hui obsolète.",
@@ -282,7 +282,7 @@ Exemple : L'appel à la tradition (« On a toujours fait comme ça ») est un so
   },
   // Question n°23
   {
-    question: "Question 23 : Quel concept Hannah Arendt utilise-t-elle pour désigner la capacité humaine à commencer quelque chose de nouveau par la parole et l'action dans la sphère publique ?",
+    question: "Question n°23 : Quel concept Hannah Arendt utilise-t-elle pour désigner la capacité humaine à commencer quelque chose de nouveau par la parole et l'action dans la sphère publique ?",
     answers: [
       "Le <em>contrat social</em>.",
       "La <em>natalité</em>.",
@@ -294,7 +294,7 @@ Exemple : Le discours « I have a dream » de Martin Luther King fut un acte de 
   },
   // Question n°24
   {
-    question: "Question 24 : Dans le <em>Banquet</em> de Platon, quelle est la nature de l'ascension décrite par Diotime, qui mène de l'amour des beaux corps à l'amour du Beau en soi ?",
+    question: "Question n°24 : Dans le <em>Banquet</em> de Platon, quelle est la nature de l'ascension décrite par Diotime, qui mène de l'amour des beaux corps à l'amour du Beau en soi ?",
     answers: [
       "Une simple métaphore poétique pour décrire le désir amoureux commun à tous les hommes.",
       "Une progression dialectique où l'amour pousse l'âme du sensible vers l'intelligible.",
@@ -306,7 +306,7 @@ Exemple : Un étudiant peut d'abord être passionné par une discipline particul
   },
   // Question n°25
   {
-    question: "Question 25 : Que signifie l'expression <em>langue de bois</em> en contexte politique ?",
+    question: "Question n°25 : Que signifie l'expression <em>langue de bois</em> en contexte politique ?",
     answers: [
       "Un langage volontairement compliqué et jargonnant pour impressionner l'auditoire.",
       "Le langage technique des rapports administratifs, incompréhensible pour le grand public.",
@@ -318,7 +318,7 @@ Exemple : Une réponse politique du type « Des mesures seront prises en temps u
   },
   // Question n°26
   {
-    question: "Question 26 : Quelle différence majeure oppose la puissance (<em>potentia</em>) et le pouvoir (<em>potestas</em>) de la parole ?",
+    question: "Question n°26 : Quelle différence majeure oppose la puissance (<em>potentia</em>) et le pouvoir (<em>potestas</em>) de la parole ?",
     answers: [
       "La <em>potentia</em> est la puissance créatrice de la parole, la <em>potestas</em> est son usage comme instrument de domination.",
       "La <em>potentia</em> est le pouvoir légitime (du roi), la <em>potestas</em> est la force illégitime (du tyran).",
@@ -330,7 +330,7 @@ Exemple : Une conversation amicale où l'on se confie et se comprend fait jouer 
   },
   // Question n°27
   {
-    question: "Question 27 : Comment Aristote définit-il l'<em>enthymème</em> dans sa <em>Rhétorique</em> ?",
+    question: "Question n°27 : Comment Aristote définit-il l'<em>enthymème</em> dans sa <em>Rhétorique</em> ?",
     answers: [
       "Un argument construit à partir de prémisses probables destiné à un non-spécialiste.",
       "Un discours passionné qui transporte l'auditeur hors de lui-même (enthousiasme).",
@@ -342,7 +342,7 @@ Exemple : « Socrate est mortel, car il est un homme » est un enthymème. La pr
   },
   // Question n°28
   {
-    question: "Question 28 : Quelle est la fonction du silence dans l'art de la parole, selon une perspective philosophique ?",
+    question: "Question n°28 : Quelle est la fonction du silence dans l'art de la parole, selon une perspective philosophique ?",
     answers: [
       "Il n'a aucune fonction ; la rhétorique vise précisément à l'éliminer par un flux continu de paroles.",
       "Il peut être une forme d'expression qui donne son sens et sa force à la parole qui l'entoure.",
@@ -354,7 +354,7 @@ Exemple : Le silence d'une minute en mémoire des victimes d'une tragédie est u
   },
   // Question n°29
   {
-    question: "Question 29 : Que signifie l'<em>argument d'autorité</em> et pourquoi est-il souvent considéré comme un sophisme ?",
+    question: "Question n°29 : Que signifie l'<em>argument d'autorité</em> et pourquoi est-il souvent considéré comme un sophisme ?",
     answers: [
       "Un argument qui prétend prouver une thèse en misant sur celui qui la soutient.",
       "Un argument qui s'appuie sur l'autorité légale de celui qui parle.",
@@ -366,7 +366,7 @@ Exemple : « Il faut croire en Dieu car la Bible le dit » est un argument d'aut
   },
   // Question n°30
   {
-    question: "Question 30 : Quelle est la thèse centrale de Walter Benjamin dans son essai <em>Le Conteur</em>, concernant la modernité ?",
+    question: "Question n°30 : Quelle est la thèse centrale de Walter Benjamin dans son essai <em>Le Conteur</em>, concernant la modernité ?",
     answers: [
       "La modernité a entraîné la décadence de la sagesse transmise par la parole des conteurs.",
       "La modernité a vu renaître l'art du conte grâce aux nouveaux médias comme la radio.",
@@ -378,7 +378,7 @@ Exemple : Les grands récits des anciens (sur la guerre, l'amour, le travail) av
   },
   // Question n°31
   {
-    question: "Question 31 : Comment Cicéron définit-il l'idéal de l'orateur parfait dans son traité <em>De l'Orateur</em> ?",
+    question: "Question n°31 : Comment Cicéron définit-il l'idéal de l'orateur parfait dans son traité <em>De l'Orateur</em> ?",
     answers: [
       "Un maître de l'éloquence, cultivé et vertueux.",
       "Un technicien spécialisé dans l'art de persuader les juges.",
@@ -390,7 +390,7 @@ Exemple : Cicéron lui-même, en dénonçant la conjuration de Catilina, chercha
   },
   // Question n°32
   {
-    question: "Question 32 : Que désigne le terme <em>topos</em> (τόπος) en rhétorique ?",
+    question: "Question n°32 : Que désigne le terme <em>topos</em> (τόπος) en rhétorique ?",
     answers: [
       "Le lieu géographique où se tient le discours.",
       "Un schéma d'argumentation standard.",
@@ -402,7 +402,7 @@ Exemple : Pour défendre une loi, on peut puiser dans le topos de l'utilité (el
   },
   // Question n°33
   {
-    question: "Question 33 : En quoi le concept de <em>parole prophétique</em> se distingue-t-il de la parole rhétorique classique ?",
+    question: "Question n°33 : En quoi le concept de <em>parole prophétique</em> se distingue-t-il de la parole rhétorique classique ?",
     answers: [
       "Elle est toujours prononcée par un devin et concerne l'avenir.",
       "Elle utilise un langage codé et symbolique, incompréhensible sans initiation.",
@@ -414,7 +414,7 @@ Exemple : Les discours de Martin Luther King, pasteur, empruntaient à la forme 
   },
   // Question n°34
   {
-    question: "Question 34 : Quelle est la signification et la portée de la formule de Gorgias : « Le tragique est un trompeur qui fait passer pour juste celui qui trompe » ?",
+    question: "Question n°34 : Quelle est la signification et la portée de la formule de Gorgias : « Le tragique est un trompeur qui fait passer pour juste celui qui trompe » ?",
     answers: [
       "Une critique du théâtre tragique qui manipule les émotions du public.",
       "Une définition de la tragédie comme l'art consenti de l'illusion.",
@@ -426,7 +426,7 @@ Exemple : Au cinéma, nous savons que les acteurs ne meurent pas vraiment, mais 
   },
   // Question n°35
   {
-    question: "Question 35 : Quelle critique Rousseau adresse-t-il à l'éloquence des sociétés polies dans <em>Discours sur l'origine de l'inégalité</em> ?",
+    question: "Question n°35 : Quelle critique Rousseau adresse-t-il à l'éloquence des sociétés polies dans <em>Discours sur l'origine de l'inégalité</em> ?",
     answers: [
       "Elle est trop complexe et nécessite une éducation longue, réservée aux riches.",
       "Elle a perdu la force et la sincérité de la parole des premiers hommes, devenant un art de la flatterie et du mensonge social.",
@@ -438,7 +438,7 @@ Exemple : Le langage diplomatique ou mondain, où l'on complimente sans le pense
   },
   // Question n°36
   {
-    question: "Question 36 : Quel est le sens de la fameuse phrase de Karl Marx : « Les philosophes n'ont fait qu'interpréter le monde de différentes manières ; ce qui importe, c'est de le transformer » ?",
+    question: "Question n°36 : Quel est le sens de la fameuse phrase de Karl Marx : « Les philosophes n'ont fait qu'interpréter le monde de différentes manières ; ce qui importe, c'est de le transformer » ?",
     answers: [
       "Une critique de la philosophie spéculative qui est jugée comme étant inutile.",
       "Un éloge de l'action révolutionnaire violente contre la parole intellectualisée.",
@@ -450,7 +450,7 @@ Exemple : Le <em>Manifeste du Parti communiste</em> n'est pas un traité académ
   },
   // Question n°37
   {
-    question: "Question 37 : Que signifie le principe d'<em>interprétation charitable</em> dans la philosophie du langage et le débat d'idées ?",
+    question: "Question n°37 : Que signifie le principe d'<em>interprétation charitable</em> dans la philosophie du langage et le débat d'idées ?",
     answers: [
       "Il faut toujours interpréter les paroles des pauvres et des défavorisés avec une bienveillance particulière.",
       "C'est une technique sophistique qui consiste à donner une interprétation favorable à ses propres arguments.",
@@ -462,7 +462,7 @@ Exemple : Avant de critiquer la position d'un philosophe, on doit s'efforcer de 
   },
   // Question n°38
   {
-    question: "Question 38 : Quelle est la fonction de la <em>narration</em> (narratio) dans un discours judiciaire selon les traités classiques ?",
+    question: "Question n°38 : Quelle est la fonction de la <em>narration</em> (narratio) dans un discours judiciaire selon les traités classiques ?",
     answers: [
       "Exposer les faits de l'affaire de manière claire et favorable à sa cause.",
       "Raconter une histoire fictive pour émouvoir le jury.",
@@ -474,7 +474,7 @@ Exemple : Dans un procès, l'avocat de la défense et le procureur proposent deu
   },
   // Question n°39
   {
-    question: "Question 39 : Comment Hannah Arendt analyse-t-elle le phénomène totalitaire en lien avec la destruction du langage ?",
+    question: "Question n°39 : Comment Hannah Arendt analyse-t-elle le phénomène totalitaire en lien avec la destruction du langage ?",
     answers: [
       "Les régimes totalitaires imposent une nouvelle langue artificielle, comme le novlangue d'Orwell.",
       "Ils interdisent simplement la liberté d'expression et punissent sévèrement toute parole dissidente.",
@@ -486,7 +486,7 @@ Exemple : Dans 1984 d'Orwell, le novlangue vise à réduire le nombre de mots po
   },
   // Question n°40
   {
-    question: "Question 40 : Que signifie l'expression <em>argument ad hominem</em> ?",
+    question: "Question n°40 : Que signifie l'expression <em>argument ad hominem</em> ?",
     answers: [
       "Un argument qui s'adresse directement à l'interlocuteur pour le convaincre personnellement.",
       "Un argument fondé sur l'expérience humaine universelle.",
@@ -498,7 +498,7 @@ Exemple : « Ne croyez pas les conclusions de ce rapport sur le climat, il a ét
   },
   // Question n°41
   {
-    question: "Question 41 : Quelle est la différence entre <em>dénotation</em> et <em>connotation</em> dans l'analyse du langage ?",
+    question: "Question n°41 : Quelle est la différence entre <em>dénotation</em> et <em>connotation</em> dans l'analyse du langage ?",
     answers: [
       "La dénotation est l'origine étymologique du mot, la connotation est son usage actuel.",
       "La dénotation est la définition du mot, la connotation renvoie aux associations qu'il éveille.",
@@ -510,7 +510,7 @@ Exemple : Le mot <em>révolution</em> dénote un changement politique brutal. Ma
   },
   // Question n°42
   {
-    question: "Question 42 : Quel rôle joue la <em>réticence</em> (ou aposiopèse) comme figure de style dans un discours persuasif ?",
+    question: "Question n°42 : Quel rôle joue la <em>réticence</em> (ou aposiopèse) comme figure de style dans un discours persuasif ?",
     answers: [
       "Elle sert à marquer une pause pour laisser réfléchir l'auditoire.",
       "Elle permet de corriger une erreur de langage sans que l'auditoire ne s'en aperçoive.",
@@ -522,7 +522,7 @@ Exemple : « Si je vous disais tout ce que je sais sur ses agissements... mais n
   },
   // Question n°43
   {
-    question: "Question 43 : Comment le philosophe Jürgen Habermas conçoit-il l'idéal de la <em>communication non-distorsionnée</em> ?",
+    question: "Question n°43 : Comment le philosophe Jürgen Habermas conçoit-il l'idéal de la <em>communication non-distorsionnée</em> ?",
     answers: [
       "Une communication utilisant un langage purement logique et scientifique.",
       "Une communication qui évite soigneusement tout sujet polémique ou conflictuel.",
@@ -534,7 +534,7 @@ Exemple : Un conseil municipal participatif où tous les habitants peuvent s'exp
   },
   // Question n°44
   {
-    question: "Question 44 : Quelle est la signification profonde de l'aphorisme de Wittgenstein : « Les limites de mon langage signifient les limites de mon monde » ?",
+    question: "Question n°44 : Quelle est la signification profonde de l'aphorisme de Wittgenstein : « Les limites de mon langage signifient les limites de mon monde » ?",
     answers: [
       "Ce qui est inexprimable dans ma langue reste en dehors de mon monde pensable.",
       "On ne peut parler que de ce qu'on a vu personnellement.",
@@ -546,7 +546,7 @@ Exemple : Si une langue n'a pas de mot pour une émotion subtile (comme la <em>s
   },
   // Question n°45
   {
-    question: "Question 45 : Que désigne l'<em>argument du pente glissante</em> (pente savonneuse) ?",
+    question: "Question n°45 : Que désigne l'<em>argument du pente glissante</em> (pente savonneuse) ?",
     answers: [
       "Un sophisme qui affirme qu'une petite décision entraîne des conséquences désastreuses.",
       "Un argument qui prévient des risques de chute physique lors d'une manifestation.",
@@ -558,7 +558,7 @@ Exemple : « Si on autorise le mariage pour tous, bientôt on autorisera le mari
   },
   // Question n°46
   {
-    question: "Question 46 : En quoi consiste la stratégie rhétorique de la <em>concession</em> ?",
+    question: "Question n°46 : En quoi consiste la stratégie rhétorique de la <em>concession</em> ?",
     answers: [
       "Concéder un argument important pour obtenir un autre avantage dans la négociation.",
       "Abandonner le débat et reconnaître sa défaite.",
@@ -570,7 +570,7 @@ Exemple : « Je reconnais volontiers que cette réforme comporte des aspects pos
   },
   // Question n°47
   {
-    question: "Question 47 : Quelle est la fonction de la <em>question rhétorique</em> dans un discours ?",
+    question: "Question n°47 : Quelle est la fonction de la <em>question rhétorique</em> dans un discours ?",
     answers: [
       "Poser une véritable question à l'auditoire pour susciter sa réflexion.",
       "Poser une question dont la réponse est évidente pour renforcer une affirmation.",
@@ -582,7 +582,7 @@ Exemple : « Jusqu'à quand tolérerez-vous cette injustice ? » (sous-entendu :
   },
   // Question n°48
   {
-    question: "Question 48 : Comment Nietzsche analyse-t-il la relation entre la vérité et le langage dans <em>Vérité et mensonge au sens extra-moral</em> ?",
+    question: "Question n°48 : Comment Nietzsche analyse-t-il la relation entre la vérité et le langage dans <em>Vérité et mensonge au sens extra-moral</em> ?",
     answers: [
       "Le langage est l'outil parfait pour exprimer la vérité des choses.",
       "Le langage poétique seul peut dépasser les limites du langage conceptuel.",
@@ -594,7 +594,7 @@ Exemple : Le mot <em>esprit</em> était à l'origine une métaphore souffle/vent
   },
   // Question n°49
   {
-    question: "Question 49 : Qu'est-ce qu'un <em>stéréotype</em> linguistique et quel est son rôle dans la communication ?",
+    question: "Question n°49 : Qu'est-ce qu'un <em>stéréotype</em> linguistique et quel est son rôle dans la communication ?",
     answers: [
       "Une phrase type, pré-construite, utilisée dans des situations standards (comme les formules de politesse).",
       "Le style caractéristique et reconnaissable d'un grand écrivain.",
@@ -606,7 +606,7 @@ Exemple : Les stéréotypes de genre (« les femmes sont émotives, les hommes s
   },
   // Question n°50
   {
-    question: "Question 50 : Quelle est la différence entre <em>oralité</em> et <em>oral</em> ?",
+    question: "Question n°50 : Quelle est la différence entre <em>oralité</em> et <em>oral</em> ?",
     answers: [
       "Il n'y a pas de différence, ce sont des synonymes.",
       "L'oralité désigne le savoir qui repose sur la parole, l'oral désigne le mode de communication.",
@@ -618,7 +618,7 @@ Exemple : La culture homérique (transmission des poèmes d'Homère par des aèd
   },
   // Question n°51
   {
-    question: "Question 51 : Que signifie l'expression « le silence est d'or » dans le contexte de l'art de la parole ?",
+    question: "Question n°51 : Que signifie l'expression « le silence est d'or » dans le contexte de l'art de la parole ?",
     answers: [
       "Savoir se taire au bon moment est une sagesse précieuse.",
       "Il est toujours plus rentable de se taire que de parler.",
@@ -630,7 +630,7 @@ Exemple : Dans une négociation tendue, le fait de se taire après avoir posé u
   },
   // Question n°52
   {
-    question: "Question 52 : Quelle est la thèse de Ferdinand de Saussure sur l'<em>arbitraire du signe</em> linguistique ?",
+    question: "Question n°52 : Quelle est la thèse de Ferdinand de Saussure sur l'<em>arbitraire du signe</em> linguistique ?",
     answers: [
       "Les signes linguistiques sont choisis au hasard par les locuteurs.",
       "La grammaire est une construction arbitraire qui devrait être simplifiée.",
@@ -642,7 +642,7 @@ Exemple : Rien dans la suite de sons [ʃ(ə)val] ne rappelle l'animal « cheval 
   },
   // Question n°53
   {
-    question: "Question 53 : Qu'est-ce que <em>l'argument par l'absurde</em> (reductio ad absurdum) ?",
+    question: "Question n°53 : Qu'est-ce que <em>l'argument par l'absurde</em> (reductio ad absurdum) ?",
     answers: [
       "Un argument si compliqué qu'il en devient absurde.",
       "Un argument qui prétend qu'il est donc inutile de débattre.",
@@ -654,7 +654,7 @@ Exemple : Pour prouver qu'<em>il n'existe pas de plus grand nombre entier</em>, 
   },
   // Question n°54
   {
-    question: "Question 54 : Comment peut-on définir la <em>propagande</em> moderne par rapport à la rhétorique classique ?",
+    question: "Question n°54 : Comment peut-on définir la <em>propagande</em> moderne par rapport à la rhétorique classique ?",
     answers: [
       "C'est une forme massive de persuasion visant à modeler l'opinion publique.",
       "C'est exactement la même chose que la rhétorique, mais appliquée à la politique.",
@@ -666,7 +666,7 @@ Exemple : La propagande nazie, avec ses affiches, ses films et ses discours radi
   },
   // Question n°55
   {
-    question: "Question 55 : Quelle est la fonction de la <em>périphrase</em> comme figure de style ?",
+    question: "Question n°55 : Quelle est la fonction de la <em>périphrase</em> comme figure de style ?",
     answers: [
       "Découper une phrase en plusieurs parties pour la rendre plus claire.",
       "Dire en plus de mots ce qu'on pourrait dire en peu créer un effet de style.",
@@ -678,7 +678,7 @@ Exemple : « La Ville Lumière » pour Paris, « le pays du Cèdre » pour le Li
   },
   // Question n°56
   {
-    question: "Question 56 : Quelle est la position de Platon sur la poésie, exprimée notamment dans <em>La République</em> ?",
+    question: "Question n°56 : Quelle est la position de Platon sur la poésie, exprimée notamment dans <em>La République</em> ?",
     answers: [
       "Il la tolère comme un divertissement inoffensif pour le peuple.",
       "Il la bannit car elle éveille les passions au détriment de la raison.",
@@ -690,7 +690,7 @@ Exemple : Homère montre Achille pleurant la mort de Patrocle. Pour Platon, cela
   },
   // Question n°57
   {
-    question: "Question 57 : Que signifie l'expression « faire un procès d'intention » à quelqu'un ?",
+    question: "Question n°57 : Que signifie l'expression « faire un procès d'intention » à quelqu'un ?",
     answers: [
       "Lui attribuer des intentions malveillantes pour discréditer ses actes.",
       "Lui intenter un procès pour des intentions malveillantes non concrétisées.",
@@ -702,7 +702,7 @@ Exemple : « Il propose une baisse d'impôts, mais ne vous y trompez pas, son in
   },
   // Question n°58
   {
-    question: "Question 58 : Comment la notion de <em>cadre</em> (frame) est-elle utilisée en analyse du discours et en communication politique ?",
+    question: "Question n°58 : Comment la notion de <em>cadre</em> (frame) est-elle utilisée en analyse du discours et en communication politique ?",
     answers: [
       "Elle désigne le format physique (cadre en bois) qui entoure un discours écrit.",
       "C'est le plan détaillé que suit l'orateur pour structurer son propos.",
@@ -714,7 +714,7 @@ Exemple : Parler de <em>charges sociales</em> plutôt que de <em>cotisations soc
   },
   // Question n°59
   {
-    question: "Question 59 : Quelle est la différence entre <em>langue morte</em> et <em>langue vivante</em> ?",
+    question: "Question n°59 : Quelle est la différence entre <em>langue morte</em> et <em>langue vivante</em> ?",
     answers: [
       "Une langue vivante est parlée par une communauté. Une langue morte n'est plus langue maternelle de personne.",
       "Une langue morte est une langue que personne ne comprend plus, une langue vivante est comprise par au moins une personne.",
@@ -726,7 +726,7 @@ Exemple : L'hébreu est un cas unique de <em>résurrection</em> : langue liturgi
   },
   // Question n°60
   {
-    question: "Question 60 : Quel est le sens de l'expression « tourner sept fois sa langue dans sa bouche avant de parler » ?",
+    question: "Question n°60 : Quel est le sens de l'expression « tourner sept fois sa langue dans sa bouche avant de parler » ?",
     answers: [
       "Il faut réfléchir aux conséquences de ses paroles.",
       "Une technique d'élocution pour bien articuler.",
@@ -738,7 +738,7 @@ Exemple : Avant d'envoyer un message en colère sur les réseaux sociaux, il est
   },
   // Question n°61
   {
-    question: "Question 61 : Que signifie l'expression « l'esprit de l'escalier » (l'esprit d'escalier) ?",
+    question: "Question n°61 : Que signifie l'expression « l'esprit de l'escalier » (l'esprit d'escalier) ?",
     answers: [
       "Le fait de trouver le bon argument, mais trop tard.",
       "Une intelligence particulièrement rapide et vive.",
@@ -750,7 +750,7 @@ Exemple : Après une dispute, on repense à ce qu'aurait dû être notre répons
   },
   // Question n°62
   {
-    question: "Question 62 : Quelle est la fonction de l'<em>apostrophe</em> dans un discours ?",
+    question: "Question n°62 : Quelle est la fonction de l'<em>apostrophe</em> dans un discours ?",
     answers: [
       "Interpeller directement quelqu'un pour créer un effet.",
       "Une figure qui consiste à omettre une lettre dans un mot.",
@@ -762,7 +762,7 @@ Exemple : Dans un discours politique : « Monsieur le Premier ministre, allez-vo
   },
   // Question n°63
   {
-    question: "Question 63 : Comment la philosophie analytique aborde-t-elle la question des <em>actes de parole</em> ?",
+    question: "Question n°63 : Comment la philosophie analytique aborde-t-elle la question des <em>actes de parole</em> ?",
     answers: [
       "Elle les ignore, car seule la logique des propositions l'intéresse.",
       "Elle les réduit à des comportements verbaux observables.",
@@ -774,7 +774,7 @@ Exemple : « La porte est ouverte » (locution). Peut être une simple constatat
   },
   // Question n°64
   {
-    question: "Question 64 : Qu'est-ce qu'un <em>lieu commun</em> (κοινὸς τόπος, koinos topos) dans le sens péjoratif du terme ?",
+    question: "Question n°64 : Qu'est-ce qu'un <em>lieu commun</em> (κοινὸς τόπος, koinos topos) dans le sens péjoratif du terme ?",
     answers: [
       "Une idée banale qui ne suscite plus aucune réflexion.",
       "Un argument si évident qu'il est partagé par tous.",
@@ -786,7 +786,7 @@ Exemple : « Il faut vivre avec son temps » ou « L'argent ne fait pas le bonhe
   },
   // Question n°65
   {
-    question: "Question 65 : Quel est le rôle des <em>exemples</em> (παραδείγματα, paradeigmata) dans l'argumentation selon Aristote ?",
+    question: "Question n°65 : Quel est le rôle des <em>exemples</em> (παραδείγματα, paradeigmata) dans l'argumentation selon Aristote ?",
     answers: [
       "Ils servent uniquement à illustrer de manière concrète une idée abstraite pour la rendre compréhensible.",
       "Ils ont une fonction purement ornementale et émotionnelle.",
@@ -798,7 +798,7 @@ Exemple : Pour défendre une politique de dépenses publiques en temps de crise,
   },
   // Question n°66
   {
-    question: "Question 66 : Que signifie l'expression « parler à demi-mot » ?",
+    question: "Question n°66 : Que signifie l'expression « parler à demi-mot » ?",
     answers: [
       "Parler très doucement, en chuchotant.",
       "Ne terminer jamais ses phrases.",
@@ -810,7 +810,7 @@ Exemple : Entre deux personnes qui connaissent une situation délicate, l'une pe
   },
   // Question n°67
   {
-    question: "Question 67 : Comment le <em>paradoxe</em> est-il utilisé dans la parole philosophique, notamment chez les Stoïciens ou les Cyniques ?",
+    question: "Question n°67 : Comment le <em>paradoxe</em> est-il utilisé dans la parole philosophique, notamment chez les Stoïciens ou les Cyniques ?",
     answers: [
       "Comme une simple figure de style pour amuser la galerie.",
       "Comme une affirmation choquante pour provoquer la réflexion.",
@@ -822,7 +822,7 @@ Exemple : L'assertion socratique « Je sais que je ne sais rien » est un parado
   },
   // Question n°68
   {
-    question: "Question 68 : Quelle est la fonction de l'<em>hyperbole</em> comme figure de style ?",
+    question: "Question n°68 : Quelle est la fonction de l'<em>hyperbole</em> comme figure de style ?",
     answers: [
       "Nommer une chose par un terme qui désigne le contraire, par ironie.",
       "Comparer deux éléments à l'aide de <em>comme</em> ou <em>tel</em>.",
@@ -834,7 +834,7 @@ Exemple : « Je t'ai appelé mille fois ! » (pour dire « plusieurs fois »). D
   },
   // Question n°69
   {
-    question: "Question 69 : Qu'est-ce qu'un <em>lapsus</em> linguistique, et comment la psychanalyse l'interprète-t-elle ?",
+    question: "Question n°69 : Qu'est-ce qu'un <em>lapsus</em> linguistique, et comment la psychanalyse l'interprète-t-elle ?",
     answers: [
       "Un acte manqué qui trahit un désir inconscient.",
       "Une simple erreur d'inattention, sans signification.",
@@ -846,7 +846,7 @@ Exemple : Un président de séance qui dit « Je déclare la séance levée » a
   },
   // Question n°70
   {
-    question: "Question 70 : Comment la notion de <em>politiquement correct</em> est-elle généralement interprétée dans les débats contemporains sur le langage ?",
+    question: "Question n°70 : Comment la notion de <em>politiquement correct</em> est-elle généralement interprétée dans les débats contemporains sur le langage ?",
     answers: [
       "Comme un effort pour éliminer du langage courant les termes et expressions jugés discriminatoires, offensants ou stigmatisants envers certains groupes (minorités, femmes, handicapés), visant à promouvoir le respect et l'égalité.",
       "Comme un ensemble de règles grammaticales très strictes.",
@@ -858,7 +858,7 @@ Exemple : Le débat sur l'écriture inclusive (« iel », « agriculteur·rice·
   },
   // Question n°71
   {
-    question: "Question 71 : Quelle est la signification de l'expression <em>parole vide</em> ?",
+    question: "Question n°71 : Quelle est la signification de l'expression <em>parole vide</em> ?",
     answers: [
       "Un discours réduit à des formules creuses.",
       "Une parole prononcée à voix basse, inaudible.",
@@ -870,7 +870,7 @@ Exemple : Les discours de campagne électorale qui multiplient les promesses gé
   },
   // Question n°72
   {
-    question: "Question 72 : Quel est le sens de la maxime de Térence : « Je suis homme, et rien de ce qui est humain ne m'est étranger » (<em>Homo sum, humani nihil a me alienum puto</em>) ?",
+    question: "Question n°72 : Quel est le sens de la maxime de Térence : « Je suis homme, et rien de ce qui est humain ne m'est étranger » (<em>Homo sum, humani nihil a me alienum puto</em>) ?",
     answers: [
       "Une affirmation d'égoïsme : je ne m'intéresse qu'aux choses qui me concernent directement.",
       "Une simple formule de politesse pour se présenter.",
@@ -882,7 +882,7 @@ Exemple : Un journaliste qui va à la rencontre de populations marginalisées po
   },
   // Question n°73
   {
-    question: "Question 73 : Qu'est-ce qu'un <em>dialogue de sourds</em> ?",
+    question: "Question n°73 : Qu'est-ce qu'un <em>dialogue de sourds</em> ?",
     answers: [
       "Un dialogue secret, que les autres ne doivent pas entendre.",
       "Un échange où chacun parle sans vraiment écouter l'autre.",
@@ -894,7 +894,7 @@ Exemple : De nombreux débats télévisés entre politiques de bords opposés to
   },
   // Question n°74
   {
-    question: "Question 74 : Comment la notion de <em>mythe</em> est-elle utilisée par le philosophe et sociologue Roland Barthes dans ses <em>Mythologies</em> ?",
+    question: "Question n°74 : Comment la notion de <em>mythe</em> est-elle utilisée par le philosophe et sociologue Roland Barthes dans ses <em>Mythologies</em> ?",
     answers: [
       "Au sens traditionnel, comme récit fondateur des origines.",
       "Comme synonyme d'idéologie politique.",
@@ -906,7 +906,7 @@ Exemple : La publicité qui associe une voiture 4x4 à la liberté et à la natu
   },
   // Question n°75
   {
-    question: "Question 75 : Que signifie l'expression <em>le poids des mots</em> ?",
+    question: "Question n°75 : Que signifie l'expression <em>le poids des mots</em> ?",
     answers: [
       "Les dictionnaires sont très lourds.",
       "Les paroles ne sont pas de simples sons mais des actes.",
@@ -918,7 +918,7 @@ Exemple : Les campagnes de sensibilisation contre le harcèlement scolaire insis
   },
   // Question n°76
   {
-    question: "Question 76 : Qu'est-ce que la <em>litote</em> comme figure de style ?",
+    question: "Question n°76 : Qu'est-ce que la <em>litote</em> comme figure de style ?",
     answers: [
       "Une exagération outrancière.",
       "Répéter les mêmes mots en début de phrase.",
@@ -930,7 +930,7 @@ Exemple : Après un repas très copieux, dire « Je n'ai plus faim » est une li
   },
   // Question n°77
   {
-    question: "Question 77 : Comment le philosophe Emmanuel Levinas conçoit-il la parole dans la relation à autrui ?",
+    question: "Question n°77 : Comment le philosophe Emmanuel Levinas conçoit-il la parole dans la relation à autrui ?",
     answers: [
       "Comme un outil de domination qu'il faut déconstruire.",
       "Comme un appel qui engage ma responsabilité infinie.",
@@ -942,7 +942,7 @@ Exemple : Dire « bonjour » à quelqu'un n'est pas juste un code social ; dans 
   },
   // Question n°78
   {
-    question: "Question 78 : Qu'est-ce qu'une <em>pétition de principe</em> (<em>petitio principii</em>) ?",
+    question: "Question n°78 : Qu'est-ce qu'une <em>pétition de principe</em> (<em>petitio principii</em>) ?",
     answers: [
       "Une demande officielle adressée à un prince.",
       "Le premier principe d'un système philosophique.",
@@ -954,7 +954,7 @@ Exemple : « L'homéopathie est efficace car elle soigne les patients. Et commen
   },
   // Question n°79
   {
-    question: "Question 79 : Quelle est la fonction de la <em>métaphore</em> dans le langage, au-delà de son usage poétique ?",
+    question: "Question n°79 : Quelle est la fonction de la <em>métaphore</em> dans le langage, au-delà de son usage poétique ?",
     answers: [
       "Elle est un simple ornement facultatif.",
       "Elle sert uniquement à créer des images frappantes dans la publicité.",
@@ -966,7 +966,7 @@ Exemple : Parler d'<em>inondation migratoire</em> est une métaphore qui fait pe
   },
   // Question n°80
   {
-    question: "Question 80 : Que signifie l'expression <em>parler pour ne rien dire</em> ?",
+    question: "Question n°80 : Que signifie l'expression <em>parler pour ne rien dire</em> ?",
     answers: [
       "Tenir un discours verbeux qui ne vise qu'à occuper l'espace sonore.",
       "Parler très doucement, de manière inaudible.",
@@ -978,7 +978,7 @@ Exemple : Une réponse d'expert à une question simple, remplie de termes techni
   },
   // Question n°81
   {
-    question: "Question 81 : Quel est le sens de la formule d'Aristote : « La parole est ce qui rend l'homme un animal politique » (ζῷον πoλιτικόν, zoon politikon) ?",
+    question: "Question n°81 : Quel est le sens de la formule d'Aristote : « La parole est ce qui rend l'homme un animal politique » (ζῷον πoλιτικόν, zoon politikon) ?",
     answers: [
       "La communauté politique est une communauté de parole.",
       "Seul l'homme fait de la politique professionnelle.",
@@ -990,7 +990,7 @@ Exemple : L'Agora athénienne, lieu de débat public où les citoyens discutaien
   },
   // Question n°82
   {
-    question: "Question 82 : Qu'est-ce que <em>l'ironie socratique</em> ?",
+    question: "Question n°82 : Qu'est-ce que <em>l'ironie socratique</em> ?",
     answers: [
       "Une moquerie méchante et blessante.",
       "Dire le contraire de ce qu'on pense comme dans l'ironie moderne.",
@@ -1002,7 +1002,7 @@ Exemple : Dans le Ménon, Socrate demande à Ménon de définir la vertu. Chaque
   },
   // Question n°83
   {
-    question: "Question 83 : Comment le <em>storytelling</em> est-il utilisé dans la communication contemporaine (politique, management, marketing) ?",
+    question: "Question n°83 : Comment le <em>storytelling</em> est-il utilisé dans la communication contemporaine (politique, management, marketing) ?",
     answers: [
       "Comme une technique pour apprendre aux enfants à lire.",
       "Comme une méthode pour écrire des romans.",
@@ -1014,7 +1014,7 @@ Exemple : Un candidat à la présidentielle qui raconte son enfance modeste, ses
   },
   // Question n°84
   {
-    question: "Question 84 : Que signifie l'expression <em>jeter des mots à la tête de quelqu'un</em> ?",
+    question: "Question n°84 : Que signifie l'expression <em>jeter des mots à la tête de quelqu'un</em> ?",
     answers: [
       "Lui donner des conseils non sollicités.",
       "Lui lancer des propos de manière agressive.",
@@ -1026,7 +1026,7 @@ Exemple : Lors d'une dispute conjugale houleuse, les partenaires peuvent <em>se 
   },
   // Question n°85
   {
-    question: "Question 85 : Quel est le rôle de la <em>règle d'or</em> de la réciprocité dans l'éthique de la discussion ?",
+    question: "Question n°85 : Quel est le rôle de la <em>règle d'or</em> de la réciprocité dans l'éthique de la discussion ?",
     answers: [
       "Faire aux autres ce que l'on voudrait qu'ils fassent pour soi.",
       "Parler à tour de rôle sans se couper la parole.",
@@ -1038,7 +1038,7 @@ Exemple : Dans un débat en classe, si on exige que ses arguments soient écout�
   },
   // Question n°86
   {
-    question: "Question 86 : Qu'est-ce qu'une <em>antithèse</em> comme figure de style ?",
+    question: "Question n°86 : Qu'est-ce qu'une <em>antithèse</em> comme figure de style ?",
     answers: [
       "La négation d'une thèse.",
       "Une proposition intermédiaire dans un raisonnement.",
@@ -1050,7 +1050,7 @@ Exemple : « Vous êtes riche, je suis pauvre ; vous êtes puissant, je suis fai
   },
   // Question n°87
   {
-    question: "Question 87 : Comment la notion de <em>parole donnée</em> peut-elle être analysée ?",
+    question: "Question n°87 : Comment la notion de <em>parole donnée</em> peut-elle être analysée ?",
     answers: [
       "Comme un simple usage conventionnel du langage.",
       "Comme une illusion, car on ne peut s'engager sur l'avenir qui est incertain.",
@@ -1062,7 +1062,7 @@ Exemple : Le serment d'Hippocrate (« Je promets... ») est une parole donnée p
   },
   // Question n°88
   {
-    question: "Question 88 : Qu'est-ce que le <em>double bind</em> (double contrainte) dans la communication, selon l'école de Palo Alto ?",
+    question: "Question n°88 : Qu'est-ce que le <em>double bind</em> (double contrainte) dans la communication, selon l'école de Palo Alto ?",
     answers: [
       "Une situation où l'on doit choisir entre deux options également désirables.",
       "Un argument qui fonctionne dans les deux sens.",
@@ -1074,7 +1074,7 @@ Exemple : Un manager qui dit à son équipe « Soyez créatifs et sortez des sen
   },
   // Question n°89
   {
-    question: "Question 89 : Que signifie l'expression <em>appeler un chat un chat</em> ?",
+    question: "Question n°89 : Que signifie l'expression <em>appeler un chat un chat</em> ?",
     answers: [
       "Nommer les choses avec les mots justes avec franchise.",
       "Utiliser des mots simples pour se faire comprendre des enfants.",
@@ -1086,7 +1086,7 @@ Exemple : Au lieu de dire « il a des difficultés sociales », dire « il est p
   },
   // Question n°90
   {
-    question: "Question 90 : Quelle est la fonction de l'<em>anaphore</em> comme figure de style ?",
+    question: "Question n°90 : Quelle est la fonction de l'<em>anaphore</em> comme figure de style ?",
     answers: [
       "Dire la même chose en utilisant des mots différents (périphrase).",
       "Répéter un mot en début de plusieurs phrases pour créer un effet.",
@@ -1098,7 +1098,7 @@ Exemple : Le discours « I have a dream » de Martin Luther King est construit s
   },
   // Question n°91
   {
-    question: "Question 91 : Comment Ludwig Wittgenstein caractérise-t-il les « jeux de langage » ?",
+    question: "Question n°91 : Comment Ludwig Wittgenstein caractérise-t-il les « jeux de langage » ?",
     answers: [
       "Des activités ludiques pour apprendre une langue.",
       "Des sophismes élaborés pour tromper.",
@@ -1110,7 +1110,7 @@ Exemple : Le mot « pain » n'a pas le même « jeu de langage » chez le boulan
   },
   // Question n°92
   {
-    question: "Question 92 : Qu'est-ce qu'un <em>oxymore</em> comme figure de style ?",
+    question: "Question n°92 : Qu'est-ce qu'un <em>oxymore</em> comme figure de style ?",
     answers: [
       "Une exagération grossière.",
       "Une association contradictoire de deux termes.",
@@ -1122,7 +1122,7 @@ Exemple : « Cette douce violence », « un merveilleux malheur », « le clair-
   },
   // Question n°93
   {
-    question: "Question 93 : Que signifie l'expression <em>tourner sa veste</em> en langage politique ?",
+    question: "Question n°93 : Que signifie l'expression <em>tourner sa veste</em> en langage politique ?",
     answers: [
       "Changer de costume pour s'adapter à un autre événement.",
       "Partir en laissant ses affaires derrière soi.",
@@ -1134,7 +1134,7 @@ Exemple : Un élu élu sur un programme de gauche qui, une fois au pouvoir, vote
   },
   // Question n°94
   {
-    question: "Question 94 : Comment la <em>parole d'honneur</em> se distingue-t-elle d'une simple promesse ?",
+    question: "Question n°94 : Comment la <em>parole d'honneur</em> se distingue-t-elle d'une simple promesse ?",
     answers: [
       "Elle est toujours prononcée devant témoins.",
       "Elle a une valeur légale contraignante.",
@@ -1146,7 +1146,7 @@ Exemple : Dans le duel, les adversaires donnaient leur parole d'honneur de respe
   },
   // Question n°95
   {
-    question: "Question 95 : Qu'est-ce que le <em>pléonasme</em> ?",
+    question: "Question n°95 : Qu'est-ce que le <em>pléonasme</em> ?",
     answers: [
       "Une figure qui consiste à omettre un mot attendu.",
       "Un raisonnement qui va de la cause à l'effet.",
@@ -1158,7 +1158,7 @@ Exemple : « Une fausse perruque » (toute perruque est fausse), « prévoir à 
   },
   // Question n°96
   {
-    question: "Question 96 : Quelle est la signification de la formule de Paul Valéry : « Ce qui se conçoit bien s'énonce clairement, Et les mots pour le dire arrivent aisément » ?",
+    question: "Question n°96 : Quelle est la signification de la formule de Paul Valéry : « Ce qui se conçoit bien s'énonce clairement, Et les mots pour le dire arrivent aisément » ?",
     answers: [
       "Une description du processus de l'inspiration poétique.",
       "Une critique des écrivains obscurs.",
@@ -1170,7 +1170,7 @@ Exemple : Un étudiant qui bute pour expliquer un concept compliqué est invité
   },
   // Question n°97
   {
-    question: "Question 97 : Qu'est-ce que le <em>sous-entendu</em> dans la communication ?",
+    question: "Question n°97 : Qu'est-ce que le <em>sous-entendu</em> dans la communication ?",
     answers: [
       "Un message qui est murmuré, donc mal entendu.",
       "La conclusion logique d'un raisonnement.",
@@ -1182,7 +1182,7 @@ Exemple : Si quelqu'un dit « Il fait froid ici » en regardant la fenêtre ouve
   },
   // Question n°98
   {
-    question: "Question 98 : Comment la <em>parole de témoin</em> (dans un procès, sur un événement historique) est-elle épistémologiquement problématique ?",
+    question: "Question n°98 : Comment la <em>parole de témoin</em> (dans un procès, sur un événement historique) est-elle épistémologiquement problématique ?",
     answers: [
       "Elle mêle le vécu subjective et les faits objectifs.",
       "Elle est toujours fausse, car la mémoire est infidèle.",
@@ -1194,7 +1194,7 @@ Exemple : Les témoignages sur un accident de voiture varient souvent sur des d�
   },
   // Question n°99
   {
-    question: "Question 99 : Que signifie l'expression <em>prendre quelqu'un au mot</em> ?",
+    question: "Question n°99 : Que signifie l'expression <em>prendre quelqu'un au mot</em> ?",
     answers: [
       "Le critiquer sévèrement pour ce qu'il a dit.",
       "Interpréter ses paroles de manière très littérale.",
@@ -1206,7 +1206,7 @@ Exemple : Un enfant dit à ses parents « Je déteste cette école, j'arrête d'
   },
   // Question n°100
   {
-    question: "Question 100 : Quel est l'enjeu de l'étude de <em>l'art de la parole</em> ?",
+    question: "Question n°100 : Quel est l'enjeu de l'étude de <em>l'art de la parole</em> ?",
     answers: [
       "Apprendre à bien parler en public pour réussir ses examens oraux.",
       "Mémoriser un catalogue de figures de style.",

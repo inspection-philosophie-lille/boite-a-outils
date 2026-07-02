@@ -16,9 +16,9 @@ const philosophyData = {
 // QUESTIONS DU QUIZ (1 à 100)
 // ============================================
 const questions = [
-  // Question n°1
+  // Question n°01
   {
-    question: "Question 1 : Que signifie étymologiquement le verbe latin <em>se-ducere</em>, à l'origine du terme <em>séduction</em> ?",
+    question: "Question n°01 : Que signifie étymologiquement le verbe latin <em>se-ducere</em>, à l'origine du terme <em>séduction</em> ?",
     answers: [
       "Parler avec grâce et élégance pour captiver un auditoire",
       "Emmener à l'écart de son chemin par la puissance des mots",
@@ -27,9 +27,9 @@ const questions = [
     correct: 2,
     explanation: `L'étymologie de <em>se-ducere</em> (d'où vient séduire) signifie littéralement « conduire à l'écart ». Elle révèle l'essence potentiellement manipulatrice de l'acte de séduction par la parole : il s'agit de détourner l'autre de sa trajectoire initiale, de l'égarer ou de l'attirer vers un ailleurs qu'il n'aurait pas spontanément choisi. Cette racine souligne que la séduction opère toujours un déplacement, qui peut être bénéfique (éduquer, e-ducere) ou maléfique (égarer).\nExemple : Dans la Genèse, le serpent séduit Ève en la détournant de l'interdit divin par une parole insidieuse, l'amenant à transgresser l'ordre établi.`
   },
-  // Question n°2
+  // Question n°02
   {
-    question: "Question 2 : Dans <em>L'Apologie de Socrate</em>, sur quel fondement principal Socrate base-t-il la légitimité de sa parole face au tribunal ?",
+    question: "Question n°02 : Dans <em>L'Apologie de Socrate</em>, sur quel fondement principal Socrate base-t-il la légitimité de sa parole face au tribunal ?",
     answers: [
       "Sur son exceptionnelle maîtrise des techniques de l'éloquence sophistique",
       "Sur sa mission divine de questionner les prétendus sages pour réveiller la cité",
@@ -38,9 +38,9 @@ const questions = [
     correct: 2,
     explanation: `Socrate fonde l'autorité de sa parole non sur une technique rhétorique, mais sur une mission reçue du dieu Apollon. Il se compare à un taon qui harcèle la cité pour la tenir éveillée. Sa parole est une parole de vérité, dérangeante et thérapeutique, qui vise à amener ses concitoyens à « prendre soin de leur âme ». Cette parole subjugue par la puissance du questionnement et de l'exigence éthique, non par la recherche de l'agrément.\nExemple : Face à ses juges, Socrate refuse d'utiliser les procédés pathétiques habituels pour attendrir le jury, préférant dire la vérité sur sa mission et accepter la condamnation.`
   },
-  // Question n°3
+  // Question n°03
   {
-    question: "Question 3 : Quel mécanisme narratif Shéhérazade utilise-t-elle pour différer indéfiniment son exécution et séduire le sultan ?",
+    question: "Question n°03 : Quel mécanisme narratif Shéhérazade utilise-t-elle pour différer indéfiniment son exécution et séduire le sultan ?",
     answers: [
       "Elle le convainc par des arguments juridiques sur l'injustice de sa loi",
       "Elle interrompt son récit chaque matin à un moment crucial de suspense",
@@ -49,9 +49,9 @@ const questions = [
     correct: 2,
     explanation: `La séduction de Shéhérazade est une séduction par le récit et la suspension. En arrêtant son histoire au point le plus passionnant (« Mais voici que le jour parut... »), elle crée chez le sultan un désir irrépressible de connaître la suite. La parole devient un fil ténu qui retient la mort, transformant la menace en promesse de plaisir futur. Cette technique repose sur la puissance du <em>storytelling</em> pour capter et retenir l'attention.\nExemple : La formule « Si je suis encore en vie demain, je te raconterai la suite » transforme chaque nuit en un suspense renouvelé, faisant de la curiosité narrative une raison de vivre.`
   },
-  // Question n°4
+  // Question n°04
   {
-    question: "Question 4 : Selon Hannah Arendt, quel mécanisme spécifique utilise la propagande totalitaire pour imposer sa fiction politique ?",
+    question: "Question n°04 : Selon Hannah Arendt, quel mécanisme spécifique utilise la propagande totalitaire pour imposer sa fiction politique ?",
     answers: [
       "Elle s'appuie sur le charisme exceptionnel et l'éloquence d'un seul homme",
       "Elle construit un monde fictif cohérent puis utilise la terreur pour le rendre irréfutable",
@@ -60,9 +60,9 @@ const questions = [
     correct: 2,
     explanation: `Pour Arendt, le totalitarisme ne séduit pas au sens classique. Il utilise d'abord une propagande massive pour créer une réalité alternative (un monde de complots et d'ennemis fantasmés). Puis, la terreur systématique rend cette fiction indiscutable en détruisant toute spontanéité humaine et tout espace de débat. La parole y est un outil non pour convaincre, mais pour imposer une logique folle et refermée sur elle-même.\nExemple : La propagande nazie inventait un monde peuplé de « sous-hommes » et de complots juifs internationaux ; la terreur des camps et de la police rendait toute contestation de cette fiction impossible et mortelle.`
   },
-  // Question n°5
+  // Question n°05
   {
-    question: "Question 5 : Dans le domaine publicitaire, quelle stratégie vise à associer un produit à une identité sociale ou à des aspirations personnelles ?",
+    question: "Question n°05 : Dans le domaine publicitaire, quelle stratégie vise à associer un produit à une identité sociale ou à des aspirations personnelles ?",
     answers: [
       "La suggestion subliminale cachée dans des images ou des sons",
       "La projection, qui consiste à créer une image de marque et un univers symbolique",
@@ -71,9 +71,9 @@ const questions = [
     correct: 2,
     explanation: `La stratégie de projection ne vend pas un produit pour ses qualités intrinsèques, mais pour l'identité, le style de vie ou le statut qu'il est censé conférer. Elle séduit en faisant miroiter une transformation du moi par la consommation. Cette parole publicitaire s'adresse à l'imaginaire et au désir d'être autre, en contextualisant le produit dans un récit valorisant.\nExemple : Une publicité pour une marque de vêtements sportifs ne montre pas seulement des chaussures, mais des athlètes victorieux, associant le produit à la performance, la détermination et le dépassement de soi.`
   },
-  // Question n°6
+  // Question n°06
   {
-    question: "Question 6 : Quelle puissance la figure mythique d'Orphée incarne-t-elle à propos de la parole ?",
+    question: "Question n°06 : Quelle puissance la figure mythique d'Orphée incarne-t-elle à propos de la parole ?",
     answers: [
       "La puissance législative du premier roi qui donna des lois à son peuple",
       "La puissance judiciaire de l'avocat capable de défendre n'importe quelle cause",
@@ -82,9 +82,9 @@ const questions = [
     correct: 3,
     explanation: `Orphée incarne la puissance absolue et quasi divine de la parole artistique. Son chant et les accords de sa lyre (don d'Apollon) ont le pouvoir d'« enchanter » littéralement le monde : apaiser les bêtes féroces, faire danser les arbres et les pierres, et même fléchir Hadès, le dieu des Enfers. Il montre que la parole, lorsqu'elle est élevée au rang d'art, peut suspendre les lois de la nature et toucher l'inhumain.\nExemple : Pour récupérer Eurydice, Orphée charme de son chant le gardien Cerbère et adoucit le cœur des divinités infernales, obtenant une faveur exceptionnelle par la seule puissance de son art.`
   },
-  // Question n°7
+  // Question n°07
   {
-    question: "Question 7 : Quelle distinction classique en rhétorique oppose-t-on généralement entre <em>convaincre</em> et <em>persuader</em> ?",
+    question: "Question n°07 : Quelle distinction classique en rhétorique oppose-t-on généralement entre <em>convaincre</em> et <em>persuader</em> ?",
     answers: [
       "Convaincre s'adresse aux émotions, persuader à la raison logique",
       "Convaincre vise l'adhésion rationnelle, persuader vise l'adhésion affective",
@@ -93,9 +93,9 @@ const questions = [
     correct: 2,
     explanation: `Convaincre fait appel au <em>logos</em>, à la raison, à la logique et à la démonstration (comme en science ou en philosophie). Persuader fait appel au <em>pathos</em>, aux émotions, aux valeurs, et à l'image de l'orateur (<em>ethos</em>). La parole de séduction relève principalement de la persuasion, car elle cherche à entraîner l'adhésion par des moyens qui peuvent contourner l'examen critique. Une parole efficace mêle souvent les deux registres.\nExemple : Pour défendre une cause environnementale, un rapport scientifique avec des données chiffrées cherche à convaincre ; un documentaire montrant la souffrance d'animaux cherche à persuader par l'émotion.`
   },
-  // Question n°8
+  // Question n°08
   {
-    question: "Question 8 : Comment Gorgias de Léontinoi décrit-il l'effet du discours (<em>logos</em>) sur l'âme dans son <em>Éloge d'Hélène</em> ?",
+    question: "Question n°08 : Comment Gorgias de Léontinoi décrit-il l'effet du discours (<em>logos</em>) sur l'âme dans son <em>Éloge d'Hélène</em> ?",
     answers: [
       "Le discours est un aliment spirituel qui nourrit l'âme de vérités",
       "Le discours est comme un médicament (<em>pharmakon</em>), qui peut guérir ou empoisonner",
@@ -104,9 +104,9 @@ const questions = [
     correct: 2,
     explanation: `Gorgias développe une analogie puissante : le discours a sur l'âme le même pouvoir que les drogues (<em>pharmaka</em>) sur le corps. Selon sa « composition » et l'intention de celui qui l'administre, il peut soigner (calmer, encourager, instruire) ou tuer (tromper, affliger, corrompre). Cette conception fait du langage une force active et ambivalente, une véritable technique (<em>technè</em>) de l'âme que le rhéteur doit maîtriser.\nExemple : Un discours de haine peut exacerber la colère et mener à la violence, tandis qu'un discours de consolation ou de sagesse peut apaiser une douleur et éclairer l'esprit.`
   },
-  // Question n°9
+  // Question n°09
   {
-    question: "Question 9 : Quel conseil cynique Ovide donne-t-il concernant les promesses dans l'art de la séduction amoureuse ?",
+    question: "Question n°09 : Quel conseil cynique Ovide donne-t-il concernant les promesses dans l'art de la séduction amoureuse ?",
     answers: [
       "Il faut toujours tenir ses promesses pour établir une confiance inébranlable",
       "Il faut promettre sans cesse, car l'espérance fait gagner du temps",
@@ -117,7 +117,7 @@ const questions = [
   },
   // Question n°10
   {
-    question: "Question 10 : Quel concept Aristote utilise-t-il pour décrire l'effet purificateur de la tragédie sur les passions du spectateur ?",
+    question: "Question n°10 : Quel concept Aristote utilise-t-il pour décrire l'effet purificateur de la tragédie sur les passions du spectateur ?",
     answers: [
       "La mimésis (μίμησις), c'est-à-dire l'imitation de l'action",
       "La catharsis (κάθαρσις), soit la purification des passions",
@@ -128,7 +128,7 @@ const questions = [
   },
   // Question n°11
   {
-    question: "Question 11 : Que signifie le caractère <em>performatif</em> de certaines paroles dans le contexte amoureux ou juridique ?",
+    question: "Question n°11 : Que signifie le caractère <em>performatif</em> de certaines paroles dans le contexte amoureux ou juridique ?",
     answers: [
       "Qu'elles sont particulièrement bien écrites et déclamées avec art",
       "Qu'elles imitent le langage théâtral et sont destinées à la scène",
@@ -139,7 +139,7 @@ const questions = [
   },
   // Question n°12
   {
-    question: "Question 12 : Quel est le principal grief que Platon adresse aux poètes, et notamment à Homère, dans <em>La République</em> ?",
+    question: "Question n°12 : Quel est le principal grief que Platon adresse aux poètes, et notamment à Homère, dans <em>La République</em> ?",
     answers: [
       "Ils coûtent trop cher à la cité et sont réservés à une élite oisive",
       "Ils corrompent l'âme en nourrissant sa partie irrationnelle",
@@ -150,7 +150,7 @@ const questions = [
   },
   // Question n°13
   {
-    question: "Question 13 : Comment Max Weber définit-il l'autorité politique de type <em>charismatique</em> ?",
+    question: "Question n°13 : Comment Max Weber définit-il l'autorité politique de type <em>charismatique</em> ?",
     answers: [
       "L'autorité fondée sur des règles écrites et une bureaucratie rationnelle et impersonnelle",
       "L'autorité fondée sur la tradition, la coutume et le caractère héréditaire du pouvoir",
@@ -161,7 +161,7 @@ const questions = [
   },
   // Question n°14
   {
-    question: "Question 14 : Quel effet Ulysse cherche-t-il à produire sur les Phéaciens en leur racontant ses aventures ?",
+    question: "Question n°14 : Quel effet Ulysse cherche-t-il à produire sur les Phéaciens en leur racontant ses aventures ?",
     answers: [
       "Les impressionner par sa supériorité guerrière et ses exploits militaires",
       "Les émouvoir pour susciter la pitié et obtenir par compassion le moyen de rentrer chez lui",
@@ -172,7 +172,7 @@ const questions = [
   },
   // Question n°15
   {
-    question: "Question 15 : Selon Jean Baudrillard, quelle est la caractéristique essentielle de la parole publicitaire dans la société de consommation ?",
+    question: "Question n°15 : Selon Jean Baudrillard, quelle est la caractéristique essentielle de la parole publicitaire dans la société de consommation ?",
     answers: [
       "Elle informe objectivement et en détail sur les qualités intrinsèques des produits",
       "Elle simule la parole significative mais ne signifie rien, se contentant d'un mode séductif",
@@ -183,7 +183,7 @@ const questions = [
   },
   // Question n°16
   {
-    question: "Question 16 : Quelle distinction fondamentale Hannah Arendt établit-elle entre la <em>force</em> (violence) et la <em>puissance</em> politique ?",
+    question: "Question n°16 : Quelle distinction fondamentale Hannah Arendt établit-elle entre la <em>force</em> (violence) et la <em>puissance</em> politique ?",
     answers: [
       "La force est légitime, la puissance est toujours illégitime et oppressive",
       "La force est physique et individuelle, la puissance est psychologique et collective",
@@ -194,7 +194,7 @@ const questions = [
   },
   // Question n°17
   {
-    question: "Question 17 : Dans le fragment 31 de Sappho, quel est l'effet physiologique décrit de la vue de l'être aimé sur la poétesse ?",
+    question: "Question n°17 : Dans le fragment 31 de Sappho, quel est l'effet physiologique décrit de la vue de l'être aimé sur la poétesse ?",
     answers: [
       "Une sensation de force invincible et d'exaltation joyeuse",
       "Une série de symptômes corporels de sidération amoureuse",
@@ -205,7 +205,7 @@ const questions = [
   },
   // Question n°18
   {
-    question: "Question 18 : Que signifie l'idée qu'un discours politique repose sur une « légitimité horizontale » plutôt que verticale ?",
+    question: "Question n°18 : Que signifie l'idée qu'un discours politique repose sur une « légitimité horizontale » plutôt que verticale ?",
     answers: [
       "Il est imposé d'en haut (par Dieu ou un souverain) plutôt que consenti d'en bas",
       "Il est fondé sur un contrat social entre des individus considérés comme égaux",
@@ -216,7 +216,7 @@ const questions = [
   },
   // Question n°19
   {
-    question: "Question 19 : Quelle promesse envoûtante et dangereuse les Sirènes font-elles aux marins dans l'<em>Odyssée</em> ?",
+    question: "Question n°19 : Quelle promesse envoûtante et dangereuse les Sirènes font-elles aux marins dans l'<em>Odyssée</em> ?",
     answers: [
       "La promesse de richesses matérielles et de trésors inimaginables",
       "La promesse d'une connaissance absolue de tout ce qui est arrivé",
@@ -227,7 +227,7 @@ const questions = [
   },
   // Question n°20
   {
-    question: "Question 20 : Comment Roland Barthes décrit-il le langage dans le discours amoureux ?",
+    question: "Question n°20 : Comment Roland Barthes décrit-il le langage dans le discours amoureux ?",
     answers: [
       "Comme un outil de communication neutre et transparent entre deux subjectivités",
       "Comme une peau, un contact, une caresse faite avec des mots et des intonations",
@@ -238,7 +238,7 @@ const questions = [
   },
   // Question n°21
   {
-    question: "Question 21 : Quel reproche moral majeur est traditionnellement adressé à la parole de séduction ?",
+    question: "Question n°21 : Quel reproche moral majeur est traditionnellement adressé à la parole de séduction ?",
     answers: [
       "Elle est trop longue, compliquée et finalement ennuyeuse pour l'auditeur",
       "Elle constitue une manipulation qui perturbe le libre-arbitre et de la raison",
@@ -249,7 +249,7 @@ const questions = [
   },
   // Question n°22
   {
-    question: "Question 22 : Selon le mythe rapporté par Diotime dans <em>Le Banquet</em> de Platon, qui sont les parents d'Éros (l'Amour) ?",
+    question: "Question n°22 : Selon le mythe rapporté par Diotime dans <em>Le Banquet</em> de Platon, qui sont les parents d'Éros (l'Amour) ?",
     answers: [
       "Aphrodite (la Beauté) et Arès (la Guerre), d'où sa nature passionnée",
       "Poros (la Ressource, l'Ingéniosité) et Pénia (la Pauvreté, le Manque)",
@@ -260,7 +260,7 @@ const questions = [
   },
   // Question n°23
   {
-    question: "Question 23 : Selon Rousseau dans l'<em>Essai sur l'origine des langues</em>, quelle est la fonction première du langage ?",
+    question: "Question n°23 : Selon Rousseau dans l'<em>Essai sur l'origine des langues</em>, quelle est la fonction première du langage ?",
     answers: [
       "Exécuter des tâches pratiques et coordonner le travail pour satisfaire les besoins physiques",
       "Exprimer les passions et rapprocher les hommes pour former des liens moraux",
@@ -271,7 +271,7 @@ const questions = [
   },
   // Question n°24
   {
-    question: "Question 24 : Comment Jules César utilisait-il la séduction amoureuse comme instrument de sa stratégie politique ?",
+    question: "Question n°24 : Comment Jules César utilisait-il la séduction amoureuse comme instrument de sa stratégie politique ?",
     answers: [
       "Il l'évitait soigneusement pour préserver une réputation de rigueur et de sérieux",
       "Il s'en servait comme d'une arme pour humilier ses rivaux en séduisant leurs épouses",
@@ -282,7 +282,7 @@ const questions = [
   },
   // Question n°25
   {
-    question: "Question 25 : Sur quel sentiment humain universel Priam mise-t-il pour fléchir Achille et récupérer le corps d'Hector ?",
+    question: "Question n°25 : Sur quel sentiment humain universel Priam mise-t-il pour fléchir Achille et récupérer le corps d'Hector ?",
     answers: [
       "Sur la peur de la vengeance divine en cas de violation des coutumes funéraires",
       "Sur la pitié, en invoquant la figure de son propre père et la vulnérabilité d'un vieil homme",
@@ -293,7 +293,7 @@ const questions = [
   },
   // Question n°26
   {
-    question: "Question 26 : Que signifie le terme <em>enthousiasme</em> (ἐνθουσιασμός) dans son sens étymologique et premier, appliqué au poète inspiré ?",
+    question: "Question n°26 : Que signifie le terme <em>enthousiasme</em> (ἐνθουσιασμός) dans son sens étymologique et premier, appliqué au poète inspiré ?",
     answers: [
       "Avoir un talent naturel exceptionnel pour l'écriture et la versification",
       "Être inspiré, habité par un dieu, être le porte-parole d'une puissance divine",
@@ -304,7 +304,7 @@ const questions = [
   },
   // Question n°27
   {
-    question: "Question 27 : Quelle différence essentielle existe-t-il entre le « pouvoir d'injonction » et le « pouvoir d'influence » ?",
+    question: "Question n°27 : Quelle différence essentielle existe-t-il entre le « pouvoir d'injonction » et le « pouvoir d'influence » ?",
     answers: [
       "L'injonction est douce et persuasive, l'influence est violente et contraignante",
       "L'injonction repose sur l'ordre et la menace, l'influence sur la suggestion et l'espoir",
@@ -315,7 +315,7 @@ const questions = [
   },
   // Question n°28
   {
-    question: "Question 28 : Selon une idée reprise par Rousseau, quel personnage mythique est présenté comme l'inventeur du dessin ?",
+    question: "Question n°28 : Selon une idée reprise par Rousseau, quel personnage mythique est présenté comme l'inventeur du dessin ?",
     answers: [
       "Dédale, le grand architecte et inventeur du Labyrinthe",
       "Prométhée, le titan qui vola le feu technique aux dieux",
@@ -326,7 +326,7 @@ const questions = [
   },
   // Question n°29
   {
-    question: "Question 29 : Comment le silence peut-il devenir un élément actif et puissant dans une stratégie de séduction ?",
+    question: "Question n°29 : Comment le silence peut-il devenir un élément actif et puissant dans une stratégie de séduction ?",
     answers: [
       "Il montre un manque d'intérêt et repousse définitivement l'autre",
       "Il crée un vide que l'autre a envie de combler, ou suspend le discours pour attiser la curiosité",
@@ -337,7 +337,7 @@ const questions = [
   },
   // Question n°30
   {
-    question: "Question 30 : Que représente le masque (<em>prosopon</em>, <em>persona</em>) dans le théâtre antique grec ?",
+    question: "Question n°30 : Que représente le masque (<em>prosopon</em>, <em>persona</em>) dans le théâtre antique grec ?",
     answers: [
       "Un simple déguisement visant à cacher l'identité de l'acteur",
       "Un accessoire technique destiné uniquement à projeter la voix plus loin dans l'espace",
@@ -348,7 +348,7 @@ const questions = [
   },
   // Question n°31
   {
-    question: "Question 31 : Quelle est la nature de la parole de Tirésias face à Œdipe dans la tragédie de Sophocle ?",
+    question: "Question n°31 : Quelle est la nature de la parole de Tirésias face à Œdipe dans la tragédie de Sophocle ?",
     answers: [
       "Une parole de flatterie calculée pour gagner les faveurs du nouveau roi",
       "Une parole de vérité fatale, prononcée sous la contrainte et la colère",
@@ -359,7 +359,7 @@ const questions = [
   },
   // Question n°32
   {
-    question: "Question 32 : Quelle est la spécificité de l'« autorité éducative » par rapport aux modèles autoritariste et charismatique ?",
+    question: "Question n°32 : Quelle est la spécificité de l'« autorité éducative » par rapport aux modèles autoritariste et charismatique ?",
     answers: [
       "C'est une autorité faible qui refuse tout conflit et toute exigence",
       "C'est une autorité capable de faire grandir l'autonomie de l'autre",
@@ -370,7 +370,7 @@ const questions = [
   },
   // Question n°33
   {
-    question: "Question 33 : Selon Ferdinand de Saussure, quelle distinction fondamentale établit-il entre « langue », « langage » et « parole » ?",
+    question: "Question n°33 : Selon Ferdinand de Saussure, quelle distinction fondamentale établit-il entre « langue », « langage » et « parole » ?",
     answers: [
       "La langue est individuelle, le langage est social, la parole est biologique",
       "La langue est sociale, la parole est individuelle, le langage est générale",
@@ -381,7 +381,7 @@ const questions = [
   },
   // Question n°34
   {
-    question: "Question 34 : Quel est le rôle principal du chœur dans la tragédie grecque antique ?",
+    question: "Question n°34 : Quel est le rôle principal du chœur dans la tragédie grecque antique ?",
     answers: [
       "Il incarne le peuple et commente l'action, offrant une perspective collective et morale",
       "Il joue le rôle des dieux, intervenant directement dans l'intrigue pour la faire avancer",
@@ -392,7 +392,7 @@ const questions = [
   },
   // Question n°35
   {
-    question: "Question 35 : Contre quelle thèse Rousseau s'élève-t-il concernant l'origine du langage ?",
+    question: "Question n°35 : Contre quelle thèse Rousseau s'élève-t-il concernant l'origine du langage ?",
     answers: [
       "Contre l'idée que le langage est un don direct des dieux aux hommes",
       "Contre l'idée que le langage est né des besoins physiques et de la coopération utilitaire",
@@ -403,7 +403,7 @@ const questions = [
   },
   // Question n°36
   {
-    question: "Question 36 : Que désigne le terme grec <em>doxa</em> (δόξα) dans le contexte de la rhétorique et de la séduction ?",
+    question: "Question n°36 : Que désigne le terme grec <em>doxa</em> (δόξα) dans le contexte de la rhétorique et de la séduction ?",
     answers: [
       "La vérité absolue, scientifique et démontrable",
       "L'opinion commune, l'ensemble des croyances et préjugés partagés par une communauté",
@@ -414,7 +414,7 @@ const questions = [
   },
   // Question n°37
   {
-    question: "Question 37 : En quoi la parole d'Héloïse à Abélard représente-t-elle une forme de séduction paradoxale et radicale ?",
+    question: "Question n°37 : En quoi la parole d'Héloïse à Abélard représente-t-elle une forme de séduction paradoxale et radicale ?",
     answers: [
       "Elle séduit par sa soumission totale et son renoncement à toute volonté propre",
       "Elle séduit par sa revendication d'un amour absolu, détaché des lois sociales comme le mariage",
@@ -425,7 +425,7 @@ const questions = [
   },
   // Question n°38
   {
-    question: "Question 38 : Comment Jean Baudrillard analyse-t-il la publicité dans <em>Simulacres et simulation</em> ?",
+    question: "Question n°38 : Comment Jean Baudrillard analyse-t-il la publicité dans <em>Simulacres et simulation</em> ?",
     answers: [
       "Comme un art mineur mais utile, qui informe sur les produits de consommation",
       "Comme un discours qui signifie profondément les désirs inconscients de la société",
@@ -436,7 +436,7 @@ const questions = [
   },
   // Question n°39
   {
-    question: "Question 39 : Que symbolise le mythe de l'androgyne, raconté par Aristophane dans <em>Le Banquet</em> de Platon ?",
+    question: "Question n°39 : Que symbolise le mythe de l'androgyne, raconté par Aristophane dans <em>Le Banquet</em> de Platon ?",
     answers: [
       "La supériorité originelle et la complétude de l'être humain avant la chute",
       "Le désir amoureux comme quête de la moitié perdue pour retrouver l'unité originelle",
@@ -447,7 +447,7 @@ const questions = [
   },
   // Question n°40
   {
-    question: "Question 40 : Que signifie le terme <em>psychagogie</em> (ψυχαγωγία), pratiquée par les sophistes comme Gorgias ?",
+    question: "Question n°40 : Que signifie le terme <em>psychagogie</em> (ψυχαγωγία), pratiquée par les sophistes comme Gorgias ?",
     answers: [
       "L'étude scientifique et rationnelle des phénomènes de l'esprit",
       "La « conduite des âmes », l'art de persuader en guidant les croyances de l'auditeur",
@@ -458,7 +458,7 @@ const questions = [
   },
   // Question n°41
   {
-    question: "Question 41 : Quel est l'objectif principal de la parole de propagande ?",
+    question: "Question n°41 : Quel est l'objectif principal de la parole de propagande ?",
     answers: [
       "Informer objectivement et complètement la population sur les événements",
       "Ouvrir un débat démocratique riche et contradictoire sur les enjeux de société",
@@ -469,7 +469,7 @@ const questions = [
   },
   // Question n°42
   {
-    question: "Question 42 : Comment Martin Heidegger caractérise-t-il le « bavardage » (<em>Gerede</em>) dans <em>Être et Temps</em> ?",
+    question: "Question n°42 : Comment Martin Heidegger caractérise-t-il le « bavardage » (<em>Gerede</em>) dans <em>Être et Temps</em> ?",
     answers: [
       "Une parole authentique et créatrice, propre à l'existence quotidienne",
       "La parole poétique par excellence, qui révèle l'être des choses",
@@ -480,7 +480,7 @@ const questions = [
   },
   // Question n°43
   {
-    question: "Question 43 : Qu'est-ce qu'un énoncé « performatif », selon la théorie du langage de J.L. Austin ?",
+    question: "Question n°43 : Qu'est-ce qu'un énoncé « performatif », selon la théorie du langage de J.L. Austin ?",
     answers: [
       "Un énoncé qui décrit un état de fait objectif",
       "Un énoncé qui accomplit l'action qu'il décrit",
@@ -491,7 +491,7 @@ const questions = [
   },
   // Question n°44
   {
-    question: "Question 44 : Pourquoi la séduction manipulatrice est-elle considérée comme une menace pour le libre-arbitre ?",
+    question: "Question n°44 : Pourquoi la séduction manipulatrice est-elle considérée comme une menace pour le libre-arbitre ?",
     answers: [
       "Parce qu'elle utilise des arguments trop complexes que l'on ne peut pas comprendre",
       "Parce qu'elle cherche à contourner la raison pour obtenir un consentement non éclairé",
@@ -502,7 +502,7 @@ const questions = [
   },
   // Question n°45
   {
-    question: "Question 45 : Comment Lady Macbeth use-t-elle de la parole pour séduire et manipuler son mari dans la pièce de Shakespeare ?",
+    question: "Question n°45 : Comment Lady Macbeth use-t-elle de la parole pour séduire et manipuler son mari dans la pièce de Shakespeare ?",
     answers: [
       "En le flattant sur sa bravoire pour le pousser à prendre une retraite honorable",
       "En doutant de sa virilité et de son ambition pour le provoquer au régicide",
@@ -513,7 +513,7 @@ const questions = [
   },
   // Question n°46
   {
-    question: "Question 46 : Quel rôle jouent la musique et le rythme dans l'efficacité d'une parole séductrice, selon les exemples antiques ?",
+    question: "Question n°46 : Quel rôle jouent la musique et le rythme dans l'efficacité d'une parole séductrice, selon les exemples antiques ?",
     answers: [
       "Aucun, ils distraient de l'attention portée au sens des mots",
       "Ils sont de simples ornements accessoires et décoratifs",
@@ -524,7 +524,7 @@ const questions = [
   },
   // Question n°47
   {
-    question: "Question 47 : Quelle est la caractéristique de la parole de l'oracle (comme celui de Delphes) ?",
+    question: "Question n°47 : Quelle est la caractéristique de la parole de l'oracle (comme celui de Delphes) ?",
     answers: [
       "Elle est toujours claire, directe et directement applicable par le consultant",
       "Elle est gratuite et accessible à tous les citoyens sans distinction de rang",
@@ -535,7 +535,7 @@ const questions = [
   },
   // Question n°48
   {
-    question: "Question 48 : Comment les réseaux sociaux reconfigurent-ils l'art de la séduction par la parole ?",
+    question: "Question n°48 : Comment les réseaux sociaux reconfigurent-ils l'art de la séduction par la parole ?",
     answers: [
       "Ils l'abolissent au profit de l'image pure et immédiate",
       "Ils permettent une séduction calculée par la construction d'une « persona » soignée",
@@ -546,7 +546,7 @@ const questions = [
   },
   // Question n°49
   {
-    question: "Question 49 : Quelle distinction Blaise Pascal établit-il entre « persuader » et « convaincre » dans ses <em>Pensées</em> ?",
+    question: "Question n°49 : Quelle distinction Blaise Pascal établit-il entre « persuader » et « convaincre » dans ses <em>Pensées</em> ?",
     answers: [
       "Convaincre les esprits forts par la raison, persuader les esprits faibles par la foi",
       "« Convaincre » est l'art de démontrer, « persuader » est l'art d'agréer",
@@ -557,7 +557,7 @@ const questions = [
   },
   // Question n°50
   {
-    question: "Question 50 : Quelle est la différence entre la parole du « conseiller » et celle du « chef » dans l'exercice de l'autorité ?",
+    question: "Question n°50 : Quelle est la différence entre la parole du « conseiller » et celle du « chef » dans l'exercice de l'autorité ?",
     answers: [
       "Le conseiller séduit par la flatterie, le chef commande par la peur",
       "Le conseiller propose et use de la persuasion, le chef décide et use de l'injonction",
@@ -568,7 +568,7 @@ const questions = [
   },
   // Question n°51
   {
-    question: "Question 51 : Comment l'humour et l'ironie peuvent-ils être des outils de séduction efficaces ?",
+    question: "Question n°51 : Comment l'humour et l'ironie peuvent-ils être des outils de séduction efficaces ?",
     answers: [
       "Ils montrent une supériorité intellectuelle écrasante et humilient l'autre",
       "Ils créent une complicité par le sous-entendu, et évitent la lourdeur solennelle",
@@ -579,7 +579,7 @@ const questions = [
   },
   // Question n°52
   {
-    question: "Question 52 : Comment Aristote justifie-t-il la poésie (et son « mensonge ») face à la critique platonicienne ?",
+    question: "Question n°52 : Comment Aristote justifie-t-il la poésie (et son « mensonge ») face à la critique platonicienne ?",
     answers: [
       "Il affirme que les poètes sont inspirés par les dieux et donc incontestables",
       "Il soutient que la poésie, par l'imitation, peut atteindre une vérité universelle",
@@ -590,7 +590,7 @@ const questions = [
   },
   // Question n°53
   {
-    question: "Question 53 : Sur quels ressorts l'éloquence judiciaire (au tribunal) fait-elle reposer sa force de séduction ?",
+    question: "Question n°53 : Sur quels ressorts l'éloquence judiciaire (au tribunal) fait-elle reposer sa force de séduction ?",
     answers: [
       "Uniquement sur la présentation de preuves matérielles et d'expertises techniques",
       "Sur la construction d'un récit crédible et émouvant qui donne un sens moral aux faits",
@@ -601,7 +601,7 @@ const questions = [
   },
   // Question n°54
   {
-    question: "Question 54 : Dans l'analyse de Sartre, que cherche la « coquette » à travers le jeu de la séduction ?",
+    question: "Question n°54 : Dans l'analyse de Sartre, que cherche la « coquette » à travers le jeu de la séduction ?",
     answers: [
       "Un mariage avantageux sur le plan social et économique",
       "À se faire désirer pour exister dans le regard de l'autre",
@@ -612,7 +612,7 @@ const questions = [
   },
   // Question n°55
   {
-    question: "Question 55 : En quoi la parole séductrice est-elle un phénomène corporel autant que linguistique ?",
+    question: "Question n°55 : En quoi la parole séductrice est-elle un phénomène corporel autant que linguistique ?",
     answers: [
       "Elle nécessite une bonne santé physique et une grande énergie vitale",
       "Elle s'exprime aussi par la voix, le regard, les gestes et la posture",
@@ -623,7 +623,7 @@ const questions = [
   },
   // Question n°56
   {
-    question: "Question 56 : Comment la courtoisie amoureuse du Moyen Âge codifie-t-elle la parole de séduction ?",
+    question: "Question n°56 : Comment la courtoisie amoureuse du Moyen Âge codifie-t-elle la parole de séduction ?",
     answers: [
       "Elle l'interdit purement et simplement, la considérant comme un péché",
       "Elle en fait un « jeu » social raffiné, réglé par des codes stricts de discours",
@@ -634,7 +634,7 @@ const questions = [
   },
   // Question n°57
   {
-    question: "Question 57 : Quelle est la différence entre une parole politique qui « divise » et une parole qui « rassemble » ?",
+    question: "Question n°57 : Quelle est la différence entre une parole politique qui « divise » et une parole qui « rassemble » ?",
     answers: [
       "La parole qui divise est toujours mensongère, celle qui rassemble est toujours vraie",
       "La parole qui divise identifie des ennemis ; celle qui rassemble cherche des dénominateurs communs",
@@ -645,7 +645,7 @@ const questions = [
   },
   // Question n°58
   {
-    question: "Question 58 : Sur quel point précis Platon fonde-t-il sa critique la plus radicale contre les sophistes ?",
+    question: "Question n°58 : Sur quel point précis Platon fonde-t-il sa critique la plus radicale contre les sophistes ?",
     answers: [
       "Ils sont trop chers et réservent leur enseignement à une élite riche",
       "Ils ne vendent qu'une technique de persuasion sans souci de la vérité",
@@ -656,7 +656,7 @@ const questions = [
   },
   // Question n°59
   {
-    question: "Question 59 : Un professeur doit-il user de séduction pour enseigner efficacement ?",
+    question: "Question n°59 : Un professeur doit-il user de séduction pour enseigner efficacement ?",
     answers: [
       "Non, la séduction est contraire à la rigueur et à la neutralité scientifique requise",
       "Oui, mais d'une séduction spécifique : capter l'attention et éveiller le désir de savoir",
@@ -667,7 +667,7 @@ const questions = [
   },
   // Question n°60
   {
-    question: "Question 60 : Dans les légendes de Mélusine ou d'Ondine, quelle est la puissance et la limite de la parole séductrice ?",
+    question: "Question n°60 : Dans les légendes de Mélusine ou d'Ondine, quelle est la puissance et la limite de la parole séductrice ?",
     answers: [
       "Elle permet de transformer les hommes en animaux par un simple sortilège verbal",
       "Elle lie les êtres par un pacte dont la rupture entraîne une malédiction",
@@ -678,7 +678,7 @@ const questions = [
   },
   // Question n°61
   {
-    question: "Question 61 : Quelle stratégie de parole séductrice est typique de la négociation commerciale ?",
+    question: "Question n°61 : Quelle stratégie de parole séductrice est typique de la négociation commerciale ?",
     answers: [
       "Menacer l'autre pour obtenir le prix le plus bas possible sur le produit",
       "Créer un rapport de « partenaires » tout en masquant ses propres limites réelles",
@@ -689,7 +689,7 @@ const questions = [
   },
   // Question n°62
   {
-    question: "Question 62 : Comment l'auteur d'une autobiographie séduit-il son lecteur par sa parole écrite ?",
+    question: "Question n°62 : Comment l'auteur d'une autobiographie séduit-il son lecteur par sa parole écrite ?",
     answers: [
       "En mentant délibérément pour se rendre plus intéressant et héroïque",
       "En construisant une image de soi crédible et attachante par la confession et l'humilité",
@@ -700,7 +700,7 @@ const questions = [
   },
   // Question n°63
   {
-    question: "Question 63 : Qu'est-ce qu'un « double bind » (double contrainte) dans une communication manipulatrice ?",
+    question: "Question n°63 : Qu'est-ce qu'un « double bind » (double contrainte) dans une communication manipulatrice ?",
     answers: [
       "Deux arguments solides qui se renforcent mutuellement pour convaincre",
       "Deux messages contradictoires sont émis et empêchent toute réponse adéquate",
@@ -711,7 +711,7 @@ const questions = [
   },
   // Question n°64
   {
-    question: "Question 64 : Comment une parole peut-elle être à la fois « libératrice » et « aliénante » ?",
+    question: "Question n°64 : Comment une parole peut-elle être à la fois « libératrice » et « aliénante » ?",
     answers: [
       "C'est impossible, ce sont deux effets strictement opposés et incompatibles",
       "Elle libère si elle permet de nommer une souffrance ; elle aliène si elle impose un dogme",
@@ -722,7 +722,7 @@ const questions = [
   },
   // Question n°65
   {
-    question: "Question 65 : Que signifie la notion grecque de <em>kairos</em> (καιρός) pour un orateur ?",
+    question: "Question n°65 : Que signifie la notion grecque de <em>kairos</em> (καιρός) pour un orateur ?",
     answers: [
       "La peur paralysante de parler en public",
       "Le moment opportun pour prononcer la parole juste",
@@ -733,7 +733,7 @@ const questions = [
   },
   // Question n°66
   {
-    question: "Question 66 : Pourquoi une crise (économique, sociale) est-elle un terreau fertile pour l'émergence d'un leader charismatique ?",
+    question: "Question n°66 : Pourquoi une crise (économique, sociale) est-elle un terreau fertile pour l'émergence d'un leader charismatique ?",
     answers: [
       "Parce que les gens ont moins d'argent pour s'informer par des médias diversifiés",
       "Parce que lorsque les institutions sont discréditées, on attend un sauveur",
@@ -744,7 +744,7 @@ const questions = [
   },
   // Question n°67
   {
-    question: "Question 67 : Pourquoi le fait de partager un secret est-il un puissant vecteur de séduction ?",
+    question: "Question n°67 : Pourquoi le fait de partager un secret est-il un puissant vecteur de séduction ?",
     answers: [
       "Parce que cela oblige l'autre à se taire aussi, sous peine de trahison",
       "Parce que cela crée une alliance exclusive, une intimité et une confiance uniques",
@@ -755,7 +755,7 @@ const questions = [
   },
   // Question n°68
   {
-    question: "Question 68 : Quelle est la fonction séductrice du récit mythique (comme ceux de la Genèse) ?",
+    question: "Question n°68 : Quelle est la fonction séductrice du récit mythique (comme ceux de la Genèse) ?",
     answers: [
       "Donner des informations scientifiques exactes sur les origines du cosmos",
       "Fournir un cadre juridique précis pour l'organisation des premières sociétés",
@@ -766,7 +766,7 @@ const questions = [
   },
   // Question n°69
   {
-    question: "Question 69 : Comment la publicité parvient-elle à « créer un besoin » artificiel chez le consommateur ?",
+    question: "Question n°69 : Comment la publicité parvient-elle à « créer un besoin » artificiel chez le consommateur ?",
     answers: [
       "En modifiant chimiquement les produits pour les rendre addictifs et indispensables",
       "En associant le produit à un manque que le consommateur ne percevait pas auparavant",
@@ -777,7 +777,7 @@ const questions = [
   },
   // Question n°70
   {
-    question: "Question 70 : Peut-on définir une « éthique de la séduction » ? Autrement dit, y a-t-il une « bonne » et une « mauvaise » séduction ?",
+    question: "Question n°70 : Peut-on définir une « éthique de la séduction » ? Autrement dit, y a-t-il une « bonne » et une « mauvaise » séduction ?",
     answers: [
       "Non, séduire c'est toujours manipuler, donc c'est moralement condamnable",
       "Oui, la distinction repose sur l'intention et le respect de la liberté de l'autre",
@@ -788,7 +788,7 @@ const questions = [
   },
   // Question n°71
   {
-    question: "Question 71 : Qu'est-ce qui fait la séduction du « poète maudit » (comme Rimbaud ou Baudelaire) ?",
+    question: "Question n°71 : Qu'est-ce qui fait la séduction du « poète maudit » (comme Rimbaud ou Baudelaire) ?",
     answers: [
       "Sa richesse et son succès mondain qui fascinent le public bourgeois",
       "Sa rébellion contre l'ordre social et son exploration des marges",
@@ -799,7 +799,7 @@ const questions = [
   },
   // Question n°72
   {
-    question: "Question 72 : En quoi consiste l'art de la conversation, comme lieu privilégié de la séduction mondaine aux XVIIe-XVIIIe siècles ?",
+    question: "Question n°72 : En quoi consiste l'art de la conversation, comme lieu privilégié de la séduction mondaine aux XVIIe-XVIIIe siècles ?",
     answers: [
       "À débattre de philosophie de façon académique et systématique",
       "À briller par son esprit et son savoir-dire, dans le respect de codes stricts",
@@ -810,7 +810,7 @@ const questions = [
   },
   // Question n°73
   {
-    question: "Question 73 : Pourquoi le mensonge est-il une arme à double tranchant dans la parole séductrice ?",
+    question: "Question n°73 : Pourquoi le mensonge est-il une arme à double tranchant dans la parole séductrice ?",
     answers: [
       "Il est toujours découvert immédiatement par l'intuition de l'autre",
       "Il peut permettre un succès immédiat mais détruit la confiance s'il est découvert",
@@ -821,7 +821,7 @@ const questions = [
   },
   // Question n°74
   {
-    question: "Question 74 : Quel est le pouvoir des images associées à la parole dans la séduction contemporaine (publicité, politique) ?",
+    question: "Question n°74 : Quel est le pouvoir des images associées à la parole dans la séduction contemporaine (publicité, politique) ?",
     answers: [
       "Elles affaiblissent la parole en distrayant l'attention de son contenu",
       "Elles sont devenues prédominantes ; elles frappent plus vite et plus fort que les mots",
@@ -832,7 +832,7 @@ const questions = [
   },
   // Question n°75
   {
-    question: "Question 75 : Comment un expert (scientifique, médecin) use-t-il de la parole pour séduire et faire autorité ?",
+    question: "Question n°75 : Comment un expert (scientifique, médecin) use-t-il de la parole pour séduire et faire autorité ?",
     answers: [
       "En criant plus fort et avec plus d'assurance que les contradicteurs",
       "En construisant son « ethos » par un discours technique maîtrisé et un langage spécialisé",
@@ -843,7 +843,7 @@ const questions = [
   },
   // Question n°76
   {
-    question: "Question 76 : Quelle est la stratégie de la parole religieuse pour séduire et convertir ?",
+    question: "Question n°76 : Quelle est la stratégie de la parole religieuse pour séduire et convertir ?",
     answers: [
       "Elle n'use que de menaces explicites sur les châtiments de l'au-delà",
       "Elle mêle la promesse d'un salut et la description d'une communauté d'élection",
@@ -854,7 +854,7 @@ const questions = [
   },
   // Question n°77
   {
-    question: "Question 77 : Pourquoi le silence de l'écoute est-il une condition essentielle à l'émergence d'une parole authentique ?",
+    question: "Question n°77 : Pourquoi le silence de l'écoute est-il une condition essentielle à l'émergence d'une parole authentique ?",
     answers: [
       "Parce que cela permet de préparer mentalement sa propre réplique imparable",
       "Parce qu'une écoute attentive donne à l'autre la permission d'exister par la parole",
@@ -865,7 +865,7 @@ const questions = [
   },
   // Question n°78
   {
-    question: "Question 78 : Pourquoi la flatterie est-elle un ressort si courant de la parole séductrice ?",
+    question: "Question n°78 : Pourquoi la flatterie est-elle un ressort si courant de la parole séductrice ?",
     answers: [
       "Parce qu'elle est toujours vraie et correspond à une réalité objective",
       "Parce qu'elle s'adresse directement à l'amour-propre, un levier universel",
@@ -876,7 +876,7 @@ const questions = [
   },
   // Question n°79
   {
-    question: "Question 79 : Qu'appelle-t-on la « séduction intellectuelle » ?",
+    question: "Question n°79 : Qu'appelle-t-on la « séduction intellectuelle » ?",
     answers: [
       "Le fait d'avoir un haut diplôme universitaire qui impressionne socialement",
       "La capacité à fasciner par la profondeur et l'originalité de sa conversation",
@@ -887,7 +887,7 @@ const questions = [
   },
   // Question n°80
   {
-    question: "Question 80 : Comment les médias d'information utilisent-ils le « storytelling » pour séduire leur public ?",
+    question: "Question n°80 : Comment les médias d'information utilisent-ils le « storytelling » pour séduire leur public ?",
     answers: [
       "En inventant purement et simplement les nouvelles pour les rendre plus spectaculaires",
       "En présentant l'actualité sous forme de récits avec des héros, des méchants et une morale",
@@ -898,7 +898,7 @@ const questions = [
   },
   // Question n°81
   {
-    question: "Question 81 : Quelle distinction peut-on faire entre deux pôles de la séduction ?",
+    question: "Question n°81 : Quelle distinction peut-on faire entre deux pôles de la séduction ?",
     answers: [
       "Une séduction « horizontale » entre égaux et une séduction « verticale » impliquant une domination",
       "Une séduction diurne, socialement acceptée, et une séduction nocturne, honteuse et cachée",
@@ -909,7 +909,7 @@ const questions = [
   },
   // Question n°82
   {
-    question: "Question 82 : Comment la parole peut-elle avoir un pouvoir « guérisseur » (dans une thérapie) ?",
+    question: "Question n°82 : Comment la parole peut-elle avoir un pouvoir « guérisseur » (dans une thérapie) ?",
     answers: [
       "Par des incantations magiques et des formules secrètes transmises de maître à disciple",
       "En permettant de mettre des mots sur une souffrance et de l'intégrer dans un récit cohérent",
@@ -920,7 +920,7 @@ const questions = [
   },
   // Question n°83
   {
-    question: "Question 83 : Quel type de séduction opère la parole du « peuple » (proverbes, dictons) ?",
+    question: "Question n°83 : Quel type de séduction opère la parole du « peuple » (proverbes, dictons) ?",
     answers: [
       "Une séduction par l'évidence et l'autorité indiscutable de la tradition et du bon sens",
       "Une séduction scientifique, car ces formules sont le fruit d'observations rigoureuses",
@@ -931,7 +931,7 @@ const questions = [
   },
   // Question n°84
   {
-    question: "Question 84 : Pourquoi une parole rare, mesurée, peut-elle être plus séduisante qu'un flot de paroles ?",
+    question: "Question n°84 : Pourquoi une parole rare, mesurée, peut-elle être plus séduisante qu'un flot de paroles ?",
     answers: [
       "Parce que cela montre qu'on est timide et inoffensif, donc rassurant",
       "Parce que la rareté crée la valeur ; la parole rare semble plus précieuse et réfléchie",
@@ -942,7 +942,7 @@ const questions = [
   },
   // Question n°85
   {
-    question: "Question 85 : En quoi une parole qui engage (serment, promesse) est-elle au cœur de la séduction amoureuse ou politique ?",
+    question: "Question n°85 : En quoi une parole qui engage (serment, promesse) est-elle au cœur de la séduction amoureuse ou politique ?",
     answers: [
       "Elle n'est qu'une formalité sans importance, vite oubliée par les deux parties",
       "Elle crée un lien moral fort et une attente ; c'est un pari sur l'avenir et une preuve de confiance",
@@ -953,7 +953,7 @@ const questions = [
   },
   // Question n°86
   {
-    question: "Question 86 : Que révèlent les manuels d'éducation pour jeunes filles (comme celui du Chevalier de La Tour Landry) sur la parole féminine ?",
+    question: "Question n°86 : Que révèlent les manuels d'éducation pour jeunes filles (comme celui du Chevalier de La Tour Landry) sur la parole féminine ?",
     answers: [
       "Ils l'encouragent comme un art nécessaire à la bonne tenue d'un salon",
       "Ils la présentent comme dangereuse, tant à recevoir qu'à émettre, et prônent la discrétion",
@@ -964,7 +964,7 @@ const questions = [
   },
   // Question n°87
   {
-    question: "Question 87 : Quelle est la différence fondamentale, selon Platon, entre la parole du philosophe et celle du rhéteur ?",
+    question: "Question n°87 : Quelle est la différence fondamentale, selon Platon, entre la parole du philosophe et celle du rhéteur ?",
     answers: [
       "Le philosophe parle pour gagner de l'argent, le rhéteur par pur amour du savoir désintéressé",
       "Le philosophe cherche la vérité par le dialogue ; le rhéteur cherche à persuader et à plaire",
@@ -975,7 +975,7 @@ const questions = [
   },
   // Question n°88
   {
-    question: "Question 88 : Comment la relation médecin-patient illustre-t-elle un rapport de séduction par la parole ?",
+    question: "Question n°88 : Comment la relation médecin-patient illustre-t-elle un rapport de séduction par la parole ?",
     answers: [
       "Le médecin doit séduire le patient pour qu'il paie sa consultation sans discuter le prix",
       "Le médecin use de son « ethos » de compétence et d'une parole rassurante pour obtenir la confiance",
@@ -986,7 +986,7 @@ const questions = [
   },
   // Question n°89
   {
-    question: "Question 89 : En quoi la parole « performe-t-elle » la réalité sociale, selon des sociologues comme Pierre Bourdieu ?",
+    question: "Question n°89 : En quoi la parole « performe-t-elle » la réalité sociale, selon des sociologues comme Pierre Bourdieu ?",
     answers: [
       "Les mots n'ont aucun effet sur la réalité matérielle et sociale, qui leur préexiste",
       "En nommant les choses, la parole officielle leur donne une existence sociale et légale",
@@ -997,7 +997,7 @@ const questions = [
   },
   // Question n°90
   {
-    question: "Question 90 : Quels procédés typiques de la séduction peut-on identifier dans un discours politique contemporain ?",
+    question: "Question n°90 : Quels procédés typiques de la séduction peut-on identifier dans un discours politique contemporain ?",
     answers: [
       "L'usage exclusif de données statistiques brutes et de graphiques complexes",
       "L'emploi de « nous » inclusif, de slogans simples, de storytelling personnel et de promesses",
@@ -1008,7 +1008,7 @@ const questions = [
   },
   // Question n°91
   {
-    question: "Question 91 : Quelle est la fonction de la parole qui console ? En quoi peut-elle séduire ?",
+    question: "Question n°91 : Quelle est la fonction de la parole qui console ? En quoi peut-elle séduire ?",
     answers: [
       "Elle n'a pas de fonction, elle est inefficace face à la douleur réelle",
       "Elle reconnaît la souffrance de l'autre et lui offre une présence apaisante par les mots",
@@ -1019,7 +1019,7 @@ const questions = [
   },
   // Question n°92
   {
-    question: "Question 92 : Comment fonctionne la séduction par la peur dans un discours politique sécuritaire ?",
+    question: "Question n°92 : Comment fonctionne la séduction par la peur dans un discours politique sécuritaire ?",
     answers: [
       "Elle énumère calmement et objectivement les statistiques de la délinquance",
       "Elle amplifie et personnifie une menace, puis se présente comme le seul rempart",
@@ -1030,7 +1030,7 @@ const questions = [
   },
   // Question n°93
   {
-    question: "Question 93 : Comment un artiste (écrivain, cinéaste) séduit-il son public par son œuvre ?",
+    question: "Question n°93 : Comment un artiste (écrivain, cinéaste) séduit-il son public par son œuvre ?",
     answers: [
       "En lui donnant des leçons morales directes et des conseils pratiques de vie",
       "En créant un univers esthétique cohérent et fascinant qui touche à l'universel",
@@ -1041,7 +1041,7 @@ const questions = [
   },
   // Question n°94
   {
-    question: "Question 94 : Quelle est la différence entre une parole qui « révèle » et une parole qui « cache » ?",
+    question: "Question n°94 : Quelle est la différence entre une parole qui « révèle » et une parole qui « cache » ?",
     answers: [
       "La parole qui révèle est toujours bonne, celle qui cache est toujours mauvaise et mensongère",
       "La parole qui révèle dévoile une vérité ; celle qui cache peut protéger ou tromper selon l'intention",
@@ -1052,7 +1052,7 @@ const questions = [
   },
   // Question n°95
   {
-    question: "Question 95 : Que signifie l'expression biblique « connaître » une femme, souvent utilisée pour évoquer les relations charnelles ?",
+    question: "Question n°95 : Que signifie l'expression biblique « connaître » une femme, souvent utilisée pour évoquer les relations charnelles ?",
     answers: [
       "Avoir une conversation intellectuelle approfondie et philosophique avec elle",
       "Avoir une relation sexuelle avec elle, montrant l'imbrication entre parole et union des corps",
@@ -1063,7 +1063,7 @@ const questions = [
   },
   // Question n°96
   {
-    question: "Question 96 : La parole de la justice doit-elle séduire ?",
+    question: "Question n°96 : La parole de la justice doit-elle séduire ?",
     answers: [
       "Non, elle doit être austère et incompréhensible pour inspirer le respect craintif",
       "Elle peut user d'une séduction par la solennité mais son autorité doit être rationnelle",
@@ -1074,7 +1074,7 @@ const questions = [
   },
   // Question n°97
   {
-    question: "Question 97 : En quoi le don gratuit (un cadeau, un compliment) est-il une parole séductrice ?",
+    question: "Question n°97 : En quoi le don gratuit (un cadeau, un compliment) est-il une parole séductrice ?",
     answers: [
       "Il ne l'est pas, car un vrai don est désintéressé et n'attend rien en retour",
       "Il crée une dette symbolique et un sentiment de gratitude engageant la réciprocité",
@@ -1085,7 +1085,7 @@ const questions = [
   },
   // Question n°98
   {
-    question: "Question 98 : Comment les hymnes nationaux ou les chants de supporters créent-ils une séduction collective ?",
+    question: "Question n°98 : Comment les hymnes nationaux ou les chants de supporters créent-ils une séduction collective ?",
     answers: [
       "Ils endorment les gens par leur monotonie et leur répétitivité lancinante",
       "Ils unifient un groupe par la répétition rythmée, créant une « communauté d'émotion »",
@@ -1096,7 +1096,7 @@ const questions = [
   },
   // Question n°99
   {
-    question: "Question 99 : Quel nouveau défi pose l'intelligence artificielle (chatbots, deepfakes audio) à la parole séductrice ?",
+    question: "Question n°99 : Quel nouveau défi pose l'intelligence artificielle (chatbots, deepfakes audio) à la parole séductrice ?",
     answers: [
       "Aucun, l'IA ne peut pas séduire car elle manque de conscience et d'émotions réelles",
       "Elle peut générer des paroles parfaitement adaptées et persuasives à l'échelle industrielle",
@@ -1107,7 +1107,7 @@ const questions = [
   },
   // Question n°100
   {
-    question: "Question 100 : La séduction est-elle le contraire de la parole vraie, ou en est-elle parfois l'expression la plus achevée ?",
+    question: "Question n°100 : La séduction est-elle le contraire de la parole vraie, ou en est-elle parfois l'expression la plus achevée ?",
     answers: [
       "Elle en est toujours le contraire : séduire, c'est par essence tromper et manipuler",
       "Elle peut en être l'expression la plus achevée : une parole vraie peut être la plus séduisante",

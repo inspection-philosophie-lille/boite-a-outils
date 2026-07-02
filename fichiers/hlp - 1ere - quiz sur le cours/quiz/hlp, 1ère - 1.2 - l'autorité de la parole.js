@@ -16,9 +16,9 @@ const philosophyData = {
 // QUESTIONS DU QUIZ (1 à 100) - Corrigées avec <em>
 // ============================================
 const questions = [
-  // Question n°1
+  // Question n°01
   {
-    question: "Question 1 : Quelle distinction fondamentale permet d'analyser le concept d'<em>autorité</em> ?",
+    question: "Question n°01 : Quelle distinction fondamentale permet d'analyser le concept d'<em>autorité</em> ?",
     answers: [
       "<em>Autorité</em> naturelle et <em>autorité</em> acquise",
       "<em>Autorité</em> personnelle et <em>autorité</em> institutionnelle",
@@ -27,9 +27,9 @@ const questions = [
     correct: 3,
     explanation: `La distinction centrale est entre l'<em>auctoritas</em> (<em>autorité</em> fondée sur la tradition, l'origine, le prestige) et la <em>potestas</em> (<em>puissance</em> de contrainte, pouvoir de commandement). L'<em>auctoritas</em> renvoie à une légitimité héritée du passé, à un poids symbolique. La <em>potestas</em> désigne l'exercice effectif du pouvoir, la capacité à imposer sa volonté. Cette distinction, héritée de la pensée politique romaine, permet de comprendre qu'une parole peut « faire <em>autorité</em> » sans pour autant détenir le pouvoir coercitif.<br>Exemple : Un grand professeur émérite a de l'<em>auctoritas</em> dans son domaine, même s'il n'a plus de <em>potestas</em> administrative.`
   },
-  // Question n°2
+  // Question n°02
   {
-    question: "Question 2 : Que signifie étymologiquement le terme grec ἐξουσία, traduit par <em>autorité</em> ?",
+    question: "Question n°02 : Que signifie étymologiquement le terme grec ἐξουσία, traduit par <em>autorité</em> ?",
     answers: [
       "Ce qui provient de l'<em>essence</em>",
       "La <em>force</em> persuasive",
@@ -38,9 +38,9 @@ const questions = [
     correct: 1,
     explanation: `Le mot grec ἐξουσία se décompose en ἐκ (origine, provenance) et ουσία (substance, <em>essence</em>, bien). Étymologiquement, il désigne donc quelque chose dont on hérite, qui provient de la substance ou de l'<em>essence</em>. Cette origine souligne que l'<em>autorité</em>, dans la conception grecque, est liée à une légitimité qui vient du fond de l'être ou d'un héritage, plutôt qu'à une simple fonction ou à une <em>force</em> immédiate.<br>Exemple : L'<em>autorité</em> du père de famille dans la Grèce antique découlait de sa position substantielle comme chef de l'<em>oikos</em> (maisonnée).`
   },
-  // Question n°3
+  // Question n°03
   {
-    question: "Question 3 : Comment Cicéron, dans <em>De Legibus</em>, distingue-t-il l'<em>autorité</em> du <em>pouvoir</em> ?",
+    question: "Question n°03 : Comment Cicéron, dans <em>De Legibus</em>, distingue-t-il l'<em>autorité</em> du <em>pouvoir</em> ?",
     answers: [
       "L'<em>autorité</em> appartient au peuple, le <em>pouvoir</em> au Sénat",
       "L'<em>autorité</em> et le <em>pouvoir</em> sont concentrés dans les mains du consul",
@@ -49,9 +49,9 @@ const questions = [
     correct: 3,
     explanation: `Cicéron énonce : « Tandis que le <em>pouvoir</em> réside dans le peuple, l'<em>autorité</em> appartient au sénat ». Cette formule résume la conception républicaine romaine de la répartition des <em>pouvoirs</em>. Le peuple (<em>populus</em>) détient la souveraineté et le <em>pouvoir</em> de voter les lois (<em>potestas</em>). Le Sénat, assemblée des anciens et des hommes prestigieux, détient l'<em>auctoritas</em> : son avis, son prestige, son poids moral orientent et légitiment les décisions sans les commander directement.<br>Exemple : Une loi votée par les comices populaires acquérait une légitimité renforcée si elle recevait l'approbation (l'<em>auctoritas</em>) du Sénat.`
   },
-  // Question n°4
+  // Question n°04
   {
-    question: "Question 4 : Quelle est la distinction établie par Max Weber entre <em>puissance</em> (<em>Macht</em>) et <em>domination</em> (<em>Herrschaft</em>) ?",
+    question: "Question n°04 : Quelle est la distinction établie par Max Weber entre <em>puissance</em> (<em>Macht</em>) et <em>domination</em> (<em>Herrschaft</em>) ?",
     answers: [
       "La <em>puissance</em> est la possibilité d'imposer sa volonté, la <em>domination</em> est une <em>autorité</em> institutionnalisée",
       "La <em>puissance</em> est légitime, la <em>domination</em> est illégitime",
@@ -60,9 +60,9 @@ const questions = [
     correct: 1,
     explanation: `Max Weber définit la <em>puissance</em> (<em>Macht</em>) comme « toute chance de faire triompher au sein d'une relation sociale sa propre volonté, même contre des résistances ». C'est un rapport de <em>force</em> contingente. La <em>domination</em> (<em>Herrschaft</em>) est « la chance de trouver des personnes déterminables prêtes à obéir à un ordre de contenu déterminé ». Elle implique une légitimité reconnue, une institutionnalisation qui rend l'obéissance quasi-automatique. La <em>domination</em> se rapproche ainsi de la notion d'<em>autorité</em> légitime.<br>Exemple : Un chef de bande a de la <em>puissance</em> sur ses hommes ; un juge exerce une <em>domination</em> légale-rationnelle.`
   },
-  // Question n°5
+  // Question n°05
   {
-    question: "Question 5 : Dans l'<em>Odyssée</em>, comment Télémaque justifie-t-il son ordre à Pénélope de se retirer dans ses appartements ?",
+    question: "Question n°05 : Dans l'<em>Odyssée</em>, comment Télémaque justifie-t-il son ordre à Pénélope de se retirer dans ses appartements ?",
     answers: [
       "En affirmant que <em>parler</em> appartient aux hommes",
       "Par son statut de <em>futur roi</em>",
@@ -71,9 +71,9 @@ const questions = [
     correct: 1,
     explanation: `Face à Pénélope qui demande à l'aède de cesser de chanter les malheurs d'Ulysse, Télémaque, son fils, l'interrompt et lui ordonne de se retirer, déclarant : « Le soin de <em>parler</em> appartient aux hommes, et surtout à moi qui règne dans ce palais ». Cette scène illustre l'<em>autorité</em> patriarcale dans la société homérique : la <em>parole</em> publique, politique et décisionnelle est l'apanage des hommes, en particulier du maître de maison. Pénélope, bien que reine, doit s'incliner devant la <em>parole</em> masculine de son fils devenu adulte.<br>Exemple : Cette scène fonde symboliquement le passage de l'<em>autorité</em> d'Ulysse (absent) à son fils Télémaque.`
   },
-  // Question n°6
+  // Question n°06
   {
-    question: "Question 6 : Quel concept décrit l'<em>autorité</em> qui repose sur les qualités extraordinaires (réelles ou supposées) d'un individu ?",
+    question: "Question n°06 : Quel concept décrit l'<em>autorité</em> qui repose sur les qualités extraordinaires (réelles ou supposées) d'un individu ?",
     answers: [
       "<em>Autorité</em> traditionnelle",
       "<em>Autorité</em> légale-rationnelle",
@@ -82,9 +82,9 @@ const questions = [
     correct: 3,
     explanation: `L'<em>autorité</em> charismatique, selon Max Weber, est celle qui s'appuie sur la dévotion extraordinaire que suscite une personne en raison de ses qualités héroïques, exemplaires ou divinement inspirées. Le <em>charisme</em> (<em>χάρισμα</em>, « don de grâce ») n'est pas tant une qualité objective qu'une croyance collective dans les <em>pouvoirs</em> exceptionnels du leader. Cette <em>autorité</em> est souvent instable et personnelle, contrairement aux <em>autorités</em> traditionnelle ou légale-rationnelle qui sont institutionnalisées.<br>Exemple : Les prophètes religieux, les leaders révolutionnaires ou certains chefs politiques populistes exercent une <em>autorité</em> charismatique.`
   },
-  // Question n°7
+  // Question n°07
   {
-    question: "Question 7 : Que signifie l'expression <em>dissonance cognitive</em> dans l'analyse des rapports à l'<em>autorité</em> ?",
+    question: "Question n°07 : Que signifie l'expression <em>dissonance cognitive</em> dans l'analyse des rapports à l'<em>autorité</em> ?",
     answers: [
       "Le <em>conflit</em> entre deux sources d'<em>autorité</em>",
       "La <em>tendance</em> à justifier une situation subie",
@@ -93,9 +93,9 @@ const questions = [
     correct: 2,
     explanation: `La <em>dissonance cognitive</em> est un concept de psychologie sociale qui décrit l'inconfort mental ressenti lorsqu'une personne détient deux croyances, attitudes ou comportements contradictoires. Face à une <em>autorité</em> imposée et inchangeable, l'individu a tendance à modifier son attitude (son « avis sur la situation ») pour la justifier et réduire la <em>dissonance</em>, plutôt que de maintenir une opinion critique qui le mettrait en <em>conflit</em> permanent avec une réalité immuable.<br>Exemple : Une victime de <em>violence</em> peut finir par justifier ou minimiser les actes de son agresseur pour réduire la <em>dissonance</em> entre la souffrance subie et l'impuissance à y échapper.`
   },
-  // Question n°8
+  // Question n°08
   {
-    question: "Question 8 : Quelle est la principale conclusion de l'<em>expérience</em> de Milgram sur la <em>soumission</em> à l'<em>autorité</em> ?",
+    question: "Question n°08 : Quelle est la principale conclusion de l'<em>expérience</em> de Milgram sur la <em>soumission</em> à l'<em>autorité</em> ?",
     answers: [
       "Seuls les individus <em>malveillants</em> obéissent à des ordres <em>immoraux</em>",
       "L'<em>obéissance</em> dépend exclusivement de la <em>personnalité</em> des individus",
@@ -104,9 +104,9 @@ const questions = [
     correct: 3,
     explanation: `L'<em>expérience</em> de Stanley Milgram (1961-1963) démontre que, dans un cadre institutionnel perçu comme <em>légitime</em> (un laboratoire universitaire), une proportion alarmante de participants <em>ordinaires</em> (environ 65%) est prête à administrer des décharges électriques potentiellement mortelles à un tiers, sur l'ordre d'une <em>autorité</em> scientifique. Cette <em>expérience</em> révèle la <em>puissance</em> de la situation et de l'<em>autorité</em> institutionnelle sur le comportement individuel, pouvant surpasser les inhibitions morales personnelles.<br>Exemple : L'adaptation télévisée française « Le Jeu de la Mort » (2010) a reproduit ces résultats, montrant que l'<em>autorité</em> d'une animatrice de télévision pouvait obtenir des taux de <em>soumission</em> encore plus élevés.`
   },
-  // Question n°9
+  // Question n°09
   {
-    question: "Question 9 : Selon Hannah Arendt, quel est le fondement de l'<em>autorité</em> (<em>auctoritas</em>) dans la Rome antique ?",
+    question: "Question n°09 : Selon Hannah Arendt, quel est le fondement de l'<em>autorité</em> (<em>auctoritas</em>) dans la Rome antique ?",
     answers: [
       "La <em>force militaire</em>",
       "L'<em>origine sacrée</em> de sa fondation",
@@ -117,7 +117,7 @@ const questions = [
   },
   // Question n°10
   {
-    question: "Question 10 : Quelle caractéristique définit principalement un <em>mythe</em> par rapport à une <em>légende</em> ou une <em>fable</em> ?",
+    question: "Question n°10 : Quelle caractéristique définit principalement un <em>mythe</em> par rapport à une <em>légende</em> ou une <em>fable</em> ?",
     answers: [
       "Il est <em>historiquement attesté</em>",
       "Il comporte toujours des éléments <em>merveilleux</em>",
@@ -128,7 +128,7 @@ const questions = [
   },
   // Question n°11
   {
-    question: "Question 11 : Quel est l'enjeu principal du <em>mythe</em> de Gygès, rapporté par Platon dans <em>La République</em> ?",
+    question: "Question n°11 : Quel est l'enjeu principal du <em>mythe</em> de Gygès, rapporté par Platon dans <em>La République</em> ?",
     answers: [
       "L'enjeu de la <em>supériorité</em> de la monarchie par rapport à la démocratie",
       "L'enjeu de l'<em>importance</em> de la richesse pour le bonheur",
@@ -139,7 +139,7 @@ const questions = [
   },
   // Question n°12
   {
-    question: "Question 12 : Quelle est la fonction de la <em>parole symbolique</em> selon l'analyse anthropologique de Claude Lévi-Strauss ?",
+    question: "Question n°12 : Quelle est la fonction de la <em>parole symbolique</em> selon l'analyse anthropologique de Claude Lévi-Strauss ?",
     answers: [
       "Transmettre des <em>informations</em> pratiques",
       "<em>Divertir</em> la communauté",
@@ -150,7 +150,7 @@ const questions = [
   },
   // Question n°13
   {
-    question: "Question 13 : Dans la Genèse, quel <em>pouvoir</em> particulier est attribué à la <em>parole</em> de Dieu lors de la Création ?",
+    question: "Question n°13 : Dans la Genèse, quel <em>pouvoir</em> particulier est attribué à la <em>parole</em> de Dieu lors de la Création ?",
     answers: [
       "Elle fait <em>advenir</em> ce qu'elle nomme",
       "Elle <em>décrit</em> ce qui existe déjà",
@@ -161,7 +161,7 @@ const questions = [
   },
   // Question n°14
   {
-    question: "Question 14 : Quel terme, repris par Martin Heidegger, désigne la <em>vérité</em> comme <em>dévoilement</em> plutôt que comme <em>adéquation</em> ?",
+    question: "Question n°14 : Quel terme, repris par Martin Heidegger, désigne la <em>vérité</em> comme <em>dévoilement</em> plutôt que comme <em>adéquation</em> ?",
     answers: [
       "<em>Logos</em> (λόγος)",
       "<em>Epistémè</em> (ἐπιστήμη)",
@@ -172,7 +172,7 @@ const questions = [
   },
   // Question n°15
   {
-    question: "Question 15 : Que signifie l'expression <em>parole performative</em>', développée par le philosophe John L. Austin ?",
+    question: "Question n°15 : Que signifie l'expression <em>parole performative</em>', développée par le philosophe John L. Austin ?",
     answers: [
       "Une <em>parole</em> particulièrement <em>théâtrale</em>",
       "Une <em>parole</em> qui <em>persuade</em> efficacement",
@@ -183,7 +183,7 @@ const questions = [
   },
   // Question n°16
   {
-    question: "Question 16 : Dans la fable <em>Le Loup et l'Agneau</em> (Ésope/La Fontaine), quelle est la fonction de la <em>parole</em> du loup ?",
+    question: "Question n°16 : Dans la fable <em>Le Loup et l'Agneau</em> (Ésope/La Fontaine), quelle est la fonction de la <em>parole</em> du loup ?",
     answers: [
       "Chercher un <em>compromis</em>",
       "Instruire <em>moralement</em> l'agneau",
@@ -194,7 +194,7 @@ const questions = [
   },
   // Question n°17
   {
-    question: "Question 17 : Quelle distinction Kant établit-il dans son texte sur les Lumières entre les <em>ordres</em> courants et l'<em>ordre</em> du seul <em>maître</em> qui autorise à <em>raisonner</em> ?",
+    question: "Question n°17 : Quelle distinction Kant établit-il dans son texte sur les Lumières entre les <em>ordres</em> courants et l'<em>ordre</em> du seul <em>maître</em> qui autorise à <em>raisonner</em> ?",
     answers: [
       "L'<em>officier</em>, le <em>financier</em> et le <em>prêtre</em> disent « Ne <em>raisonnez</em> pas, <em>obéissez</em> ! »",
       "Tous les <em>maîtres</em> disent « <em>Raisonnez</em> autant que vous voudrez, mais <em>obéissez</em> ! »",
@@ -205,7 +205,7 @@ const questions = [
   },
   // Question n°18
   {
-    question: "Question 18 : Quel est le principal <em>argument</em> utilisé par Dominique de Villepin dans son <em>discours</em> à l'ONU (2003) pour s'opposer à la <em>guerre</em> en Irak ?",
+    question: "Question n°18 : Quel est le principal <em>argument</em> utilisé par Dominique de Villepin dans son <em>discours</em> à l'ONU (2003) pour s'opposer à la <em>guerre</em> en Irak ?",
     answers: [
       "La <em>nécessité</em> de laisser plus de temps aux <em>inspections</em>",
       "La <em>faiblesse militaire</em> de la France",
@@ -216,7 +216,7 @@ const questions = [
   },
   // Question n°19
   {
-    question: "Question 19 : Que signifie étymologiquement le mot <em>poésie</em>, issu du grec ποιεῖν (<em>poiein</em>) ?",
+    question: "Question n°19 : Que signifie étymologiquement le mot <em>poésie</em>, issu du grec ποιεῖν (<em>poiein</em>) ?",
     answers: [
       "<em>Faire</em>",
       "<em>Chanter</em>",
@@ -227,7 +227,7 @@ const questions = [
   },
   // Question n°20
   {
-    question: "Question 20 : Comment Stéphane Mallarmé définit-il le <em>projet</em> de la <em>poésie</em> dans <em>Crise de vers</em> ?",
+    question: "Question n°20 : Comment Stéphane Mallarmé définit-il le <em>projet</em> de la <em>poésie</em> dans <em>Crise de vers</em> ?",
     answers: [
       "Exprimer les <em>sentiments personnels</em> du <em>poète</em>",
       "Décrire la <em>nature</em> avec précision",
@@ -238,7 +238,7 @@ const questions = [
   },
   // Question n°21
   {
-    question: "Question 21 : Quelle est la <em>critique</em> majeure que Socrate (Platon) adresse à l'<em>écriture</em> dans le <em>Phèdre</em> ?",
+    question: "Question n°21 : Quelle est la <em>critique</em> majeure que Socrate (Platon) adresse à l'<em>écriture</em> dans le <em>Phèdre</em> ?",
     answers: [
       "Elle <em>fixe</em> la <em>parole</em> vivante, la rend <em>muette</em> et <em>orpheline</em>",
       "Elle est trop <em>chère</em> et réservée aux <em>riches</em>",
@@ -249,7 +249,7 @@ const questions = [
   },
   // Question n°22
   {
-    question: "Question 22 : Selon Pierre Bourdieu, quelle est la fonction du <em>pouvoir symbolique</em> de la <em>parole</em> ?",
+    question: "Question n°22 : Selon Pierre Bourdieu, quelle est la fonction du <em>pouvoir symbolique</em> de la <em>parole</em> ?",
     answers: [
       "<em>Communiquer</em> des <em>informations</em> neutres",
       "Produire des <em>représentations</em> du monde social",
@@ -260,7 +260,7 @@ const questions = [
   },
   // Question n°23
   {
-    question: "Question 23 : Quel est le sens de la célèbre formule de Pascal : 'La <em>justice</em> sans la <em>force</em> est <em>impuissante</em>, la <em>force</em> sans la <em>justice</em> est <em>tyrannique</em> ?",
+    question: "Question n°23 : Quel est le sens de la célèbre formule de Pascal : 'La <em>justice</em> sans la <em>force</em> est <em>impuissante</em>, la <em>force</em> sans la <em>justice</em> est <em>tyrannique</em> ?",
     answers: [
       "La <em>justice</em> et la <em>force</em> sont <em>inconciliables</em>",
       "Il faut toujours <em>préférer</em> la <em>force</em> à la <em>justice</em>",
@@ -271,7 +271,7 @@ const questions = [
   },
   // Question n°24
   {
-    question: "Question 24 : Que signifie le concept d'« <em>internalité</em> » dans l'analyse de la <em>soumission</em> à l'<em>autorité</em> (expériences type Milgram) ?",
+    question: "Question n°24 : Que signifie le concept d'« <em>internalité</em> » dans l'analyse de la <em>soumission</em> à l'<em>autorité</em> (expériences type Milgram) ?",
     answers: [
       "Le fait de <em>garder</em> ses <em>pensées</em> pour soi",
       "L'<em>obéissance</em> due à une <em>conviction</em> intime",
@@ -282,7 +282,7 @@ const questions = [
   },
   // Question n°25
   {
-    question: "Question 25 : Quelle est la caractéristique de l'<em>autorité</em> <em>traditionnelle</em> selon la typologie de Max Weber ?",
+    question: "Question n°25 : Quelle est la caractéristique de l'<em>autorité</em> <em>traditionnelle</em> selon la typologie de Max Weber ?",
     answers: [
       "Elle repose sur la <em>croyance</em> en la <em>sainteté</em> des ordres et des <em>pouvoirs</em> de commandement existant de tout temps",
       "Elle repose sur la <em>croyance</em> en la <em>légalité</em> des règles établies",
@@ -293,7 +293,7 @@ const questions = [
   },
   // Question n°26
   {
-    question: "Question 26 : Quel rôle joue la <em>parole</em> dans le <em>contrat social</em> selon Rousseau ?",
+    question: "Question n°26 : Quel rôle joue la <em>parole</em> dans le <em>contrat social</em> selon Rousseau ?",
     answers: [
       "Elle est l'<em>instrument</em> de la <em>tromperie</em> des <em>puissants</em>",
       "Elle est <em>inutile</em>, seul le <em>pacte</em> tacite importe",
@@ -304,7 +304,7 @@ const questions = [
   },
   // Question n°27
   {
-    question: "Question 27 : Que désigne le terme <em>oint</em> (Christ, Messie) dans le contexte de la <em>légitimation</em> du <em>pouvoir</em> monarchique ?",
+    question: "Question n°27 : Que désigne le terme <em>oint</em> (Christ, Messie) dans le contexte de la <em>légitimation</em> du <em>pouvoir</em> monarchique ?",
     answers: [
       "Celui qui est <em>élu</em> par Dieu",
       "Le <em>guerrier</em> le plus <em>fort</em>",
@@ -315,7 +315,7 @@ const questions = [
   },
   // Question n°28
   {
-    question: "Question 28 : Quelle est la fonction principale du <em>serment</em> dans l'accès à une fonction (médecin, président, etc.) ?",
+    question: "Question n°28 : Quelle est la fonction principale du <em>serment</em> dans l'accès à une fonction (médecin, président, etc.) ?",
     answers: [
       "Créer un <em>engagement</em> solennel",
       "<em>Rassurer</em> l'<em>opinion publique</em>",
@@ -326,7 +326,7 @@ const questions = [
   },
   // Question n°29
   {
-    question: "Question 29 : Dans l'Exode, comment Dieu répond-il à l'<em>objection</em> de Moïse qui se dit <em>lent à la parole</em> pour convaincre Pharaon ?",
+    question: "Question n°29 : Dans l'Exode, comment Dieu répond-il à l'<em>objection</em> de Moïse qui se dit <em>lent à la parole</em> pour convaincre Pharaon ?",
     answers: [
       "Il lui donne un <em>porte-parole</em>, son frère Aaron",
       "Il lui apprend l'<em>éloquence</em> par un <em>miracle</em>",
@@ -337,7 +337,7 @@ const questions = [
   },
   // Question n°30
   {
-    question: "Question 30 : Que signifie l'expression <em>parole déviante</em> dans le contexte de la <em>critique</em> socratique ?",
+    question: "Question n°30 : Que signifie l'expression <em>parole déviante</em> dans le contexte de la <em>critique</em> socratique ?",
     answers: [
       "Une <em>parole</em> prononcée par un <em>marginal</em>",
       "Une <em>parole</em> grammaticalement <em>incorrecte</em>",
@@ -348,7 +348,7 @@ const questions = [
   },
   // Question n°31
   {
-    question: "Question 31 : Comment Pierre Clastres caractérise-t-il la <em>parole</em> du <em>chef</em> dans les sociétés primitives qu'il étudie ?",
+    question: "Question n°31 : Comment Pierre Clastres caractérise-t-il la <em>parole</em> du <em>chef</em> dans les sociétés primitives qu'il étudie ?",
     answers: [
       "Elle est <em>secrète</em> et réservée aux <em>initiés</em>",
       "Elle est un <em>ordre</em> impératif et <em>coercitif</em>",
@@ -359,7 +359,7 @@ const questions = [
   },
   // Question n°32
   {
-    question: "Question 32 : Quel est le sens de la formule de Carl Schmitt : 'Le <em>Führer</em> protège le droit' ?",
+    question: "Question n°32 : Quel est le sens de la formule de Carl Schmitt : 'Le <em>Führer</em> protège le droit' ?",
     answers: [
       "L'<em>action</em> du <em>Führer</em> est la <em>justice</em> qui crée le droit",
       "Le <em>chef</em> a pour <em>devoir</em> de faire respecter les lois existantes",
@@ -370,7 +370,7 @@ const questions = [
   },
   // Question n°33
   {
-    question: "Question 33 : Quelle est la différence entre <em>mythe</em>', <em>légende</em> et <em>fable</em> selon les définitions retenues ?",
+    question: "Question n°33 : Quelle est la différence entre <em>mythe</em>', <em>légende</em> et <em>fable</em> selon les définitions retenues ?",
     answers: [
       "Le <em>mythe</em> est grec, la <em>légende</em> est médiévale, la <em>fable</em> est moderne",
       "Le <em>mythe</em> est vrai, la <em>légende</em> est fausse, la <em>fable</em> est morale",
@@ -381,7 +381,7 @@ const questions = [
   },
   // Question n°34
   {
-    question: "Question 34 : Que signifie l'expression <em>parole utopique</em> au sens étymologique strict ?",
+    question: "Question n°34 : Que signifie l'expression <em>parole utopique</em> au sens étymologique strict ?",
     answers: [
       "Une <em>parole</em> qui décrit une société <em>parfaite</em>",
       "Une <em>parole</em> idéaliste",
@@ -392,7 +392,7 @@ const questions = [
   },
   // Question n°35
   {
-    question: "Question 35 : Quel rôle joue le <em>silence</em> dans l'analyse de la <em>prise de parole</em> ?",
+    question: "Question n°35 : Quel rôle joue le <em>silence</em> dans l'analyse de la <em>prise de parole</em> ?",
     answers: [
       "Il est toujours un signe de <em>soumission</em> ou d'<em>impuissance</em>",
       "Il doit être absolument <em>combattu</em> pour que la <em>liberté d'expression</em> règne",
@@ -403,7 +403,7 @@ const questions = [
   },
   // Question n°36
   {
-    question: "Question 36 : Que signifie le concept d'<em>efficacité symbolique</em> développé par Claude Lévi-Strauss ?",
+    question: "Question n°36 : Que signifie le concept d'<em>efficacité symbolique</em> développé par Claude Lévi-Strauss ?",
     answers: [
       "L'<em>effet magique</em> des mots",
       "L'<em>impact persuasif</em> des figures de style",
@@ -414,7 +414,7 @@ const questions = [
   },
   // Question n°37
   {
-    question: "Question 37 : Comment Hannah Arendt définit-elle la relation entre <em>autorité</em> et <em>tradition</em> ?",
+    question: "Question n°37 : Comment Hannah Arendt définit-elle la relation entre <em>autorité</em> et <em>tradition</em> ?",
     answers: [
       "L'<em>autorité</em> est l'<em>ennemie</em> de la <em>tradition</em>",
       "La <em>tradition</em> fonde et est <em>gardienne</em> de l'<em>autorité</em>",
@@ -425,7 +425,7 @@ const questions = [
   },
   // Question n°38
   {
-    question: "Question 38 : Que signifie l'affirmation selon laquelle la <em>parole poétique</em> est une <em>parole gratuite</em> ?",
+    question: "Question n°38 : Que signifie l'affirmation selon laquelle la <em>parole poétique</em> est une <em>parole gratuite</em> ?",
     answers: [
       "Elle ne coûte <em>rien</em> à produire",
       "Elle est souvent <em>offerte</em> au public",
@@ -436,7 +436,7 @@ const questions = [
   },
   // Question n°39
   {
-    question: "Question 39 : Quelle est la caractéristique d'une <em>parole testimoniale</em> ?",
+    question: "Question n°39 : Quelle est la caractéristique d'une <em>parole testimoniale</em> ?",
     answers: [
       "Elle <em>atteste</em> d'un fait <em>objectif</em> et <em>vérifiable</em>",
       "Elle est prononcée devant un <em>tribunal</em>",
@@ -447,7 +447,7 @@ const questions = [
   },
   // Question n°40
   {
-    question: "Question 40 : Comment Démosthène, dans la <em>Première Philippique</em>, cherche-t-il à exhorter les Athéniens à l'<em>action</em> ?",
+    question: "Question n°40 : Comment Démosthène, dans la <em>Première Philippique</em>, cherche-t-il à exhorter les Athéniens à l'<em>action</em> ?",
     answers: [
       "En piquant leur <em>orgueil</em>",
       "En les flattant sur leur <em>puissance</em> passée",
@@ -458,7 +458,7 @@ const questions = [
   },
   // Question n°41
   {
-    question: "Question 41 : Que signifie l'expression <em>parole d'engagement</em> dans le contexte politique ?",
+    question: "Question n°41 : Que signifie l'expression <em>parole d'engagement</em> dans le contexte politique ?",
     answers: [
       "Un <em>discours</em> détaillé",
       "Un <em>contrat</em> écrit",
@@ -469,7 +469,7 @@ const questions = [
   },
   // Question n°42
   {
-    question: "Question 42 : Quelle est la différence entre <em>universel</em> et <em>général</em> selon les définitions données ?",
+    question: "Question n°42 : Quelle est la différence entre <em>universel</em> et <em>général</em> selon les définitions données ?",
     answers: [
       "L'<em>universel</em> est <em>abstrait</em>, le <em>général</em> est <em>concret</em>",
       "L'<em>universel</em> vaut pour tous, le <em>général</em> vaut pour la <em>plupart</em>",
@@ -480,7 +480,7 @@ const questions = [
   },
   // Question n°43
   {
-    question: "Question 43 : Comment Machiavel justifie-t-il, dans <em>Le Prince</em>, qu'il vaut mieux être <em>craint</em> qu'<em>aimé</em> ?",
+    question: "Question n°43 : Comment Machiavel justifie-t-il, dans <em>Le Prince</em>, qu'il vaut mieux être <em>craint</em> qu'<em>aimé</em> ?",
     answers: [
       "Parce que les hommes sont naturellement <em>méchants</em> et ne méritent pas l'<em>amour</em>",
       "Parce que l'<em>amour</em> est un lien <em>versatile</em> et la <em>crainte</em> du châtiment est plus <em>stable</em>",
@@ -491,7 +491,7 @@ const questions = [
   },
   // Question n°44
   {
-    question: "Question 44 : Quel est le sens de la formule de l'apôtre Paul : 'Toute <em>autorité</em> vient de Dieu' (Romains 13:1) ?",
+    question: "Question n°44 : Quel est le sens de la formule de l'apôtre Paul : 'Toute <em>autorité</em> vient de Dieu' (Romains 13:1) ?",
     answers: [
       "Le <em>pouvoir</em> politique a été voulu par Dieu et mérite donc <em>obéissance</em>",
       "Les détenteurs du <em>pouvoir</em> sont toujours des <em>saints</em>",
@@ -502,7 +502,7 @@ const questions = [
   },
   // Question n°45
   {
-    question: "Question 45 : Que signifie le concept de <em>domination légale-rationnelle</em> chez Max Weber ?",
+    question: "Question n°45 : Que signifie le concept de <em>domination légale-rationnelle</em> chez Max Weber ?",
     answers: [
       "La <em>domination</em> par la <em>force</em> de la loi",
       "L'<em>obéissance</em> à un leader <em>charismatique</em> qui promulgue des lois",
@@ -513,7 +513,7 @@ const questions = [
   },
   // Question n°46
   {
-    question: "Question 46 : Quelle est la fonction de la <em>parole fondatrice</em> ?",
+    question: "Question n°46 : Quelle est la fonction de la <em>parole fondatrice</em> ?",
     answers: [
       "<em>Annoncer</em> un <em>programme</em> politique",
       "Faire l'<em>éloge</em> des <em>fondateurs</em>",
@@ -524,7 +524,7 @@ const questions = [
   },
   // Question n°47
   {
-    question: "Question 47 : Que signifie l'expression <em>parole ironique</em> dans la <em>méthode</em> socratique ?",
+    question: "Question n°47 : Que signifie l'expression <em>parole ironique</em> dans la <em>méthode</em> socratique ?",
     answers: [
       "Une <em>parole</em> qui dit le <em>contraire</em> de ce qu'elle pense pour tromper",
       "Une <em>parole</em> <em>moqueuse</em> et <em>méprisante</em>",
@@ -535,7 +535,7 @@ const questions = [
   },
   // Question n°48
   {
-    question: "Question 48 : Comment le <em>mythe</em> des androgynes (Platon, <em>Le Banquet</em>) explique-t-il l'origine de l'<em>amour</em> ?",
+    question: "Question n°48 : Comment le <em>mythe</em> des androgynes (Platon, <em>Le Banquet</em>) explique-t-il l'origine de l'<em>amour</em> ?",
     answers: [
       "L'<em>amour</em> est le <em>désir</em> de retrouver notre <em>moitié</em>",
       "L'<em>amour</em> est une <em>punition</em> des dieux",
@@ -546,7 +546,7 @@ const questions = [
   },
   // Question n°49
   {
-    question: "Question 49 : Que signifie la <em>délégation d'autorité</em> dans l'exemple biblique de Moïse et Aaron ?",
+    question: "Question n°49 : Que signifie la <em>délégation d'autorité</em> dans l'exemple biblique de Moïse et Aaron ?",
     answers: [
       "Le <em>transfert</em> complet du <em>pouvoir</em> à un subordonné",
       "La <em>renonciation</em> à son propre <em>discours</em>",
@@ -557,7 +557,7 @@ const questions = [
   },
   // Question n°50
   {
-    question: "Question 50 : Quel est l'enjeu du <em>serment d'allégeance</em> dans les relations féodales ?",
+    question: "Question n°50 : Quel est l'enjeu du <em>serment d'allégeance</em> dans les relations féodales ?",
     answers: [
       "Un acte <em>performative</em> hiérarchique",
       "Un simple <em>formulaire</em> juridique",
@@ -568,7 +568,7 @@ const questions = [
   },
   // Question n°51
   {
-    question: "Question 51 : Quelle est la caractéristique d'une <em>parole prophétique</em> ?",
+    question: "Question n°51 : Quelle est la caractéristique d'une <em>parole prophétique</em> ?",
     answers: [
       "Elle utilise un langage <em>codé</em> et <em>obscur</em>",
       "Elle prédit l'avenir avec <em>exactitude</em>",
@@ -579,7 +579,7 @@ const questions = [
   },
   // Question n°52
   {
-    question: "Question 52 : Comment la <em>parole</em> de l'<em>oracle</em> (comme la Pythie à Delphes) était-elle considérée dans l'Antiquité ?",
+    question: "Question n°52 : Comment la <em>parole</em> de l'<em>oracle</em> (comme la Pythie à Delphes) était-elle considérée dans l'Antiquité ?",
     answers: [
       "Comme une <em>parole</em> humaine éclairée",
       "Comme une <em>supercherie</em> des prêtres",
@@ -590,7 +590,7 @@ const questions = [
   },
   // Question n°53
   {
-    question: "Question 53 : Que signifie le concept de « <em>violence symbolique</em> » développé par Pierre Bourdieu ?",
+    question: "Question n°53 : Que signifie le concept de « <em>violence symbolique</em> » développé par Pierre Bourdieu ?",
     answers: [
       "Les <em>insultes</em> et le <em>harcèlement</em> verbal",
       "L'<em>imposition</em> de <em>schèmes</em> de perception",
@@ -601,7 +601,7 @@ const questions = [
   },
   // Question n°54
   {
-    question: "Question 54 : Comment le <em>silence de Dieu</em> (<em>deus absconditus</em>) est-il interprété dans la théologie et la littérature ?",
+    question: "Question n°54 : Comment le <em>silence de Dieu</em> (<em>deus absconditus</em>) est-il interprété dans la théologie et la littérature ?",
     answers: [
       "Comme un <em>désintérêt</em> de Dieu pour les affaires humaines",
       "Comme une <em>parole</em> en creux qu'il faut apprendre à <em>écouter</em>",
@@ -612,7 +612,7 @@ const questions = [
   },
   // Question n°55
   {
-    question: "Question 55 : Quelle est la fonction de la <em>parole de conciliation</em> ou de médiation ?",
+    question: "Question n°55 : Quelle est la fonction de la <em>parole de conciliation</em> ou de médiation ?",
     answers: [
       "<em>Désigner</em> un coupable",
       "<em>Imposer</em> un <em>compromis</em> par la <em>force</em>",
@@ -623,7 +623,7 @@ const questions = [
   },
   // Question n°56
   {
-    question: "Question 56 : Que signifie l'expression « <em>parole performative malheureuse</em> » chez Austin ?",
+    question: "Question n°56 : Que signifie l'expression « <em>parole performative malheureuse</em> » chez Austin ?",
     answers: [
       "Un <em>performatif</em> prononcé avec une <em>mauvaise intention</em>",
       "Un <em>performatif</em> qui échoue",
@@ -634,7 +634,7 @@ const questions = [
   },
   // Question n°57
   {
-    question: "Question 57 : Comment le concept de « <em>parole vive</em> » s'oppose-t-il à celui de « <em>parole morte</em> » ?",
+    question: "Question n°57 : Comment le concept de « <em>parole vive</em> » s'oppose-t-il à celui de « <em>parole morte</em> » ?",
     answers: [
       "La <em>parole vive</em> est <em>poétique</em>, la <em>parole morte</em> est <em>scientifique</em>",
       "La <em>parole vive</em> est <em>criée</em>, la <em>parole morte</em> est <em>chuchotée</em>",
@@ -645,7 +645,7 @@ const questions = [
   },
   // Question n°58
   {
-    question: "Question 58 : Quel rôle joue la <em>parole d'exhortation</em> dans les <em>discours</em> militaires ou politiques ?",
+    question: "Question n°58 : Quel rôle joue la <em>parole d'exhortation</em> dans les <em>discours</em> militaires ou politiques ?",
     answers: [
       "<em>Dénoncer</em> les erreurs du passé",
       "<em>Susciter</em> l'<em>engagement</em> dans l'<em>action</em>",
@@ -656,7 +656,7 @@ const questions = [
   },
   // Question n°59
   {
-    question: "Question 59 : Que signifie l'affirmation <em>la parole est un acte</em> dans la philosophie du langage ?",
+    question: "Question n°59 : Que signifie l'affirmation <em>la parole est un acte</em> dans la philosophie du langage ?",
     answers: [
       "Il faut <em>agir</em> et non <em>parler</em>",
       "<em>Parler</em> nécessite un <em>effort</em> physique",
@@ -667,7 +667,7 @@ const questions = [
   },
   // Question n°60
   {
-    question: "Question 60 : Comment la <em>parole judiciaire</em> (du juge) exerce-t-elle son <em>autorité</em> ?",
+    question: "Question n°60 : Comment la <em>parole judiciaire</em> (du juge) exerce-t-elle son <em>autorité</em> ?",
     answers: [
       "Par la <em>puissance</em> <em>performative</em> de l'institution",
       "Par la <em>force</em> des <em>arguments</em> logiques seulement",
@@ -678,7 +678,7 @@ const questions = [
   },
   // Question n°61
   {
-    question: "Question 61 : Quelle est la caractéristique d'une <em>parole sacramentelle</em> dans les religions ?",
+    question: "Question n°61 : Quelle est la caractéristique d'une <em>parole sacramentelle</em> dans les religions ?",
     answers: [
       "Elle est réservée aux prêtres",
       "Elle est incompréhensible aux laïcs",
@@ -689,7 +689,7 @@ const questions = [
   },
   // Question n°62
   {
-    question: "Question 62 : Que signifie le concept de <em>parole aliénée</em> ou <em>aliénante</em> ?",
+    question: "Question n°62 : Que signifie le concept de <em>parole aliénée</em> ou <em>aliénante</em> ?",
     answers: [
       "Une <em>parole</em> qui isole socialement",
       "Une <em>parole</em> prononcée dans une langue étrangère",
@@ -700,7 +700,7 @@ const questions = [
   },
   // Question n°63
   {
-    question: "Question 63 : Comment la <em>parole proverbiale</em> ou de <em>sagesse populaire</em> exerce-t-elle son <em>autorité</em> ?",
+    question: "Question n°63 : Comment la <em>parole proverbiale</em> ou de <em>sagesse populaire</em> exerce-t-elle son <em>autorité</em> ?",
     answers: [
       "Par la <em>preuve</em> scientifique apportée",
       "Par le poids de la <em>tradition</em>",
@@ -711,7 +711,7 @@ const questions = [
   },
   // Question n°64
   {
-    question: "Question 64 : Quelle est la fonction de la <em>parole rituelle</em> dans les cérémonies ?",
+    question: "Question n°64 : Quelle est la fonction de la <em>parole rituelle</em> dans les cérémonies ?",
     answers: [
       "<em>Expliquer</em> le sens du rituel",
       "<em>Répéter</em> des formules <em>fixes</em>",
@@ -722,7 +722,7 @@ const questions = [
   },
   // Question n°65
   {
-    question: "Question 65 : Que signifie l'expression <em>prendre la parole</em> au-delà du simple fait de <em>parler</em> ?",
+    question: "Question n°65 : Que signifie l'expression <em>prendre la parole</em> au-delà du simple fait de <em>parler</em> ?",
     answers: [
       "<em>Parler</em> à un niveau sonore très <em>fort</em>",
       "S'<em>emparer</em> physiquement d'un microphone",
@@ -733,7 +733,7 @@ const questions = [
   },
   // Question n°66
   {
-    question: "Question 66 : Comment la <em>parole d'aveu</em> fonctionne-t-elle dans les relations de pouvoir (Foucault) ?",
+    question: "Question n°66 : Comment la <em>parole d'aveu</em> fonctionne-t-elle dans les relations de pouvoir (Foucault) ?",
     answers: [
       "Elle <em>libère</em> toujours celui qui avoue",
       "Elle est un dialogue entre égaux",
@@ -744,7 +744,7 @@ const questions = [
   },
   // Question n°67
   {
-    question: "Question 67 : Quel est le rôle de la <em>parole d'intercession</em> (prière de demande) ?",
+    question: "Question n°67 : Quel est le rôle de la <em>parole d'intercession</em> (prière de demande) ?",
     answers: [
       "<em>Intercéder</em> en faveur de quelqu'un",
       "<em>Ordonner</em> quelque chose à Dieu",
@@ -755,7 +755,7 @@ const questions = [
   },
   // Question n°68
   {
-    question: "Question 68 : Que signifie l'expression <em>parole d'ordre</em> dans le vocabulaire politique et militaire ?",
+    question: "Question n°68 : Que signifie l'expression <em>parole d'ordre</em> dans le vocabulaire politique et militaire ?",
     answers: [
       "Un <em>désordre</em> verbal",
       "L'<em>organisation</em> alphabétique des <em>discours</em>",
@@ -766,7 +766,7 @@ const questions = [
   },
   // Question n°69
   {
-    question: "Question 69 : Comment la <em>parole d'expert</em> (scientifique, technicien) fonde-t-elle son <em>autorité</em> ?",
+    question: "Question n°69 : Comment la <em>parole d'expert</em> (scientifique, technicien) fonde-t-elle son <em>autorité</em> ?",
     answers: [
       "Sur la <em>force</em> de ses convictions",
       "Sur la <em>reconnaissance</em> sociale",
@@ -777,7 +777,7 @@ const questions = [
   },
   // Question n°70
   {
-    question: "Question 70 : Quelle est la caractéristique d'une <em>parole délibérative</em> au sens aristotélicien ?",
+    question: "Question n°70 : Quelle est la caractéristique d'une <em>parole délibérative</em> au sens aristotélicien ?",
     answers: [
       "Elle <em>juge</em> le passé",
       "Elle fait l'<em>éloge</em> ou le blâme du présent",
@@ -788,7 +788,7 @@ const questions = [
   },
   // Question n°71
   {
-    question: "Question 71 : Que signifie l'expression <em>parole proleptique</em> ?",
+    question: "Question n°71 : Que signifie l'expression <em>parole proleptique</em> ?",
     answers: [
       "Une <em>parole</em> qui <em>propage</em> des <em>rumeurs</em>",
       "Une <em>parole</em> complexe",
@@ -799,7 +799,7 @@ const questions = [
   },
   // Question n°72
   {
-    question: "Question 72 : Comment la <em>parole écrite</em> (lois, constitutions) fonde-t-elle l'<em>autorité</em> dans les États modernes ?",
+    question: "Question n°72 : Comment la <em>parole écrite</em> (lois, constitutions) fonde-t-elle l'<em>autorité</em> dans les États modernes ?",
     answers: [
       "Par le <em>charisme</em> de ceux qui l'ont écrite",
       "Par sa beauté stylistique",
@@ -810,7 +810,7 @@ const questions = [
   },
   // Question n°73
   {
-    question: "Question 73 : Quelle est la fonction de la <em>parole prophétique de malheur</em> (annonce de châtiment) ?",
+    question: "Question n°73 : Quelle est la fonction de la <em>parole prophétique de malheur</em> (annonce de châtiment) ?",
     answers: [
       "Prédire l'avenir pour montrer sa <em>puissance</em>",
       "Appeler à la <em>conversion</em> par la <em>crainte</em>",
@@ -821,7 +821,7 @@ const questions = [
   },
   // Question n°74
   {
-    question: "Question 74 : Que signifie le concept de <em>parole autoréférentielle</em> du <em>pouvoir</em> (le <em>pouvoir</em> qui se légitime lui-même) ?",
+    question: "Question n°74 : Que signifie le concept de <em>parole autoréférentielle</em> du <em>pouvoir</em> (le <em>pouvoir</em> qui se légitime lui-même) ?",
     answers: [
       "Le <em>pouvoir</em> qui <em>parle</em> de lui-même avec <em>modestie</em>",
       "Le <em>pouvoir</em> qui <em>écoute</em> ses propres conseillers",
@@ -832,7 +832,7 @@ const questions = [
   },
   // Question n°75
   {
-    question: "Question 75 : Comment la <em>parole de pardon</em> exerce-t-elle son <em>autorité</em> ?",
+    question: "Question n°75 : Comment la <em>parole de pardon</em> exerce-t-elle son <em>autorité</em> ?",
     answers: [
       "En <em>effaçant</em> magiquement la faute",
       "En <em>rompant</em> le cycle de la vengeance",
@@ -843,7 +843,7 @@ const questions = [
   },
   // Question n°76
   {
-    question: "Question 76 : Quelle est la caractéristique d'une <em>parole d'injonction thérapeutique</em> (ordres du médecin, du psychothérapeute) ?",
+    question: "Question n°76 : Quelle est la caractéristique d'une <em>parole d'injonction thérapeutique</em> (ordres du médecin, du psychothérapeute) ?",
     answers: [
       "Elle n'a aucune <em>force</em> contraignante",
       "Elle est <em>experte</em> et <em>performative</em>",
@@ -854,7 +854,7 @@ const questions = [
   },
   // Question n°77
   {
-    question: "Question 77 : Que signifie l'expression <em>parole de défi</em> ou de provocation ?",
+    question: "Question n°77 : Que signifie l'expression <em>parole de défi</em> ou de provocation ?",
     answers: [
       "Une <em>parole</em> qui <em>cherche</em> à éviter le <em>conflit</em>",
       "Une <em>parole</em> qui propose un <em>compromis</em>",
@@ -865,7 +865,7 @@ const questions = [
   },
   // Question n°78
   {
-    question: "Question 78 : Comment la <em>parole de consolation</em> exerce-t-elle son <em>autorité</em> ?",
+    question: "Question n°78 : Comment la <em>parole de consolation</em> exerce-t-elle son <em>autorité</em> ?",
     answers: [
       "En ordonnant de ne plus souffrir",
       "En <em>reconnaissant</em> la souffrance d'autrui",
@@ -876,7 +876,7 @@ const questions = [
   },
   // Question n°79
   {
-    question: "Question 79 : Quelle est la fonction de la <em>parole d'interdiction</em> (tabous, interdits) ?",
+    question: "Question n°79 : Quelle est la fonction de la <em>parole d'interdiction</em> (tabous, interdits) ?",
     answers: [
       "<em>Cacher</em> des secrets",
       "<em>Limiter</em> la liberté pour le plaisir",
@@ -887,7 +887,7 @@ const questions = [
   },
   // Question n°80
   {
-    question: "Question 80 : Que signifie l'expression <em>parole d'institution</em> (Bourdieu) ?",
+    question: "Question n°80 : Que signifie l'expression <em>parole d'institution</em> (Bourdieu) ?",
     answers: [
       "Le règlement intérieur d'une école",
       "Un <em>discours</em> prononcé dans une institution",
@@ -898,7 +898,7 @@ const questions = [
   },
   // Question n°81
   {
-    question: "Question 81 : Comment la <em>parole de séduction</em> exerce-t-elle une forme d'<em>autorité</em> ?",
+    question: "Question n°81 : Comment la <em>parole de séduction</em> exerce-t-elle une forme d'<em>autorité</em> ?",
     answers: [
       "En disant toujours la <em>vérité</em>",
       "En <em>imposant</em> sa volonté par la <em>force</em>",
@@ -909,7 +909,7 @@ const questions = [
   },
   // Question n°82
   {
-    question: "Question 82 : Quelle est la caractéristique de la <em>parole mystique</em> ou d'extase ?",
+    question: "Question n°82 : Quelle est la caractéristique de la <em>parole mystique</em> ou d'extase ?",
     answers: [
       "Elle donne des ordres à Dieu",
       "Elle tente de dire l'<em>indicible</em>, l'expérience de l'union avec le divin, souvent par le paradoxe et le <em>silence</em>",
@@ -920,7 +920,7 @@ const questions = [
   },
   // Question n°83
   {
-    question: "Question 83 : Que signifie l'expression <em>parole d'apaisement</em> ou de pacification ?",
+    question: "Question n°83 : Que signifie l'expression <em>parole d'apaisement</em> ou de pacification ?",
     answers: [
       "Une <em>parole</em> qui <em>impose</em> la paix par la menace",
       "Une <em>parole</em> qui étouffe les <em>conflits</em> sans les résoudre",
@@ -931,7 +931,7 @@ const questions = [
   },
   // Question n°84
   {
-    question: "Question 84 : Comment la <em>parole de dénonciation</em> (<em>whistleblowing</em>, lanceur d'alerte) exerce-t-elle son <em>autorité</em> ?",
+    question: "Question n°84 : Comment la <em>parole de dénonciation</em> (<em>whistleblowing</em>, lanceur d'alerte) exerce-t-elle son <em>autorité</em> ?",
     answers: [
       "En répandant des <em>rumeurs</em>",
       "En <em>obéissant</em> aux ordres de sa hiérarchie",
@@ -942,7 +942,7 @@ const questions = [
   },
   // Question n°85
   {
-    question: "Question 85 : Quelle est la fonction de la <em>parole d'enseignement</em> (du maître, du professeur) ?",
+    question: "Question n°85 : Quelle est la fonction de la <em>parole d'enseignement</em> (du maître, du professeur) ?",
     answers: [
       "<em>Imposer</em> un savoir par la contrainte",
       "<em>Répéter</em> ce que disent les manuels",
@@ -953,7 +953,7 @@ const questions = [
   },
   // Question n°86
   {
-    question: "Question 86 : Que signifie l'expression <em>parole de résistance</em> face à une <em>autorité</em> oppressive ?",
+    question: "Question n°86 : Que signifie l'expression <em>parole de résistance</em> face à une <em>autorité</em> oppressive ?",
     answers: [
       "Une <em>parole</em> silencieuse",
       "Une <em>parole</em> qui dit « non » à la <em>parole</em> dominante",
@@ -964,7 +964,7 @@ const questions = [
   },
   // Question n°87
   {
-    question: "Question 87 : Comment la <em>parole prophétique de salut</em> (annonce d'un avenir radieux) fonctionne-t-elle ?",
+    question: "Question n°87 : Comment la <em>parole prophétique de salut</em> (annonce d'un avenir radieux) fonctionne-t-elle ?",
     answers: [
       "Elle garantit le bonheur matériel immédiat",
       "Elle promet un salut conditionné",
@@ -975,7 +975,7 @@ const questions = [
   },
   // Question n°88
   {
-    question: "Question 88 : Quelle est la caractéristique d'une <em>parole d'assemblée</em> (délibérations collectives) ?",
+    question: "Question n°88 : Quelle est la caractéristique d'une <em>parole d'assemblée</em> (délibérations collectives) ?",
     answers: [
       "Elle est <em>secrète</em>",
       "Elle est le produit de discussions",
@@ -986,7 +986,7 @@ const questions = [
   },
   // Question n°89
   {
-    question: "Question 89 : Que signifie l'expression <em>parole de trahison</em> ?",
+    question: "Question n°89 : Que signifie l'expression <em>parole de trahison</em> ?",
     answers: [
       "Une <em>parole</em> prononcée dans une langue étrangère",
       "Une <em>parole</em> qui <em>révèle</em> un secret promis",
@@ -997,7 +997,7 @@ const questions = [
   },
   // Question n°90
   {
-    question: "Question 90 : Comment la <em>parole d'interprétation</em> (de l'herméneute, du critique) exerce-t-elle son <em>autorité</em> ?",
+    question: "Question n°90 : Comment la <em>parole d'interprétation</em> (de l'herméneute, du critique) exerce-t-elle son <em>autorité</em> ?",
     answers: [
       "En <em>répétant</em> le texte mot pour mot",
       "En <em>imposant</em> une lecture unique",
@@ -1008,7 +1008,7 @@ const questions = [
   },
   // Question n°91
   {
-    question: "Question 91 : Quelle est la fonction de la <em>parole d'investiture</em> (cérémonie d'intronisation) ?",
+    question: "Question n°91 : Quelle est la fonction de la <em>parole d'investiture</em> (cérémonie d'intronisation) ?",
     answers: [
       "<em>Critiquer</em> le prédécesseur",
       "<em>Conférer</em> solennellement une charge",
@@ -1019,7 +1019,7 @@ const questions = [
   },
   // Question n°92
   {
-    question: "Question 92 : Que signifie l'expression « <em>parole de révélation</em> » (dans les religions <em>révélées</em>) ?",
+    question: "Question n°92 : Que signifie l'expression « <em>parole de révélation</em> » (dans les religions <em>révélées</em>) ?",
     answers: [
       "Une <em>découverte</em> scientifique",
       "Une <em>parole</em> de l'homme sur Dieu",
@@ -1030,7 +1030,7 @@ const questions = [
   },
   // Question n°93
   {
-    question: "Question 93 : Comment la <em>parole de dérision</em> (satire, moquerie) peut-elle saper une <em>autorité</em> ?",
+    question: "Question n°93 : Comment la <em>parole de dérision</em> (satire, moquerie) peut-elle saper une <em>autorité</em> ?",
     answers: [
       "En la ridiculisant",
       "En l'ignorant",
@@ -1041,7 +1041,7 @@ const questions = [
   },
   // Question n°94
   {
-    question: "Question 94 : Quelle est la caractéristique de la <em>parole d'évidence</em> (qui s'impose comme allant de soi) ?",
+    question: "Question n°94 : Quelle est la caractéristique de la <em>parole d'évidence</em> (qui s'impose comme allant de soi) ?",
     answers: [
       "Elle résulte d'une démonstration",
       "Elle se présente sans <em>preuve</em>",
@@ -1052,7 +1052,7 @@ const questions = [
   },
   // Question n°95
   {
-    question: "Question 95 : Que signifie l'expression <em>parole de rupture</em> (dans les révolutions, les schismes) ?",
+    question: "Question n°95 : Que signifie l'expression <em>parole de rupture</em> (dans les révolutions, les schismes) ?",
     answers: [
       "Une <em>parole</em> hésitante",
       "Une <em>parole</em> qui inaugure un nouvel ordre",
@@ -1063,7 +1063,7 @@ const questions = [
   },
   // Question n°96
   {
-    question: "Question 96 : Comment la <em>parole de consolation philosophique</em> (Boèce, Sénèque) <em>cherche</em>-t-elle à agir ?",
+    question: "Question n°96 : Comment la <em>parole de consolation philosophique</em> (Boèce, Sénèque) <em>cherche</em>-t-elle à agir ?",
     answers: [
       "En atténuant la douleur par la compréhension",
       "En promettant une récompense dans l'au-delà",
@@ -1074,7 +1074,7 @@ const questions = [
   },
   // Question n°97
   {
-    question: "Question 97 : Quelle est la fonction de la <em>parole d'avertissement</em> ?",
+    question: "Question n°97 : Quelle est la fonction de la <em>parole d'avertissement</em> ?",
     answers: [
       "<em>Annoncer</em> une bonne nouvelle",
       "<em>Mettre en garde</em>",
@@ -1085,7 +1085,7 @@ const questions = [
   },
   // Question n°98
   {
-    question: "Question 98 : Que signifie l'expression <em>parole de dévoilement</em> au sens philosophique (<em>alètheia</em>) ?",
+    question: "Question n°98 : Que signifie l'expression <em>parole de dévoilement</em> au sens philosophique (<em>alètheia</em>) ?",
     answers: [
       "Enlever un voile matériel",
       "<em>Faire sortir</em> de l'oubli",
@@ -1096,7 +1096,7 @@ const questions = [
   },
   // Question n°99
   {
-    question: "Question 99 : Comment la <em>parole de réconciliation</em> (post-<em>conflit</em>) opère-t-elle ?",
+    question: "Question n°99 : Comment la <em>parole de réconciliation</em> (post-<em>conflit</em>) opère-t-elle ?",
     answers: [
       "En <em>désignant</em> un vainqueur et un vaincu",
       "En établissant une <em>vérité</em> commune",
@@ -1107,7 +1107,7 @@ const questions = [
   },
   // Question n°100
   {
-    question: "Question 100 : Quel est l'enjeu ultime de la séquence l'<em>autorité de la parole</em> ?",
+    question: "Question n°100 : Quel est l'enjeu ultime de la séquence l'<em>autorité de la parole</em> ?",
     answers: [
       "Distinguer les différents types de <em>discours</em>",
       "Apprendre à <em>imposer</em> sa <em>parole</em> par la <em>force</em>",
