@@ -2359,7 +2359,7 @@
 			<!-- ===== SÉLECTEUR DE QUIZ (apparaît après chargement, cache le bouton) ===== -->
 			<div class="quiz-selector-container-submenu" id="selectorContainerSubmenu">
 				<select id="quizSelectorSubmenu" class="quiz-select">
-					<option value="">-- sélectionner un texte --</option>
+					<option value="">-- sélectionner une séquence --</option>
 				</select>
 			</div>
 
@@ -2818,9 +2818,22 @@
 			// ========== MISE À JOUR DU SÉLECTEUR DANS LE SOUS-MENU ==========
 			function updateSelectorSubmenu() {
 				if (!quizSelectorSubmenu) return;
-				const options = '<option value="">-- sélectionner un texte --</option>' +
+				
+				// Fonction pour extraire le nom formaté (comme dans le sélecteur GitHub)
+				function getFormattedName(quizName) {
+					// On enlève l'extension si présente
+					let name = quizName.replace('.js', '');
+					// On cherche le premier tiret et on prend ce qui suit
+					const firstDashIndex = name.search(/[-–—]/);
+					if (firstDashIndex !== -1) {
+						name = name.substring(firstDashIndex + 1).trim();
+					}
+					return name;
+				}
+				
+				const options = '<option value="">-- sélectionner une séquence --</option>' +
 					loadedQuizzes.map((qz, index) =>
-						`<option value="${index}" ${index === currentQuizIndex ? 'selected' : ''}>${qz.name}</option>`
+						`<option value="${index}" ${index === currentQuizIndex ? 'selected' : ''}>${getFormattedName(qz.name)}</option>`
 					).join('');
 				quizSelectorSubmenu.innerHTML = options;
 				if (loadedQuizzes.length > 0) {
