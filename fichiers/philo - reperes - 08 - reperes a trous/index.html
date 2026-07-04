@@ -955,6 +955,13 @@
                 visibility: hidden;
             }
         }
+
+        /* Style pour l'icône de sortie de plein écran */
+        .fullscreen-exit-icon {
+            stroke-width: 1.2px !important;
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
     </style>
 </head>
 
@@ -987,8 +994,7 @@
         </div>
         <div class="toolbar-right">
             <button class="toolbar-btn fullscreen" id="fullscreenButton" data-title="plein écran (F)">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="butt">
+                <svg class="fullscreen-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
                     <line x1="4" y1="5" x2="10" y2="5" />
                     <line x1="5" y1="6" x2="5" y2="10" />
                     <line x1="14" y1="5" x2="20" y2="5" />
@@ -1032,8 +1038,7 @@
                 </svg>
             </button>
             <button class="toolbar-btn fullscreen" id="fullscreenButtonMobile" data-title="plein écran">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="butt">
+                <svg class="fullscreen-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
                     <line x1="4" y1="5" x2="10" y2="5" />
                     <line x1="5" y1="6" x2="5" y2="10" />
                     <line x1="14" y1="5" x2="20" y2="5" />
@@ -1102,7 +1107,7 @@
                     stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="3"></circle>
                     <path
-                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
                     </path>
                 </svg>paramètres</button>
             <button class="menu-item" id="openShortcutsSub"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -1814,12 +1819,77 @@
             reloadBtns.forEach(btn => btn && btn.addEventListener('click', reload));
             function toggleFullscreen() {
                 const btns = document.querySelectorAll('.fullscreen');
-                if (!document.fullscreenElement) { document.documentElement.requestFullscreen(); btns.forEach(btn => { btn.classList.add('fullscreen-active'); btn.setAttribute('data-title', 'quitter plein écran (F)'); }); }
-                else { document.exitFullscreen(); btns.forEach(btn => { btn.classList.remove('fullscreen-active'); btn.setAttribute('data-title', 'plein écran (F)'); }); }
+                if (!document.fullscreenElement) { 
+                    document.documentElement.requestFullscreen(); 
+                    btns.forEach(btn => { 
+                        btn.classList.add('fullscreen-active'); 
+                        btn.setAttribute('data-title', 'quitter plein écran (F)');
+                        // Remplacer par l'icône de sortie
+                        btn.innerHTML = `
+                            <svg class="fullscreen-exit-icon" width="28" height="28" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
+                                <line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
+                                <line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
+                                <line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
+                                <line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
+                            </svg>
+                        `;
+                    }); 
+                } else { 
+                    document.exitFullscreen(); 
+                    btns.forEach(btn => { 
+                        btn.classList.remove('fullscreen-active'); 
+                        btn.setAttribute('data-title', 'plein écran (F)');
+                        // Remplacer par l'icône d'entrée
+                        btn.innerHTML = `
+                            <svg class="fullscreen-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+                                <line x1="4" y1="5" x2="10" y2="5" />
+                                <line x1="5" y1="6" x2="5" y2="10" />
+                                <line x1="14" y1="5" x2="20" y2="5" />
+                                <line x1="19" y1="6" x2="19" y2="10" />
+                                <line x1="5" y1="14" x2="5" y2="20" />
+                                <line x1="6" y1="19" x2="10" y2="19" />
+                                <line x1="14" y1="19" x2="20" y2="19" />
+                                <line x1="19" y1="14" x2="19" y2="18" />
+                            </svg>
+                        `;
+                    }); 
+                }
             }
             const fullscreenBtns = [document.getElementById('fullscreenButton'), document.getElementById('fullscreenButtonMobile')];
             fullscreenBtns.forEach(btn => btn && btn.addEventListener('click', toggleFullscreen));
-            document.addEventListener('fullscreenchange', () => { const btns = document.querySelectorAll('.fullscreen'); const fs = !!document.fullscreenElement; btns.forEach(btn => { if (fs) { btn.classList.add('fullscreen-active'); btn.setAttribute('data-title', 'quitter plein écran (F)'); } else { btn.classList.remove('fullscreen-active'); btn.setAttribute('data-title', 'plein écran (F)'); } }); });
+            document.addEventListener('fullscreenchange', () => { 
+                const btns = document.querySelectorAll('.fullscreen'); 
+                const fs = !!document.fullscreenElement; 
+                btns.forEach(btn => { 
+                    if (fs) { 
+                        btn.classList.add('fullscreen-active'); 
+                        btn.setAttribute('data-title', 'quitter plein écran (F)');
+                        btn.innerHTML = `
+                            <svg class="fullscreen-exit-icon" width="28" height="28" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
+                                <line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
+                                <line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
+                                <line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
+                                <line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
+                            </svg>
+                        `;
+                    } else { 
+                        btn.classList.remove('fullscreen-active'); 
+                        btn.setAttribute('data-title', 'plein écran (F)');
+                        btn.innerHTML = `
+                            <svg class="fullscreen-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+                                <line x1="4" y1="5" x2="10" y2="5" />
+                                <line x1="5" y1="6" x2="5" y2="10" />
+                                <line x1="14" y1="5" x2="20" y2="5" />
+                                <line x1="19" y1="6" x2="19" y2="10" />
+                                <line x1="5" y1="14" x2="5" y2="20" />
+                                <line x1="6" y1="19" x2="10" y2="19" />
+                                <line x1="14" y1="19" x2="20" y2="19" />
+                                <line x1="19" y1="14" x2="19" y2="18" />
+                            </svg>
+                        `;
+                    } 
+                }); 
+            });
             document.addEventListener('keydown', e => { if (e.target.matches('input, textarea, select')) return; if (e.key === 'Escape') { clearSelection(); if (document.querySelector('.submenu.active')) closeAllSubmenus(); else if (slideMenu.classList.contains('open')) closeMenu(); else { const finalMsg = document.getElementById('finalCorrectionMsg'); if (finalMsg) finalMsg.remove(); } } if (e.key === 'm' || e.key === 'M') { e.preventDefault(); toggleMenu(); } if (e.key === 'h' || e.key === 'H') { e.preventDefault(); window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); } if (e.key === 'r' || e.key === 'R') { e.preventDefault(); reload(); } if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFullscreen(); } });
         }
 
