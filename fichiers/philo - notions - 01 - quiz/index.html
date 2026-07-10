@@ -1518,104 +1518,96 @@
         }
 
         /* ========== STYLE BENTO GRID POUR LES RÉSULTATS ========== */
-        /* ========== STYLE BENTO GRID POUR LES RÉSULTATS ========== */
-.container--quiz-results {
-    color: var(--font-color);
-    font-family: Arial, sans-serif;
-    width: 100%;
-    max-height: 100%;
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-}
+        .container--quiz-results {
+            color: var(--font-color);
+            font-family: Arial, sans-serif;
+            width: 100%;
+            max-height: 100%;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
 
-/* Zone du score principal - même largeur que les lignes de stats */
-.container--quiz-results .bento-score {
-    width: 100%;
-    max-width: 596px;  /* ← Modifié : 140px × 4 + 12px × 3 = 596px */
-    background: var(--btn);
-    border-radius: 12px;
-    padding: 16px 20px;
-    box-shadow: var(--shadow-out);
-    text-align: center;
-}
+        .container--quiz-results .bento-score {
+            width: 100%;
+            max-width: 596px;
+            background: var(--btn);
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: var(--shadow-out);
+            text-align: center;
+        }
 
-/* Statistiques globales */
-.container--quiz-results .bento-stats-global {
-    width: 100%;
-    max-width: 596px;  /* ← Modifié : même largeur */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-}
+        .container--quiz-results .bento-stats-global {
+            width: 100%;
+            max-width: 596px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
 
-.container--quiz-results .bento-stats-global .stat-item {
-    flex: 0 0 140px;
-    min-width: 120px;
-    max-width: 160px;
-    background: var(--btn);
-    border-radius: 10px;
-    padding: 12px 8px;
-    box-shadow: var(--shadow-out);
-    text-align: center;
-}
+        .container--quiz-results .bento-stats-global .stat-item {
+            flex: 0 0 140px;
+            min-width: 120px;
+            max-width: 160px;
+            background: var(--btn);
+            border-radius: 10px;
+            padding: 12px 8px;
+            box-shadow: var(--shadow-out);
+            text-align: center;
+        }
 
-/* Statistiques personnelles */
-.container--quiz-results .bento-stats-personal {
-    width: 100%;
-    max-width: 596px;  /* ← Modifié : même largeur */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-}
+        .container--quiz-results .bento-stats-personal {
+            width: 100%;
+            max-width: 596px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
 
-.container--quiz-results .bento-stats-personal .stat-item-mini {
-    flex: 0 0 140px;
-    min-width: 120px;
-    max-width: 160px;
-    background: var(--btn);
-    border-radius: 10px;
-    padding: 12px 8px;
-    box-shadow: var(--shadow-out);
-    text-align: center;
-}
+        .container--quiz-results .bento-stats-personal .stat-item-mini {
+            flex: 0 0 140px;
+            min-width: 120px;
+            max-width: 160px;
+            background: var(--btn);
+            border-radius: 10px;
+            padding: 12px 8px;
+            box-shadow: var(--shadow-out);
+            text-align: center;
+        }
 
-/* Message de synthèse - même largeur que les lignes de stats */
-.container--quiz-results .bento-message {
-    width: 100%;
-    max-width: 596px;  /* ← Modifié : même largeur */
-    background: var(--btn);
-    border-radius: 10px;
-    padding: 12px 16px;
-    box-shadow: var(--shadow-out);
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.4;
-}
+        .container--quiz-results .bento-message {
+            width: 100%;
+            max-width: 596px;
+            background: var(--btn);
+            border-radius: 10px;
+            padding: 12px 16px;
+            box-shadow: var(--shadow-out);
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.4;
+        }
 
-/* Bouton Recommencer */
-.container--quiz-results .bento-restart {
-    width: 100%;
-    max-width: 596px;  /* ← Modifié : même largeur */
-    text-align: center;
-    padding: 4px 0;
-}
+        .container--quiz-results .bento-restart {
+            width: 100%;
+            max-width: 596px;
+            text-align: center;
+            padding: 4px 0;
+        }
 
-/* Détail des réponses */
-.container--quiz-results .bento-details {
-    width: 100%;
-    max-width: 596px;  /* ← Modifié : même largeur */
-    background: var(--btn);
-    border-radius: 10px;
-    padding: 12px 16px;
-    box-shadow: var(--shadow-out);
-}
+        .container--quiz-results .bento-details {
+            width: 100%;
+            max-width: 596px;
+            background: var(--btn);
+            border-radius: 10px;
+            padding: 12px 16px;
+            box-shadow: var(--shadow-out);
+        }
 
-        /* Responsive - Mobile : 8 pastilles sur 2 lignes de 4 */
         @media (max-width: 768px) {
             .container--quiz-results .bento-stats-global {
                 max-width: 100%;
@@ -1700,8 +1692,6 @@
                 font-size: 11px;
             }
         }
-
-        /* ========== FIN STYLE BENTO GRID ========== */
 
         .container--quiz-btn {
             align-items: center;
@@ -3041,7 +3031,7 @@
                             <!-- BENTO RESTART -->
                             <div class="bento-restart">
                                 <button id="restartQuizBtn" class="quiz-btn quiz-btn--default" type="button" style="min-width:200px;">
-                                    Recommencer
+                                    recommencer
                                 </button>
                             </div>
 
@@ -3355,7 +3345,8 @@
             let isReviewMode = false;
             let questionCount = parseInt(localStorage.getItem('questionCount') || '5');
             let isDeferredEvaluation = localStorage.getItem('deferredEvaluation') === 'true';
-            let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
+            // SON DÉSACTIVÉ PAR DÉFAUT
+            let soundEnabled = localStorage.getItem('soundEnabled') === 'true';
             let timerEnabled = localStorage.getItem('timerEnabled') === 'true';
             let isRevisionMode = false;
             let incorrectQuestions = [];
@@ -3782,10 +3773,54 @@
             }
 
             // ========== AUDIO ==========
+            // Context audio global pour éviter de le recréer à chaque fois
+            let audioCtx = null;
+            let audioInitialized = false;
+
+            function initAudio() {
+                if (audioInitialized) return;
+                try {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    // Si le contexte est suspendu, on le reprend
+                    if (audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
+                    audioInitialized = true;
+                    console.log('🔊 Audio initialisé');
+                } catch (e) {
+                    console.debug('Audio non disponible', e);
+                }
+            }
+
+            // Initialiser l'audio au premier clic n'importe où sur la page
+            document.addEventListener('click', function initAudioOnClick() {
+                if (!soundEnabled) return;
+                initAudio();
+                document.removeEventListener('click', initAudioOnClick);
+            }, { once: true });
+
+            // Fonction playSound améliorée
             function playSound(type) {
                 if (!soundEnabled) return;
+                
                 try {
-                    const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+                    // S'assurer que le contexte audio est initialisé
+                    if (!audioInitialized) {
+                        initAudio();
+                    }
+                    
+                    // Si le contexte n'est toujours pas disponible, on sort
+                    if (!audioCtx) {
+                        // Tentative de recréation
+                        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                        audioInitialized = true;
+                    }
+                    
+                    // Vérifier et reprendre le contexte si suspendu
+                    if (audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
+
                     const oscillator = audioCtx.createOscillator();
                     const gainNode = audioCtx.createGain();
                     oscillator.connect(gainNode);
@@ -3819,8 +3854,36 @@
                             }, i * 120);
                         });
                     }
-                } catch (e) { /* Silencieux */ }
+                } catch (e) {
+                    // Silencieux - on tente de réinitialiser le contexte pour la prochaine fois
+                    audioInitialized = false;
+                    audioCtx = null;
+                    console.debug('Erreur audio, réinitialisation', e);
+                }
             }
+
+            // ========== GESTION DU SWITCH SON ==========
+            // Initialiser l'état du switch son au chargement
+            document.addEventListener('DOMContentLoaded', function() {
+                const soundToggle = document.getElementById('soundToggle');
+                if (soundToggle) {
+                    // Par défaut, le son est désactivé (soundEnabled = false)
+                    soundToggle.checked = soundEnabled;
+                }
+            });
+
+            // Événement pour le switch son
+            document.addEventListener('change', function(e) {
+                if (e.target && e.target.id === 'soundToggle') {
+                    soundEnabled = e.target.checked;
+                    localStorage.setItem('soundEnabled', String(soundEnabled));
+                    
+                    // Si le son est activé, initialiser l'audio
+                    if (soundEnabled && !audioInitialized) {
+                        initAudio();
+                    }
+                }
+            });
 
             // ========== PARTICULES ==========
             function spawnStars(x, y) {
@@ -4509,11 +4572,11 @@
                 incorrectLabel.textContent = '❌ ' + pluralize(incorrect, 'incorrecte', 'incorrectes');
 
                 let message = '';
-                if (percentage >= 90) message = "🌟 Excellent ! Vous maîtrisez parfaitement cette notion";
-                else if (percentage >= 70) message = "👏 Très bon score ! Vous avez une bonne connaissance de cette notion";
-                else if (percentage >= 50) message = "📚 Score correct. Continuez à étudier cette notion";
-                else if (percentage >= 30) message = "📖 Vous avez des bases. Relisez les principales notions";
-                else message = "💪 N'hésitez pas à réviser cette notion et à refaire le quiz";
+                if (percentage >= 90) message = "🌟 excellent ! vous maîtrisez parfaitement cette notion";
+                else if (percentage >= 70) message = "👏 très bon score ! vous avez une bonne connaissance de cette notion";
+                else if (percentage >= 50) message = "📚 score correct : continuez à étudier cette notion";
+                else if (percentage >= 30) message = "📖 vous avez des bases : relisez les principales notions";
+                else message = "💪 n'hésitez pas à réviser cette notion et à refaire le quiz";
                 summaryMessageEl.textContent = message;
             }
 
@@ -4677,12 +4740,17 @@
 
             function toggleSound(e) {
                 soundEnabled = e.target.checked;
-                localStorage.setItem('soundEnabled', e.target.checked);
+                localStorage.setItem('soundEnabled', String(e.target.checked));
+                // Réinitialiser l'audio quand le son est réactivé
+                if (e.target.checked) {
+                    audioInitialized = false;
+                    audioCtx = null;
+                }
             }
 
             function toggleTimer(e) {
                 timerEnabled = e.target.checked;
-                localStorage.setItem('timerEnabled', e.target.checked);
+                localStorage.setItem('timerEnabled', String(e.target.checked));
                 if (!timerEnabled) {
                     stopTimer();
                     if (timerdisplay) timerdisplay.style.display = 'none';
@@ -4948,10 +5016,16 @@
                     document.getElementById('deferredEvaluationToggle').checked = true;
                     isDeferredEvaluation = true;
                 }
-                if (localStorage.getItem('soundEnabled') === 'false') {
-                    document.getElementById('soundToggle').checked = false;
-                    soundEnabled = false;
+                
+                // SON : initialisation avec la valeur stockée (par défaut false)
+                const soundToggle = document.getElementById('soundToggle');
+                if (soundToggle) {
+                    // Récupérer la valeur stockée, par défaut false
+                    const storedSound = localStorage.getItem('soundEnabled');
+                    soundEnabled = storedSound === 'true';
+                    soundToggle.checked = soundEnabled;
                 }
+                
                 if (localStorage.getItem('timerEnabled') === 'true') {
                     document.getElementById('timerToggle').checked = true;
                     timerEnabled = true;
