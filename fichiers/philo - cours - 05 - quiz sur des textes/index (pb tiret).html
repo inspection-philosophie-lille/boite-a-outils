@@ -2854,7 +2854,7 @@
 
 			const TOTAL_QUESTIONS = 10;
 			const GITHUB_REPO = 'inspection-philosophie-lille/boite-a-outils';
-            const GITHUB_PATH = 'fichiers/philo-cours-05-quiz-sur-des-textes/quiz';
+            const GITHUB_PATH = 'fichiers/philo - cours - 05 - quiz sur des textes/textes';
 			const GITHUB_API_URL =
 				`https://api.github.com/repos/${GITHUB_REPO}/contents/${encodeURIComponent(GITHUB_PATH)}`;
 
@@ -3194,7 +3194,10 @@
 
 				function getFormattedName(quizName) {
 					let name = quizName.replace('.js', '');
-					// AFFICHER LE NOM COMPLET - NE PAS SUPPRIMER LA PARTIE GAUCHE
+					const firstDashIndex = name.search(/[-–—]/);
+					if (firstDashIndex !== -1) {
+						name = name.substring(firstDashIndex + 1).trim();
+					}
 					return name;
 				}
 
@@ -3271,8 +3274,11 @@
 				files.forEach(f => {
 					const opt = document.createElement('option');
 					opt.value = f.download_url;
-					// AFFICHER LE NOM COMPLET - NE PAS SUPPRIMER LA PARTIE GAUCHE
 					let displayName = f.name.replace('.js', '');
+					const firstDashIndex = displayName.search(/[-–—]/);
+					if (firstDashIndex !== -1) {
+						displayName = displayName.substring(firstDashIndex + 1).trim();
+					}
 					opt.textContent = displayName;
 					githubFileSelect.appendChild(opt);
 				});
