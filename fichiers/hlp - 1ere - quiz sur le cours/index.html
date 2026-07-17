@@ -2933,11 +2933,10 @@
             const loadContainerSubmenu = document.getElementById('loadContainerSubmenu');
             const localResetBtn = document.getElementById('localResetBtn');
 
-            // === FONCTION UPDATE SUBTITLE CORRIGÉE ===
-            // Combine "tester ses connaissances" + "sur « ... »"
+            // === FONCTION UPDATE SUBTITLE ===
             function updateSubtitle(sequenceName) {
-                let displaySub = APP_SOUS_TITRE; // par défaut : "tester ses connaissances"
-                if (sequenceName && sequenceName.trim() !== '') {
+                let displaySub = APP_SOUS_TITRE;
+                if (sequenceName && sequenceName.trim() !== '' && sequenceName !== APP_SOUS_TITRE) {
                     displaySub = APP_SOUS_TITRE + ' sur « ' + sequenceName.trim() + ' »';
                 }
                 if (appSubtitle) appSubtitle.textContent = displaySub;
@@ -3059,8 +3058,7 @@
                 if (!philosophyData.texte || philosophyData.texte.trim() === '') {
                     section.classList.add('hidden');
                     progressBar.classList.remove('visible');
-                    // Réinitialiser le sous-titre si pas de texte
-                    updateSubtitle('');
+                    // NE PAS METTRE À JOUR LE SOUS-TITRE ICI
                     return;
                 }
                 section.classList.remove('hidden');
@@ -3106,15 +3104,10 @@
                     } else {
                         formattedSource = philosophyData.source;
                     }
-                    // Mise à jour du sous-titre avec le titre de la séquence
-                    const sequenceName = currentSequenceCleanTitle || author;
-                    updateSubtitle(sequenceName);
+                    // NE PAS METTRE À JOUR LE SOUS-TITRE ICI
                     sourceContent.innerHTML = formattedSource;
                 } else {
                     sourceContent.innerHTML = '';
-                    if (currentSequenceCleanTitle) {
-                        updateSubtitle(currentSequenceCleanTitle);
-                    }
                 }
             }
 
@@ -3232,12 +3225,11 @@
                 philosophyData = data.philosophyData || { texte: "", source: "" };
                 questions = data.questions || [];
 
-                // Mise à jour du sous-titre avec le nom de la séquence
-                if (data.sousTitre) {
-                    updateSubtitle(data.sousTitre);
-                } else if (currentSequenceCleanTitle) {
+                // Utiliser UNIQUEMENT le titre de la séquence pour le sous-titre
+                if (currentSequenceCleanTitle && currentSequenceCleanTitle.trim() !== '') {
                     updateSubtitle(currentSequenceCleanTitle);
                 }
+                // Si currentSequenceCleanTitle est vide, garder le sous-titre par défaut
 
                 if (fileStatus) {
                     fileStatus.textContent = `✅ "${quiz.name}" chargé !`;
@@ -3260,7 +3252,9 @@
                     const jsFiles = files.filter(f => f.type === 'file' && f.name.endsWith('.js'));
                     if (!jsFiles.length) throw new Error('Aucun fichier .js trouvé');
                     updateGitHubSelect(jsFiles);
-                    fileStatus.textContent = jsFiles.length === 0 ? 'Aucun quiz disponible' : `${jsFiles.length} quiz disponible${jsFiles.length > 1 ? 's' : ''}`;
+                    if (fileStatus) {
+                        fileStatus.textContent = jsFiles.length === 0 ? 'Aucun quiz disponible' : `${jsFiles.length} quiz disponible${jsFiles.length > 1 ? 's' : ''}`;
+                    }
                 } catch (err) {
                     fileStatus.textContent = `Erreur: ${err.message}`;
                     githubFileSelect.innerHTML = `<option value="">-- Erreur --</option><option value="error" disabled>Impossible de charger</option>`;
@@ -3281,6 +3275,7 @@
                     opt.textContent = displayName;
                     githubFileSelect.appendChild(opt);
                 });
+                // NE PAS TOUCHER AU SOUS-TITRE ICI
             }
 
             async function loadFromGitHub(url) {
@@ -3305,12 +3300,11 @@
                         currentSequenceIndex = seqInfo.sequenceIndex;
                         currentSequenceIndexLong = seqInfo.sequenceIndexLong;
 
-                        // Mise à jour du sous-titre avec le nom de la séquence
-                        if (result.sousTitre) {
-                            updateSubtitle(result.sousTitre);
-                        } else if (currentSequenceCleanTitle) {
+                        // Utiliser UNIQUEMENT le titre de la séquence pour le sous-titre
+                        if (currentSequenceCleanTitle && currentSequenceCleanTitle.trim() !== '') {
                             updateSubtitle(currentSequenceCleanTitle);
                         }
+                        // Si currentSequenceCleanTitle est vide, garder le sous-titre par défaut
 
                         fileStatus.textContent = `✅ "${fileName.replace('.js', '')}" chargé !`;
                         setTimeout(startQuiz, 600);
@@ -3477,9 +3471,6 @@
                         totalCorrectLabelEl.textContent = totalCorr <= 1 ? 'bonne réponse' : 'bonnes réponses';
                     }
                 }
-
-                const correct = parseInt(correctAnswers.textContent) || 0;
-                const incorrect = parseInt(incorrectAnswers.textContent) || 0;
             }
 
             function updateGlobalStatsDisplay() {
@@ -4032,10 +4023,7 @@
                                         philosophyData = data.philosophyData || { texte: "", source: "" };
                                         questions = data.questions || [];
                                         
-                                        // Mise à jour du sous-titre avec le nom de la séquence
-                                        if (data.sousTitre) {
-                                            updateSubtitle(data.sousTitre);
-                                        } else if (currentSequenceCleanTitle) {
+                                        if (currentSequenceCleanTitle && currentSequenceCleanTitle.trim() !== '') {
                                             updateSubtitle(currentSequenceCleanTitle);
                                         }
                                         
