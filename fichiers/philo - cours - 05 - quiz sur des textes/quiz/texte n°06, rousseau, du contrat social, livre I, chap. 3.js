@@ -19,7 +19,7 @@ const philosophyData = {
 
 [18] Convenons donc que force ne fait pas droit, et qu'on n'est obligé d'obéir qu'aux puissances légitimes. »`,
     
-    source: "ROUSSEAU, Du contrat social, livre I, chap.3 (1762), Amsterdam chez Marc-Michel Rey, pp.12-15."
+    source: "ROUSSEAU, Du contrat social, livre I, chap.3, Amsterdam chez Marc-Michel Rey, [1762], pp.12-15."
 };
 
 // ============================================

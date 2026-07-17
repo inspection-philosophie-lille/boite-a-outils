@@ -13,7 +13,7 @@ const sousTitre = "Tester ses connaissances sur un texte de Nietzsche";
 const philosophyData = {
     texte: `« LE MENSONGE. — [1] Pourquoi la plupart du temps les hommes, dans la vie de tous les jours, disent-ils la vérité ? — [2] Assurément ce n'est pas parce qu'un Dieu a défendu le mensonge. [3] Mais c'est premièrement : parce que cela est plus aisé, le mensonge exigeant invention, dissimulation et mémoire. ([4] Voilà pourquoi Swift dit : Celui qui énonce un mensonge se rend rarement compte du lourd fardeau qu'il s'impose ; il lui faut en effet, pour soutenir un mensonge, en inventer vingt autres.) [5] C'est ensuite : parce qu'en des circonstances simples, il est avantageux de parler franc : Je veux ceci, j'ai fait ceci, et ainsi de suite ; donc parce que la voie de la contrainte et de l'autorité est plus sûre que celle de la ruse. — [6] Mais pour peu qu'un enfant ait été élevé dans des circonstances domestiques compliquées, il se sert tout aussi naturellement du mensonge et dit involontairement toujours ce qui répond à son intérêt : un sens de la vérité, une répugnance au mensonge en soi, lui sont tout à fait étrangers et inaccessibles, et il ment en toute innocence. »`,
     
-    source: "NIETZSCHE, Humain trop humain, 1ᵉʳᵉ partie, §54, Mercure de France (1906), pp.88-89."
+    source: "NIETZSCHE, Humain trop humain, 1ᵉʳᵉ partie, §54, Mercure de France, 1906, pp.88-89."
 };
 
 // ============================================

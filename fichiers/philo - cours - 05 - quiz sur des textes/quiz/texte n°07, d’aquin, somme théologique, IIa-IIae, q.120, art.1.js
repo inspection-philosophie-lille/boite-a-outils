@@ -12,7 +12,7 @@ const sousTitre = "Tester ses connaissances sur un texte de D'AQUIN";
 
 const philosophyData = {
     texte: `« [1] Nous avons dit, à propos de l'étude des lois, que les actes humains soumis aux lois portent sur des situations singulières qui peuvent varier à l'infini. [2] Il est donc impossible d'instituer une loi qui ne serait jamais dans aucun cas en défaut. [3] Pour établir une loi, les législateurs considèrent les conditions générales ; mais l'observance de cette loi serait dans certaines situations contraire à la justice et au bien commun que la loi entend sauvegarder. [4] Par exemple, la loi déclare qu'il faut rendre un dépôt, ce qui est juste dans la généralité des cas particuliers, mais peut devenir dangereux dans des cas particuliers, tel le fou qui réclame l'épée qu'il a déposée, ou l'individu qui demande son dépôt pour trahir sa patrie. [5] En pareilles circonstances et en d'autres semblables, il serait mal d'obéir à la loi, et le bien consiste à transgresser la lettre de la loi pour rester fidèle à l'esprit de justice et à l'exigence du bien commun ».`,
-    source: "THOMAS D'AQUIN, Somme théologique, Secunda Secundae (IIa-IIae), q.120, art.1, trad. A. Lemonnyer o. p., Paris, Desclée&Brouwer/Le Cerf, pp.584-585"
+    source: "THOMAS D'AQUIN, Somme théologique, \Secunda Secundae\ (IIa-IIae), q.120, art.1, trad. A. Lemonnyer o. p., Paris, Desclée&Brouwer/Le Cerf, pp.584-585"
 };
 
 // ============================================

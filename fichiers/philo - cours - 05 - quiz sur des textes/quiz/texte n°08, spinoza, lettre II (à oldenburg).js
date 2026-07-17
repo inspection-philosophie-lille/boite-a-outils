@@ -17,7 +17,7 @@ const philosophyData = {
 		
 [3] Puis donc que la volonté n'est qu'un être de raison et ne peut en aucune façon être dite la cause de telle ou telle volition, que d'autre part les volitions particulières, ayant besoin d'une cause pour exister, ne peuvent être appelées libres, mais sont nécessairement telles qu'il résulte des causes qui les déterminent, qu'enfin, suivant Descartes lui-même, les erreurs sont des volitions particulières, il suit de là nécessairement qu'elles ne sont point libres, mais déterminées par des causes extérieures et non du tout par la volonté. »`,
 
-	source: "SPINOZA, Correspondance, Lettre II (à Oldenburg) (1677), trad. C. Appuhn, Paris, Garnier, 1926, p.136"
+	source: "SPINOZA, Correspondance, Lettre II (à Oldenburg), trad. C. Appuhn, Paris, Garnier, [1677], 1926, p.136"
 	
 };
 

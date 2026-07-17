@@ -25,7 +25,7 @@ const philosophyData = {
 
 [7] Ainsi nous appelons illusion une croyance quand, dans la motivation de celle-ci la réalisation d'un désir est prévalente, et nous ne tenons pas compte, ce faisant, des rapports de cette croyance à la réalité, tout comme l'illusion elle-même renonce à être confirmée par le réel. »`,
     
-    source: "FREUD, L'avenir d'une illusion, (1943) trad. Marie Bonaparte, chap.VI, PUF, 1971, p.43"
+    source: "FREUD, L'avenir d'une illusion, trad. Marie Bonaparte, chap.VI, PUF, [1943], 1971, p.43"
 };
 
 // ============================================
