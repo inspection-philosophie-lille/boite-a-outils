@@ -1,0 +1,4379 @@
+<!DOCTYPE html>
+<!-- Daniel Boulagnon -->
+<!-- daniel.boulagnon@ac-lille.fr -->
+<!-- version 2026 -->
+<!-- Exploitation à but strictement pédagogique et non lucratif -->
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=yes">
+    <link rel="icon" type="image/svg+xml" href="src/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>quiz φ</title>
+    <style>
+        /* ===== RÉINITIALISATION ET BASE ===== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        :root {
+            --bg: #f0f0f0;
+            --btn: #e0e0e0;
+            --font-color: #000000;
+            --shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.9);
+            --shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.9);
+            --tooltip-bg: #ffffff;
+            --tooltip-color: #333333;
+            --letter-color: #e74c3c;
+            --color-correct: #28a745;
+            --color-incorrect: #dc3545;
+            --border-correct: #28a745;
+            --border-incorrect: #dc3545;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--font-color);
+            padding: 12px 12px 24px 12px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.4s, color 0.4s;
+            overflow-y: auto;
+        }
+
+        body.dark-theme {
+            --bg: #121212;
+            --btn: #3d3d3d;
+            --font-color: #ffffff;
+            --shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.05);
+            --shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
+            --tooltip-bg: #1a1a1a;
+            --tooltip-color: #ffffff;
+            --letter-color: #ff6b6b;
+            --color-correct: #2ecc71;
+            --color-incorrect: #e74c3c;
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        body.dark-theme .toolbar,
+        body.dark-theme .toolbar-mobile {
+            background: transparent;
+        }
+
+        body.dark-theme .btn {
+            background: #3d3d3d;
+            color: #ffffff;
+            box-shadow: 0.3rem 0.3rem 0.6rem #000000, -0.3rem -0.3rem 0.6rem #5a5a5a;
+        }
+
+        body.dark-theme .btn:hover {
+            box-shadow: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-theme .slide-menu,
+        body.dark-theme .submenu {
+            background: #1a1a1a;
+        }
+
+        body.dark-theme .menu-item {
+            background: #3d3d3d;
+            color: #ffffff;
+            box-shadow: 0.3rem 0.3rem 0.6rem #000000, -0.3rem -0.3rem 0.6rem #5a5a5a;
+        }
+
+        body.dark-theme .menu-item:hover {
+            background: #4a4a4a;
+        }
+
+        body.dark-theme .menu-close,
+        body.dark-theme .submenu-close {
+            background: #3d3d3d;
+            color: #ffffff;
+            box-shadow: 0.3rem 0.3rem 0.6rem #000000, -0.3rem -0.3rem 0.6rem #5a5a5a;
+        }
+
+        body.dark-theme .menu-close:hover,
+        body.dark-theme .submenu-close:hover {
+            box-shadow: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-theme .container--quiz {
+            background: #1a1a1a;
+            border-color: #2a2a2a;
+            color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-theme .quiz-answer {
+            background: #3d3d3d;
+            color: #ffffff;
+            box-shadow: 0.2rem 0.2rem 0.5rem #000000, -0.2rem -0.2rem 0.5rem #5a5a5a;
+            border-color: #2a2a2a;
+        }
+
+        body.dark-theme .quiz-answer:hover {
+            box-shadow: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-theme .quiz-explanation {
+            background: #3d3d3d;
+            border-color: #2a2a2a;
+            color: #ffffff;
+        }
+
+        body.dark-theme .philosophy-text-container {
+            background: #3d3d3d;
+            border-color: #2a2a2a;
+        }
+
+        body.dark-theme .philosophy-text-header {
+            background: rgba(255, 255, 255, 0.04);
+            border-bottom-color: #2a2a2a;
+        }
+
+        body.dark-theme .subtitle {
+            color: #dddddd;
+        }
+
+        body.dark-theme .file-status {
+            color: #ffffff;
+        }
+
+        body.dark-theme .modal-content {
+            background: #1a1a1a;
+            color: #ffffff;
+            box-shadow: 0.3rem 0.3rem 0.6rem #000000, -0.3rem -0.3rem 0.6rem #5a5a5a;
+        }
+
+        body.dark-theme .bracket-number {
+            color: #6eb5ff;
+        }
+
+        body.dark-theme .philosophy-text-source {
+            color: #b0c4de;
+        }
+
+        body.dark-theme .container--quiz-results {
+            color: #ffffff;
+        }
+
+        body.dark-theme #detailedResults {
+            background: #3d3d3d;
+            color: #ffffff;
+        }
+
+        body.dark-theme .quiz-start__opacity {
+            background: rgba(0, 0, 0, 0.55);
+        }
+
+        body.dark-theme .next-button-container .quiz-btn,
+        body.dark-theme .container--quiz-btn .quiz-btn {
+            background: #3d3d3d;
+            border-color: #5a5a5a;
+            color: #ffffff;
+            box-shadow: 0.2rem 0.2rem 0.5rem #000000, -0.2rem -0.2rem 0.5rem #5a5a5a;
+        }
+
+        body.dark-theme .next-button-container .quiz-btn:hover,
+        body.dark-theme .container--quiz-btn .quiz-btn:hover {
+            box-shadow: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-theme .text-toggle-btn {
+            color: #b0c4de;
+        }
+
+        body.dark-theme .theme-switch .slider {
+            background: #3d3d3d;
+        }
+
+        body.dark-theme .theme-switch input:checked + .slider {
+            background: #2196F3;
+        }
+
+        body.dark-theme kbd {
+            background-color: #1a1a1a;
+            color: #e2e8f0;
+            border: 1px solid #333;
+        }
+
+        body.dark-theme .submenu-content .settings-info {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-theme .timer-display {
+            color: #8895a7;
+        }
+
+        body.colorblind-mode {
+            --color-correct: #2c7be5;
+            --color-incorrect: #1a3a5c;
+            --border-correct: #2c7be5;
+            --border-incorrect: #1a3a5c;
+            --letter-color: #2c7be5;
+        }
+
+        body.dark-theme.colorblind-mode {
+            --color-correct: #4a90d9;
+            --color-incorrect: #3a5a7a;
+            --border-correct: #4a90d9;
+            --border-incorrect: #3a5a7a;
+            --letter-color: #4a90d9;
+        }
+
+        body.colorblind-mode .toolbar-title,
+        body.colorblind-mode .mobile-title,
+        body.colorblind-mode .submenu-title {
+            color: var(--color-correct) !important;
+        }
+
+        body.dark-theme.colorblind-mode .toolbar-title,
+        body.dark-theme.colorblind-mode .mobile-title,
+        body.dark-theme.colorblind-mode .submenu-title {
+            color: var(--color-correct) !important;
+        }
+
+        body.colorblind-mode .quiz-answer.correct {
+            background: rgba(44, 123, 229, 0.15) !important;
+            border-color: var(--color-correct) !important;
+        }
+
+        body.colorblind-mode .quiz-answer.incorrect {
+            background: rgba(231, 76, 60, 0.15) !important;
+            border-color: var(--color-incorrect) !important;
+        }
+
+        body.dark-theme.colorblind-mode .quiz-answer.correct {
+            background: rgba(74, 144, 217, 0.2) !important;
+            border-color: var(--color-correct) !important;
+        }
+
+        body.dark-theme.colorblind-mode .quiz-answer.incorrect {
+            background: rgba(231, 76, 60, 0.2) !important;
+            border-color: var(--color-incorrect) !important;
+        }
+
+        body.colorblind-mode .answer-letter {
+            background: var(--color-correct) !important;
+            color: white !important;
+            border: 2px solid var(--color-correct) !important;
+        }
+
+        body.colorblind-mode .quiz-answer.correct .answer-letter {
+            background: var(--color-correct) !important;
+            border-color: var(--color-correct) !important;
+        }
+
+        body.colorblind-mode .quiz-answer.incorrect .answer-letter {
+            background: var(--color-incorrect) !important;
+            border-color: var(--color-incorrect) !important;
+        }
+
+        body.dark-theme.colorblind-mode .answer-letter {
+            background: var(--color-correct) !important;
+            color: white !important;
+            border: 2px solid var(--color-correct) !important;
+        }
+
+        body.colorblind-mode .progress-bar__cursor--dynamic {
+            background: var(--color-correct);
+        }
+
+        body.colorblind-mode .questions-slider::-webkit-slider-thumb {
+            background: var(--color-correct);
+        }
+
+        body.colorblind-mode .questions-slider::-moz-range-thumb {
+            background: var(--color-correct);
+        }
+
+        body.colorblind-mode .stat-value,
+        body.colorblind-mode .stat-num {
+            color: var(--color-correct);
+        }
+
+        body.colorblind-mode .stat-value[data-type="incorrect"] {
+            color: var(--color-incorrect);
+        }
+
+        body.colorblind-mode .quiz-end__score {
+            color: var(--color-correct);
+        }
+
+        body.colorblind-mode .philosophy-text-header h3 {
+            color: var(--color-correct);
+        }
+
+        body.colorblind-mode .menu-item .item-badge {
+            background: var(--color-correct);
+        }
+
+        body.colorblind-mode .questions-slider-value {
+            color: var(--color-correct);
+        }
+
+        body.colorblind-mode #detailedResults h3 {
+            color: var(--color-correct);
+        }
+
+        body.colorblind-mode .quiz-answer.correct .correct-icon {
+            display: block;
+        }
+
+        body.colorblind-mode .quiz-answer.incorrect .incorrect-icon {
+            display: block;
+        }
+
+        body.colorblind-mode .quiz-select:hover {
+            border-color: var(--color-correct) !important;
+        }
+
+        /* ===== BARRE DE PROGRESSION ===== */
+        .progress-bar {
+            flex-shrink: 0;
+            padding: 4px 12px 3px;
+            margin-bottom: 6px;
+            background: transparent;
+            width: 100%;
+            border-radius: 14px 14px 0 0;
+            display: none;
+        }
+
+        .progress-bar.visible {
+            display: block;
+        }
+
+        .progress-bar__info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            gap: 8px;
+            padding-bottom: 2px;
+        }
+
+        .progress-bar__title {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .progress-bar__title .phi-symbol {
+            margin-right: 4px;
+            margin-bottom: 4px;
+            margin-top: -4px;
+            font-family: 'Times New Roman', serif;
+            font-size: 35px !important;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            text-transform: lowercase;
+            align-items: center;
+            justify-content: center;
+            color: var(--font-color);
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .progress-bar__title h1 {
+            font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+            margin: 0;
+            color: var(--font-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .progress-bar__count {
+            font-weight: bold;
+            font-size: 11px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        body.dark-theme .progress-bar__count {
+            color: #8895a7;
+        }
+
+        .timer-display {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 1px 8px;
+            border-radius: 20px;
+            background: var(--btn);
+            box-shadow: var(--shadow-out);
+            color: var(--font-color);
+            min-width: 40px;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .timer-display.warning {
+            color: #ff6b6b;
+            animation: timer-pulse 0.5s ease infinite alternate;
+        }
+
+        .timer-display.danger {
+            color: #ff0000;
+            animation: timer-pulse 0.3s ease infinite alternate;
+        }
+
+        @keyframes timer-pulse {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.05);
+            }
+        }
+
+        .progress-bar__cursor {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 18px;
+            height: 4px;
+            position: relative;
+            width: 100%;
+        }
+
+        body.dark-theme .progress-bar__cursor {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-bar__cursor--dynamic {
+            position: absolute;
+            border-radius: 18px;
+            height: 4px;
+            background: red;
+            transition: width 0.3s ease;
+        }
+
+        body.dark-theme .progress-bar__cursor--dynamic {
+            background: #ef5350;
+        }
+
+        /* ===== CONTENEUR DE LA BARRE D'OUTILS ===== */
+        .toolbar-wrapper {
+            position: relative;
+            z-index: 10;
+            flex-shrink: 0;
+            margin-bottom: 12px;
+        }
+
+        /* ===== BARRE D'OUTILS ===== */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 15px;
+            background: transparent;
+            height: 76px;
+            border-radius: 12px 12px 0 0;
+            gap: 10px;
+            position: relative;
+        }
+
+        .toolbar-left,
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .toolbar-left {
+            justify-content: flex-start;
+        }
+        .toolbar-right {
+            justify-content: flex-end;
+        }
+
+        .toolbar-center {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .toolbar-title {
+            color: red;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: bold;
+            white-space: nowrap;
+            line-height: 1.2;
+            text-transform: lowercase;
+            margin: 0;
+        }
+
+        .toolbar-subtitle {
+            color: #555;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            line-height: 1.2;
+            padding-top: 12px;
+        }
+
+        /* ===== BOUTONS ===== */
+        .btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--btn);
+            border: none;
+            color: var(--font-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-out);
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .btn:hover {
+            box-shadow: var(--shadow-in);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            flex-shrink: 0;
+        }
+
+        .btn::after {
+            content: attr(data-title);
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 0.5rem;
+            background-color: var(--tooltip-bg);
+            color: var(--tooltip-color);
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:hover::after {
+            opacity: 1;
+        }
+
+        .btn-home .icon-wrapper {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            flex-shrink: 0;
+        }
+
+        .btn-home:hover .icon-wrapper {
+            animation: spin360 2s infinite linear;
+        }
+
+        @keyframes spin360 {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .btn-reload:hover svg {
+            animation: rotate 1s linear;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .menu-icon {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: transform 0.3s ease;
+            width: 22px;
+            height: 18px;
+            justify-content: center;
+        }
+
+        .menu-icon span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: currentColor;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-menu:hover .menu-icon {
+            transform: rotate(90deg);
+        }
+
+        .btn-fullscreen .fullscreen-icon {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .btn-fullscreen:not(.fullscreen-active):hover .fullscreen-icon {
+            transform: scale(1.5);
+        }
+
+        .fullscreen-exit-icon {
+            transform-origin: center;
+            transition: transform 0.3s ease;
+            stroke-width: 1.2px !important;
+        }
+
+        .btn-fullscreen.fullscreen-active:hover .fullscreen-exit-icon {
+            transform: scale(0.7);
+        }
+
+        /* ===== BARRE D'OUTILS MOBILE ===== */
+        .toolbar-mobile {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 6px 12px 4px;
+            background: transparent;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .toolbar-mobile .btn {
+            width: 44px;
+            height: 44px;
+        }
+
+        .toolbar-mobile .btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .toolbar-mobile .menu-icon {
+            width: 18px;
+            height: 14px;
+            gap: 3px;
+        }
+
+        .toolbar-mobile .menu-icon span {
+            height: 2px;
+        }
+
+        .mobile-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            gap: 6px;
+            padding: 0 4px;
+        }
+
+        .mobile-title-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: 6px;
+        }
+
+        .mobile-title {
+            color: red;
+            font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.2;
+            margin-top: 5px;
+            text-transform: lowercase;
+        }
+
+        .mobile-subtitle {
+            color: #555;
+            font-size: clamp(0.7rem, 2vw, 0.85rem);
+            text-align: center;
+            line-height: 1.2;
+            padding-top: 12px;
+        }
+
+        /* ===== PLEIN ÉCRAN ===== */
+        .fullscreen .toolbar-wrapper {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        }
+
+        .fullscreen .hover-trigger {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            z-index: 9;
+            pointer-events: none;
+        }
+
+        .fullscreen .hover-trigger.active {
+            pointer-events: auto;
+        }
+
+        .fullscreen .hover-trigger.active ~ .toolbar-wrapper,
+        .fullscreen .toolbar-wrapper:hover {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* ===== MENUS ===== */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .slide-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100vh;
+            background-color: var(--bg);
+            z-index: 1001;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            border-radius: 20px 0 0 20px;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .slide-menu.open {
+            right: 0;
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+        }
+
+        .menu-close {
+            background: var(--btn);
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-out);
+            color: var(--font-color);
+        }
+
+        .menu-close svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+        }
+
+        .menu-close:hover {
+            box-shadow: var(--shadow-in);
+        }
+
+        .menu-close:hover svg {
+            animation: rotate 1s linear;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0px 20px;
+            background: var(--btn);
+            color: var(--font-color);
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-bottom: 17px;
+            width: 100%;
+            box-shadow: var(--shadow-out);
+            border: none;
+            transition: all 0.2s ease;
+            min-height: 42px;
+        }
+
+        .menu-item:hover {
+            background: rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-in);
+            transform: translateY(-2px);
+        }
+
+        .menu-item:hover svg {
+            animation: rotate 1s linear;
+        }
+
+        .menu-item svg {
+            width: 24px;
+            height: 24px;
+            margin-right: 16px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .menu-item .item-label {
+            flex: 1;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .menu-item .item-badge {
+            background: red;
+            color: #fff;
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-left: 8px;
+        }
+
+        /* ===== SOUS-MENUS COULISSANTS ===== */
+        .submenu {
+            position: fixed;
+            top: 0;
+            right: -340px;
+            width: 280px;
+            height: 100%;
+            background: var(--bg);
+            z-index: 10010;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 20px 0 0 20px;
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            transition: right 0.5s ease;
+        }
+
+        .submenu.active {
+            right: 0;
+        }
+
+        .submenu-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: red;
+            margin: 0.5rem 0 1.5rem 0;
+            text-align: center;
+            text-transform: lowercase;
+        }
+
+        .submenu-close {
+            background: var(--btn);
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-out);
+            color: var(--font-color);
+            margin-left: auto;
+            margin-bottom: 8px;
+        }
+
+        .submenu-close svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+        }
+
+        .submenu-close:hover {
+            box-shadow: var(--shadow-in);
+        }
+
+        .submenu-close:hover svg {
+            animation: rotate 1s linear;
+        }
+
+        .submenu-content {
+            color: var(--font-color);
+            font-size: 13px;
+            line-height: 1.5;
+            margin-top: 4px;
+        }
+
+        /* ===== STYLE DES SOUS-MENUS ===== */
+        .settings-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .stats-info .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: red;
+        }
+
+        .stats-reload-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 8px 16px;
+            font-size: 1rem;
+            cursor: pointer;
+            background: var(--btn);
+            border: none;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-out);
+            color: var(--font-color);
+            display: inline-flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .stats-reload-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* ===== TOGGLES DANS LE SOUS-MENU PARAMÈTRES ===== */
+        .toggle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            min-height: 24px;
+        }
+
+        .toggle-label {
+            color: var(--font-color);
+            font-size: 1rem;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .toggle-label i {
+            width: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .questions-slider-label i {
+            width: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Switch */
+        .theme-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .theme-switch .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: #b0b8c4;
+            border-radius: 20px;
+            transition: .3s;
+        }
+
+        .theme-switch .slider:before {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            left: 2px;
+            top: 2px;
+            background: #fff;
+            border-radius: 50%;
+            transition: .3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-switch input:checked + .slider {
+            background: #3a7bb5;
+        }
+
+        .theme-switch input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        body.dark-theme .theme-switch .slider {
+            background: #3d3d3d;
+        }
+
+        body.dark-theme .theme-switch input:checked + .slider {
+            background: #4a80c0;
+        }
+
+        /* ===== RÉGLETTE POUR LE NOMBRE DE QUESTIONS ===== */
+        .questions-slider-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        body.dark-theme .questions-slider-container {
+            border-top-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .questions-slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .questions-slider-label i {
+            margin-right: 0.5rem;
+        }
+
+        .questions-slider-value {
+            font-weight: bold;
+            color: red;
+            font-size: 1rem;
+        }
+
+        .questions-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            background: #b0b8c4;
+            outline: none;
+            transition: background 0.3s ease;
+        }
+
+        .questions-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #3a7bb5;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: background 0.2s ease;
+        }
+
+        .questions-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .questions-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #3a7bb5;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-theme .questions-slider {
+            background: #3d3d3d;
+        }
+
+        body.dark-theme .questions-slider::-webkit-slider-thumb {
+            background: #4a80c0;
+        }
+
+        body.dark-theme .questions-slider::-moz-range-thumb {
+            background: #4a80c0;
+        }
+
+        .slider-graduations {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0;
+            margin-top: 5px;
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        .slider-graduations span {
+            text-align: center;
+            flex: 1;
+        }
+
+        /* ===== SÉLECTEUR DE QUIZ ===== */
+        .quiz-selector-container {
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .quiz-select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: var(--btn);
+            border: 2px solid #8895a7;
+            color: var(--font-color);
+            font-size: 13px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            appearance: auto;
+            box-shadow: var(--shadow-out);
+        }
+
+        .quiz-select:hover {
+            border-color: var(--color-correct);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .quiz-select option {
+            background: var(--bg);
+            color: var(--font-color);
+            padding: 6px;
+        }
+
+        body.dark-theme .quiz-select {
+            background: #3d3d3d;
+            color: #ffffff;
+            border-color: #5a5a5a;
+        }
+
+        body.dark-theme .quiz-select option {
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .file-status {
+            font-size: 12px;
+            font-style: italic;
+            min-height: 18px;
+            color: var(--font-color);
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        /* ===== CONTENEUR POUR LE CHARGEMENT LOCAL ===== */
+        .local-file-upload-area {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .local-file-upload-area .upload-btn {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: var(--btn);
+            border: 2px dashed #8895a7;
+            font-size: 13px;
+            font-family: Arial, sans-serif;
+            transition: all 0.3s ease;
+            text-align: center;
+            cursor: pointer;
+            color: var(--font-color);
+            box-shadow: var(--shadow-out);
+        }
+
+        .local-file-upload-area .upload-btn:hover {
+            box-shadow: var(--shadow-in);
+            border-color: var(--color-correct);
+        }
+
+        body.dark-theme .local-file-upload-area .upload-btn {
+            background: #3d3d3d;
+            color: #ffffff;
+            border-color: #5a5a5a;
+        }
+
+        body.dark-theme .local-file-upload-area .upload-btn:hover {
+            background: #4a4a4a;
+            border-color: var(--color-correct);
+        }
+
+        #fileInputSubmenu {
+            display: none;
+        }
+
+        /* ===== CONTENEUR DU SÉLECTEUR DANS LE SOUS-MENU ===== */
+        .quiz-selector-container-submenu {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 8px;
+            display: none;
+        }
+
+        .quiz-selector-container-submenu .quiz-select {
+            width: 100%;
+        }
+
+        .upload-container.hidden {
+            display: none;
+        }
+
+        .local-reset-btn {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            background: var(--btn);
+            border: 2px solid #8895a7;
+            border-radius: 10px;
+            box-shadow: var(--shadow-out);
+            color: var(--font-color);
+            display: inline-flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-family: Arial, sans-serif;
+        }
+
+        .local-reset-btn:hover {
+            box-shadow: var(--shadow-in);
+            border-color: var(--color-correct);
+            transform: translateY(-2px);
+        }
+
+        body.dark-theme .local-reset-btn {
+            background: #3d3d3d;
+            color: #ffffff;
+            border-color: #5a5a5a;
+        }
+
+        body.dark-theme .local-reset-btn:hover {
+            background: #4a4a4a;
+            border-color: var(--color-correct);
+        }
+
+        /* ===== CONTENU PRINCIPAL ===== */
+        .content--v2 {
+            flex: 1;
+            padding: 0 8px 8px;
+            width: 100%;
+            max-width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 0;
+        }
+
+        .wrapper--grid-playlist {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .grid-area--player {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* ===== CONTENEUR QUIZ ===== */
+        .container--quiz {
+            background: #ffffff;
+            border: 6px solid #ffffff;
+            width: 100%;
+            max-width: 950px;
+            border-radius: 14px;
+            position: relative;
+            color: var(--font-color);
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        body.dark-theme .container--quiz {
+            border-color: #1a1a1a;
+        }
+
+        /* ===== ÉCRAN D'ACCUEIL ===== */
+        .container--quiz-start {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 400px;
+            height: 100%;
+        }
+
+        .quiz-start__img {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .quiz-start__img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .quiz-start__opacity {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 2;
+            transition: background 0.3s ease;
+        }
+
+        .quiz-start__content {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 14px 18px 20px;
+        }
+
+        .quiz-start__button {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ===== QUIZ EN COURS ===== */
+        #quizQuestions {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #questionsContainer {
+            overflow-y: visible;
+            padding: 2px 0;
+        }
+
+        /* ===== TEXTES ===== */
+        .philosophy-text-container {
+            background: #f8f9fb;
+            border: 1px solid #e0e4ea;
+            border-radius: 10px;
+            margin: 3px 12px 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        body.dark-theme .philosophy-text-container {
+            background: #3d3d3d;
+            border-color: #2a2a2a;
+        }
+
+        .philosophy-text-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 12px;
+            background: transparent;
+        }
+
+        body.dark-theme .philosophy-text-header {
+            background: transparent;
+            border-bottom-color: #2a2a2a;
+        }
+
+        .philosophy-text-header h3 {
+            margin: 0;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: red;
+            letter-spacing: 0.5px;
+        }
+
+        body.dark-theme .philosophy-text-header h3 {
+            color: red;
+        }
+
+        .text-toggle-btn {
+            padding: 2px;
+            color: #555;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.dark-theme .text-toggle-btn {
+            color: #b0c4de;
+        }
+
+        .text-toggle-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        .text-toggle-btn.collapsed svg {
+            transform: rotate(180deg);
+        }
+
+        .philosophy-text-content {
+            padding: 6px 12px 8px;
+            max-height: none;
+            overflow-y: visible;
+            transition: padding 0.3s ease;
+        }
+
+        .philosophy-text-content.collapsed {
+            max-height: 0;
+            padding: 0 12px;
+            overflow: hidden;
+        }
+
+        .philosophy-text-content blockquote {
+            margin: 0;
+            padding: 0;
+            font-size: clamp(0.7rem, 0.9vw, 0.8rem);
+            line-height: 1.4;
+            text-align: justify;
+            color: var(--font-color);
+        }
+
+        .philosophy-paragraph {
+            text-indent: 1.2em;
+        }
+
+        .philosophy-text-source {
+            font-size: clamp(0.7rem, 0.9vw, 0.8rem);
+            color: #333;
+            text-align: right;
+            margin-top: 4px;
+            padding-top: 4px;
+            font-style: normal;
+        }
+
+        body.dark-theme .philosophy-text-source {
+            color: #b0c4de;
+            border-top-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .philosophy-text-source .work-title {
+            font-style: italic;
+        }
+
+        .bracket-number {
+            color: #1a56db;
+            font-weight: 500;
+        }
+
+        body.dark-theme .bracket-number {
+            color: #6eb5ff;
+        }
+
+        /* ===== QUESTION ===== */
+        .container--question {
+            padding: 4px 12px 2px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container--question fieldset {
+            border: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container--question legend p {
+            font-weight: bold;
+            font-size: clamp(0.7rem, 1.1vw, 0.8rem);
+            margin: 0 0 10px 0;
+            padding: 0;
+            line-height: 1.3;
+            text-align: left;
+            word-break: break-word;
+            color: var(--font-color);
+        }
+
+        body.dark-theme .container--question legend p {
+            color: #e8edf5;
+        }
+
+        .container--question ul {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .answer-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--letter-color);
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-right: 12px;
+            font-family: Arial, sans-serif;
+            transition: all 0.3s ease;
+            border: 2px solid var(--letter-color);
+        }
+
+        body.dark-theme .answer-letter {
+            background: #ff6b6b;
+            border-color: #ff6b6b;
+        }
+
+        .quiz-answer.correct .answer-letter {
+            background: var(--color-correct) !important;
+            border-color: var(--color-correct) !important;
+        }
+
+        .quiz-answer.incorrect .answer-letter {
+            background: var(--color-incorrect) !important;
+            border-color: var(--color-incorrect) !important;
+        }
+
+        .daltonic-icon {
+            display: none;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            z-index: 5;
+        }
+
+        .daltonic-icon svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .quiz-answer {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.06);
+            border-radius: 8px;
+            padding: 6px 12px;
+            border: 2px solid #e0e4ea;
+            width: 100%;
+            cursor: pointer;
+            min-height: 32px;
+            font-size: clamp(0.65rem, 0.9vw, 0.75rem);
+            line-height: 1.3;
+            transition: all 0.2s ease;
+            position: relative;
+            gap: 8px;
+            color: var(--font-color);
+        }
+
+        .answer-text {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+            gap: 8px;
+        }
+
+        .answer-icon {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+            margin-left: auto;
+        }
+
+        .answer-icon.hidden {
+            display: none;
+        }
+
+        body.dark-theme .quiz-answer {
+            background: #242a33;
+            color: #e8edf5;
+            box-shadow: 0.2rem 0.2rem 0.5rem #0b0d10, -0.2rem -0.2rem 0.5rem #3d4653;
+            border-color: #2a303a;
+        }
+
+        .quiz-answer:hover {
+            box-shadow: inset 0.2rem 0.2rem 0.3rem rgba(0, 0, 0, 0.06), inset -0.2rem -0.2rem 0.3rem rgba(255, 255, 255, 0.8);
+        }
+
+        body.dark-theme .quiz-answer:hover {
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #0b0d10, inset -0.2rem -0.2rem 0.3rem #3d4653;
+        }
+
+        .selected {
+            background: rgba(0, 0, 0, 0.06) !important;
+            border-color: #8895a7 !important;
+        }
+
+        body.dark-theme .selected {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: #8895a7 !important;
+        }
+
+        .correct {
+            border-color: var(--color-correct) !important;
+            background: rgba(40, 167, 69, 0.15) !important;
+            color: #000000 !important;
+        }
+
+        .incorrect {
+            border-color: var(--color-incorrect) !important;
+            background: rgba(220, 53, 69, 0.15) !important;
+            color: #000000 !important;
+        }
+
+        body.dark-theme .correct {
+            border-color: var(--color-correct) !important;
+            background: rgba(46, 204, 113, 0.15) !important;
+            color: white !important;
+        }
+
+        body.dark-theme .incorrect {
+            border-color: var(--color-incorrect) !important;
+            background: rgba(231, 76, 60, 0.15) !important;
+            color: white !important;
+        }
+
+        .quiz-explanation {
+            background: #f8f9fb;
+            border: 1px solid #e0e4ea;
+            border-radius: 8px;
+            padding: 6px 12px;
+            margin: 3px 0 2px;
+            font-size: clamp(0.6rem, 0.85vw, 0.7rem);
+            line-height: 1.4;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            flex-shrink: 0;
+            color: var(--font-color);
+        }
+
+        body.dark-theme .quiz-explanation {
+            background: #242a33;
+            border-color: #2a303a;
+            color: #e8edf5;
+        }
+
+        .quiz-explanation__label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .quiz-explanation__label .emoji {
+            width: 14px;
+            height: 14px;
+        }
+
+        .next-button-container {
+            text-align: center;
+            padding: 4px 0 8px;
+            flex-shrink: 0;
+            margin-top: 8px;
+        }
+
+        .next-button-container .quiz-btn {
+            min-width: 100px;
+            padding: 6px 16px;
+            border-radius: 27px;
+            font-size: clamp(0.6rem, 0.85vw, 0.7rem);
+            background: #ffffff;
+            box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.06);
+            border: 1px solid #d0d5dd;
+            color: var(--font-color);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        body.dark-theme .next-button-container .quiz-btn {
+            background: #242a33;
+            border-color: #3d4653;
+            color: #e8edf5;
+            box-shadow: 0.2rem 0.2rem 0.5rem #0b0d10, -0.2rem -0.2rem 0.5rem #3d4653;
+        }
+
+        .next-button-container .quiz-btn:hover {
+            box-shadow: inset 0.2rem 0.2rem 0.3rem rgba(0, 0, 0, 0.06), inset -0.2rem -0.2rem 0.3rem rgba(255, 255, 255, 0.8);
+        }
+
+        body.dark-theme .next-button-container .quiz-btn:hover {
+            box-shadow: inset 0.2rem 0.2rem 0.3rem #0b0d10, inset -0.2rem -0.2rem 0.3rem #3d4653;
+        }
+
+        /* ===== ÉCRAN DE FIN ===== */
+        .container--quiz-end {
+            min-height: 300px;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            overflow: auto;
+            flex: 1;
+            padding: 10px 0;
+        }
+
+        .container--quiz-results {
+            color: var(--font-color);
+            font-family: Arial, sans-serif;
+            width: 100%;
+            max-height: 100%;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .container--quiz-results .bento-score {
+            width: 100%;
+            max-width: 596px;
+            background: var(--btn);
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: var(--shadow-out);
+            text-align: center;
+        }
+
+        .container--quiz-results .bento-stats-global {
+            width: 100%;
+            max-width: 596px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .container--quiz-results .bento-stats-global .stat-item {
+            flex: 0 0 140px;
+            min-width: 120px;
+            max-width: 160px;
+            background: var(--btn);
+            border-radius: 10px;
+            padding: 12px 8px;
+            box-shadow: var(--shadow-out);
+            text-align: center;
+        }
+
+        .container--quiz-results .bento-stats-personal {
+            width: 100%;
+            max-width: 596px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .container--quiz-results .bento-stats-personal .stat-item-mini {
+            flex: 0 0 140px;
+            min-width: 120px;
+            max-width: 160px;
+            background: var(--btn);
+            border-radius: 10px;
+            padding: 12px 8px;
+            box-shadow: var(--shadow-out);
+            text-align: center;
+        }
+
+        .container--quiz-results .bento-message {
+            width: 100%;
+            max-width: 596px;
+            background: var(--btn);
+            border-radius: 10px;
+            padding: 12px 16px;
+            box-shadow: var(--shadow-out);
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .container--quiz-results .bento-restart {
+            width: 100%;
+            max-width: 596px;
+            text-align: center;
+            padding: 4px 0;
+        }
+
+        .container--quiz-results .bento-details {
+            width: 100%;
+            max-width: 596px;
+            background: var(--btn);
+            border-radius: 10px;
+            padding: 12px 16px;
+            box-shadow: var(--shadow-out);
+        }
+
+        @media (max-width: 768px) {
+            .container--quiz-results .bento-stats-global {
+                max-width: 100%;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+            .container--quiz-results .bento-stats-global .stat-item {
+                flex: none;
+                min-width: 0;
+                max-width: none;
+                width: 100%;
+                padding: 8px 4px;
+                font-size: 0.75rem;
+            }
+            .container--quiz-results .bento-stats-global .stat-item .stat-value {
+                font-size: 14px;
+            }
+            .container--quiz-results .bento-stats-global .stat-item .stat-label {
+                font-size: 11px;
+            }
+            
+            .container--quiz-results .bento-stats-personal {
+                max-width: 100%;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+            .container--quiz-results .bento-stats-personal .stat-item-mini {
+                flex: none;
+                min-width: 0;
+                max-width: none;
+                width: 100%;
+                padding: 8px 4px;
+                font-size: 0.75rem;
+            }
+            .container--quiz-results .bento-stats-personal .stat-item-mini .stat-num {
+                font-size: 14px;
+            }
+            .container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
+                font-size: 11px;
+            }
+            
+            .container--quiz-results {
+                gap: 8px;
+            }
+            
+            .container--quiz-results .bento-score,
+            .container--quiz-results .bento-message,
+            .container--quiz-results .bento-restart,
+            .container--quiz-results .bento-details {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container--quiz-results .bento-stats-global {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+            .container--quiz-results .bento-stats-global .stat-item {
+                padding: 6px 3px;
+            }
+            .container--quiz-results .bento-stats-global .stat-item .stat-value {
+                font-size: 12px;
+            }
+            .container--quiz-results .bento-stats-global .stat-item .stat-label {
+                font-size: 11px;
+            }
+            
+            .container--quiz-results .bento-stats-personal {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+            .container--quiz-results .bento-stats-personal .stat-item-mini {
+                padding: 6px 3px;
+            }
+            .container--quiz-results .bento-stats-personal .stat-item-mini .stat-num {
+                font-size: 12px;
+            }
+            .container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
+                font-size: 11px;
+            }
+        }
+
+        .container--quiz-btn {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            margin: 10px 0 5px 0;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        #detailedResults {
+            text-align: left;
+            margin-top: 10px;
+            padding: 10px 14px;
+            background: #f8f9fb;
+            border-radius: 10px;
+            box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.06);
+            max-height: 260px;
+            overflow-y: auto;
+            color: var(--font-color);
+        }
+
+        body.dark-theme #detailedResults {
+            background: #242a33;
+            color: #e8edf5;
+        }
+
+        #detailedResults h3 {
+            color: red;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .review-item {
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border-left: 4px solid #b0b8c4;
+            font-size: 0.8rem;
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        body.dark-theme .review-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-left-color: #3d3d3d;
+        }
+
+        .review-item.correct-item {
+            background: rgba(40, 167, 69, 0.08);
+            border-left-color: var(--color-correct, #28a745);
+        }
+
+        .review-item.incorrect-item {
+            background: rgba(220, 53, 69, 0.08);
+            border-left-color: var(--color-incorrect, #dc3545);
+        }
+
+        body.dark-theme .review-item.correct-item {
+            background: rgba(46, 204, 113, 0.12);
+        }
+
+        body.dark-theme .review-item.incorrect-item {
+            background: rgba(231, 76, 60, 0.12);
+        }
+
+        /* ===== ZONE DE DÉTECTION POUR PLEIN ÉCRAN ===== */
+        .hover-trigger {
+            display: none;
+        }
+
+        .fullscreen .hover-trigger {
+            display: block;
+        }
+
+        .fullscreen body {
+            overflow: hidden;
+        }
+
+        .fullscreen .container--quiz {
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        /* ===== SOUS-MENU RACCOURCIS ===== */
+        .shortcuts-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0.2rem 0.2rem;
+            font-size: 0.85rem;
+        }
+
+        .shortcuts-table td {
+            padding: 3px 3px;
+        }
+
+        body.dark-theme .shortcuts-table td {
+            border-bottom-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .shortcuts-table kbd {
+            display: inline-block;
+            padding: 4px 8px;
+            font-family: monospace;
+            font-size: 0.9em;
+            font-weight: bold;
+            background-color: #d1d1d1;
+            color: #333;
+            border-radius: 6px;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.6) inset;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        body.dark-theme .shortcuts-table kbd {
+            background-color: #1a1a1a;
+            color: #e2e8f0;
+            border: 1px solid #333;
+        }
+
+        .shortcuts-table .key-combo {
+            white-space: nowrap;
+        }
+
+        /* ===== RESPONSIVE - MOBILE ===== */
+        @media (max-width: 820px) {
+            .toolbar {
+                height: 64px;
+                padding: 6px 12px;
+            }
+
+            .btn {
+                width: 46px;
+                height: 46px;
+            }
+
+            .btn svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .btn-home .icon-wrapper {
+                width: 46px;
+                height: 46px;
+            }
+
+            .toolbar-title {
+                font-size: clamp(1.4rem, 4vw, 1.8rem);
+            }
+
+            .toolbar-subtitle {
+                font-size: clamp(0.8rem, 2vw, 1rem);
+            }
+
+            .container--quiz-start {
+                min-height: 350px;
+            }
+
+            .quiz-start__content {
+                min-height: 350px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .toolbar {
+                display: none;
+            }
+
+            .toolbar-mobile {
+                display: flex;
+            }
+
+            body {
+                padding: 6px 6px 16px 6px;
+            }
+
+            .container--quiz {
+                border-width: 3px;
+                border-radius: 10px;
+                max-width: 100%;
+            }
+
+            .container--quiz-start {
+                border-radius: 10px;
+                min-height: 300px;
+            }
+
+            .quiz-start__content {
+                min-height: 300px;
+            }
+
+            .container--question {
+                padding: 2px 8px 2px;
+            }
+
+            .quiz-answer {
+                padding: 5px 10px;
+                min-height: 28px;
+                font-size: 0.7rem;
+                border-radius: 6px;
+            }
+
+            .progress-bar {
+                padding: 3px 8px;
+            }
+
+            .progress-bar__title .phi-symbol {
+                font-size: 20px !important;
+                text-transform: lowercase;
+            }
+
+            .progress-bar__title h1 {
+                font-size: 0.7rem;
+            }
+
+            .progress-bar__count {
+                font-size: 10px;
+            }
+
+            .container--question legend p {
+                font-size: 0.75rem;
+                margin-bottom: 8px;
+            }
+
+            .philosophy-text-container {
+                margin: 2px 8px 3px;
+            }
+
+            .next-button-container .quiz-btn {
+                min-width: 80px;
+                padding: 5px 12px;
+                font-size: 0.65rem;
+            }
+
+            .quiz-explanation {
+                padding: 5px 10px;
+                font-size: 0.65rem;
+                margin: 2px 0 2px;
+            }
+
+            .container--quiz-results .quiz-end__score {
+                font-size: 1.6rem;
+            }
+
+            .container--quiz-results .quiz-end__total {
+                font-size: 1.6rem;
+            }
+
+            .slide-menu {
+                width: 260px;
+                right: -280px;
+                padding: 14px 16px;
+            }
+
+            .submenu {
+                width: 260px;
+                right: -280px;
+                padding: 14px 16px;
+            }
+
+            .menu-item {
+                padding: 10px 14px;
+                font-size: 12px;
+                min-height: 48px;
+                border-radius: 8px;
+            }
+
+            .menu-item svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .quiz-start__content {
+                padding: 10px 14px 16px;
+            }
+
+            .toolbar-mobile .btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .toolbar-mobile .btn svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .toolbar-mobile .menu-icon {
+                width: 16px;
+                height: 12px;
+                gap: 2.5px;
+            }
+
+            .toolbar-mobile .menu-icon span {
+                height: 1.5px;
+            }
+
+            .mobile-buttons {
+                gap: 4px;
+            }
+
+            .container--quiz-end {
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container--quiz-start {
+                min-height: 250px;
+            }
+
+            .quiz-start__content {
+                min-height: 250px;
+            }
+
+            .quiz-answer {
+                padding: 4px 8px;
+                min-height: 24px;
+                font-size: 0.65rem;
+            }
+
+            .container--question legend p {
+                font-size: 0.7rem;
+            }
+
+            .progress-bar__title .phi-symbol {
+                font-size: 16px !important;
+                text-transform: lowercase;
+            }
+
+            .next-button-container .quiz-btn {
+                min-width: 70px;
+                padding: 4px 10px;
+                font-size: 0.6rem;
+            }
+
+            .toolbar-mobile .btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .toolbar-mobile .btn svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            .toolbar-mobile .menu-icon {
+                width: 14px;
+                height: 10px;
+                gap: 2px;
+            }
+
+            .toolbar-mobile .menu-icon span {
+                height: 1.5px;
+            }
+
+            .mobile-title {
+                font-size: 1rem;
+            }
+
+            .mobile-subtitle {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* ===== BARRE DE DÉFILEMENT ===== */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #b0b8c4;
+            border-radius: 4px;
+        }
+
+        body.dark-theme ::-webkit-scrollbar-thumb {
+            background: #3d3d3d;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes shakeX {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes shakeY {
+            0%, 100% { transform: translateY(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateY(-5px); }
+            20%, 40%, 60%, 80% { transform: translateY(5px); }
+        }
+
+        .shake-x {
+            animation: shakeX 0.9s ease;
+        }
+        .shake-y {
+            animation: shakeY 0.9s ease;
+        }
+
+        .hidden {
+            display: none;
+        }
+        
+        .stat-value,
+        .stat-num {
+            color: red;
+        }
+        
+        .quiz-end__score {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ZONE DE DÉTECTION PLEIN ÉCRAN -->
+    <div class="hover-trigger" id="hoverTrigger"></div>
+
+    <!-- ===== BARRE D'OUTILS ===== -->
+    <div class="toolbar-wrapper">
+        <!-- Bureau -->
+        <div class="toolbar" id="toolbarDesktop">
+            <div class="toolbar-left">
+                <button class="btn btn-home" data-action="home" data-title="accueil (H)">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="btn btn-reload" data-action="reload" data-title="recharger (R)">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"/>
+                        <polyline points="1 20 1 14 7 14"/>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="toolbar-center">
+                <div class="toolbar-title" id="appTitle">quiz</div>
+                <div class="toolbar-subtitle" id="appSubtitle">tester ses connaissances</div>
+            </div>
+            <div class="toolbar-right">
+                <button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (F)">
+                    <svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+                        <line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+                        <line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+                        <line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+                        <line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+                    </svg>
+                </button>
+                <button class="btn btn-menu" data-action="menu" data-title="menu (M)">
+                    <div class="menu-icon"><span></span><span></span><span></span></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile -->
+        <div class="toolbar-mobile" id="toolbarMobile">
+            <div class="mobile-buttons">
+                <button class="btn btn-home" data-action="home" data-title="accueil">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="btn btn-reload" data-action="reload" data-title="recharger">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"/>
+                        <polyline points="1 20 1 14 7 14"/>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                    </svg>
+                </button>
+                <button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran">
+                    <svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+                        <line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+                        <line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+                        <line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+                        <line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+                    </svg>
+                </button>
+                <button class="btn btn-menu" data-action="menu" data-title="menu">
+                    <div class="menu-icon"><span></span><span></span><span></span></div>
+                </button>
+            </div>
+            <div class="mobile-title-wrapper">
+                <div class="mobile-title" id="mobileTitle">quiz</div>
+                <div class="mobile-subtitle" id="mobileSubtitle">tester ses connaissances</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CONTENU PRINCIPAL ===== -->
+    <main id="content" class="content--v2" role="main">
+        <div class="wrapper--grid-playlist">
+            <div class="grid-area--player">
+                <div id="quiz" class="container--quiz">
+
+                    <!-- ===== DÉMARRAGE ===== -->
+                    <div id="quizStart">
+                        <div class="container--quiz-start">
+                            <div class="quiz-start__img">
+                                <img alt="Quiz" src="src/couverture.png" />
+                            </div>
+                            <div class="quiz-start__opacity"></div>
+                            <div class="quiz-start__content">
+                                <div class="quiz-start__button">
+                                    <!-- ===== SÉLECTEUR PRINCIPAL ===== -->
+                                    <div class="quiz-selector-container">
+                                        <select id="mainFileSelect" class="quiz-select">
+                                            <option value="">-- sélectionner un texte --</option>
+                                            <option value="loading" disabled>chargement...</option>
+                                        </select>
+                                    </div>
+                                    <div id="fileStatus" class="file-status">
+                                        <em>connexion à GitHub...</em>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== QUIZ EN COURS ===== -->
+                    <div id="quizQuestions" class="hidden">
+                        <div class="progress-bar" id="progressBar">
+                            <div class="progress-bar__info">
+                                <div class="progress-bar__title">
+                                    <span class="phi-symbol">φ</span>
+                                    <h1 id="quizTitle">quiz</h1>
+                                </div>
+                                <div class="progress-bar__count">
+                                    <span id="currentQuestion">1</span> / <span id="totalQuestions" data-value="10">10</span>
+                                    <span class="timer-display" id="timerdisplay" style="display:none;">⏱️ <span id="timerValue">30</span>s</span>
+                                </div>
+                            </div>
+                            <div class="progress-bar__cursor">
+                                <span class="progress-bar__cursor--dynamic" style="width:0%"></span>
+                            </div>
+                        </div>
+
+                        <div id="philosophyText" class="hidden">
+                            <div class="philosophy-text-container">
+                                <div class="philosophy-text-header">
+                                    <h3 id="philosophyTextTitle">texte</h3>
+                                    <button id="toggleTextBtn" class="text-toggle-btn" aria-label="Cacher le texte">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+                                    </button>
+                                </div>
+                                <div class="philosophy-text-content">
+                                    <blockquote id="philosophyTextContent"></blockquote>
+                                    <div class="philosophy-text-source" id="philosophyTextSource"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="questionsContainer"></div>
+                    </div>
+
+                    <!-- ===== FIN ===== -->
+                    <div id="quizEnd" class="hidden">
+                        <div class="container--quiz-end">
+                            <div class="container--quiz-results">
+                                <div class="bento-score">
+                                    <p style="margin:0; font-size:14px;">
+                                        <span>votre score :</span><br>
+                                        <span class="quiz-end__score" id="finalScoreDisplay" style="font-size:2rem; font-weight:bold;">0</span>
+                                        <span id="scoreLabel" style="font-size:0.9rem;">bonne réponse</span>
+                                        <span style="font-size:0.9rem;">sur</span>
+                                        <span class="quiz-end__total" id="finalTotalDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
+                                    </p>
+                                </div>
+
+                                <div class="bento-stats-global">
+                                    <div class="stat-item">
+                                        <span class="stat-value" id="correctAnswers">0</span>
+                                        <span class="stat-label" id="correctLabel">correctes</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-value" id="incorrectAnswers">0</span>
+                                        <span class="stat-label" id="incorrectLabel">incorrectes</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-value" id="percentageScore">0%</span>
+                                        <span class="stat-label">score</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-value" id="avgTimeDisplay">0s</span>
+                                        <span class="stat-label">moyenne</span>
+                                    </div>
+                                </div>
+
+                                <div class="bento-stats-personal">
+                                    <div class="stat-item-mini">
+                                        <span class="stat-num" id="totalAttempts">0</span>
+                                        <span class="stat-label-mini" id="attemptsLabel">tentative(s)</span>
+                                    </div>
+                                    <div class="stat-item-mini">
+                                        <span class="stat-num" id="bestScore">0%</span>
+                                        <span class="stat-label-mini">meilleur score</span>
+                                    </div>
+                                    <div class="stat-item-mini">
+                                        <span class="stat-num" id="avgScore">0%</span>
+                                        <span class="stat-label-mini">moyenne</span>
+                                    </div>
+                                    <div class="stat-item-mini">
+                                        <span class="stat-num" id="totalCorrect">0</span>
+                                        <span class="stat-label-mini" id="totalCorrectLabel">bonne(s) réponse(s)</span>
+                                    </div>
+                                </div>
+
+                                <div class="bento-message" id="summaryMessage"></div>
+
+                                <div class="bento-restart">
+                                    <button id="quizRetry" class="quiz-btn" style="min-width:180px; padding:10px 20px; border-radius:24px">recommencer</button>
+                                </div>
+
+                                <div class="bento-details" id="detailedResults" style="padding:12px 16px;">
+                                    <h3 style="color:red;margin:0 0 8px 0;font-size:0.85rem;text-align:center;">📋 détail des réponses :</h3>
+                                    <div id="questionsReview"></div>
+                                    <div style="text-align:center;margin-top:10px;">
+                                        <button id="retryAfterReview" class="quiz-btn" style="min-width:150px; padding:8px 16px;">🔄 réessayer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== MENU ===== -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="slide-menu" id="slideMenu">
+        <div class="menu-header">
+            <button class="menu-close" id="menuClose">
+                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="menu-content">
+            <button class="menu-item" id="instructionsButton">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span class="item-label">présentation</span>
+            </button>
+            <button class="menu-item" id="localFilesButton">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                    <line x1="12" y1="11" x2="12" y2="17"/>
+                    <polyline points="9 14 12 11 15 14"/>
+                </svg>
+                <span class="item-label">charger des quiz</span>
+            </button>
+            <button class="menu-item" id="statsButton">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M 3 3 L 3 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+                    <path d="M 3 22 L 22 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+                    <path d="M 7 18 L 11 12 L 15 15 L 21 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                </svg>
+                <span class="item-label">statistiques</span>
+                <span class="item-badge" id="statsBadge">0%</span>
+            </button>
+            <button class="menu-item" id="settingsButton">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+                <span class="item-label">paramètres</span>
+            </button>
+            <button class="menu-item" id="shortcutsButton">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                    <line x1="6" y1="8" x2="10" y2="8"></line>
+                    <line x1="14" y1="8" x2="18" y2="8"></line>
+                    <line x1="6" y1="12" x2="10" y2="12"></line>
+                    <line x1="14" y1="12" x2="18" y2="12"></line>
+                    <line x1="6" y1="16" x2="10" y2="16"></line>
+                    <line x1="14" y1="16" x2="18" y2="16"></line>
+                </svg>
+                <span class="item-label">raccourcis</span>
+            </button>
+            <button class="menu-item" id="resetButton">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 2v6h6"></path>
+                    <path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
+                    <path d="M21 22v-6h-6"></path>
+                    <path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path>
+                </svg>
+                <span class="item-label">réinitialiser</span>
+            </button>
+            <button class="menu-item" id="aboutButton">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <span class="item-label">à propos</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== SOUS-MENUS ===== -->
+    <div class="submenu" id="submenuInstructions">
+        <div class="menu-header">
+            <button class="submenu-close" data-submenu="instructions">
+                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="submenu-title">présentation</div>
+        <div class="submenu-content">
+            <div class="settings-info">
+                <p><i class="fas fa-bullseye"></i> <strong>objectif</strong><br><br>répondre aux questions à choix multiples</p>
+            </div>
+            <div class="settings-info">
+                <p><i class="fas fa-bars"></i> <strong>options</strong></p><br>
+                <p><strong>• mode sombre :</strong> pour une lecture confortable</p>
+                <p><strong>• animations :</strong> active / désactive les effets visuels</p>
+                <p><strong>• mode daltonien :</strong> bleu / rouge remplace vert / rouge</p>
+                <p><strong>• mode évaluation :</strong> solutions en fin de quiz</p>
+                <p><strong>• sons :</strong> active / désactive le son</p>
+                <p><strong>• minuteur :</strong> chronométrage du temps de réponse</p>
+                <p><strong>• nombre de questions :</strong> 1-10</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SOUS-MENU CHARGEMENT LOCAL ===== -->
+    <div class="submenu" id="submenuLocalFiles">
+        <div class="menu-header">
+            <button class="submenu-close" data-submenu="local">
+                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="submenu-title">charger des quiz</div>
+        <div class="submenu-content">
+            <!-- ===== CHARGEMENT LOCAL ===== -->
+            <div class="local-file-upload-area" id="loadContainerSubmenu">
+                <button class="upload-btn" id="fileLoadBtnSubmenu">
+                    <i class="fas fa-file-upload"></i> charger un ou des fichiers .js
+                </button>
+                <input type="file" id="fileInputSubmenu" accept=".js" multiple />
+            </div>
+
+            <!-- ===== SÉLECTEUR DANS LE SOUS-MENU (toujours visible) ===== -->
+            <div class="quiz-selector-container" style="width:100%;max-width:100%;margin-top:10px;">
+                <select id="quizSelectorSubmenu" class="quiz-select">
+                    <option value="">-- sélectionner un texte --</option>
+                </select>
+            </div>
+
+            <button class="local-reset-btn" id="localResetBtn">
+                <i class="fas fa-undo-alt"></i> réinitialiser les quiz chargés
+            </button>
+
+            <div class="settings-info">
+                <p><i class="fas fa-info-circle"></i> <strong>informations</strong></p>
+                <p style="font-size:12px;opacity:0.8;line-height:1.5;margin-top:8px;">
+                    Les fichiers doivent être au format .js<br>
+                    et contenir les variables :<br>
+                    <code style="font-size:11px;">titre, sousTitre, philosophyData, questions</code>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="submenu" id="submenuStats">
+        <div class="menu-header">
+            <button class="submenu-close" data-submenu="stats">
+                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="submenu-title">statistiques</div>
+        <div class="submenu-content">
+            <div class="stats-info">
+                <div class="settings-info">
+                    <p><i class="fas fa-chart-simple"></i> <strong>quelques chiffres :</strong></p>
+                    <p>• score actuel : <span style="color: red;" id="statsCorrectCount">0</span> / <span id="statsTotalCount">0</span></p>
+                    <p>• taux de réussite : <span style="color: red;" id="statsPercentage">0&nbsp;%</span></p>
+                    <p>• parties jouées : <span style="color: red;" id="gamesPlayed">0</span></p>
+                </div>
+                <div class="settings-info">
+                    <p><i class="fas fa-save"></i> <strong>sauvegarde :</strong></p>
+                    <p>les statistiques sont sauvegardées automatiquement</p>
+                </div>
+            </div>
+            <button class="stats-reload-btn" id="resetStatsBtn" style="font-size: 13px;">
+                <i class="fas fa-sync-alt"></i> réinitialiser les statistiques
+            </button>
+        </div>
+    </div>
+
+    <div class="submenu" id="submenuSettings">
+        <div class="menu-header">
+            <button class="submenu-close" data-submenu="settings">
+                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="submenu-title">paramètres</div>
+        <div class="submenu-content">
+            <div class="toggle-container">
+                <span class="toggle-label"><i class="fas fa-moon"></i> mode sombre</span>
+                <label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
+            </div>
+            <div class="toggle-container">
+                <span class="toggle-label"><i class="fas fa-play"></i> animations</span>
+                <label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-container">
+                <span class="toggle-label"><i class="fas fa-palette"></i> mode daltonien</span>
+                <label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label>
+            </div>
+            <div class="toggle-container">
+                <span class="toggle-label"><i class="fas fa-graduation-cap"></i> mode évaluation</span>
+                <label class="theme-switch"><input type="checkbox" id="deferredEvaluationToggle"><span class="slider"></span></label>
+            </div>
+            <div class="toggle-container">
+                <span class="toggle-label"><i class="fas fa-volume-up"></i> sons</span>
+                <label class="theme-switch"><input type="checkbox" id="soundToggle"><span class="slider"></span></label>
+            </div>
+            <div class="toggle-container">
+                <span class="toggle-label"><i class="fas fa-hourglass-half"></i> minuteur</span>
+                <label class="theme-switch"><input type="checkbox" id="timerToggle"><span class="slider"></span></label>
+            </div>
+            <div class="questions-slider-container">
+                <div class="questions-slider-label">
+                    <span class="toggle-label"><i class="fa-solid fa-list"></i> nombre de questions</span>
+                    <span class="questions-slider-value" id="questionCountDisplay">5</span>
+                </div>
+                <input type="range" id="questionCountSlider" class="questions-slider" min="1" max="10" value="5">
+                <div class="slider-graduations">
+                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="submenu" id="submenuShortcuts">
+        <div class="menu-header">
+            <button class="submenu-close" data-submenu="shortcuts">
+                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="submenu-title">raccourcis</div>
+        <div class="submenu-content">
+            <div class="settings-info">
+                <table class="shortcuts-table">
+                    <tr><td class="key-combo"><kbd>A</kbd></td><td>choisir la réponse A</td></tr>
+                    <tr><td class="key-combo"><kbd>B</kbd></td><td>choisir la réponse B</td></tr>
+                    <tr><td class="key-combo"><kbd>C</kbd></td><td>choisir la réponse C</td></tr>
+                    <tr><td class="key-combo"><kbd>Entrée</kbd></td><td>question suivante</td></tr>
+                    <tr><td class="key-combo"><kbd>Ctrl</kbd> + <kbd>H</kbd></td><td>renvoi au site académique</td></tr>
+                    <tr><td class="key-combo"><kbd>Ctrl</kbd> + <kbd>R</kbd></td><td>recharger / nouvelle partie</td></tr>
+                    <tr><td class="key-combo"><kbd>Ctrl</kbd> + <kbd>F</kbd></td><td>plein écran</td></tr>
+                    <tr><td class="key-combo"><kbd>Ctrl</kbd> + <kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr>
+                    <tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="submenu" id="submenuAbout">
+        <div class="menu-header">
+            <button class="submenu-close" data-submenu="about">
+                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="submenu-title">à propos</div>
+        <div class="submenu-content">
+            <div class="settings-info"><p><i class="fas fa-user"></i> application développée par Daniel Boulagnon</p></div>
+            <div class="settings-info"><p><i class="fas fa-envelope"></i> daniel.boulagnon@ac-lille.fr</p></div>
+            <div class="settings-info"><p><i class="fas fa-tag"></i> version 1.6.5 (2026)</p></div>
+            <div class="settings-info"><p><i class="fas fa-graduation-cap"></i> exploitation pédagogique et non commerciale</p></div>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        // ========== CONFIGURATION GITHUB ==========
+        const TOTAL_QUESTIONS = 10;
+        const GITHUB_REPO = 'inspection-philosophie-lille/boite-a-outils';
+        const GITHUB_PATH = 'fichiers/philo - cours - 05 - quiz sur des textes/quiz';
+        const GITHUB_API_URL =
+            `https://api.github.com/repos/${GITHUB_REPO}/contents/${encodeURIComponent(GITHUB_PATH)}`;
+
+        // ========== ÉTAT ==========
+        let currentTitre = "quiz";
+        let currentSousTitre = "tester ses connaissances";
+        let philosophyData = { texte: "", source: "" };
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let shuffledQuestions = [];
+        let originalQuestionIndices = [];
+        let userAnswers = [];
+        let isDeferredEvaluation = localStorage.getItem('deferredEvaluation') === 'true';
+        let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
+        let totalCorrectAnswers = parseInt(localStorage.getItem('totalCorrectAnswers') || '0');
+        let totalQuestionsAnswered = parseInt(localStorage.getItem('totalQuestionsAnswered') || '0');
+        let totalQuestions = parseInt(localStorage.getItem('questionCount') || '5');
+        let darkMode = localStorage.getItem('darkMode') === 'true';
+        let colorblindMode = localStorage.getItem('colorblindMode') === 'true';
+        let animationsEnabled = localStorage.getItem('animations') !== 'false';
+        let soundEnabled = localStorage.getItem('soundEnabled') === 'true';
+        let timerEnabled = localStorage.getItem('timerEnabled') === 'true';
+        let timerInterval = null;
+        let timeLeft = 30;
+        const MAX_TIME = 30;
+        let timerExpired = false;
+        let questionTimes = [];
+        let stats = JSON.parse(localStorage.getItem('quizStats') || '{}');
+
+        // ===== STOCKAGE DES QUIZ =====
+        let loadedQuizzes = [];
+        let currentQuizIndex = -1;
+        let githubQuizzes = [];
+
+        // ========== RÉFÉRENCES DOM ==========
+        const quizStart = document.getElementById('quizStart');
+        const quizQuestions = document.getElementById('quizQuestions');
+        const quizEnd = document.getElementById('quizEnd');
+        const questionsContainer = document.getElementById('questionsContainer');
+        const quizTitle = document.getElementById('quizTitle');
+        const appTitle = document.getElementById('appTitle');
+        const appSubtitle = document.getElementById('appSubtitle');
+        const mobileTitle = document.getElementById('mobileTitle');
+        const mobileSubtitle = document.getElementById('mobileSubtitle');
+        const quizRetry = document.getElementById('quizRetry');
+        const retryAfterReview = document.getElementById('retryAfterReview');
+        const mainFileSelect = document.getElementById('mainFileSelect');
+        const fileStatus = document.getElementById('fileStatus');
+        const questionCountSlider = document.getElementById('questionCountSlider');
+        const questionCountDisplay = document.getElementById('questionCountDisplay');
+        const currentQuestionSpan = document.getElementById('currentQuestion');
+        const totalQuestionsSpan = document.getElementById('totalQuestions');
+        const progressBar = document.getElementById('progressBar');
+        const philosophyTextTitle = document.getElementById('philosophyTextTitle');
+        const timerdisplay = document.getElementById('timerdisplay');
+        const timerValue = document.getElementById('timerValue');
+        const finalScoreDisplay = document.getElementById('finalScoreDisplay');
+        const finalTotalDisplay = document.getElementById('finalTotalDisplay');
+        const scoreLabel = document.getElementById('scoreLabel');
+        const correctAnswers = document.getElementById('correctAnswers');
+        const incorrectAnswers = document.getElementById('incorrectAnswers');
+        const percentageScore = document.getElementById('percentageScore');
+        const avgTimeDisplay = document.getElementById('avgTimeDisplay');
+        const totalAttempts = document.getElementById('totalAttempts');
+        const bestScore = document.getElementById('bestScore');
+        const avgScore = document.getElementById('avgScore');
+        const totalCorrect = document.getElementById('totalCorrect');
+        const totalCorrectLabel = document.getElementById('totalCorrectLabel');
+        const attemptsLabel = document.getElementById('attemptsLabel');
+        const summaryMessage = document.getElementById('summaryMessage');
+        const questionsReview = document.getElementById('questionsReview');
+        const detailedResults = document.getElementById('detailedResults');
+
+        // ===== ÉLÉMENTS POUR LE CHARGEMENT LOCAL =====
+        const fileInputSubmenu = document.getElementById('fileInputSubmenu');
+        const fileLoadBtnSubmenu = document.getElementById('fileLoadBtnSubmenu');
+        const quizSelectorSubmenu = document.getElementById('quizSelectorSubmenu');
+        const localResetBtn = document.getElementById('localResetBtn');
+
+        // ========== FONCTIONS UTILITAIRES ==========
+        function capitalizeFirstLetter(str) {
+            if (!str) return str;
+            return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+        }
+
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function updateQuizTitles(titre, sousTitre) {
+            let t = titre || "quiz";
+            if (appTitle) appTitle.textContent = t;
+            if (mobileTitle) mobileTitle.textContent = t;
+            if (quizTitle) quizTitle.textContent = titre || "quiz";
+            if (sousTitre !== undefined) {
+                if (appSubtitle) appSubtitle.textContent = sousTitre;
+                if (mobileSubtitle) mobileSubtitle.textContent = sousTitre;
+            }
+        }
+
+        function getFullName(quizName) {
+            return quizName.replace('.js', '');
+        }
+
+        function protectSpacesAroundTags(text) {
+            if (!text) return text;
+            return text
+                .replace(/(\s+)<(\/?\w+)([^>]*)>/g, (m, spaces, tag, attrs) => {
+                    return spaces.replace(/ /g, '&nbsp;') + `<${tag}${attrs}>`;
+                })
+                .replace(/<\/(\w+)>(\s+)/g, (m, tag, spaces) => {
+                    return `</${tag}>` + spaces.replace(/ /g, '&nbsp;');
+                });
+        }
+
+        function protectSpacesInAnswers(answers) {
+            return answers.map(a => protectSpacesAroundTags(a));
+        }
+
+        function getAuthorFromSource(source) {
+            if (!source) return '';
+            const comma = source.indexOf(',');
+            return comma === -1 ? source.trim() : source.substring(0, comma).trim();
+        }
+
+        function formatPhilosophyText(text) {
+            if (!text) return '';
+            let formatted = text.replace(/\[(\d+)\]/g, '<span class="bracket-number">[$1]</span>');
+            return formatted.split('\n').filter(p => p.trim()).map(p =>
+                `<p class="philosophy-paragraph">${p.trim()}</p>`
+            ).join('');
+        }
+
+        function extractWorkTitle(source) {
+            if (!source) return null;
+            const firstComma = source.indexOf(',');
+            if (firstComma === -1) return null;
+            let endIndex = source.indexOf(',', firstComma + 1);
+            if (endIndex === -1) {
+                endIndex = source.indexOf('.', firstComma + 1);
+            }
+            if (endIndex === -1) {
+                endIndex = source.length;
+            }
+            let title = source.substring(firstComma + 1, endIndex).trim();
+            title = title.replace(/^["']|["']$/g, '').trim();
+            if (!title) return null;
+            return {
+                title: title,
+                before: source.substring(0, firstComma + 1) + ' ',
+                after: source.substring(endIndex)
+            };
+        }
+
+        function displayPhilosophyText() {
+            const textContent = document.getElementById('philosophyTextContent');
+            const sourceContent = document.getElementById('philosophyTextSource');
+            const section = document.getElementById('philosophyText');
+
+            if (!philosophyData.texte || philosophyData.texte.trim() === '') {
+                section.classList.add('hidden');
+                progressBar.classList.remove('visible');
+                // Remet le sous-titre par défaut si aucun texte n'est affiché
+                if (appSubtitle) appSubtitle.textContent = currentSousTitre;
+                if (mobileSubtitle) mobileSubtitle.textContent = currentSousTitre;
+                return;
+            }
+            section.classList.remove('hidden');
+            progressBar.classList.add('visible');
+            textContent.innerHTML = formatPhilosophyText(philosophyData.texte);
+
+            let textNumber = '';
+            if (mainFileSelect && mainFileSelect.selectedIndex > 0) {
+                const selectedText = mainFileSelect.options[mainFileSelect.selectedIndex].text;
+                const match = selectedText.match(/\d+/);
+                if (match) {
+                    const num = parseInt(match[0]);
+                    if (num < 10) {
+                        textNumber = '0' + num;
+                    } else {
+                        textNumber = match[0];
+                    }
+                }
+            }
+
+            let formattedSource = '';
+            if (philosophyData.source && philosophyData.source.trim()) {
+                const author = getAuthorFromSource(philosophyData.source);
+                const capitalizedAuthor = capitalizeFirstLetter(author);
+                const workInfo = extractWorkTitle(philosophyData.source);
+
+                if (workInfo) {
+                    formattedSource = workInfo.before +
+                        '<span class="work-title">' + workInfo.title + '</span>' +
+                        workInfo.after;
+                } else {
+                    formattedSource = philosophyData.source;
+                }
+
+                // Modification ici : on construit le sous-titre avec "sur un texte de " + l'auteur
+                const subtitleText = "tester ses connaissances sur un texte de " + capitalizedAuthor;
+                if (appSubtitle) appSubtitle.textContent = subtitleText;
+                if (mobileSubtitle) mobileSubtitle.textContent = subtitleText;
+
+                if (textNumber) {
+                    philosophyTextTitle.textContent = 'TEXTE N°' + textNumber + ' DE ' + author.toUpperCase();
+                } else {
+                    philosophyTextTitle.textContent = 'TEXTE DE ' + author.toUpperCase();
+                }
+                sourceContent.innerHTML = formattedSource;
+            } else {
+                if (textNumber) {
+                    philosophyTextTitle.textContent = 'TEXTE N°' + textNumber;
+                } else {
+                    philosophyTextTitle.textContent = 'TEXTE';
+                }
+                sourceContent.innerHTML = '';
+                // Si pas de source, on remet le sous-titre par défaut
+                if (appSubtitle) appSubtitle.textContent = currentSousTitre;
+                if (mobileSubtitle) mobileSubtitle.textContent = currentSousTitre;
+            }
+        }
+
+        function hidePhilosophyText() {
+            document.getElementById('philosophyText')?.classList.add('hidden');
+            progressBar.classList.remove('visible');
+            // Remet le sous-titre par défaut si on cache le texte
+            if (appSubtitle) appSubtitle.textContent = currentSousTitre;
+            if (mobileSubtitle) mobileSubtitle.textContent = currentSousTitre;
+        }
+
+        function togglePhilosophyText() {
+            const btn = document.getElementById('toggleTextBtn');
+            const content = document.querySelector('.philosophy-text-content');
+            if (btn && content) {
+                btn.classList.toggle('collapsed');
+                content.classList.toggle('collapsed');
+            }
+        }
+
+        // ========== MISE À JOUR DES SÉLECTEURS (principal + sous-menu) ==========
+        function updateAllSelectors() {
+            if (!mainFileSelect && !quizSelectorSubmenu) return;
+
+            let options = '<option value="">-- sélectionner un texte --</option>';
+
+            githubQuizzes.forEach((qz, index) => {
+                const value = 'github_' + index;
+                options += `<option value="${value}">${getFullName(qz.name)}</option>`;
+            });
+
+            loadedQuizzes.forEach((qz, index) => {
+                const value = 'local_' + index;
+                options += `<option value="${value}">${getFullName(qz.name)}</option>`;
+            });
+
+            if (mainFileSelect) mainFileSelect.innerHTML = options;
+            if (quizSelectorSubmenu) quizSelectorSubmenu.innerHTML = options;
+
+            const total = githubQuizzes.length + loadedQuizzes.length;
+            if (fileStatus) {
+                if (total === 0) {
+                    fileStatus.textContent = 'Aucun quiz disponible';
+                } else {
+                    fileStatus.textContent = `${total} quiz disponible${total > 1 ? 's' : ''}`;
+                }
+            }
+        }
+
+        // ========== FONCTION DE CHARGEMENT DE QUIZ LOCAL ==========
+        function loadQuizData(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    try {
+                        const code = event.target.result + '\nreturn {titre, sousTitre, philosophyData, questions};';
+                        const func = new Function(code);
+                        const result = func();
+                        if (result.philosophyData && Array.isArray(result.questions) && result.questions.length > 0) {
+                            resolve({
+                                name: file.name.replace('.js', ''),
+                                data: result
+                            });
+                        } else {
+                            reject(new Error('Données incomplètes dans le fichier'));
+                        }
+                    } catch (err) {
+                        reject(err);
+                    }
+                };
+                reader.onerror = function() {
+                    reject(new Error('Erreur de lecture du fichier'));
+                };
+                reader.readAsText(file);
+            });
+        }
+
+        function loadMultipleQuizzes(files) {
+            const validFiles = Array.from(files).filter(f => f.name.endsWith('.js'));
+            if (validFiles.length === 0) {
+                alert('Veuillez sélectionner des fichiers .js valides.');
+                return;
+            }
+
+            const promises = validFiles.map(f => loadQuizData(f));
+
+            Promise.all(promises)
+                .then(results => {
+                    loadedQuizzes = loadedQuizzes.concat(results);
+                    updateAllSelectors();
+                    try {
+                        localStorage.setItem('loadedQuizzes', JSON.stringify(loadedQuizzes));
+                        loadedQuizzes.forEach((qz, index) => {
+                            localStorage.setItem('quizData_' + index, JSON.stringify(qz.data));
+                        });
+                    } catch (e) {
+                        console.error('Erreur sauvegarde:', e);
+                    }
+                    if (fileStatus && results.length > 0) {
+                        fileStatus.textContent = `✅ ${results.length} quiz chargé${results.length > 1 ? 's' : ''} !`;
+                    }
+                })
+                .catch(err => {
+                    console.error('Erreur de chargement:', err);
+                    alert('Erreur lors du chargement des fichiers: ' + err.message);
+                });
+        }
+
+        // ========== CHARGEMENT D'UN QUIZ ==========
+        function loadQuizFromSelector(value) {
+            if (!value) return;
+
+            if (value.startsWith('github_')) {
+                const index = parseInt(value.replace('github_', ''));
+                if (index >= 0 && index < githubQuizzes.length) {
+                    loadFromGitHubByIndex(index);
+                }
+            } else if (value.startsWith('local_')) {
+                const index = parseInt(value.replace('local_', ''));
+                if (index >= 0 && index < loadedQuizzes.length) {
+                    loadLocalQuizByIndex(index);
+                }
+            }
+        }
+
+        function loadLocalQuizByIndex(index) {
+            if (index < 0 || index >= loadedQuizzes.length) return;
+            const quiz = loadedQuizzes[index];
+            currentQuizIndex = index;
+            const data = quiz.data;
+
+            philosophyData = data.philosophyData || { texte: "", source: "" };
+            questions = data.questions || [];
+
+            if (data.titre) {
+                currentTitre = data.titre;
+                // On garde le sous-titre par défaut "tester ses connaissances", il sera complété par displayPhilosophyText
+                currentSousTitre = "tester ses connaissances";
+                updateQuizTitles(currentTitre, currentSousTitre);
+            }
+
+            if (fileStatus) {
+                fileStatus.textContent = `✅ "${quiz.name}" chargé !`;
+            }
+
+            if (mainFileSelect) mainFileSelect.value = 'local_' + index;
+            if (quizSelectorSubmenu) quizSelectorSubmenu.value = 'local_' + index;
+
+            if (questions.length > 0) {
+                setTimeout(startQuiz, 300);
+            }
+        }
+
+        // ========== CHARGEMENT DEPUIS GITHUB ==========
+        async function fetchGitHubFiles() {
+            try {
+                fileStatus.textContent = 'Connexion à GitHub...';
+                const resp = await fetch(GITHUB_API_URL);
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const files = await resp.json();
+                const jsFiles = files.filter(f => f.type === 'file' && f.name.endsWith('.js'));
+                if (!jsFiles.length) throw new Error('Aucun fichier .js trouvé');
+
+                githubQuizzes = jsFiles.map(f => ({
+                    name: f.name,
+                    url: f.download_url
+                }));
+
+                updateAllSelectors();
+                fileStatus.textContent = jsFiles.length === 0 ? 'Aucun quiz disponible' :
+                    `${jsFiles.length} quiz disponible${jsFiles.length > 1 ? 's' : ''}`;
+            } catch (err) {
+                fileStatus.textContent = `Erreur: ${err.message}`;
+                if (mainFileSelect) {
+                    mainFileSelect.innerHTML = `<option value="">-- Erreur --</option><option value="error" disabled>Impossible de charger</option>`;
+                }
+                if (quizSelectorSubmenu) {
+                    quizSelectorSubmenu.innerHTML = `<option value="">-- Erreur --</option><option value="error" disabled>Impossible de charger</option>`;
+                }
+            }
+        }
+
+        async function loadFromGitHubByIndex(index) {
+            if (index < 0 || index >= githubQuizzes.length) return;
+            const quiz = githubQuizzes[index];
+            try {
+                fileStatus.textContent = 'Téléchargement...';
+                const resp = await fetch(quiz.url);
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const code = await resp.text();
+                const func = new Function(code + '\nreturn {titre, sousTitre, philosophyData, questions};');
+                const result = func();
+
+                if (result.philosophyData && Array.isArray(result.questions) && result.questions.length > 0) {
+                    philosophyData = result.philosophyData;
+                    questions = result.questions;
+                    if (result.titre) {
+                        currentTitre = result.titre;
+                        currentSousTitre = "tester ses connaissances";
+                        updateQuizTitles(currentTitre, currentSousTitre);
+                    }
+                    fileStatus.textContent = `✅ "${quiz.name.replace('.js', '')}" chargé !`;
+                    if (mainFileSelect) mainFileSelect.value = 'github_' + index;
+                    if (quizSelectorSubmenu) quizSelectorSubmenu.value = 'github_' + index;
+                    setTimeout(startQuiz, 600);
+                } else {
+                    throw new Error('Données incomplètes');
+                }
+            } catch (err) {
+                fileStatus.textContent = `❌ Erreur: ${err.message}`;
+            }
+        }
+
+        // ========== FONCTIONS POUR LE MINUTEUR ==========
+        function startTimer() {
+            timerExpired = false;
+            if (!timerEnabled) {
+                if (timerdisplay) timerdisplay.style.display = 'none';
+                return;
+            }
+            if (timerdisplay) {
+                timerdisplay.style.display = 'inline-flex';
+                timerdisplay.classList.remove('warning', 'danger');
+            }
+            timeLeft = MAX_TIME;
+            timerValue.textContent = timeLeft;
+
+            if (timerInterval) clearInterval(timerInterval);
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerValue.textContent = timeLeft;
+
+                if (timerdisplay) {
+                    if (timeLeft <= 10) {
+                        timerdisplay.classList.add('warning');
+                    }
+                    if (timeLeft <= 5) {
+                        timerdisplay.classList.add('danger');
+                    }
+                }
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    timerExpired = true;
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            if (timerdisplay) {
+                timerdisplay.classList.remove('warning', 'danger');
+            }
+        }
+
+        function resetTimer() {
+            stopTimer();
+            timerExpired = false;
+            if (timerEnabled) {
+                timeLeft = MAX_TIME;
+                timerValue.textContent = timeLeft;
+                if (timerdisplay) timerdisplay.style.display = 'inline-flex';
+            } else {
+                if (timerdisplay) timerdisplay.style.display = 'none';
+            }
+        }
+
+        // ========== FONCTIONS POUR LE SON ==========
+        function playSound(type) {
+            if (!soundEnabled) return;
+
+            try {
+                let soundFile = '';
+                if (type === 'correct') {
+                    soundFile = 'sounds/reponse-bonne.mp3';
+                } else if (type === 'incorrect') {
+                    soundFile = 'sounds/reponse-mauvaise.mp3';
+                } else if (type === 'score_good') {
+                    soundFile = 'sounds/score-bon.mp3';
+                } else if (type === 'score_bad') {
+                    soundFile = 'sounds/score-mauvais.mp3';
+                } else if (type === 'click') {
+                    soundFile = 'sounds/bruit-clavier.mp3';
+                } else {
+                    return;
+                }
+
+                const audio = new Audio(soundFile);
+                audio.volume = (type === 'click') ? 0.3 : 0.8;
+                audio.preload = 'auto';
+
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.debug('Erreur lecture audio:', error);
+                        audio.load();
+                        setTimeout(() => {
+                            audio.play().catch(() => {});
+                        }, 100);
+                    });
+                }
+            } catch (e) {
+                console.debug('Erreur audio:', e);
+            }
+        }
+
+        function preloadSounds() {
+            if (!soundEnabled) return;
+
+            const sounds = [
+                'sounds/reponse-bonne.mp3',
+                'sounds/reponse-mauvaise.mp3',
+                'sounds/score-bon.mp3',
+                'sounds/score-mauvais.mp3',
+                'sounds/bruit-clavier.mp3'
+            ];
+
+            sounds.forEach(file => {
+                const audio = new Audio();
+                audio.preload = 'auto';
+                audio.src = file;
+                audio.load();
+            });
+        }
+
+        // ========== FONCTIONS POUR LES STATISTIQUES PAR QUIZ ==========
+        function updateStats(notionId, correct, total) {
+            if (!stats[notionId]) {
+                stats[notionId] = { attempts: 0, totalCorrect: 0, totalQuestions: 0, bestScore: 0, scores: [] };
+            }
+            const s = stats[notionId];
+            s.attempts++;
+            s.totalCorrect += correct;
+            s.totalQuestions += total;
+            const pct = Math.round((correct / total) * 100);
+            s.scores.push(pct);
+            s.bestScore = Math.max(s.bestScore, pct);
+
+            if (s.scores.length > 20) s.scores.shift();
+
+            localStorage.setItem('quizStats', JSON.stringify(stats));
+            displayStats(notionId);
+            updateGlobalStatsDisplay();
+        }
+
+        function displayStats(notionId) {
+            const s = stats[notionId];
+            const attempts = s ? s.attempts : 0;
+            const totalCorr = s ? s.totalCorrect : 0;
+
+            if (totalAttempts) {
+                totalAttempts.textContent = attempts;
+                const attemptsLabelEl = document.getElementById('attemptsLabel');
+                if (attemptsLabelEl) {
+                    attemptsLabelEl.textContent = attempts <= 1 ? 'tentative' : 'tentatives';
+                }
+            }
+            if (bestScore) bestScore.textContent = s ? s.bestScore + '%' : '0%';
+            const avg = s && s.scores.length > 0 ? Math.round(s.scores.reduce((a, b) => a + b, 0) / s.scores.length) : 0;
+            if (avgScore) avgScore.textContent = avg + '%';
+            if (totalCorrect) {
+                totalCorrect.textContent = totalCorr;
+                const totalCorrectLabelEl = document.getElementById('totalCorrectLabel');
+                if (totalCorrectLabelEl) {
+                    totalCorrectLabelEl.textContent = totalCorr <= 1 ? 'bonne réponse' : 'bonnes réponses';
+                }
+            }
+
+            const correct = parseInt(correctAnswers.textContent) || 0;
+            const incorrect = parseInt(incorrectAnswers.textContent) || 0;
+        }
+
+        function updateGlobalStatsDisplay() {
+            const pct = totalQuestionsAnswered ? Math.round((totalCorrectAnswers / totalQuestionsAnswered) * 100) : 0;
+            document.querySelectorAll('#statsCorrectCount, #statsCorrectCount2').forEach(el => el.textContent = totalCorrectAnswers);
+            document.querySelectorAll('#statsTotalCount, #statsTotalCount2').forEach(el => el.textContent = totalQuestionsAnswered);
+            document.querySelectorAll('#statsPercentage, #statsPercentage2').forEach(el => el.textContent = pct + '%');
+            document.querySelectorAll('#gamesPlayed, #gamesPlayed2').forEach(el => el.textContent = gamesPlayed);
+            
+            const badge = document.getElementById('statsBadge');
+            if (badge) badge.textContent = pct + '%';
+        }
+
+        // ========== LOGIQUE DU QUIZ ==========
+        function startQuiz() {
+            if (questions.length < totalQuestions) {
+                alert(`Le quiz ne contient que ${questions.length} questions. Il en faut ${totalQuestions}.`);
+                return;
+            }
+
+            originalQuestionIndices = [];
+            shuffledQuestions = [];
+
+            const indices = Array.from({ length: questions.length }, (_, i) => i);
+            shuffleArray(indices);
+
+            for (let i = 0; i < totalQuestions && i < indices.length; i++) {
+                const originalIndex = indices[i];
+                originalQuestionIndices.push(originalIndex);
+                shuffledQuestions.push(questions[originalIndex]);
+            }
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            questionTimes = [];
+
+            quizStart.classList.add('hidden');
+            quizEnd.classList.add('hidden');
+            quizQuestions.classList.remove('hidden');
+            detailedResults.classList.add('hidden');
+            if (quizRetry) quizRetry.style.display = 'inline-block';
+
+            displayPhilosophyText();
+            const btn = document.getElementById('toggleTextBtn');
+            const content = document.querySelector('.philosophy-text-content');
+            if (btn) btn.classList.remove('collapsed');
+            if (content) content.classList.remove('collapsed');
+
+            totalQuestionsSpan.textContent = totalQuestions;
+            gamesPlayed++;
+            localStorage.setItem('gamesPlayed', gamesPlayed);
+            updateGlobalStatsDisplay();
+
+            resetTimer();
+            if (timerEnabled) {
+                startTimer();
+            }
+
+            displayNextQuestion();
+        }
+
+        function displayNextQuestion() {
+            if (!questionsContainer) return;
+            questionsContainer.innerHTML = '';
+
+            if (currentQuestionIndex < totalQuestions) {
+                const q = shuffledQuestions[currentQuestionIndex];
+                const shuffledAnswers = [...q.answers];
+                shuffleArray(shuffledAnswers);
+                const protectedAnswers = protectSpacesInAnswers(shuffledAnswers);
+
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+
+                const el = document.createElement('div');
+                el.className = 'container--question';
+                el.innerHTML = `
+                            <fieldset>
+                                <legend><p>${q.question}</p></legend>
+                                <ul>${protectedAnswers.map((a, i) => `
+                                    <li class="quiz-answer" data-index="${i}" data-original="${shuffledAnswers[i].replace(/"/g, '&quot;')}" data-key="${letters[i].toLowerCase()}">
+                                        <div class="answer-text">
+                                            <span class="answer-letter">${letters[i]}</span>
+                                            <span>${a}</span>
+                                        </div>
+                                        <img src="src/false.svg" alt="" class="answer-icon hidden">
+                                    </li>
+                                `).join('')}</ul>
+                            </fieldset>
+                            <div class="next-button-container">
+                                <button class="quiz-btn next-question-btn">${currentQuestionIndex === totalQuestions - 1 ? 'votre score' : 'question suivante'}</button>
+                            </div>
+                            <div class="quiz-explanation hidden">
+                                <div class="quiz-explanation__label"><span></span></div>
+                                <p class="quiz-explanation__detail"><strong>Explication : </strong>${q.explanation ? q.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>') : ''}</p>
+                            </div>
+                        `;
+                questionsContainer.appendChild(el);
+
+                const answers = el.querySelectorAll('.quiz-answer');
+                answers.forEach((ansEl, i) => {
+                    ansEl.addEventListener('click', function onClickHandler() {
+                        const container = this.closest('.container--question');
+                        const alreadyAnswered = container.querySelector('.quiz-answer.correct, .quiz-answer.incorrect');
+                        if (alreadyAnswered) return;
+                        
+                        if (isDeferredEvaluation) {
+                            selectAnswer(this, shuffledAnswers[i]);
+                        } else {
+                            checkAnswer(this, shuffledAnswers[i], shuffledAnswers);
+                        }
+                    });
+                });
+
+                const nextBtn = el.querySelector('.next-question-btn');
+                nextBtn.onclick = () => {
+                    if (!isDeferredEvaluation) {
+                        if (!el.querySelector('.correct') && !el.querySelector('.incorrect')) {
+                            alert('Veuillez sélectionner une réponse.');
+                            return;
+                        }
+                    } else if (!userAnswers[currentQuestionIndex]) {
+                        userAnswers[currentQuestionIndex] = {
+                            question: q.question,
+                            userAnswer: null,
+                            correctAnswer: '',
+                            explanation: q.explanation,
+                            allAnswers: shuffledAnswers
+                        };
+                    }
+                    const timeSpent = MAX_TIME - timeLeft;
+                    questionTimes.push(timeSpent);
+
+                    currentQuestionIndex++;
+                    resetTimer();
+                    if (timerEnabled && currentQuestionIndex < totalQuestions) {
+                        startTimer();
+                    }
+                    displayNextQuestion();
+                };
+
+                currentQuestionSpan.textContent = currentQuestionIndex + 1;
+                updateProgressBar();
+            } else {
+                stopTimer();
+                endQuiz();
+            }
+        }
+
+        function selectAnswer(selected, selectedText) {
+            const parent = selected.parentNode;
+            Array.from(parent.children).forEach(a => a.classList.remove('selected'));
+            selected.classList.add('selected');
+
+            const q = shuffledQuestions[currentQuestionIndex];
+            userAnswers[currentQuestionIndex] = {
+                question: q.question,
+                userAnswer: selectedText,
+                correctAnswerIndex: q.correct - 1,
+                explanation: q.explanation,
+                allAnswers: Array.from(parent.children).map(el => el.dataset.original || el.textContent)
+            };
+        }
+
+        function checkAnswer(selected, selectedText, shuffledAnswers) {
+            const parent = selected.parentNode;
+            const container = selected.closest('.container--question');
+            const label = container.querySelector('.quiz-explanation__label span');
+            totalQuestionsAnswered++;
+            localStorage.setItem('totalQuestionsAnswered', totalQuestionsAnswered);
+
+            const q = shuffledQuestions[currentQuestionIndex];
+            const correctText = q.answers[q.correct - 1] || q.answers[0];
+
+            userAnswers[currentQuestionIndex] = {
+                question: q.question,
+                userAnswer: selectedText,
+                correctAnswerIndex: q.correct - 1,
+                explanation: q.explanation,
+                allAnswers: shuffledAnswers
+            };
+
+            const icon = selected.querySelector('.answer-icon');
+            
+            if (selectedText === correctText) {
+                selected.classList.add('correct');
+                if (icon) {
+                    icon.src = 'src/true.svg';
+                    icon.classList.remove('hidden');
+                }
+                score++;
+                totalCorrectAnswers++;
+                localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
+                if (label) label.innerHTML = '<img src="src/emoji-happy.gif" alt="emoji" class="emoji"> bonne réponse !';
+                if (animationsEnabled) selected.classList.add('shake-y');
+                playSound('correct');
+            } else {
+                selected.classList.add('incorrect');
+                if (icon) {
+                    icon.src = 'src/false.svg';
+                    icon.classList.remove('hidden');
+                }
+                if (label) label.innerHTML = '<img src="src/emoji-sad.gif" alt="emoji" class="emoji"> mauvaise réponse !';
+                if (animationsEnabled) selected.classList.add('shake-x');
+                playSound('incorrect');
+
+                Array.from(parent.children).forEach(a => {
+                    if ((a.dataset.original || a.textContent) === correctText) {
+                        a.classList.add('correct');
+                        const correctIcon = a.querySelector('.answer-icon');
+                        if (correctIcon) {
+                            correctIcon.src = 'src/true.svg';
+                            correctIcon.classList.remove('hidden');
+                        }
+                    }
+                });
+            }
+
+            Array.from(parent.children).forEach(a => {
+                const isCorrect = (a.dataset.original || a.textContent) === correctText;
+                if (!isCorrect && a !== selected) {
+                    a.classList.add('incorrect');
+                    const wrongIcon = a.querySelector('.answer-icon');
+                    if (wrongIcon) {
+                        wrongIcon.src = 'src/false.svg';
+                        wrongIcon.classList.remove('hidden');
+                    }
+                }
+                a.style.pointerEvents = 'none';
+            });
+
+            const expl = container.querySelector('.quiz-explanation');
+            if (expl) expl.classList.remove('hidden');
+        }
+
+        function endQuiz() {
+            quizQuestions.classList.add('hidden');
+            quizEnd.classList.remove('hidden');
+
+            if (isDeferredEvaluation) calculateDeferredScore();
+
+            const scoreEl = document.getElementById('finalScoreDisplay');
+            const totalEl = document.getElementById('finalTotalDisplay');
+            const scoreLabelEl = document.getElementById('scoreLabel');
+            
+            if (scoreEl) {
+                scoreEl.textContent = score;
+                if (scoreLabelEl) {
+                    scoreLabelEl.textContent = score <= 1 ? 'bonne réponse' : 'bonnes réponses';
+                }
+            }
+            if (totalEl) totalEl.textContent = totalQuestions;
+
+            const avgTime = questionTimes.length > 0 ? Math.round(questionTimes.reduce((a, b) => a + b, 0) / questionTimes.length) : 0;
+            if (avgTimeDisplay) avgTimeDisplay.textContent = avgTime + 's';
+
+            const correct = score;
+            const incorrect = totalQuestions - score;
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            if (correctAnswers) correctAnswers.textContent = correct;
+            const correctLabelEl = document.getElementById('correctLabel');
+            if (correctLabelEl) {
+                correctLabelEl.textContent = correct <= 1 ? 'correcte' : 'correctes';
+            }
+            
+            if (incorrectAnswers) incorrectAnswers.textContent = incorrect;
+            const incorrectLabelEl = document.getElementById('incorrectLabel');
+            if (incorrectLabelEl) {
+                incorrectLabelEl.textContent = incorrect <= 1 ? 'incorrecte' : 'incorrectes';
+            }
+            
+            if (percentageScore) percentageScore.textContent = percentage + '%';
+
+            let message = '';
+            if (percentage >= 90) message = "🌟 excellent ! vous maîtrisez parfaitement ce quiz";
+            else if (percentage >= 70) message = "👏 très bon score ! vous avez une bonne connaissance de ce quiz";
+            else if (percentage >= 50) message = "📚 score correct : continuez à étudier ce quiz";
+            else if (percentage >= 30) message = "📖 vous avez des bases : relisez l'essentiel de ce quiz";
+            else message = "💪 n'hésitez pas à refaire le quiz";
+            if (summaryMessage) summaryMessage.textContent = message;
+
+            const notionId = currentTitre || 'quiz';
+            updateStats(notionId, score, totalQuestions);
+            displayStats(notionId);
+
+            const pct = Math.round((score / totalQuestions) * 100);
+            if (pct >= 80) {
+                setTimeout(() => {
+                    launchConfetti();
+                    playSound('score_good');
+                }, 300);
+            } else if (pct < 20) {
+                setTimeout(() => {
+                    playSound('score_bad');
+                }, 500);
+            }
+
+            hidePhilosophyText();
+            updateGlobalStatsDisplay();
+
+            if (isDeferredEvaluation) {
+                setTimeout(showDetailedReview, 400);
+            }
+        }
+
+        function calculateDeferredScore() {
+            score = 0;
+            userAnswers.forEach((ans, idx) => {
+                if (!ans) return;
+                const q = shuffledQuestions[idx];
+                if (!q) return;
+                const correct = q.answers[q.correct - 1] || q.answers[0];
+                if (ans.userAnswer === correct) {
+                    score++;
+                    totalCorrectAnswers++;
+                }
+                if (ans.userAnswer !== null) totalQuestionsAnswered++;
+            });
+            localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
+            localStorage.setItem('totalQuestionsAnswered', totalQuestionsAnswered);
+        }
+
+        function showDetailedReview() {
+            if (!questionsReview) return;
+            questionsReview.innerHTML = '';
+
+            userAnswers.forEach((ans, idx) => {
+                if (!ans) return;
+                const q = shuffledQuestions[idx];
+                if (!q) return;
+                const correct = q.answers[q.correct - 1] || q.answers[0];
+                const isCorrect = ans.userAnswer === correct;
+                const div = document.createElement('div');
+                div.className = `review-item ${isCorrect ? 'correct-item' : 'incorrect-item'}`;
+                div.innerHTML = `
+                            <p style="font-weight:bold;font-size:0.85rem;margin-bottom:3px;">${ans.question}</p>
+                            <p style="font-size:0.8rem;margin:2px 0;"><strong>Votre réponse :</strong> ${protectSpacesAroundTags(ans.userAnswer || 'Non répondue')}</p>
+                            <p style="font-size:0.8rem;margin:2px 0;"><strong>Réponse correcte :</strong> ${protectSpacesAroundTags(correct)}</p>
+                            <p style="font-size:0.75rem;margin-top:3px;"><strong>Explication :</strong> ${ans.explanation ? ans.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>') : ''}</p>
+                        `;
+                questionsReview.appendChild(div);
+            });
+
+            detailedResults.classList.remove('hidden');
+        }
+
+        function launchConfetti() {
+            const container = document.createElement('div');
+            container.className = 'confetti-container';
+            document.body.appendChild(container);
+
+            const colors = ['#ff0000', '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff', '#ff9f43'];
+
+            for (let i = 0; i < 160; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.width = (Math.random() * 8 + 4) + 'px';
+                piece.style.height = (Math.random() * 8 + 4) + 'px';
+                piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                piece.style.animationDelay = (Math.random() * 1.5) + 's';
+                container.appendChild(piece);
+            }
+
+            setTimeout(() => container.remove(), 4000);
+        }
+
+        // ========== RÉINITIALISATION ==========
+        function resetLoadedQuizzes() {
+            if (confirm('Voulez-vous vraiment réinitialiser les quiz chargés localement ?')) {
+                loadedQuizzes = [];
+                currentQuizIndex = -1;
+                localStorage.removeItem('loadedQuizzes');
+                localStorage.removeItem('currentQuizIndex');
+                for (let i = 0; i < 100; i++) {
+                    localStorage.removeItem('quizData_' + i);
+                }
+                updateAllSelectors();
+                if (fileStatus) {
+                    fileStatus.textContent = 'Aucun quiz chargé localement';
+                }
+                quizStart.classList.remove('hidden');
+                quizQuestions.classList.add('hidden');
+                quizEnd.classList.add('hidden');
+            }
+        }
+
+        function resetApplication() {
+            if (confirm('Voulez-vous vraiment réinitialiser l\'application ? Toutes les données (statistiques, paramètres) seront effacées.')) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
+        function resetStats() {
+            if (confirm('Voulez-vous vraiment réinitialiser les statistiques ?')) {
+                stats = {};
+                localStorage.setItem('quizStats', JSON.stringify(stats));
+                totalCorrectAnswers = 0;
+                totalQuestionsAnswered = 0;
+                gamesPlayed = 0;
+                localStorage.setItem('totalCorrectAnswers', '0');
+                localStorage.setItem('totalQuestionsAnswered', '0');
+                localStorage.setItem('gamesPlayed', '0');
+                updateGlobalStatsDisplay();
+                if (currentTitre) {
+                    displayStats(currentTitre);
+                }
+            }
+        }
+
+        // ========== MENU ==========
+        function closeAllSubmenus() {
+            document.querySelectorAll('.submenu').forEach(s => s.classList.remove('active'));
+        }
+
+        function closeMenu() {
+            document.getElementById('slideMenu')?.classList.remove('open');
+            document.getElementById('menuOverlay')?.classList.remove('open');
+            document.body.style.overflow = '';
+            closeAllSubmenus();
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('slideMenu');
+            const overlay = document.getElementById('menuOverlay');
+            if (menu?.classList.contains('open')) {
+                closeMenu();
+            } else {
+                overlay?.classList.add('open');
+                menu?.classList.add('open');
+                document.body.style.overflow = 'hidden';
+                closeAllSubmenus();
+            }
+        }
+
+        // ========== PLEIN ÉCRAN ==========
+        function updateFullscreen() {
+            const isFullscreen = !!document.fullscreenElement;
+            document.body.classList.toggle('fullscreen', isFullscreen);
+            const trigger = document.getElementById('hoverTrigger');
+            if (trigger) trigger.classList.toggle('active', isFullscreen);
+
+            const btns = document.querySelectorAll('.btn-fullscreen');
+            btns.forEach(btn => {
+                btn.classList.toggle('fullscreen-active', isFullscreen);
+                const title = isFullscreen ? 'quitter plein écran (F)' : 'plein écran (F)';
+                btn.dataset.title = title;
+
+                if (isFullscreen) {
+                    btn.innerHTML = `
+                        <svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
+                            <line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
+                            <line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
+                            <line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
+                            <line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
+                        </svg>
+                    `;
+                } else {
+                    btn.innerHTML = `<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+                        <line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+                        <line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+                        <line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+                        <line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+                    </svg>`;
+                }
+            });
+        }
+
+        document.addEventListener('fullscreenchange', updateFullscreen);
+
+        // ========== PROGRESSION ==========
+        function updateProgressBar() {
+            const bar = document.querySelector('.progress-bar__cursor--dynamic');
+            if (bar) {
+                const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+                bar.style.width = Math.min(progress, 100) + '%';
+            }
+        }
+
+        // ========== RACCOURCIS CLAVIER ==========
+        document.addEventListener('keydown', function(e) {
+            if (e.target.matches('input, textarea, select, [contenteditable]')) return;
+
+            const keyMap = {
+                'a': 0, 'A': 0,
+                'b': 1, 'B': 1,
+                'c': 2, 'C': 2
+            };
+
+            if (keyMap.hasOwnProperty(e.key)) {
+                const currentQuestion = document.querySelector('.container--question');
+                if (currentQuestion) {
+                    const answers = currentQuestion.querySelectorAll('.quiz-answer');
+                    const alreadyAnswered = currentQuestion.querySelector('.quiz-answer.correct, .quiz-answer.incorrect, .quiz-answer.selected');
+                    if (!alreadyAnswered) {
+                        const targetIndex = keyMap[e.key];
+                        if (targetIndex < answers.length) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            answers[targetIndex].click();
+                        }
+                    }
+                }
+                return;
+            }
+
+            if (e.key === 'Enter') {
+                const nextBtn = document.querySelector('.next-question-btn');
+                if (nextBtn && !nextBtn.disabled) {
+                    e.preventDefault();
+                    nextBtn.click();
+                }
+            }
+        });
+
+        // ========== INITIALISATION ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            if (darkMode) {
+                document.body.classList.add('dark-theme');
+                document.getElementById('darkModeToggle').checked = true;
+            }
+            if (colorblindMode) {
+                document.body.classList.add('colorblind-mode');
+                document.getElementById('colorblindToggle').checked = true;
+            }
+            if (isDeferredEvaluation) {
+                document.getElementById('deferredEvaluationToggle').checked = true;
+            }
+            if (!animationsEnabled) {
+                document.getElementById('animationsToggle').checked = false;
+            }
+
+            const soundToggle = document.getElementById('soundToggle');
+            if (soundToggle) {
+                const storedSound = localStorage.getItem('soundEnabled');
+                soundEnabled = storedSound === 'true';
+                soundToggle.checked = soundEnabled;
+                if (soundEnabled) {
+                    preloadSounds();
+                }
+            }
+
+            const timerToggle = document.getElementById('timerToggle');
+            if (timerToggle) {
+                const storedTimer = localStorage.getItem('timerEnabled');
+                timerEnabled = storedTimer === 'true';
+                timerToggle.checked = timerEnabled;
+                if (!timerEnabled && timerdisplay) {
+                    timerdisplay.style.display = 'none';
+                }
+            }
+
+            const savedCount = parseInt(localStorage.getItem('questionCount') || '5');
+            totalQuestions = savedCount;
+            if (questionCountSlider) questionCountSlider.value = savedCount;
+            if (questionCountDisplay) questionCountDisplay.textContent = savedCount;
+
+            // Initialisation du sous-titre
+            updateQuizTitles(currentTitre, currentSousTitre);
+
+            fetchGitHubFiles();
+
+            try {
+                const savedQuizzes = localStorage.getItem('loadedQuizzes');
+                if (savedQuizzes) {
+                    const parsed = JSON.parse(savedQuizzes);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        loadedQuizzes = parsed;
+                        updateAllSelectors();
+                        const savedIndex = parseInt(localStorage.getItem('currentQuizIndex') || '-1');
+                        if (savedIndex >= 0 && savedIndex < loadedQuizzes.length) {
+                            currentQuizIndex = savedIndex;
+                            const quizData = localStorage.getItem('quizData_' + savedIndex);
+                            if (quizData) {
+                                try {
+                                    const data = JSON.parse(quizData);
+                                    philosophyData = data.philosophyData || { texte: "", source: "" };
+                                    questions = data.questions || [];
+                                    if (data.titre) {
+                                        currentTitre = data.titre;
+                                        currentSousTitre = "tester ses connaissances";
+                                        updateQuizTitles(currentTitre, currentSousTitre);
+                                    }
+                                    if (fileStatus) {
+                                        fileStatus.textContent = `✅ "${loadedQuizzes[savedIndex].name}" chargé !`;
+                                    }
+                                    if (mainFileSelect) mainFileSelect.value = 'local_' + savedIndex;
+                                    if (quizSelectorSubmenu) quizSelectorSubmenu.value = 'local_' + savedIndex;
+                                    if (questions.length > 0) {
+                                        setTimeout(startQuiz, 500);
+                                    }
+                                } catch (e) {
+                                    console.error('Erreur restauration quiz:', e);
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error('Erreur restauration des quizzes:', e);
+            }
+
+            // ===== ÉVÉNEMENTS DES SÉLECTEURS =====
+            if (mainFileSelect) {
+                mainFileSelect.addEventListener('change', function() {
+                    const value = this.value;
+                    if (value) {
+                        playSound('click');
+                        if (quizSelectorSubmenu) quizSelectorSubmenu.value = value;
+                        loadQuizFromSelector(value);
+                    }
+                });
+            }
+
+            if (quizSelectorSubmenu) {
+                quizSelectorSubmenu.addEventListener('change', function() {
+                    const val = this.value;
+                    if (val) {
+                        playSound('click');
+                        if (mainFileSelect) mainFileSelect.value = val;
+                        loadQuizFromSelector(val);
+                    }
+                });
+            }
+
+            // ===== ÉVÉNEMENTS POUR LE CHARGEMENT LOCAL =====
+            fileLoadBtnSubmenu.addEventListener('click', () => {
+                playSound('click');
+                fileInputSubmenu.click();
+            });
+
+            fileInputSubmenu.addEventListener('change', (e) => {
+                const files = e.target.files;
+                if (!files || files.length === 0) return;
+                playSound('click');
+                loadMultipleQuizzes(files);
+                fileInputSubmenu.value = '';
+            });
+
+            if (localResetBtn) {
+                localResetBtn.addEventListener('click', function() {
+                    playSound('click');
+                    resetLoadedQuizzes();
+                });
+            }
+
+            document.getElementById('localFilesButton')?.addEventListener('click', function() {
+                playSound('click');
+                closeAllSubmenus();
+                document.getElementById('submenuLocalFiles')?.classList.add('active');
+            });
+
+            // ===== ACTIONS DE LA BARRE D'OUTILS =====
+            document.querySelectorAll('[data-action]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const action = btn.dataset.action;
+                    e.preventDefault();
+                    playSound('click');
+                    switch (action) {
+                        case 'home':
+                            window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+                            break;
+                        case 'reload':
+                            if (questions.length) startQuiz();
+                            break;
+                        case 'fullscreen':
+                            if (!document.fullscreenElement) {
+                                document.documentElement.requestFullscreen();
+                            } else {
+                                document.exitFullscreen();
+                            }
+                            break;
+                        case 'menu':
+                            toggleMenu();
+                            break;
+                    }
+                });
+            });
+
+            // ===== MENU =====
+            document.getElementById('menuClose')?.addEventListener('click', function() {
+                playSound('click');
+                closeMenu();
+            });
+            document.getElementById('menuOverlay')?.addEventListener('click', function() {
+                playSound('click');
+                closeMenu();
+            });
+
+            document.getElementById('instructionsButton')?.addEventListener('click', function() {
+                playSound('click');
+                closeAllSubmenus();
+                document.getElementById('submenuInstructions')?.classList.add('active');
+            });
+
+            document.getElementById('statsButton')?.addEventListener('click', function() {
+                playSound('click');
+                closeAllSubmenus();
+                updateGlobalStatsDisplay();
+                document.getElementById('submenuStats')?.classList.add('active');
+            });
+            document.getElementById('settingsButton')?.addEventListener('click', function() {
+                playSound('click');
+                closeAllSubmenus();
+                document.getElementById('submenuSettings')?.classList.add('active');
+            });
+            document.getElementById('shortcutsButton')?.addEventListener('click', function() {
+                playSound('click');
+                closeAllSubmenus();
+                document.getElementById('submenuShortcuts')?.classList.add('active');
+            });
+            document.getElementById('aboutButton')?.addEventListener('click', function() {
+                playSound('click');
+                closeAllSubmenus();
+                document.getElementById('submenuAbout')?.classList.add('active');
+            });
+
+            document.getElementById('resetButton')?.addEventListener('click', function() {
+                playSound('click');
+                resetApplication();
+            });
+
+            document.querySelectorAll('.submenu-close').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    playSound('click');
+                    closeAllSubmenus();
+                });
+            });
+
+            document.getElementById('resetStatsBtn')?.addEventListener('click', function() {
+                playSound('click');
+                resetStats();
+            });
+
+            quizRetry?.addEventListener('click', function() {
+                playSound('click');
+                if (questions.length) startQuiz();
+            });
+            retryAfterReview?.addEventListener('click', function() {
+                playSound('click');
+                if (questions.length) startQuiz();
+            });
+            document.getElementById('toggleTextBtn')?.addEventListener('click', function() {
+                playSound('click');
+                togglePhilosophyText();
+            });
+
+            // ===== TOGGLES =====
+            document.getElementById('darkModeToggle')?.addEventListener('change', function() {
+                const checked = this.checked;
+                darkMode = checked;
+                document.body.classList.toggle('dark-theme', checked);
+                localStorage.setItem('darkMode', checked);
+                playSound('click');
+            });
+
+            document.getElementById('colorblindToggle')?.addEventListener('change', function() {
+                const checked = this.checked;
+                colorblindMode = checked;
+                document.body.classList.toggle('colorblind-mode', checked);
+                localStorage.setItem('colorblindMode', checked);
+                playSound('click');
+            });
+
+            document.getElementById('deferredEvaluationToggle')?.addEventListener('change', function() {
+                const checked = this.checked;
+                isDeferredEvaluation = checked;
+                localStorage.setItem('deferredEvaluation', checked);
+                playSound('click');
+            });
+
+            document.getElementById('animationsToggle')?.addEventListener('change', function() {
+                const checked = this.checked;
+                animationsEnabled = checked;
+                localStorage.setItem('animations', checked);
+                playSound('click');
+            });
+
+            document.getElementById('soundToggle')?.addEventListener('change', function() {
+                const checked = this.checked;
+                soundEnabled = checked;
+                localStorage.setItem('soundEnabled', String(checked));
+                if (soundEnabled) {
+                    preloadSounds();
+                }
+                playSound('click');
+            });
+
+            document.getElementById('timerToggle')?.addEventListener('change', function() {
+                const checked = this.checked;
+                timerEnabled = checked;
+                localStorage.setItem('timerEnabled', String(checked));
+                if (!timerEnabled) {
+                    stopTimer();
+                    if (timerdisplay) timerdisplay.style.display = 'none';
+                } else {
+                    resetTimer();
+                    if (!quizEnd.classList.contains('hidden') && !quizQuestions.classList.contains('hidden')) {
+                        startTimer();
+                    }
+                }
+                playSound('click');
+            });
+
+            if (questionCountSlider) {
+                questionCountSlider.addEventListener('input', function() {
+                    const val = parseInt(questionCountSlider.value);
+                    totalQuestions = val;
+                    questionCountDisplay.textContent = val;
+                    localStorage.setItem('questionCount', val);
+                    playSound('click');
+                });
+            }
+
+            updateFullscreen();
+            updateGlobalStatsDisplay();
+
+            document.addEventListener('keydown', (e) => {
+                if (e.target.matches('input, textarea, select')) return;
+
+                const key = e.key.toLowerCase();
+                if (key === 'escape') {
+                    closeMenu();
+                    closeAllSubmenus();
+                    return;
+                }
+
+                if (e.ctrlKey || e.metaKey) {
+                    switch (key) {
+                        case 'h':
+                            e.preventDefault();
+                            window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+                            break;
+                        case 'r':
+                            e.preventDefault();
+                            if (questions.length) startQuiz();
+                            break;
+                        case 'f':
+                            e.preventDefault();
+                            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+                            else document.exitFullscreen();
+                            break;
+                        case 'm':
+                            e.preventDefault();
+                            toggleMenu();
+                            break;
+                    }
+                }
+            });
+
+            if (soundEnabled) {
+                preloadSounds();
+            }
+        });
+
+        // ===== STYLE POUR LES CONFETTIS =====
+        const confettiStyle = document.createElement('style');
+        confettiStyle.textContent = `
+            .confetti-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 99999;
+                overflow: hidden;
+            }
+            .confetti-piece {
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                top: -10px;
+                animation: confetti-fall linear forwards;
+            }
+            @keyframes confetti-fall {
+                0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+                100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(confettiStyle);
+
+    })();
+    </script>
+</body>
+</html>
