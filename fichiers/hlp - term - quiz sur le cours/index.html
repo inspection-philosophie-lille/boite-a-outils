@@ -3460,21 +3460,26 @@
 				const attempts = s ? s.attempts : 0;
 				const totalCorr = s ? s.totalCorrect : 0;
 
-				if (totalAttempts) totalAttempts.textContent = attempts;
+				if (totalAttempts) {
+					totalAttempts.textContent = attempts;
+					const attemptsLabelEl = document.getElementById('attemptsLabel');
+					if (attemptsLabelEl) {
+						attemptsLabelEl.textContent = attempts <= 1 ? 'tentative' : 'tentatives';
+					}
+				}
 				if (bestScore) bestScore.textContent = s ? s.bestScore + '%' : '0%';
 				const avg = s && s.scores.length > 0 ? Math.round(s.scores.reduce((a, b) => a + b, 0) / s.scores.length) : 0;
 				if (avgScore) avgScore.textContent = avg + '%';
-				if (totalCorrect) totalCorrect.textContent = totalCorr;
+				if (totalCorrect) {
+					totalCorrect.textContent = totalCorr;
+					const totalCorrectLabelEl = document.getElementById('totalCorrectLabel');
+					if (totalCorrectLabelEl) {
+						totalCorrectLabelEl.textContent = totalCorr <= 1 ? 'bonne réponse' : 'bonnes réponses';
+					}
+				}
 
 				const correct = parseInt(correctAnswers.textContent) || 0;
 				const incorrect = parseInt(incorrectAnswers.textContent) || 0;
-				updateLabels(correct, incorrect, attempts, totalCorr);
-			}
-
-			function updateLabels(correct, incorrect, attempts, totalCorr) {
-				if (scoreLabel) scoreLabel.textContent = correct <= 1 ? 'bonne réponse' : 'bonnes réponses';
-				if (attemptsLabel) attemptsLabel.textContent = attempts <= 1 ? 'tentative' : 'tentatives';
-				if (totalCorrectLabel) totalCorrectLabel.textContent = totalCorr <= 1 ? 'bonne réponse' : 'bonnes réponses';
 			}
 
 			function updateGlobalStatsDisplay() {
@@ -3531,7 +3536,7 @@
 				resetTimer();
 				if (timerEnabled) {
 					startTimer();
-					}
+				}
 
 				displayNextQuestion();
 			}
@@ -3724,7 +3729,17 @@
 				const percentage = Math.round((score / totalQuestions) * 100);
 				
 				if (correctAnswers) correctAnswers.textContent = correct;
+				const correctLabelEl = document.getElementById('correctLabel');
+				if (correctLabelEl) {
+					correctLabelEl.textContent = correct <= 1 ? 'correcte' : 'correctes';
+				}
+				
 				if (incorrectAnswers) incorrectAnswers.textContent = incorrect;
+				const incorrectLabelEl = document.getElementById('incorrectLabel');
+				if (incorrectLabelEl) {
+					incorrectLabelEl.textContent = incorrect <= 1 ? 'incorrecte' : 'incorrectes';
+				}
+				
 				if (percentageScore) percentageScore.textContent = percentage + '%';
 
 				let message = '';
