@@ -13,7 +13,7 @@ const sousTitre = "Tester ses connaissances sur un texte de D'AQUIN";
 const philosophyData = {
 		texte: `« [1] Toute loi, avons-nous dit, vise l'intérêt commun des hommes, et c'est seulement dans cette mesure qu'elle acquiert force et valeur de loi. [2] Dans la mesure, au contraire, où elle ne réalise pas ce but, elle perd sa force d'obligation […]. [3] Or, il arrive fréquemment qu'une disposition légale utile à observer pour le bien public en règle générale devienne, en certains cas, extrêmement nuisible. [4] Car le législateur, ne pouvant envisager tous les cas particuliers, rédige la loi en fonction de ce qui se présente le plus souvent, portant son attention sur l'utilité commune. [5] C'est pourquoi s'il surgit un cas où l'observation de telle loi soit préjudiciable au bien commun, celle-ci ne doit plus être observée.
 [6] Ainsi à supposer que dans une ville assiégée on promulgue la loi que les portes doivent demeurer closes, c'est évidemment utile au bien public, en règle générale ; mais s'il arrive que les ennemis poursuivent des citoyens dont dépend le salut de la cité, il serait très préjudiciable à cette ville de ne pas leur ouvrir ses portes. [7] Et par conséquent dans une telle occurrence, il faudrait ouvrir les portes, malgré les termes de la loi, afin de sauvegarder l'intérêt général que le législateur a en vue. »`,
-		source: "THOMAS D’AQUIN, Somme théologique, \Prima Secundae\ (Ia-IIae), q.96, art.6, trad. A. Lemonnyer o. p., Paris, Desclée&Brouwer/Le Cerf, 1955, pp.174-175"
+		source: "THOMAS D’AQUIN, Somme théologique, Prima Secundae (Ia-IIae), q.96, art.6, trad. A. Lemonnyer o. p., Paris, Desclée & Brouwer / Le Cerf, 1955, pp.174-175"
 };
 
 // ============================================

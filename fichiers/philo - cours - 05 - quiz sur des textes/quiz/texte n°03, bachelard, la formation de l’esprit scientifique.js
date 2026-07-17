@@ -14,7 +14,7 @@ const philosophyData = {
 		texte: `« [1] La science, dans son besoin d'achèvement comme dans son principe, s'oppose absolument à l'opinion. [2] S'il lui arrive, sur un point particulier, de légitimer l'opinion, c'est pour d'autres raisons que celles qui fondent l'opinion ; de sorte que l'opinion a, en droit, toujours tort. [3] L'opinion pense mal ; elle ne pense pas : elle traduit des besoins en connaissances. [4] En désignant les objets par leur utilité, elle s'interdit de les connaître. [5] On ne peut rien fonder sur l'opinion : il faut d'abord la détruire. [6] Elle est le premier obstacle à surmonter.
 [7] Il ne suffirait pas, par exemple, de la rectifier sur des points particuliers, en maintenant, comme une sorte de morale provisoire, une connaissance vulgaire provisoire. [8] L'esprit scientifique nous interdit d'avoir une opinion sur des questions que nous ne comprenons pas, sur des questions que nous ne savons pas formuler clairement. [9] Avant tout, il faut savoir poser des problèmes. [10] Et quoi qu'on dise, dans la vie scientifique, les problèmes ne se posent pas d'eux-mêmes. [11] C'est précisément ce sens du problème qui donne la marque du véritable esprit scientifique. [12] Pour un esprit scientifique, toute connaissance est une réponse à une question. [13] S'il n'y a pas eu de question, il ne peut y avoir connaissance scientifique. [14] Rien ne va de soi. [15] Rien n'est donné. Tout est construit. »`,
 
-		source: "BACHELARD, La formation de l'esprit scientifique, I, §1, (1938) Paris, Librairie philosophique J. Vrin, p.14"
+		source: "BACHELARD, La formation de l'esprit scientifique, I, §1, Paris, Librairie philosophique J. Vrin, 1938, p.14"
 };
 
 // ============================================

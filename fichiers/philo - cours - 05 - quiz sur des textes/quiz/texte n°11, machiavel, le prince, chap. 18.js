@@ -14,7 +14,7 @@ const philosophyData = {
     texte: `« [1] … les hommes ont tant de crédulité, ils se plient si servilement aux nécessités du moment que le trompeur trouvera toujours quelqu'un qui se laisse tromper. […] 
 [2] Il n'est donc pas nécessaire à un prince de posséder toutes les vertus énumérées plus haut ; ce qu'il faut, c'est qu'il paraisse les avoir. [3] Bien mieux, j'affirme que s'il les avait et les appliquait toujours, elles lui porteraient préjudice ; mais si ce sont de simples apparences, il en tirera profit. [4] Ainsi, tu peux sembler — et être réellement — pitoyable, fidèle, humain, intègre, religieux : fort bien ; mais tu dois avoir entraîné ton cœur à être exactement l'opposé, si les circonstances l'exigent. [5] Si bien qu'un prince doit comprendre — et spécialement un prince nouveau — qu'il ne peut pratiquer toutes ces vertus qui rendent les hommes dignes de louanges, puisqu'il lui faut souvent, s'il veut garder le pouvoir, agir contre la foi, contre la charité, contre l'humanité, contre la religion. »`,
     
-    source: "MACHIAVEL, Le Prince, chap. XVIII, trad. E. Barincou, in Œuvres complètes, Paris, Gallimard, coll. \"Pléiade\", [1532], 1952, p. 341"
+    source: "MACHIAVEL, Le Prince, chap. XVIII, trad. E. Barincou, in Œuvres complètes, Paris, Gallimard, coll. Pléiade, [1532] 1952, p. 341"
 };
 
 // ============================================
