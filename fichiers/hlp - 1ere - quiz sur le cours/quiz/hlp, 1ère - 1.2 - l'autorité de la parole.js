@@ -2,7 +2,7 @@
 // DONNÉES GÉNÉRALES
 // ============================================
 const titre = "QUIZ HPL 1ère - l'autorité de la parole";
-const sousTitre = "100 questions";
+const sousTitre = "tester ses connaissances";
 
 // ============================================
 // DONNÉES DU TEXTE PHILOSOPHIQUE (Synthèse)

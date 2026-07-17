@@ -2,7 +2,7 @@
 // DONNÉES GÉNÉRALES
 // ============================================
 const titre = "QUIZ HLP 1ère - décrire, figurer, imaginer";
-const sousTitre = "100 questions";
+const sousTitre = "tester ses connaissances";
 
 // ============================================
 // DONNÉES DU TEXTE PHILOSOPHIQUE (Synthèse)

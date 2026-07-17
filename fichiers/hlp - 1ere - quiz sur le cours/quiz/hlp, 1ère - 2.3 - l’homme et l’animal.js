@@ -2,7 +2,7 @@
 // DONNÉES GÉNÉRALES
 // ============================================
 const titre = "QUIZ HLP 1ère - l'homme et l'animal";
-const sousTitre = "100 questions";
+const sousTitre = "tester ses connaissances";
 
 // ============================================
 // DONNÉES DU TEXTE PHILOSOPHIQUE (Synthèse)
