@@ -1639,19 +1639,19 @@
 			object-fit: contain;
 		}
 
-.next-button-container {
-	text-align: center;
-	padding: 10px 0 0px;
-	flex-shrink: 0;
-	background: var(--bg);
-	margin-top: auto;
-	width: 100% !important;
-	margin-left: 0 !important;
-	margin-right: 0 !important;
-	max-width: 700px !important;
-	border: none !important;
-	box-shadow: none !important;
-}
+		.next-button-container {
+			text-align: center;
+			padding: 10px 0 0px;
+			flex-shrink: 0;
+			background: var(--bg);
+			margin-top: auto;
+			width: 100% !important;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			max-width: 700px !important;
+			border: none !important;
+			box-shadow: none !important;
+		}
 
 		.next-button-container .quiz-btn {
 			margin: 0 auto;
@@ -2117,6 +2117,20 @@
 		@keyframes confetti-fall {
 			0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
 			100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
+		}
+
+		/* ===== STARS PARTICLES ===== */
+		.star-particle {
+			position: fixed;
+			pointer-events: none;
+			font-size: 24px;
+			z-index: 99998;
+			animation: star-float 1.2s ease-out forwards;
+		}
+
+		@keyframes star-float {
+			0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+			100% { opacity: 0; transform: translateY(-150px) scale(0) rotate(180deg); }
 		}
 
 		/* ===== RESPONSIVE ===== */
@@ -4554,6 +4568,22 @@
 		const timerdisplay = document.getElementById('timerdisplay');
 		const timerValue = document.getElementById('timerValue');
 
+		// ===== FONCTION POUR FAIRE APPARAÎTRE DES ÉTOILES =====
+		function spawnStars(x, y) {
+			const emojis = ['⭐', '🌟', '✨', '💫'];
+			for (let i = 0; i < 6; i++) {
+				const el = document.createElement('div');
+				el.className = 'star-particle';
+				el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+				el.style.left = (x + (Math.random() - 0.5) * 80) + 'px';
+				el.style.top = (y + (Math.random() - 0.5) * 80) + 'px';
+				el.style.fontSize = (16 + Math.random() * 20) + 'px';
+				el.style.animationDuration = (0.8 + Math.random() * 0.6) + 's';
+				document.body.appendChild(el);
+				setTimeout(() => el.remove(), 1500);
+			}
+		}
+
 		// ===== SONS AVEC FICHIERS MP3 =====
 		function playSound(type) {
 			if (!soundEnabled) return;
@@ -5033,7 +5063,7 @@
 			questions.forEach((question, questionIndex) => {
 				const answers = question.querySelectorAll('.quiz-answer');
 				answers.forEach((answer, answerIndex) => {
-					answer.addEventListener('click', function() {
+					answer.addEventListener('click', function(e) {
 						if (!deferredEvaluationMode) answers.forEach(a => a.style.pointerEvents = 'none');
 						const isCorrect = this.getAttribute('data-correct') === 'true';
 						const userAnswer = this.querySelector('.answer-text span:last-child')?.textContent || '';
@@ -5045,6 +5075,11 @@
 							question: selectedQuestions[questionIndex]?.question || ''
 						};
 						const isColorblind = document.body.classList.contains('colorblind-mode');
+						
+						// ===== ÉTOILES AU CLIC =====
+						const rect = this.getBoundingClientRect();
+						spawnStars(rect.left + rect.width / 2, rect.top + rect.height / 2);
+						
 						if (!deferredEvaluationMode) {
 							answers.forEach(a => {
 								const aIsCorrect = a.getAttribute('data-correct') === 'true';
