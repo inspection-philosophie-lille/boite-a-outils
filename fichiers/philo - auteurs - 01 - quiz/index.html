@@ -26,6 +26,7 @@
 
 		:root {
 			--bg: #f0f0f0;
+			--quiz-bg: #dcdcdc;
 			--btn: #e0e0e0;
 			--font-color: #000000;
 			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.9);
@@ -37,6 +38,7 @@
 			--color-incorrect: #dc3545;
 			--border-correct: #28a745;
 			--border-incorrect: #dc3545;
+			--quiz-max-width: 700px;
 		}
 
 		body {
@@ -53,6 +55,7 @@
 
 		body.dark-theme {
 			--bg: #121212;
+			--quiz-bg: #2a2a2a;
 			--btn: #3d3d3d;
 			--font-color: #ffffff;
 			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.05);
@@ -1226,11 +1229,11 @@
 			background: #3d3d3d;
 		}
 
-		/* ===== QUIZ ===== */
+		/* ===== QUIZ - CONTENEUR PRINCIPAL ===== */
 		.container--quiz {
-			background: var(--bg);
+			background: var(--quiz-bg);
 			width: 100% !important;
-			max-width: 100% !important;
+			max-width: var(--quiz-max-width) !important;
 			height: auto;
 			min-height: 500px;
 			overflow: visible;
@@ -1240,7 +1243,9 @@
 			color: var(--font-color);
 			display: flex;
 			flex-direction: column;
-			border: 6px solid var(--bg);
+			border: 6px solid var(--quiz-bg);
+			transition: background-color 0.4s ease;
+			padding: 0 20px 20px 20px;	/* ← AJOUT : 20px de padding à gauche et à droite */
 		}
 
 		.quiz-btn {
@@ -1275,7 +1280,7 @@
 		/* ===== CONTENEUR POUR ALIGNEMENT HORIZONTAL ===== */
 		.quiz-content-wrapper {
 			max-width: 50vw;
-			max-width: 700px;
+			max-width: var(--quiz-max-width);
 			margin: 0 auto;
 			width: 100%;
 		}
@@ -1285,7 +1290,7 @@
 		.container--quiz .container--question,
 		.container--quiz .quiz-explanation,
 		.container--quiz .next-button-container {
-			max-width: 700px;
+			max-width: var(--quiz-max-width);
 			margin-left: auto !important;
 			margin-right: auto !important;
 			width: 100% !important;
@@ -1294,14 +1299,13 @@
 		.progress-bar {
 			align-items: center;
 			width: 100% !important;
-			max-width: 700px !important;
-			background-color: var(--bg);
-			padding: 0px 15px;
+			max-width: var(--quiz-max-width) !important;
+			background-color: var(--quiz-bg);
+			padding: 0px 0px;
 			flex-shrink: 0;
 			position: sticky;
 			top: 0;
 			z-index: 10;
-			background: var(--bg);
 			box-shadow: none !important;
 			margin: 0 auto;
 			display: block;
@@ -1404,7 +1408,7 @@
 			overflow-y: visible;
 			position: relative;
 			padding-bottom: 0;
-			max-width: 700px;
+			max-width: var(--quiz-max-width);
 			margin: 0 auto !important;
 		}
 
@@ -1597,7 +1601,7 @@
 			text-align: left;
 			padding: 15px;
 			width: 100% !important;
-			max-width: 700px !important;
+			max-width: var(--quiz-max-width) !important;
 			box-shadow: var(--shadow-out);
 			flex-shrink: 0;
 			max-height: none;
@@ -1628,12 +1632,12 @@
 			text-align: center;
 			padding: 10px 0 0px;
 			flex-shrink: 0;
-			background: var(--bg);
+			background: var(--quiz-bg);
 			margin-top: auto;
 			width: 100% !important;
 			margin-left: 0 !important;
 			margin-right: 0 !important;
-			max-width: 700px !important;
+			max-width: var(--quiz-max-width) !important;
 			border: none !important;
 			box-shadow: none !important;
 		}
@@ -1661,7 +1665,7 @@
 			color: var(--font-color);
 			font-family: Arial, sans-serif;
 			width: 100%;
-			max-width: 700px;
+			max-width: var(--quiz-max-width);
 			max-height: 100%;
 			overflow: auto;
 			display: flex;
@@ -2172,11 +2176,17 @@
 			.progress-bar-container {
 				width: 50vw;
 			}
+			/* Sur mobile, on laisse les éléments s'étendre */
 			.progress-bar,
 			.container--question,
 			.quiz-explanation,
 			.next-button-container {
-				max-width: 70vw !important;
+				max-width: 100% !important;
+				padding-left: 16px !important;
+				padding-right: 16px !important;
+			}
+			.container--quiz {
+				max-width: 100% !important;
 			}
 		}
 
@@ -2193,6 +2203,7 @@
 			.container--quiz {
 				border-width: 3px;
 				border-radius: 10px;
+				max-width: 100% !important;
 			}
 			.nav-button {
 				top: 50%;
@@ -2310,11 +2321,12 @@
 				height: 24px;
 				font-size: 12px;
 			}
+			/* Sur mobile, les éléments s'étendent sur toute la largeur */
 			.progress-bar,
 			.container--question,
 			.quiz-explanation,
 			.next-button-container {
-				max-width: 90vw !important;
+				max-width: 100% !important;
 				padding-left: 8px !important;
 				padding-right: 8px !important;
 			}
@@ -2666,7 +2678,6 @@
 						<!-- 01 Les présocratiques -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="presocratiques"
 							data-js="quiz/presocratiques.js" data-image="src/presocratiques.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/presocratiques.jpg" alt="Portrait des présocratiques">
 							</div>
@@ -2683,7 +2694,6 @@
 						<!-- 02 Platon -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="platon" data-js="quiz/platon.js"
 							data-image="src/platon.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/platon.jpg" alt="Portrait de Platon">
 							</div>
@@ -2700,7 +2710,6 @@
 						<!-- 03 Aristote -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="aristote"
 							data-js="quiz/aristote.js" data-image="src/aristote.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/aristote.jpg" alt="Portrait d'Aristote">
 							</div>
@@ -2717,7 +2726,6 @@
 						<!-- 04 Zhuangzi -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="zhuangzi"
 							data-js="quiz/zhuangzi.js" data-image="src/zhuangzi.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/zhuangzi.jpg" alt="Portrait de Zhuangzi">
 							</div>
@@ -2734,7 +2742,6 @@
 						<!-- 05 Épicure -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="epicure" data-js="quiz/epicure.js"
 							data-image="src/epicure.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/epicure.jpg" alt="Portrait d'Épicure">
 							</div>
@@ -2751,7 +2758,6 @@
 						<!-- 06 Cicéron -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="ciceron" data-js="quiz/ciceron.js"
 							data-image="src/ciceron.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/ciceron.jpg" alt="Portrait de Cicéron">
 							</div>
@@ -2768,7 +2774,6 @@
 						<!-- 07 Lucrèce -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="lucrece" data-js="quiz/lucrece.js"
 							data-image="src/lucrece.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/lucrece.jpg" alt="Portrait de Lucrèce">
 							</div>
@@ -2785,7 +2790,6 @@
 						<!-- 08 Sénèque -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="seneque" data-js="quiz/seneque.js"
 							data-image="src/seneque.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/seneque.jpg" alt="Portrait de Sénèque">
 							</div>
@@ -2802,7 +2806,6 @@
 						<!-- 09 Épictète -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="epictete"
 							data-js="quiz/epictete.js" data-image="src/epictete.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/epictete.jpg" alt="Portrait d'Épictète">
 							</div>
@@ -2819,7 +2822,6 @@
 						<!-- 10 Marc Aurèle -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="marc aurèle"
 							data-js="quiz/marc aurèle.js" data-image="src/marc-aurele.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/marc-aurele.jpg" alt="Portrait de Marc Aurèle">
 							</div>
@@ -2836,7 +2838,6 @@
 						<!-- 11 Nāgārjuna -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="nagarjuna"
 							data-js="quiz/nagarjuna.js" data-image="src/nagarjuna.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/nagarjuna.jpg" alt="Portrait de Nāgārjuna">
 							</div>
@@ -2853,7 +2854,6 @@
 						<!-- 12 Sextus Empiricus -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="sextus empiricus"
 							data-js="quiz/sextus-empiricus.js" data-image="src/sextus-empiricus.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/sextus-empiricus.jpg"
 									alt="Portrait de Sextus Empiricus">
@@ -2871,7 +2871,6 @@
 						<!-- 13 Plotin -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="plotin" data-js="quiz/plotin.js"
 							data-image="src/plotin.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/plotin.jpg" alt="Portrait de Plotin">
 							</div>
@@ -2888,7 +2887,6 @@
 						<!-- 14 Saint Augustin -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="augustin"
 							data-js="quiz/augustin.js" data-image="src/augustin.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/augustin.jpg" alt="Portrait d'Augustin">
 							</div>
@@ -2905,7 +2903,6 @@
 						<!-- 15 Avicenne -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="avicenne"
 							data-js="quiz/avicenne.js" data-image="src/avicenne.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/avicenne.jpg" alt="Portrait d'Avicenne">
 							</div>
@@ -2922,7 +2919,6 @@
 						<!-- 16 Anselme -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="anselme" data-js="quiz/anselme.js"
 							data-image="src/anselme.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/anselme.jpg" alt="Portrait d'Anselme">
 							</div>
@@ -2939,7 +2935,6 @@
 						<!-- 17 Averroès -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="averroès"
 							data-js="quiz/averroes.js" data-image="src/averroès.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/averroès.jpg" alt="Portrait d'Averroès">
 							</div>
@@ -2972,7 +2967,6 @@
 						<!-- 19 Thomas d'Aquin -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="thomas d'aquin"
 							data-js="quiz/thomas d'aquin.js" data-image="src/thomas d'aquin.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/thomas d'aquin.jpg"
 									alt="Portrait de Thomas d'Aquin">
@@ -2990,7 +2984,6 @@
 						<!-- 20 Guillaume d'Ockham -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="guillaume ockham"
 							data-js="quiz/ockham.js" data-image="src/ockham.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/ockham.jpg" alt="Portrait de Guillaume d'Ockham">
 							</div>
@@ -3007,7 +3000,6 @@
 						<!-- 21 Machiavel -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="machiavel"
 							data-js="quiz/machiavel.js" data-image="src/machiavel.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/machiavel.jpg" alt="Portrait de Machiavel">
 							</div>
@@ -3024,7 +3016,6 @@
 						<!-- 22 Montaigne -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="montaigne"
 							data-js="quiz/montaigne.js" data-image="src/montaigne.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/montaigne.jpg" alt="Portrait de Montaigne">
 							</div>
@@ -3041,7 +3032,6 @@
 						<!-- 23 Bacon -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="bacon" data-js="quiz/bacon.js"
 							data-image="src/bacon.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/bacon.jpg" alt="Portrait de Bacon">
 							</div>
@@ -3058,7 +3048,6 @@
 						<!-- 24 Hobbes -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="hobbes" data-js="quiz/hobbes.js"
 							data-image="src/hobbes.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/hobbes.jpg" alt="Portrait de Hobbes">
 							</div>
@@ -3075,7 +3064,6 @@
 						<!-- 25 Descartes -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="descartes"
 							data-js="quiz/descartes.js" data-image="src/descartes.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/descartes.jpg" alt="Portrait de Descartes">
 							</div>
@@ -3092,7 +3080,6 @@
 						<!-- 26 Pascal -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="pascal" data-js="quiz/pascal.js"
 							data-image="src/pascal.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/pascal.jpg" alt="Portrait de Pascal">
 							</div>
@@ -3109,7 +3096,6 @@
 						<!-- 27 Locke -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="locke" data-js="quiz/locke.js"
 							data-image="src/locke.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/locke.jpg" alt="Portrait de Locke">
 							</div>
@@ -3126,7 +3112,6 @@
 						<!-- 28 Spinoza -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="spinoza" data-js="quiz/spinoza.js"
 							data-image="src/spinoza.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/spinoza.jpg" alt="Portrait de Spinoza">
 							</div>
@@ -3143,7 +3128,6 @@
 						<!-- 29 Malebranche -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="malebranche"
 							data-js="quiz/malebranche.js" data-image="src/malebranche.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/malebranche.jpg" alt="Portrait de Malebranche">
 							</div>
@@ -3160,7 +3144,6 @@
 						<!-- 30 Leibniz -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="leibniz" data-js="quiz/leibniz.js"
 							data-image="src/leibniz.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/leibniz.jpg" alt="Portrait de Leibniz">
 							</div>
@@ -3177,7 +3160,6 @@
 						<!-- 31 Vico -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="vico" data-js="quiz/vico.js"
 							data-image="src/vico.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/vico.jpg" alt="Portrait de Vico">
 							</div>
@@ -3194,7 +3176,6 @@
 						<!-- 32 Berkeley -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="berkeley"
 							data-js="quiz/berkeley.js" data-image="src/berkeley.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/berkeley.jpg" alt="Portrait de Berkeley">
 							</div>
@@ -3211,7 +3192,6 @@
 						<!-- 33 Montesquieu -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="montesquieu"
 							data-js="quiz/montesquieu.js" data-image="src/montesquieu.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/montesquieu.jpg" alt="Portrait de Montesquieu">
 							</div>
@@ -3228,7 +3208,6 @@
 						<!-- 34 Hume -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="hume" data-js="quiz/hume.js"
 							data-image="src/hume.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/hume.jpg" alt="Portrait de Hume">
 							</div>
@@ -3245,7 +3224,6 @@
 						<!-- 35 Rousseau -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="rousseau"
 							data-js="quiz/rousseau.js" data-image="src/rousseau.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/rousseau.jpg" alt="Portrait de Rousseau">
 							</div>
@@ -3262,7 +3240,6 @@
 						<!-- 36 Diderot -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="diderot" data-js="quiz/diderot.js"
 							data-image="src/diderot.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/diderot.jpg" alt="Portrait de Diderot">
 							</div>
@@ -3279,7 +3256,6 @@
 						<!-- 37 Condillac -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="condillac"
 							data-js="quiz/condillac.js" data-image="src/condillac.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/condillac.jpg" alt="Portrait de Condillac">
 							</div>
@@ -3296,7 +3272,6 @@
 						<!-- 38 Smith -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="smith" data-js="quiz/smith.js"
 							data-image="src/smith.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/smith.jpg" alt="Portrait de Smith">
 							</div>
@@ -3313,7 +3288,6 @@
 						<!-- 39 Kant -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="kant" data-js="quiz/kant.js"
 							data-image="src/kant.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/kant.jpg" alt="Portrait de Kant">
 							</div>
@@ -3330,7 +3304,6 @@
 						<!-- 40 Bentham -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="bentham" data-js="quiz/bentham.js"
 							data-image="src/bentham.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/bentham.jpg" alt="Portrait de Bentham">
 							</div>
@@ -3347,7 +3320,6 @@
 						<!-- 41 Hegel -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="hegel" data-js="quiz/hegel.js"
 							data-image="src/hegel.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/hegel.jpg" alt="Portrait de Hegel">
 							</div>
@@ -3364,7 +3336,6 @@
 						<!-- 42 Schopenhauer -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="schopenhauer"
 							data-js="quiz/schopenhauer.js" data-image="src/schopenhauer.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/schopenhauer.jpg" alt="Portrait de Schopenhauer">
 							</div>
@@ -3381,7 +3352,6 @@
 						<!-- 43 Comte -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="comte" data-js="quiz/comte.js"
 							data-image="src/comte.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/comte.jpg" alt="Portrait de Comte">
 							</div>
@@ -3398,7 +3368,6 @@
 						<!-- 44 Cournot -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="cournot" data-js="quiz/cournot.js"
 							data-image="src/cournot.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/cournot.jpg" alt="Portrait de Cournot">
 							</div>
@@ -3415,7 +3384,6 @@
 						<!-- 45 Feuerbach -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="feuerbach"
 							data-js="quiz/feuerbach.js" data-image="src/feuerbach.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/feuerbach.jpg" alt="Portrait de Feuerbach">
 							</div>
@@ -3432,7 +3400,6 @@
 						<!-- 46 Tocqueville -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="tocqueville"
 							data-js="quiz/tocqueville.js" data-image="src/tocqueville.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/tocqueville.jpg" alt="Portrait de Tocqueville">
 							</div>
@@ -3449,7 +3416,6 @@
 						<!-- 47 Mill -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="mill" data-js="quiz/mill.js"
 							data-image="src/mill.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/mill.jpg" alt="Portrait de Mill">
 							</div>
@@ -3466,7 +3432,6 @@
 						<!-- 48 Kierkegaard -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="kierkegaard"
 							data-js="quiz/kierkegaard.js" data-image="src/kierkegaard.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/kierkegaard.jpg" alt="Portrait de Kierkegaard">
 							</div>
@@ -3483,7 +3448,6 @@
 						<!-- 49 Marx -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="marx" data-js="quiz/marx.js"
 							data-image="src/marx.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/marx.jpg" alt="Portrait de Marx">
 							</div>
@@ -3500,7 +3464,6 @@
 						<!-- 50 Engels -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="engels" data-js="quiz/engels.js"
 							data-image="src/engels.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/engels.jpg" alt="Portrait d'Engels">
 							</div>
@@ -3517,7 +3480,6 @@
 						<!-- 51 James -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="james" data-js="quiz/james.js"
 							data-image="src/james.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/james.jpg" alt="Portrait de James">
 							</div>
@@ -3534,7 +3496,6 @@
 						<!-- 52 Nietzsche -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="nietzsche"
 							data-js="quiz/nietzsche.js" data-image="src/nietzsche.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/nietzsche.jpg" alt="Portrait de Nietzsche">
 							</div>
@@ -3551,7 +3512,6 @@
 						<!-- 53 Freud -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="freud" data-js="quiz/freud.js"
 							data-image="src/freud.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/freud.jpg" alt="Portrait de Freud">
 							</div>
@@ -3568,7 +3528,6 @@
 						<!-- 54 Durkheim -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="durkheim"
 							data-js="quiz/durkheim.js" data-image="src/durkheim.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/durkheim.jpg" alt="Portrait de Durkheim">
 							</div>
@@ -3585,7 +3544,6 @@
 						<!-- 55 Bergson -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="bergson" data-js="quiz/bergson.js"
 							data-image="src/bergson.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/bergson.jpg" alt="Portrait de Bergson">
 							</div>
@@ -3602,7 +3560,6 @@
 						<!-- 56 Husserl -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="husserl" data-js="quiz/husserl.js"
 							data-image="src/husserl.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/husserl.jpg" alt="Portrait de Husserl">
 							</div>
@@ -3619,7 +3576,6 @@
 						<!-- 57 Weber -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="weber" data-js="quiz/weber.js"
 							data-image="src/weber.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/weber.jpg" alt="Portrait de Weber">
 							</div>
@@ -3636,7 +3592,6 @@
 						<!-- 58 Alain -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="alain" data-js="quiz/alain.js"
 							data-image="src/alain.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/alain.jpg" alt="Portrait d'Alain">
 							</div>
@@ -3653,7 +3608,6 @@
 						<!-- 59 Mauss -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="mauss" data-js="quiz/mauss.js"
 							data-image="src/mauss.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/mauss.jpg" alt="Portrait de Mauss">
 							</div>
@@ -3670,7 +3624,6 @@
 						<!-- 60 Russell -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="russell" data-js="quiz/russell.js"
 							data-image="src/russell.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/russell.jpg" alt="Portrait de Russell">
 							</div>
@@ -3687,7 +3640,6 @@
 						<!-- 61 Jaspers -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="jaspers" data-js="quiz/jaspers.js"
 							data-image="src/jaspers.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/jaspers.jpg" alt="Portrait de Jaspers">
 							</div>
@@ -3704,7 +3656,6 @@
 						<!-- 62 Bachelard -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="bachelard"
 							data-js="quiz/bachelard.js" data-image="src/bachelard.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/bachelard.jpg" alt="Portrait de Bachelard">
 							</div>
@@ -3721,7 +3672,6 @@
 						<!-- 63 Heidegger -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="heidegger"
 							data-js="quiz/heidegger.js" data-image="src/heidegger.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/heidegger.jpg" alt="Portrait de Heidegger">
 							</div>
@@ -3738,7 +3688,6 @@
 						<!-- 64 Wittgenstein -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="wittgenstein"
 							data-js="quiz/wittgenstein.js" data-image="src/wittgenstein.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/wittgenstein.jpg" alt="Portrait de Wittgenstein">
 							</div>
@@ -3755,7 +3704,6 @@
 						<!-- 65 Benjamin -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="benjamin"
 							data-js="quiz/benjamin.js" data-image="src/benjamin.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/benjamin.jpg" alt="Portrait de Benjamin">
 							</div>
@@ -3772,7 +3720,6 @@
 						<!-- 66 Popper -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="popper" data-js="quiz/popper.js"
 							data-image="src/popper.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/popper.jpg" alt="Portrait de Popper">
 							</div>
@@ -3789,7 +3736,6 @@
 						<!-- 67 Jankélévitch -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="jankélévitch"
 							data-js="quiz/jankélévitch.js" data-image="src/jankélévitch.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/jankélévitch.jpg" alt="Portrait de Jankélévitch">
 							</div>
@@ -3806,7 +3752,6 @@
 						<!-- 68 Jonas -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="jonas" data-js="quiz/jonas.js"
 							data-image="src/jonas.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/jonas.jpg" alt="Portrait de Jonas">
 							</div>
@@ -3823,7 +3768,6 @@
 						<!-- 69 Aron -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="aron" data-js="quiz/aron.js"
 							data-image="src/aron.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/aron.jpg" alt="Portrait d'Aron">
 							</div>
@@ -3840,7 +3784,6 @@
 						<!-- 70 Sartre -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="sartre" data-js="quiz/sartre.js"
 							data-image="src/sartre.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/sartre.jpg" alt="Portrait de Sartre">
 							</div>
@@ -3857,7 +3800,6 @@
 						<!-- 71 Arendt -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="arendt" data-js="quiz/arendt.js"
 							data-image="src/arendt.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/arendt.jpg" alt="Portrait d'Arendt">
 							</div>
@@ -3874,7 +3816,6 @@
 						<!-- 72 Levinas -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="levinas" data-js="quiz/levinas.js"
 							data-image="src/levinas.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/levinas.jpg" alt="Portrait de Levinas">
 							</div>
@@ -3891,7 +3832,6 @@
 						<!-- 73 Beauvoir -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="beauvoir"
 							data-js="quiz/beauvoir.js" data-image="src/beauvoir.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/beauvoir.jpg" alt="Portrait de Beauvoir">
 							</div>
@@ -3908,7 +3848,6 @@
 						<!-- 74 Lévi-Strauss -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="levi strauss"
 							data-js="quiz/levi-strauss.js" data-image="src/levi-strauss.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/levi-strauss.jpg" alt="Portrait de Lévi-Strauss">
 							</div>
@@ -3925,7 +3864,6 @@
 						<!-- 75 Merleau-Ponty -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="merleau ponty"
 							data-js="quiz/merleau-ponty.js" data-image="src/merleau-ponty.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/merleau-ponty.jpg" alt="Portrait de Merleau-Ponty">
 							</div>
@@ -3942,7 +3880,6 @@
 						<!-- 76 Weil -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="weil" data-js="quiz/weil.js"
 							data-image="src/weil.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/weil.jpg" alt="Portrait de Weil">
 							</div>
@@ -3959,7 +3896,6 @@
 						<!-- 77 Hersch -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="hersch" data-js="quiz/hersch.js"
 							data-image="src/hersch.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/hersch.jpg" alt="Portrait de Hersch">
 							</div>
@@ -3976,7 +3912,6 @@
 						<!-- 78 Ricœur -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="ricoeur" data-js="quiz/ricoeur.js"
 							data-image="src/ricoeur.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/ricoeur.jpg" alt="Portrait de Ricœur">
 							</div>
@@ -3993,7 +3928,6 @@
 						<!-- 79 Anscombe -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="anscombe"
 							data-js="quiz/anscombe.js" data-image="src/anscombe.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/anscombe.jpg" alt="Portrait d'Anscombe">
 							</div>
@@ -4010,7 +3944,6 @@
 						<!-- 80 Murdoch -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="murdoch" data-js="quiz/murdoch.js"
 							data-image="src/murdoch.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/murdoch.jpg" alt="Portrait de Murdoch">
 							</div>
@@ -4027,7 +3960,6 @@
 						<!-- 81 Rawls -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="rawls" data-js="quiz/rawls.js"
 							data-image="src/rawls.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/rawls.jpg" alt="Portrait de Rawls">
 							</div>
@@ -4044,7 +3976,6 @@
 						<!-- 82 Simondon -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="simondon"
 							data-js="quiz/simondon.js" data-image="src/simondon.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/simondon.jpg" alt="Portrait de Simondon">
 							</div>
@@ -4061,7 +3992,6 @@
 						<!-- 83 Foucault -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="foucault"
 							data-js="quiz/foucault.js" data-image="src/foucault.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/foucault.jpg" alt="Portrait de Foucault">
 							</div>
@@ -4078,7 +4008,6 @@
 						<!-- 84 Putnam -->
 						<a href="javascript:void(0);" class="quiz-card" data-author="putnam" data-js="quiz/putnam.js"
 							data-image="src/putnam.jpg">
-
 							<div class="card-image-container">
 								<img class="card-image" src="src/putnam.jpg" alt="Portrait de Putnam">
 							</div>
@@ -4198,9 +4127,7 @@
 												<span class="quiz-review-correction" style="display:none">correction</span>
 											</button>
 											<button class="quiz-btn quiz-btn--default quiz-btn-retry" type="button" tabindex="0" aria-label="Rejouer">réessayer</button>
-																 
-												<button id="quizBackToAuthors" class="quiz-btn" style="min-width:150px; padding:8px 16px;">retour aux auteurs</button>
-								 
+											<button id="quizBackToAuthors" class="quiz-btn" style="min-width:150px; padding:8px 16px;">retour aux auteurs</button>
 										</div>
 									</div>
 								</div>
@@ -4240,11 +4167,11 @@
 				<span class="item-label">charger des quiz</span>
 			</button>
 			<button class="menu-item" id="openStatsSub">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M 3 3 L 3 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
-                    <path d="M 3 22 L 22 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
-                    <path d="M 7 18 L 11 12 L 15 15 L 21 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-                </svg>
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<path d="M 3 3 L 3 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+										<path d="M 3 22 L 22 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+										<path d="M 7 18 L 11 12 L 15 15 L 21 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+								</svg>
 				<span class="item-label">statistiques</span>
 				<span class="item-badge" id="statsBadge">0%</span>
 			</button>
@@ -5062,7 +4989,6 @@
 						};
 						const isColorblind = document.body.classList.contains('colorblind-mode');
 						
-						// ===== ÉTOILES AU CLIC (uniquement si animations activées) =====
 						if (animationsEnabled) {
 							const rect = this.getBoundingClientRect();
 							spawnStars(rect.left + rect.width / 2, rect.top + rect.height / 2);
@@ -5141,7 +5067,6 @@
 			currentQuestionEl.textContent = index + 1;
 			nextBtn.disabled = deferredEvaluationMode ? false : true;
 			
-			// Changer le texte du bouton selon la question
 			if (index === selectedQuestions.length - 1) {
 				nextBtn.textContent = 'votre score';
 			} else {
@@ -5172,7 +5097,6 @@
 		}
 
 		function nextQuestion() {
-			// Si c'est la dernière question, afficher les résultats
 			if (currentQuestion === selectedQuestions.length - 1) {
 				endQuiz();
 				playSound('click');
