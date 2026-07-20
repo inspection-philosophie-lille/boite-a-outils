@@ -25,8 +25,8 @@
 		}
 
 		:root {
-			--bg: #f0f0f0;
-			--quiz-bg: #dcdcdc;
+			--bg: #f1f1f1;
+			--quiz-bg: #ffffff;
 			--btn: #e0e0e0;
 			--font-color: #000000;
 			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.9);
@@ -1109,6 +1109,7 @@
 			flex: 1;
 			display: flex;
 			flex-direction: column;
+			background: white;
 		}
 
 		.author-name {
@@ -4069,8 +4070,7 @@
 										<!-- Bento Score -->
 										<div class="bento-score">
 											<p style="margin:0; font-size:14px;">
-												<span>votre score :</span><br>
-												<span class="quiz-end__score" id="finalScoreDisplay" style="font-size:2rem; font-weight:bold;">0</span>
+												<span>votre score : </span><span class="quiz-end__score" id="finalScoreDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
 												<span id="scoreLabel" style="font-size:0.9rem;">bonne réponse</span>
 												<span style="font-size:0.9rem;">sur</span>
 												<span class="quiz-end__total" id="finalTotalDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
@@ -4080,19 +4080,19 @@
 										<!-- Bento Stats Global -->
 										<div class="bento-stats-global">
 											<div class="stat-item">
-												<span class="stat-value" id="correctAnswers">0</span>
+												<span class="stat-value" id="correctAnswers">0</span><br>
 												<span class="stat-label" id="correctLabel">correctes</span>
 											</div>
 											<div class="stat-item">
-												<span class="stat-value" id="incorrectAnswers">0</span>
+												<span class="stat-value" id="incorrectAnswers">0</span><br>
 												<span class="stat-label" id="incorrectLabel">incorrectes</span>
 											</div>
 											<div class="stat-item">
-												<span class="stat-value" id="percentageScore">0%</span>
+												<span class="stat-value" id="percentageScore">0%</span><br>
 												<span class="stat-label">score</span>
 											</div>
 											<div class="stat-item">
-												<span class="stat-value" id="avgTimeDisplay">0s</span>
+												<span class="stat-value" id="avgTimeDisplay">0s</span><br>
 												<span class="stat-label">moyenne</span>
 											</div>
 										</div>
@@ -4100,19 +4100,19 @@
 										<!-- Bento Stats Personnelles -->
 										<div class="bento-stats-personal">
 											<div class="stat-item-mini">
-												<span class="stat-num" id="totalAttempts">0</span>
+												<span class="stat-num" id="totalAttempts">0</span><br>
 												<span class="stat-label-mini" id="attemptsLabel">tentative(s)</span>
 											</div>
 											<div class="stat-item-mini">
-												<span class="stat-num" id="bestScore">0%</span>
+												<span class="stat-num" id="bestScore">0%</span><br>
 												<span class="stat-label-mini">meilleur score</span>
 											</div>
 											<div class="stat-item-mini">
-												<span class="stat-num" id="avgScore">0%</span>
+												<span class="stat-num" id="avgScore">0%</span><br>
 												<span class="stat-label-mini">moyenne</span>
 											</div>
 											<div class="stat-item-mini">
-												<span class="stat-num" id="totalCorrect">0</span>
+												<span class="stat-num" id="totalCorrect">0</span><br>
 												<span class="stat-label-mini" id="totalCorrectLabel">bonne(s) réponse(s)</span>
 											</div>
 										</div>
