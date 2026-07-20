@@ -12,6 +12,7 @@
 	<link rel="icon" type="image/svg+xml" href="src/favicon.ico" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<style>
+		/* ===== STYLES COMPLETS ===== */
 		* {
 			box-sizing: border-box;
 			margin: 0;
@@ -1853,7 +1854,7 @@
 			box-shadow: var(--shadow-out);
 		}
 
-		/* === BOUTONS FINAUX === */
+		/* === 3 BOUTONS FINAUX === */
 		.bento-actions {
 			width: 100%;
 			max-width: 596px;
@@ -1868,14 +1869,14 @@
 			background: var(--btn);
 			border: 2px solid #8895a7;
 			border-radius: 27px;
-			padding: 8px 16px;
-			font-size: 0.8rem;
+			padding: 10px 20px;
+			font-size: 0.85rem;
 			cursor: pointer;
 			box-shadow: var(--shadow-out);
 			color: var(--font-color);
 			transition: all 0.2s ease;
 			font-family: Arial, sans-serif;
-			min-width: 120px;
+			min-width: 130px;
 			flex: 1;
 			text-align: center;
 		}
@@ -1959,8 +1960,8 @@
 			}
 			.bento-actions .quiz-btn {
 				min-width: 100px;
-				font-size: 0.7rem;
-				padding: 6px 12px;
+				font-size: 0.75rem;
+				padding: 8px 14px;
 			}
 		}
 
@@ -1995,7 +1996,7 @@
 			.bento-actions .quiz-btn {
 				min-width: 80px;
 				font-size: 0.65rem;
-				padding: 5px 8px;
+				padding: 6px 10px;
 			}
 		}
 
@@ -2016,7 +2017,7 @@
 			border-radius: 10px;
 			box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.06);
 			max-height: 260px;
-			overflow-y: auto;
+			 overflow-y: auto;
 			color: var(--font-color);
 		}
 
@@ -2614,13 +2615,12 @@
 						<div id="questionsContainer"></div>
 					</div>
 
-					<div id="quizEnd" class="hidden">
+			<div id="quizEnd" class="hidden">
 						<div class="container--quiz-end">
 							<div class="container--quiz-results">
 								<div class="bento-score">
 									<p style="margin:0; font-size:14px;">
-										<span>votre score :</span><br>
-										<span class="quiz-end__score" id="finalScoreDisplay" style="font-size:2rem; font-weight:bold;">0</span>
+										<span>votre score : </span><span class="quiz-end__score" id="finalScoreDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
 										<span id="scoreLabel" style="font-size:0.9rem;">bonne réponse</span>
 										<span style="font-size:0.9rem;">sur</span>
 										<span class="quiz-end__total" id="finalTotalDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
@@ -2629,49 +2629,49 @@
 
 								<div class="bento-stats-global">
 									<div class="stat-item">
-										<span class="stat-value" id="correctAnswers">0</span>
+										<span class="stat-value" id="correctAnswers">0</span><br>
 										<span class="stat-label" id="correctLabel">correctes</span>
 									</div>
 									<div class="stat-item">
-										<span class="stat-value" id="incorrectAnswers">0</span>
+										<span class="stat-value" id="incorrectAnswers">0</span><br>
 										<span class="stat-label" id="incorrectLabel">incorrectes</span>
 									</div>
 									<div class="stat-item">
-										<span class="stat-value" id="percentageScore">0%</span>
+										<span class="stat-value" id="percentageScore">0%</span><br>
 										<span class="stat-label">score</span>
 									</div>
 									<div class="stat-item">
-										<span class="stat-value" id="avgTimeDisplay">0s</span>
+										<span class="stat-value" id="avgTimeDisplay">0s</span><br>
 										<span class="stat-label">moyenne</span>
 									</div>
 								</div>
 
 								<div class="bento-stats-personal">
 									<div class="stat-item-mini">
-										<span class="stat-num" id="totalAttempts">0</span>
+										<span class="stat-num" id="totalAttempts">0</span><br>
 										<span class="stat-label-mini" id="attemptsLabel">tentative(s)</span>
 									</div>
 									<div class="stat-item-mini">
-										<span class="stat-num" id="bestScore">0%</span>
+										<span class="stat-num" id="bestScore">0%</span><br>
 										<span class="stat-label-mini">meilleur score</span>
 									</div>
 									<div class="stat-item-mini">
-										<span class="stat-num" id="avgScore">0%</span>
+										<span class="stat-num" id="avgScore">0%</span><br>
 										<span class="stat-label-mini">moyenne</span>
 									</div>
 									<div class="stat-item-mini">
-										<span class="stat-num" id="totalCorrect">0</span>
+										<span class="stat-num" id="totalCorrect">0</span><br>
 										<span class="stat-label-mini" id="totalCorrectLabel">bonne(s) réponse(s)</span>
 									</div>
 								</div>
 
 								<div class="bento-message" id="summaryMessage"></div>
 
-								<!-- NOUVEAUX BOUTONS -->
+								<!-- === 3 BOUTONS FINAUX === -->
 								<div class="bento-actions">
-									<button class="quiz-btn" id="quizRetry">🔄 recommencer</button>
-									<button class="quiz-btn" id="retryAfterReview">🔄 réessayer</button>
-									<button class="quiz-btn quiz-btn-danger" id="resetAllStatsBtn">🗑️ réinitialiser stats</button>
+									<button class="quiz-btn" id="quizReviewBtn">réponses</button>
+									<button class="quiz-btn" id="quizRetryBtn">réessayer</button>
+									<button class="quiz-btn" id="quizBackBtn">retour aux séquences</button>
 								</div>
 
 								<div class="bento-details" id="detailedResults" style="padding:12px 16px;">
@@ -2931,7 +2931,7 @@
 			'use strict';
 
 			const APP_TITRE = document.querySelector('title')?.textContent || "quiz hlp";
-			const APP_SOUS_TITRE = document.querySelector('meta[name="description"]')?.getAttribute('content') || "tester ses connaissances";
+			const APP_SOUS_TITRE = "tester ses connaissances";
 
 			// Remplir tous les éléments avec le titre
 			const titleElements = ['appTitle', 'mobileTitle', 'quizTitle'];
@@ -2998,9 +2998,9 @@
 			const appSubtitle = document.getElementById('appSubtitle');
 			const mobileTitle = document.getElementById('mobileTitle');
 			const mobileSubtitle = document.getElementById('mobileSubtitle');
-			const quizRetry = document.getElementById('quizRetry');
-			const retryAfterReview = document.getElementById('retryAfterReview');
-			const resetAllStatsBtn = document.getElementById('resetAllStatsBtn');
+			const quizRetryBtn = document.getElementById('quizRetryBtn');
+			const quizReviewBtn = document.getElementById('quizReviewBtn');
+			const quizBackBtn = document.getElementById('quizBackBtn');
 			const githubFileSelect = document.getElementById('githubFileSelect');
 			const fileStatus = document.getElementById('fileStatus');
 			const questionCountSlider = document.getElementById('questionCountSlider');
@@ -3035,12 +3035,10 @@
 			const loadContainerSubmenu = document.getElementById('loadContainerSubmenu');
 			const localResetBtn = document.getElementById('localResetBtn');
 
-			// === FONCTION UPDATE SUBTITLE CORRIGÉE ===
+			// === FONCTION UPDATE SUBTITLE ===
 			function updateSubtitle(sequenceName) {
-				let displaySub = APP_SOUS_TITRE;
-				if (sequenceName && sequenceName.trim() !== '' && sequenceName !== APP_SOUS_TITRE) {
-					displaySub = APP_SOUS_TITRE + ' sur « ' + sequenceName.trim() + ' »';
-				}
+				// Le sous-titre reste toujours "tester ses connaissances"
+				const displaySub = APP_SOUS_TITRE;
 				if (appSubtitle) appSubtitle.textContent = displaySub;
 				if (mobileSubtitle) mobileSubtitle.textContent = displaySub;
 				currentSousTitre = displaySub;
@@ -3342,9 +3340,8 @@
 				philosophyData = data.philosophyData || { texte: "", source: "" };
 				questions = data.questions || [];
 
-				if (currentSequenceCleanTitle && currentSequenceCleanTitle.trim() !== '') {
-					updateSubtitle(currentSequenceCleanTitle);
-				}
+				// Le sous-titre reste toujours "tester ses connaissances"
+				updateSubtitle(currentSequenceCleanTitle);
 
 				if (fileStatus) {
 					fileStatus.textContent = `✅ "${quiz.name}" chargé !`;
@@ -3414,9 +3411,8 @@
 						currentSequenceIndex = seqInfo.sequenceIndex;
 						currentSequenceIndexLong = seqInfo.sequenceIndexLong;
 
-						if (currentSequenceCleanTitle && currentSequenceCleanTitle.trim() !== '') {
-							updateSubtitle(currentSequenceCleanTitle);
-						}
+						// Le sous-titre reste toujours "tester ses connaissances"
+						updateSubtitle(currentSequenceCleanTitle);
 
 						fileStatus.textContent = `✅ "${fileName.replace('.js', '')}" chargé !`;
 						setTimeout(startQuiz, 600);
@@ -3660,7 +3656,7 @@
 				quizEnd.classList.add('hidden');
 				quizQuestions.classList.remove('hidden');
 				detailedResults.classList.add('hidden');
-				if (quizRetry) quizRetry.style.display = 'inline-block';
+				if (quizRetryBtn) quizRetryBtn.style.display = 'inline-block';
 
 				displayPhilosophyText();
 				const btn = document.getElementById('toggleTextBtn');
@@ -4146,9 +4142,8 @@
 										philosophyData = data.philosophyData || { texte: "", source: "" };
 										questions = data.questions || [];
 										
-										if (currentSequenceCleanTitle && currentSequenceCleanTitle.trim() !== '') {
-											updateSubtitle(currentSequenceCleanTitle);
-										}
+										// Le sous-titre reste toujours "tester ses connaissances"
+										updateSubtitle(currentSequenceCleanTitle);
 										
 										if (fileStatus) {
 											fileStatus.textContent = `✅ "${loadedQuizzes[savedIndex].name}" chargé !`;
@@ -4296,20 +4291,44 @@
 					resetStats();
 				});
 
-				// Nouveau bouton de réinitialisation des stats sur la page de fin
-				resetAllStatsBtn?.addEventListener('click', function() {
+				// === 3 BOUTONS FINAUX ===
+				quizReviewBtn?.addEventListener('click', function() {
 					playSound('click');
-					resetStats();
+					const details = document.getElementById('detailedResults');
+					if (details) {
+						details.classList.toggle('hidden');
+						if (!details.classList.contains('hidden')) {
+							showDetailedReview();
+						}
+					}
 				});
 
-				quizRetry?.addEventListener('click', function() {
+				quizRetryBtn?.addEventListener('click', function() {
 					playSound('click');
 					if (questions.length) startQuiz();
 				});
-				retryAfterReview?.addEventListener('click', function() {
+
+				quizBackBtn?.addEventListener('click', function() {
 					playSound('click');
-					if (questions.length) startQuiz();
+					// Retour à l'écran d'accueil (sélection des quiz)
+					quizEnd.classList.add('hidden');
+					quizQuestions.classList.add('hidden');
+					quizStart.classList.remove('hidden');
+					// Remettre le sous-titre par défaut
+					updateSubtitle('');
+					// Réinitialiser l'état
+					currentQuestionIndex = 0;
+					score = 0;
+					userAnswers = [];
+					shuffledQuestions = [];
+					stopTimer();
+					// Afficher le sélecteur
+					document.getElementById('githubFileSelect').value = '';
+					document.getElementById('fileStatus').textContent = 'Choisissez un quiz ci-dessus';
+					// Réinitialiser l'affichage
+					if (progressBar) progressBar.classList.remove('visible');
 				});
+
 				document.getElementById('toggleTextBtn')?.addEventListener('click', function() {
 					playSound('click');
 					togglePhilosophyText();
