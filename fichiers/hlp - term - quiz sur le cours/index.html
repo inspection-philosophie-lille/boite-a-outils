@@ -3661,8 +3661,8 @@
 				displayPhilosophyText();
 				const btn = document.getElementById('toggleTextBtn');
 				const content = document.querySelector('.philosophy-text-content');
-				if (btn) btn.classList.remove('collapsed');
-				if (content) content.classList.remove('collapsed');
+				if (btn) btn.classList.add('collapsed');
+				if (content) content.classList.add('collapsed');
 
 				totalQuestionsSpan.textContent = totalQuestions;
 				gamesPlayed++;
