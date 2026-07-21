@@ -408,6 +408,8 @@
 			min-width: 40px;
 			justify-content: center;
 			transition: all 0.3s ease;
+			margin-right: 12px;
+			text-transform: none;
 		}
 
 		.timer-display.warning {
@@ -2588,8 +2590,8 @@
 									<h1 id="quizTitle"></h1>
 								</div>
 								<div class="progress-bar__count">
-									<span id="currentQuestion">1</span>/<span id="totalQuestions" data-value="10">10</span>
 									<span class="timer-display" id="timerdisplay" style="display:none;">⏱️ <span id="timerValue">0</span>s</span>
+									<span id="currentQuestion">1</span>/<span id="totalQuestions" data-value="10">10</span>
 								</div>
 							</div>
 							<div class="progress-bar__cursor">
@@ -3071,13 +3073,13 @@
 					const partNum = parseInt(numMatch[1]);
 					const seqNum = parseInt(numMatch[2]);
 					let partTitle = "";
-					let partShort = `HLP, TERM, PART. ${partNum}`;
+					let partShort = `PART. ${partNum}`;
 					if (partNum === 1) {
-						partTitle = `HLP, TERM, PARTIE ${partNum} : LES POUVOIRS DE LA PAROLE`;
+						partTitle = `PARTIE ${partNum} : LES POUVOIRS DE LA PAROLE`;
 					} else if (partNum === 2) {
-						partTitle = `HLP, TERM, PARTIE ${partNum} : LES REPRÉSENTATIONS DU MONDE`;
+						partTitle = `PARTIE ${partNum} : LES REPRÉSENTATIONS DU MONDE`;
 					} else {
-						partTitle = `HLP, TERM, PARTIE ${partNum}`;
+						partTitle = `PARTIE ${partNum}`;
 					}
 					return {
 						number: `${partNum}.${seqNum}`,
