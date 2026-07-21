@@ -387,7 +387,7 @@
 			color: #555;
 			display: flex;
 			align-items: center;
-			gap: 8px;
+			gap: 3px;
 		}
 
 		body.dark-theme .progress-bar__count {
@@ -2588,7 +2588,7 @@
 									<h1 id="quizTitle"></h1>
 								</div>
 								<div class="progress-bar__count">
-									<span id="currentQuestion">1</span> / <span id="totalQuestions" data-value="10">10</span>
+									<span id="currentQuestion">1</span>/<span id="totalQuestions" data-value="10">10</span>
 									<span class="timer-display" id="timerdisplay" style="display:none;">⏱️ <span id="timerValue">0</span>s</span>
 								</div>
 							</div>
@@ -3687,7 +3687,7 @@
 					shuffleArray(shuffledAnswers);
 					const protectedAnswers = protectSpacesInAnswers(shuffledAnswers);
 
-					const letters = ['A', 'B', 'C', 'D', 'E'];
+					const letters = ['A', 'B', 'C'];
 
 					const el = document.createElement('div');
 					el.className = 'container--question';
@@ -4028,7 +4028,7 @@
 			function updateProgressBar() {
 				const bar = document.querySelector('.progress-bar__cursor--dynamic');
 				if (bar) {
-					const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+					const progress = ((currentQuestionIndex + 1)/totalQuestions) * 100;
 					bar.style.width = Math.min(progress, 100) + '%';
 				}
 			}
