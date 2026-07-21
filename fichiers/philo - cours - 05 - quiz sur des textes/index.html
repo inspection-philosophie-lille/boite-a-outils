@@ -326,12 +326,9 @@
             color: var(--color-correct);
         }
 
-        body.colorblind-mode .quiz-answer.correct .correct-icon {
-            display: block;
-        }
-
-        body.colorblind-mode .quiz-answer.incorrect .incorrect-icon {
-            display: block;
+        /* En mode daltonien, les icônes s'affichent */
+        body.colorblind-mode .quiz-answer .daltonic-icon {
+            display: block !important;
         }
 
         body.colorblind-mode .quiz-select:hover {
@@ -477,6 +474,7 @@
             z-index: 10;
             flex-shrink: 0;
             margin-bottom: 12px;
+            transition: filter 0.3s ease;
         }
 
         /* ===== BARRE D'OUTILS ===== */
@@ -1343,6 +1341,7 @@
             align-items: center;
             justify-content: flex-start;
             min-height: 0;
+            transition: filter 0.3s ease;
         }
 
         .wrapper--grid-playlist {
@@ -1632,6 +1631,7 @@
             border-color: var(--color-incorrect) !important;
         }
 
+        /* Icônes daltoniennes : masquées par défaut */
         .daltonic-icon {
             display: none;
             position: absolute;
@@ -1648,6 +1648,11 @@
             width: 100%;
             height: 100%;
             display: block;
+        }
+
+        /* En mode daltonien, les icônes s'affichent */
+        body.colorblind-mode .daltonic-icon {
+            display: block !important;
         }
 
         .quiz-answer {
@@ -1678,17 +1683,6 @@
             overflow-wrap: break-word;
             max-width: 100%;
             gap: 8px;
-        }
-
-        .answer-icon {
-            width: 14px;
-            height: 14px;
-            flex-shrink: 0;
-            margin-left: auto;
-        }
-
-        .answer-icon.hidden {
-            display: none;
         }
 
         body.dark-theme .quiz-answer {
@@ -1910,6 +1904,57 @@
             box-shadow: var(--shadow-out);
         }
 
+        /* ===== 3 BOUTONS FINAUX ===== */
+        .bento-actions {
+            width: 100%;
+            max-width: 596px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .bento-actions .quiz-btn {
+            background: var(--btn);
+            border: 2px solid #8895a7;
+            border-radius: 27px;
+            padding: 10px 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-out);
+            color: var(--font-color);
+            transition: all 0.2s ease;
+            font-family: Arial, sans-serif;
+            min-width: 130px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .bento-actions .quiz-btn:hover {
+            box-shadow: var(--shadow-in);
+            transform: translateY(-2px);
+            border-color: var(--color-correct);
+        }
+
+        .bento-actions .quiz-btn-danger {
+            border-color: #dc3545;
+        }
+        .bento-actions .quiz-btn-danger:hover {
+            border-color: #dc3545;
+            background: rgba(220, 53, 69, 0.1);
+        }
+
+        body.dark-theme .bento-actions .quiz-btn {
+            background: #3d3d3d;
+            border-color: #5a5a5a;
+            color: #ffffff;
+        }
+        body.dark-theme .bento-actions .quiz-btn:hover {
+            background: #4a4a4a;
+            border-color: var(--color-correct);
+        }
+
         @media (max-width: 768px) {
             .container--quiz-results .bento-stats-global {
                 max-width: 100%;
@@ -1963,6 +2008,11 @@
             .container--quiz-results .bento-details {
                 max-width: 100%;
             }
+            .bento-actions .quiz-btn {
+                min-width: 100px;
+                font-size: 0.75rem;
+                padding: 8px 14px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1992,6 +2042,11 @@
             }
             .container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
                 font-size: 11px;
+            }
+            .bento-actions .quiz-btn {
+                min-width: 80px;
+                font-size: 0.65rem;
+                padding: 6px 10px;
             }
         }
 
@@ -2115,6 +2170,43 @@
 
         .shortcuts-table .key-combo {
             white-space: nowrap;
+        }
+
+        /* ===== EFFET FLOU QUAND MENU OUVERT ===== */
+        body.menu-open .toolbar-wrapper,
+        body.menu-open #content,
+        body.menu-open .container--quiz {
+            filter: blur(4px);
+            pointer-events: none;
+            transition: filter 0.3s ease;
+        }
+
+        body.menu-open .toolbar-wrapper {
+            pointer-events: none;
+        }
+
+        body.menu-open .slide-menu,
+        body.menu-open .submenu {
+            filter: none !important;
+            pointer-events: auto !important;
+        }
+
+        body.menu-open .menu-overlay {
+            pointer-events: auto;
+        }
+
+        /* ===== ÉTOILES ===== */
+        .star-particle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 24px;
+            z-index: 99998;
+            animation: star-float 1.2s ease-out forwards;
+        }
+
+        @keyframes star-float {
+            0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(-150px) scale(0) rotate(180deg); }
         }
 
         /* ===== RESPONSIVE - MOBILE ===== */
@@ -2565,8 +2657,7 @@
                             <div class="container--quiz-results">
                                 <div class="bento-score">
                                     <p style="margin:0; font-size:14px;">
-                                        <span>votre score :</span><br>
-                                        <span class="quiz-end__score" id="finalScoreDisplay" style="font-size:2rem; font-weight:bold;">0</span>
+										<span>votre score : </span><span class="quiz-end__score" id="finalScoreDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
                                         <span id="scoreLabel" style="font-size:0.9rem;">bonne réponse</span>
                                         <span style="font-size:0.9rem;">sur</span>
                                         <span class="quiz-end__total" id="finalTotalDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
@@ -2575,54 +2666,54 @@
 
                                 <div class="bento-stats-global">
                                     <div class="stat-item">
-                                        <span class="stat-value" id="correctAnswers">0</span>
+                                        <span class="stat-value" id="correctAnswers">0</span><br>
                                         <span class="stat-label" id="correctLabel">correctes</span>
                                     </div>
                                     <div class="stat-item">
-                                        <span class="stat-value" id="incorrectAnswers">0</span>
+                                        <span class="stat-value" id="incorrectAnswers">0</span><br>
                                         <span class="stat-label" id="incorrectLabel">incorrectes</span>
                                     </div>
                                     <div class="stat-item">
-                                        <span class="stat-value" id="percentageScore">0%</span>
+                                        <span class="stat-value" id="percentageScore">0%</span><br>
                                         <span class="stat-label">score</span>
                                     </div>
                                     <div class="stat-item">
-                                        <span class="stat-value" id="avgTimeDisplay">0s</span>
+                                        <span class="stat-value" id="avgTimeDisplay">0s</span><br>
                                         <span class="stat-label">moyenne</span>
                                     </div>
                                 </div>
 
                                 <div class="bento-stats-personal">
                                     <div class="stat-item-mini">
-                                        <span class="stat-num" id="totalAttempts">0</span>
+                                        <span class="stat-num" id="totalAttempts">0</span><br>
                                         <span class="stat-label-mini" id="attemptsLabel">tentative(s)</span>
                                     </div>
                                     <div class="stat-item-mini">
-                                        <span class="stat-num" id="bestScore">0%</span>
+                                        <span class="stat-num" id="bestScore">0%</span><br>
                                         <span class="stat-label-mini">meilleur score</span>
                                     </div>
                                     <div class="stat-item-mini">
-                                        <span class="stat-num" id="avgScore">0%</span>
+                                        <span class="stat-num" id="avgScore">0%</span><br>
                                         <span class="stat-label-mini">moyenne</span>
                                     </div>
                                     <div class="stat-item-mini">
-                                        <span class="stat-num" id="totalCorrect">0</span>
+                                        <span class="stat-num" id="totalCorrect">0</span><br>
                                         <span class="stat-label-mini" id="totalCorrectLabel">bonne(s) réponse(s)</span>
                                     </div>
                                 </div>
 
                                 <div class="bento-message" id="summaryMessage"></div>
 
-                                <div class="bento-restart">
-                                    <button id="quizRetry" class="quiz-btn" style="min-width:180px; padding:10px 20px; border-radius:24px">recommencer</button>
+                                <!-- ===== 3 BOUTONS FINAUX ===== -->
+                                <div class="bento-actions">
+                                    <button class="quiz-btn" id="quizReviewBtn">réponses</button>
+                                    <button class="quiz-btn" id="quizRetryBtn">réessayer</button>
+                                    <button class="quiz-btn" id="quizBackBtn">retour aux séquences</button>
                                 </div>
 
                                 <div class="bento-details" id="detailedResults" style="padding:12px 16px;">
                                     <h3 style="color:red;margin:0 0 8px 0;font-size:0.85rem;text-align:center;">📋 détail des réponses :</h3>
                                     <div id="questionsReview"></div>
-                                    <div style="text-align:center;margin-top:10px;">
-                                        <button id="retryAfterReview" class="quiz-btn" style="min-width:150px; padding:8px 16px;">🔄 réessayer</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2933,8 +3024,9 @@
         const appSubtitle = document.getElementById('appSubtitle');
         const mobileTitle = document.getElementById('mobileTitle');
         const mobileSubtitle = document.getElementById('mobileSubtitle');
-        const quizRetry = document.getElementById('quizRetry');
-        const retryAfterReview = document.getElementById('retryAfterReview');
+        const quizRetryBtn = document.getElementById('quizRetryBtn');
+        const quizReviewBtn = document.getElementById('quizReviewBtn');
+        const quizBackBtn = document.getElementById('quizBackBtn');
         const mainFileSelect = document.getElementById('mainFileSelect');
         const fileStatus = document.getElementById('fileStatus');
         const questionCountSlider = document.getElementById('questionCountSlider');
@@ -2987,9 +3079,26 @@
             if (appTitle) appTitle.textContent = t;
             if (mobileTitle) mobileTitle.textContent = t;
             if (quizTitle) quizTitle.textContent = titre || "quiz";
-            if (sousTitre !== undefined) {
-                if (appSubtitle) appSubtitle.textContent = sousTitre;
-                if (mobileSubtitle) mobileSubtitle.textContent = sousTitre;
+            // Le sous-titre par défaut est "tester ses connaissances"
+            // Il sera modifié par displayPhilosophyText quand un texte est chargé
+            const displaySub = sousTitre || "tester ses connaissances";
+            if (appSubtitle) appSubtitle.textContent = displaySub;
+            if (mobileSubtitle) mobileSubtitle.textContent = displaySub;
+            currentSousTitre = displaySub;
+        }
+
+        // Fonction pour mettre à jour le sous-titre avec le nom de l'auteur
+        function updateSubtitleWithAuthor(author) {
+            if (author && author.trim() !== '') {
+                const subtitleText = "tester ses connaissances sur un texte de " + capitalizeFirstLetter(author);
+                if (appSubtitle) appSubtitle.textContent = subtitleText;
+                if (mobileSubtitle) mobileSubtitle.textContent = subtitleText;
+                currentSousTitre = subtitleText;
+            } else {
+                const defaultSub = "tester ses connaissances";
+                if (appSubtitle) appSubtitle.textContent = defaultSub;
+                if (mobileSubtitle) mobileSubtitle.textContent = defaultSub;
+                currentSousTitre = defaultSub;
             }
         }
 
@@ -3047,6 +3156,23 @@
             };
         }
 
+        // ===== SPAWN STARS =====
+        function spawnStars(x, y) {
+            if (!animationsEnabled) return;
+            const emojis = ['⭐', '🌟', '✨', '💫'];
+            for (let i = 0; i < 6; i++) {
+                const el = document.createElement('div');
+                el.className = 'star-particle';
+                el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                el.style.left = (x + (Math.random() - 0.5) * 80) + 'px';
+                el.style.top = (y + (Math.random() - 0.5) * 80) + 'px';
+                el.style.fontSize = (16 + Math.random() * 20) + 'px';
+                el.style.animationDuration = (0.8 + Math.random() * 0.6) + 's';
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 1500);
+            }
+        }
+
         function displayPhilosophyText() {
             const textContent = document.getElementById('philosophyTextContent');
             const sourceContent = document.getElementById('philosophyTextSource');
@@ -3055,9 +3181,8 @@
             if (!philosophyData.texte || philosophyData.texte.trim() === '') {
                 section.classList.add('hidden');
                 progressBar.classList.remove('visible');
-                // Remet le sous-titre par défaut si aucun texte n'est affiché
-                if (appSubtitle) appSubtitle.textContent = currentSousTitre;
-                if (mobileSubtitle) mobileSubtitle.textContent = currentSousTitre;
+                // Remet le sous-titre par défaut
+                updateSubtitleWithAuthor('');
                 return;
             }
             section.classList.remove('hidden');
@@ -3092,10 +3217,8 @@
                     formattedSource = philosophyData.source;
                 }
 
-                // Modification ici : on construit le sous-titre avec "sur un texte de " + l'auteur
-                const subtitleText = "tester ses connaissances sur un texte de " + capitalizedAuthor;
-                if (appSubtitle) appSubtitle.textContent = subtitleText;
-                if (mobileSubtitle) mobileSubtitle.textContent = subtitleText;
+                // Mise à jour du sous-titre avec le nom de l'auteur
+                updateSubtitleWithAuthor(author);
 
                 if (textNumber) {
                     philosophyTextTitle.textContent = 'TEXTE N°' + textNumber + ' DE ' + author.toUpperCase();
@@ -3110,18 +3233,14 @@
                     philosophyTextTitle.textContent = 'TEXTE';
                 }
                 sourceContent.innerHTML = '';
-                // Si pas de source, on remet le sous-titre par défaut
-                if (appSubtitle) appSubtitle.textContent = currentSousTitre;
-                if (mobileSubtitle) mobileSubtitle.textContent = currentSousTitre;
+                updateSubtitleWithAuthor('');
             }
         }
 
         function hidePhilosophyText() {
             document.getElementById('philosophyText')?.classList.add('hidden');
             progressBar.classList.remove('visible');
-            // Remet le sous-titre par défaut si on cache le texte
-            if (appSubtitle) appSubtitle.textContent = currentSousTitre;
-            if (mobileSubtitle) mobileSubtitle.textContent = currentSousTitre;
+            updateSubtitleWithAuthor('');
         }
 
         function togglePhilosophyText() {
@@ -3133,7 +3252,7 @@
             }
         }
 
-        // ========== MISE À JOUR DES SÉLECTEURS (principal + sous-menu) ==========
+        // ========== MISE À JOUR DES SÉLECTEURS ==========
         function updateAllSelectors() {
             if (!mainFileSelect && !quizSelectorSubmenu) return;
 
@@ -3249,9 +3368,7 @@
 
             if (data.titre) {
                 currentTitre = data.titre;
-                // On garde le sous-titre par défaut "tester ses connaissances", il sera complété par displayPhilosophyText
-                currentSousTitre = "tester ses connaissances";
-                updateQuizTitles(currentTitre, currentSousTitre);
+                updateQuizTitles(currentTitre, "tester ses connaissances");
             }
 
             if (fileStatus) {
@@ -3311,8 +3428,7 @@
                     questions = result.questions;
                     if (result.titre) {
                         currentTitre = result.titre;
-                        currentSousTitre = "tester ses connaissances";
-                        updateQuizTitles(currentTitre, currentSousTitre);
+                        updateQuizTitles(currentTitre, "tester ses connaissances");
                     }
                     fileStatus.textContent = `✅ "${quiz.name.replace('.js', '')}" chargé !`;
                     if (mainFileSelect) mainFileSelect.value = 'github_' + index;
@@ -3484,9 +3600,6 @@
                     totalCorrectLabelEl.textContent = totalCorr <= 1 ? 'bonne réponse' : 'bonnes réponses';
                 }
             }
-
-            const correct = parseInt(correctAnswers.textContent) || 0;
-            const incorrect = parseInt(incorrectAnswers.textContent) || 0;
         }
 
         function updateGlobalStatsDisplay() {
@@ -3528,7 +3641,6 @@
             quizEnd.classList.add('hidden');
             quizQuestions.classList.remove('hidden');
             detailedResults.classList.add('hidden');
-            if (quizRetry) quizRetry.style.display = 'inline-block';
 
             displayPhilosophyText();
             const btn = document.getElementById('toggleTextBtn');
@@ -3572,7 +3684,17 @@
                                             <span class="answer-letter">${letters[i]}</span>
                                             <span>${a}</span>
                                         </div>
-                                        <img src="src/false.svg" alt="" class="answer-icon hidden">
+                                        <div class="daltonic-icon correct-icon">
+                                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+                                                <polyline class="check-mark" points="4 12 9 17 20 6" stroke="var(--color-correct)" stroke-width="2"/>
+                                            </svg>
+                                        </div>
+                                        <div class="daltonic-icon incorrect-icon">
+                                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+                                                <line class="cross-mark" x1="6" y1="6" x2="18" y2="18" stroke="var(--color-incorrect)" stroke-width="2"/>
+                                                <line class="cross-mark" x1="18" y1="6" x2="6" y2="18" stroke="var(--color-incorrect)" stroke-width="2"/>
+                                            </svg>
+                                        </div>
                                     </li>
                                 `).join('')}</ul>
                             </fieldset>
@@ -3588,10 +3710,16 @@
 
                 const answers = el.querySelectorAll('.quiz-answer');
                 answers.forEach((ansEl, i) => {
-                    ansEl.addEventListener('click', function onClickHandler() {
+                    ansEl.addEventListener('click', function onClickHandler(e) {
                         const container = this.closest('.container--question');
                         const alreadyAnswered = container.querySelector('.quiz-answer.correct, .quiz-answer.incorrect');
                         if (alreadyAnswered) return;
+                        
+                        // ÉTOILES
+                        if (animationsEnabled) {
+                            const rect = this.getBoundingClientRect();
+                            spawnStars(rect.left + rect.width / 2, rect.top + rect.height / 2);
+                        }
                         
                         if (isDeferredEvaluation) {
                             selectAnswer(this, shuffledAnswers[i]);
@@ -3669,14 +3797,8 @@
                 allAnswers: shuffledAnswers
             };
 
-            const icon = selected.querySelector('.answer-icon');
-            
             if (selectedText === correctText) {
                 selected.classList.add('correct');
-                if (icon) {
-                    icon.src = 'src/true.svg';
-                    icon.classList.remove('hidden');
-                }
                 score++;
                 totalCorrectAnswers++;
                 localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
@@ -3685,10 +3807,6 @@
                 playSound('correct');
             } else {
                 selected.classList.add('incorrect');
-                if (icon) {
-                    icon.src = 'src/false.svg';
-                    icon.classList.remove('hidden');
-                }
                 if (label) label.innerHTML = '<img src="src/emoji-sad.gif" alt="emoji" class="emoji"> mauvaise réponse !';
                 if (animationsEnabled) selected.classList.add('shake-x');
                 playSound('incorrect');
@@ -3696,11 +3814,6 @@
                 Array.from(parent.children).forEach(a => {
                     if ((a.dataset.original || a.textContent) === correctText) {
                         a.classList.add('correct');
-                        const correctIcon = a.querySelector('.answer-icon');
-                        if (correctIcon) {
-                            correctIcon.src = 'src/true.svg';
-                            correctIcon.classList.remove('hidden');
-                        }
                     }
                 });
             }
@@ -3709,11 +3822,6 @@
                 const isCorrect = (a.dataset.original || a.textContent) === correctText;
                 if (!isCorrect && a !== selected) {
                     a.classList.add('incorrect');
-                    const wrongIcon = a.querySelector('.answer-icon');
-                    if (wrongIcon) {
-                        wrongIcon.src = 'src/false.svg';
-                        wrongIcon.classList.remove('hidden');
-                    }
                 }
                 a.style.pointerEvents = 'none';
             });
@@ -3834,7 +3942,9 @@
             detailedResults.classList.remove('hidden');
         }
 
+        // ===== CONFETTIS =====
         function launchConfetti() {
+            if (!animationsEnabled) return;
             const container = document.createElement('div');
             container.className = 'confetti-container';
             document.body.appendChild(container);
@@ -3846,7 +3956,8 @@
                 piece.className = 'confetti-piece';
                 piece.style.left = Math.random() * 100 + '%';
                 piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-                piece.style.width = (Math.random() * 8 + 4) + 'px';
+                // Taille agrandie
+                piece.style.width = (Math.random() * 16 + 4) + 'px';
                 piece.style.height = (Math.random() * 8 + 4) + 'px';
                 piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
                 piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
@@ -3904,12 +4015,14 @@
         // ========== MENU ==========
         function closeAllSubmenus() {
             document.querySelectorAll('.submenu').forEach(s => s.classList.remove('active'));
+            document.body.classList.remove('menu-open');
         }
 
         function closeMenu() {
             document.getElementById('slideMenu')?.classList.remove('open');
             document.getElementById('menuOverlay')?.classList.remove('open');
             document.body.style.overflow = '';
+            document.body.classList.remove('menu-open');
             closeAllSubmenus();
         }
 
@@ -3922,8 +4035,10 @@
                 overlay?.classList.add('open');
                 menu?.classList.add('open');
                 document.body.style.overflow = 'hidden';
+                document.body.classList.add('menu-open');
                 closeAllSubmenus();
             }
+            playSound('click');
         }
 
         // ========== PLEIN ÉCRAN ==========
@@ -4004,6 +4119,11 @@
                     nextBtn.click();
                 }
             }
+
+            if (e.key === 'Escape') {
+                closeMenu();
+                closeAllSubmenus();
+            }
         });
 
         // ========== INITIALISATION ==========
@@ -4048,8 +4168,7 @@
             if (questionCountSlider) questionCountSlider.value = savedCount;
             if (questionCountDisplay) questionCountDisplay.textContent = savedCount;
 
-            // Initialisation du sous-titre
-            updateQuizTitles(currentTitre, currentSousTitre);
+            updateQuizTitles(currentTitre, "tester ses connaissances");
 
             fetchGitHubFiles();
 
@@ -4071,8 +4190,7 @@
                                     questions = data.questions || [];
                                     if (data.titre) {
                                         currentTitre = data.titre;
-                                        currentSousTitre = "tester ses connaissances";
-                                        updateQuizTitles(currentTitre, currentSousTitre);
+                                        updateQuizTitles(currentTitre, "tester ses connaissances");
                                     }
                                     if (fileStatus) {
                                         fileStatus.textContent = `✅ "${loadedQuizzes[savedIndex].name}" chargé !`;
@@ -4141,6 +4259,7 @@
                 playSound('click');
                 closeAllSubmenus();
                 document.getElementById('submenuLocalFiles')?.classList.add('active');
+                document.body.classList.add('menu-open');
             });
 
             // ===== ACTIONS DE LA BARRE D'OUTILS =====
@@ -4184,6 +4303,7 @@
                 playSound('click');
                 closeAllSubmenus();
                 document.getElementById('submenuInstructions')?.classList.add('active');
+                document.body.classList.add('menu-open');
             });
 
             document.getElementById('statsButton')?.addEventListener('click', function() {
@@ -4191,21 +4311,25 @@
                 closeAllSubmenus();
                 updateGlobalStatsDisplay();
                 document.getElementById('submenuStats')?.classList.add('active');
+                document.body.classList.add('menu-open');
             });
             document.getElementById('settingsButton')?.addEventListener('click', function() {
                 playSound('click');
                 closeAllSubmenus();
                 document.getElementById('submenuSettings')?.classList.add('active');
+                document.body.classList.add('menu-open');
             });
             document.getElementById('shortcutsButton')?.addEventListener('click', function() {
                 playSound('click');
                 closeAllSubmenus();
                 document.getElementById('submenuShortcuts')?.classList.add('active');
+                document.body.classList.add('menu-open');
             });
             document.getElementById('aboutButton')?.addEventListener('click', function() {
                 playSound('click');
                 closeAllSubmenus();
                 document.getElementById('submenuAbout')?.classList.add('active');
+                document.body.classList.add('menu-open');
             });
 
             document.getElementById('resetButton')?.addEventListener('click', function() {
@@ -4217,6 +4341,7 @@
                 btn.addEventListener('click', function() {
                     playSound('click');
                     closeAllSubmenus();
+                    document.body.classList.remove('menu-open');
                 });
             });
 
@@ -4225,14 +4350,43 @@
                 resetStats();
             });
 
-            quizRetry?.addEventListener('click', function() {
+            // ===== 3 BOUTONS FINAUX =====
+            quizReviewBtn?.addEventListener('click', function() {
+                playSound('click');
+                const details = document.getElementById('detailedResults');
+                if (details) {
+                    details.classList.toggle('hidden');
+                    if (!details.classList.contains('hidden')) {
+                        showDetailedReview();
+                    }
+                }
+            });
+
+            quizRetryBtn?.addEventListener('click', function() {
                 playSound('click');
                 if (questions.length) startQuiz();
             });
-            retryAfterReview?.addEventListener('click', function() {
+
+            quizBackBtn?.addEventListener('click', function() {
                 playSound('click');
-                if (questions.length) startQuiz();
+                // Retour à l'écran d'accueil
+                quizEnd.classList.add('hidden');
+                quizQuestions.classList.add('hidden');
+                quizStart.classList.remove('hidden');
+                // Remettre le sous-titre par défaut
+                updateQuizTitles(currentTitre, "tester ses connaissances");
+                // Réinitialiser l'état
+                currentQuestionIndex = 0;
+                score = 0;
+                userAnswers = [];
+                shuffledQuestions = [];
+                stopTimer();
+                // Afficher le sélecteur
+                if (mainFileSelect) mainFileSelect.value = '';
+                if (fileStatus) fileStatus.textContent = 'Choisissez un quiz ci-dessus';
+                if (progressBar) progressBar.classList.remove('visible');
             });
+
             document.getElementById('toggleTextBtn')?.addEventListener('click', function() {
                 playSound('click');
                 togglePhilosophyText();
