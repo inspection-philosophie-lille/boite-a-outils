@@ -4247,7 +4247,7 @@
 		}
 		updateSummary();
 		const avg = questionTimes.length ? Math.round(questionTimes.reduce((a, b) => a + b, 0) / questionTimes.length) : 0;
-		avgTimeDisplay.textContent = avg + 's';
+		avgTimeDisplay.textContent = avg + ' s';
 		if (currentNotion) updateStats(currentNotion, score, selectedQuestions.length);
 		const pct = Math.round(score / selectedQuestions.length * 100);
 		if (pct >= 80) { setTimeout(() => { launchConfetti(); playSound('score_good'); }, 300); }
