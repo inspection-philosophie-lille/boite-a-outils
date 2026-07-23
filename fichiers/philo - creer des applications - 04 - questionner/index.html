@@ -67,7 +67,7 @@
 			--color-correct: #2c7be5;
 			--color-incorrect: #1a3a5c;
 			--border-correct: #2c7be5;
-			--border-incorrect: #1a3a5c
+			--border-incorrect: #1a3a5c;
 			--letter-color: #2c7be5;
 			--slider-thumb: #2c7be5;
 		}
@@ -94,6 +94,22 @@
 		body.dark-mode.colorblind-mode .quiz-answer.correct {
 			background: rgba(74, 144, 217, 0.2) !important;
 			border-color: var(--color-correct) !important;
+		}
+
+		body.colorblind-mode #detailedResults h3 {
+			color: var(--color-correct) !important;
+		}
+		
+		body.colorblind-mode #statsBadge {
+			background: var(--color-correct) !important;
+		}
+		
+		body.colorblind-mode .quiz-selector-container-submenu .quiz-select:hover {
+			border-color: var(--color-correct) !important;
+		}
+		
+		body.colorblind-mode .questions-slider-value {
+			color: var(--color-correct) !important;
 		}
 
 		body.dark-mode.colorblind-mode .quiz-answer.incorrect {
@@ -1036,11 +1052,11 @@
 		.card-image {
 			width: 100%;
 			height: 100%;
-			object-fit: cover;	/* Changé de 'contain' à 'cover' pour remplir tout l'espace */
+			object-fit: cover;
 			object-position: center;
 			display: block;
 			background: #f5f5f5;
-			padding: 0;	/* Changé de '10px' à '0' pour supprimer les bords blancs */
+			padding: 0;
 		}
 
 		body.dark-mode .card-image {
@@ -1757,7 +1773,6 @@
 			justify-content: center;
 			overflow: auto;
 			flex: 1;
-			padding: 10px 0;
 		}
 
 		/* ========== STYLE BENTO GRID POUR LES RÉSULTATS ========== */
@@ -1851,6 +1866,57 @@
 			box-shadow: var(--shadow-out);
 		}
 
+		/* === 3 BOUTONS FINAUX === */
+		.bento-actions {
+			width: 100%;
+			max-width: 596px;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 10px;
+			margin-top: 5px;
+		}
+
+		.bento-actions .quiz-btn {
+			background: var(--btn);
+			border: 2px solid #8895a7;
+			border-radius: 27px;
+			padding: 10px 20px;
+			font-size: 0.85rem;
+			cursor: pointer;
+			box-shadow: var(--shadow-out);
+			color: var(--font-color);
+			transition: all 0.2s ease;
+			font-family: Arial, sans-serif;
+			min-width: 130px;
+			flex: 1;
+			text-align: center;
+		}
+
+		.bento-actions .quiz-btn:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+			border-color: var(--color-correct);
+		}
+
+		.bento-actions .quiz-btn-danger {
+			border-color: #dc3545;
+		}
+		.bento-actions .quiz-btn-danger:hover {
+			border-color: #dc3545;
+			background: rgba(220, 53, 69, 0.1);
+		}
+
+		body.dark-mode .bento-actions .quiz-btn {
+			background: #3d3d3d;
+			border-color: #5a5a5a;
+			color: #ffffff;
+		}
+		body.dark-mode .bento-actions .quiz-btn:hover {
+			background: #4a4a4a;
+			border-color: var(--color-correct);
+		}
+
 		@media (max-width: 768px) {
 			.container--quiz-results .bento-stats-global {
 				max-width: 100%;
@@ -1904,6 +1970,11 @@
 			.container--quiz-results .bento-details {
 				max-width: 100%;
 			}
+			.bento-actions .quiz-btn {
+				min-width: 100px;
+				font-size: 0.75rem;
+				padding: 8px 14px;
+			}
 		}
 
 		@media (max-width: 480px) {
@@ -1933,6 +2004,11 @@
 			}
 			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
 				font-size: 11px;
+			}
+			.bento-actions .quiz-btn {
+				min-width: 80px;
+				font-size: 0.65rem;
+				padding: 6px 10px;
 			}
 		}
 
@@ -1975,6 +2051,7 @@
 			font-weight: bold;
 			display: block;
 			line-height: 1.2;
+		color: red;
 		}
 
 		.stat-label {
@@ -3267,7 +3344,7 @@
 		</div>
 		<div class="toolbar-center">
 			<h1 class="main-title">quiz φ</h1>
-			<p class="subtitle">évaluer ses connaissances</p>
+			<p class="subtitle">tester ses connaissances</p>
 		</div>
 		<div class="toolbar-right">
 			<button class="toolbar-btn fullscreen-btn" id="fullscreenButton" data-title="plein écran (F)">
@@ -3328,7 +3405,7 @@
 
 	<div class="mobile-title-wrapper">
 		<p class="mobile-title">quiz φ</p>
-		<p class="mobile-subtitle">réviser les notions</p>
+		<p class="mobile-subtitle">tester ses connaissances</p>
 	</div>
 
 	<!-- ========== INDICATEUR MODE FOCUS ========== -->
@@ -3398,8 +3475,8 @@
 							<!-- BENTO SCORE -->
 							<div class="bento-score">
 								<p class="quiz-end__results" style="margin:0;">
-									<span class="quiz-end__message-failure">score :</span>
-									<span class="quiz-end__score" id="finalScore">0</span> <span id="scoreLabel">bonne(s) réponse(s)</span> / <span id="totalQuestionsEnd">10</span>
+									<span class="quiz-end__message-failure">votre score :</span>
+									<span class="quiz-end__score" id="finalScore">0</span> <span id="scoreLabel">bonne(s) réponse(s)</span> sur <span class="quiz-end__score" id="totalQuestionsEnd">10</span>
 								</p>
 							</div>
 
@@ -3446,16 +3523,18 @@
 							<!-- BENTO MESSAGE -->
 							<div class="bento-message" id="summaryMessage"></div>
 
-							<!-- BENTO RESTART -->
-							<div class="bento-restart">
-								<button id="restartQuizBtn" class="quiz-btn quiz-btn--default" type="button" style="min-width:200px;">
-									recommencer
-								</button>
+							<!-- === 3 BOUTONS FINAUX === -->
+							<div class="bento-actions">
+								<button class="quiz-btn" id="quizReviewBtn">réponses</button>
+								<button class="quiz-btn" id="quizRetryBtn">réessayer</button>
+								<button class="quiz-btn" id="quizBackBtn">retour aux séquences</button>
 							</div>
 
 							<!-- BENTO DETAILS -->
 							<div class="bento-details" id="detailedResults" style="padding:12px 16px;">
 								<h3 style="color:red;margin:0 0 8px 0;font-size:0.85rem;text-align:center;">📋 détail des réponses :</h3>
+								
+
 								<div id="questionsReview"></div>
 								<div style="text-align:center;margin-top:10px;">
 									<button id="retryAfterReview" class="quiz-btn quiz-btn--default quiz-btn--fill" type="button">🔄 Réessayer</button>
@@ -3772,6 +3851,9 @@
 		const nextBtn = document.getElementById('nextQuestion');
 		const restartQuizBtn = document.getElementById('restartQuizBtn');
 		const statsBadge = document.getElementById('statsBadge');
+		const quizReviewBtn = document.getElementById('quizReviewBtn');
+		const quizRetryBtn = document.getElementById('quizRetryBtn');
+		const quizBackBtn = document.getElementById('quizBackBtn');
 
 		// Éléments de la modale
 		const fileInput = document.getElementById('fileInput');
@@ -3913,10 +3995,10 @@
 		}
 
 		// ========== TRAITEMENT DES FICHIERS SÉLECTIONNÉS ==========
-function processSelectedFiles(files) {
-		notionsList = [];
+		function processSelectedFiles(files) {
+			notionsList = [];
 
-		files.forEach(file => {
+			files.forEach(file => {
 				const baseName = getBaseName(file.name);
 				const title = formatTitle(file.name);
 				const imagePath = 'src/' + baseName + '.png';
@@ -3924,28 +4006,28 @@ function processSelectedFiles(files) {
 				// Comptage des questions
 				let questionCountText = 'chargement...';
 				try {
-						// Si le contenu est disponible
-						const content = file.content || '';
-						const matches = content.match(/question\s*:/gi);
-						const count = matches ? matches.length : 0;
-						if (count > 0) {
-								questionCountText = count + ' questions';
-						}
+					// Si le contenu est disponible
+					const content = file.content || '';
+					const matches = content.match(/question\s*:/gi);
+					const count = matches ? matches.length : 0;
+					if (count > 0) {
+						questionCountText = count + ' questions';
+					}
 				} catch(e) {
-						// Ignorer
+					// Ignorer
 				}
 				
 				notionsList.push({
-						id: baseName.toLowerCase().replace(/[^a-z0-9]/g, ''),
-						title: title,
-						imagePath: imagePath,
-						questions: questionCountText,
-						code: 'φ',
-						file: file.name,
-						fileObject: file.fileObject || file,
-						cachedContent: file.content || null
+					id: baseName.toLowerCase().replace(/[^a-z0-9]/g, ''),
+					title: title,
+					imagePath: imagePath,
+					questions: questionCountText,
+					code: 'φ',
+					file: file.name,
+					fileObject: file.fileObject || file,
+					cachedContent: file.content || null
 				});
-		});
+			});
 
 			quizSelectorSubmenu.innerHTML = '<option value="">-- sélectionner une notion --</option>';
 			notionsList.forEach(notion => {
@@ -4629,6 +4711,7 @@ function processSelectedFiles(files) {
 
 		// ========== PARTICULES ==========
 		function spawnStars(x, y) {
+			if (!animationsEnabled) return;
 			const emojis = ['⭐', '🌟', '✨', '💫'];
 			for (let i = 0; i < 6; i++) {
 				const el = document.createElement('div');
@@ -4644,6 +4727,7 @@ function processSelectedFiles(files) {
 		}
 
 		function launchConfetti() {
+			if (!animationsEnabled) return;
 			const container = document.createElement('div');
 			container.className = 'confetti-container';
 			document.body.appendChild(container);
@@ -4655,7 +4739,7 @@ function processSelectedFiles(files) {
 				piece.className = 'confetti-piece';
 				piece.style.left = Math.random() * 100 + '%';
 				piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-				piece.style.width = (Math.random() * 8 + 4) + 'px';
+				piece.style.width = (Math.random() * 16 + 4) + 'px';
 				piece.style.height = (Math.random() * 8 + 4) + 'px';
 				piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
 				piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
@@ -4714,8 +4798,8 @@ function processSelectedFiles(files) {
 		}
 
 		function displayQuestions() {
-		questionsContainer.innerHTML = '';
-		selectedQuestions.forEach((q, index) => {
+			questionsContainer.innerHTML = '';
+			selectedQuestions.forEach((q, index) => {
 				const questionDiv = document.createElement('div');
 				questionDiv.className = 'container--question hidden';
 				questionDiv.setAttribute('data-question', index + 1);
@@ -4772,10 +4856,10 @@ function processSelectedFiles(files) {
 								</div>
 						`;
 				questionsContainer.appendChild(questionDiv);
-		});
-		setupAnswerListeners();
-		setupKeyboardShortcuts();
-}
+			});
+			setupAnswerListeners();
+			setupKeyboardShortcuts();
+		}
 
 		function setupAnswerListeners() {
 			const questions = document.querySelectorAll('.container--question');
@@ -5043,7 +5127,7 @@ function processSelectedFiles(files) {
 			updateSummary();
 
 			const avgTime = questionTimes.length > 0 ? Math.round(questionTimes.reduce((a, b) => a + b, 0) / questionTimes.length) : 0;
-			avgTimeDisplay.textContent = avgTime + 's';
+			avgTimeDisplay.textContent = avgTime + ' s';
 
 			if (currentNotion) {
 				updateStats(currentNotion, score, selectedQuestions.length);
@@ -5744,6 +5828,84 @@ function processSelectedFiles(files) {
 				restartQuiz();
 			});
 
+			// ========== ÉVÉNEMENTS DES 3 BOUTONS FINAUX ==========
+			if (quizReviewBtn) {
+				quizReviewBtn.addEventListener('click', function() {
+					playSound('click');
+					if (detailedResults) {
+						detailedResults.classList.toggle('hidden');
+						if (!detailedResults.classList.contains('hidden')) {
+							showDetailedReview();
+						}
+					}
+				});
+			}
+
+			if (quizRetryBtn) {
+				quizRetryBtn.addEventListener('click', function() {
+					playSound('click');
+					retryQuiz();
+				});
+			}
+
+// ===== BOUTON RETOUR AUX NOTIONS CORRIGÉ =====
+if (quizBackBtn) {
+		quizBackBtn.addEventListener('click', function() {
+				playSound('click');
+				
+				// NE PAS réinitialiser currentNotion ni vider le cache
+				// Les cartes ont besoin de ces données pour fonctionner
+				
+				// Nettoyer l'état du quiz
+				stopTimer();
+				document.querySelectorAll('script[data-src-loader="true"]').forEach(s => s.remove());
+				
+				// Réinitialiser les variables du quiz
+				selectedQuestions = [];
+				userAnswers = [];
+				score = 0;
+				currentQuestionIndex = 0;
+				incorrectQuestions = [];
+				questionTimes = [];
+				timerExpired = false;
+				isReviewMode = false;
+				isRevisionMode = false;
+				allQuestions = [];
+				
+				// Nettoyer l'interface
+				document.querySelectorAll('.container--question').forEach(q => {
+						q.querySelectorAll('.quiz-answer').forEach(a => {
+								a.classList.remove('correct', 'incorrect', 'shake-x', 'shake-y', 'selected');
+								a.style.pointerEvents = 'auto';
+						});
+						const expl = q.querySelector('.quiz-explanation');
+						if (expl) {
+								expl.classList.remove('visible');
+								expl.classList.add('hidden');
+						}
+				});
+				
+				if (progressBarQuiz) progressBarQuiz.style.width = '0%';
+				if (revisionBadge) revisionBadge.classList.add('hidden');
+				
+				// Cacher la section quiz et montrer les notions
+				document.getElementById('quizSection').classList.add('hidden');
+				document.getElementById('notionsSection').classList.remove('hidden');
+				quizQuestions.classList.remove('hidden');
+				quizEnd.classList.add('hidden');
+				
+				if (timerdisplay) {
+						timerdisplay.style.display = 'none';
+						timerdisplay.classList.remove('warning', 'danger');
+				}
+				
+				if (quizTitleEl) quizTitleEl.textContent = '';
+				
+				// On garde currentNotion et questionsCache intacts pour les cartes
+				// Les cartes pourront ainsi fonctionner normalement
+		});
+}
+
 			if (soundEnabled) {
 				preloadSounds();
 			}
@@ -5776,11 +5938,11 @@ function processSelectedFiles(files) {
 				
 				loadingOverlay.classList.add('active');
 				
-Promise.all(readPromises)
-		.then(filesWithContent => {
-				setCachedFiles(filesWithContent);
-				fileSelectionModal.classList.remove('visible');
-				processSelectedFiles(filesWithContent);
+				Promise.all(readPromises)
+					.then(filesWithContent => {
+						setCachedFiles(filesWithContent);
+						fileSelectionModal.classList.remove('visible');
+						processSelectedFiles(filesWithContent);
 					})
 					.catch(error => {
 						console.error('Erreur lors de la lecture des fichiers:', error);
