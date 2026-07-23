@@ -5299,7 +5299,7 @@
 				}
 			}
 			const avgTime = questionTimes.length > 0 ? Math.round(questionTimes.reduce((a, b) => a + b, 0) / questionTimes.length) : 0;
-			if (avgTimeDisplay) avgTimeDisplay.textContent = avgTime + 's';
+			if (avgTimeDisplay) avgTimeDisplay.textContent = avgTime + ' s';
 			if (correctAnswers) {
 				correctAnswers.textContent = score;
 				if (correctLabel) correctLabel.textContent = score <= 1 ? 'correcte' : 'correctes';
