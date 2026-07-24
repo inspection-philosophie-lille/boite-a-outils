@@ -1422,7 +1422,7 @@
 			<p class="subtitle" id="desktopSubtitle">associer un argument à l'exemple correspondant</p>
 		</div>
 		<div class="toolbar-right">
-			<button class="timer-btn" id="timerBtnDesktop" data-title="temps restant"><span id="timerValueDesktop">30</span>s</button>
+			<button class="timer-btn" id="timerBtnDesktop" data-title="temps restant"><span id="timerValueDesktop">60</span>s</button>
 			<button class="toolbar-btn fullscreen" id="fullscreenButton" data-title="plein écran (F)">
 				<svg class="fullscreen-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
 					<line x1="4" y1="5" x2="10" y2="5" />
@@ -1464,7 +1464,7 @@
 					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
 				</svg>
 			</button>
-			<button class="timer-btn" id="timerBtnMobile" data-title="temps restant"><span id="timerValueMobile">30</span>s</button>
+			<button class="timer-btn" id="timerBtnMobile" data-title="temps restant"><span id="timerValueMobile">60</span>s</button>
 			<button class="toolbar-btn fullscreen" id="fullscreenButtonMobile" data-title="plein écran">
 				<svg class="fullscreen-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
 					<line x1="4" y1="5" x2="10" y2="5" />
@@ -1811,7 +1811,7 @@
 		// 3. TIMER
 		// ====================================================================
 		let timerEnabled = localStorage.getItem('apparierTimer') !== 'false';
-		let timerLimit = parseInt(localStorage.getItem('apparierTimerLimit') || '30');
+		let timerLimit = parseInt(localStorage.getItem('apparierTimerLimit') || '60');
 		let timerInterval = null;
 		let timeLeft = timerLimit;
 
