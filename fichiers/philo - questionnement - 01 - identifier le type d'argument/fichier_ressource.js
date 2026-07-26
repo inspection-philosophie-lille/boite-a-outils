@@ -1,6 +1,6 @@
 // Contenu à modifier
 
-window.title = "identifier le type d'argument";
+window.title = "identifier un argument";
 window.subtitle = "associer un argument à l'exemple correspondant";
 
 window.argumentsData = [
