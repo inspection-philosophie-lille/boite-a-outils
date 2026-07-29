@@ -1,7 +1,7 @@
 // Contenu à modifier
 
-window.title = "identifier le type de sophisme";
-window.subtitle = "relier chaque type de sophisme à l'exemple correspondant";
+window.title = "identifier le sophisme";
+window.subtitle = "relier un sophisme à l'exemple correspondant";
 
 window.argumentsData = [
 /* attention aux virgules ! le dernier argument est le seul à ne pas en comporter !*/

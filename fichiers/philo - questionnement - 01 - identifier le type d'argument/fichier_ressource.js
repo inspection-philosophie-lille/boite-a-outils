@@ -1,7 +1,7 @@
 // Contenu à modifier
 
 window.title = "identifier un argument";
-window.subtitle = "associer un argument à l'exemple correspondant";
+window.subtitle = "relier un argument à l'exemple correspondant";
 
 window.argumentsData = [
 { colonne_de_gauche: "Alternative (raisonnement par élimination)", colonne_de_droite: "Soit avoir des biens matériels est une condition du bonheur, soit on peut être heureux sans bien matériel. Or il est presque impossible d'être heureux ainsi. Donc avoir des biens matériels est une condition du bonheur." }, // n°1
