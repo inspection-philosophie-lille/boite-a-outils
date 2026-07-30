@@ -1,5 +1,5 @@
 // Contenu à modifier
-window.title = "du problème à un intitulé";
+window.title = "du problème à l'intitulé";
 window.subtitle = "lier un problème à la question qu'il présuppose";
 
 window.argumentsData = [
