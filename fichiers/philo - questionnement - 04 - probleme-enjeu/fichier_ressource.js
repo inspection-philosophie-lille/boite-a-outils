@@ -1,5 +1,5 @@
 // Contenu à modifier
-window.title = "du problème à son enjeu";
+window.title = "du problème à l'enjeu";
 window.subtitle = "trouver l'enjeu d'un problème";
 
 window.argumentsData = [
