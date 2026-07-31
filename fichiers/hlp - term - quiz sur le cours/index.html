@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- Daniel Boulagnon -->
 <!-- daniel.boulagnon@ac-lille.fr -->
-<!-- version 2026 -->
+<!-- version 2026 - code nettoyé -->
 <!-- Exploitation à but strictement pédagogique et non lucratif -->
 <html lang="fr">
 <head>
@@ -12,7 +12,7 @@
 	<link rel="icon" type="image/svg+xml" href="src/favicon.ico" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<style>
-		/* ===== STYLES COMPLETS ===== */
+		/* ===== STYLES SIMPLIFIÉS ===== */
 		* {
 			box-sizing: border-box;
 			margin: 0;
@@ -39,18 +39,6 @@
 			--border-incorrect: #dc3545;
 		}
 
-		body {
-			font-family: Arial, sans-serif;
-			background-color: var(--bg);
-			color: var(--font-color);
-			padding: 12px 12px 24px 12px;
-			min-height: 100vh;
-			display: flex;
-			flex-direction: column;
-			transition: background-color 0.4s, color 0.4s;
-			overflow-y: auto;
-		}
-
 		body.dark-theme {
 			--bg: #121212;
 			--btn: #3d3d3d;
@@ -64,138 +52,6 @@
 			--color-incorrect: #e74c3c;
 			background-color: #121212;
 			color: #ffffff;
-		}
-
-		body.dark-theme .toolbar,
-		body.dark-theme .toolbar-mobile {
-			background: transparent;
-		}
-
-		body.dark-theme .btn {
-			background: #3d3d3d;
-			color: #ffffff;
-			box-shadow: 0.3rem 0.3rem 0.6rem #000000, -0.3rem -0.3rem 0.6rem #5a5a5a;
-		}
-
-		body.dark-theme .btn:hover {
-			box-shadow: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
-		}
-
-		body.dark-theme .slide-menu,
-		body.dark-theme .submenu {
-			background: #1a1a1a;
-		}
-
-		body.dark-theme .menu-item {
-			background: #3d3d3d;
-			color: #ffffff;
-			box-shadow: 0.3rem 0.3rem 0.6rem #000000, -0.3rem -0.3rem 0.6rem #5a5a5a;
-		}
-
-		body.dark-theme .menu-item:hover {
-			background: #4a4a4a;
-		}
-
-		body.dark-theme .menu-close,
-		body.dark-theme .submenu-close {
-			background: #3d3d3d;
-			color: #ffffff;
-			box-shadow: 0.3rem 0.3rem 0.6rem #000000, -0.3rem -0.3rem 0.6rem #5a5a5a;
-		}
-
-		body.dark-theme .menu-close:hover,
-		body.dark-theme .submenu-close:hover {
-			box-shadow: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
-		}
-
-		body.dark-theme .container--quiz {
-			background: #1a1a1a;
-			border-color: #2a2a2a;
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-		}
-
-		body.dark-theme .quiz-answer {
-			background: #3d3d3d;
-			box-shadow: 0.2rem 0.2rem 0.5rem #000000, -0.2rem -0.2rem 0.5rem #5a5a5a;
-			border-color: #2a2a2a;
-		}
-
-		body.dark-theme .quiz-answer:hover {
-			box-shadow: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
-		}
-
-		body.dark-theme .quiz-explanation {
-			background: #3d3d3d;
-			border-color: #2a2a2a;
-		}
-
-		body.dark-theme .philosophy-text-container {
-			background: #3d3d3d;
-			border-color: #2a2a2a;
-		}
-
-		body.dark-theme .philosophy-text-header {
-			background: rgba(255, 255, 255, 0.04);
-			border-bottom-color: #2a2a2a;
-		}
-
-		body.dark-theme .modal-content {
-			background: #1a1a1a;
-			box-shadow: 0.3rem 0.3rem 0.6rem #000000, -0.3rem -0.3rem 0.6rem #5a5a5a;
-		}
-
-		body.dark-theme .bracket-number {
-			color: #6eb5ff;
-		}
-
-		body.dark-theme .philosophy-text-source {
-			color: #b0c4de;
-		}
-
-		body.dark-theme #detailedResults {
-			background: #3d3d3d;
-		}
-
-		body.dark-theme .quiz-start__opacity {
-			background: rgba(0, 0, 0, 0.55);
-		}
-
-		body.dark-theme .next-button-container .quiz-btn,
-		body.dark-theme .container--quiz-btn .quiz-btn {
-			background: #3d3d3d;
-			border-color: #5a5a5a;
-			box-shadow: 0.2rem 0.2rem 0.5rem #000000, -0.2rem -0.2rem 0.5rem #5a5a5a;
-		}
-
-		body.dark-theme .next-button-container .quiz-btn:hover,
-		body.dark-theme .container--quiz-btn .quiz-btn:hover {
-			box-shadow: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
-		}
-
-		body.dark-theme .text-toggle-btn {
-			color: #b0c4de;
-		}
-
-		body.dark-theme .theme-switch .slider {
-			background: #3d3d3d;
-		}
-
-		body.dark-theme .theme-switch input:checked+.slider {
-			background: #2196F3;
-		}
-
-		body.dark-theme kbd {
-			background-color: #1a1a1a;
-			color: #e2e8f0;
-			border: 1px solid #333;
-		}
-
-		body.dark-theme .submenu-content .settings-info {
-			background: rgba(255, 255, 255, 0.05);
-		}
-
-		body.dark-theme .timer-display {
-			color: #8895a7;
 		}
 
 		body.colorblind-mode {
@@ -214,245 +70,148 @@
 			--letter-color: #4a90d9;
 		}
 
-		body.colorblind-mode .toolbar-title,
-		body.colorblind-mode .mobile-title,
-		body.colorblind-mode .submenu-title {
-			color: var(--color-correct) !important;
-		}
-
-		body.dark-theme.colorblind-mode .toolbar-title,
-		body.dark-theme.colorblind-mode .mobile-title,
-		body.dark-theme.colorblind-mode .submenu-title {
-			color: var(--color-correct) !important;
-		}
-
-		body.colorblind-mode .quiz-answer.correct {
-			background: rgba(44, 123, 229, 0.15) !important;
-			border-color: var(--color-correct) !important;
-		}
-
-		body.colorblind-mode .quiz-answer.incorrect {
-			background: rgba(231, 76, 60, 0.15) !important;
-			border-color: var(--color-incorrect) !important;
-		}
-
-		body.dark-theme.colorblind-mode .quiz-answer.correct {
-			background: rgba(74, 144, 217, 0.2) !important;
-			border-color: var(--color-correct) !important;
-		}
-
-		body.dark-theme.colorblind-mode .quiz-answer.incorrect {
-			background: rgba(231, 76, 60, 0.2) !important;
-			border-color: var(--color-incorrect) !important;
-		}
-
-		body.colorblind-mode .answer-letter {
-			background: var(--color-correct) !important;
-			color: white !important;
-			border: 2px solid var(--color-correct) !important;
-		}
-
-		body.colorblind-mode .quiz-answer.correct .answer-letter {
-			background: var(--color-correct) !important;
-			border-color: var(--color-correct) !important;
-		}
-
-		body.colorblind-mode .quiz-answer.incorrect .answer-letter {
-			background: var(--color-incorrect) !important;
-			border-color: var(--color-incorrect) !important;
-		}
-
-		body.dark-theme.colorblind-mode .answer-letter {
-			background: var(--color-correct) !important;
-			color: white !important;
-			border: 2px solid var(--color-correct) !important;
-		}
-
-		body.colorblind-mode .progress-bar__cursor--dynamic {
-			background: var(--color-correct);
-		}
-
-		body.colorblind-mode .questions-slider::-webkit-slider-thumb {
-			background: var(--color-correct);
-		}
-
-		body.colorblind-mode .questions-slider::-moz-range-thumb {
-			background: var(--color-correct);
-		}
-
-		body.colorblind-mode .stat-value,
-		body.colorblind-mode .stat-num {
-			color: var(--color-correct);
-		}
-
-		body.colorblind-mode .stat-value[data-type="incorrect"] {
-			color: var(--color-incorrect);
-		}
-
-		body.colorblind-mode .quiz-end__score {
-			color: var(--color-correct);
-		}
-
-		body.colorblind-mode .philosophy-text-header h3 {
-			color: var(--color-correct);
-		}
-
-		body.colorblind-mode .menu-item .item-badge {
-			background: var(--color-correct);
-		}
-
-		body.colorblind-mode .questions-slider-value {
-			color: var(--color-correct);
-		}
-
-		body.colorblind-mode #detailedResults h3 {
-			color: var(--color-correct);
-		}
-
-		body.colorblind-mode .quiz-answer.correct .correct-icon {
-			display: block;
-		}
-
-		body.colorblind-mode .quiz-answer.incorrect .incorrect-icon {
-			display: block;
-		}
-
-		body.colorblind-mode .quiz-select:hover {
-			border-color: var(--color-correct) !important;
-		}
-
-		.progress-bar {
-			flex-shrink: 0;
-			padding: 4px 12px 3px;
-			margin-bottom: 6px;
-			background: transparent;
-			width: 100%;
-			border-radius: 14px 14px 0 0;
-			display: none;
-		}
-
-		.progress-bar.visible {
-			display: block;
-		}
-
-		.progress-bar__info {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			font-size: 10px;
-			text-transform: uppercase;
-			letter-spacing: 0.3px;
-			gap: 8px;
-			padding-bottom: 2px;
-		}
-
-		.progress-bar__title {
-			display: flex;
-			align-items: center;
-			gap: 4px;
-			min-width: 0;
-		}
-
-		.progress-bar__title .phi-symbol {
-			margin-right: 4px;
-			margin-bottom: 4px;
-			margin-top: -4px;
-			font-family: 'Times New Roman', serif;
-			font-size: 35px !important;
-			width: 35px;
-			height: 35px;
-			display: flex;
-			text-transform: lowercase;
-			align-items: center;
-			justify-content: center;
+		body {
+			font-family: Arial, sans-serif;
+			background-color: var(--bg);
 			color: var(--font-color);
-			line-height: 1;
-			flex-shrink: 0;
-		}
-
-		.progress-bar__title h1 {
-			font-size: clamp(0.7rem, 1.2vw, 0.9rem);
-			margin: 0;
-			color: var(--font-color);
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
-
-		.progress-bar__count {
-			font-weight: bold;
-			font-size: 11px;
-			white-space: nowrap;
-			flex-shrink: 0;
-			color: #555;
+			padding: 12px 12px 24px 12px;
+			min-height: 100vh;
 			display: flex;
-			align-items: center;
-			gap: 3px;
+			flex-direction: column;
+			transition: background-color 0.4s, color 0.4s;
+			overflow-y: auto;
 		}
 
-		body.dark-theme .progress-bar__count {
-			color: #8895a7;
-		}
-
-		.timer-display {
-			display: inline-flex;
-			align-items: center;
-			gap: 4px;
-			font-size: 11px;
-			font-weight: bold;
-			padding: 1px 8px;
-			border-radius: 20px;
+		/* Styles unifiés pour tous les composants */
+		.btn, .timer-btn, .menu-close, .submenu-close, .menu-item, .quiz-select, 
+		.upload-btn, .local-reset-btn, .stats-reload-btn, .bento-actions .quiz-btn,
+		.next-button-container .quiz-btn, .container--quiz-btn .quiz-btn {
 			background: var(--btn);
-			box-shadow: var(--shadow-out);
 			color: var(--font-color);
-			min-width: 40px;
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+			border: none;
+			cursor: pointer;
+		}
+
+		.btn:hover, .timer-btn:hover, .menu-close:hover, .submenu-close:hover,
+		.menu-item:hover, .quiz-select:hover, .upload-btn:hover, .local-reset-btn:hover,
+		.stats-reload-btn:hover, .bento-actions .quiz-btn:hover,
+		.next-button-container .quiz-btn:hover, .container--quiz-btn .quiz-btn:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+
+		.btn {
+			width: 52px;
+			height: 52px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
 			justify-content: center;
-			transition: all 0.3s ease;
-			margin-right: 12px;
-			text-transform: none;
-		}
-
-		.timer-display.warning {
-			color: #ff6b6b;
-			animation: timer-pulse 0.5s ease infinite alternate;
-		}
-
-		.timer-display.danger {
-			color: #ff0000;
-			animation: timer-pulse 0.3s ease infinite alternate;
-		}
-
-		@keyframes timer-pulse {
-			0% {
-				transform: scale(1);
-			}
-			100% {
-				transform: scale(1.05);
-			}
-		}
-
-		.progress-bar__cursor {
-			background: rgba(0, 0, 0, 0.1);
-			border-radius: 18px;
-			height: 4px;
+			flex-shrink: 0;
 			position: relative;
-			width: 100%;
 		}
 
-		body.dark-theme .progress-bar__cursor {
-			background: rgba(255, 255, 255, 0.1);
+		.btn svg {
+			width: 24px;
+			height: 24px;
+			fill: none;
+			stroke: currentColor;
+			stroke-width: 2;
+			flex-shrink: 0;
 		}
 
-		.progress-bar__cursor--dynamic {
+		.btn::after, .timer-btn::after {
+			content: attr(data-title);
 			position: absolute;
-			border-radius: 18px;
-			height: 4px;
-			background: red;
-			transition: width 0.3s ease;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: 0.5rem;
+			background-color: var(--tooltip-bg);
+			color: var(--tooltip-color);
+			padding: 0.3rem 0.6rem;
+			border-radius: 5px;
+			font-size: 0.8rem;
+			white-space: nowrap;
+			opacity: 0;
+			pointer-events: none;
+			z-index: 10;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 		}
 
-		body.dark-theme .progress-bar__cursor--dynamic {
-			background: #ef5350;
+		.btn:hover::after, .timer-btn:hover::after {
+			opacity: 1;
+		}
+
+		.btn-home .icon-wrapper {
+			width: 52px;
+			height: 52px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transform-style: preserve-3d;
+			flex-shrink: 0;
+		}
+
+		.btn-home:hover .icon-wrapper {
+			animation: spin360 2s infinite linear;
+		}
+
+		@keyframes spin360 {
+			0% { transform: rotateY(0deg); }
+			100% { transform: rotateY(360deg); }
+		}
+
+		.btn-reload:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		@keyframes rotate {
+			from { transform: rotate(0deg); }
+			to { transform: rotate(360deg); }
+		}
+
+		.menu-icon {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			transition: transform 0.3s ease;
+			width: 22px;
+			height: 18px;
+			justify-content: center;
+		}
+
+		.menu-icon span {
+			display: block;
+			width: 100%;
+			height: 2px;
+			background: currentColor;
+			border-radius: 2px;
+			transition: all 0.3s ease;
+		}
+
+		.btn-menu:hover .menu-icon {
+			transform: rotate(90deg);
+		}
+
+		.btn-fullscreen .fullscreen-icon {
+			transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+		}
+
+		.btn-fullscreen:not(.fullscreen-active):hover .fullscreen-icon {
+			transform: scale(1.5);
+		}
+
+		.fullscreen-exit-icon {
+			transform-origin: center;
+			transition: transform 0.3s ease;
+			stroke-width: 1.2px !important;
+		}
+
+		.btn-fullscreen.fullscreen-active:hover .fullscreen-exit-icon {
+			transform: scale(0.7);
 		}
 
 		.toolbar-wrapper {
@@ -520,139 +279,40 @@
 			padding-top: 12px;
 		}
 
-		.btn {
+		body.dark-theme .toolbar-subtitle,
+		body.dark-theme .mobile-subtitle {
+			color: #8895a7;
+		}
+
+		.timer-btn {
 			width: 52px;
 			height: 52px;
 			border-radius: 50%;
-			background: var(--btn);
-			border: none;
-			color: var(--font-color);
-			cursor: pointer;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			box-shadow: var(--shadow-out);
-			transition: all 0.2s ease;
-			flex-shrink: 0;
 			position: relative;
-		}
-
-		.btn:hover {
-			box-shadow: var(--shadow-in);
-			transform: translateY(-2px);
-		}
-
-		.btn:active {
-			transform: translateY(1px);
-		}
-
-		.btn svg {
-			width: 24px;
-			height: 24px;
-			fill: none;
-			stroke: currentColor;
-			stroke-width: 2;
+			padding: 0;
+			line-height: 1;
+			font-size: 12px;
+			font-weight: bold;
+			font-family: monospace;
 			flex-shrink: 0;
 		}
 
-		.btn::after {
-			content: attr(data-title);
-			position: absolute;
-			top: 100%;
-			left: 50%;
-			transform: translateX(-50%);
-			margin-top: 0.5rem;
-			background-color: var(--tooltip-bg);
-			color: var(--tooltip-color);
-			padding: 0.3rem 0.6rem;
-			border-radius: 5px;
-			font-size: 0.8rem;
-			white-space: nowrap;
-			opacity: 0;
-			pointer-events: none;
-			z-index: 10;
-			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		.timer-btn.warning {
+			color: #ff6b6b;
+			animation: timer-pulse 0.5s ease infinite alternate;
 		}
 
-		.btn:hover::after {
-			opacity: 1;
+		.timer-btn.danger {
+			color: #ff0000;
+			animation: timer-pulse 0.3s ease infinite alternate;
 		}
 
-		.btn-home .icon-wrapper {
-			width: 52px;
-			height: 52px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			transform-style: preserve-3d;
-			flex-shrink: 0;
-		}
-
-		.btn-home:hover .icon-wrapper {
-			animation: spin360 2s infinite linear;
-		}
-
-		@keyframes spin360 {
-			0% {
-				transform: rotateY(0deg);
-			}
-			100% {
-				transform: rotateY(360deg);
-			}
-		}
-
-		.btn-reload:hover svg {
-			animation: rotate 1s linear;
-		}
-
-		@keyframes rotate {
-			from {
-				transform: rotate(0deg);
-			}
-			to {
-				transform: rotate(360deg);
-			}
-		}
-
-		.menu-icon {
-			display: flex;
-			flex-direction: column;
-			gap: 4px;
-			transition: transform 0.3s ease;
-			width: 22px;
-			height: 18px;
-			justify-content: center;
-		}
-
-		.menu-icon span {
-			display: block;
-			width: 100%;
-			height: 2px;
-			background: currentColor;
-			border-radius: 2px;
-			transition: all 0.3s ease;
-		}
-
-		.btn-menu:hover .menu-icon {
-			transform: rotate(90deg);
-		}
-
-		.btn-fullscreen .fullscreen-icon {
-			transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-		}
-
-		.btn-fullscreen:not(.fullscreen-active):hover .fullscreen-icon {
-			transform: scale(1.5);
-		}
-
-		.fullscreen-exit-icon {
-			transform-origin: center;
-			transition: transform 0.3s ease;
-			stroke-width: 1.2px !important;
-		}
-
-		.btn-fullscreen.fullscreen-active:hover .fullscreen-exit-icon {
-			transform: scale(0.7);
+		@keyframes timer-pulse {
+			0% { transform: scale(1); }
+			100% { transform: scale(1.05); }
 		}
 
 		.toolbar-mobile {
@@ -665,7 +325,8 @@
 			border-radius: 12px 12px 0 0;
 		}
 
-		.toolbar-mobile .btn {
+		.toolbar-mobile .btn,
+		.toolbar-mobile .timer-btn {
 			width: 44px;
 			height: 44px;
 		}
@@ -793,31 +454,25 @@
 			margin-bottom: 1rem;
 		}
 
-		.menu-close {
-			background: var(--btn);
-			border: none;
-			cursor: pointer;
+		.menu-close,
+		.submenu-close {
 			width: 40px;
 			height: 40px;
 			border-radius: 50%;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			box-shadow: var(--shadow-out);
-			color: var(--font-color);
 		}
 
-		.menu-close svg {
+		.menu-close svg,
+		.submenu-close svg {
 			width: 18px;
 			height: 18px;
 			stroke: currentColor;
 		}
 
-		.menu-close:hover {
-			box-shadow: var(--shadow-in);
-		}
-
-		.menu-close:hover svg {
+		.menu-close:hover svg,
+		.submenu-close:hover svg {
 			animation: rotate 1s linear;
 		}
 
@@ -825,27 +480,21 @@
 			display: flex;
 			align-items: center;
 			padding: 0px 20px;
-			background: var(--btn);
-			color: var(--font-color);
 			font-size: 14px;
-			cursor: pointer;
 			border-radius: 8px;
 			margin-bottom: 17px;
 			width: 100%;
-			box-shadow: var(--shadow-out);
-			border: none;
-			transition: all 0.2s ease;
 			min-height: 42px;
+			border: none;
 		}
 
 		.menu-item:hover {
 			background: rgba(0, 0, 0, 0.08);
-			box-shadow: var(--shadow-in);
 			transform: translateY(-2px);
 		}
 
-		.menu-item:hover svg {
-			animation: rotate 1s linear;
+		body.dark-theme .menu-item:hover {
+			background: rgba(255, 255, 255, 0.08);
 		}
 
 		.menu-item svg {
@@ -909,36 +558,6 @@
 			text-transform: lowercase;
 		}
 
-		.submenu-close {
-			background: var(--btn);
-			border: none;
-			cursor: pointer;
-			width: 40px;
-			height: 40px;
-			border-radius: 50%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			box-shadow: var(--shadow-out);
-			color: var(--font-color);
-			margin-left: auto;
-			margin-bottom: 8px;
-		}
-
-		.submenu-close svg {
-			width: 18px;
-			height: 18px;
-			stroke: currentColor;
-		}
-
-		.submenu-close:hover {
-			box-shadow: var(--shadow-in);
-		}
-
-		.submenu-close:hover svg {
-			animation: rotate 1s linear;
-		}
-
 		.submenu-content {
 			color: var(--font-color);
 			font-size: 13px;
@@ -954,10 +573,8 @@
 			text-align: left;
 		}
 
-		.stats-info .stat-value {
-			font-size: 1.5rem;
-			font-weight: bold;
-			color: red;
+		body.dark-theme .settings-info {
+			background: rgba(255, 255, 255, 0.05);
 		}
 
 		.stats-reload-btn {
@@ -965,21 +582,12 @@
 			margin-top: 15px;
 			padding: 8px 16px;
 			font-size: 1rem;
-			cursor: pointer;
-			background: var(--btn);
-			border: none;
 			border-radius: 0.5rem;
-			box-shadow: var(--shadow-out);
-			color: var(--font-color);
 			display: inline-flex;
 			gap: 8px;
 			justify-content: center;
 			align-items: center;
-			transition: all 0.3s ease;
-		}
-
-		.stats-reload-btn:hover {
-			transform: translateY(-2px);
+			border: none;
 		}
 
 		.toggle-container {
@@ -1002,16 +610,6 @@
 		}
 
 		.toggle-label i {
-			width: 24px;
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			flex-shrink: 0;
-			font-size: 1rem;
-			margin-right: 0.5rem;
-		}
-
-		.questions-slider-label i {
 			width: 24px;
 			display: inline-flex;
 			align-items: center;
@@ -1089,10 +687,6 @@
 			font-size: 0.9rem;
 		}
 
-		.questions-slider-label i {
-			margin-right: 0.5rem;
-		}
-
 		.questions-slider-value {
 			font-weight: bold;
 			color: red;
@@ -1148,6 +742,26 @@
 			background: #4a80c0;
 		}
 
+		.slider-container {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+			margin-top: 0.5rem;
+		}
+
+		.slider-label {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 0.9rem;
+		}
+
+		.slider-value {
+			font-weight: bold;
+			color: red;
+			font-size: 1rem;
+		}
+
 		.slider-graduations {
 			display: flex;
 			justify-content: space-between;
@@ -1172,34 +786,17 @@
 			width: 100%;
 			padding: 10px 14px;
 			border-radius: 10px;
-			background: var(--btn);
 			border: 2px solid #8895a7;
-			color: var(--font-color);
 			font-size: 13px;
-			cursor: pointer;
 			font-family: Arial, sans-serif;
-			transition: all 0.3s ease;
-			box-sizing: border-box;
 			appearance: auto;
-			box-shadow: var(--shadow-out);
-		}
-
-		.quiz-select:hover {
-			border-color: var(--color-correct);
-			transform: translateY(-2px);
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+			box-sizing: border-box;
 		}
 
 		.quiz-select option {
 			background: var(--bg);
 			color: var(--font-color);
 			padding: 6px;
-		}
-
-		body.dark-theme .quiz-select {
-			background: #3d3d3d;
-			color: #ffffff;
-			border-color: #5a5a5a;
 		}
 
 		body.dark-theme .quiz-select option {
@@ -1221,34 +818,17 @@
 			padding: 10px 0;
 		}
 
-		.local-file-upload-area .upload-btn {
+		.upload-btn {
 			width: 100%;
 			padding: 12px 14px;
 			border-radius: 10px;
-			background: var(--btn);
 			border: 2px dashed #8895a7;
 			font-size: 13px;
 			font-family: Arial, sans-serif;
-			transition: all 0.3s ease;
 			text-align: center;
-			cursor: pointer;
-			color: var(--font-color);
-			box-shadow: var(--shadow-out);
 		}
 
-		.local-file-upload-area .upload-btn:hover {
-			box-shadow: var(--shadow-in);
-			border-color: var(--color-correct);
-		}
-
-		body.dark-theme .local-file-upload-area .upload-btn {
-			background: #3d3d3d;
-			color: #ffffff;
-			border-color: #5a5a5a;
-		}
-
-		body.dark-theme .local-file-upload-area .upload-btn:hover {
-			background: #4a4a4a;
+		.upload-btn:hover {
 			border-color: var(--color-correct);
 		}
 
@@ -1272,34 +852,16 @@
 			margin-top: 10px;
 			padding: 10px 14px;
 			font-size: 0.9rem;
-			cursor: pointer;
-			background: var(--btn);
 			border: 2px solid #8895a7;
 			border-radius: 10px;
-			box-shadow: var(--shadow-out);
-			color: var(--font-color);
 			display: inline-flex;
 			gap: 8px;
 			justify-content: center;
 			align-items: center;
-			transition: all 0.3s ease;
 			font-family: Arial, sans-serif;
 		}
 
 		.local-reset-btn:hover {
-			box-shadow: var(--shadow-in);
-			border-color: var(--color-correct);
-			transform: translateY(-2px);
-		}
-
-		body.dark-theme .local-reset-btn {
-			background: #3d3d3d;
-			color: #ffffff;
-			border-color: #5a5a5a;
-		}
-
-		body.dark-theme .local-reset-btn:hover {
-			background: #4a4a4a;
 			border-color: var(--color-correct);
 		}
 
@@ -1347,7 +909,9 @@
 		}
 
 		body.dark-theme .container--quiz {
+			background: #1a1a1a;
 			border-color: #1a1a1a;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 		}
 
 		.container--quiz-start {
@@ -1381,6 +945,10 @@
 			transition: background 0.3s ease;
 		}
 
+		body.dark-theme .quiz-start__opacity {
+			background: rgba(0, 0, 0, 0.55);
+		}
+
 		.quiz-start__content {
 			position: relative;
 			z-index: 3;
@@ -1412,6 +980,103 @@
 			padding: 2px 0;
 		}
 
+		.progress-bar {
+			flex-shrink: 0;
+			padding: 4px 12px 3px;
+			margin-bottom: 6px;
+			background: transparent;
+			width: 100%;
+			border-radius: 14px 14px 0 0;
+			display: none;
+		}
+
+		.progress-bar.visible {
+			display: block;
+		}
+
+		.progress-bar__info {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 10px;
+			text-transform: uppercase;
+			letter-spacing: 0.3px;
+			gap: 8px;
+			padding-bottom: 2px;
+		}
+
+		.progress-bar__title {
+			display: flex;
+			align-items: center;
+			gap: 4px;
+			min-width: 0;
+		}
+
+		.progress-bar__title .phi-symbol {
+			margin-right: 4px;
+			margin-bottom: 4px;
+			margin-top: -4px;
+			font-family: 'Times New Roman', serif;
+			font-size: 35px !important;
+			width: 35px;
+			height: 35px;
+			display: flex;
+			text-transform: lowercase;
+			align-items: center;
+			justify-content: center;
+			color: var(--font-color);
+			line-height: 1;
+			flex-shrink: 0;
+		}
+
+		.progress-bar__title h1 {
+			font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+			margin: 0;
+			color: var(--font-color);
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.progress-bar__count {
+			font-weight: bold;
+			font-size: 11px;
+			white-space: nowrap;
+			flex-shrink: 0;
+			color: #555;
+			display: flex;
+			align-items: center;
+			gap: 3px;
+		}
+
+		body.dark-theme .progress-bar__count {
+			color: #8895a7;
+		}
+
+		.progress-bar__cursor {
+			background: rgba(0, 0, 0, 0.1);
+			border-radius: 18px;
+			height: 4px;
+			position: relative;
+			width: 100%;
+		}
+
+		body.dark-theme .progress-bar__cursor {
+			background: rgba(255, 255, 255, 0.1);
+		}
+
+		.progress-bar__cursor--dynamic {
+			position: absolute;
+			border-radius: 18px;
+			height: 4px;
+			background: red;
+			transition: width 0.3s ease;
+		}
+
+		body.dark-theme .progress-bar__cursor--dynamic {
+			background: #ef5350;
+		}
+
 		.philosophy-text-container {
 			background: #f8f9fb;
 			border: 1px solid #e0e4ea;
@@ -1433,11 +1098,6 @@
 			align-items: center;
 			padding: 4px 12px;
 			background: transparent;
-		}
-
-		body.dark-theme .philosophy-text-header {
-			background: transparent;
-			border-bottom-color: #2a2a2a;
 		}
 
 		.philosophy-text-header h3 {
@@ -1505,7 +1165,6 @@
 
 		body.dark-theme .philosophy-text-source {
 			color: #b0c4de;
-			border-top-color: rgba(255, 255, 255, 0.06);
 		}
 
 		.philosophy-text-source .work-title {
@@ -1575,11 +1234,6 @@
 			border: 2px solid var(--letter-color);
 		}
 
-		body.dark-theme .answer-letter {
-			background: #ff6b6b;
-			border-color: #ff6b6b;
-		}
-
 		.quiz-answer.correct .answer-letter {
 			background: var(--color-correct) !important;
 			border-color: var(--color-correct) !important;
@@ -1625,17 +1279,6 @@
 			position: relative;
 			gap: 8px;
 			color: var(--font-color);
-		}
-
-		.answer-text {
-			flex: 1;
-			display: flex;
-			align-items: center;
-			height: 100%;
-			word-wrap: break-word;
-			overflow-wrap: break-word;
-			max-width: 100%;
-			gap: 8px;
 		}
 
 		body.dark-theme .quiz-answer {
@@ -1731,27 +1374,12 @@
 			padding: 6px 16px;
 			border-radius: 27px;
 			font-size: clamp(0.6rem, 0.85vw, 0.7rem);
-			background: #ffffff;
-			box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.06);
 			border: 1px solid #d0d5dd;
-			color: var(--font-color);
 			transition: all 0.2s ease;
-			cursor: pointer;
 		}
 
 		body.dark-theme .next-button-container .quiz-btn {
-			background: #242a33;
 			border-color: #3d4653;
-			color: #e8edf5;
-			box-shadow: 0.2rem 0.2rem 0.5rem #0b0d10, -0.2rem -0.2rem 0.5rem #3d4653;
-		}
-
-		.next-button-container .quiz-btn:hover {
-			box-shadow: inset 0.2rem 0.2rem 0.3rem rgba(0, 0, 0, 0.06), inset -0.2rem -0.2rem 0.3rem rgba(255, 255, 255, 0.8);
-		}
-
-		body.dark-theme .next-button-container .quiz-btn:hover {
-			box-shadow: inset 0.2rem 0.2rem 0.3rem #0b0d10, inset -0.2rem -0.2rem 0.3rem #3d4653;
 		}
 
 		.container--quiz-end {
@@ -1778,13 +1406,20 @@
 			gap: 12px;
 		}
 
+		.container--quiz-results .bento-score,
+		.container--quiz-results .bento-stats-global .stat-item,
+		.container--quiz-results .bento-stats-personal .stat-item-mini,
+		.container--quiz-results .bento-message,
+		.container--quiz-results .bento-details {
+			background: var(--btn);
+			box-shadow: var(--shadow-out);
+			border-radius: 10px;
+		}
+
 		.container--quiz-results .bento-score {
 			width: 100%;
 			max-width: 596px;
-			background: var(--btn);
-			border-radius: 12px;
 			padding: 16px 20px;
-			box-shadow: var(--shadow-out);
 			text-align: center;
 		}
 
@@ -1801,10 +1436,7 @@
 			flex: 0 0 140px;
 			min-width: 120px;
 			max-width: 160px;
-			background: var(--btn);
-			border-radius: 10px;
 			padding: 12px 8px;
-			box-shadow: var(--shadow-out);
 			text-align: center;
 		}
 
@@ -1821,42 +1453,25 @@
 			flex: 0 0 140px;
 			min-width: 120px;
 			max-width: 160px;
-			background: var(--btn);
-			border-radius: 10px;
 			padding: 12px 8px;
-			box-shadow: var(--shadow-out);
 			text-align: center;
 		}
 
 		.container--quiz-results .bento-message {
 			width: 100%;
 			max-width: 596px;
-			background: var(--btn);
-			border-radius: 10px;
 			padding: 12px 16px;
-			box-shadow: var(--shadow-out);
 			text-align: center;
 			font-size: 14px;
 			line-height: 1.4;
 		}
 
-		.container--quiz-results .bento-restart {
-			width: 100%;
-			max-width: 596px;
-			text-align: center;
-			padding: 4px 0;
-		}
-
 		.container--quiz-results .bento-details {
 			width: 100%;
 			max-width: 596px;
-			background: var(--btn);
-			border-radius: 10px;
 			padding: 12px 16px;
-			box-shadow: var(--shadow-out);
 		}
 
-		/* === 3 BOUTONS FINAUX === */
 		.bento-actions {
 			width: 100%;
 			max-width: 596px;
@@ -1868,15 +1483,10 @@
 		}
 
 		.bento-actions .quiz-btn {
-			background: var(--btn);
 			border: 2px solid #8895a7;
 			border-radius: 27px;
 			padding: 10px 20px;
 			font-size: 0.85rem;
-			cursor: pointer;
-			box-shadow: var(--shadow-out);
-			color: var(--font-color);
-			transition: all 0.2s ease;
 			font-family: Arial, sans-serif;
 			min-width: 130px;
 			flex: 1;
@@ -1884,8 +1494,6 @@
 		}
 
 		.bento-actions .quiz-btn:hover {
-			box-shadow: var(--shadow-in);
-			transform: translateY(-2px);
 			border-color: var(--color-correct);
 		}
 
@@ -1898,128 +1506,19 @@
 		}
 
 		body.dark-theme .bento-actions .quiz-btn {
-			background: #3d3d3d;
 			border-color: #5a5a5a;
-			color: #ffffff;
 		}
 		body.dark-theme .bento-actions .quiz-btn:hover {
 			background: #4a4a4a;
 			border-color: var(--color-correct);
 		}
 
-		@media (max-width: 768px) {
-			.container--quiz-results .bento-stats-global {
-				max-width: 100%;
-				display: grid;
-				grid-template-columns: repeat(4, 1fr);
-				gap: 8px;
-			}
-			.container--quiz-results .bento-stats-global .stat-item {
-				flex: none;
-				min-width: 0;
-				max-width: none;
-				width: 100%;
-				padding: 8px 4px;
-				font-size: 0.75rem;
-			}
-			.container--quiz-results .bento-stats-global .stat-item .stat-value {
-				font-size: 14px;
-			}
-			.container--quiz-results .bento-stats-global .stat-item .stat-label {
-				font-size: 11px;
-			}
-			
-			.container--quiz-results .bento-stats-personal {
-				max-width: 100%;
-				display: grid;
-				grid-template-columns: repeat(4, 1fr);
-				gap: 8px;
-			}
-			.container--quiz-results .bento-stats-personal .stat-item-mini {
-				flex: none;
-				min-width: 0;
-				max-width: none;
-				width: 100%;
-				padding: 8px 4px;
-				font-size: 0.75rem;
-			}
-			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-num {
-				font-size: 14px;
-			}
-			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
-				font-size: 11px;
-			}
-			
-			.container--quiz-results {
-				gap: 8px;
-			}
-			
-			.container--quiz-results .bento-score,
-			.container--quiz-results .bento-message,
-			.container--quiz-results .bento-restart,
-			.container--quiz-results .bento-details {
-				max-width: 100%;
-			}
-			.bento-actions .quiz-btn {
-				min-width: 100px;
-				font-size: 0.75rem;
-				padding: 8px 14px;
-			}
-		}
-
-		@media (max-width: 480px) {
-			.container--quiz-results .bento-stats-global {
-				grid-template-columns: repeat(4, 1fr);
-				gap: 6px;
-			}
-			.container--quiz-results .bento-stats-global .stat-item {
-				padding: 6px 3px;
-			}
-			.container--quiz-results .bento-stats-global .stat-item .stat-value {
-				font-size: 12px;
-			}
-			.container--quiz-results .bento-stats-global .stat-item .stat-label {
-				font-size: 11px;
-			}
-			
-			.container--quiz-results .bento-stats-personal {
-				grid-template-columns: repeat(4, 1fr);
-				gap: 6px;
-			}
-			.container--quiz-results .bento-stats-personal .stat-item-mini {
-				padding: 6px 3px;
-			}
-			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-num {
-				font-size: 12px;
-			}
-			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
-				font-size: 11px;
-			}
-			.bento-actions .quiz-btn {
-				min-width: 80px;
-				font-size: 0.65rem;
-				padding: 6px 10px;
-			}
-		}
-
-		.container--quiz-btn {
-			align-items: center;
-			display: flex;
-			justify-content: center;
-			margin: 10px 0 5px 0;
-			flex-wrap: wrap;
-			gap: 8px;
-		}
-
 		#detailedResults {
 			text-align: left;
 			margin-top: 10px;
 			padding: 10px 14px;
-			background: #f8f9fb;
-			border-radius: 10px;
-			box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.06);
 			max-height: 260px;
-			 overflow-y: auto;
+			overflow-y: auto;
 			color: var(--font-color);
 		}
 
@@ -2094,10 +1593,6 @@
 			padding: 3px 3px;
 		}
 
-		body.dark-theme .shortcuts-table td {
-			border-bottom-color: rgba(255, 255, 255, 0.06);
-		}
-
 		.shortcuts-table kbd {
 			display: inline-block;
 			padding: 4px 8px;
@@ -2122,10 +1617,8 @@
 			white-space: nowrap;
 		}
 
-		/* === EFFET FLOU QUAND MENU OUVERT === */
 		body.menu-open .toolbar-wrapper,
 		body.menu-open #content,
-		body.menu-open .progress-footer,
 		body.menu-open .container--quiz {
 			filter: blur(4px);
 			pointer-events: none;
@@ -2146,7 +1639,6 @@
 			pointer-events: auto;
 		}
 
-		/* === ÉTOILES === */
 		.star-particle {
 			position: fixed;
 			pointer-events: none;
@@ -2160,243 +1652,117 @@
 			100% { opacity: 0; transform: translateY(-150px) scale(0) rotate(180deg); }
 		}
 
-		@media (max-width: 820px) {
-			.toolbar {
-				height: 64px;
-				padding: 6px 12px;
-			}
-
-			.btn {
-				width: 46px;
-				height: 46px;
-			}
-
-			.btn svg {
-				width: 20px;
-				height: 20px;
-			}
-
-			.btn-home .icon-wrapper {
-				width: 46px;
-				height: 46px;
-			}
-
-			.toolbar-title {
-				font-size: clamp(1.4rem, 4vw, 1.8rem);
-			}
-
-			.toolbar-subtitle {
-				font-size: clamp(0.8rem, 2vw, 1rem);
-			}
-
-			.container--quiz-start {
-				min-height: 350px;
-			}
-
-			.quiz-start__content {
-				min-height: 350px;
-			}
+		.confetti-container {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			z-index: 99999;
+			overflow: hidden;
 		}
 
-		@media (max-width: 600px) {
-			.toolbar {
-				display: none;
-			}
-
-			.toolbar-mobile {
-				display: flex;
-			}
-
-			body {
-				padding: 6px 6px 16px 6px;
-			}
-
-			.container--quiz {
-				border-width: 3px;
-				border-radius: 10px;
-				max-width: 100%;
-			}
-
-			.container--quiz-start {
-				border-radius: 10px;
-				min-height: 300px;
-			}
-
-			.quiz-start__content {
-				min-height: 300px;
-			}
-
-			.container--question {
-				padding: 2px 8px 2px;
-			}
-
-			.quiz-answer {
-				padding: 5px 10px;
-				min-height: 28px;
-				font-size: 0.7rem;
-				border-radius: 6px;
-			}
-
-			.progress-bar {
-				padding: 3px 8px;
-			}
-
-			.progress-bar__title .phi-symbol {
-				font-size: 20px !important;
-				text-transform: lowercase;
-			}
-
-			.progress-bar__title h1 {
-				font-size: 0.7rem;
-			}
-
-			.progress-bar__count {
-				font-size: 10px;
-			}
-
-			.container--question legend p {
-				font-size: 0.75rem;
-				margin-bottom: 8px;
-			}
-
-			.philosophy-text-container {
-				margin: 2px 8px 3px;
-			}
-
-			.next-button-container .quiz-btn {
-				min-width: 80px;
-				padding: 5px 12px;
-				font-size: 0.65rem;
-			}
-
-			.quiz-explanation {
-				padding: 5px 10px;
-				font-size: 0.65rem;
-				margin: 2px 0 2px;
-			}
-
-			.container--quiz-results .quiz-end__score {
-				font-size: 1.6rem;
-			}
-
-			.container--quiz-results .quiz-end__total {
-				font-size: 1.6rem;
-			}
-
-			.slide-menu {
-				width: 260px;
-				right: -280px;
-				padding: 14px 16px;
-			}
-
-			.submenu {
-				width: 260px;
-				right: -280px;
-				padding: 14px 16px;
-			}
-
-			.menu-item {
-				padding: 10px 14px;
-				font-size: 12px;
-				min-height: 48px;
-				border-radius: 8px;
-			}
-
-			.menu-item svg {
-				width: 20px;
-				height: 20px;
-			}
-
-			.quiz-start__content {
-				padding: 10px 14px 16px;
-			}
-
-			.toolbar-mobile .btn {
-				width: 40px;
-				height: 40px;
-			}
-
-			.toolbar-mobile .btn svg {
-				width: 18px;
-				height: 18px;
-			}
-
-			.toolbar-mobile .menu-icon {
-				width: 16px;
-				height: 12px;
-				gap: 2.5px;
-			}
-
-			.toolbar-mobile .menu-icon span {
-				height: 1.5px;
-			}
-
-			.mobile-buttons {
-				gap: 4px;
-			}
-
-			.container--quiz-end {
-				min-height: 300px;
-			}
+		.confetti-piece {
+			position: absolute;
+			width: 10px;
+			height: 10px;
+			top: -10px;
+			animation: confetti-fall linear forwards;
 		}
 
-		@media (max-width: 400px) {
-			.container--quiz-start {
-				min-height: 250px;
-			}
+		@keyframes confetti-fall {
+			0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+			100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
+		}
 
-			.quiz-start__content {
-				min-height: 250px;
-			}
+		/* ===== TOASTER ===== */
+		.toaster {
+			position: fixed;
+			top: 20px;
+			left: 50%;
+			transform: translateX(-50%) translateY(-100px);
+			background: var(--color-incorrect);
+			color: #fff;
+			padding: 16px 28px;
+			border-radius: 12px;
+			font-size: 1rem;
+			font-weight: bold;
+			z-index: 99999;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+			transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+			opacity: 0;
+			pointer-events: none;
+			text-align: center;
+			max-width: 90%;
+			min-width: 200px;
+		}
 
-			.quiz-answer {
-				padding: 4px 8px;
-				min-height: 24px;
-				font-size: 0.65rem;
-			}
+		.toaster.show {
+			transform: translateX(-50%) translateY(0);
+			opacity: 1;
+		}
 
-			.container--question legend p {
-				font-size: 0.7rem;
-			}
+		.toaster.correct {
+			background: var(--color-correct);
+		}
 
-			.progress-bar__title .phi-symbol {
-				font-size: 16px !important;
-				text-transform: lowercase;
-			}
+		.toaster.info {
+			background: #2196F3;
+		}
 
-			.next-button-container .quiz-btn {
-				min-width: 70px;
-				padding: 4px 10px;
-				font-size: 0.6rem;
-			}
+		.toaster.warning {
+			background: #ff9800;
+		}
 
-			.toolbar-mobile .btn {
-				width: 36px;
-				height: 36px;
-			}
+		.toaster .toaster-buttons {
+			display: flex;
+			gap: 12px;
+			justify-content: center;
+			margin-top: 12px;
+		}
 
-			.toolbar-mobile .btn svg {
-				width: 16px;
-				height: 16px;
-			}
+		.toaster .toaster-btn {
+			padding: 6px 20px;
+			border: none;
+			border-radius: 6px;
+			font-size: 0.9rem;
+			font-weight: bold;
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
 
-			.toolbar-mobile .menu-icon {
-				width: 14px;
-				height: 10px;
-				gap: 2px;
-			}
+		.toaster .toaster-btn-confirm {
+			background: #4CAF50;
+			color: white;
+		}
 
-			.toolbar-mobile .menu-icon span {
-				height: 1.5px;
-			}
+		.toaster .toaster-btn-confirm:hover {
+			background: #45a049;
+			transform: scale(1.05);
+		}
 
-			.mobile-title {
-				font-size: 1rem;
-			}
+		.toaster .toaster-btn-cancel {
+			background: #f44336;
+			color: white;
+		}
 
-			.mobile-subtitle {
-				font-size: 0.7rem;
-			}
+		.toaster .toaster-btn-cancel:hover {
+			background: #d32f2f;
+			transform: scale(1.05);
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		.stat-value,
+		.stat-num {
+			color: red;
+		}
+
+		.quiz-end__score {
+			color: red;
 		}
 
 		::-webkit-scrollbar {
@@ -2416,69 +1782,334 @@
 			background: #3d3d3d;
 		}
 
+		/* ===== ANIMATIONS SHAKE ===== */
 		@keyframes shakeX {
-			0%,
-			100% {
-				transform: translateX(0);
-			}
-			10%,
-			30%,
-			50%,
-			70%,
-			90% {
-				transform: translateX(-5px);
-			}
-			20%,
-			40%,
-			60%,
-			80% {
-				transform: translateX(5px);
-			}
+			0%, 100% { transform: translateX(0); }
+			10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+			20%, 40%, 60%, 80% { transform: translateX(5px); }
 		}
 
 		@keyframes shakeY {
-			0%,
-			100% {
-				transform: translateY(0);
-			}
-			10%,
-			30%,
-			50%,
-			70%,
-			90% {
-				transform: translateY(-5px);
-			}
-			20%,
-			40%,
-			60%,
-			80% {
-				transform: translateY(5px);
-			}
+			0%, 100% { transform: translateY(0); }
+			10%, 30%, 50%, 70%, 90% { transform: translateY(-5px); }
+			20%, 40%, 60%, 80% { transform: translateY(5px); }
 		}
 
 		.shake-x {
 			animation: shakeX 0.9s ease;
 		}
+
 		.shake-y {
 			animation: shakeY 0.9s ease;
 		}
 
-		.hidden {
-			display: none;
+		/* ===== MEDIA QUERIES ===== */
+		@media (max-width: 820px) {
+			.toolbar {
+				height: 64px;
+				padding: 6px 12px;
+			}
+			.btn {
+				width: 46px;
+				height: 46px;
+			}
+			.btn svg {
+				width: 20px;
+				height: 20px;
+			}
+			.btn-home .icon-wrapper {
+				width: 46px;
+				height: 46px;
+			}
+			.timer-btn {
+				width: 46px;
+				height: 46px;
+			}
+			.toolbar-title {
+				font-size: clamp(1.4rem, 4vw, 1.8rem);
+			}
+			.toolbar-subtitle {
+				font-size: clamp(0.8rem, 2vw, 1rem);
+			}
+			.container--quiz-start {
+				min-height: 350px;
+			}
+			.quiz-start__content {
+				min-height: 350px;
+			}
 		}
-		
-		.stat-value,
-		.stat-num {
-			color: red;
+
+		@media (max-width: 600px) {
+			.toolbar {
+				display: none;
+			}
+			.toolbar-mobile {
+				display: flex;
+			}
+			body {
+				padding: 6px 6px 16px 6px;
+			}
+			.container--quiz {
+				border-width: 3px;
+				border-radius: 10px;
+				max-width: 100%;
+			}
+			.container--quiz-start {
+				border-radius: 10px;
+				min-height: 300px;
+			}
+			.quiz-start__content {
+				min-height: 300px;
+			}
+			.container--question {
+				padding: 2px 8px 2px;
+			}
+			.quiz-answer {
+				padding: 5px 10px;
+				min-height: 28px;
+				font-size: 0.7rem;
+				border-radius: 6px;
+			}
+			.progress-bar {
+				padding: 3px 8px;
+			}
+			.progress-bar__title .phi-symbol {
+				font-size: 20px !important;
+				text-transform: lowercase;
+			}
+			.progress-bar__title h1 {
+				font-size: 0.7rem;
+			}
+			.progress-bar__count {
+				font-size: 10px;
+			}
+			.container--question legend p {
+				font-size: 0.75rem;
+				margin-bottom: 8px;
+			}
+			.philosophy-text-container {
+				margin: 2px 8px 3px;
+			}
+			.next-button-container .quiz-btn {
+				min-width: 80px;
+				padding: 5px 12px;
+				font-size: 0.65rem;
+			}
+			.quiz-explanation {
+				padding: 5px 10px;
+				font-size: 0.65rem;
+				margin: 2px 0 2px;
+			}
+			.container--quiz-results .quiz-end__score {
+				font-size: 1.6rem;
+			}
+			.container--quiz-results .quiz-end__total {
+				font-size: 1.6rem;
+			}
+			.slide-menu {
+				width: 260px;
+				right: -280px;
+				padding: 14px 16px;
+			}
+			.submenu {
+				width: 260px;
+				right: -280px;
+				padding: 14px 16px;
+			}
+			.menu-item {
+				padding: 10px 14px;
+				font-size: 12px;
+				min-height: 48px;
+				border-radius: 8px;
+			}
+			.menu-item svg {
+				width: 20px;
+				height: 20px;
+			}
+			.quiz-start__content {
+				padding: 10px 14px 16px;
+			}
+			.toolbar-mobile .btn,
+			.toolbar-mobile .timer-btn {
+				width: 40px;
+				height: 40px;
+			}
+			.toolbar-mobile .btn svg {
+				width: 18px;
+				height: 18px;
+			}
+			.toolbar-mobile .menu-icon {
+				width: 16px;
+				height: 12px;
+				gap: 2.5px;
+			}
+			.toolbar-mobile .menu-icon span {
+				height: 1.5px;
+			}
+			.mobile-buttons {
+				gap: 4px;
+			}
+			.container--quiz-end {
+				min-height: 300px;
+			}
+			.timer-btn {
+				width: 40px;
+				height: 40px;
+				font-size: 10px !important;
+			}
+			.timer-btn span {
+				font-size: 10px !important;
+			}
+			.container--quiz-results .bento-stats-global {
+				max-width: 100%;
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 8px;
+			}
+			.container--quiz-results .bento-stats-global .stat-item {
+				flex: none;
+				min-width: 0;
+				max-width: none;
+				width: 100%;
+				padding: 8px 4px;
+				font-size: 0.75rem;
+			}
+			.container--quiz-results .bento-stats-global .stat-item .stat-value {
+				font-size: 14px;
+			}
+			.container--quiz-results .bento-stats-global .stat-item .stat-label {
+				font-size: 11px;
+			}
+			.container--quiz-results .bento-stats-personal {
+				max-width: 100%;
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 8px;
+			}
+			.container--quiz-results .bento-stats-personal .stat-item-mini {
+				flex: none;
+				min-width: 0;
+				max-width: none;
+				width: 100%;
+				padding: 8px 4px;
+				font-size: 0.75rem;
+			}
+			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-num {
+				font-size: 14px;
+			}
+			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
+				font-size: 11px;
+			}
+			.container--quiz-results {
+				gap: 8px;
+			}
+			.container--quiz-results .bento-score,
+			.container--quiz-results .bento-message,
+			.container--quiz-results .bento-restart,
+			.container--quiz-results .bento-details {
+				max-width: 100%;
+			}
+			.bento-actions .quiz-btn {
+				min-width: 100px;
+				font-size: 0.75rem;
+				padding: 8px 14px;
+			}
 		}
-		
-		.quiz-end__score {
-			color: red;
+
+		@media (max-width: 400px) {
+			.container--quiz-start {
+				min-height: 250px;
+			}
+			.quiz-start__content {
+				min-height: 250px;
+			}
+			.quiz-answer {
+				padding: 4px 8px;
+				min-height: 24px;
+				font-size: 0.65rem;
+			}
+			.container--question legend p {
+				font-size: 0.7rem;
+			}
+			.progress-bar__title .phi-symbol {
+				font-size: 16px !important;
+				text-transform: lowercase;
+			}
+			.next-button-container .quiz-btn {
+				min-width: 70px;
+				padding: 4px 10px;
+				font-size: 0.6rem;
+			}
+			.toolbar-mobile .btn,
+			.toolbar-mobile .timer-btn {
+				width: 36px;
+				height: 36px;
+			}
+			.toolbar-mobile .btn svg {
+				width: 16px;
+				height: 16px;
+			}
+			.toolbar-mobile .menu-icon {
+				width: 14px;
+				height: 10px;
+				gap: 2px;
+			}
+			.toolbar-mobile .menu-icon span {
+				height: 1.5px;
+			}
+			.mobile-title {
+				font-size: 1rem;
+			}
+			.mobile-subtitle {
+				font-size: 0.7rem;
+			}
+			.timer-btn {
+				width: 36px;
+				height: 36px;
+				font-size: 9px !important;
+			}
+			.timer-btn span {
+				font-size: 9px !important;
+			}
+			.container--quiz-results .bento-stats-global {
+				grid-template-columns: repeat(4, 1fr);
+				gap: 6px;
+			}
+			.container--quiz-results .bento-stats-global .stat-item {
+				padding: 6px 3px;
+			}
+			.container--quiz-results .bento-stats-global .stat-item .stat-value {
+				font-size: 12px;
+			}
+			.container--quiz-results .bento-stats-global .stat-item .stat-label {
+				font-size: 11px;
+			}
+			.container--quiz-results .bento-stats-personal {
+				grid-template-columns: repeat(4, 1fr);
+				gap: 6px;
+			}
+			.container--quiz-results .bento-stats-personal .stat-item-mini {
+				padding: 6px 3px;
+			}
+			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-num {
+				font-size: 12px;
+			}
+			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
+				font-size: 11px;
+			}
+			.bento-actions .quiz-btn {
+				min-width: 80px;
+				font-size: 0.65rem;
+				padding: 6px 10px;
+			}
 		}
 	</style>
 </head>
 <body>
 	<div class="hover-trigger" id="hoverTrigger"></div>
+
+	<!-- TOASTER -->
+	<div id="toaster" class="toaster"></div>
 
 	<div class="toolbar-wrapper">
 		<div class="toolbar" id="toolbarDesktop">
@@ -2505,6 +2136,9 @@
 				<div class="toolbar-subtitle" id="appSubtitle"></div>
 			</div>
 			<div class="toolbar-right">
+				<button class="timer-btn" id="timerBtnDesktop" data-title="temps restant">
+					<span id="timerValueDesktop">01:00</span>
+				</button>
 				<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (F)">
 					<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
 						<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
@@ -2536,6 +2170,9 @@
 						<polyline points="1 20 1 14 7 14"/>
 						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
 					</svg>
+				</button>
+				<button class="timer-btn" id="timerBtnMobile" data-title="temps restant">
+					<span id="timerValueMobile">01:00</span>
 				</button>
 				<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran">
 					<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
@@ -2590,7 +2227,6 @@
 									<h1 id="quizTitle"></h1>
 								</div>
 								<div class="progress-bar__count">
-									<span class="timer-display" id="timerdisplay" style="display:none;">⏱️ <span id="timerValue">0</span>s</span>
 									<span id="currentQuestion">1</span>/<span id="totalQuestions" data-value="10">10</span>
 								</div>
 							</div>
@@ -2617,7 +2253,7 @@
 						<div id="questionsContainer"></div>
 					</div>
 
-			<div id="quizEnd" class="hidden">
+					<div id="quizEnd" class="hidden">
 						<div class="container--quiz-end">
 							<div class="container--quiz-results">
 								<div class="bento-score">
@@ -2669,7 +2305,6 @@
 
 								<div class="bento-message" id="summaryMessage"></div>
 
-								<!-- === 3 BOUTONS FINAUX === -->
 								<div class="bento-actions">
 									<button class="quiz-btn" id="quizReviewBtn">réponses</button>
 									<button class="quiz-btn" id="quizRetryBtn">réessayer</button>
@@ -2772,7 +2407,7 @@
 				<p><i class="fas fa-bullseye"></i> <strong>objectif</strong><br><br>réviser le cours d'HLP</p>
 			</div>
 			<div class="settings-info">
-				<p><i class="fas fa-bars"></i> <strong>options</strong></p><br>				
+				<p><i class="fas fa-bars"></i> <strong>options</strong></p><br>				 
 				<p><strong>• mode sombre :</strong> pour une lecture confortable</p>
 				<p><strong>• animations :</strong> active / désactive les effets visuels</p>
 				<p><strong>• mode daltonien :</strong> bleu / rouge remplace vert / rouge</p>
@@ -2876,6 +2511,16 @@
 				<span class="toggle-label"><i class="fas fa-hourglass-half"></i> minuteur</span>
 				<label class="theme-switch"><input type="checkbox" id="timerToggle"><span class="slider"></span></label>
 			</div>
+			<div class="slider-container">
+				<div class="slider-label">
+					<span><i class="fas fa-clock"></i> temps limite</span>
+					<span class="slider-value" id="timerLimitValue">1 min</span>
+				</div>
+				<input type="range" id="timerLimitSlider" min="1" max="6" step="1" value="1">
+				<div class="slider-graduations">
+					<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span>∞</span>
+				</div>
+			</div>
 			<div class="questions-slider-container">
 				<div class="questions-slider-label">
 					<span class="toggle-label"><i class="fa-solid fa-list"></i> nombre de questions</span>
@@ -2929,80 +2574,53 @@
 	</div>
 
 	<script>
+		// === CODE JAVASCRIPT COMPLET ET NETTOYÉ ===
 		(function() {
 			'use strict';
 
 			const APP_TITRE = document.querySelector('title')?.textContent || "quiz hlp term";
 			const APP_SOUS_TITRE = "tester ses connaissances";
 
-			// Remplir tous les éléments avec le titre
-			const titleElements = ['appTitle', 'mobileTitle', 'quizTitle'];
-			titleElements.forEach(id => {
-				const el = document.getElementById(id);
+			// Initialisation des titres
+			document.querySelectorAll('#appTitle, #mobileTitle, #quizTitle').forEach(el => {
 				if (el) el.textContent = APP_TITRE;
 			});
-
-			// Initialisation du sous-titre
-			const subElements = ['appSubtitle', 'mobileSubtitle'];
-			subElements.forEach(id => {
-				const el = document.getElementById(id);
+			document.querySelectorAll('#appSubtitle, #mobileSubtitle').forEach(el => {
 				if (el) el.textContent = APP_SOUS_TITRE;
 			});
 
-			let currentSousTitre = APP_SOUS_TITRE;
-
-			const TOTAL_QUESTIONS = 10;
 			const GITHUB_REPO = 'inspection-philosophie-lille/boite-a-outils';
 			const GITHUB_PATH = 'fichiers/hlp - term - quiz sur le cours/quiz';
-			const GITHUB_API_URL =
-				`https://api.github.com/repos/${GITHUB_REPO}/contents/${encodeURIComponent(GITHUB_PATH)}`;
+			const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/contents/${encodeURIComponent(GITHUB_PATH)}`;
 
-			let currentSequenceTitle = "";
-			let currentSequenceCleanTitle = "";
-			let currentSequenceNumber = "";
-			let currentPartTitle = "";
-			let currentPartShort = "";
-			let currentSequenceIndex = "";
-			let currentSequenceIndexLong = "";
 			let philosophyData = { texte: "", source: "" };
 			let questions = [];
 			let currentQuestionIndex = 0;
 			let score = 0;
 			let shuffledQuestions = [];
-			let originalQuestionIndices = [];
 			let userAnswers = [];
 			let isDeferredEvaluation = localStorage.getItem('deferredEvaluation') === 'true';
 			let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
 			let totalCorrectAnswers = parseInt(localStorage.getItem('totalCorrectAnswers') || '0');
 			let totalQuestionsAnswered = parseInt(localStorage.getItem('totalQuestionsAnswered') || '0');
 			let totalQuestions = parseInt(localStorage.getItem('questionCount') || '5');
-			let darkMode = localStorage.getItem('darkMode') === 'true';
-			let colorblindMode = localStorage.getItem('colorblindMode') === 'true';
 			let animationsEnabled = localStorage.getItem('animations') !== 'false';
 			let soundEnabled = localStorage.getItem('soundEnabled') === 'true';
-			let timerEnabled = localStorage.getItem('timerEnabled') === 'true';
+			let timerEnabled = localStorage.getItem('timerEnabled') !== 'false';
+			let timerLimit = parseInt(localStorage.getItem('timerLimit') || '60');
 			let timerInterval = null;
-			let timeLeft = 30;
-			const MAX_TIME = 30;
+			let timeLeft = timerLimit;
 			let timerExpired = false;
 			let questionTimes = [];
 			let stats = JSON.parse(localStorage.getItem('quizStats') || '{}');
-
 			let loadedQuizzes = [];
 			let currentQuizIndex = -1;
 
+			// Références DOM
 			const quizStart = document.getElementById('quizStart');
 			const quizQuestions = document.getElementById('quizQuestions');
 			const quizEnd = document.getElementById('quizEnd');
 			const questionsContainer = document.getElementById('questionsContainer');
-			const quizTitle = document.getElementById('quizTitle');
-			const appTitle = document.getElementById('appTitle');
-			const appSubtitle = document.getElementById('appSubtitle');
-			const mobileTitle = document.getElementById('mobileTitle');
-			const mobileSubtitle = document.getElementById('mobileSubtitle');
-			const quizRetryBtn = document.getElementById('quizRetryBtn');
-			const quizReviewBtn = document.getElementById('quizReviewBtn');
-			const quizBackBtn = document.getElementById('quizBackBtn');
 			const githubFileSelect = document.getElementById('githubFileSelect');
 			const fileStatus = document.getElementById('fileStatus');
 			const questionCountSlider = document.getElementById('questionCountSlider');
@@ -3010,9 +2628,13 @@
 			const currentQuestionSpan = document.getElementById('currentQuestion');
 			const totalQuestionsSpan = document.getElementById('totalQuestions');
 			const progressBar = document.getElementById('progressBar');
-			const philosophyTextTitle = document.getElementById('philosophyTextTitle');
-			const timerdisplay = document.getElementById('timerdisplay');
-			const timerValue = document.getElementById('timerValue');
+			const timerValueDesktop = document.getElementById('timerValueDesktop');
+			const timerValueMobile = document.getElementById('timerValueMobile');
+			const timerBtnDesktop = document.getElementById('timerBtnDesktop');
+			const timerBtnMobile = document.getElementById('timerBtnMobile');
+			const timerToggle = document.getElementById('timerToggle');
+			const timerLimitSlider = document.getElementById('timerLimitSlider');
+			const timerLimitValue = document.getElementById('timerLimitValue');
 			const finalScoreDisplay = document.getElementById('finalScoreDisplay');
 			const finalTotalDisplay = document.getElementById('finalTotalDisplay');
 			const scoreLabel = document.getElementById('scoreLabel');
@@ -3024,12 +2646,9 @@
 			const bestScore = document.getElementById('bestScore');
 			const avgScore = document.getElementById('avgScore');
 			const totalCorrect = document.getElementById('totalCorrect');
-			const totalCorrectLabel = document.getElementById('totalCorrectLabel');
-			const attemptsLabel = document.getElementById('attemptsLabel');
 			const summaryMessage = document.getElementById('summaryMessage');
 			const questionsReview = document.getElementById('questionsReview');
 			const detailedResults = document.getElementById('detailedResults');
-
 			const fileInputSubmenu = document.getElementById('fileInputSubmenu');
 			const fileLoadBtnSubmenu = document.getElementById('fileLoadBtnSubmenu');
 			const quizSelectorSubmenu = document.getElementById('quizSelectorSubmenu');
@@ -3037,15 +2656,27 @@
 			const loadContainerSubmenu = document.getElementById('loadContainerSubmenu');
 			const localResetBtn = document.getElementById('localResetBtn');
 
-			// === FONCTION UPDATE SUBTITLE ===
-			function updateSubtitle(sequenceName) {
-				// Le sous-titre reste toujours "tester ses connaissances"
-				const displaySub = APP_SOUS_TITRE;
-				if (appSubtitle) appSubtitle.textContent = displaySub;
-				if (mobileSubtitle) mobileSubtitle.textContent = displaySub;
-				currentSousTitre = displaySub;
+			// === TOASTER ===
+			let toasterTimeout = null;
+
+			function showToaster(message, type = 'error', duration = 3000) {
+				const toaster = document.getElementById('toaster');
+				if (!toaster) return;
+				toaster.innerHTML = message;
+				toaster.className = 'toaster';
+				if (type === 'correct') toaster.classList.add('correct');
+				else if (type === 'info') toaster.classList.add('info');
+				else if (type === 'warning') toaster.classList.add('warning');
+				toaster.classList.add('show');
+				clearTimeout(toasterTimeout);
+				if (duration > 0) {
+					toasterTimeout = setTimeout(() => {
+						toaster.classList.remove('show');
+					}, duration);
+				}
 			}
 
+			// === UTILITAIRES ===
 			function shuffleArray(arr) {
 				for (let i = arr.length - 1; i > 0; i--) {
 					const j = Math.floor(Math.random() * (i + 1));
@@ -3117,12 +2748,6 @@
 				return answers.map(a => protectSpacesAroundTags(a));
 			}
 
-			function getAuthorFromSource(source) {
-				if (!source) return '';
-				const comma = source.indexOf(',');
-				return comma === -1 ? source.trim() : source.substring(0, comma).trim();
-			}
-
 			function formatPhilosophyText(text) {
 				if (!text) return '';
 				let formatted = text.replace(/\[(\d+)\]/g, '<span class="bracket-number">[$1]</span>');
@@ -3152,85 +2777,195 @@
 				};
 			}
 
-			// === FONCTION SPAWN STARS ===
 			function spawnStars(x, y) {
+				// Fonction supprimée - plus utilisée
+			}
+
+			function launchConfetti() {
 				if (!animationsEnabled) return;
-				const emojis = ['⭐', '🌟', '✨', '💫'];
-				for (let i = 0; i < 6; i++) {
-					const el = document.createElement('div');
-					el.className = 'star-particle';
-					el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-					el.style.left = (x + (Math.random() - 0.5) * 80) + 'px';
-					el.style.top = (y + (Math.random() - 0.5) * 80) + 'px';
-					el.style.fontSize = (16 + Math.random() * 20) + 'px';
-					el.style.animationDuration = (0.8 + Math.random() * 0.6) + 's';
-					document.body.appendChild(el);
-					setTimeout(() => el.remove(), 1500);
+				const container = document.createElement('div');
+				container.className = 'confetti-container';
+				document.body.appendChild(container);
+				const colors = ['#ff0000', '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff', '#ff9f43', '#00d2d3', '#f368e0', '#ff9f43'];
+				for (let i = 0; i < 160; i++) {
+					const piece = document.createElement('div');
+					piece.className = 'confetti-piece';
+					piece.style.left = Math.random() * 100 + '%';
+					piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+					piece.style.width = (Math.random() * 16 + 4) + 'px';
+					piece.style.height = (Math.random() * 8 + 4) + 'px';
+					piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+					piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+					piece.style.animationDelay = (Math.random() * 1.5) + 's';
+					container.appendChild(piece);
+				}
+				setTimeout(() => container.remove(), 4000);
+			}
+
+			// === SON ===
+			function playSound(type) {
+				if (!soundEnabled) return;
+				try {
+					const soundMap = {
+						'correct': '../../src/sounds/reponse-bonne.mp3',
+						'incorrect': '../../src/sounds/reponse-mauvaise.mp3',
+						'score_good': '../../src/sounds/score-bon.mp3',
+						'score_bad': '../../src/sounds/score-mauvais.mp3',
+						'click': '../../src/sounds/bruit-clavier.mp3'
+					};
+					const soundFile = soundMap[type];
+					if (!soundFile) return;
+					const audio = new Audio(soundFile);
+					audio.volume = type === 'click' ? 0.3 : 0.8;
+					audio.preload = 'auto';
+					audio.play().catch(() => {});
+				} catch (e) {
+					// Ignorer les erreurs audio
 				}
 			}
 
-			function displayPhilosophyText() {
+			function preloadSounds() {
+				if (!soundEnabled) return;
+				['reponse-bonne.mp3', 'reponse-mauvaise.mp3', 'score-bon.mp3', 'score-mauvais.mp3', 'bruit-clavier.mp3']
+					.forEach(file => {
+						const audio = new Audio();
+						audio.preload = 'auto';
+						audio.src = '../../src/sounds/' + file;
+						audio.load();
+					});
+			}
+
+			// === TIMER ===
+			function formatTimer(seconds) {
+				if (seconds <= 0) return '00:00';
+				const mins = Math.floor(seconds / 60);
+				const secs = seconds % 60;
+				return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+			}
+
+			function sliderPosToValue(pos) {
+				if (pos === 6) return 0;
+				return parseInt(pos) * 60;
+			}
+
+			function valueToSliderPos(val) {
+				if (val === 0) return 6;
+				const minutes = Math.round(val / 60);
+				if (minutes >= 1 && minutes <= 5) return minutes;
+				return 1;
+			}
+
+			function startTimer() {
+				timerExpired = false;
+				if (!timerEnabled || timerLimit === 0) {
+					updateTimerDisplay('00:00');
+					return;
+				}
+				timeLeft = timerLimit;
+				updateTimerDisplay(formatTimer(timeLeft));
+
+				if (timerInterval) clearInterval(timerInterval);
+
+				timerInterval = setInterval(() => {
+					timeLeft--;
+					updateTimerDisplay(formatTimer(timeLeft));
+					
+					const timerBtns = [timerBtnDesktop, timerBtnMobile].filter(b => b);
+					timerBtns.forEach(btn => {
+						btn.classList.remove('warning', 'danger');
+						if (timeLeft <= 30 && timeLeft > 0) btn.classList.add('warning');
+						if (timeLeft <= 15 && timeLeft > 0) btn.classList.add('danger');
+					});
+
+					if (timeLeft <= 0) {
+						clearInterval(timerInterval);
+						timerInterval = null;
+						timerExpired = true;
+						if (!quizEnd.classList.contains('hidden') || quizQuestions.classList.contains('hidden')) {
+							// Déjà terminé
+						} else {
+							forceEndQuiz();
+						}
+						showToaster('⏰ Temps écoulé ! Voici les réponses.', 'info', 3000);
+					}
+				}, 1000);
+			}
+
+			function stopTimer() {
+				if (timerInterval) {
+					clearInterval(timerInterval);
+					timerInterval = null;
+				}
+				[timerBtnDesktop, timerBtnMobile].forEach(btn => {
+					if (btn) btn.classList.remove('warning', 'danger');
+				});
+			}
+
+			function resetTimer() {
+				stopTimer();
+				timerExpired = false;
+				if (timerEnabled && timerLimit > 0) {
+					timeLeft = timerLimit;
+					updateTimerDisplay(formatTimer(timeLeft));
+				} else {
+					updateTimerDisplay('00:00');
+				}
+			}
+
+			function updateTimerDisplay(value) {
+				if (timerValueDesktop) timerValueDesktop.textContent = value;
+				if (timerValueMobile) timerValueMobile.textContent = value;
+			}
+
+			// === AFFICHAGE ===
+			function displayPhilosophyText(sequenceInfo) {
 				const textContent = document.getElementById('philosophyTextContent');
 				const sourceContent = document.getElementById('philosophyTextSource');
 				const section = document.getElementById('philosophyText');
+				const titleEl = document.getElementById('philosophyTextTitle');
 
 				if (!philosophyData.texte || philosophyData.texte.trim() === '') {
-					section.classList.add('hidden');
-					progressBar.classList.remove('visible');
+					section?.classList.add('hidden');
+					progressBar?.classList.remove('visible');
 					return;
 				}
-				section.classList.remove('hidden');
-				progressBar.classList.add('visible');
+				section?.classList.remove('hidden');
+				progressBar?.classList.add('visible');
 				textContent.innerHTML = formatPhilosophyText(philosophyData.texte);
 
-				if (philosophyTextTitle) {
-					let fullTitle = "";
-					if (window.innerWidth <= 600) {
-						if (currentPartShort && currentSequenceIndex) {
-							fullTitle = currentPartShort + ' | ' + currentSequenceIndex;
-						} else if (currentPartShort) {
-							fullTitle = currentPartShort;
-						} else if (currentSequenceIndex) {
-							fullTitle = currentSequenceIndex;
-						} else {
-							fullTitle = 'TEXTE';
+				if (titleEl && sequenceInfo) {
+					const isMobile = window.innerWidth <= 600;
+					let fullTitle = 'TEXTE';
+					if (isMobile) {
+						if (sequenceInfo.partShort && sequenceInfo.sequenceIndex) {
+							fullTitle = sequenceInfo.partShort + ' | ' + sequenceInfo.sequenceIndex;
+						} else if (sequenceInfo.partShort) {
+							fullTitle = sequenceInfo.partShort;
+						} else if (sequenceInfo.sequenceIndex) {
+							fullTitle = sequenceInfo.sequenceIndex;
 						}
 					} else {
-						if (currentPartTitle && currentSequenceIndexLong && currentSequenceCleanTitle) {
-							fullTitle = currentPartTitle + ', ' + currentSequenceIndexLong + ' : ' + currentSequenceCleanTitle.toUpperCase();
-						} else if (currentPartTitle && currentSequenceCleanTitle) {
-							fullTitle = currentPartTitle + ', ' + currentSequenceCleanTitle.toUpperCase();
-						} else if (currentPartTitle) {
-							fullTitle = currentPartTitle;
-						} else if (currentSequenceCleanTitle) {
-							fullTitle = currentSequenceCleanTitle.toUpperCase();
-						} else {
-							fullTitle = 'TEXTE';
+						if (sequenceInfo.partTitle && sequenceInfo.sequenceIndexLong && sequenceInfo.cleanTitle) {
+							fullTitle = sequenceInfo.partTitle + ', ' + sequenceInfo.sequenceIndexLong + ' : ' + sequenceInfo.cleanTitle.toUpperCase();
+						} else if (sequenceInfo.partTitle && sequenceInfo.cleanTitle) {
+							fullTitle = sequenceInfo.partTitle + ', ' + sequenceInfo.cleanTitle.toUpperCase();
+						} else if (sequenceInfo.partTitle) {
+							fullTitle = sequenceInfo.partTitle;
+						} else if (sequenceInfo.cleanTitle) {
+							fullTitle = sequenceInfo.cleanTitle.toUpperCase();
 						}
 					}
-					philosophyTextTitle.innerHTML = fullTitle;
+					titleEl.innerHTML = fullTitle;
 				}
 
-				let formattedSource = '';
 				if (philosophyData.source && philosophyData.source.trim()) {
-					const author = getAuthorFromSource(philosophyData.source);
 					const workInfo = extractWorkTitle(philosophyData.source);
-					if (workInfo) {
-						formattedSource = workInfo.before +
-							'<span class="work-title">' + workInfo.title + '</span>' +
-							workInfo.after;
-					} else {
-						formattedSource = philosophyData.source;
-					}
-					sourceContent.innerHTML = formattedSource;
+					sourceContent.innerHTML = workInfo ? 
+						workInfo.before + '<span class="work-title">' + workInfo.title + '</span>' + workInfo.after :
+						philosophyData.source;
 				} else {
 					sourceContent.innerHTML = '';
 				}
-			}
-
-			function hidePhilosophyText() {
-				document.getElementById('philosophyText')?.classList.add('hidden');
-				progressBar.classList.remove('visible');
 			}
 
 			function togglePhilosophyText() {
@@ -3241,6 +2976,79 @@
 					content.classList.toggle('collapsed');
 				}
 			}
+
+			function updateProgressBar() {
+				const bar = document.querySelector('.progress-bar__cursor--dynamic');
+				if (bar) {
+					const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+					bar.style.width = Math.min(progress, 100) + '%';
+				}
+			}
+
+			// === STATISTIQUES ===
+			function updateStats(notionId, correct, total) {
+				if (!stats[notionId]) {
+					stats[notionId] = { attempts: 0, totalCorrect: 0, totalQuestions: 0, bestScore: 0, scores: [] };
+				}
+				const s = stats[notionId];
+				s.attempts++;
+				s.totalCorrect += correct;
+				s.totalQuestions += total;
+				const pct = Math.round((correct / total) * 100);
+				s.scores.push(pct);
+				s.bestScore = Math.max(s.bestScore, pct);
+				if (s.scores.length > 20) s.scores.shift();
+				localStorage.setItem('quizStats', JSON.stringify(stats));
+				displayStats(notionId);
+				updateGlobalStatsDisplay();
+			}
+
+			function displayStats(notionId) {
+				const s = stats[notionId];
+				if (!s) return;
+				if (totalAttempts) {
+					totalAttempts.textContent = s.attempts;
+					const label = document.getElementById('attemptsLabel');
+					if (label) label.textContent = s.attempts <= 1 ? 'tentative' : 'tentatives';
+				}
+				if (bestScore) bestScore.textContent = s.bestScore + '%';
+				const avg = s.scores.length > 0 ? Math.round(s.scores.reduce((a, b) => a + b, 0) / s.scores.length) : 0;
+				if (avgScore) avgScore.textContent = avg + '%';
+				if (totalCorrect) {
+					totalCorrect.textContent = s.totalCorrect;
+					const label = document.getElementById('totalCorrectLabel');
+					if (label) label.textContent = s.totalCorrect <= 1 ? 'bonne réponse' : 'bonnes réponses';
+				}
+			}
+
+			function updateGlobalStatsDisplay() {
+				const pct = totalQuestionsAnswered ? Math.round((totalCorrectAnswers / totalQuestionsAnswered) * 100) : 0;
+				document.querySelectorAll('#statsCorrectCount, #statsCorrectCount2').forEach(el => el.textContent = totalCorrectAnswers);
+				document.querySelectorAll('#statsTotalCount, #statsTotalCount2').forEach(el => el.textContent = totalQuestionsAnswered);
+				document.querySelectorAll('#statsPercentage, #statsPercentage2').forEach(el => el.textContent = pct + '%');
+				document.querySelectorAll('#gamesPlayed, #gamesPlayed2').forEach(el => el.textContent = gamesPlayed);
+				const badge = document.getElementById('statsBadge');
+				if (badge) badge.textContent = pct + '%';
+			}
+
+			function resetStats() {
+				stats = {};
+				localStorage.setItem('quizStats', JSON.stringify(stats));
+				totalCorrectAnswers = 0;
+				totalQuestionsAnswered = 0;
+				gamesPlayed = 0;
+				localStorage.setItem('totalCorrectAnswers', '0');
+				localStorage.setItem('totalQuestionsAnswered', '0');
+				localStorage.setItem('gamesPlayed', '0');
+				updateGlobalStatsDisplay();
+				if (currentSequenceInfo?.cleanTitle) {
+					displayStats(currentSequenceInfo.cleanTitle);
+				}
+				showToaster('Statistiques réinitialisées !', 'info', 2500);
+			}
+
+			// === CHARGEMENT DES QUIZ ===
+			let currentSequenceInfo = null;
 
 			function loadQuizData(file) {
 				return new Promise((resolve, reject) => {
@@ -3272,13 +3080,11 @@
 			function loadMultipleQuizzes(files) {
 				const validFiles = Array.from(files).filter(f => f.name.endsWith('.js'));
 				if (validFiles.length === 0) {
-					alert('Veuillez sélectionner des fichiers .js valides.');
+					showToaster('Veuillez sélectionner des fichiers .js valides.', 'error', 3000);
 					return;
 				}
 
-				const promises = validFiles.map(f => loadQuizData(f));
-
-				Promise.all(promises)
+				Promise.all(validFiles.map(f => loadQuizData(f)))
 					.then(results => {
 						loadedQuizzes = loadedQuizzes.concat(results);
 						updateSelectorSubmenu();
@@ -3290,10 +3096,11 @@
 						} catch (e) {
 							console.error('Erreur sauvegarde:', e);
 						}
+						showToaster(`${results.length} quiz chargé(s) avec succès !`, 'correct', 2500);
 					})
 					.catch(err => {
 						console.error('Erreur de chargement:', err);
-						alert('Erreur lors du chargement des fichiers: ' + err.message);
+						showToaster('Erreur lors du chargement des fichiers: ' + err.message, 'error', 3000);
 					});
 			}
 
@@ -3328,22 +3135,10 @@
 				const quiz = loadedQuizzes[index];
 				currentQuizIndex = index;
 				const data = quiz.data;
-
 				const fileName = quiz.name;
-				const seqInfo = extractSequenceInfo(fileName + '.js');
-				currentSequenceNumber = seqInfo.number;
-				currentSequenceTitle = seqInfo.title;
-				currentSequenceCleanTitle = seqInfo.cleanTitle;
-				currentPartTitle = seqInfo.partTitle;
-				currentPartShort = seqInfo.partShort;
-				currentSequenceIndex = seqInfo.sequenceIndex;
-				currentSequenceIndexLong = seqInfo.sequenceIndexLong;
-
+				currentSequenceInfo = extractSequenceInfo(fileName + '.js');
 				philosophyData = data.philosophyData || { texte: "", source: "" };
 				questions = data.questions || [];
-
-				// Le sous-titre reste toujours "tester ses connaissances"
-				updateSubtitle(currentSequenceCleanTitle);
 
 				if (fileStatus) {
 					fileStatus.textContent = `✅ "${quiz.name}" chargé !`;
@@ -3365,30 +3160,26 @@
 					const files = await resp.json();
 					const jsFiles = files.filter(f => f.type === 'file' && f.name.endsWith('.js'));
 					if (!jsFiles.length) throw new Error('Aucun fichier .js trouvé');
-					updateGitHubSelect(jsFiles);
-					if (fileStatus) {
-						fileStatus.textContent = jsFiles.length === 0 ? 'Aucun quiz disponible' : `${jsFiles.length} quiz disponible${jsFiles.length > 1 ? 's' : ''}`;
-					}
+					
+					githubFileSelect.innerHTML = '<option value="">-- sélectionner une séquence --</option>';
+					jsFiles.sort((a, b) => a.name.localeCompare(b.name));
+					jsFiles.forEach(f => {
+						const opt = document.createElement('option');
+						opt.value = f.download_url;
+						let displayName = f.name.replace('.js', '');
+						const firstDashIndex = displayName.search(/[-–—]/);
+						if (firstDashIndex !== -1) {
+							displayName = displayName.substring(firstDashIndex + 1).trim();
+						}
+						opt.textContent = displayName;
+						githubFileSelect.appendChild(opt);
+					});
+					
+					fileStatus.textContent = `${jsFiles.length} quiz disponible${jsFiles.length > 1 ? 's' : ''}`;
 				} catch (err) {
 					fileStatus.textContent = `Erreur: ${err.message}`;
 					githubFileSelect.innerHTML = `<option value="">-- Erreur --</option><option value="error" disabled>Impossible de charger</option>`;
 				}
-			}
-
-			function updateGitHubSelect(files) {
-				githubFileSelect.innerHTML = '<option value="">-- sélectionner une séquence --</option>';
-				files.sort((a, b) => a.name.localeCompare(b.name));
-				files.forEach(f => {
-					const opt = document.createElement('option');
-					opt.value = f.download_url;
-					let displayName = f.name.replace('.js', '');
-					const firstDashIndex = displayName.search(/[-–—]/);
-					if (firstDashIndex !== -1) {
-						displayName = displayName.substring(firstDashIndex + 1).trim();
-					}
-					opt.textContent = displayName;
-					githubFileSelect.appendChild(opt);
-				});
 			}
 
 			async function loadFromGitHub(url) {
@@ -3404,18 +3195,7 @@
 						philosophyData = result.philosophyData;
 						questions = result.questions;
 						const fileName = url.split('/').pop();
-						const seqInfo = extractSequenceInfo(fileName);
-						currentSequenceNumber = seqInfo.number;
-						currentSequenceTitle = seqInfo.title;
-						currentSequenceCleanTitle = seqInfo.cleanTitle;
-						currentPartTitle = seqInfo.partTitle;
-						currentPartShort = seqInfo.partShort;
-						currentSequenceIndex = seqInfo.sequenceIndex;
-						currentSequenceIndexLong = seqInfo.sequenceIndexLong;
-
-						// Le sous-titre reste toujours "tester ses connaissances"
-						updateSubtitle(currentSequenceCleanTitle);
-
+						currentSequenceInfo = extractSequenceInfo(fileName);
 						fileStatus.textContent = `✅ "${fileName.replace('.js', '')}" chargé !`;
 						setTimeout(startQuiz, 600);
 					} else {
@@ -3426,228 +3206,16 @@
 				}
 			}
 
-			function startTimer() {
-				timerExpired = false;
-				if (!timerEnabled) {
-					if (timerdisplay) timerdisplay.style.display = 'none';
-					return;
-				}
-				if (timerdisplay) {
-					timerdisplay.style.display = 'inline-flex';
-					timerdisplay.classList.remove('warning', 'danger');
-				}
-				timeLeft = MAX_TIME;
-				timerValue.textContent = timeLeft;
-
-				if (timerInterval) clearInterval(timerInterval);
-
-				timerInterval = setInterval(() => {
-					timeLeft--;
-					timerValue.textContent = timeLeft;
-
-					if (timerdisplay) {
-						if (timeLeft <= 10) {
-							timerdisplay.classList.add('warning');
-						}
-						if (timeLeft <= 5) {
-							timerdisplay.classList.add('danger');
-						}
-					}
-					if (timeLeft <= 0) {
-						clearInterval(timerInterval);
-						timerInterval = null;
-						timerExpired = true;
-					}
-				}, 1000);
-			}
-
-			function stopTimer() {
-				if (timerInterval) {
-					clearInterval(timerInterval);
-					timerInterval = null;
-				}
-				if (timerdisplay) {
-					timerdisplay.classList.remove('warning', 'danger');
-				}
-			}
-
-			function resetTimer() {
-				stopTimer();
-				timerExpired = false;
-				if (timerEnabled) {
-					timeLeft = MAX_TIME;
-					timerValue.textContent = timeLeft;
-					if (timerdisplay) timerdisplay.style.display = 'inline-flex';
-				} else {
-					if (timerdisplay) timerdisplay.style.display = 'none';
-				}
-			}
-
-			// === PLAY SOUND ===
-			function playSound(type) {
-				if (!soundEnabled) return;
-				try {
-					let soundFile = '';
-					if (type === 'correct') {
-						soundFile = 'sounds/reponse-bonne.mp3';
-					} else if (type === 'incorrect') {
-						soundFile = 'sounds/reponse-mauvaise.mp3';
-					} else if (type === 'score_good') {
-						soundFile = 'sounds/score-bon.mp3';
-					} else if (type === 'score_bad') {
-						soundFile = 'sounds/score-mauvais.mp3';
-					} else if (type === 'click') {
-						soundFile = 'sounds/bruit-clavier.mp3';
-					} else {
-						return;
-					}
-					const audio = new Audio(soundFile);
-					audio.volume = (type === 'click') ? 0.3 : 0.8;
-					audio.preload = 'auto';
-					const playPromise = audio.play();
-					if (playPromise !== undefined) {
-						playPromise.catch(error => {
-							console.debug('Erreur lecture audio:', error);
-							audio.load();
-							setTimeout(() => {
-								audio.play().catch(() => {});
-							}, 100);
-						});
-					}
-				} catch (e) {
-					console.debug('Erreur audio:', e);
-				}
-			}
-
-			function preloadSounds() {
-				if (!soundEnabled) return;
-				const sounds = [
-					'sounds/reponse-bonne.mp3',
-					'sounds/reponse-mauvaise.mp3',
-					'sounds/score-bon.mp3',
-					'sounds/score-mauvais.mp3',
-					'sounds/bruit-clavier.mp3'
-				];
-				sounds.forEach(file => {
-					const audio = new Audio();
-					audio.preload = 'auto';
-					audio.src = file;
-					audio.load();
-				});
-			}
-
-			// === CONFETTIS ===
-			function launchConfetti() {
-				if (!animationsEnabled) return;
-				const container = document.createElement('div');
-				container.className = 'confetti-container';
-				document.body.appendChild(container);
-				const colors = ['#ff0000', '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff', '#ff9f43', '#00d2d3', '#f368e0', '#ff9f43'];
-				for (let i = 0; i < 160; i++) {
-					const piece = document.createElement('div');
-					piece.className = 'confetti-piece';
-					piece.style.left = Math.random() * 100 + '%';
-					piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-					piece.style.width = (Math.random() * 16 + 4) + 'px';
-					piece.style.height = (Math.random() * 8 + 4) + 'px';
-					piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-					piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
-					piece.style.animationDelay = (Math.random() * 1.5) + 's';
-					container.appendChild(piece);
-				}
-				setTimeout(() => container.remove(), 4000);
-			}
-
-			// === STATISTIQUES ===
-			function updateStats(notionId, correct, total) {
-				if (!stats[notionId]) {
-					stats[notionId] = { attempts: 0, totalCorrect: 0, totalQuestions: 0, bestScore: 0, scores: [] };
-				}
-				const s = stats[notionId];
-				s.attempts++;
-				s.totalCorrect += correct;
-				s.totalQuestions += total;
-				const pct = Math.round((correct / total) * 100);
-				s.scores.push(pct);
-				s.bestScore = Math.max(s.bestScore, pct);
-
-				if (s.scores.length > 20) s.scores.shift();
-
-				localStorage.setItem('quizStats', JSON.stringify(stats));
-				displayStats(notionId);
-				updateGlobalStatsDisplay();
-			}
-
-			function displayStats(notionId) {
-				const s = stats[notionId];
-				const attempts = s ? s.attempts : 0;
-				const totalCorr = s ? s.totalCorrect : 0;
-
-				if (totalAttempts) {
-					totalAttempts.textContent = attempts;
-					const attemptsLabelEl = document.getElementById('attemptsLabel');
-					if (attemptsLabelEl) {
-						attemptsLabelEl.textContent = attempts <= 1 ? 'tentative' : 'tentatives';
-					}
-				}
-				if (bestScore) bestScore.textContent = s ? s.bestScore + '%' : '0%';
-				const avg = s && s.scores.length > 0 ? Math.round(s.scores.reduce((a, b) => a + b, 0) / s.scores.length) : 0;
-				if (avgScore) avgScore.textContent = avg + '%';
-				if (totalCorrect) {
-					totalCorrect.textContent = totalCorr;
-					const totalCorrectLabelEl = document.getElementById('totalCorrectLabel');
-					if (totalCorrectLabelEl) {
-						totalCorrectLabelEl.textContent = totalCorr <= 1 ? 'bonne réponse' : 'bonnes réponses';
-					}
-				}
-			}
-
-			function updateGlobalStatsDisplay() {
-				const pct = totalQuestionsAnswered ? Math.round((totalCorrectAnswers / totalQuestionsAnswered) * 100) : 0;
-				document.querySelectorAll('#statsCorrectCount, #statsCorrectCount2').forEach(el => el.textContent = totalCorrectAnswers);
-				document.querySelectorAll('#statsTotalCount, #statsTotalCount2').forEach(el => el.textContent = totalQuestionsAnswered);
-				document.querySelectorAll('#statsPercentage, #statsPercentage2').forEach(el => el.textContent = pct + '%');
-				document.querySelectorAll('#gamesPlayed, #gamesPlayed2').forEach(el => el.textContent = gamesPlayed);
-				
-				const badge = document.getElementById('statsBadge');
-				if (badge) badge.textContent = pct + '%';
-			}
-
-			function resetStats() {
-				if (confirm('Voulez-vous vraiment réinitialiser les statistiques ?')) {
-					stats = {};
-					localStorage.setItem('quizStats', JSON.stringify(stats));
-					totalCorrectAnswers = 0;
-					totalQuestionsAnswered = 0;
-					gamesPlayed = 0;
-					localStorage.setItem('totalCorrectAnswers', '0');
-					localStorage.setItem('totalQuestionsAnswered', '0');
-					localStorage.setItem('gamesPlayed', '0');
-					updateGlobalStatsDisplay();
-					if (currentSequenceCleanTitle) {
-						displayStats(currentSequenceCleanTitle);
-					}
-				}
-			}
-
 			// === QUIZ ===
 			function startQuiz() {
 				if (questions.length < totalQuestions) {
-					alert(`Le quiz ne contient que ${questions.length} questions. Il en faut ${totalQuestions}.`);
+					showToaster(`Le quiz ne contient que ${questions.length} questions. Il en faut ${totalQuestions}.`, 'error', 3000);
 					return;
 				}
 
-				originalQuestionIndices = [];
-				shuffledQuestions = [];
-
 				const indices = Array.from({ length: questions.length }, (_, i) => i);
 				shuffleArray(indices);
-
-				for (let i = 0; i < totalQuestions && i < indices.length; i++) {
-					const originalIndex = indices[i];
-					originalQuestionIndices.push(originalIndex);
-					shuffledQuestions.push(questions[originalIndex]);
-				}
+				shuffledQuestions = indices.slice(0, totalQuestions).map(i => questions[i]);
 
 				currentQuestionIndex = 0;
 				score = 0;
@@ -3658,9 +3226,8 @@
 				quizEnd.classList.add('hidden');
 				quizQuestions.classList.remove('hidden');
 				detailedResults.classList.add('hidden');
-				if (quizRetryBtn) quizRetryBtn.style.display = 'inline-block';
 
-				displayPhilosophyText();
+				displayPhilosophyText(currentSequenceInfo);
 				const btn = document.getElementById('toggleTextBtn');
 				const content = document.querySelector('.philosophy-text-content');
 				if (btn) btn.classList.add('collapsed');
@@ -3672,7 +3239,7 @@
 				updateGlobalStatsDisplay();
 
 				resetTimer();
-				if (timerEnabled) {
+				if (timerEnabled && timerLimit > 0) {
 					startTimer();
 				}
 
@@ -3688,56 +3255,51 @@
 					const shuffledAnswers = [...q.answers];
 					shuffleArray(shuffledAnswers);
 					const protectedAnswers = protectSpacesInAnswers(shuffledAnswers);
-
 					const letters = ['A', 'B', 'C', 'D', 'E'];
 
 					const el = document.createElement('div');
 					el.className = 'container--question';
 					el.innerHTML = `
-								<fieldset>
-									<legend><p>${q.question}</p></legend>
-									<ul>${protectedAnswers.map((a, i) => `
-										<li class="quiz-answer" data-index="${i}" data-original="${shuffledAnswers[i].replace(/"/g, '&quot;')}" data-key="${letters[i].toLowerCase()}" data-correct="${q.answers[q.correct - 1] === shuffledAnswers[i]}">
-											<div class="answer-text">
-												<span class="answer-letter">${letters[i]}</span>
-												<span>${a}</span>
-											</div>
-											<div class="daltonic-icon correct-icon">
-												<svg viewBox="0 0 24 24" width="24" height="24" fill="none">
-													<polyline class="check-mark" points="4 12 9 17 20 6" stroke="var(--color-correct)" stroke-width="2"/>
-												</svg>
-											</div>
-											<div class="daltonic-icon incorrect-icon">
-												<svg viewBox="0 0 24 24" width="24" height="24" fill="none">
-													<line class="cross-mark" x1="6" y1="6" x2="18" y2="18" stroke="var(--color-incorrect)" stroke-width="2"/>
-													<line class="cross-mark" x1="18" y1="6" x2="6" y2="18" stroke="var(--color-incorrect)" stroke-width="2"/>
-												</svg>
-											</div>
-										</li>
-									`).join('')}</ul>
-								</fieldset>
-								<div class="next-button-container">
-									<button class="quiz-btn next-question-btn">${currentQuestionIndex === totalQuestions - 1 ? 'votre score' : 'question suivante'}</button>
-								</div>
-								<div class="quiz-explanation hidden">
-									<div class="quiz-explanation__label"><span></span></div>
-									<p class="quiz-explanation__detail"><strong>Explication : </strong>${q.explanation ? q.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>') : ''}</p>
-								</div>
-							`;
+						<fieldset>
+							<legend><p>${q.question}</p></legend>
+							<ul>${protectedAnswers.map((a, i) => `
+								<li class="quiz-answer" data-index="${i}" data-original="${shuffledAnswers[i].replace(/"/g, '&quot;')}" data-key="${letters[i].toLowerCase()}" data-correct="${q.answers[q.correct - 1] === shuffledAnswers[i]}">
+									<div class="answer-text">
+										<span class="answer-letter">${letters[i]}</span>
+										<span>${a}</span>
+									</div>
+									<div class="daltonic-icon correct-icon">
+										<svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+											<polyline class="check-mark" points="4 12 9 17 20 6" stroke="var(--color-correct)" stroke-width="2"/>
+										</svg>
+									</div>
+									<div class="daltonic-icon incorrect-icon">
+										<svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+											<line class="cross-mark" x1="6" y1="6" x2="18" y2="18" stroke="var(--color-incorrect)" stroke-width="2"/>
+											<line class="cross-mark" x1="18" y1="6" x2="6" y2="18" stroke="var(--color-incorrect)" stroke-width="2"/>
+										</svg>
+									</div>
+								</li>
+							`).join('')}</ul>
+						</fieldset>
+						<div class="next-button-container">
+							<button class="quiz-btn next-question-btn">${currentQuestionIndex === totalQuestions - 1 ? 'votre score' : 'question suivante'}</button>
+						</div>
+						<div class="quiz-explanation hidden">
+							<div class="quiz-explanation__label"><span></span></div>
+							<p class="quiz-explanation__detail"><strong>Explication : </strong>${q.explanation ? q.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>') : ''}</p>
+						</div>
+					`;
 					questionsContainer.appendChild(el);
 
 					const answers = el.querySelectorAll('.quiz-answer');
 					answers.forEach((ansEl, i) => {
-						ansEl.addEventListener('click', function onClickHandler(e) {
+						ansEl.addEventListener('click', function(e) {
 							const container = this.closest('.container--question');
 							const alreadyAnswered = container.querySelector('.quiz-answer.correct, .quiz-answer.incorrect, .quiz-answer.selected');
 							if (alreadyAnswered) return;
 							
-							// ÉTOILES
-							if (animationsEnabled) {
-								const rect = this.getBoundingClientRect();
-								spawnStars(rect.left + rect.width / 2, rect.top + rect.height / 2);
-							}
+							// Plus d'étoiles
 							
 							if (isDeferredEvaluation) {
 								selectAnswer(this, shuffledAnswers[i]);
@@ -3751,10 +3313,11 @@
 					nextBtn.onclick = () => {
 						if (!isDeferredEvaluation) {
 							if (!el.querySelector('.correct') && !el.querySelector('.incorrect')) {
-								alert('Veuillez sélectionner une réponse.');
+								showToaster('Veuillez sélectionner une réponse.', 'error', 2000);
 								return;
 							}
 						} else if (!userAnswers[currentQuestionIndex]) {
+							const q = shuffledQuestions[currentQuestionIndex];
 							userAnswers[currentQuestionIndex] = {
 								question: q.question,
 								userAnswer: null,
@@ -3763,12 +3326,12 @@
 								allAnswers: shuffledAnswers
 							};
 						}
-						const timeSpent = MAX_TIME - timeLeft;
+						const timeSpent = timerLimit - timeLeft;
 						questionTimes.push(timeSpent);
 
 						currentQuestionIndex++;
 						resetTimer();
-						if (timerEnabled && currentQuestionIndex < totalQuestions) {
+						if (timerEnabled && timerLimit > 0 && currentQuestionIndex < totalQuestions) {
 							startTimer();
 						}
 						displayNextQuestion();
@@ -3821,12 +3384,22 @@
 					totalCorrectAnswers++;
 					localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
 					if (label) label.innerHTML = '<img src="src/emoji-happy.gif" alt="emoji" class="emoji"> bonne réponse !';
-					if (animationsEnabled) selected.classList.add('shake-y');
+					// Shake vertical pour bonne réponse
+					if (animationsEnabled) {
+						selected.classList.remove('shake-x');
+						selected.classList.add('shake-y');
+						setTimeout(() => selected.classList.remove('shake-y'), 900);
+					}
 					playSound('correct');
 				} else {
 					selected.classList.add('incorrect');
 					if (label) label.innerHTML = '<img src="src/emoji-sad.gif" alt="emoji" class="emoji"> mauvaise réponse !';
-					if (animationsEnabled) selected.classList.add('shake-x');
+					// Shake horizontal pour mauvaise réponse
+					if (animationsEnabled) {
+						selected.classList.remove('shake-y');
+						selected.classList.add('shake-x');
+						setTimeout(() => selected.classList.remove('shake-x'), 900);
+					}
 					playSound('incorrect');
 
 					Array.from(parent.children).forEach(a => {
@@ -3847,97 +3420,142 @@
 				if (expl) expl.classList.remove('hidden');
 			}
 
+			function forceEndQuiz() {
+				for (let i = 0; i < shuffledQuestions.length; i++) {
+					if (!userAnswers[i] || userAnswers[i].userAnswer === null || userAnswers[i].userAnswer === undefined) {
+						const q = shuffledQuestions[i];
+						userAnswers[i] = {
+							question: q.question,
+							userAnswer: "Non répondue",
+							correctAnswerIndex: q.correct - 1,
+							explanation: q.explanation,
+							allAnswers: q.answers
+						};
+						totalQuestionsAnswered++;
+					}
+				}
+				localStorage.setItem('totalQuestionsAnswered', totalQuestionsAnswered);
+				endQuiz();
+			}
+
 			function endQuiz() {
 				quizQuestions.classList.add('hidden');
 				quizEnd.classList.remove('hidden');
 
-				if (isDeferredEvaluation) calculateDeferredScore();
-
-				const scoreEl = document.getElementById('finalScoreDisplay');
-				const totalEl = document.getElementById('finalTotalDisplay');
-				const scoreLabelEl = document.getElementById('scoreLabel');
-				
-				if (scoreEl) {
-					scoreEl.textContent = score;
-					if (scoreLabelEl) {
-						scoreLabelEl.textContent = score <= 1 ? 'bonne réponse' : 'bonnes réponses';
+				if (isDeferredEvaluation) {
+					let newScore = 0;
+					userAnswers.forEach((ans, idx) => {
+						if (!ans) {
+							const q = shuffledQuestions[idx];
+							if (q) {
+								userAnswers[idx] = {
+									question: q.question,
+									userAnswer: "Non répondue",
+									correctAnswerIndex: q.correct - 1,
+									explanation: q.explanation,
+									allAnswers: q.answers
+								};
+								totalQuestionsAnswered++;
+							}
+							return;
+						}
+						if (ans.userAnswer === "Non répondue" || ans.userAnswer === null) {
+							totalQuestionsAnswered++;
+							return;
+						}
+						const q = shuffledQuestions[idx];
+						if (!q) return;
+						const correct = q.answers[q.correct - 1] || q.answers[0];
+						if (ans.userAnswer === correct) {
+							newScore++;
+							totalCorrectAnswers++;
+						}
+						if (ans.userAnswer !== null) totalQuestionsAnswered++;
+					});
+					score = newScore;
+					localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
+					localStorage.setItem('totalQuestionsAnswered', totalQuestionsAnswered);
+				} else if (timerExpired) {
+					let calculatedScore = 0;
+					for (let i = 0; i < userAnswers.length; i++) {
+						const ans = userAnswers[i];
+						if (ans && ans.userAnswer !== "Non répondue") {
+							const q = shuffledQuestions[i];
+							if (q) {
+								const correct = q.answers[q.correct - 1] || q.answers[0];
+								if (ans.userAnswer === correct) {
+									calculatedScore++;
+								}
+							}
+						}
 					}
+					score = calculatedScore;
 				}
-				if (totalEl) totalEl.textContent = totalQuestions;
+
+				finalScoreDisplay.textContent = score;
+				scoreLabel.textContent = score <= 1 ? 'bonne réponse' : 'bonnes réponses';
+				finalTotalDisplay.textContent = totalQuestions;
 
 				const avgTime = questionTimes.length > 0 ? Math.round(questionTimes.reduce((a, b) => a + b, 0) / questionTimes.length) : 0;
-				if (avgTimeDisplay) avgTimeDisplay.textContent = avgTime + ' s';
+				avgTimeDisplay.textContent = avgTime + ' s';
 
 				const correct = score;
 				const incorrect = totalQuestions - score;
 				const percentage = Math.round((score / totalQuestions) * 100);
 				
-				if (correctAnswers) correctAnswers.textContent = correct;
-				const correctLabelEl = document.getElementById('correctLabel');
-				if (correctLabelEl) {
-					correctLabelEl.textContent = correct <= 1 ? 'correcte' : 'correctes';
-				}
-				
-				if (incorrectAnswers) incorrectAnswers.textContent = incorrect;
-				const incorrectLabelEl = document.getElementById('incorrectLabel');
-				if (incorrectLabelEl) {
-					incorrectLabelEl.textContent = incorrect <= 1 ? 'incorrecte' : 'incorrectes';
-				}
-				
-				if (percentageScore) percentageScore.textContent = percentage + '%';
+				correctAnswers.textContent = correct;
+				document.getElementById('correctLabel').textContent = correct <= 1 ? 'correcte' : 'correctes';
+				incorrectAnswers.textContent = incorrect;
+				document.getElementById('incorrectLabel').textContent = incorrect <= 1 ? 'incorrecte' : 'incorrectes';
+				percentageScore.textContent = percentage + '%';
 
-				let message = '';
-				if (percentage >= 90) message = "🌟 excellent ! vous maîtrisez parfaitement ce quiz";
-				else if (percentage >= 70) message = "👏 très bon score ! vous avez une bonne connaissance de ce quiz";
-				else if (percentage >= 50) message = "📚 score correct : continuez à étudier ce quiz";
-				else if (percentage >= 30) message = "📖 vous avez des bases : relisez l'essentiel de ce quiz";
-				else message = "💪 n'hésitez pas à refaire le quiz";
-				if (summaryMessage) summaryMessage.textContent = message;
+				const messages = [
+					{ min: 90, text: "🌟 excellent ! vous maîtrisez parfaitement ce quiz" },
+					{ min: 70, text: "👏 très bon score ! vous avez une bonne connaissance de ce quiz" },
+					{ min: 50, text: "📚 score correct : continuez à étudier ce quiz" },
+					{ min: 30, text: "📖 vous avez des bases : relisez l'essentiel de ce quiz" },
+					{ min: 0, text: "💪 n'hésitez pas à refaire le quiz" }
+				];
+				const msg = messages.find(m => percentage >= m.min) || messages[messages.length - 1];
+				summaryMessage.textContent = msg.text;
 
-				const notionId = currentSequenceCleanTitle || 'quiz';
+				const notionId = currentSequenceInfo?.cleanTitle || 'quiz';
 				updateStats(notionId, score, totalQuestions);
 				displayStats(notionId);
 
-				const pct = Math.round((score / totalQuestions) * 100);
-				if (pct >= 80) {
+				if (percentage >= 80) {
 					setTimeout(() => {
 						launchConfetti();
 						playSound('score_good');
 					}, 300);
-				} else if (pct < 20) {
-					setTimeout(() => {
-						playSound('score_bad');
-					}, 500);
+				} else if (percentage < 20) {
+					setTimeout(() => playSound('score_bad'), 500);
 				}
 
-				hidePhilosophyText();
+				document.getElementById('philosophyText')?.classList.add('hidden');
+				progressBar?.classList.remove('visible');
 				updateGlobalStatsDisplay();
 
-				if (isDeferredEvaluation) {
-					setTimeout(showDetailedReview, 400);
-				}
-			}
-
-			function calculateDeferredScore() {
-				score = 0;
-				userAnswers.forEach((ans, idx) => {
-					if (!ans) return;
-					const q = shuffledQuestions[idx];
-					if (!q) return;
-					const correct = q.answers[q.correct - 1] || q.answers[0];
-					if (ans.userAnswer === correct) {
-						score++;
-						totalCorrectAnswers++;
-					}
-					if (ans.userAnswer !== null) totalQuestionsAnswered++;
-				});
-				localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
-				localStorage.setItem('totalQuestionsAnswered', totalQuestionsAnswered);
+				showDetailedReview();
+				detailedResults.classList.remove('hidden');
 			}
 
 			function showDetailedReview() {
 				if (!questionsReview) return;
 				questionsReview.innerHTML = '';
+
+				for (let i = 0; i < shuffledQuestions.length; i++) {
+					if (!userAnswers[i] || userAnswers[i].userAnswer === null || userAnswers[i].userAnswer === undefined) {
+						const q = shuffledQuestions[i];
+						userAnswers[i] = {
+							question: q.question,
+							userAnswer: "Non répondue",
+							correctAnswerIndex: q.correct - 1,
+							explanation: q.explanation,
+							allAnswers: q.answers
+						};
+					}
+				}
 
 				userAnswers.forEach((ans, idx) => {
 					if (!ans) return;
@@ -3948,24 +3566,16 @@
 					const div = document.createElement('div');
 					div.className = `review-item ${isCorrect ? 'correct-item' : 'incorrect-item'}`;
 					div.innerHTML = `
-								<p style="font-weight:bold;font-size:0.85rem;margin-bottom:3px;">${ans.question}</p>
-								<p style="font-size:0.8rem;margin:2px 0;"><strong>Votre réponse :</strong> ${protectSpacesAroundTags(ans.userAnswer || 'Non répondue')}</p>
-								<p style="font-size:0.8rem;margin:2px 0;"><strong>Réponse correcte :</strong> ${protectSpacesAroundTags(correct)}</p>
-								<p style="font-size:0.75rem;margin-top:3px;"><strong>Explication :</strong> ${ans.explanation ? ans.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>') : ''}</p>
-							`;
+						<p style="font-weight:bold;font-size:0.85rem;margin-bottom:3px;">${ans.question}</p>
+						<p style="font-size:0.8rem;margin:2px 0;"><strong>Votre réponse :</strong> ${protectSpacesAroundTags(ans.userAnswer || 'Non répondue')}</p>
+						<p style="font-size:0.8rem;margin:2px 0;"><strong>Réponse correcte :</strong> ${protectSpacesAroundTags(correct)}</p>
+						<p style="font-size:0.75rem;margin-top:3px;"><strong>Explication :</strong> ${ans.explanation ? ans.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>') : ''}</p>
+					`;
 					questionsReview.appendChild(div);
 				});
-
-				detailedResults.classList.remove('hidden');
 			}
 
-			function resetApplication() {
-				if (confirm('Voulez-vous vraiment réinitialiser l\'application ? Toutes les données (statistiques, paramètres...) seront effacées')) {
-					localStorage.clear();
-					location.reload();
-				}
-			}
-
+			// === MENU ===
 			function closeAllSubmenus() {
 				document.querySelectorAll('.submenu').forEach(s => s.classList.remove('active'));
 			}
@@ -3993,18 +3603,16 @@
 				playSound('click');
 			}
 
+			// === FULLSCREEN ===
 			function updateFullscreen() {
 				const isFullscreen = !!document.fullscreenElement;
 				document.body.classList.toggle('fullscreen', isFullscreen);
 				const trigger = document.getElementById('hoverTrigger');
 				if (trigger) trigger.classList.toggle('active', isFullscreen);
 
-				const btns = document.querySelectorAll('.btn-fullscreen');
-				btns.forEach(btn => {
+				document.querySelectorAll('.btn-fullscreen').forEach(btn => {
 					btn.classList.toggle('fullscreen-active', isFullscreen);
-					const title = isFullscreen ? 'quitter plein écran (F)' : 'plein écran (F)';
-					btn.dataset.title = title;
-
+					btn.dataset.title = isFullscreen ? 'quitter plein écran (F)' : 'plein écran (F)';
 					if (isFullscreen) {
 						btn.innerHTML = `
 							<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
@@ -4025,25 +3633,18 @@
 				});
 			}
 
-			document.addEventListener('fullscreenchange', updateFullscreen);
-
-			function updateProgressBar() {
-				const bar = document.querySelector('.progress-bar__cursor--dynamic');
-				if (bar) {
-					const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
-					bar.style.width = Math.min(progress, 100) + '%';
-				}
+			// === RESET APPLICATION ===
+			function resetApplication() {
+				localStorage.clear();
+				showToaster('Application réinitialisée !', 'info', 2000);
+				setTimeout(() => location.reload(), 1500);
 			}
 
+			// === RACCORDIS CLAVIER ===
 			document.addEventListener('keydown', function(e) {
 				if (e.target.matches('input, textarea, select, [contenteditable]')) return;
 
-				const keyMap = {
-					'a': 0, 'A': 0,
-					'b': 1, 'B': 1,
-					'c': 2, 'C': 2
-				};
-
+				const keyMap = { 'a': 0, 'A': 0, 'b': 1, 'B': 1, 'c': 2, 'C': 2 };
 				if (keyMap.hasOwnProperty(e.key)) {
 					const currentQuestion = document.querySelector('.container--question');
 					if (currentQuestion) {
@@ -4053,7 +3654,6 @@
 							const targetIndex = keyMap[e.key];
 							if (targetIndex < answers.length) {
 								e.preventDefault();
-								e.stopPropagation();
 								answers[targetIndex].click();
 							}
 						}
@@ -4075,7 +3675,12 @@
 				}
 			});
 
-			document.addEventListener('DOMContentLoaded', () => {
+			// === INITIALISATION ===
+			document.addEventListener('DOMContentLoaded', function() {
+				// Thèmes
+				const darkMode = localStorage.getItem('darkMode') === 'true';
+				const colorblindMode = localStorage.getItem('colorblindMode') === 'true';
+				
 				if (darkMode) {
 					document.body.classList.add('dark-theme');
 					document.getElementById('darkModeToggle').checked = true;
@@ -4091,33 +3696,34 @@
 					document.getElementById('animationsToggle').checked = false;
 				}
 
+				// Sons
 				const soundToggle = document.getElementById('soundToggle');
 				if (soundToggle) {
-					const storedSound = localStorage.getItem('soundEnabled');
-					soundEnabled = storedSound === 'true';
 					soundToggle.checked = soundEnabled;
-					if (soundEnabled) {
-						preloadSounds();
-					}
+					if (soundEnabled) preloadSounds();
 				}
 
-				const timerToggle = document.getElementById('timerToggle');
+				// Timer
 				if (timerToggle) {
-					const storedTimer = localStorage.getItem('timerEnabled');
-					timerEnabled = storedTimer === 'true';
 					timerToggle.checked = timerEnabled;
-					if (!timerEnabled && timerdisplay) {
-						timerdisplay.style.display = 'none';
-					}
 				}
+				if (timerLimitSlider) {
+					const sliderPos = valueToSliderPos(timerLimit);
+					timerLimitSlider.value = sliderPos;
+					timerLimitValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
+				}
+				updateTimerDisplay(formatTimer(timerLimit));
 
+				// Nombre de questions
 				const savedCount = parseInt(localStorage.getItem('questionCount') || '5');
 				totalQuestions = savedCount;
 				if (questionCountSlider) questionCountSlider.value = savedCount;
 				if (questionCountDisplay) questionCountDisplay.textContent = savedCount;
 
+				// Chargement GitHub
 				fetchGitHubFiles();
 
+				// Restauration des quiz locaux
 				try {
 					const savedQuizzes = localStorage.getItem('loadedQuizzes');
 					if (savedQuizzes) {
@@ -4127,29 +3733,15 @@
 							updateSelectorSubmenu();
 							const savedIndex = parseInt(localStorage.getItem('currentQuizIndex') || '-1');
 							if (savedIndex >= 0 && savedIndex < loadedQuizzes.length) {
-								currentQuizIndex = savedIndex;
 								const quizData = localStorage.getItem('quizData_' + savedIndex);
 								if (quizData) {
 									try {
 										const data = JSON.parse(quizData);
-										const fileName = loadedQuizzes[savedIndex].name;
-										const seqInfo = extractSequenceInfo(fileName + '.js');
-										currentSequenceNumber = seqInfo.number;
-										currentSequenceTitle = seqInfo.title;
-										currentSequenceCleanTitle = seqInfo.cleanTitle;
-										currentPartTitle = seqInfo.partTitle;
-										currentPartShort = seqInfo.partShort;
-										currentSequenceIndex = seqInfo.sequenceIndex;
-										currentSequenceIndexLong = seqInfo.sequenceIndexLong;
+										currentQuizIndex = savedIndex;
+										currentSequenceInfo = extractSequenceInfo(loadedQuizzes[savedIndex].name + '.js');
 										philosophyData = data.philosophyData || { texte: "", source: "" };
 										questions = data.questions || [];
-										
-										// Le sous-titre reste toujours "tester ses connaissances"
-										updateSubtitle(currentSequenceCleanTitle);
-										
-										if (fileStatus) {
-											fileStatus.textContent = `✅ "${loadedQuizzes[savedIndex].name}" chargé !`;
-										}
+										fileStatus.textContent = `✅ "${loadedQuizzes[savedIndex].name}" chargé !`;
 										if (questions.length > 0) {
 											setTimeout(startQuiz, 500);
 										}
@@ -4164,6 +3756,7 @@
 					console.error('Erreur restauration des quizzes:', e);
 				}
 
+				// === ÉVÉNEMENTS ===
 				githubFileSelect.addEventListener('change', function() {
 					const url = this.value;
 					if (url) {
@@ -4200,13 +3793,7 @@
 					});
 				}
 
-				document.getElementById('localFilesButton')?.addEventListener('click', function() {
-					playSound('click');
-					closeAllSubmenus();
-					document.getElementById('submenuLocalFiles')?.classList.add('active');
-					document.body.classList.add('menu-open');
-				});
-
+				// Actions des boutons
 				document.querySelectorAll('[data-action]').forEach(btn => {
 					btn.addEventListener('click', (e) => {
 						const action = btn.dataset.action;
@@ -4233,6 +3820,7 @@
 					});
 				});
 
+				// Menu
 				document.getElementById('menuClose')?.addEventListener('click', function() {
 					playSound('click');
 					closeMenu();
@@ -4249,6 +3837,13 @@
 					document.body.classList.add('menu-open');
 				});
 
+				document.getElementById('localFilesButton')?.addEventListener('click', function() {
+					playSound('click');
+					closeAllSubmenus();
+					document.getElementById('submenuLocalFiles')?.classList.add('active');
+					document.body.classList.add('menu-open');
+				});
+
 				document.getElementById('statsButton')?.addEventListener('click', function() {
 					playSound('click');
 					closeAllSubmenus();
@@ -4256,18 +3851,21 @@
 					document.getElementById('submenuStats')?.classList.add('active');
 					document.body.classList.add('menu-open');
 				});
+
 				document.getElementById('settingsButton')?.addEventListener('click', function() {
 					playSound('click');
 					closeAllSubmenus();
 					document.getElementById('submenuSettings')?.classList.add('active');
 					document.body.classList.add('menu-open');
 				});
+
 				document.getElementById('shortcutsButton')?.addEventListener('click', function() {
 					playSound('click');
 					closeAllSubmenus();
 					document.getElementById('submenuShortcuts')?.classList.add('active');
 					document.body.classList.add('menu-open');
 				});
+
 				document.getElementById('aboutButton')?.addEventListener('click', function() {
 					playSound('click');
 					closeAllSubmenus();
@@ -4293,8 +3891,8 @@
 					resetStats();
 				});
 
-				// === 3 BOUTONS FINAUX ===
-				quizReviewBtn?.addEventListener('click', function() {
+				// Quiz controls
+				document.getElementById('quizReviewBtn')?.addEventListener('click', function() {
 					playSound('click');
 					const details = document.getElementById('detailedResults');
 					if (details) {
@@ -4305,29 +3903,23 @@
 					}
 				});
 
-				quizRetryBtn?.addEventListener('click', function() {
+				document.getElementById('quizRetryBtn')?.addEventListener('click', function() {
 					playSound('click');
 					if (questions.length) startQuiz();
 				});
 
-				quizBackBtn?.addEventListener('click', function() {
+				document.getElementById('quizBackBtn')?.addEventListener('click', function() {
 					playSound('click');
-					// Retour à l'écran d'accueil (sélection des quiz)
 					quizEnd.classList.add('hidden');
 					quizQuestions.classList.add('hidden');
 					quizStart.classList.remove('hidden');
-					// Remettre le sous-titre par défaut
-					updateSubtitle('');
-					// Réinitialiser l'état
 					currentQuestionIndex = 0;
 					score = 0;
 					userAnswers = [];
 					shuffledQuestions = [];
 					stopTimer();
-					// Afficher le sélecteur
-					document.getElementById('githubFileSelect').value = '';
-					document.getElementById('fileStatus').textContent = 'Choisissez un quiz ci-dessus';
-					// Réinitialiser l'affichage
+					githubFileSelect.value = '';
+					fileStatus.textContent = 'Choisissez un quiz ci-dessus';
 					if (progressBar) progressBar.classList.remove('visible');
 				});
 
@@ -4336,58 +3928,67 @@
 					togglePhilosophyText();
 				});
 
+				// Toggles
 				document.getElementById('darkModeToggle')?.addEventListener('change', function() {
-					const checked = this.checked;
-					darkMode = checked;
-					document.body.classList.toggle('dark-theme', checked);
-					localStorage.setItem('darkMode', checked);
+					document.body.classList.toggle('dark-theme', this.checked);
+					localStorage.setItem('darkMode', this.checked);
 					playSound('click');
 				});
 
 				document.getElementById('colorblindToggle')?.addEventListener('change', function() {
-					const checked = this.checked;
-					colorblindMode = checked;
-					document.body.classList.toggle('colorblind-mode', checked);
-					localStorage.setItem('colorblindMode', checked);
+					document.body.classList.toggle('colorblind-mode', this.checked);
+					localStorage.setItem('colorblindMode', this.checked);
 					playSound('click');
 				});
 
 				document.getElementById('deferredEvaluationToggle')?.addEventListener('change', function() {
-					const checked = this.checked;
-					isDeferredEvaluation = checked;
-					localStorage.setItem('deferredEvaluation', checked);
+					isDeferredEvaluation = this.checked;
+					localStorage.setItem('deferredEvaluation', this.checked);
 					playSound('click');
 				});
 
 				document.getElementById('animationsToggle')?.addEventListener('change', function() {
-					const checked = this.checked;
-					animationsEnabled = checked;
-					localStorage.setItem('animations', checked);
+					animationsEnabled = this.checked;
+					localStorage.setItem('animations', this.checked);
 					playSound('click');
 				});
 
 				document.getElementById('soundToggle')?.addEventListener('change', function() {
-					const checked = this.checked;
-					soundEnabled = checked;
-					localStorage.setItem('soundEnabled', String(checked));
-					if (soundEnabled) {
-						preloadSounds();
-					}
+					soundEnabled = this.checked;
+					localStorage.setItem('soundEnabled', String(this.checked));
+					if (soundEnabled) preloadSounds();
 					playSound('click');
 				});
 
 				document.getElementById('timerToggle')?.addEventListener('change', function() {
-					const checked = this.checked;
-					timerEnabled = checked;
-					localStorage.setItem('timerEnabled', String(checked));
-					if (!timerEnabled) {
+					timerEnabled = this.checked;
+					localStorage.setItem('timerEnabled', String(this.checked));
+					if (!timerEnabled || timerLimit === 0) {
 						stopTimer();
-						if (timerdisplay) timerdisplay.style.display = 'none';
+						updateTimerDisplay('00:00');
 					} else {
 						resetTimer();
 						if (!quizEnd.classList.contains('hidden') && !quizQuestions.classList.contains('hidden')) {
 							startTimer();
 						}
+					}
+					playSound('click');
+				});
+
+				document.getElementById('timerLimitSlider')?.addEventListener('input', function(e) {
+					const pos = parseInt(e.target.value, 10);
+					timerLimit = sliderPosToValue(pos);
+					timerLimitValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
+					localStorage.setItem('timerLimit', timerLimit);
+					updateTimerDisplay(formatTimer(timerLimit));
+					if (timerEnabled && timerLimit > 0) {
+						resetTimer();
+						if (!quizEnd.classList.contains('hidden') && !quizQuestions.classList.contains('hidden')) {
+							startTimer();
+						}
+					} else {
+						stopTimer();
+						updateTimerDisplay('00:00');
 					}
 					playSound('click');
 				});
@@ -4402,45 +4003,17 @@
 					});
 				}
 
-				window.addEventListener('resize', function() {
-					if (philosophyData.texte && philosophyData.texte.trim() !== '') {
-						displayPhilosophyText();
-					}
-				});
-
+				// Fullscreen
+				document.addEventListener('fullscreenchange', updateFullscreen);
 				updateFullscreen();
+
+				// Stats globales
 				updateGlobalStatsDisplay();
 
 				if (soundEnabled) {
 					preloadSounds();
 				}
 			});
-
-			const confettiStyle = document.createElement('style');
-			confettiStyle.textContent = `
-				.confetti-container {
-					position: fixed;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					pointer-events: none;
-					z-index: 99999;
-					overflow: hidden;
-				}
-				.confetti-piece {
-					position: absolute;
-					width: 10px;
-					height: 10px;
-					top: -10px;
-					animation: confetti-fall linear forwards;
-				}
-				@keyframes confetti-fall {
-					0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
-					100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
-				}
-			`;
-			document.head.appendChild(confettiStyle);
 
 		})();
 	</script>
