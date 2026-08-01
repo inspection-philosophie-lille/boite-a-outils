@@ -824,6 +824,12 @@ function createLink(repereCell, definitionCell, nameText, definitionText) {
     if (window.innerWidth <= 768) {
         validateLinkImmediate(links[links.length - 1]);
     }
+    
+    // Arrêter le timer si toutes les paires sont posées (mais le laisser visible)
+    if (links.length === selectedPairs.length) {
+        stopTimer();
+        // Ne pas cacher le timer, juste l'arrêter
+    }
 }
 
 function validateLinkImmediate(link) {
@@ -882,6 +888,13 @@ function validateLinkImmediate(link) {
     saveGameStats();
     updateStatsDisplay();
     updateStatsBadge();
+    
+    // Arrêter le timer si toutes les paires sont posées (mais le laisser visible)
+    if (links.length === selectedPairs.length) {
+        stopTimer();
+        // Ne pas cacher le timer, juste l'arrêter
+    }
+    
     if (links.length === selectedPairs.length) {
         const allCorrect = links.every(l => l.isCorrect === true);
         if (allCorrect) {
