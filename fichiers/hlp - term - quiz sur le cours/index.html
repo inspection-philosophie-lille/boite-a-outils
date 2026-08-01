@@ -671,6 +671,7 @@
 			background: #4a80c0;
 		}
 
+		/* Styles communs pour les sliders (nombre de questions ET temps limite) */
 		.questions-slider-container {
 			display: flex;
 			flex-direction: column;
@@ -740,26 +741,6 @@
 
 		body.dark-theme .questions-slider::-moz-range-thumb {
 			background: #4a80c0;
-		}
-
-		.slider-container {
-			display: flex;
-			flex-direction: column;
-			gap: 0.5rem;
-			margin-top: 0.5rem;
-		}
-
-		.slider-label {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			font-size: 0.9rem;
-		}
-
-		.slider-value {
-			font-weight: bold;
-			color: red;
-			font-size: 1rem;
 		}
 
 		.slider-graduations {
@@ -1097,7 +1078,7 @@
 			justify-content: space-between;
 			align-items: center;
 			padding: 4px 12px;
-			background: transparent;
+				background: transparent;
 		}
 
 		.philosophy-text-header h3 {
@@ -2511,16 +2492,18 @@
 				<span class="toggle-label"><i class="fas fa-hourglass-half"></i> minuteur</span>
 				<label class="theme-switch"><input type="checkbox" id="timerToggle"><span class="slider"></span></label>
 			</div>
-			<div class="slider-container">
-				<div class="slider-label">
-					<span><i class="fas fa-clock"></i> temps limite</span>
-					<span class="slider-value" id="timerLimitValue">1 min</span>
+			<!-- TEMPS LIMITE -->
+			<div class="questions-slider-container">
+				<div class="questions-slider-label">
+					<span class="toggle-label"><i class="fas fa-clock"></i> temps limite</span>
+					<span class="questions-slider-value" id="timerLimitValue">1 min</span>
 				</div>
-				<input type="range" id="timerLimitSlider" min="1" max="6" step="1" value="1">
+				<input type="range" id="timerLimitSlider" class="questions-slider" min="1" max="6" step="1" value="1">
 				<div class="slider-graduations">
 					<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span>∞</span>
 				</div>
 			</div>
+			<!-- NOMBRE DE QUESTIONS -->
 			<div class="questions-slider-container">
 				<div class="questions-slider-label">
 					<span class="toggle-label"><i class="fa-solid fa-list"></i> nombre de questions</span>
@@ -2777,10 +2760,6 @@
 				};
 			}
 
-			function spawnStars(x, y) {
-				// Fonction supprimée - plus utilisée
-			}
-
 			function launchConfetti() {
 				if (!animationsEnabled) return;
 				const container = document.createElement('div');
@@ -2855,12 +2834,27 @@
 				return 1;
 			}
 
+			// Fonctions timer corrigées
+			function updateTimerDisplay(value) {
+				if (timerValueDesktop) timerValueDesktop.textContent = value;
+				if (timerValueMobile) timerValueMobile.textContent = value;
+			}
+
+			function showTimerButtons(show) {
+				const btns = document.querySelectorAll('.timer-btn');
+				btns.forEach(btn => {
+					btn.style.display = show ? '' : 'none';
+				});
+			}
+
 			function startTimer() {
 				timerExpired = false;
 				if (!timerEnabled || timerLimit === 0) {
-					updateTimerDisplay('00:00');
+					updateTimerDisplay('∞');
+					showTimerButtons(false);
 					return;
 				}
+				showTimerButtons(true);
 				timeLeft = timerLimit;
 				updateTimerDisplay(formatTimer(timeLeft));
 
@@ -2881,18 +2875,14 @@
 						clearInterval(timerInterval);
 						timerInterval = null;
 						timerExpired = true;
-						// Vider la question en cours et passer directement aux statistiques
 						if (!quizEnd.classList.contains('hidden') || quizQuestions.classList.contains('hidden')) {
 							// Déjà terminé
 						} else {
-							// Vider le conteneur de questions pour masquer la question, les réponses et le bouton
 							if (questionsContainer) {
 								questionsContainer.innerHTML = '';
 							}
-							// Masquer également le texte philosophique et la barre de progression
 							document.getElementById('philosophyText')?.classList.add('hidden');
 							progressBar?.classList.remove('visible');
-							// Forcer la fin du quiz
 							forceEndQuiz();
 						}
 						showToaster('⏰ temps écoulé ! voici les résultats :', 'info', 3000);
@@ -2916,14 +2906,11 @@
 				if (timerEnabled && timerLimit > 0) {
 					timeLeft = timerLimit;
 					updateTimerDisplay(formatTimer(timeLeft));
+					showTimerButtons(true);
 				} else {
-					updateTimerDisplay('00:00');
+					updateTimerDisplay('∞');
+					showTimerButtons(false);
 				}
-			}
-
-			function updateTimerDisplay(value) {
-				if (timerValueDesktop) timerValueDesktop.textContent = value;
-				if (timerValueMobile) timerValueMobile.textContent = value;
 			}
 
 			// === AFFICHAGE ===
@@ -3308,8 +3295,6 @@
 							const alreadyAnswered = container.querySelector('.quiz-answer.correct, .quiz-answer.incorrect, .quiz-answer.selected');
 							if (alreadyAnswered) return;
 							
-							// Plus d'étoiles
-							
 							if (isDeferredEvaluation) {
 								selectAnswer(this, shuffledAnswers[i]);
 							} else {
@@ -3335,8 +3320,9 @@
 								allAnswers: shuffledAnswers
 							};
 						}
-						const timeSpent = timerLimit - timeLeft;
-						questionTimes.push(timeSpent);
+						// On arrête le timer si une réponse a été donnée
+						// Mais le timer a déjà été arrêté dans checkAnswer ou selectAnswer
+						// On ne fait rien ici
 
 						currentQuestionIndex++;
 						resetTimer();
@@ -3355,11 +3341,19 @@
 			}
 
 			function selectAnswer(selected, selectedText) {
+				// Arrêter le timer immédiatement
+				stopTimer();
+				
 				const parent = selected.parentNode;
 				Array.from(parent.children).forEach(a => a.classList.remove('selected'));
 				selected.classList.add('selected');
 
 				const q = shuffledQuestions[currentQuestionIndex];
+				
+				// Enregistrer le temps écoulé pour cette question
+				const timeSpent = timerLimit - timeLeft;
+				questionTimes.push(timeSpent);
+				
 				userAnswers[currentQuestionIndex] = {
 					question: q.question,
 					userAnswer: selectedText,
@@ -3370,6 +3364,9 @@
 			}
 
 			function checkAnswer(selected, selectedText, shuffledAnswers) {
+				// Arrêter le timer immédiatement
+				stopTimer();
+				
 				const parent = selected.parentNode;
 				const container = selected.closest('.container--question');
 				const label = container.querySelector('.quiz-explanation__label span');
@@ -3378,6 +3375,10 @@
 
 				const q = shuffledQuestions[currentQuestionIndex];
 				const correctText = q.answers[q.correct - 1] || q.answers[0];
+
+				// Enregistrer le temps écoulé pour cette question
+				const timeSpent = timerLimit - timeLeft;
+				questionTimes.push(timeSpent);
 
 				userAnswers[currentQuestionIndex] = {
 					question: q.question,
@@ -3393,7 +3394,6 @@
 					totalCorrectAnswers++;
 					localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
 					if (label) label.innerHTML = '<img src="src/emoji-happy.gif" alt="emoji" class="emoji"> bonne réponse !';
-					// Shake vertical pour bonne réponse
 					if (animationsEnabled) {
 						selected.classList.remove('shake-x');
 						selected.classList.add('shake-y');
@@ -3403,7 +3403,6 @@
 				} else {
 					selected.classList.add('incorrect');
 					if (label) label.innerHTML = '<img src="src/emoji-sad.gif" alt="emoji" class="emoji"> mauvaise réponse !';
-					// Shake horizontal pour mauvaise réponse
 					if (animationsEnabled) {
 						selected.classList.remove('shake-y');
 						selected.classList.add('shake-x');
@@ -3545,7 +3544,6 @@
 				progressBar?.classList.remove('visible');
 				updateGlobalStatsDisplay();
 
-				// On cache le détail des réponses par défaut
 				detailedResults.classList.add('hidden');
 			}
 
@@ -3721,7 +3719,14 @@
 					timerLimitSlider.value = sliderPos;
 					timerLimitValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
 				}
-				updateTimerDisplay(formatTimer(timerLimit));
+				// Initialisation de l'affichage du timer
+				if (timerLimit === 0 || !timerEnabled) {
+					updateTimerDisplay('∞');
+					showTimerButtons(false);
+				} else {
+					updateTimerDisplay(formatTimer(timerLimit));
+					showTimerButtons(true);
+				}
 
 				// Nombre de questions
 				const savedCount = parseInt(localStorage.getItem('questionCount') || '5');
@@ -3974,8 +3979,10 @@
 					localStorage.setItem('timerEnabled', String(this.checked));
 					if (!timerEnabled || timerLimit === 0) {
 						stopTimer();
-						updateTimerDisplay('00:00');
+						updateTimerDisplay('∞');
+						showTimerButtons(false);
 					} else {
+						showTimerButtons(true);
 						resetTimer();
 						if (!quizEnd.classList.contains('hidden') && !quizQuestions.classList.contains('hidden')) {
 							startTimer();
@@ -3989,15 +3996,18 @@
 					timerLimit = sliderPosToValue(pos);
 					timerLimitValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
 					localStorage.setItem('timerLimit', timerLimit);
-					updateTimerDisplay(formatTimer(timerLimit));
-					if (timerEnabled && timerLimit > 0) {
+					
+					if (timerLimit === 0) {
+						updateTimerDisplay('∞');
+						showTimerButtons(false);
+						stopTimer();
+					} else {
+						showTimerButtons(true);
+						updateTimerDisplay(formatTimer(timerLimit));
 						resetTimer();
 						if (!quizEnd.classList.contains('hidden') && !quizQuestions.classList.contains('hidden')) {
 							startTimer();
 						}
-					} else {
-						stopTimer();
-						updateTimerDisplay('00:00');
 					}
 					playSound('click');
 				});
