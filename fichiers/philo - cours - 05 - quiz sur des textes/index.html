@@ -162,13 +162,26 @@
 			100% { transform: rotateY(360deg); }
 		}
 
+		/* ===== ROTATION DES SVG ===== */
+		@keyframes rotate {
+			from { transform: rotate(0deg); }
+			to { transform: rotate(360deg); }
+		}
+
 		.btn-reload:hover svg {
 			animation: rotate 1s linear;
 		}
 
-		@keyframes rotate {
-			from { transform: rotate(0deg); }
-			to { transform: rotate(360deg); }
+		.menu-item:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		.menu-close:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		.submenu-close:hover svg {
+			animation: rotate 1s linear;
 		}
 
 		.menu-icon {
@@ -469,11 +482,6 @@
 			stroke: currentColor;
 		}
 
-		.menu-close:hover svg,
-		.submenu-close:hover svg {
-			animation: rotate 1s linear;
-		}
-
 		.menu-item {
 			display: flex;
 			align-items: center;
@@ -596,35 +604,57 @@
 			min-height: 24px;
 		}
 
-		/* ===== MODIFICATIONS : suppression du gap, icônes uniformisées ===== */
+		/* ===== TOGGLES - alignement horizontal ===== */
 		.toggle-label {
 			color: var(--font-color);
-			font-size: 1rem;
+			font-size: 0.9rem;
 			text-align: left;
 			display: flex;
 			align-items: center;
+			gap: 0.75rem;
 			cursor: pointer;
 			flex: 1;
 		}
 
 		.toggle-label i {
 			width: 24px;
-			display: inline-flex;
+			min-width: 24px;
+			display: flex;
 			align-items: center;
 			justify-content: center;
 			flex-shrink: 0;
 			font-size: 1rem;
-			margin-right: 0.5rem;
+			text-align: center;
+			line-height: 1;
 		}
 
-		.questions-slider-label i {
+		/* ===== SLIDERS - alignement horizontal ===== */
+		.questions-slider-label {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 0.9rem;
+		}
+
+		.questions-slider-label .toggle-label {
+			font-size: 0.9rem;
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			cursor: pointer;
+			flex: 1;
+		}
+
+		.questions-slider-label .toggle-label i {
 			width: 24px;
-			display: inline-flex;
+			min-width: 24px;
+			display: flex;
 			align-items: center;
 			justify-content: center;
 			flex-shrink: 0;
 			font-size: 1rem;
-			margin-right: 0.5rem;
+			text-align: center;
+			line-height: 1;
 		}
 
 		.theme-switch {
@@ -686,13 +716,6 @@
 			margin-top: 0.75rem;
 			padding-top: 0.75rem;
 			margin-bottom: 0.75rem;
-		}
-
-		.questions-slider-label {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			font-size: 0.9rem;
 		}
 
 		.questions-slider-value {
@@ -763,6 +786,14 @@
 		.slider-graduations span {
 			text-align: center;
 			flex: 1;
+		}
+
+		.slider-graduations .infinity-symbol {
+			font-size: 1rem;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			line-height: 1;
 		}
 
 		.quiz-selector-container {
@@ -2251,7 +2282,7 @@
 							<div class="container--quiz-results">
 								<div class="bento-score">
 									<p style="margin:0; font-size:14px;">
-										<span>votre score : </span><span class="quiz-end__score" id="finalScoreDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
+										<span>score : </span><span class="quiz-end__score" id="finalScoreDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
 										<span id="scoreLabel" style="font-size:0.9rem;">bonne réponse</span>
 										<span style="font-size:0.9rem;">sur</span>
 										<span class="quiz-end__total" id="finalTotalDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
@@ -2506,7 +2537,7 @@
 				<span class="toggle-label"><i class="fas fa-volume-up"></i> sons</span>
 				<label class="theme-switch"><input type="checkbox" id="soundToggle"><span class="slider"></span></label>
 			</div>
-			<!-- MINUTEUR : switch supprimé, icône changée de fa-clock à fa-hourglass-half -->
+			<!-- MINUTEUR -->
 			<div class="questions-slider-container" style="margin-top:0;">
 				<div class="questions-slider-label">
 					<span class="toggle-label"><i class="fas fa-hourglass-half"></i> minuteur</span>
@@ -2514,7 +2545,7 @@
 				</div>
 				<input type="range" id="timerLimitSlider" class="questions-slider" min="1" max="6" step="1" value="1">
 				<div class="slider-graduations">
-					<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span>∞</span>
+					<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span class="infinity-symbol">∞</span>
 				</div>
 			</div>
 			<!-- Nombre de questions -->
@@ -2571,1461 +2602,1461 @@
 	</div>
 
 	<script>
-		(function() {
-			'use strict';
+			(function() {
+				'use strict';
 
-			const APP_TITRE = document.querySelector('title')?.textContent || "quiz φ";
-			const APP_SOUS_TITRE = "tester ses connaissances";
+				const APP_TITRE = document.querySelector('title')?.textContent || "quiz φ";
+				const APP_SOUS_TITRE = "tester ses connaissances";
 
-			document.querySelectorAll('#appTitle, #mobileTitle, #quizTitle').forEach(el => {
-				if (el) el.textContent = APP_TITRE;
-			});
-			document.querySelectorAll('#appSubtitle, #mobileSubtitle').forEach(el => {
-				if (el) el.textContent = APP_SOUS_TITRE;
-			});
+				document.querySelectorAll('#appTitle, #mobileTitle, #quizTitle').forEach(el => {
+					if (el) el.textContent = APP_TITRE;
+				});
+				document.querySelectorAll('#appSubtitle, #mobileSubtitle').forEach(el => {
+					if (el) el.textContent = APP_SOUS_TITRE;
+				});
 
-			const GITHUB_REPO = 'inspection-philosophie-lille/boite-a-outils';
-			const GITHUB_PATH = 'fichiers/philo - cours - 05 - quiz sur des textes/quiz';
-			const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/contents/${encodeURIComponent(GITHUB_PATH)}`;
+				const GITHUB_REPO = 'inspection-philosophie-lille/boite-a-outils';
+				const GITHUB_PATH = 'fichiers/philo - cours - 05 - quiz sur des textes/quiz';
+				const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/contents/${encodeURIComponent(GITHUB_PATH)}`;
 
-			let philosophyData = { texte: "", source: "" };
-			let questions = [];
-			let currentQuestionIndex = 0;
-			let score = 0;
-			let shuffledQuestions = [];
-			let userAnswers = [];
-			let isDeferredEvaluation = localStorage.getItem('deferredEvaluation') === 'true';
-			let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
-			let totalCorrectAnswers = parseInt(localStorage.getItem('totalCorrectAnswers') || '0');
-			let totalQuestionsAnswered = parseInt(localStorage.getItem('totalQuestionsAnswered') || '0');
-			let totalQuestions = parseInt(localStorage.getItem('questionCount') || '5');
-			let animationsEnabled = localStorage.getItem('animations') !== 'false';
-			let soundEnabled = localStorage.getItem('soundEnabled') === 'true';
-			let timerEnabled = localStorage.getItem('timerEnabled') !== 'false';
-			let timerLimit = parseInt(localStorage.getItem('timerLimit') || '60');
-			let timerInterval = null;
-			let timeLeft = timerLimit;
-			let timerExpired = false;
-			let timerStoppedManually = false;
-			let questionTimes = [];
-			let stats = JSON.parse(localStorage.getItem('quizStats') || '{}');
-			let loadedQuizzes = [];
-			let currentQuizIndex = -1;
-			let currentSequenceInfo = null;
+				let philosophyData = { texte: "", source: "" };
+				let questions = [];
+				let currentQuestionIndex = 0;
+				let score = 0;
+				let shuffledQuestions = [];
+				let userAnswers = [];
+				let isDeferredEvaluation = localStorage.getItem('deferredEvaluation') === 'true';
+				let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
+				let totalCorrectAnswers = parseInt(localStorage.getItem('totalCorrectAnswers') || '0');
+				let totalQuestionsAnswered = parseInt(localStorage.getItem('totalQuestionsAnswered') || '0');
+				let totalQuestions = parseInt(localStorage.getItem('questionCount') || '5');
+				let animationsEnabled = localStorage.getItem('animations') !== 'false';
+				let soundEnabled = localStorage.getItem('soundEnabled') === 'true';
+				let timerEnabled = localStorage.getItem('timerEnabled') !== 'false';
+				let timerLimit = parseInt(localStorage.getItem('timerLimit') || '60');
+				let timerInterval = null;
+				let timeLeft = timerLimit;
+				let timerExpired = false;
+				let timerStoppedManually = false;
+				let questionTimes = [];
+				let stats = JSON.parse(localStorage.getItem('quizStats') || '{}');
+				let loadedQuizzes = [];
+				let currentQuizIndex = -1;
+				let currentSequenceInfo = null;
 
-			const quizStart = document.getElementById('quizStart');
-			const quizQuestions = document.getElementById('quizQuestions');
-			const quizEnd = document.getElementById('quizEnd');
-			const questionsContainer = document.getElementById('questionsContainer');
-			const githubFileSelect = document.getElementById('githubFileSelect');
-			const fileStatus = document.getElementById('fileStatus');
-			const questionCountSlider = document.getElementById('questionCountSlider');
-			const questionCountDisplay = document.getElementById('questionCountDisplay');
-			const currentQuestionSpan = document.getElementById('currentQuestion');
-			const totalQuestionsSpan = document.getElementById('totalQuestions');
-			const progressBar = document.getElementById('progressBar');
-			const timerValueDesktop = document.getElementById('timerValueDesktop');
-			const timerValueMobile = document.getElementById('timerValueMobile');
-			const timerBtnDesktop = document.getElementById('timerBtnDesktop');
-			const timerBtnMobile = document.getElementById('timerBtnMobile');
-			const timerToggle = document.getElementById('timerToggle');
-			const timerLimitSlider = document.getElementById('timerLimitSlider');
-			const timerLimitValue = document.getElementById('timerLimitValue');
-			const finalScoreDisplay = document.getElementById('finalScoreDisplay');
-			const finalTotalDisplay = document.getElementById('finalTotalDisplay');
-			const scoreLabel = document.getElementById('scoreLabel');
-			const correctAnswers = document.getElementById('correctAnswers');
-			const incorrectAnswers = document.getElementById('incorrectAnswers');
-			const percentageScore = document.getElementById('percentageScore');
-			const avgTimeDisplay = document.getElementById('avgTimeDisplay');
-			const totalAttempts = document.getElementById('totalAttempts');
-			const bestScore = document.getElementById('bestScore');
-			const avgScore = document.getElementById('avgScore');
-			const totalCorrect = document.getElementById('totalCorrect');
-			const summaryMessage = document.getElementById('summaryMessage');
-			const questionsReview = document.getElementById('questionsReview');
-			const detailedResults = document.getElementById('detailedResults');
-			const fileInputSubmenu = document.getElementById('fileInputSubmenu');
-			const fileLoadBtnSubmenu = document.getElementById('fileLoadBtnSubmenu');
-			const quizSelectorSubmenu = document.getElementById('quizSelectorSubmenu');
-			const selectorContainerSubmenu = document.getElementById('selectorContainerSubmenu');
-			const loadContainerSubmenu = document.getElementById('loadContainerSubmenu');
-			const localResetBtn = document.getElementById('localResetBtn');
-			const appSubtitle = document.getElementById('appSubtitle');
-			const mobileSubtitle = document.getElementById('mobileSubtitle');
+				const quizStart = document.getElementById('quizStart');
+				const quizQuestions = document.getElementById('quizQuestions');
+				const quizEnd = document.getElementById('quizEnd');
+				const questionsContainer = document.getElementById('questionsContainer');
+				const githubFileSelect = document.getElementById('githubFileSelect');
+				const fileStatus = document.getElementById('fileStatus');
+				const questionCountSlider = document.getElementById('questionCountSlider');
+				const questionCountDisplay = document.getElementById('questionCountDisplay');
+				const currentQuestionSpan = document.getElementById('currentQuestion');
+				const totalQuestionsSpan = document.getElementById('totalQuestions');
+				const progressBar = document.getElementById('progressBar');
+				const timerValueDesktop = document.getElementById('timerValueDesktop');
+				const timerValueMobile = document.getElementById('timerValueMobile');
+				const timerBtnDesktop = document.getElementById('timerBtnDesktop');
+				const timerBtnMobile = document.getElementById('timerBtnMobile');
+				const timerToggle = document.getElementById('timerToggle');
+				const timerLimitSlider = document.getElementById('timerLimitSlider');
+				const timerLimitValue = document.getElementById('timerLimitValue');
+				const finalScoreDisplay = document.getElementById('finalScoreDisplay');
+				const finalTotalDisplay = document.getElementById('finalTotalDisplay');
+				const scoreLabel = document.getElementById('scoreLabel');
+				const correctAnswers = document.getElementById('correctAnswers');
+				const incorrectAnswers = document.getElementById('incorrectAnswers');
+				const percentageScore = document.getElementById('percentageScore');
+				const avgTimeDisplay = document.getElementById('avgTimeDisplay');
+				const totalAttempts = document.getElementById('totalAttempts');
+				const bestScore = document.getElementById('bestScore');
+				const avgScore = document.getElementById('avgScore');
+				const totalCorrect = document.getElementById('totalCorrect');
+				const summaryMessage = document.getElementById('summaryMessage');
+				const questionsReview = document.getElementById('questionsReview');
+				const detailedResults = document.getElementById('detailedResults');
+				const fileInputSubmenu = document.getElementById('fileInputSubmenu');
+				const fileLoadBtnSubmenu = document.getElementById('fileLoadBtnSubmenu');
+				const quizSelectorSubmenu = document.getElementById('quizSelectorSubmenu');
+				const selectorContainerSubmenu = document.getElementById('selectorContainerSubmenu');
+				const loadContainerSubmenu = document.getElementById('loadContainerSubmenu');
+				const localResetBtn = document.getElementById('localResetBtn');
+				const appSubtitle = document.getElementById('appSubtitle');
+				const mobileSubtitle = document.getElementById('mobileSubtitle');
 
-			let toasterTimeout = null;
+				let toasterTimeout = null;
 
-			function showToaster(message, type = 'error', duration = 3000) {
-				const toaster = document.getElementById('toaster');
-				if (!toaster) return;
-				toaster.innerHTML = message;
-				toaster.className = 'toaster';
-				if (type === 'correct') toaster.classList.add('correct');
-				else if (type === 'info') toaster.classList.add('info');
-				else if (type === 'warning') toaster.classList.add('warning');
-				toaster.classList.add('show');
-				clearTimeout(toasterTimeout);
-				if (duration > 0) {
-					toasterTimeout = setTimeout(() => {
-						toaster.classList.remove('show');
-					}, duration);
+				function showToaster(message, type = 'error', duration = 3000) {
+					const toaster = document.getElementById('toaster');
+					if (!toaster) return;
+					toaster.innerHTML = message;
+					toaster.className = 'toaster';
+					if (type === 'correct') toaster.classList.add('correct');
+					else if (type === 'info') toaster.classList.add('info');
+					else if (type === 'warning') toaster.classList.add('warning');
+					toaster.classList.add('show');
+					clearTimeout(toasterTimeout);
+					if (duration > 0) {
+						toasterTimeout = setTimeout(() => {
+							toaster.classList.remove('show');
+						}, duration);
+					}
 				}
-			}
 
-			function shuffleArray(arr) {
-				for (let i = arr.length - 1; i > 0; i--) {
-					const j = Math.floor(Math.random() * (i + 1));
-					[arr[i], arr[j]] = [arr[j], arr[i]];
+				function shuffleArray(arr) {
+					for (let i = arr.length - 1; i > 0; i--) {
+						const j = Math.floor(Math.random() * (i + 1));
+						[arr[i], arr[j]] = [arr[j], arr[i]];
+					}
+					return arr;
 				}
-				return arr;
-			}
 
-			function capitalizeFirstLetter(str) {
-				if (!str) return str;
-				return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-			}
-
-			function getAuthorFromSource(source) {
-				if (!source) return '';
-				const comma = source.indexOf(',');
-				return comma === -1 ? source.trim() : source.substring(0, comma).trim();
-			}
-
-			function updateSubtitleWithAuthor(author) {
-				if (author && author.trim() !== '') {
-					const subtitleText = "tester ses connaissances sur un texte de " + capitalizeFirstLetter(author);
-					if (appSubtitle) appSubtitle.textContent = subtitleText;
-					if (mobileSubtitle) mobileSubtitle.textContent = subtitleText;
-				} else {
-					const defaultSub = "tester ses connaissances";
-					if (appSubtitle) appSubtitle.textContent = defaultSub;
-					if (mobileSubtitle) mobileSubtitle.textContent = defaultSub;
+				function capitalizeFirstLetter(str) {
+					if (!str) return str;
+					return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 				}
-			}
 
-			function extractSequenceInfo(fileName) {
-				if (!fileName) return { number: "", title: "", cleanTitle: "", partTitle: "", partShort: "", sequenceIndex: "", sequenceIndexLong: "" };
-				let name = fileName.replace('.js', '');
-				let cleanName = name;
-				const firstDashIndex = name.search(/[-–—]/);
-				if (firstDashIndex !== -1) {
-					cleanName = name.substring(firstDashIndex + 1).trim();
+				function getAuthorFromSource(source) {
+					if (!source) return '';
+					const comma = source.indexOf(',');
+					return comma === -1 ? source.trim() : source.substring(0, comma).trim();
 				}
-				const fullTitle = cleanName;
-				let cleanTitle = fullTitle;
-				const titleMatch = fullTitle.match(/^\d+\.\d+\s*[-–—]\s*(.+)$/);
-				if (titleMatch) {
-					cleanTitle = titleMatch[1].trim();
-				}
-				const numMatch = name.match(/(\d+)\.(\d+)/);
-				if (numMatch) {
-					const partNum = parseInt(numMatch[1]);
-					const seqNum = parseInt(numMatch[2]);
-					let partTitle = "";
-					let partShort = `PART. ${partNum}`;
-					if (partNum === 1) {
-						partTitle = `PARTIE ${partNum} : LES POUVOIRS DE LA PAROLE`;
-					} else if (partNum === 2) {
-						partTitle = `PARTIE ${partNum} : LES REPRÉSENTATIONS DU MONDE`;
+
+				function updateSubtitleWithAuthor(author) {
+					if (author && author.trim() !== '') {
+						const subtitleText = "tester ses connaissances sur un texte de " + capitalizeFirstLetter(author);
+						if (appSubtitle) appSubtitle.textContent = subtitleText;
+						if (mobileSubtitle) mobileSubtitle.textContent = subtitleText;
 					} else {
-						partTitle = `PARTIE ${partNum}`;
+						const defaultSub = "tester ses connaissances";
+						if (appSubtitle) appSubtitle.textContent = defaultSub;
+						if (mobileSubtitle) mobileSubtitle.textContent = defaultSub;
+					}
+				}
+
+				function extractSequenceInfo(fileName) {
+					if (!fileName) return { number: "", title: "", cleanTitle: "", partTitle: "", partShort: "", sequenceIndex: "", sequenceIndexLong: "" };
+					let name = fileName.replace('.js', '');
+					let cleanName = name;
+					const firstDashIndex = name.search(/[-–—]/);
+					if (firstDashIndex !== -1) {
+						cleanName = name.substring(firstDashIndex + 1).trim();
+					}
+					const fullTitle = cleanName;
+					let cleanTitle = fullTitle;
+					const titleMatch = fullTitle.match(/^\d+\.\d+\s*[-–—]\s*(.+)$/);
+					if (titleMatch) {
+						cleanTitle = titleMatch[1].trim();
+					}
+					const numMatch = name.match(/(\d+)\.(\d+)/);
+					if (numMatch) {
+						const partNum = parseInt(numMatch[1]);
+						const seqNum = parseInt(numMatch[2]);
+						let partTitle = "";
+						let partShort = `PART. ${partNum}`;
+						if (partNum === 1) {
+							partTitle = `PARTIE ${partNum} : LES POUVOIRS DE LA PAROLE`;
+						} else if (partNum === 2) {
+							partTitle = `PARTIE ${partNum} : LES REPRÉSENTATIONS DU MONDE`;
+						} else {
+							partTitle = `PARTIE ${partNum}`;
+						}
+						return {
+							number: `${partNum}.${seqNum}`,
+							title: fullTitle,
+							cleanTitle: cleanTitle,
+							partTitle: partTitle,
+							partShort: partShort,
+							sequenceIndex: `SÉQ. ${seqNum}`,
+							sequenceIndexLong: `SÉQUENCE ${seqNum}`
+						};
 					}
 					return {
-						number: `${partNum}.${seqNum}`,
+						number: "",
 						title: fullTitle,
 						cleanTitle: cleanTitle,
-						partTitle: partTitle,
-						partShort: partShort,
-						sequenceIndex: `SÉQ. ${seqNum}`,
-						sequenceIndexLong: `SÉQUENCE ${seqNum}`
+						partTitle: "",
+						partShort: "",
+						sequenceIndex: "",
+						sequenceIndexLong: ""
 					};
 				}
-				return {
-					number: "",
-					title: fullTitle,
-					cleanTitle: cleanTitle,
-					partTitle: "",
-					partShort: "",
-					sequenceIndex: "",
-					sequenceIndexLong: ""
-				};
-			}
 
-			function getFullDisplayName(fileName) {
-				if (!fileName) return "";
-				return fileName.replace('.js', '');
-			}
-
-			function protectSpacesAroundTags(text) {
-				if (!text) return text;
-				return text
-					.replace(/(\s+)<(\/?\w+)([^>]*)>/g, (m, spaces, tag, attrs) => {
-						return spaces.replace(/ /g, '&nbsp;') + `<${tag}${attrs}>`;
-					})
-					.replace(/<\/(\w+)>(\s+)/g, (m, tag, spaces) => {
-						return `</${tag}>` + spaces.replace(/ /g, '&nbsp;');
-					});
-			}
-
-			function protectSpacesInAnswers(answers) {
-				return answers.map(a => protectSpacesAroundTags(a));
-			}
-
-			function formatPhilosophyText(text) {
-				if (!text) return '';
-				let formatted = text.replace(/\[(\d+)\]/g, '<span class="bracket-number">[$1]</span>');
-				return formatted.split('\n').filter(p => p.trim()).map(p =>
-					`<p class="philosophy-paragraph">${p.trim()}</p>`
-				).join('');
-			}
-
-			function extractWorkTitle(source) {
-				if (!source) return null;
-				const firstComma = source.indexOf(',');
-				if (firstComma === -1) return null;
-				let endIndex = source.indexOf(',', firstComma + 1);
-				if (endIndex === -1) {
-					endIndex = source.indexOf('.', firstComma + 1);
+				function getFullDisplayName(fileName) {
+					if (!fileName) return "";
+					return fileName.replace('.js', '');
 				}
-				if (endIndex === -1) {
-					endIndex = source.length;
+
+				function protectSpacesAroundTags(text) {
+					if (!text) return text;
+					return text
+						.replace(/(\s+)<(\/?\w+)([^>]*)>/g, (m, spaces, tag, attrs) => {
+							return spaces.replace(/ /g, '&nbsp;') + `<${tag}${attrs}>`;
+						})
+						.replace(/<\/(\w+)>(\s+)/g, (m, tag, spaces) => {
+							return `</${tag}>` + spaces.replace(/ /g, '&nbsp;');
+						});
 				}
-				let title = source.substring(firstComma + 1, endIndex).trim();
-				title = title.replace(/^["']|["']$/g, '').trim();
-				if (!title) return null;
-				return {
-					title: title,
-					before: source.substring(0, firstComma + 1) + ' ',
-					after: source.substring(endIndex)
-				};
-			}
 
-			function launchConfetti() {
-				if (!animationsEnabled) return;
-				const container = document.createElement('div');
-				container.className = 'confetti-container';
-				document.body.appendChild(container);
-				const colors = ['#ff0000', '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff', '#ff9f43', '#00d2d3', '#f368e0', '#ff9f43'];
-				for (let i = 0; i < 160; i++) {
-					const piece = document.createElement('div');
-					piece.className = 'confetti-piece';
-					piece.style.left = Math.random() * 100 + '%';
-					piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-					piece.style.width = (Math.random() * 16 + 4) + 'px';
-					piece.style.height = (Math.random() * 8 + 4) + 'px';
-					piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-					piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
-					piece.style.animationDelay = (Math.random() * 1.5) + 's';
-					container.appendChild(piece);
+				function protectSpacesInAnswers(answers) {
+					return answers.map(a => protectSpacesAroundTags(a));
 				}
-				setTimeout(() => container.remove(), 4000);
-			}
 
-			function playSound(type) {
-				if (!soundEnabled) return;
-				try {
-					const soundMap = {
-						'correct': '../../src/sounds/reponse-bonne.mp3',
-						'incorrect': '../../src/sounds/reponse-mauvaise.mp3',
-						'score_good': '../../src/sounds/score-bon.mp3',
-						'score_bad': '../../src/sounds/score-mauvais.mp3',
-						'click': '../../src/sounds/bruit-clavier.mp3'
-					};
-					const soundFile = soundMap[type];
-					if (!soundFile) return;
-					const audio = new Audio(soundFile);
-					audio.volume = type === 'click' ? 0.3 : 0.8;
-					audio.preload = 'auto';
-					audio.play().catch(() => {});
-				} catch (e) {}
-			}
-
-			function preloadSounds() {
-				if (!soundEnabled) return;
-				['reponse-bonne.mp3', 'reponse-mauvaise.mp3', 'score-bon.mp3', 'score-mauvais.mp3', 'bruit-clavier.mp3']
-					.forEach(file => {
-						const audio = new Audio();
-						audio.preload = 'auto';
-						audio.src = '../../src/sounds/' + file;
-						audio.load();
-					});
-			}
-
-			function formatTimer(seconds) {
-				if (seconds <= 0) return '00:00';
-				const mins = Math.floor(seconds / 60);
-				const secs = seconds % 60;
-				return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
-			}
-
-			function sliderPosToValue(pos) {
-				if (pos === 6) return 0;
-				return parseInt(pos) * 60;
-			}
-
-			function valueToSliderPos(val) {
-				if (val === 0) return 6;
-				const minutes = Math.round(val / 60);
-				if (minutes >= 1 && minutes <= 5) return minutes;
-				return 1;
-			}
-
-			function updateTimerDisplay(value) {
-				if (timerValueDesktop) timerValueDesktop.textContent = value;
-				if (timerValueMobile) timerValueMobile.textContent = value;
-			}
-
-			function showTimerButtons(show) {
-				const btns = document.querySelectorAll('.timer-btn');
-				btns.forEach(btn => {
-					btn.style.display = show ? '' : 'none';
-				});
-			}
-
-			function startTimer() {
-				timerExpired = false;
-				timerStoppedManually = false;
-				if (!timerEnabled || timerLimit === 0) {
-					updateTimerDisplay('∞');
-					showTimerButtons(false);
-					return;
+				function formatPhilosophyText(text) {
+					if (!text) return '';
+					let formatted = text.replace(/\[(\d+)\]/g, '<span class="bracket-number">[$1]</span>');
+					return formatted.split('\n').filter(p => p.trim()).map(p =>
+						`<p class="philosophy-paragraph">${p.trim()}</p>`
+					).join('');
 				}
-				showTimerButtons(true);
-				timeLeft = timerLimit;
-				updateTimerDisplay(formatTimer(timeLeft));
 
-				if (timerInterval) clearInterval(timerInterval);
-
-				timerInterval = setInterval(() => {
-					if (timerStoppedManually) return;
-					
-					timeLeft--;
-					updateTimerDisplay(formatTimer(timeLeft));
-					
-					const timerBtns = [timerBtnDesktop, timerBtnMobile].filter(b => b);
-					timerBtns.forEach(btn => {
-						btn.classList.remove('warning', 'danger');
-						if (timeLeft <= 30 && timeLeft > 0) btn.classList.add('warning');
-						if (timeLeft <= 15 && timeLeft > 0) btn.classList.add('danger');
-					});
-
-					if (timeLeft <= 0) {
-						clearInterval(timerInterval);
-						timerInterval = null;
-						timerExpired = true;
-						if (!quizEnd.classList.contains('hidden') || quizQuestions.classList.contains('hidden')) {
-						} else {
-							if (questionsContainer) {
-								questionsContainer.innerHTML = '';
-							}
-							document.getElementById('philosophyText')?.classList.add('hidden');
-							progressBar?.classList.remove('visible');
-							forceEndQuiz();
-						}
-						showToaster('⏰ temps écoulé ! voici les résultats :', 'info', 3000);
+				function extractWorkTitle(source) {
+					if (!source) return null;
+					const firstComma = source.indexOf(',');
+					if (firstComma === -1) return null;
+					let endIndex = source.indexOf(',', firstComma + 1);
+					if (endIndex === -1) {
+						endIndex = source.indexOf('.', firstComma + 1);
 					}
-				}, 1000);
-			}
-
-			function stopTimer() {
-				if (timerInterval) {
-					clearInterval(timerInterval);
-					timerInterval = null;
+					if (endIndex === -1) {
+						endIndex = source.length;
+					}
+					let title = source.substring(firstComma + 1, endIndex).trim();
+					title = title.replace(/^["']|["']$/g, '').trim();
+					if (!title) return null;
+					return {
+						title: title,
+						before: source.substring(0, firstComma + 1) + ' ',
+						after: source.substring(endIndex)
+					};
 				}
-				[timerBtnDesktop, timerBtnMobile].forEach(btn => {
-					if (btn) btn.classList.remove('warning', 'danger');
-				});
-			}
 
-			function resetTimer() {
-				stopTimer();
-				timerExpired = false;
-				timerStoppedManually = false;
-				if (timerEnabled && timerLimit > 0) {
+				function launchConfetti() {
+					if (!animationsEnabled) return;
+					const container = document.createElement('div');
+					container.className = 'confetti-container';
+					document.body.appendChild(container);
+					const colors = ['#ff0000', '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff', '#ff9f43', '#00d2d3', '#f368e0', '#ff9f43'];
+					for (let i = 0; i < 160; i++) {
+						const piece = document.createElement('div');
+						piece.className = 'confetti-piece';
+						piece.style.left = Math.random() * 100 + '%';
+						piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+						piece.style.width = (Math.random() * 16 + 4) + 'px';
+						piece.style.height = (Math.random() * 8 + 4) + 'px';
+						piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+						piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+						piece.style.animationDelay = (Math.random() * 1.5) + 's';
+						container.appendChild(piece);
+					}
+					setTimeout(() => container.remove(), 4000);
+				}
+
+				function playSound(type) {
+					if (!soundEnabled) return;
+					try {
+						const soundMap = {
+							'correct': '../../src/sounds/reponse-bonne.mp3',
+							'incorrect': '../../src/sounds/reponse-mauvaise.mp3',
+							'score_good': '../../src/sounds/score-bon.mp3',
+							'score_bad': '../../src/sounds/score-mauvais.mp3',
+							'click': '../../src/sounds/bruit-clavier.mp3'
+						};
+						const soundFile = soundMap[type];
+						if (!soundFile) return;
+						const audio = new Audio(soundFile);
+						audio.volume = type === 'click' ? 0.3 : 0.8;
+						audio.preload = 'auto';
+						audio.play().catch(() => {});
+					} catch (e) {}
+				}
+
+				function preloadSounds() {
+					if (!soundEnabled) return;
+					['reponse-bonne.mp3', 'reponse-mauvaise.mp3', 'score-bon.mp3', 'score-mauvais.mp3', 'bruit-clavier.mp3']
+						.forEach(file => {
+							const audio = new Audio();
+							audio.preload = 'auto';
+							audio.src = '../../src/sounds/' + file;
+							audio.load();
+						});
+				}
+
+				function formatTimer(seconds) {
+					if (seconds <= 0) return '00:00';
+					const mins = Math.floor(seconds / 60);
+					const secs = seconds % 60;
+					return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+				}
+
+				function sliderPosToValue(pos) {
+					if (pos === 6) return 0;
+					return parseInt(pos) * 60;
+				}
+
+				function valueToSliderPos(val) {
+					if (val === 0) return 6;
+					const minutes = Math.round(val / 60);
+					if (minutes >= 1 && minutes <= 5) return minutes;
+					return 1;
+				}
+
+				function updateTimerDisplay(value) {
+					if (timerValueDesktop) timerValueDesktop.textContent = value;
+					if (timerValueMobile) timerValueMobile.textContent = value;
+				}
+
+				function showTimerButtons(show) {
+					const btns = document.querySelectorAll('.timer-btn');
+					btns.forEach(btn => {
+						btn.style.display = show ? '' : 'none';
+					});
+				}
+
+				function startTimer() {
+					timerExpired = false;
+					timerStoppedManually = false;
+					if (!timerEnabled || timerLimit === 0) {
+						updateTimerDisplay('∞');
+						showTimerButtons(false);
+						return;
+					}
+					showTimerButtons(true);
 					timeLeft = timerLimit;
 					updateTimerDisplay(formatTimer(timeLeft));
-					showTimerButtons(true);
-				} else {
-					updateTimerDisplay('∞');
-					showTimerButtons(false);
+
+					if (timerInterval) clearInterval(timerInterval);
+
+					timerInterval = setInterval(() => {
+						if (timerStoppedManually) return;
+						
+						timeLeft--;
+						updateTimerDisplay(formatTimer(timeLeft));
+						
+						const timerBtns = [timerBtnDesktop, timerBtnMobile].filter(b => b);
+						timerBtns.forEach(btn => {
+							btn.classList.remove('warning', 'danger');
+							if (timeLeft <= 30 && timeLeft > 0) btn.classList.add('warning');
+							if (timeLeft <= 15 && timeLeft > 0) btn.classList.add('danger');
+						});
+
+						if (timeLeft <= 0) {
+							clearInterval(timerInterval);
+							timerInterval = null;
+							timerExpired = true;
+							if (!quizEnd.classList.contains('hidden') || quizQuestions.classList.contains('hidden')) {
+							} else {
+								if (questionsContainer) {
+									questionsContainer.innerHTML = '';
+								}
+								document.getElementById('philosophyText')?.classList.add('hidden');
+								progressBar?.classList.remove('visible');
+								forceEndQuiz();
+							}
+							showToaster('⏰ temps écoulé ! voici les résultats :', 'info', 3000);
+						}
+					}, 1000);
 				}
-			}
 
-			function displayPhilosophyText(sequenceInfo) {
-				const textContent = document.getElementById('philosophyTextContent');
-				const sourceContent = document.getElementById('philosophyTextSource');
-				const section = document.getElementById('philosophyText');
-				const titleEl = document.getElementById('philosophyTextTitle');
-
-				if (!philosophyData.texte || philosophyData.texte.trim() === '') {
-					section?.classList.add('hidden');
-					progressBar?.classList.remove('visible');
-					updateSubtitleWithAuthor('');
-					return;
+				function stopTimer() {
+					if (timerInterval) {
+						clearInterval(timerInterval);
+						timerInterval = null;
+					}
+					[timerBtnDesktop, timerBtnMobile].forEach(btn => {
+						if (btn) btn.classList.remove('warning', 'danger');
+					});
 				}
-				section?.classList.remove('hidden');
-				progressBar?.classList.add('visible');
-				textContent.innerHTML = formatPhilosophyText(philosophyData.texte);
 
-				let textNumber = '';
-				if (githubFileSelect && githubFileSelect.selectedIndex > 0) {
-					const selectedText = githubFileSelect.options[githubFileSelect.selectedIndex].text;
-					const match = selectedText.match(/\d+/);
-					if (match) {
-						const num = parseInt(match[0]);
-						if (num < 10) {
-							textNumber = '0' + num;
+				function resetTimer() {
+					stopTimer();
+					timerExpired = false;
+					timerStoppedManually = false;
+					if (timerEnabled && timerLimit > 0) {
+						timeLeft = timerLimit;
+						updateTimerDisplay(formatTimer(timeLeft));
+						showTimerButtons(true);
+					} else {
+						updateTimerDisplay('∞');
+						showTimerButtons(false);
+					}
+				}
+
+				function displayPhilosophyText(sequenceInfo) {
+					const textContent = document.getElementById('philosophyTextContent');
+					const sourceContent = document.getElementById('philosophyTextSource');
+					const section = document.getElementById('philosophyText');
+					const titleEl = document.getElementById('philosophyTextTitle');
+
+					if (!philosophyData.texte || philosophyData.texte.trim() === '') {
+						section?.classList.add('hidden');
+						progressBar?.classList.remove('visible');
+						updateSubtitleWithAuthor('');
+						return;
+					}
+					section?.classList.remove('hidden');
+					progressBar?.classList.add('visible');
+					textContent.innerHTML = formatPhilosophyText(philosophyData.texte);
+
+					let textNumber = '';
+					if (githubFileSelect && githubFileSelect.selectedIndex > 0) {
+						const selectedText = githubFileSelect.options[githubFileSelect.selectedIndex].text;
+						const match = selectedText.match(/\d+/);
+						if (match) {
+							const num = parseInt(match[0]);
+							if (num < 10) {
+								textNumber = '0' + num;
+							} else {
+								textNumber = match[0];
+							}
+						}
+					}
+
+					let formattedSource = '';
+					if (philosophyData.source && philosophyData.source.trim()) {
+						const author = getAuthorFromSource(philosophyData.source);
+						const capitalizedAuthor = capitalizeFirstLetter(author);
+						const workInfo = extractWorkTitle(philosophyData.source);
+
+						if (workInfo) {
+							formattedSource = workInfo.before +
+								'<span class="work-title">' + workInfo.title + '</span>' +
+								workInfo.after;
 						} else {
-							textNumber = match[0];
+							formattedSource = philosophyData.source;
 						}
-					}
-				}
 
-				let formattedSource = '';
-				if (philosophyData.source && philosophyData.source.trim()) {
-					const author = getAuthorFromSource(philosophyData.source);
-					const capitalizedAuthor = capitalizeFirstLetter(author);
-					const workInfo = extractWorkTitle(philosophyData.source);
+						updateSubtitleWithAuthor(author);
 
-					if (workInfo) {
-						formattedSource = workInfo.before +
-							'<span class="work-title">' + workInfo.title + '</span>' +
-							workInfo.after;
+						if (textNumber) {
+							titleEl.textContent = 'TEXTE N°' + textNumber + ' DE ' + author.toUpperCase();
+						} else {
+							titleEl.textContent = 'TEXTE DE ' + author.toUpperCase();
+						}
+						sourceContent.innerHTML = formattedSource;
 					} else {
-						formattedSource = philosophyData.source;
+						if (textNumber) {
+							titleEl.textContent = 'TEXTE N°' + textNumber;
+						} else {
+							titleEl.textContent = 'TEXTE';
+						}
+						sourceContent.innerHTML = '';
+						updateSubtitleWithAuthor('');
+					}
+				}
+
+				function togglePhilosophyText() {
+					const btn = document.getElementById('toggleTextBtn');
+					const content = document.querySelector('.philosophy-text-content');
+					if (btn && content) {
+						btn.classList.toggle('collapsed');
+						content.classList.toggle('collapsed');
+					}
+				}
+
+				function updateProgressBar() {
+					const bar = document.querySelector('.progress-bar__cursor--dynamic');
+					if (bar) {
+						const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+						bar.style.width = Math.min(progress, 100) + '%';
+					}
+				}
+
+				function updateStats(notionId, correct, total) {
+					if (!stats[notionId]) {
+						stats[notionId] = { attempts: 0, totalCorrect: 0, totalQuestions: 0, bestScore: 0, scores: [] };
+					}
+					const s = stats[notionId];
+					s.attempts++;
+					s.totalCorrect += correct;
+					s.totalQuestions += total;
+					const pct = Math.round((correct / total) * 100);
+					s.scores.push(pct);
+					s.bestScore = Math.max(s.bestScore, pct);
+					if (s.scores.length > 20) s.scores.shift();
+					localStorage.setItem('quizStats', JSON.stringify(stats));
+					displayStats(notionId);
+					updateGlobalStatsDisplay();
+				}
+
+				function displayStats(notionId) {
+					const s = stats[notionId];
+					if (!s) return;
+					if (totalAttempts) {
+						totalAttempts.textContent = s.attempts;
+						const label = document.getElementById('attemptsLabel');
+						if (label) label.textContent = s.attempts <= 1 ? 'tentative' : 'tentatives';
+					}
+					if (bestScore) bestScore.textContent = s.bestScore + '%';
+					const avg = s.scores.length > 0 ? Math.round(s.scores.reduce((a, b) => a + b, 0) / s.scores.length) : 0;
+					if (avgScore) avgScore.textContent = avg + '%';
+					if (totalCorrect) {
+						totalCorrect.textContent = s.totalCorrect;
+						const label = document.getElementById('totalCorrectLabel');
+						if (label) label.textContent = s.totalCorrect <= 1 ? 'bonne réponse' : 'bonnes réponses';
+					}
+				}
+
+				function updateGlobalStatsDisplay() {
+					const pct = totalQuestionsAnswered ? Math.round((totalCorrectAnswers / totalQuestionsAnswered) * 100) : 0;
+					document.querySelectorAll('#statsCorrectCount, #statsCorrectCount2').forEach(el => el.textContent = totalCorrectAnswers);
+					document.querySelectorAll('#statsTotalCount, #statsTotalCount2').forEach(el => el.textContent = totalQuestionsAnswered);
+					document.querySelectorAll('#statsPercentage, #statsPercentage2').forEach(el => el.textContent = pct + '%');
+					document.querySelectorAll('#gamesPlayed, #gamesPlayed2').forEach(el => el.textContent = gamesPlayed);
+					const badge = document.getElementById('statsBadge');
+					if (badge) badge.textContent = pct + '%';
+				}
+
+				function resetStats() {
+					stats = {};
+					localStorage.setItem('quizStats', JSON.stringify(stats));
+					totalCorrectAnswers = 0;
+					totalQuestionsAnswered = 0;
+					gamesPlayed = 0;
+					localStorage.setItem('totalCorrectAnswers', '0');
+					localStorage.setItem('totalQuestionsAnswered', '0');
+					localStorage.setItem('gamesPlayed', '0');
+					updateGlobalStatsDisplay();
+					if (currentSequenceInfo?.cleanTitle) {
+						displayStats(currentSequenceInfo.cleanTitle);
+					}
+					showToaster('Statistiques réinitialisées !', 'info', 2500);
+				}
+
+				function loadQuizData(file) {
+					return new Promise((resolve, reject) => {
+						const reader = new FileReader();
+						reader.onload = function(event) {
+							try {
+								const code = event.target.result + '\nreturn {titre, sousTitre, philosophyData, questions};';
+								const func = new Function(code);
+								const result = func();
+								if (result.philosophyData && Array.isArray(result.questions) && result.questions.length > 0) {
+									resolve({
+										name: file.name.replace('.js', ''),
+										data: result
+									});
+								} else {
+									reject(new Error('Données incomplètes dans le fichier'));
+								}
+							} catch (err) {
+								reject(err);
+							}
+						};
+						reader.onerror = function() {
+							reject(new Error('Erreur de lecture du fichier'));
+						};
+						reader.readAsText(file);
+					});
+				}
+
+				function loadMultipleQuizzes(files) {
+					const validFiles = Array.from(files).filter(f => f.name.endsWith('.js'));
+					if (validFiles.length === 0) {
+						showToaster('Veuillez sélectionner des fichiers .js valides.', 'error', 3000);
+						return;
 					}
 
-					updateSubtitleWithAuthor(author);
-
-					if (textNumber) {
-						titleEl.textContent = 'TEXTE N°' + textNumber + ' DE ' + author.toUpperCase();
-					} else {
-						titleEl.textContent = 'TEXTE DE ' + author.toUpperCase();
-					}
-					sourceContent.innerHTML = formattedSource;
-				} else {
-					if (textNumber) {
-						titleEl.textContent = 'TEXTE N°' + textNumber;
-					} else {
-						titleEl.textContent = 'TEXTE';
-					}
-					sourceContent.innerHTML = '';
-					updateSubtitleWithAuthor('');
-				}
-			}
-
-			function togglePhilosophyText() {
-				const btn = document.getElementById('toggleTextBtn');
-				const content = document.querySelector('.philosophy-text-content');
-				if (btn && content) {
-					btn.classList.toggle('collapsed');
-					content.classList.toggle('collapsed');
-				}
-			}
-
-			function updateProgressBar() {
-				const bar = document.querySelector('.progress-bar__cursor--dynamic');
-				if (bar) {
-					const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
-					bar.style.width = Math.min(progress, 100) + '%';
-				}
-			}
-
-			function updateStats(notionId, correct, total) {
-				if (!stats[notionId]) {
-					stats[notionId] = { attempts: 0, totalCorrect: 0, totalQuestions: 0, bestScore: 0, scores: [] };
-				}
-				const s = stats[notionId];
-				s.attempts++;
-				s.totalCorrect += correct;
-				s.totalQuestions += total;
-				const pct = Math.round((correct / total) * 100);
-				s.scores.push(pct);
-				s.bestScore = Math.max(s.bestScore, pct);
-				if (s.scores.length > 20) s.scores.shift();
-				localStorage.setItem('quizStats', JSON.stringify(stats));
-				displayStats(notionId);
-				updateGlobalStatsDisplay();
-			}
-
-			function displayStats(notionId) {
-				const s = stats[notionId];
-				if (!s) return;
-				if (totalAttempts) {
-					totalAttempts.textContent = s.attempts;
-					const label = document.getElementById('attemptsLabel');
-					if (label) label.textContent = s.attempts <= 1 ? 'tentative' : 'tentatives';
-				}
-				if (bestScore) bestScore.textContent = s.bestScore + '%';
-				const avg = s.scores.length > 0 ? Math.round(s.scores.reduce((a, b) => a + b, 0) / s.scores.length) : 0;
-				if (avgScore) avgScore.textContent = avg + '%';
-				if (totalCorrect) {
-					totalCorrect.textContent = s.totalCorrect;
-					const label = document.getElementById('totalCorrectLabel');
-					if (label) label.textContent = s.totalCorrect <= 1 ? 'bonne réponse' : 'bonnes réponses';
-				}
-			}
-
-			function updateGlobalStatsDisplay() {
-				const pct = totalQuestionsAnswered ? Math.round((totalCorrectAnswers / totalQuestionsAnswered) * 100) : 0;
-				document.querySelectorAll('#statsCorrectCount, #statsCorrectCount2').forEach(el => el.textContent = totalCorrectAnswers);
-				document.querySelectorAll('#statsTotalCount, #statsTotalCount2').forEach(el => el.textContent = totalQuestionsAnswered);
-				document.querySelectorAll('#statsPercentage, #statsPercentage2').forEach(el => el.textContent = pct + '%');
-				document.querySelectorAll('#gamesPlayed, #gamesPlayed2').forEach(el => el.textContent = gamesPlayed);
-				const badge = document.getElementById('statsBadge');
-				if (badge) badge.textContent = pct + '%';
-			}
-
-			function resetStats() {
-				stats = {};
-				localStorage.setItem('quizStats', JSON.stringify(stats));
-				totalCorrectAnswers = 0;
-				totalQuestionsAnswered = 0;
-				gamesPlayed = 0;
-				localStorage.setItem('totalCorrectAnswers', '0');
-				localStorage.setItem('totalQuestionsAnswered', '0');
-				localStorage.setItem('gamesPlayed', '0');
-				updateGlobalStatsDisplay();
-				if (currentSequenceInfo?.cleanTitle) {
-					displayStats(currentSequenceInfo.cleanTitle);
-				}
-				showToaster('Statistiques réinitialisées !', 'info', 2500);
-			}
-
-			function loadQuizData(file) {
-				return new Promise((resolve, reject) => {
-					const reader = new FileReader();
-					reader.onload = function(event) {
-						try {
-							const code = event.target.result + '\nreturn {titre, sousTitre, philosophyData, questions};';
-							const func = new Function(code);
-							const result = func();
-							if (result.philosophyData && Array.isArray(result.questions) && result.questions.length > 0) {
-								resolve({
-									name: file.name.replace('.js', ''),
-									data: result
+					Promise.all(validFiles.map(f => loadQuizData(f)))
+						.then(results => {
+							loadedQuizzes = loadedQuizzes.concat(results);
+							updateSelectorSubmenu();
+							try {
+								localStorage.setItem('loadedQuizzes', JSON.stringify(loadedQuizzes));
+								loadedQuizzes.forEach((qz, index) => {
+									localStorage.setItem('quizData_' + index, JSON.stringify(qz.data));
 								});
-							} else {
-								reject(new Error('Données incomplètes dans le fichier'));
+							} catch (e) {
+								console.error('Erreur sauvegarde:', e);
 							}
-						} catch (err) {
-							reject(err);
-						}
-					};
-					reader.onerror = function() {
-						reject(new Error('Erreur de lecture du fichier'));
-					};
-					reader.readAsText(file);
-				});
-			}
-
-			function loadMultipleQuizzes(files) {
-				const validFiles = Array.from(files).filter(f => f.name.endsWith('.js'));
-				if (validFiles.length === 0) {
-					showToaster('Veuillez sélectionner des fichiers .js valides.', 'error', 3000);
-					return;
+							showToaster(`${results.length} quiz chargé(s) avec succès !`, 'correct', 2500);
+						})
+						.catch(err => {
+							console.error('Erreur de chargement:', err);
+							showToaster('Erreur lors du chargement des fichiers: ' + err.message, 'error', 3000);
+						});
 				}
 
-				Promise.all(validFiles.map(f => loadQuizData(f)))
-					.then(results => {
-						loadedQuizzes = loadedQuizzes.concat(results);
-						updateSelectorSubmenu();
-						try {
-							localStorage.setItem('loadedQuizzes', JSON.stringify(loadedQuizzes));
-							loadedQuizzes.forEach((qz, index) => {
-								localStorage.setItem('quizData_' + index, JSON.stringify(qz.data));
-							});
-						} catch (e) {
-							console.error('Erreur sauvegarde:', e);
-						}
-						showToaster(`${results.length} quiz chargé(s) avec succès !`, 'correct', 2500);
-					})
-					.catch(err => {
-						console.error('Erreur de chargement:', err);
-						showToaster('Erreur lors du chargement des fichiers: ' + err.message, 'error', 3000);
-					});
-			}
+				function updateSelectorSubmenu() {
+					if (!quizSelectorSubmenu) return;
 
-			function updateSelectorSubmenu() {
-				if (!quizSelectorSubmenu) return;
-
-				const options = '<option value="">-- sélectionner un texte --</option>' +
-					loadedQuizzes.map((qz, index) =>
-						`<option value="${index}" ${index === currentQuizIndex ? 'selected' : ''}>${getFullDisplayName(qz.name)}</option>`
-					).join('');
-				quizSelectorSubmenu.innerHTML = options;
-				if (loadedQuizzes.length > 0) {
-					selectorContainerSubmenu.style.display = 'block';
-					loadContainerSubmenu.style.display = 'none';
-				} else {
-					selectorContainerSubmenu.style.display = 'none';
-					loadContainerSubmenu.style.display = 'block';
-				}
-			}
-
-			function loadQuizByIndex(index) {
-				if (index < 0 || index >= loadedQuizzes.length) return;
-				const quiz = loadedQuizzes[index];
-				currentQuizIndex = index;
-				const data = quiz.data;
-				const fileName = quiz.name;
-				currentSequenceInfo = extractSequenceInfo(fileName + '.js');
-				philosophyData = data.philosophyData || { texte: "", source: "" };
-				questions = data.questions || [];
-
-				if (fileStatus) {
-					fileStatus.textContent = `✅ "${getFullDisplayName(quiz.name)}" chargé !`;
-				}
-
-				updateSelectorSubmenu();
-				localStorage.setItem('currentQuizIndex', index.toString());
-
-				if (questions.length > 0) {
-					setTimeout(startQuiz, 300);
-				}
-			}
-
-			async function fetchGitHubFiles() {
-				try {
-					fileStatus.textContent = 'Connexion à GitHub...';
-					const resp = await fetch(GITHUB_API_URL);
-					if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-					const files = await resp.json();
-					const jsFiles = files.filter(f => f.type === 'file' && f.name.endsWith('.js'));
-					if (!jsFiles.length) throw new Error('Aucun fichier .js trouvé');
-					
-					githubFileSelect.innerHTML = '<option value="">-- sélectionner un texte --</option>';
-					jsFiles.sort((a, b) => a.name.localeCompare(b.name));
-					jsFiles.forEach(f => {
-						const opt = document.createElement('option');
-						opt.value = f.download_url;
-						opt.textContent = getFullDisplayName(f.name);
-						githubFileSelect.appendChild(opt);
-					});
-					
-					fileStatus.textContent = `${jsFiles.length} quiz disponible${jsFiles.length > 1 ? 's' : ''}`;
-				} catch (err) {
-					fileStatus.textContent = `Erreur: ${err.message}`;
-					githubFileSelect.innerHTML = `<option value="">-- Erreur --</option><option value="error" disabled>Impossible de charger</option>`;
-				}
-			}
-
-			async function loadFromGitHub(url) {
-				try {
-					fileStatus.textContent = 'Téléchargement...';
-					const resp = await fetch(url);
-					if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-					const code = await resp.text();
-					const func = new Function(code + '\nreturn {titre, sousTitre, philosophyData, questions};');
-					const result = func();
-
-					if (result.philosophyData && Array.isArray(result.questions) && result.questions.length > 0) {
-						philosophyData = result.philosophyData;
-						questions = result.questions;
-						const fileName = url.split('/').pop();
-						currentSequenceInfo = extractSequenceInfo(fileName);
-						fileStatus.textContent = `✅ "${getFullDisplayName(fileName)}" chargé !`;
-						setTimeout(startQuiz, 600);
+					const options = '<option value="">-- sélectionner un texte --</option>' +
+						loadedQuizzes.map((qz, index) =>
+							`<option value="${index}" ${index === currentQuizIndex ? 'selected' : ''}>${getFullDisplayName(qz.name)}</option>`
+						).join('');
+					quizSelectorSubmenu.innerHTML = options;
+					if (loadedQuizzes.length > 0) {
+						selectorContainerSubmenu.style.display = 'block';
+						loadContainerSubmenu.style.display = 'none';
 					} else {
-						throw new Error('Données incomplètes');
+						selectorContainerSubmenu.style.display = 'none';
+						loadContainerSubmenu.style.display = 'block';
 					}
-				} catch (err) {
-					fileStatus.textContent = `❌ Erreur: ${err.message}`;
-				}
-			}
-
-			function startQuiz() {
-				if (questions.length < totalQuestions) {
-					showToaster(`Le quiz ne contient que ${questions.length} questions. Il en faut ${totalQuestions}.`, 'error', 3000);
-					return;
 				}
 
-				const indices = Array.from({ length: questions.length }, (_, i) => i);
-				shuffleArray(indices);
-				shuffledQuestions = indices.slice(0, totalQuestions).map(i => questions[i]);
+				function loadQuizByIndex(index) {
+					if (index < 0 || index >= loadedQuizzes.length) return;
+					const quiz = loadedQuizzes[index];
+					currentQuizIndex = index;
+					const data = quiz.data;
+					const fileName = quiz.name;
+					currentSequenceInfo = extractSequenceInfo(fileName + '.js');
+					philosophyData = data.philosophyData || { texte: "", source: "" };
+					questions = data.questions || [];
 
-				currentQuestionIndex = 0;
-				score = 0;
-				userAnswers = [];
-				questionTimes = [];
+					if (fileStatus) {
+						fileStatus.textContent = `✅ "${getFullDisplayName(quiz.name)}" chargé !`;
+					}
 
-				quizStart.classList.add('hidden');
-				quizEnd.classList.add('hidden');
-				quizQuestions.classList.remove('hidden');
-				detailedResults.classList.add('hidden');
+					updateSelectorSubmenu();
+					localStorage.setItem('currentQuizIndex', index.toString());
 
-				displayPhilosophyText(currentSequenceInfo);
-				const btn = document.getElementById('toggleTextBtn');
-				const content = document.querySelector('.philosophy-text-content');
-				if (btn) btn.classList.add('collapsed');
-				if (content) content.classList.add('collapsed');
-
-				totalQuestionsSpan.textContent = totalQuestions;
-				gamesPlayed++;
-				localStorage.setItem('gamesPlayed', gamesPlayed);
-				updateGlobalStatsDisplay();
-
-				resetTimer();
-				if (timerEnabled && timerLimit > 0) {
-					startTimer();
+					if (questions.length > 0) {
+						setTimeout(startQuiz, 300);
+					}
 				}
 
-				displayNextQuestion();
-			}
+				async function fetchGitHubFiles() {
+					try {
+						fileStatus.textContent = 'Connexion à GitHub...';
+						const resp = await fetch(GITHUB_API_URL);
+						if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+						const files = await resp.json();
+						const jsFiles = files.filter(f => f.type === 'file' && f.name.endsWith('.js'));
+						if (!jsFiles.length) throw new Error('Aucun fichier .js trouvé');
+						
+						githubFileSelect.innerHTML = '<option value="">-- sélectionner un texte --</option>';
+						jsFiles.sort((a, b) => a.name.localeCompare(b.name));
+						jsFiles.forEach(f => {
+							const opt = document.createElement('option');
+							opt.value = f.download_url;
+							opt.textContent = getFullDisplayName(f.name);
+							githubFileSelect.appendChild(opt);
+						});
+						
+						fileStatus.textContent = `${jsFiles.length} quiz disponible${jsFiles.length > 1 ? 's' : ''}`;
+					} catch (err) {
+						fileStatus.textContent = `Erreur: ${err.message}`;
+						githubFileSelect.innerHTML = `<option value="">-- Erreur --</option><option value="error" disabled>Impossible de charger</option>`;
+					}
+				}
 
-			function displayNextQuestion() {
-				if (!questionsContainer) return;
-				questionsContainer.innerHTML = '';
+				async function loadFromGitHub(url) {
+					try {
+						fileStatus.textContent = 'Téléchargement...';
+						const resp = await fetch(url);
+						if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+						const code = await resp.text();
+						const func = new Function(code + '\nreturn {titre, sousTitre, philosophyData, questions};');
+						const result = func();
 
-				if (currentQuestionIndex < totalQuestions) {
-					const q = shuffledQuestions[currentQuestionIndex];
-					const shuffledAnswers = [...q.answers];
-					shuffleArray(shuffledAnswers);
-					const protectedAnswers = protectSpacesInAnswers(shuffledAnswers);
-					const letters = ['A', 'B', 'C', 'D', 'E'];
+						if (result.philosophyData && Array.isArray(result.questions) && result.questions.length > 0) {
+							philosophyData = result.philosophyData;
+							questions = result.questions;
+							const fileName = url.split('/').pop();
+							currentSequenceInfo = extractSequenceInfo(fileName);
+							fileStatus.textContent = `✅ "${getFullDisplayName(fileName)}" chargé !`;
+							setTimeout(startQuiz, 600);
+						} else {
+							throw new Error('Données incomplètes');
+						}
+					} catch (err) {
+						fileStatus.textContent = `❌ Erreur: ${err.message}`;
+					}
+				}
 
-					const el = document.createElement('div');
-					el.className = 'container--question';
-					el.innerHTML = `
-						<fieldset>
-							<legend><p>${q.question}</p></legend>
-							<ul>${protectedAnswers.map((a, i) => `
-								<li class="quiz-answer" data-index="${i}" data-original="${shuffledAnswers[i].replace(/"/g, '&quot;')}" data-key="${letters[i].toLowerCase()}" data-correct="${q.answers[q.correct - 1] === shuffledAnswers[i]}">
-									<span class="answer-letter">${letters[i]}</span>
-									<div class="answer-text">${a}</div>
-									<div class="daltonic-icon correct-icon">
-										<svg viewBox="0 0 24 24" width="24" height="24" fill="none">
-											<polyline class="check-mark" points="4 12 9 17 20 6" stroke="var(--color-correct)" stroke-width="2"/>
-										</svg>
-									</div>
-									<div class="daltonic-icon incorrect-icon">
-										<svg viewBox="0 0 24 24" width="24" height="24" fill="none">
-											<line class="cross-mark" x1="6" y1="6" x2="18" y2="18" stroke="var(--color-incorrect)" stroke-width="2"/>
-											<line class="cross-mark" x1="18" y1="6" x2="6" y2="18" stroke="var(--color-incorrect)" stroke-width="2"/>
-										</svg>
-									</div>
-								</li>
-							`).join('')}</ul>
-						</fieldset>
-						<div class="next-button-container">
-							<button class="quiz-btn next-question-btn">${currentQuestionIndex === totalQuestions - 1 ? 'votre score' : 'question suivante'}</button>
-						</div>
-						<div class="quiz-explanation hidden">
-							<div class="quiz-explanation__label"><span></span></div>
-							<p class="quiz-explanation__detail"><strong>Explication : </strong>${q.explanation ? q.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>') : ''}</p>
-						</div>
-					`;
-					questionsContainer.appendChild(el);
+				function startQuiz() {
+					if (questions.length < totalQuestions) {
+						showToaster(`Le quiz ne contient que ${questions.length} questions. Il en faut ${totalQuestions}.`, 'error', 3000);
+						return;
+					}
 
-					const answers = el.querySelectorAll('.quiz-answer');
-					answers.forEach((ansEl, i) => {
-						ansEl.addEventListener('click', function(e) {
-							const container = this.closest('.container--question');
-							const alreadyAnswered = container.querySelector('.quiz-answer.correct, .quiz-answer.incorrect, .quiz-answer.selected');
-							if (alreadyAnswered) return;
-							
-							if (!timerStoppedManually) {
-								timerStoppedManually = true;
-								stopTimer();
+					const indices = Array.from({ length: questions.length }, (_, i) => i);
+					shuffleArray(indices);
+					shuffledQuestions = indices.slice(0, totalQuestions).map(i => questions[i]);
+
+					currentQuestionIndex = 0;
+					score = 0;
+					userAnswers = [];
+					questionTimes = [];
+
+					quizStart.classList.add('hidden');
+					quizEnd.classList.add('hidden');
+					quizQuestions.classList.remove('hidden');
+					detailedResults.classList.add('hidden');
+
+					displayPhilosophyText(currentSequenceInfo);
+					const btn = document.getElementById('toggleTextBtn');
+					const content = document.querySelector('.philosophy-text-content');
+					if (btn) btn.classList.add('collapsed');
+					if (content) content.classList.add('collapsed');
+
+					totalQuestionsSpan.textContent = totalQuestions;
+					gamesPlayed++;
+					localStorage.setItem('gamesPlayed', gamesPlayed);
+					updateGlobalStatsDisplay();
+
+					resetTimer();
+					if (timerEnabled && timerLimit > 0) {
+						startTimer();
+					}
+
+					displayNextQuestion();
+				}
+
+				function displayNextQuestion() {
+					if (!questionsContainer) return;
+					questionsContainer.innerHTML = '';
+
+					if (currentQuestionIndex < totalQuestions) {
+						const q = shuffledQuestions[currentQuestionIndex];
+						const shuffledAnswers = [...q.answers];
+						shuffleArray(shuffledAnswers);
+						const protectedAnswers = protectSpacesInAnswers(shuffledAnswers);
+						const letters = ['A', 'B', 'C', 'D', 'E'];
+
+						const el = document.createElement('div');
+						el.className = 'container--question';
+						el.innerHTML = `
+							<fieldset>
+								<legend><p>${q.question}</p></legend>
+								<ul>${protectedAnswers.map((a, i) => `
+									<li class="quiz-answer" data-index="${i}" data-original="${shuffledAnswers[i].replace(/"/g, '&quot;')}" data-key="${letters[i].toLowerCase()}" data-correct="${q.answers[q.correct - 1] === shuffledAnswers[i]}">
+										<span class="answer-letter">${letters[i]}</span>
+										<div class="answer-text">${a}</div>
+										<div class="daltonic-icon correct-icon">
+											<svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+												<polyline class="check-mark" points="4 12 9 17 20 6" stroke="var(--color-correct)" stroke-width="2"/>
+											</svg>
+										</div>
+										<div class="daltonic-icon incorrect-icon">
+											<svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+												<line class="cross-mark" x1="6" y1="6" x2="18" y2="18" stroke="var(--color-incorrect)" stroke-width="2"/>
+												<line class="cross-mark" x1="18" y1="6" x2="6" y2="18" stroke="var(--color-incorrect)" stroke-width="2"/>
+											</svg>
+										</div>
+									</li>
+								`).join('')}</ul>
+							</fieldset>
+							<div class="next-button-container">
+								<button class="quiz-btn next-question-btn">${currentQuestionIndex === totalQuestions - 1 ? 'score' : 'question suivante'}</button>
+							</div>
+							<div class="quiz-explanation hidden">
+								<div class="quiz-explanation__label"><span></span></div>
+								<p class="quiz-explanation__detail"><strong>Explication : </strong>${q.explanation ? q.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>') : ''}</p>
+							</div>
+						`;
+						questionsContainer.appendChild(el);
+
+						const answers = el.querySelectorAll('.quiz-answer');
+						answers.forEach((ansEl, i) => {
+							ansEl.addEventListener('click', function(e) {
+								const container = this.closest('.container--question');
+								const alreadyAnswered = container.querySelector('.quiz-answer.correct, .quiz-answer.incorrect, .quiz-answer.selected');
+								if (alreadyAnswered) return;
+								
+								if (!timerStoppedManually) {
+									timerStoppedManually = true;
+									stopTimer();
+								}
+								
+								if (isDeferredEvaluation) {
+									selectAnswer(this, shuffledAnswers[i]);
+								} else {
+									checkAnswer(this, shuffledAnswers[i], shuffledAnswers);
+								}
+							});
+						});
+
+						const nextBtn = el.querySelector('.next-question-btn');
+						nextBtn.onclick = () => {
+							if (!isDeferredEvaluation) {
+								if (!el.querySelector('.correct') && !el.querySelector('.incorrect')) {
+									showToaster('veuillez sélectionner une réponse', 'error', 2000);
+									return;
+								}
+							} else if (!userAnswers[currentQuestionIndex]) {
+								const q = shuffledQuestions[currentQuestionIndex];
+								userAnswers[currentQuestionIndex] = {
+									question: q.question,
+									userAnswer: null,
+									correctAnswer: '',
+									explanation: q.explanation,
+									allAnswers: shuffledAnswers
+								};
 							}
-							
-							if (isDeferredEvaluation) {
-								selectAnswer(this, shuffledAnswers[i]);
-							} else {
-								checkAnswer(this, shuffledAnswers[i], shuffledAnswers);
+							const timeSpent = timerLimit - timeLeft;
+							questionTimes.push(timeSpent);
+
+							currentQuestionIndex++;
+							resetTimer();
+							if (timerEnabled && timerLimit > 0 && currentQuestionIndex < totalQuestions) {
+								startTimer();
+							}
+							displayNextQuestion();
+						};
+
+						currentQuestionSpan.textContent = currentQuestionIndex + 1;
+						updateProgressBar();
+					} else {
+						stopTimer();
+						endQuiz();
+					}
+				}
+
+				function selectAnswer(selected, selectedText) {
+					const parent = selected.parentNode;
+					Array.from(parent.children).forEach(a => a.classList.remove('selected'));
+					selected.classList.add('selected');
+
+					const q = shuffledQuestions[currentQuestionIndex];
+					userAnswers[currentQuestionIndex] = {
+						question: q.question,
+						userAnswer: selectedText,
+						correctAnswerIndex: q.correct - 1,
+						explanation: q.explanation,
+						allAnswers: Array.from(parent.children).map(el => el.dataset.original || el.textContent)
+					};
+				}
+
+				function checkAnswer(selected, selectedText, shuffledAnswers) {
+					const parent = selected.parentNode;
+					const container = selected.closest('.container--question');
+					const label = container.querySelector('.quiz-explanation__label span');
+					totalQuestionsAnswered++;
+					localStorage.setItem('totalQuestionsAnswered', totalQuestionsAnswered);
+
+					const q = shuffledQuestions[currentQuestionIndex];
+					const correctText = q.answers[q.correct - 1] || q.answers[0];
+
+					userAnswers[currentQuestionIndex] = {
+						question: q.question,
+						userAnswer: selectedText,
+						correctAnswerIndex: q.correct - 1,
+						explanation: q.explanation,
+						allAnswers: shuffledAnswers
+					};
+
+					if (selectedText === correctText) {
+						selected.classList.add('correct');
+						score++;
+						totalCorrectAnswers++;
+						localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
+						if (label) label.innerHTML = '<img src="src/emoji-happy.gif" alt="emoji" class="emoji"> bonne réponse !';
+						if (animationsEnabled) {
+							selected.classList.remove('shake-x');
+							selected.classList.add('shake-y');
+							setTimeout(() => selected.classList.remove('shake-y'), 900);
+						}
+						playSound('correct');
+					} else {
+						selected.classList.add('incorrect');
+						if (label) label.innerHTML = '<img src="src/emoji-sad.gif" alt="emoji" class="emoji"> mauvaise réponse !';
+						if (animationsEnabled) {
+							selected.classList.remove('shake-y');
+							selected.classList.add('shake-x');
+							setTimeout(() => selected.classList.remove('shake-x'), 900);
+						}
+						playSound('incorrect');
+
+						Array.from(parent.children).forEach(a => {
+							if ((a.dataset.original || a.textContent) === correctText) {
+								a.classList.add('correct');
 							}
 						});
-					});
-
-					const nextBtn = el.querySelector('.next-question-btn');
-					nextBtn.onclick = () => {
-						if (!isDeferredEvaluation) {
-							if (!el.querySelector('.correct') && !el.querySelector('.incorrect')) {
-								showToaster('veuillez sélectionner une réponse', 'error', 2000);
-								return;
-							}
-						} else if (!userAnswers[currentQuestionIndex]) {
-							const q = shuffledQuestions[currentQuestionIndex];
-							userAnswers[currentQuestionIndex] = {
-								question: q.question,
-								userAnswer: null,
-								correctAnswer: '',
-								explanation: q.explanation,
-								allAnswers: shuffledAnswers
-							};
-						}
-						const timeSpent = timerLimit - timeLeft;
-						questionTimes.push(timeSpent);
-
-						currentQuestionIndex++;
-						resetTimer();
-						if (timerEnabled && timerLimit > 0 && currentQuestionIndex < totalQuestions) {
-							startTimer();
-						}
-						displayNextQuestion();
-					};
-
-					currentQuestionSpan.textContent = currentQuestionIndex + 1;
-					updateProgressBar();
-				} else {
-					stopTimer();
-					endQuiz();
-				}
-			}
-
-			function selectAnswer(selected, selectedText) {
-				const parent = selected.parentNode;
-				Array.from(parent.children).forEach(a => a.classList.remove('selected'));
-				selected.classList.add('selected');
-
-				const q = shuffledQuestions[currentQuestionIndex];
-				userAnswers[currentQuestionIndex] = {
-					question: q.question,
-					userAnswer: selectedText,
-					correctAnswerIndex: q.correct - 1,
-					explanation: q.explanation,
-					allAnswers: Array.from(parent.children).map(el => el.dataset.original || el.textContent)
-				};
-			}
-
-			function checkAnswer(selected, selectedText, shuffledAnswers) {
-				const parent = selected.parentNode;
-				const container = selected.closest('.container--question');
-				const label = container.querySelector('.quiz-explanation__label span');
-				totalQuestionsAnswered++;
-				localStorage.setItem('totalQuestionsAnswered', totalQuestionsAnswered);
-
-				const q = shuffledQuestions[currentQuestionIndex];
-				const correctText = q.answers[q.correct - 1] || q.answers[0];
-
-				userAnswers[currentQuestionIndex] = {
-					question: q.question,
-					userAnswer: selectedText,
-					correctAnswerIndex: q.correct - 1,
-					explanation: q.explanation,
-					allAnswers: shuffledAnswers
-				};
-
-				if (selectedText === correctText) {
-					selected.classList.add('correct');
-					score++;
-					totalCorrectAnswers++;
-					localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
-					if (label) label.innerHTML = '<img src="src/emoji-happy.gif" alt="emoji" class="emoji"> bonne réponse !';
-					if (animationsEnabled) {
-						selected.classList.remove('shake-x');
-						selected.classList.add('shake-y');
-						setTimeout(() => selected.classList.remove('shake-y'), 900);
 					}
-					playSound('correct');
-				} else {
-					selected.classList.add('incorrect');
-					if (label) label.innerHTML = '<img src="src/emoji-sad.gif" alt="emoji" class="emoji"> mauvaise réponse !';
-					if (animationsEnabled) {
-						selected.classList.remove('shake-y');
-						selected.classList.add('shake-x');
-						setTimeout(() => selected.classList.remove('shake-x'), 900);
-					}
-					playSound('incorrect');
 
 					Array.from(parent.children).forEach(a => {
-						if ((a.dataset.original || a.textContent) === correctText) {
-							a.classList.add('correct');
+						const isCorrect = (a.dataset.original || a.textContent) === correctText;
+						if (!isCorrect && a !== selected) {
+							a.classList.add('incorrect');
 						}
 					});
+
+					const expl = container.querySelector('.quiz-explanation');
+					if (expl) expl.classList.remove('hidden');
 				}
 
-				Array.from(parent.children).forEach(a => {
-					const isCorrect = (a.dataset.original || a.textContent) === correctText;
-					if (!isCorrect && a !== selected) {
-						a.classList.add('incorrect');
-					}
-				});
-
-				const expl = container.querySelector('.quiz-explanation');
-				if (expl) expl.classList.remove('hidden');
-			}
-
-			function forceEndQuiz() {
-				for (let i = 0; i < shuffledQuestions.length; i++) {
-					if (!userAnswers[i] || userAnswers[i].userAnswer === null || userAnswers[i].userAnswer === undefined) {
-						const q = shuffledQuestions[i];
-						userAnswers[i] = {
-							question: q.question,
-							userAnswer: "Non répondue",
-							correctAnswerIndex: q.correct - 1,
-							explanation: q.explanation,
-							allAnswers: q.answers
-						};
-						totalQuestionsAnswered++;
-					}
-				}
-				localStorage.setItem('totalQuestionsAnswered', totalQuestionsAnswered);
-				endQuiz();
-			}
-
-			function endQuiz() {
-				quizQuestions.classList.add('hidden');
-				quizEnd.classList.remove('hidden');
-
-				if (isDeferredEvaluation) {
-					let newScore = 0;
-					userAnswers.forEach((ans, idx) => {
-						if (!ans) {
-							const q = shuffledQuestions[idx];
-							if (q) {
-								userAnswers[idx] = {
-									question: q.question,
-									userAnswer: "Non répondue",
-									correctAnswerIndex: q.correct - 1,
-									explanation: q.explanation,
-									allAnswers: q.answers
-								};
-								totalQuestionsAnswered++;
-							}
-							return;
-						}
-						if (ans.userAnswer === "Non répondue" || ans.userAnswer === null) {
-							totalQuestionsAnswered++;
-							return;
-						}
-						const q = shuffledQuestions[idx];
-						if (!q) return;
-						const correct = q.answers[q.correct - 1] || q.answers[0];
-						if (ans.userAnswer === correct) {
-							newScore++;
-							totalCorrectAnswers++;
-						}
-						if (ans.userAnswer !== null) totalQuestionsAnswered++;
-					});
-					score = newScore;
-					localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
-					localStorage.setItem('totalQuestionsAnswered', totalQuestionsAnswered);
-				} else if (timerExpired) {
-					let calculatedScore = 0;
-					for (let i = 0; i < userAnswers.length; i++) {
-						const ans = userAnswers[i];
-						if (ans && ans.userAnswer !== "Non répondue") {
+				function forceEndQuiz() {
+					for (let i = 0; i < shuffledQuestions.length; i++) {
+						if (!userAnswers[i] || userAnswers[i].userAnswer === null || userAnswers[i].userAnswer === undefined) {
 							const q = shuffledQuestions[i];
-							if (q) {
-								const correct = q.answers[q.correct - 1] || q.answers[0];
-								if (ans.userAnswer === correct) {
-									calculatedScore++;
+							userAnswers[i] = {
+								question: q.question,
+								userAnswer: "Non répondue",
+								correctAnswerIndex: q.correct - 1,
+								explanation: q.explanation,
+								allAnswers: q.answers
+							};
+							totalQuestionsAnswered++;
+						}
+					}
+					localStorage.setItem('totalQuestionsAnswered', totalQuestionsAnswered);
+					endQuiz();
+				}
+
+				function endQuiz() {
+					quizQuestions.classList.add('hidden');
+					quizEnd.classList.remove('hidden');
+
+					if (isDeferredEvaluation) {
+						let newScore = 0;
+						userAnswers.forEach((ans, idx) => {
+							if (!ans) {
+								const q = shuffledQuestions[idx];
+								if (q) {
+									userAnswers[idx] = {
+										question: q.question,
+										userAnswer: "Non répondue",
+										correctAnswerIndex: q.correct - 1,
+										explanation: q.explanation,
+										allAnswers: q.answers
+									};
+									totalQuestionsAnswered++;
 								}
+								return;
 							}
-						}
-					}
-					score = calculatedScore;
-				}
-
-				finalScoreDisplay.textContent = score;
-				scoreLabel.textContent = score <= 1 ? 'bonne réponse' : 'bonnes réponses';
-				finalTotalDisplay.textContent = totalQuestions;
-
-				const avgTime = questionTimes.length > 0 ? Math.round(questionTimes.reduce((a, b) => a + b, 0) / questionTimes.length) : 0;
-				avgTimeDisplay.textContent = avgTime + ' s';
-
-				const correct = score;
-				const incorrect = totalQuestions - score;
-				const percentage = Math.round((score / totalQuestions) * 100);
-				
-				correctAnswers.textContent = correct;
-				document.getElementById('correctLabel').textContent = correct <= 1 ? 'correcte' : 'correctes';
-				incorrectAnswers.textContent = incorrect;
-				document.getElementById('incorrectLabel').textContent = incorrect <= 1 ? 'incorrecte' : 'incorrectes';
-				percentageScore.textContent = percentage + '%';
-
-				const messages = [
-					{ min: 90, text: "🌟 excellent ! vous maîtrisez parfaitement ce quiz" },
-					{ min: 70, text: "👏 très bon score ! vous avez une bonne connaissance de ce quiz" },
-					{ min: 50, text: "📚 score correct : continuez à étudier ce quiz" },
-					{ min: 30, text: "📖 vous avez des bases : relisez l'essentiel de ce quiz" },
-					{ min: 0, text: "💪 n'hésitez pas à refaire le quiz" }
-				];
-				const msg = messages.find(m => percentage >= m.min) || messages[messages.length - 1];
-				summaryMessage.textContent = msg.text;
-
-				const notionId = currentSequenceInfo?.cleanTitle || 'quiz';
-				updateStats(notionId, score, totalQuestions);
-				displayStats(notionId);
-
-				if (percentage >= 80) {
-					setTimeout(() => {
-						launchConfetti();
-						playSound('score_good');
-					}, 300);
-				} else if (percentage < 20) {
-					setTimeout(() => playSound('score_bad'), 500);
-				}
-
-				document.getElementById('philosophyText')?.classList.add('hidden');
-				progressBar?.classList.remove('visible');
-				updateGlobalStatsDisplay();
-
-				detailedResults.classList.add('hidden');
-			}
-
-			function showDetailedReview() {
-				if (!questionsReview) return;
-				questionsReview.innerHTML = '';
-
-				for (let i = 0; i < shuffledQuestions.length; i++) {
-					if (!userAnswers[i] || userAnswers[i].userAnswer === null || userAnswers[i].userAnswer === undefined) {
-						const q = shuffledQuestions[i];
-						userAnswers[i] = {
-							question: q.question,
-							userAnswer: "Non répondue",
-							correctAnswerIndex: q.correct - 1,
-							explanation: q.explanation,
-							allAnswers: q.answers
-						};
-					}
-				}
-
-				userAnswers.forEach((ans, idx) => {
-					if (!ans) return;
-					const q = shuffledQuestions[idx];
-					if (!q) return;
-					const correct = q.answers[q.correct - 1] || q.answers[0];
-					const isCorrect = ans.userAnswer === correct;
-					const div = document.createElement('div');
-					div.className = `review-item ${isCorrect ? 'correct-item' : 'incorrect-item'}`;
-					div.innerHTML = `
-						<p style="font-weight:bold;font-size:0.85rem;margin-bottom:3px;">${ans.question}</p>
-						<div style="font-size:0.8rem;margin:2px 0;">
-							<span style="font-weight:bold;">votre réponse :</span>
-							<span style="word-wrap:break-word;overflow-wrap:break-word;">${protectSpacesAroundTags(ans.userAnswer || 'Non répondue')}</span>
-						</div>
-						<div style="font-size:0.8rem;margin:2px 0;">
-							<span style="font-weight:bold;">réponse correcte :</span>
-							<span style="word-wrap:break-word;overflow-wrap:break-word;">${protectSpacesAroundTags(correct)}</span>
-						</div>
-						<p style="font-size:0.75rem;margin-top:3px;"><strong>Explication :</strong> ${ans.explanation ? ans.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>') : ''}</p>
-					`;
-					questionsReview.appendChild(div);
-				});
-			}
-
-			function closeAllSubmenus() {
-				document.querySelectorAll('.submenu').forEach(s => s.classList.remove('active'));
-			}
-
-			function closeMenu() {
-				document.getElementById('slideMenu')?.classList.remove('open');
-				document.getElementById('menuOverlay')?.classList.remove('open');
-				document.body.style.overflow = '';
-				document.body.classList.remove('menu-open');
-				closeAllSubmenus();
-			}
-
-			function toggleMenu() {
-				const menu = document.getElementById('slideMenu');
-				const overlay = document.getElementById('menuOverlay');
-				if (menu?.classList.contains('open')) {
-					closeMenu();
-				} else {
-					overlay?.classList.add('open');
-					menu?.classList.add('open');
-					document.body.style.overflow = 'hidden';
-					document.body.classList.add('menu-open');
-					closeAllSubmenus();
-				}
-				playSound('click');
-			}
-
-			function updateFullscreen() {
-				const isFullscreen = !!document.fullscreenElement;
-				document.body.classList.toggle('fullscreen', isFullscreen);
-				const trigger = document.getElementById('hoverTrigger');
-				if (trigger) trigger.classList.toggle('active', isFullscreen);
-
-				document.querySelectorAll('.btn-fullscreen').forEach(btn => {
-					btn.classList.toggle('fullscreen-active', isFullscreen);
-					btn.dataset.title = isFullscreen ? 'quitter plein écran (F)' : 'plein écran (F)';
-					if (isFullscreen) {
-						btn.innerHTML = `
-							<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
-								<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
-								<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
-								<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
-								<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
-							</svg>
-						`;
-					} else {
-						btn.innerHTML = `<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
-							<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
-							<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
-							<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
-							<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
-						</svg>`;
-					}
-				});
-			}
-
-			function resetApplication() {
-				localStorage.clear();
-				showToaster('application réinitialisée !', 'info', 2000);
-				setTimeout(() => location.reload(), 1500);
-			}
-
-			document.addEventListener('keydown', function(e) {
-				if (e.target.matches('input, textarea, select, [contenteditable]')) return;
-
-				const keyMap = { 'a': 0, 'A': 0, 'b': 1, 'B': 1, 'c': 2, 'C': 2 };
-				if (keyMap.hasOwnProperty(e.key)) {
-					const currentQuestion = document.querySelector('.container--question');
-					if (currentQuestion) {
-						const answers = currentQuestion.querySelectorAll('.quiz-answer');
-						const alreadyAnswered = currentQuestion.querySelector('.quiz-answer.correct, .quiz-answer.incorrect, .quiz-answer.selected');
-						if (!alreadyAnswered) {
-							const targetIndex = keyMap[e.key];
-							if (targetIndex < answers.length) {
-								e.preventDefault();
-								answers[targetIndex].click();
+							if (ans.userAnswer === "Non répondue" || ans.userAnswer === null) {
+								totalQuestionsAnswered++;
+								return;
 							}
-						}
-					}
-					return;
-				}
-
-				if (e.key === 'Enter') {
-					const nextBtn = document.querySelector('.next-question-btn');
-					if (nextBtn && !nextBtn.disabled) {
-						e.preventDefault();
-						nextBtn.click();
-					}
-				}
-
-				if (e.key === 'Escape') {
-					closeMenu();
-					closeAllSubmenus();
-				}
-			});
-
-			document.addEventListener('DOMContentLoaded', function() {
-				const darkMode = localStorage.getItem('darkMode') === 'true';
-				const colorblindMode = localStorage.getItem('colorblindMode') === 'true';
-				
-				if (darkMode) {
-					document.body.classList.add('dark-theme');
-					document.getElementById('darkModeToggle').checked = true;
-				}
-				if (colorblindMode) {
-					document.body.classList.add('colorblind-mode');
-					document.getElementById('colorblindToggle').checked = true;
-				}
-				if (isDeferredEvaluation) {
-					document.getElementById('deferredEvaluationToggle').checked = true;
-				}
-				if (!animationsEnabled) {
-					document.getElementById('animationsToggle').checked = false;
-				}
-
-				const soundToggle = document.getElementById('soundToggle');
-				if (soundToggle) {
-					soundToggle.checked = soundEnabled;
-					if (soundEnabled) preloadSounds();
-				}
-
-				// timerEnabled est toujours true car le switch a été supprimé
-				timerEnabled = true;
-
-				if (timerLimitSlider) {
-					const sliderPos = valueToSliderPos(timerLimit);
-					timerLimitSlider.value = sliderPos;
-					timerLimitValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
-				}
-				if (timerLimit === 0) {
-					updateTimerDisplay('∞');
-					showTimerButtons(false);
-				} else {
-					updateTimerDisplay(formatTimer(timerLimit));
-					showTimerButtons(true);
-				}
-
-				const savedCount = parseInt(localStorage.getItem('questionCount') || '5');
-				totalQuestions = savedCount;
-				if (questionCountSlider) questionCountSlider.value = savedCount;
-				if (questionCountDisplay) questionCountDisplay.textContent = savedCount;
-
-				fetchGitHubFiles();
-
-				try {
-					const savedQuizzes = localStorage.getItem('loadedQuizzes');
-					if (savedQuizzes) {
-						const parsed = JSON.parse(savedQuizzes);
-						if (Array.isArray(parsed) && parsed.length > 0) {
-							loadedQuizzes = parsed;
-							updateSelectorSubmenu();
-							const savedIndex = parseInt(localStorage.getItem('currentQuizIndex') || '-1');
-							if (savedIndex >= 0 && savedIndex < loadedQuizzes.length) {
-								const quizData = localStorage.getItem('quizData_' + savedIndex);
-								if (quizData) {
-									try {
-										const data = JSON.parse(quizData);
-										currentQuizIndex = savedIndex;
-										currentSequenceInfo = extractSequenceInfo(loadedQuizzes[savedIndex].name + '.js');
-										philosophyData = data.philosophyData || { texte: "", source: "" };
-										questions = data.questions || [];
-										fileStatus.textContent = `✅ "${getFullDisplayName(loadedQuizzes[savedIndex].name)}" chargé !`;
-										if (questions.length > 0) {
-											setTimeout(startQuiz, 500);
-										}
-									} catch (e) {
-										console.error('Erreur restauration quiz:', e);
+							const q = shuffledQuestions[idx];
+							if (!q) return;
+							const correct = q.answers[q.correct - 1] || q.answers[0];
+							if (ans.userAnswer === correct) {
+								newScore++;
+								totalCorrectAnswers++;
+							}
+							if (ans.userAnswer !== null) totalQuestionsAnswered++;
+						});
+						score = newScore;
+						localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
+						localStorage.setItem('totalQuestionsAnswered', totalQuestionsAnswered);
+					} else if (timerExpired) {
+						let calculatedScore = 0;
+						for (let i = 0; i < userAnswers.length; i++) {
+							const ans = userAnswers[i];
+							if (ans && ans.userAnswer !== "Non répondue") {
+								const q = shuffledQuestions[i];
+								if (q) {
+									const correct = q.answers[q.correct - 1] || q.answers[0];
+									if (ans.userAnswer === correct) {
+										calculatedScore++;
 									}
 								}
 							}
 						}
+						score = calculatedScore;
 					}
-				} catch (e) {
-					console.error('Erreur restauration des quizzes:', e);
-				}
 
-				githubFileSelect.addEventListener('change', function() {
-					const url = this.value;
-					if (url) {
-						playSound('click');
-						loadFromGitHub(url);
-					}
-				});
+					finalScoreDisplay.textContent = score;
+					scoreLabel.textContent = score <= 1 ? 'bonne réponse' : 'bonnes réponses';
+					finalTotalDisplay.textContent = totalQuestions;
 
-				fileLoadBtnSubmenu.addEventListener('click', () => {
-					playSound('click');
-					fileInputSubmenu.click();
-				});
+					const avgTime = questionTimes.length > 0 ? Math.round(questionTimes.reduce((a, b) => a + b, 0) / questionTimes.length) : 0;
+					avgTimeDisplay.textContent = avgTime + ' s';
 
-				fileInputSubmenu.addEventListener('change', (e) => {
-					const files = e.target.files;
-					if (!files || files.length === 0) return;
-					playSound('click');
-					loadMultipleQuizzes(files);
-					fileInputSubmenu.value = '';
-				});
-
-				quizSelectorSubmenu.addEventListener('change', function() {
-					const val = parseInt(this.value);
-					if (!isNaN(val) && val >= 0 && val < loadedQuizzes.length) {
-						playSound('click');
-						loadQuizByIndex(val);
-					}
-				});
-
-				if (localResetBtn) {
-					localResetBtn.addEventListener('click', function() {
-						playSound('click');
-						resetApplication();
-					});
-				}
-
-				document.querySelectorAll('[data-action]').forEach(btn => {
-					btn.addEventListener('click', (e) => {
-						const action = btn.dataset.action;
-						e.preventDefault();
-						playSound('click');
-						switch (action) {
-							case 'home':
-								window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
-								break;
-							case 'reload':
-								if (questions.length) startQuiz();
-								break;
-							case 'fullscreen':
-								if (!document.fullscreenElement) {
-									document.documentElement.requestFullscreen();
-								} else {
-									document.exitFullscreen();
-								}
-								break;
-							case 'menu':
-								toggleMenu();
-								break;
-						}
-					});
-				});
-
-				document.getElementById('menuClose')?.addEventListener('click', function() {
-					playSound('click');
-					closeMenu();
-				});
-				document.getElementById('menuOverlay')?.addEventListener('click', function() {
-					playSound('click');
-					closeMenu();
-				});
-
-				document.getElementById('instructionsButton')?.addEventListener('click', function() {
-					playSound('click');
-					closeAllSubmenus();
-					document.getElementById('submenuInstructions')?.classList.add('active');
-					document.body.classList.add('menu-open');
-				});
-
-				document.getElementById('localFilesButton')?.addEventListener('click', function() {
-					playSound('click');
-					closeAllSubmenus();
-					document.getElementById('submenuLocalFiles')?.classList.add('active');
-					document.body.classList.add('menu-open');
-				});
-
-				document.getElementById('statsButton')?.addEventListener('click', function() {
-					playSound('click');
-					closeAllSubmenus();
-					updateGlobalStatsDisplay();
-					document.getElementById('submenuStats')?.classList.add('active');
-					document.body.classList.add('menu-open');
-				});
-
-				document.getElementById('settingsButton')?.addEventListener('click', function() {
-					playSound('click');
-					closeAllSubmenus();
-					document.getElementById('submenuSettings')?.classList.add('active');
-					document.body.classList.add('menu-open');
-				});
-
-				document.getElementById('shortcutsButton')?.addEventListener('click', function() {
-					playSound('click');
-					closeAllSubmenus();
-					document.getElementById('submenuShortcuts')?.classList.add('active');
-					document.body.classList.add('menu-open');
-				});
-
-				document.getElementById('aboutButton')?.addEventListener('click', function() {
-					playSound('click');
-					closeAllSubmenus();
-					document.getElementById('submenuAbout')?.classList.add('active');
-					document.body.classList.add('menu-open');
-				});
-
-				document.getElementById('resetButton')?.addEventListener('click', function() {
-					playSound('click');
-					resetApplication();
-				});
-
-				document.querySelectorAll('.submenu-close').forEach(btn => {
-					btn.addEventListener('click', function() {
-						playSound('click');
-						closeAllSubmenus();
-						document.body.classList.remove('menu-open');
-					});
-				});
-
-				document.getElementById('resetStatsBtn')?.addEventListener('click', function() {
-					playSound('click');
-					resetStats();
-				});
-
-				document.getElementById('quizReviewBtn')?.addEventListener('click', function() {
-					playSound('click');
-					const details = document.getElementById('detailedResults');
-					if (details) {
-						details.classList.toggle('hidden');
-						if (!details.classList.contains('hidden')) {
-							showDetailedReview();
-						}
-					}
-				});
-
-				document.getElementById('quizRetryBtn')?.addEventListener('click', function() {
-					playSound('click');
-					if (questions.length) startQuiz();
-				});
-
-				document.getElementById('quizBackBtn')?.addEventListener('click', function() {
-					playSound('click');
-					quizEnd.classList.add('hidden');
-					quizQuestions.classList.add('hidden');
-					quizStart.classList.remove('hidden');
-					currentQuestionIndex = 0;
-					score = 0;
-					userAnswers = [];
-					shuffledQuestions = [];
-					stopTimer();
-					githubFileSelect.value = '';
-					fileStatus.textContent = 'Choisissez un quiz ci-dessus';
-					if (progressBar) progressBar.classList.remove('visible');
-				});
-
-				document.getElementById('toggleTextBtn')?.addEventListener('click', function() {
-					playSound('click');
-					togglePhilosophyText();
-				});
-
-				document.getElementById('darkModeToggle')?.addEventListener('change', function() {
-					document.body.classList.toggle('dark-theme', this.checked);
-					localStorage.setItem('darkMode', this.checked);
-					playSound('click');
-				});
-
-				document.getElementById('colorblindToggle')?.addEventListener('change', function() {
-					document.body.classList.toggle('colorblind-mode', this.checked);
-					localStorage.setItem('colorblindMode', this.checked);
-					playSound('click');
-				});
-
-				document.getElementById('deferredEvaluationToggle')?.addEventListener('change', function() {
-					isDeferredEvaluation = this.checked;
-					localStorage.setItem('deferredEvaluation', this.checked);
-					playSound('click');
-				});
-
-				document.getElementById('animationsToggle')?.addEventListener('change', function() {
-					animationsEnabled = this.checked;
-					localStorage.setItem('animations', this.checked);
-					playSound('click');
-				});
-
-				document.getElementById('soundToggle')?.addEventListener('change', function() {
-					soundEnabled = this.checked;
-					localStorage.setItem('soundEnabled', String(this.checked));
-					if (soundEnabled) preloadSounds();
-					playSound('click');
-				});
-
-				// Le toggle du minuteur a été supprimé
-
-				document.getElementById('timerLimitSlider')?.addEventListener('input', function(e) {
-					const pos = parseInt(e.target.value, 10);
-					timerLimit = sliderPosToValue(pos);
-					timerLimitValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
-					localStorage.setItem('timerLimit', timerLimit);
+					const correct = score;
+					const incorrect = totalQuestions - score;
+					const percentage = Math.round((score / totalQuestions) * 100);
 					
+					correctAnswers.textContent = correct;
+					document.getElementById('correctLabel').textContent = correct <= 1 ? 'correcte' : 'correctes';
+					incorrectAnswers.textContent = incorrect;
+					document.getElementById('incorrectLabel').textContent = incorrect <= 1 ? 'incorrecte' : 'incorrectes';
+					percentageScore.textContent = percentage + '%';
+
+					const messages = [
+						{ min: 90, text: "🌟 excellent ! vous maîtrisez parfaitement ce quiz" },
+						{ min: 70, text: "👏 très bon score ! vous avez une bonne connaissance de ce quiz" },
+						{ min: 50, text: "📚 score correct : continuez à étudier ce quiz" },
+						{ min: 30, text: "📖 vous avez des bases : relisez l'essentiel de ce quiz" },
+						{ min: 0, text: "💪 n'hésitez pas à refaire le quiz" }
+					];
+					const msg = messages.find(m => percentage >= m.min) || messages[messages.length - 1];
+					summaryMessage.textContent = msg.text;
+
+					const notionId = currentSequenceInfo?.cleanTitle || 'quiz';
+					updateStats(notionId, score, totalQuestions);
+					displayStats(notionId);
+
+					if (percentage >= 80) {
+						setTimeout(() => {
+							launchConfetti();
+							playSound('score_good');
+						}, 300);
+					} else if (percentage < 20) {
+						setTimeout(() => playSound('score_bad'), 500);
+					}
+
+					document.getElementById('philosophyText')?.classList.add('hidden');
+					progressBar?.classList.remove('visible');
+					updateGlobalStatsDisplay();
+
+					detailedResults.classList.add('hidden');
+				}
+
+				function showDetailedReview() {
+					if (!questionsReview) return;
+					questionsReview.innerHTML = '';
+
+					for (let i = 0; i < shuffledQuestions.length; i++) {
+						if (!userAnswers[i] || userAnswers[i].userAnswer === null || userAnswers[i].userAnswer === undefined) {
+							const q = shuffledQuestions[i];
+							userAnswers[i] = {
+								question: q.question,
+								userAnswer: "Non répondue",
+								correctAnswerIndex: q.correct - 1,
+								explanation: q.explanation,
+								allAnswers: q.answers
+							};
+						}
+					}
+
+					userAnswers.forEach((ans, idx) => {
+						if (!ans) return;
+						const q = shuffledQuestions[idx];
+						if (!q) return;
+						const correct = q.answers[q.correct - 1] || q.answers[0];
+						const isCorrect = ans.userAnswer === correct;
+						const div = document.createElement('div');
+						div.className = `review-item ${isCorrect ? 'correct-item' : 'incorrect-item'}`;
+						div.innerHTML = `
+							<p style="font-weight:bold;font-size:0.85rem;margin-bottom:3px;">${ans.question}</p>
+							<div style="font-size:0.8rem;margin:2px 0;">
+								<span style="font-weight:bold;">votre réponse :</span>
+								<span style="word-wrap:break-word;overflow-wrap:break-word;">${protectSpacesAroundTags(ans.userAnswer || 'Non répondue')}</span>
+							</div>
+							<div style="font-size:0.8rem;margin:2px 0;">
+								<span style="font-weight:bold;">réponse correcte :</span>
+								<span style="word-wrap:break-word;overflow-wrap:break-word;">${protectSpacesAroundTags(correct)}</span>
+							</div>
+							<p style="font-size:0.75rem;margin-top:3px;"><strong>Explication :</strong> ${ans.explanation ? ans.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>') : ''}</p>
+						`;
+						questionsReview.appendChild(div);
+					});
+				}
+
+				function closeAllSubmenus() {
+					document.querySelectorAll('.submenu').forEach(s => s.classList.remove('active'));
+				}
+
+				function closeMenu() {
+					document.getElementById('slideMenu')?.classList.remove('open');
+					document.getElementById('menuOverlay')?.classList.remove('open');
+					document.body.style.overflow = '';
+					document.body.classList.remove('menu-open');
+					closeAllSubmenus();
+				}
+
+				function toggleMenu() {
+					const menu = document.getElementById('slideMenu');
+					const overlay = document.getElementById('menuOverlay');
+					if (menu?.classList.contains('open')) {
+						closeMenu();
+					} else {
+						overlay?.classList.add('open');
+						menu?.classList.add('open');
+						document.body.style.overflow = 'hidden';
+						document.body.classList.add('menu-open');
+						closeAllSubmenus();
+					}
+					playSound('click');
+				}
+
+				function updateFullscreen() {
+					const isFullscreen = !!document.fullscreenElement;
+					document.body.classList.toggle('fullscreen', isFullscreen);
+					const trigger = document.getElementById('hoverTrigger');
+					if (trigger) trigger.classList.toggle('active', isFullscreen);
+
+					document.querySelectorAll('.btn-fullscreen').forEach(btn => {
+						btn.classList.toggle('fullscreen-active', isFullscreen);
+						btn.dataset.title = isFullscreen ? 'quitter plein écran (F)' : 'plein écran (F)';
+						if (isFullscreen) {
+							btn.innerHTML = `
+								<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
+									<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
+									<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
+									<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
+									<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
+								</svg>
+							`;
+						} else {
+							btn.innerHTML = `<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+								<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+								<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+								<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+								<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+							</svg>`;
+						}
+					});
+				}
+
+				function resetApplication() {
+					localStorage.clear();
+					showToaster('application réinitialisée !', 'info', 2000);
+					setTimeout(() => location.reload(), 1500);
+				}
+
+				document.addEventListener('keydown', function(e) {
+					if (e.target.matches('input, textarea, select, [contenteditable]')) return;
+
+					const keyMap = { 'a': 0, 'A': 0, 'b': 1, 'B': 1, 'c': 2, 'C': 2 };
+					if (keyMap.hasOwnProperty(e.key)) {
+						const currentQuestion = document.querySelector('.container--question');
+						if (currentQuestion) {
+							const answers = currentQuestion.querySelectorAll('.quiz-answer');
+							const alreadyAnswered = currentQuestion.querySelector('.quiz-answer.correct, .quiz-answer.incorrect, .quiz-answer.selected');
+							if (!alreadyAnswered) {
+								const targetIndex = keyMap[e.key];
+								if (targetIndex < answers.length) {
+									e.preventDefault();
+									answers[targetIndex].click();
+								}
+							}
+						}
+						return;
+					}
+
+					if (e.key === 'Enter') {
+						const nextBtn = document.querySelector('.next-question-btn');
+						if (nextBtn && !nextBtn.disabled) {
+							e.preventDefault();
+							nextBtn.click();
+						}
+					}
+
+					if (e.key === 'Escape') {
+						closeMenu();
+						closeAllSubmenus();
+					}
+				});
+
+				document.addEventListener('DOMContentLoaded', function() {
+					const darkMode = localStorage.getItem('darkMode') === 'true';
+					const colorblindMode = localStorage.getItem('colorblindMode') === 'true';
+					
+					if (darkMode) {
+						document.body.classList.add('dark-theme');
+						document.getElementById('darkModeToggle').checked = true;
+					}
+					if (colorblindMode) {
+						document.body.classList.add('colorblind-mode');
+						document.getElementById('colorblindToggle').checked = true;
+					}
+					if (isDeferredEvaluation) {
+						document.getElementById('deferredEvaluationToggle').checked = true;
+					}
+					if (!animationsEnabled) {
+						document.getElementById('animationsToggle').checked = false;
+					}
+
+					const soundToggle = document.getElementById('soundToggle');
+					if (soundToggle) {
+						soundToggle.checked = soundEnabled;
+						if (soundEnabled) preloadSounds();
+					}
+
+					// timerEnabled est toujours true car le switch a été supprimé
+					timerEnabled = true;
+
+					if (timerLimitSlider) {
+						const sliderPos = valueToSliderPos(timerLimit);
+						timerLimitSlider.value = sliderPos;
+						timerLimitValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
+					}
 					if (timerLimit === 0) {
 						updateTimerDisplay('∞');
 						showTimerButtons(false);
-						stopTimer();
 					} else {
-						showTimerButtons(true);
 						updateTimerDisplay(formatTimer(timerLimit));
-						resetTimer();
-						if (!quizEnd.classList.contains('hidden') && !quizQuestions.classList.contains('hidden')) {
-							startTimer();
-						}
+						showTimerButtons(true);
 					}
-					playSound('click');
-				});
 
-				if (questionCountSlider) {
-					questionCountSlider.addEventListener('input', function() {
-						const val = parseInt(questionCountSlider.value);
-						totalQuestions = val;
-						questionCountDisplay.textContent = val;
-						localStorage.setItem('questionCount', val);
+					const savedCount = parseInt(localStorage.getItem('questionCount') || '5');
+					totalQuestions = savedCount;
+					if (questionCountSlider) questionCountSlider.value = savedCount;
+					if (questionCountDisplay) questionCountDisplay.textContent = savedCount;
+
+					fetchGitHubFiles();
+
+					try {
+						const savedQuizzes = localStorage.getItem('loadedQuizzes');
+						if (savedQuizzes) {
+							const parsed = JSON.parse(savedQuizzes);
+							if (Array.isArray(parsed) && parsed.length > 0) {
+								loadedQuizzes = parsed;
+								updateSelectorSubmenu();
+								const savedIndex = parseInt(localStorage.getItem('currentQuizIndex') || '-1');
+								if (savedIndex >= 0 && savedIndex < loadedQuizzes.length) {
+									const quizData = localStorage.getItem('quizData_' + savedIndex);
+									if (quizData) {
+										try {
+											const data = JSON.parse(quizData);
+											currentQuizIndex = savedIndex;
+											currentSequenceInfo = extractSequenceInfo(loadedQuizzes[savedIndex].name + '.js');
+											philosophyData = data.philosophyData || { texte: "", source: "" };
+											questions = data.questions || [];
+											fileStatus.textContent = `✅ "${getFullDisplayName(loadedQuizzes[savedIndex].name)}" chargé !`;
+											if (questions.length > 0) {
+												setTimeout(startQuiz, 500);
+											}
+										} catch (e) {
+											console.error('Erreur restauration quiz:', e);
+										}
+									}
+								}
+							}
+						}
+					} catch (e) {
+						console.error('Erreur restauration des quizzes:', e);
+					}
+
+					githubFileSelect.addEventListener('change', function() {
+						const url = this.value;
+						if (url) {
+							playSound('click');
+							loadFromGitHub(url);
+						}
+					});
+
+					fileLoadBtnSubmenu.addEventListener('click', () => {
+						playSound('click');
+						fileInputSubmenu.click();
+					});
+
+					fileInputSubmenu.addEventListener('change', (e) => {
+						const files = e.target.files;
+						if (!files || files.length === 0) return;
+						playSound('click');
+						loadMultipleQuizzes(files);
+						fileInputSubmenu.value = '';
+					});
+
+					quizSelectorSubmenu.addEventListener('change', function() {
+						const val = parseInt(this.value);
+						if (!isNaN(val) && val >= 0 && val < loadedQuizzes.length) {
+							playSound('click');
+							loadQuizByIndex(val);
+						}
+					});
+
+					if (localResetBtn) {
+						localResetBtn.addEventListener('click', function() {
+							playSound('click');
+							resetApplication();
+						});
+					}
+
+					document.querySelectorAll('[data-action]').forEach(btn => {
+						btn.addEventListener('click', (e) => {
+							const action = btn.dataset.action;
+							e.preventDefault();
+							playSound('click');
+							switch (action) {
+								case 'home':
+									window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+									break;
+								case 'reload':
+									if (questions.length) startQuiz();
+									break;
+								case 'fullscreen':
+									if (!document.fullscreenElement) {
+										document.documentElement.requestFullscreen();
+									} else {
+										document.exitFullscreen();
+									}
+									break;
+								case 'menu':
+									toggleMenu();
+									break;
+							}
+						});
+					});
+
+					document.getElementById('menuClose')?.addEventListener('click', function() {
+						playSound('click');
+						closeMenu();
+					});
+					document.getElementById('menuOverlay')?.addEventListener('click', function() {
+						playSound('click');
+						closeMenu();
+					});
+
+					document.getElementById('instructionsButton')?.addEventListener('click', function() {
+						playSound('click');
+						closeAllSubmenus();
+						document.getElementById('submenuInstructions')?.classList.add('active');
+						document.body.classList.add('menu-open');
+					});
+
+					document.getElementById('localFilesButton')?.addEventListener('click', function() {
+						playSound('click');
+						closeAllSubmenus();
+						document.getElementById('submenuLocalFiles')?.classList.add('active');
+						document.body.classList.add('menu-open');
+					});
+
+					document.getElementById('statsButton')?.addEventListener('click', function() {
+						playSound('click');
+						closeAllSubmenus();
+						updateGlobalStatsDisplay();
+						document.getElementById('submenuStats')?.classList.add('active');
+						document.body.classList.add('menu-open');
+					});
+
+					document.getElementById('settingsButton')?.addEventListener('click', function() {
+						playSound('click');
+						closeAllSubmenus();
+						document.getElementById('submenuSettings')?.classList.add('active');
+						document.body.classList.add('menu-open');
+					});
+
+					document.getElementById('shortcutsButton')?.addEventListener('click', function() {
+						playSound('click');
+						closeAllSubmenus();
+						document.getElementById('submenuShortcuts')?.classList.add('active');
+						document.body.classList.add('menu-open');
+					});
+
+					document.getElementById('aboutButton')?.addEventListener('click', function() {
+						playSound('click');
+						closeAllSubmenus();
+						document.getElementById('submenuAbout')?.classList.add('active');
+						document.body.classList.add('menu-open');
+					});
+
+					document.getElementById('resetButton')?.addEventListener('click', function() {
+						playSound('click');
+						resetApplication();
+					});
+
+					document.querySelectorAll('.submenu-close').forEach(btn => {
+						btn.addEventListener('click', function() {
+							playSound('click');
+							closeAllSubmenus();
+							document.body.classList.remove('menu-open');
+						});
+					});
+
+					document.getElementById('resetStatsBtn')?.addEventListener('click', function() {
+						playSound('click');
+						resetStats();
+					});
+
+					document.getElementById('quizReviewBtn')?.addEventListener('click', function() {
+						playSound('click');
+						const details = document.getElementById('detailedResults');
+						if (details) {
+							details.classList.toggle('hidden');
+							if (!details.classList.contains('hidden')) {
+								showDetailedReview();
+							}
+						}
+					});
+
+					document.getElementById('quizRetryBtn')?.addEventListener('click', function() {
+						playSound('click');
+						if (questions.length) startQuiz();
+					});
+
+					document.getElementById('quizBackBtn')?.addEventListener('click', function() {
+						playSound('click');
+						quizEnd.classList.add('hidden');
+						quizQuestions.classList.add('hidden');
+						quizStart.classList.remove('hidden');
+						currentQuestionIndex = 0;
+						score = 0;
+						userAnswers = [];
+						shuffledQuestions = [];
+						stopTimer();
+						githubFileSelect.value = '';
+						fileStatus.textContent = 'Choisissez un quiz ci-dessus';
+						if (progressBar) progressBar.classList.remove('visible');
+					});
+
+					document.getElementById('toggleTextBtn')?.addEventListener('click', function() {
+						playSound('click');
+						togglePhilosophyText();
+					});
+
+					document.getElementById('darkModeToggle')?.addEventListener('change', function() {
+						document.body.classList.toggle('dark-theme', this.checked);
+						localStorage.setItem('darkMode', this.checked);
 						playSound('click');
 					});
-				}
 
-				document.addEventListener('fullscreenchange', updateFullscreen);
-				updateFullscreen();
+					document.getElementById('colorblindToggle')?.addEventListener('change', function() {
+						document.body.classList.toggle('colorblind-mode', this.checked);
+						localStorage.setItem('colorblindMode', this.checked);
+						playSound('click');
+					});
 
-				updateGlobalStatsDisplay();
+					document.getElementById('deferredEvaluationToggle')?.addEventListener('change', function() {
+						isDeferredEvaluation = this.checked;
+						localStorage.setItem('deferredEvaluation', this.checked);
+						playSound('click');
+					});
 
-				if (soundEnabled) {
-					preloadSounds();
-				}
-			});
+					document.getElementById('animationsToggle')?.addEventListener('change', function() {
+						animationsEnabled = this.checked;
+						localStorage.setItem('animations', this.checked);
+						playSound('click');
+					});
 
-		})();
+					document.getElementById('soundToggle')?.addEventListener('change', function() {
+						soundEnabled = this.checked;
+						localStorage.setItem('soundEnabled', String(this.checked));
+						if (soundEnabled) preloadSounds();
+						playSound('click');
+					});
+
+					// Le toggle du minuteur a été supprimé
+
+					document.getElementById('timerLimitSlider')?.addEventListener('input', function(e) {
+						const pos = parseInt(e.target.value, 10);
+						timerLimit = sliderPosToValue(pos);
+						timerLimitValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
+						localStorage.setItem('timerLimit', timerLimit);
+						
+						if (timerLimit === 0) {
+							updateTimerDisplay('∞');
+							showTimerButtons(false);
+							stopTimer();
+						} else {
+							showTimerButtons(true);
+							updateTimerDisplay(formatTimer(timerLimit));
+							resetTimer();
+							if (!quizEnd.classList.contains('hidden') && !quizQuestions.classList.contains('hidden')) {
+								startTimer();
+							}
+						}
+						playSound('click');
+					});
+
+					if (questionCountSlider) {
+						questionCountSlider.addEventListener('input', function() {
+							const val = parseInt(questionCountSlider.value);
+							totalQuestions = val;
+							questionCountDisplay.textContent = val;
+							localStorage.setItem('questionCount', val);
+							playSound('click');
+						});
+					}
+
+					document.addEventListener('fullscreenchange', updateFullscreen);
+					updateFullscreen();
+
+					updateGlobalStatsDisplay();
+
+					if (soundEnabled) {
+						preloadSounds();
+					}
+				});
+
+			})();
 	</script>
 </body>
 </html>
