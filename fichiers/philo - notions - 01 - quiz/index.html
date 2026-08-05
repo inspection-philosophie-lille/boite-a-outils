@@ -751,23 +751,25 @@
 
 		.toggle-label {
 			color: var(--font-color);
-			font-size: 1rem;
+			font-size: 0.9rem;
 			text-align: left;
 			display: flex;
 			align-items: center;
-			gap: 0.5rem;
+			gap: 1rem;
 			cursor: pointer;
 			flex: 1;
 		}
 
 		.toggle-label i {
 			width: 24px;
+			min-width: 24px;
 			display: inline-flex;
 			align-items: center;
 			justify-content: center;
 			flex-shrink: 0;
 			font-size: 1rem;
-			margin-right: 0.5rem;
+			text-align: center;
+			line-height: 1;
 		}
 
 		.theme-switch {
@@ -841,6 +843,23 @@
 
 		.questions-slider-label .toggle-label {
 			font-size: 0.9rem;
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			cursor: pointer;
+			flex: 1;
+		}
+
+		.questions-slider-label .toggle-label i {
+			width: 24px;
+			min-width: 24px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			font-size: 1rem;
+			text-align: center;
+			line-height: 1;
 		}
 
 		.questions-slider-value {
@@ -862,6 +881,14 @@
 		.slider-graduations span {
 			text-align: center;
 			flex: 1;
+		}
+
+		.slider-graduations .infinity-symbol {
+			font-size: 1rem;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			line-height: 1;
 		}
 
 		/* ===== CARROUSEL ===== */
@@ -1075,7 +1102,7 @@
 		.progress-footer {
 			display: flex;
 			justify-content: center;
-			align-items: center;
+				align-items: center;
 			height: 20px;
 			width: 100%;
 			background: transparent;
@@ -2892,7 +2919,7 @@
 				</div>
 				<input type="range" id="timerLimitSlider" class="questions-slider" min="1" max="6" step="1" value="1">
 				<div class="slider-graduations">
-					<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span>∞</span>
+					<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span class="infinity-symbol">∞</span>
 				</div>
 			</div>
 
