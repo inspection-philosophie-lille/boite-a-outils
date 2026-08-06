@@ -272,6 +272,15 @@
 			background: #4a80c0;
 		}
 
+		/* ===== STYLE SPÉCIFIQUE POUR LE CARACTÈRE INFINI ===== */
+		.slider-graduations .infinity-symbol {
+			font-size: 1rem;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			line-height: 1;
+		}
+
 		/* ===== MODE DALTONIEN ===== */
 		body.colorblind-mode {
 			--color-correct: #2c7be5;
@@ -1990,6 +1999,44 @@
 			background: rgba(231, 76, 60, 0.12);
 		}
 
+		/* ===== BENTO ACTIONS - BOUTONS SUR UNE LIGNE ===== */
+		.bento-actions {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 10px;
+			margin-top: 15px;
+			width: 100%;
+			max-width: 596px;
+		}
+
+		.bento-actions .quiz-btn {
+			flex: 1;
+			min-width: 80px;
+			padding: 10px 12px;
+			font-size: 0.8rem;
+			border-radius: 27px;
+			border: 2px solid #8895a7;
+			background: var(--btn);
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+			margin-bottom: 0;
+		}
+
+		.bento-actions .quiz-btn:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+			border-color: var(--color-correct);
+		}
+
+		body.dark-theme .bento-actions .quiz-btn {
+			border-color: #5a5a5a;
+		}
+
+		body.dark-theme .bento-actions .quiz-btn:hover {
+			border-color: var(--color-correct);
+		}
+
 		/* Responsive du tableau final */
 		@media (max-width: 768px) {
 			.container--quiz-results .bento-stats-global {
@@ -2073,6 +2120,13 @@
 			}
 			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
 				font-size: 11px;
+			}
+
+			/* Boutons sur une ligne même en très petit */
+			.bento-actions .quiz-btn {
+				font-size: 0.65rem !important;
+				padding: 8px 6px !important;
+				min-width: 60px !important;
 			}
 		}
 
@@ -2572,6 +2626,11 @@
 			}
 			.timer-btn span {
 				font-size: 9px !important;
+			}
+			.bento-actions .quiz-btn {
+				font-size: 0.6rem !important;
+				padding: 6px 4px !important;
+				min-width: 50px !important;
 			}
 		}
 
@@ -3665,51 +3724,51 @@
 
 						<!-- 55 Bergson -->
 						<div class="quiz-card" data-author="bergson" data-js="quiz/bergson.js">
-							<div class="card-image-container">
-								<img class="card-image" src="src/bergson.jpg" alt="Portrait de Bergson">
-							</div>
-							<div class="card-content">
-								<h3 class="author-name">Bergson</h3>
-								<p class="author-description">1859-1941</p>
-								<div class="card-meta">
-									<span class="questions-count">100 questions</span>
-									<span class="quiz-code">φ BCG & BTN</span>
+								<div class="card-image-container">
+									<img class="card-image" src="src/bergson.jpg" alt="Portrait de Bergson">
+								</div>
+								<div class="card-content">
+									<h3 class="author-name">Bergson</h3>
+									<p class="author-description">1859-1941</p>
+									<div class="card-meta">
+										<span class="questions-count">100 questions</span>
+										<span class="quiz-code">φ BCG & BTN</span>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<!-- 56 Husserl -->
-						<div class="quiz-card" data-author="husserl" data-js="quiz/husserl.js">
-							<div class="card-image-container">
-								<img class="card-image" src="src/husserl.jpg" alt="Portrait de Husserl">
-							</div>
-							<div class="card-content">
-								<h3 class="author-name">Husserl</h3>
-								<p class="author-description">1859-1938</p>
-								<div class="card-meta">
-									<span class="questions-count">100 questions</span>
-									<span class="quiz-code">φ BCG & BTN</span>
+							<!-- 56 Husserl -->
+							<div class="quiz-card" data-author="husserl" data-js="quiz/husserl.js">
+								<div class="card-image-container">
+									<img class="card-image" src="src/husserl.jpg" alt="Portrait de Husserl">
+								</div>
+								<div class="card-content">
+									<h3 class="author-name">Husserl</h3>
+									<p class="author-description">1859-1938</p>
+									<div class="card-meta">
+										<span class="questions-count">100 questions</span>
+										<span class="quiz-code">φ BCG & BTN</span>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<!-- 57 Weber -->
-						<div class="quiz-card" data-author="weber" data-js="quiz/weber.js">
-							<div class="card-image-container">
-								<img class="card-image" src="src/weber.jpg" alt="Portrait de Weber">
-							</div>
-							<div class="card-content">
-								<h3 class="author-name">Weber</h3>
-								<p class="author-description">1864-1920</p>
-								<div class="card-meta">
-									<span class="questions-count">100 questions</span>
-									<span class="quiz-code">φ BCG & BTN</span>
+							<!-- 57 Weber -->
+							<div class="quiz-card" data-author="weber" data-js="quiz/weber.js">
+								<div class="card-image-container">
+									<img class="card-image" src="src/weber.jpg" alt="Portrait de Weber">
+								</div>
+								<div class="card-content">
+									<h3 class="author-name">Weber</h3>
+									<p class="author-description">1864-1920</p>
+									<div class="card-meta">
+										<span class="questions-count">100 questions</span>
+										<span class="quiz-code">φ BCG & BTN</span>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<!-- 58 Alain -->
-						<div class="quiz-card" data-author="alain" data-js="quiz/alain.js">
+							<!-- 58 Alain -->
+							<div class="quiz-card" data-author="alain" data-js="quiz/alain.js">
 								<div class="card-image-container">
 									<img class="card-image" src="src/alain.jpg" alt="Portrait d'Alain">
 								</div>
@@ -4160,7 +4219,7 @@
 											<!-- Bento Score -->
 											<div class="bento-score">
 												<p style="margin:0; font-size:14px;">
-													<span>votre score : </span><span class="quiz-end__score" id="finalScoreDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
+													<span>score : </span><span class="quiz-end__score" id="finalScoreDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
 													<span id="scoreLabel" style="font-size:0.9rem;">bonne réponse</span>
 													<span style="font-size:0.9rem;">sur</span>
 													<span class="quiz-end__total" id="finalTotalDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
@@ -4210,14 +4269,14 @@
 											<!-- Message -->
 											<div class="bento-message" id="summaryMessage"></div>
 
-											<!-- BOUTONS -->
-											<div class="container--quiz-btn" style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:15px;">
+											<!-- ===== BOUTONS FINAUX SUR UNE SEULE LIGNE ===== -->
+											<div class="bento-actions">
 												<button id="quizReview" class="quiz-btn quiz-btn--default quiz-review-btn" type="button" aria-label="Voir la correction">
 													<span class="quiz-review-answers">réponses</span>
 													<span class="quiz-review-correction" style="display:none">masquer</span>
 												</button>
 												<button class="quiz-btn quiz-btn--default quiz-btn-retry" type="button" tabindex="0" aria-label="Rejouer">réessayer</button>
-												<button id="quizBackToAuthors" class="quiz-btn" style="min-width:150px; padding:8px 16px;">retour aux auteurs</button>
+												<button id="quizBackToAuthors" class="quiz-btn" type="button">retour aux auteurs</button>
 											</div>
 
 											<!-- ===== DÉTAIL DES RÉPONSES ===== -->
@@ -4424,7 +4483,7 @@
 					</div>
 					<input type="range" id="timerLimitSlider" class="questions-slider" min="1" max="6" step="1" value="1">
 					<div class="slider-graduations">
-						<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span>∞</span>
+						<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span class="infinity-symbol">∞</span>
 					</div>
 				</div>
 				<div class="questions-slider-container">
@@ -5199,7 +5258,7 @@
 				nextBtn.disabled = deferredEvaluationMode ? false : true;
 				
 				if (index === selectedQuestions.length - 1) {
-					nextBtn.textContent = 'votre score';
+					nextBtn.textContent = 'score';
 				} else {
 					nextBtn.textContent = 'suivant';
 				}
