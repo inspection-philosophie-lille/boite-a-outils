@@ -173,6 +173,19 @@
 			to { transform: rotate(360deg); }
 		}
 
+		/* ===== ROTATION DES SVG DU MENU ===== */
+		.menu-item:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		.menu-close:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		.submenu-close:hover svg {
+			animation: rotate 1s linear;
+		}
+
 		.menu-icon {
 			display: flex;
 			flex-direction: column;
@@ -471,11 +484,6 @@
 			stroke: currentColor;
 		}
 
-		.menu-close:hover svg,
-		.submenu-close:hover svg {
-			animation: rotate 1s linear;
-		}
-
 		.menu-item {
 			display: flex;
 			align-items: center;
@@ -598,35 +606,57 @@
 			min-height: 24px;
 		}
 
-		/* ===== MODIFICATIONS : suppression du gap, icônes uniformisées ===== */
+		/* ===== TOGGLES - alignement horizontal ===== */
 		.toggle-label {
 			color: var(--font-color);
-			font-size: 1rem;
+			font-size: 0.9rem;
 			text-align: left;
 			display: flex;
 			align-items: center;
+			gap: 0.75rem;
 			cursor: pointer;
 			flex: 1;
 		}
 
 		.toggle-label i {
 			width: 24px;
-			display: inline-flex;
+			min-width: 24px;
+			display: flex;
 			align-items: center;
 			justify-content: center;
 			flex-shrink: 0;
 			font-size: 1rem;
-			margin-right: 0.5rem;
+			text-align: center;
+			line-height: 1;
 		}
 
-		.questions-slider-label i {
+		/* ===== SLIDERS - alignement horizontal ===== */
+		.questions-slider-label {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 0.9rem;
+		}
+
+		.questions-slider-label .toggle-label {
+			font-size: 0.9rem;
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			cursor: pointer;
+			flex: 1;
+		}
+
+		.questions-slider-label .toggle-label i {
 			width: 24px;
-			display: inline-flex;
+			min-width: 24px;
+			display: flex;
 			align-items: center;
 			justify-content: center;
 			flex-shrink: 0;
 			font-size: 1rem;
-			margin-right: 0.5rem;
+			text-align: center;
+			line-height: 1;
 		}
 
 		.theme-switch {
@@ -689,13 +719,6 @@
 			margin-top: 0.75rem;
 			padding-top: 0.75rem;
 			margin-bottom: 0.75rem;
-		}
-
-		.questions-slider-label {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			font-size: 0.9rem;
 		}
 
 		.questions-slider-value {
@@ -766,6 +789,14 @@
 		.slider-graduations span {
 			text-align: center;
 			flex: 1;
+		}
+
+		.slider-graduations .infinity-symbol {
+			font-size: 1rem;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			line-height: 1;
 		}
 
 		.quiz-selector-container {
@@ -1088,7 +1119,7 @@
 			justify-content: space-between;
 			align-items: center;
 			padding: 4px 12px;
-				background: transparent;
+			background: transparent;
 		}
 
 		.philosophy-text-header h3 {
@@ -2092,6 +2123,7 @@
 				min-width: 80px;
 				font-size: 0.65rem;
 				padding: 6px 10px;
+				font-family: Arial, sans-serif;
 			}
 		}
 	</style>
@@ -2249,7 +2281,7 @@
 							<div class="container--quiz-results">
 								<div class="bento-score">
 									<p style="margin:0; font-size:14px;">
-										<span>votre score : </span><span class="quiz-end__score" id="finalScoreDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
+										<span>score : </span><span class="quiz-end__score" id="finalScoreDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
 										<span id="scoreLabel" style="font-size:0.9rem;">bonne réponse</span>
 										<span style="font-size:0.9rem;">sur</span>
 										<span class="quiz-end__total" id="finalTotalDisplay" style="font-size:1.2rem; font-weight:bold;">0</span>
@@ -2512,7 +2544,7 @@
 				</div>
 				<input type="range" id="timerLimitSlider" class="questions-slider" min="1" max="6" step="1" value="1">
 				<div class="slider-graduations">
-					<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span>∞</span>
+					<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span class="infinity-symbol">∞</span>
 				</div>
 			</div>
 			<!-- Nombre de questions -->
@@ -2606,6 +2638,7 @@
 			let timerInterval = null;
 			let timeLeft = timerLimit;
 			let timerExpired = false;
+			let timerStoppedManually = false;
 			let questionTimes = [];
 			let stats = JSON.parse(localStorage.getItem('quizStats') || '{}');
 			let loadedQuizzes = [];
@@ -2860,6 +2893,7 @@
 
 			function startTimer() {
 				timerExpired = false;
+				timerStoppedManually = false;
 				if (!timerEnabled || timerLimit === 0) {
 					updateTimerDisplay('∞');
 					showTimerButtons(false);
@@ -2872,6 +2906,8 @@
 				if (timerInterval) clearInterval(timerInterval);
 
 				timerInterval = setInterval(() => {
+					if (timerStoppedManually) return;
+					
 					timeLeft--;
 					updateTimerDisplay(formatTimer(timeLeft));
 					
@@ -2914,6 +2950,7 @@
 			function resetTimer() {
 				stopTimer();
 				timerExpired = false;
+				timerStoppedManually = false;
 				if (timerEnabled && timerLimit > 0) {
 					timeLeft = timerLimit;
 					updateTimerDisplay(formatTimer(timeLeft));
@@ -3290,7 +3327,7 @@
 							`).join('')}</ul>
 						</fieldset>
 						<div class="next-button-container">
-							<button class="quiz-btn next-question-btn">${currentQuestionIndex === totalQuestions - 1 ? 'votre score' : 'question suivante'}</button>
+							<button class="quiz-btn next-question-btn">${currentQuestionIndex === totalQuestions - 1 ? 'score' : 'question suivante'}</button>
 						</div>
 						<div class="quiz-explanation hidden">
 							<div class="quiz-explanation__label"><span></span></div>
@@ -3305,6 +3342,11 @@
 							const container = this.closest('.container--question');
 							const alreadyAnswered = container.querySelector('.quiz-answer.correct, .quiz-answer.incorrect, .quiz-answer.selected');
 							if (alreadyAnswered) return;
+							
+							if (!timerStoppedManually) {
+								timerStoppedManually = true;
+								stopTimer();
+							}
 							
 							if (isDeferredEvaluation) {
 								selectAnswer(this, shuffledAnswers[i]);
@@ -3331,8 +3373,8 @@
 								allAnswers: shuffledAnswers
 							};
 						}
-						// On arrête le timer si une réponse a été donnée
-						// Mais le timer a déjà été arrêté dans checkAnswer ou selectAnswer
+						
+						// Le timer est déjà arrêté dans checkAnswer ou selectAnswer
 						// On ne fait rien ici
 
 						currentQuestionIndex++;
