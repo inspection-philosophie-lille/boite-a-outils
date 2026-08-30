@@ -1,0 +1,2093 @@
+<!DOCTYPE html>
+<!-- Daniel Boulagnon -->
+<!-- daniel.boulagnon@ac-lille.fr -->
+<!-- version 2026 -->
+<!-- Exploitation à but strictement pédagogique et non lucratif -->
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<link rel="icon" href="../../src/favicon.ico">
+	<title>multiplication modulaire</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		html,
+		body {
+			height: 100%;
+			width: 100%;
+			overflow: hidden;
+			background: #eef2f9;
+			font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+		}
+
+		body.dark-mode {
+			background: #1e1f2c;
+		}
+
+		body.dark-mode .controls-panel {
+			background: #1e1f2c;
+			border-right-color: rgba(255, 255, 255, 0.05);
+		}
+
+		.controls-panel {
+			background: #eef2f9;
+		}
+
+		body.dark-mode .controls-panel {
+			background: #1e1f2c;
+		}
+
+		body.dark-mode .param-group {
+			background: #2d2d2d;
+			border-color: rgba(255, 255, 255, 0.1);
+			box-shadow: 8px 8px 16px #0f1119, -8px -8px 16px #25283b;
+		}
+
+		body.dark-mode .param-group h4 {
+			color: #e0e0e0;
+		}
+
+		body.dark-mode .param-row input {
+			background: #3a3c4a;
+			color: white;
+			border-color: #4a4c5a;
+		}
+
+		body.dark-mode .toolbar {
+			background: #1e1f2c;
+			border-bottom-color: rgba(255, 255, 255, 0.1);
+		}
+
+		body.dark-mode .toolbar-title-desktop {
+			color: #ff0000;
+		}
+
+		body.dark-mode canvas {
+			background: #1e1f2c;
+		}
+
+		body.dark-mode .badge-value {
+			background: #3a3c4a;
+			color: #e0e0e0;
+			box-shadow: 5px 5px 10px #0f1119, -3px -3px 6px #25283b;
+		}
+
+		body.dark-mode .btn {
+			background: #3a3c4a;
+			color: #e0e0e0;
+			box-shadow: 5px 5px 10px #0f1119, -3px -3px 6px #25283b;
+		}
+
+		body.dark-mode .btn:hover {
+			box-shadow: 7px 7px 14px #0f1119, -5px -5px 8px #25283b;
+		}
+
+		body.dark-mode .increment-control {
+			background: #2d2d2d;
+		}
+
+		body.dark-mode .main-value-input,
+		body.dark-mode .increment-value {
+			background: #2d2d2d;
+			color: white;
+			box-shadow: inset 3px 3px 6px #0f1119, inset -2px -2px 4px #25283b;
+		}
+
+		.preset-select {
+			width: 100%;
+			padding: 10px 16px;
+			border-radius: 40px;
+			border: none;
+			background: #e0e5ec;
+			font-weight: 600;
+			font-size: 0.85rem;
+			color: #1e293b;
+			cursor: pointer;
+			box-shadow: 5px 5px 10px #b8b9be, -5px -5px 10px #ffffff;
+			text-align: center;
+			appearance: none;
+		}
+
+		body.dark-mode .preset-select {
+			background: #3a3c4a;
+			color: #e0e0e0;
+			box-shadow: 5px 5px 10px #0f1119, -5px -5px 10px #25283b;
+		}
+
+		.preset-select option {
+			background: #e0e5ec;
+			color: #1e293b;
+		}
+
+		body.dark-mode .preset-select option {
+			background: #3a3c4a;
+			color: #e0e0e0;
+		}
+
+		body.dark-mode .mobile-controls .preset-select {
+			background: #3a3c4a;
+			color: #e0e0e0;
+			box-shadow: 5px 5px 10px #0f1119, -5px -5px 10px #25283b;
+		}
+
+		@media (min-width: 769px) {
+			.anim-selector button {
+				padding: 10px 0 !important;
+				font-size: 0.85rem !important;
+				font-weight: 700 !important;
+			}
+
+			.speed-control .badge-value {
+				background: #e0e5ec;
+				box-shadow: 5px 5px 10px #b8b9be, -5px -5px 10px #ffffff;
+				border-radius: 40px;
+				padding: 10px 16px;
+				font-weight: 600;
+				font-size: 0.85rem;
+				color: #1e293b;
+				min-width: 130px;
+				text-align: center;
+				display: inline-block;
+			}
+
+			body.dark-mode .speed-control .badge-value {
+				background: #3a3c4a;
+				color: #e0e0e0;
+				box-shadow: 5px 5px 10px #0f1119, -5px -5px 10px #25283b;
+			}
+		}
+
+		.toolbar-btn svg,
+		.toolbar-btn svg *,
+		.btn svg,
+		.btn svg *,
+		.menu-item svg,
+		.menu-item svg *,
+		.menu-close svg,
+		.menu-close svg *,
+		.submenu-close svg,
+		.submenu-close svg * {
+			stroke: #2c3e50;
+			stroke-width: 2.2 !important;
+			transition: transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+		}
+
+		body.dark-mode .toolbar-btn svg,
+		body.dark-mode .toolbar-btn svg *,
+		body.dark-mode .btn svg,
+		body.dark-mode .btn svg *,
+		body.dark-mode .menu-item svg,
+		body.dark-mode .menu-item svg *,
+		body.dark-mode .menu-close svg,
+		body.dark-mode .menu-close svg *,
+		body.dark-mode .submenu-close svg,
+		body.dark-mode .submenu-close svg * {
+			stroke: #e0e0e0;
+			stroke-width: 2.2 !important;
+		}
+
+		.home-btn:hover .icon-wrapper svg {
+			animation: tourne360 1.8s linear forwards;
+		}
+
+		@keyframes tourne360 {
+			0% {
+				transform: rotateY(0deg);
+			}
+
+			100% {
+				transform: rotateY(360deg);
+			}
+		}
+
+		.reload-btn:hover svg {
+			animation: rotateReload 1.6s linear infinite;
+		}
+
+		@keyframes rotateReload {
+			from {
+				transform: rotate(0deg);
+			}
+
+			to {
+				transform: rotate(360deg);
+			}
+		}
+
+		.fullscreen-btn:hover svg {
+			animation: pulseScale 0.7s ease-out forwards;
+		}
+
+		@keyframes pulseScale {
+			0% {
+				transform: scale(1);
+			}
+
+			50% {
+				transform: scale(1.25);
+			}
+
+			100% {
+				transform: scale(1);
+			}
+		}
+
+		.menu-btn:hover .menu-icon {
+			transform: rotate(90deg);
+			transition: transform 0.5s ease;
+		}
+
+		.menu-item:hover svg {
+			animation: rotateMenuItem 0.9s ease-in-out forwards;
+		}
+
+		@keyframes rotateMenuItem {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		.menu-close:hover svg,
+		.submenu-close:hover svg {
+			animation: rotateClose 0.8s linear forwards;
+		}
+
+		@keyframes rotateClose {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		.menu-icon {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+		}
+
+		.menu-icon span {
+			display: block;
+			width: 18px;
+			height: 2px;
+			background-color: #2c3e50;
+		}
+
+		body.dark-mode .menu-icon span {
+			background-color: #e0e0e0;
+		}
+
+		.dashboard {
+			display: flex;
+			width: 100%;
+			height: 100vh;
+			overflow: hidden;
+			flex-direction: column;
+		}
+
+		.toolbar {
+			width: 100%;
+			background: #eef2f9;
+			padding: 8px 16px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-shrink: 0;
+			z-index: 20;
+		}
+
+		body.dark-mode .toolbar {
+			background: #1e1f2c;
+		}
+
+		.toolbar-left,
+		.toolbar-right {
+			display: flex;
+			gap: 10px;
+			align-items: center;
+		}
+
+		.toolbar-center {
+			text-align: center;
+		}
+
+		.toolbar-title-desktop {
+			color: #ff0000;
+			font-size: 30px;
+			font-weight: bold;
+			font-family: 'Muli', 'Segoe UI', system-ui, sans-serif;
+			white-space: nowrap;
+		}
+
+		.toolbar-btn {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			background: #e0e5ec;
+			border: none;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 5px 5px 10px #b8b9be, -5px -5px 10px #ffffff;
+			transition: all 0.2s ease;
+			position: relative;
+		}
+
+		body.dark-mode .toolbar-btn {
+			background: #2d2d2d;
+			box-shadow: 5px 5px 10px #0f1119, -5px -5px 10px #25283b;
+		}
+
+		.toolbar-btn:hover {
+			box-shadow: inset 3px 3px 6px #b8b9be, inset -3px -3px 6px #ffffff;
+			transform: translateY(-2px);
+		}
+
+		.toolbar-btn svg {
+			width: 20px;
+			height: 20px;
+			fill: none;
+			stroke: #2c3e50;
+			stroke-width: 2.2;
+		}
+
+		.toolbar-btn::after {
+			content: attr(data-title);
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: 8px;
+			background: #2c3e50;
+			color: white;
+			padding: 4px 10px;
+			border-radius: 8px;
+			font-size: 11px;
+			white-space: nowrap;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.2s;
+			z-index: 30;
+		}
+
+		.toolbar-btn:hover::after {
+			opacity: 1;
+		}
+
+		.main-content {
+			display: flex;
+			flex: 1;
+			overflow: hidden;
+		}
+
+		.controls-panel {
+			width: 420px;
+			display: flex;
+			flex-direction: column;
+			overflow-y: auto;
+			padding: 20px;
+			gap: 20px;
+			z-index: 10;
+			flex-shrink: 0;
+			background: #eef2f9;
+		}
+
+		.mobile-controls {
+			display: none;
+		}
+
+		.param-group {
+			background: #e0e5ec;
+			border-radius: 28px;
+			padding: 18px 20px;
+			box-shadow: 8px 8px 16px #b8b9be, -8px -8px 16px #ffffff;
+		}
+
+		body.dark-mode .param-group {
+			background: #2d2d2d;
+		}
+
+		.speed-control {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			margin-bottom: 18px;
+		}
+
+		.badge-value {
+			background: #eef2ff;
+			border-radius: 30px;
+			padding: 4px 12px;
+			font-size: 0.7rem;
+			font-weight: 600;
+			color: black;
+			min-width: 85px;
+			text-align: center;
+		}
+
+		input[type="range"] {
+			flex: 1;
+			height: 4px;
+			border-radius: 10px;
+			-webkit-appearance: none;
+			appearance: none;
+			background: #b8b9be;
+		}
+
+		input[type="range"]::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 18px;
+			height: 18px;
+			border-radius: 50%;
+			background: #b8b9be;
+			cursor: pointer;
+			transition: transform 0.1s ease;
+		}
+
+		input[type="range"]::-webkit-slider-thumb:hover {
+			transform: scale(1.2);
+		}
+
+		input[type="range"]::-moz-range-thumb {
+			width: 18px;
+			height: 18px;
+			border-radius: 50%;
+			background: #b8b9be;
+			cursor: pointer;
+			border: none;
+		}
+
+		body.dark-mode input[type="range"]::-webkit-slider-thumb {
+			background: #b8b9be;
+		}
+
+		body.dark-mode input[type="range"]::-moz-range-thumb {
+			background: #b8b9be;
+		}
+
+		.selector-row {
+			margin-bottom: 8px;
+		}
+
+		.anim-selector {
+			display: flex;
+			gap: 0;
+			background: transparent;
+			padding: 0;
+			border-radius: 0;
+			box-shadow: none;
+		}
+
+		.anim-selector button {
+			flex: 1;
+			border: none;
+			font-weight: bold;
+			cursor: pointer;
+			background: #e0e5ec;
+			color: #2c3e50;
+			font-size: 0.85rem;
+			transition: all 0.2s;
+			box-shadow: 5px 5px 10px #b8b9be, -5px -5px 10px #ffffff;
+			padding: 10px 0;
+		}
+
+		.anim-selector button:first-child {
+			border-radius: 30px 0 0 30px;
+		}
+
+		.anim-selector button:last-child {
+			border-radius: 0 30px 30px 0;
+		}
+
+		.anim-selector button.active {
+			background: #e0e5ec;
+			color: #1e293b;
+			box-shadow: inset 5px 5px 12px #b8b9be, inset -5px -5px 8px #ffffff;
+		}
+
+		body.dark-mode .anim-selector button {
+			background: #2d2d2d;
+			color: #e0e0e0;
+			box-shadow: 5px 5px 10px #0f1119, -5px -5px 10px #25283b;
+		}
+
+		body.dark-mode .anim-selector button.active {
+			background: #2d2d2d;
+			box-shadow: inset 5px 5px 12px #0f1119, inset -5px -5px 8px #25283b;
+			color: white;
+		}
+
+		.increment-control {
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+			background: #e0e5ec;
+			padding: 12px 0px;
+			margin: 8px 0;
+		}
+
+		.increment-row {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 8px;
+		}
+
+		.increment-row label {
+			font-weight: 700;
+			color: #2c3e50;
+			font-size: 0.8rem;
+			white-space: nowrap;
+		}
+
+		body.dark-mode .increment-row label {
+			color: #e0e0e0;
+		}
+
+		.main-value-input {
+			background: #e0e5ec;
+			border: none;
+			padding: 8px 12px;
+			border-radius: 50px;
+			font-weight: bold;
+			font-size: 0.9rem;
+			width: 100px;
+			text-align: center;
+			box-shadow: inset 3px 3px 6px #b8b9be, inset -2px -2px 4px #ffffff;
+			outline: none;
+		}
+
+		.increment-value {
+			background: #e0e5ec;
+			border: none;
+			padding: 8px 12px;
+			border-radius: 50px;
+			font-weight: bold;
+			font-size: 0.8rem;
+			width: 80px;
+			text-align: center;
+			box-shadow: inset 3px 3px 6px #b8b9be, inset -2px -2px 4px #ffffff;
+			outline: none;
+		}
+
+		.button-group {
+			display: flex;
+			gap: 12px;
+			justify-content: center;
+			margin: 8px 0;
+		}
+
+		.btn {
+			border: none;
+			border-radius: 50%;
+			width: 44px;
+			height: 44px;
+			font-weight: 600;
+			font-size: 1.2rem;
+			cursor: pointer;
+			background: #e0e5ec;
+			color: #1e293b;
+			box-shadow: 5px 5px 10px #b8b9be, -3px -3px 6px #ffffff;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+		}
+
+		.btn:focus,
+		.btn:focus-visible,
+		.toolbar-btn:focus,
+		.toolbar-btn:focus-visible {
+			outline: none;
+			box-shadow: inset 3px 3px 6px #b8b9be, inset -3px -3px 6px #ffffff;
+		}
+
+		body.dark-mode .btn:focus,
+		body.dark-mode .btn:focus-visible,
+		body.dark-mode .toolbar-btn:focus,
+		body.dark-mode .toolbar-btn:focus-visible {
+			outline: none;
+			box-shadow: inset 3px 3px 6px #0f1119, inset -3px -3px 6px #25283b;
+		}
+
+		.mobile-controls .btn {
+			-webkit-tap-highlight-color: transparent;
+		}
+
+		.btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 7px 7px 14px #b8b9be, -5px -5px 8px #ffffff;
+		}
+
+		.btn:active {
+			transform: translateY(1px);
+			box-shadow: inset 3px 3px 6px #b8b9be, inset -3px -3px 6px #ffffff;
+		}
+
+		.btn::after {
+			content: attr(data-title);
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: 8px;
+			background: #2c3e50;
+			color: white;
+			padding: 4px 10px;
+			border-radius: 8px;
+			font-size: 10px;
+			white-space: nowrap;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.2s;
+			z-index: 30;
+		}
+
+		.btn:hover::after {
+			opacity: 1;
+		}
+
+
+
+		.preset-section {
+			margin-top: 12px;
+		}
+
+		.canvas-container {
+			flex: 1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: #eef2f9;
+			padding: 20px;
+			overflow: hidden;
+			position: relative;
+		}
+
+		body.dark-mode .canvas-container {
+			background: #1e1f2c;
+		}
+
+		#mon_canvas {
+			display: block;
+			box-shadow: 12px 12px 24px rgba(166, 180, 200, 0.5), -8px -8px 18px rgba(255, 255, 255, 0.8);
+			border-radius: 50%;
+			background: #eef2f9;
+			cursor: pointer;
+			max-width: calc(100vh - 80px);
+			max-height: calc(100vh - 80px);
+			width: auto;
+			height: auto;
+			margin-top: 22px;
+		}
+
+		body.dark-mode #mon_canvas {
+			background: #1e1f2c;
+			box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.5), -8px -8px 18px rgba(255, 255, 255, 0.05);
+		}
+
+		.menu-overlay {
+			position: fixed;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.5);
+			z-index: 9999;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.3s;
+		}
+
+		.menu-overlay.active {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.slide-menu {
+			position: fixed;
+			top: 0;
+			right: -340px;
+			width: 300px;
+			height: 100%;
+			background: #e0e5ec;
+			z-index: 10000;
+			transition: right 0.6s ease;
+			border-radius: 30px 0 0 30px;
+			padding: 2rem 1.5rem;
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+			overflow-y: auto;
+			box-shadow: -8px 0 24px rgba(0, 0, 0, 0.1);
+		}
+
+		body.dark-mode .slide-menu {
+			background: #2d2d2d;
+		}
+
+		.slide-menu.active {
+			right: 0;
+		}
+
+		.submenu {
+			position: fixed;
+			top: 0;
+			right: -360px;
+			width: 300px;
+			height: 100%;
+			background: #e0e5ec;
+			z-index: 10010;
+			transition: right 0.5s ease;
+			border-radius: 30px 0 0 30px;
+			padding: 2rem 1.5rem;
+			overflow-y: auto;
+			box-shadow: -8px 0 24px rgba(0, 0, 0, 0.1);
+		}
+
+		body.dark-mode .submenu {
+			background: #2d2d2d;
+		}
+
+		.submenu.active {
+			right: 0;
+		}
+
+		.submenu-title {
+			font-size: 1.3rem;
+			font-weight: bold;
+			text-align: center;
+			margin-bottom: 1.5rem;
+			color: #ff0000;
+		}
+
+		body.dark-mode .submenu-title {
+			color: red;
+		}
+
+		.menu-header {
+			display: flex;
+			justify-content: flex-end;
+			margin-bottom: 1rem;
+		}
+
+		.menu-close,
+		.submenu-close {
+			background: #e0e5ec;
+			border: none;
+			cursor: pointer;
+			width: 44px;
+			height: 44px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 5px 5px 10px #b8b9be, -5px -5px 10px #ffffff;
+		}
+
+		body.dark-mode .menu-close,
+		body.dark-mode .submenu-close {
+			background: #3a3c4a;
+			box-shadow: 5px 5px 10px #0f1119, -5px -5px 10px #25283b;
+		}
+
+		.menu-close svg,
+		.submenu-close svg {
+			width: 22px;
+			height: 22px;
+			stroke: #2c3e50;
+			fill: none;
+			stroke-width: 2.2;
+		}
+
+		.menu-item {
+			background: #e0e5ec;
+			padding: 12px;
+			border-radius: 20px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			gap: 14px;
+			box-shadow: 8px 8px 16px #b8b9be, -6px -6px 12px #ffffff;
+			border: none;
+			font-size: 1em;
+			font-weight: bold;
+			color: #2c3e50;
+			transition: all 0.2s ease;
+		}
+
+		body.dark-mode .menu-item {
+			background: #3a3c4a;
+			color: #e0e0e0;
+			box-shadow: 8px 8px 16px #0f1119, -6px -6px 12px #25283b;
+		}
+
+		.menu-item svg {
+			width: 24px;
+			height: 24px;
+			stroke: #2c3e50;
+			fill: none;
+			stroke-width: 2.2;
+		}
+
+		.setting-line {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 1rem;
+			padding: 8px 0;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+		}
+
+		body.dark-mode .setting-line {
+			border-bottom-color: rgba(255, 255, 255, 0.1);
+		}
+
+		body.dark-mode .setting-line label {
+			color: #e0e0e0;
+		}
+
+		body.dark-mode .check-group label {
+			color: #e0e0e0;
+		}
+
+		body.dark-mode .setting-line,
+		body.dark-mode .setting-line * {
+			color: #e0e0e0;
+		}
+
+		.check-group {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			flex-wrap: wrap;
+		}
+
+		.settings-info {
+			padding: 12px;
+			background: rgba(0, 0, 0, 0.05);
+			border-radius: 16px;
+			margin-top: 12px;
+			color: #2c3e50;
+			font-size: 13px;
+			line-height: 1.6;
+		}
+
+		body.dark-mode .settings-info {
+			background: rgba(255, 255, 255, 0.08);
+			color: #e0e0e0;
+		}
+
+		kbd {
+			background-color: #e0e0e0;
+			border-radius: 6px;
+			padding: 2px 8px;
+			font-size: 0.85em;
+			font-weight: 700;
+			display: inline-block;
+			margin: 2px;
+		}
+
+		body.dark-mode kbd {
+			background-color: #333;
+			color: #eee;
+		}
+
+		@media (max-width: 768px) {
+			.toolbar {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				gap: 8px;
+				padding: 10px 12px 0px 12px;
+			}
+
+			.toolbar-left,
+			.toolbar-right {
+				display: none;
+			}
+
+			.toolbar-center {
+				width: 100%;
+				text-align: center;
+				margin-top: 4px;
+				order: 2;
+			}
+
+			.toolbar-title-desktop {
+				font-size: 14px;
+				margin: 0;
+				white-space: nowrap;
+			}
+
+			.controls-panel {
+				display: none;
+			}
+
+			body.dark-mode .mobile-controls {
+				background: #1e1f2c;
+			}
+
+			.main-content {
+				flex-direction: column;
+				height: 100%;
+				overflow: hidden;
+			}
+
+			.canvas-container {
+				order: 2;
+				padding: 0px;
+				margin-top: -24px;
+				min-height: 0;
+				flex: 1 1 auto;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				overflow: hidden;
+			}
+
+			.mobile-controls {
+				display: block;
+				width: 100%;
+				background: #eef2f9;
+				flex-shrink: 0;
+				order: 3;
+				padding: 8px;
+				max-height: 38%;
+				overflow-y: auto;
+			}
+
+			#mon_canvas {
+				max-width: min(calc(100vw - 20px), calc(55vh - 60px));
+				max-height: min(calc(100vw - 20px), calc(55vh - 60px));
+				width: auto;
+				height: auto;
+				border-radius: 50%;
+			}
+
+			.mobile-controls .param-group {
+				background: #e0e5ec;
+				padding-top: 8px;
+				margin-top: -8px;
+				border-radius: 20px;
+			}
+
+			body.dark-mode .mobile-controls .param-group {
+				background: #2d2d2d;
+			}
+
+			.mobile-controls .speed-control {
+				margin-bottom: 10px;
+				gap: 8px;
+			}
+
+			.mobile-controls .badge-value {
+				font-size: 0.65rem;
+				min-width: 65px;
+				padding: 3px 6px;
+			}
+
+			.mobile-controls input[type="range"] {
+				flex: 1;
+				max-width: 120px;
+			}
+
+			.mobile-controls .anim-selector {
+				display: flex;
+				gap: 0;
+				background: transparent;
+				margin-bottom: 8px;
+			}
+
+			.mobile-controls .anim-selector button {
+				flex: 1;
+				padding: 6px 4px;
+				font-size: 0.7rem;
+				border-radius: 0;
+				white-space: nowrap;
+			}
+
+			.mobile-controls .anim-selector button:first-child {
+				border-radius: 20px 0 0 20px;
+			}
+
+			.mobile-controls .anim-selector button:last-child {
+				border-radius: 0 20px 20px 0;
+			}
+
+			.mobile-controls .increment-control {
+				background: transparent;
+				box-shadow: none;
+				padding: 2px 0;
+				margin: 0;
+			}
+
+			.mobile-controls .increment-row {
+				gap: 6px;
+			}
+
+			.mobile-controls .main-value-input {
+				width: 75px;
+				padding: 5px 6px;
+				font-size: 0.8rem;
+			}
+
+			.mobile-controls .increment-value {
+				width: 65px;
+				padding: 5px 6px;
+				font-size: 0.7rem;
+			}
+
+			.mobile-controls .increment-row label {
+				font-size: 0.7rem;
+				white-space: nowrap;
+			}
+
+			.mobile-controls .button-group {
+				gap: 10px;
+				margin: 5px 0;
+			}
+
+			.mobile-controls .btn {
+				width: 40px;
+				height: 40px;
+				font-size: 1.1rem;
+			}
+
+			.mobile-controls .preset-select {
+				padding: 6px 10px;
+				font-size: 0.7rem;
+			}
+
+			.mobile-controls input[type="range"] {
+				-webkit-appearance: none;
+				appearance: none;
+			}
+
+			.mobile-controls input[type="range"]::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				appearance: none;
+				width: 22px;
+				height: 22px;
+				border-radius: 50%;
+				background: #b8b9be;
+				cursor: pointer;
+				border: 2px solid white;
+				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+			}
+
+			.mobile-controls input[type="range"]::-moz-range-thumb {
+				width: 22px;
+				height: 22px;
+				border-radius: 50%;
+				background: #b8b9be;
+				cursor: pointer;
+				border: 2px solid white;
+			}
+
+			body.dark-mode .mobile-controls input[type="range"]::-webkit-slider-thumb {
+				background: #b8b9be;
+				border-color: #1e1f2c;
+			}
+
+			body.dark-mode .mobile-controls input[type="range"]::-moz-range-thumb {
+				background: #b8b9be;
+				border-color: #1e1f2c;
+			}
+
+		}
+
+		@media (max-width: 768px) {
+			.main-content {
+				display: flex;
+				flex-direction: column;
+				height: 100%;
+				overflow: hidden;
+			}
+
+			.canvas-container {
+				flex: 2.2;
+				min-height: 0;
+			}
+
+			.mobile-controls {
+				flex: 1.8;
+				overflow-y: auto;
+				max-height: none;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.mobile-controls {
+				max-height: 50%;
+			}
+
+			.toolbar-title-desktop {
+				font-size: 12px;
+			}
+
+			.toolbar-btn {
+				height: 40px;
+			}
+
+			#mon_canvas {
+				max-width: min(calc(100vw - 16px), calc(50vh - 50px));
+				max-height: min(calc(100vw - 16px), calc(50vh - 50px));
+			}
+		}
+
+		@media (min-width: 769px) {
+			.toolbar-btn {
+				width: 54px;
+				height: 54px;
+			}
+
+			.toolbar-btn svg {
+				width: 28px;
+				height: 28px;
+			}
+
+			.menu-icon span {
+				width: 24px;
+				height: 2.5px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="dashboard">
+		<div class="toolbar">
+			<div class="toolbar-left">
+				<button class="toolbar-btn home-btn" id="homeBtn" data-title="accueil (H)">
+					<div class="icon-wrapper">
+						<svg viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2">
+							<polyline points="19,10 12,5" stroke="#2c3e50" stroke-width="2" stroke-linecap="round" />
+							<polyline points="8,8 5,10" stroke="#2c3e50" stroke-width="2" stroke-linecap="round" />
+							<polyline points="19,11 19,19 5,19 5,11" stroke="#2c3e50" stroke-width="2"
+								stroke-linejoin="round" stroke-linecap="round" />
+						</svg>
+					</div>
+				</button>
+				<button class="toolbar-btn reload-btn" id="reloadBtn" data-title="recharger (R)"><svg
+						viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="2.2">
+						<polyline points="23 4 23 10 17 10" />
+						<polyline points="1 20 1 14 7 14" />
+						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+					</svg></button>
+				<button class="toolbar-btn screenshot-btn" id="screenshotBtn" data-title="capture"><svg
+						viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+						<rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
+						<circle cx="12" cy="12" r="4" />
+						<line x1="18" y1="8" x2="18.01" y2="8" />
+					</svg></button>
+			</div>
+			<div class="toolbar-center">
+				<h1 class="toolbar-title-desktop">multiplication modulaire</h1>
+			</div>
+			<div class="toolbar-right">
+				<button class="toolbar-btn fullscreen-btn" id="fullscreenBtn" data-title="plein écran (F)"><svg
+						viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+						<line x1="4" y1="5" x2="10" y2="5" />
+						<line x1="5" y1="6" x2="5" y2="10" />
+						<line x1="14" y1="5" x2="20" y2="5" />
+						<line x1="19" y1="6" x2="19" y2="10" />
+						<line x1="5" y1="14" x2="5" y2="20" />
+						<line x1="6" y1="19" x2="10" y2="19" />
+						<line x1="14" y1="19" x2="20" y2="19" />
+						<line x1="19" y1="14" x2="19" y2="18" />
+					</svg></button>
+				<button class="toolbar-btn menu-btn" id="menuBtn" data-title="menu (M)">
+					<div class="menu-icon"><span></span><span></span><span></span></div>
+				</button>
+			</div>
+		</div>
+		<div class="main-content">
+			<div class="controls-panel">
+				<div class="param-group">
+					<div class="speed-control">
+						<span id="speedValue1" class="badge-value">vitesse : 0 ms</span>
+						<input type="range" id="speed1" min="0" max="200" value="0">
+					</div>
+					<div class="selector-row">
+						<div class="anim-selector">
+							<button id="selectTableAnim" class="active">table</button>
+							<button id="selectModuloAnim">modulo</button>
+						</div>
+					</div>
+					<div id="commonAnimBlock">
+						<div class="increment-control">
+							<div class="increment-row">
+								<input type="number" id="mainAnimValue" class="main-value-input" step="0.1" value="2">
+								<label>incrément :</label>
+								<input type="number" id="commonIncrement" class="increment-value" value="0.1" step="0.1"
+									min="0.01">
+							</div>
+						</div>
+						<div class="button-group">
+							<button id="anim_rev" class="btn" data-title="décrémenter">
+								<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+									<polyline points="15 18 9 12 15 6"></polyline>
+								</svg>
+							</button>
+							<button id="stop_btn" class="btn" data-title="arrêter">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+									<rect x="4" y="4" width="16" height="16" rx="0" ry="0"></rect>
+								</svg>
+							</button>
+							<button id="anim_play" class="btn" data-title="incrémenter">
+								<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+									<polyline points="9 18 15 12 9 6"></polyline>
+								</svg>
+							</button>
+							<button id="retour_btn" class="btn" data-title="réinitialiser">
+								<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M23 4v6h-6"></path>
+									<path d="M1 20v-6h6"></path>
+									<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"></path>
+									<path d="M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+								</svg>
+							</button>
+						</div>
+					</div>
+					<div class="preset-section">
+						<select id="presetSelect" class="preset-select">
+							<option value="">exemples</option>
+							<option value="2,10">table de 2</option>
+							<option value="3,10">table de 3</option>
+							<option value="4,10">table de 4</option>
+							<option value="5,10">table de 5</option>
+							<option value="16,51">héxagramme</option>
+							<option value="30,88">coeur</option>
+							<option value="30,232">anneaux</option>
+							<option value="77,52">grille</option>
+							<option value="888,740">pentacle</option>
+							<option value="924,740">paille de vienne</option>
+							<option value="1837,585">rosace</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="mobile-controls">
+				<div class="param-group">
+					<div class="speed-control">
+						<span id="mobileSpeedValue" class="badge-value">vitesse : 0 ms</span>
+						<input type="range" id="mobileSpeed" min="0" max="200" value="0">
+					</div>
+					<div class="selector-row">
+						<div class="anim-selector">
+							<button id="mobileSelectTableAnim" class="active">animation table</button>
+							<button id="mobileSelectModuloAnim">animation modulo</button>
+						</div>
+					</div>
+					<div class="increment-control">
+						<div class="increment-row">
+							<input type="number" id="mobileMainAnimValue" class="main-value-input" step="0.1" value="2">
+							<label>incrément :</label>
+							<input type="number" id="mobileCommonIncrement" class="increment-value" value="0.1"
+								step="0.1" min="0.01">
+						</div>
+					</div>
+					<div class="button-group">
+						<button id="mobileAnimRev" class="btn" data-title="décrémenter">
+							<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="15 18 9 12 15 6"></polyline>
+							</svg>
+						</button>
+						<button id="mobileStopBtn" class="btn" data-title="arrêter">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+								<rect x="4" y="4" width="16" height="16" rx="0" ry="0"></rect>
+							</svg>
+						</button>
+						<button id="mobileAnimPlay" class="btn" data-title="incrémenter">
+							<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="9 18 15 12 9 6"></polyline>
+							</svg>
+						</button>
+						<button id="retour_btn_mobile" class="btn" data-title="réinitialiser">
+							<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M23 4v6h-6"></path>
+								<path d="M1 20v-6h6"></path>
+								<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"></path>
+								<path d="M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+							</svg>
+						</button>
+					</div>
+					<div class="preset-section">
+						<select id="mobilePresetSelect" class="preset-select">
+							<option value="">exemples</option>
+							<option value="2,10">table de 2</option>
+							<option value="3,10">table de 3</option>
+							<option value="4,10">table de 4</option>
+							<option value="5,10">table de 5</option>
+							<option value="16,51">héxagramme</option>
+							<option value="30,88">coeur</option>
+							<option value="30,232">anneaux</option>
+							<option value="77,52">grille</option>
+							<option value="888,740">pentacle</option>
+							<option value="924,740">paille de vienne</option>
+							<option value="1837,585">rosace</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="canvas-container"><canvas id="mon_canvas" width="600" height="600"></canvas></div>
+		</div>
+	</div>
+	<div class="menu-overlay" id="menuOverlay"></div>
+	<div class="slide-menu" id="slideMenu">
+		<div class="menu-header">
+			<button class="menu-close" id="menuClose">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+					<line x1="18" y1="6" x2="6" y2="18" />
+					<line x1="6" y1="6" x2="18" y2="18" />
+				</svg>
+			</button>
+		</div>
+		<button class="menu-item" id="openPresentationSub">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2"
+				stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="10" stroke="#2c3e50"></circle>
+				<line x1="12" y1="16" x2="12" y2="12" stroke="#2c3e50"></line>
+				<line x1="12" y1="8" x2="12.01" y2="8" stroke="#2c3e50"></line>
+			</svg>
+			présentation
+		</button>
+		<button class="menu-item" id="openShortcutsSub">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2"
+				stroke-linecap="round" stroke-linejoin="round">
+				<rect x="2" y="4" width="20" height="16" rx="2" stroke="#2c3e50"></rect>
+				<line x1="6" y1="8" x2="10" y2="8" stroke="#2c3e50"></line>
+				<line x1="14" y1="8" x2="18" y2="8" stroke="#2c3e50"></line>
+				<line x1="6" y1="12" x2="10" y2="12" stroke="#2c3e50"></line>
+				<line x1="14" y1="12" x2="18" y2="12" stroke="#2c3e50"></line>
+				<line x1="6" y1="16" x2="10" y2="16" stroke="#2c3e50"></line>
+				<line x1="14" y1="16" x2="18" y2="16" stroke="#2c3e50"></line>
+			</svg>
+			raccourcis clavier
+		</button>
+		<button class="menu-item" id="openSettingsSub">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2"
+				stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="3" stroke="#2c3e50"></circle>
+				<path
+					d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+					stroke="#2c3e50"></path>
+			</svg>
+			paramètres
+		</button>
+		<button class="menu-item" id="openAboutSub">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2"
+				stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="10" stroke="#2c3e50"></circle>
+				<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="#2c3e50"></path>
+				<line x1="12" y1="17" x2="12.01" y2="17" stroke="#2c3e50"></line>
+			</svg>
+			à propos
+		</button>
+	</div>
+	<div class="submenu" id="submenuPresentation">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="presentation">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+					<line x1="18" y1="6" x2="6" y2="18" />
+					<line x1="6" y1="6" x2="18" y2="18" />
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">présentation</div>
+		<div class="settings-info">
+			<p><strong>le principe :</strong><br>on place n points régulièrement espacés sur un cercle (numérotés de 0 à
+				n-1). Puis on relie chaque point k au point (k × table) modulo n.</p><br>
+			<p><strong>objectif pédagogique :</strong><br>montrer qu'une opération arithmétique basique peut générer des
+				figures complexes d'une beauté surprenante.</p><br>
+			<p><strong>comment expérimenter :</strong><br>• ajustez la <strong>table</strong> (le multiplicateur) et le
+				<strong>modulo</strong> (le nombre de points).<br>• le mode <strong>lent</strong> dessine les traits un
+				à un et le mode <strong>rapide</strong> fait varier automatiquement la valeur.
+			</p>
+		</div>
+	</div>
+	<div class="submenu" id="submenuShortcuts">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="shortcuts">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+					<line x1="18" y1="6" x2="6" y2="18" />
+					<line x1="6" y1="6" x2="18" y2="18" />
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">raccourcis clavier</div>
+		<div class="settings-info">
+			<p><kbd>H</kbd> : retour site</p>
+			<p><kbd>R</kbd> : recharger</p>
+			<p><kbd>F</kbd> : plein écran</p>
+			<p><kbd>M</kbd> : menu</p>
+			<p><kbd>ESC</kbd> : fermer menus</p>
+			<p><kbd>↑</kbd> ou <kbd>V</kbd> : incrémenter la valeur</p>
+			<p><kbd>↓</kbd> ou <kbd>C</kbd> : décrémenter la valeur</p>
+		</div>
+	</div>
+	<div class="submenu" id="submenuSettings">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="settings">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+					<line x1="18" y1="6" x2="6" y2="18" />
+					<line x1="6" y1="6" x2="18" y2="18" />
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">paramètres visuels</div>
+		<div class="setting-line"><label>couleur base :</label><input type="color" id="menuBaseColor" value="#3b82f6">
+		</div>
+		<div class="setting-line">
+			<div class="check-group"><input type="checkbox" id="menuGradientMode" checked><label> dégradé</label></div>
+		</div>
+		<div class="setting-line">
+			<div class="check-group">
+				<input type="checkbox" id="menuShowCircle" checked><label> cercle </label>
+				<input type="checkbox" id="menuShowPoints" checked><label> points </label>
+				<input type="checkbox" id="menuShowNumbers" checked><label> nombres </label>
+			</div>
+		</div>
+		<div class="setting-line">
+			<div class="check-group"><input type="checkbox" id="darkModeToggle"><label> mode sombre</label></div>
+		</div>
+	</div>
+	<div class="submenu" id="submenuAbout">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="about">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+					<line x1="18" y1="6" x2="6" y2="18" />
+					<line x1="6" y1="6" x2="18" y2="18" />
+				</svg>
+			</button>
+		</div>
+		<div class="submenu-title">à propos</div>
+		<div class="settings-info">
+			<p>application développée par Daniel Boulagnon</p>
+			<p>daniel.boulagnon@ac-lille.fr</p>
+			<p>exploitation à but pédagogique et non commercial</p>
+			<p>© 2026 – version 1.0.6</p>
+		</div>
+	</div>
+	<script>
+		const canvas = document.getElementById('mon_canvas'), ctx = canvas.getContext('2d');
+		let rayoncercle = 250, centrex = 300, centrey = 300, nbpointcercle = 10, tablemultiplication = 2, affichagechiffre = true;
+		let tablemultiplication_back = 2, nbpointcercle_back = 10, animer = false, speed1 = 0, animationDelay = 0, gradientMode = true, showCircle = true, showPoints = true, slowAnimationActive = false, currentSegmentIndex = 0, animationProgress = 0, segments = [], positions = [], animFrameId = null, animationHideElements = false;
+		let currentAnimType = 'table';
+		const mainAnimValue = document.getElementById('mainAnimValue'), commonIncrement = document.getElementById('commonIncrement');
+		const selectTableBtn = document.getElementById('selectTableAnim'), selectModuloBtn = document.getElementById('selectModuloAnim');
+		const speedSlider = document.getElementById('speed1'), speedLabel = document.getElementById('speedValue1');
+		const presetSelect = document.getElementById('presetSelect');
+		const menuShowNumbers = document.getElementById('menuShowNumbers'), menuShowCircle = document.getElementById('menuShowCircle'), menuShowPoints = document.getElementById('menuShowPoints');
+		const menuGradientMode = document.getElementById('menuGradientMode');
+		const menuBaseColor = document.getElementById('menuBaseColor');
+		const mobileMainAnimValue = document.getElementById('mobileMainAnimValue'), mobileCommonIncrement = document.getElementById('mobileCommonIncrement');
+		const mobileSelectTable = document.getElementById('mobileSelectTableAnim'), mobileSelectModulo = document.getElementById('mobileSelectModuloAnim');
+		const mobileSpeedSlider = document.getElementById('mobileSpeed'), mobileSpeedLabel = document.getElementById('mobileSpeedValue');
+		const mobilePresetSelect = document.getElementById('mobilePresetSelect');
+		const mobileAnimPlay = document.getElementById('mobileAnimPlay'), mobileAnimRev = document.getElementById('mobileAnimRev'), mobileStopBtn = document.getElementById('mobileStopBtn'), mobileRetourBtn = document.getElementById('retour_btn_mobile');
+
+		function updateSpeedDisplay() {
+			speedLabel.innerText = "vitesse : " + speed1 + " ms";
+			if (mobileSpeedLabel) mobileSpeedLabel.innerText = "vitesse : " + speed1 + " ms";
+		}
+
+		function computeDelayFromSpeed(s) {
+			if (s == 0) return 0;
+			return Math.max(1, 201 - s);
+		}
+
+		function updateAnimationDelay() {
+			animationDelay = computeDelayFromSpeed(speed1);
+			updateSpeedDisplay();
+		}
+
+		function getSegmentColor(idx) {
+			if (gradientMode) return `hsl(${(idx / segments.length) * 360},70%,60%)`;
+			else return menuBaseColor.value;
+		}
+
+		function resizeCanvas() {
+			const c = document.querySelector('.canvas-container');
+			if (!c) return;
+			let w = c.clientWidth, h = c.clientHeight;
+			let size = Math.min(w, h) - 25;
+			size = Math.min(size, 700);
+			if (size < 100) return;
+			canvas.width = size;
+			canvas.height = size;
+			rayoncercle = canvas.width / 2 - 28;
+			centrex = canvas.width / 2;
+			centrey = canvas.height / 2;
+			if (rayoncercle < 20) rayoncercle = 20;
+			dessinecercle();
+		}
+
+		function updatePositions() {
+			const start = -Math.PI / 2, step = (2 * Math.PI) / nbpointcercle;
+			positions = [];
+			for (let i = 0; i < nbpointcercle; i++) {
+				const a = start + i * step;
+				positions.push({ x: centrex + rayoncercle * Math.cos(a), y: centrey + rayoncercle * Math.sin(a) });
+			}
+		}
+
+		function buildSegments() {
+			const segs = [];
+			for (let i = 0; i < nbpointcercle; i++) {
+				let j = (i * tablemultiplication) % nbpointcercle;
+				let idx = ((Math.round(j) % nbpointcercle) + nbpointcercle) % nbpointcercle;
+				segs.push({ fromIdx: i, toIdx: idx });
+			}
+			return segs;
+		}
+
+		function dessinecercle() {
+			if (!ctx || !canvas) return;
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			const isDark = document.body.classList.contains('dark-mode');
+			const bg = isDark ? "#1e1f2c" : "#eef2f9";
+			const effCircle = animationHideElements ? false : showCircle;
+			const effPoints = animationHideElements ? false : showPoints;
+			const effNumbers = animationHideElements ? false : affichagechiffre;
+
+			if (effCircle) {
+				ctx.beginPath();
+				ctx.arc(centrex, centrey, rayoncercle, 0, 2 * Math.PI);
+				ctx.fillStyle = bg;
+				ctx.fill();
+				ctx.strokeStyle = isDark ? "#6a7c8e" : "#bdc7d4";
+				ctx.lineWidth = 1;
+				ctx.stroke();
+			} else {
+				ctx.fillStyle = bg;
+				ctx.fillRect(0, 0, canvas.width, canvas.height);
+			}
+
+			updatePositions();
+			const fontSize = Math.max(12, Math.floor(rayoncercle / 13));
+			const rayonTexte = rayoncercle + fontSize * 1.05;
+
+			for (let i = 0; i < nbpointcercle; i++) {
+				const a = -Math.PI / 2 + i * (2 * Math.PI) / nbpointcercle;
+				const x = centrex + rayoncercle * Math.cos(a), y = centrey + rayoncercle * Math.sin(a);
+				const xTexte = centrex + rayonTexte * Math.cos(a), yTexte = centrey + rayonTexte * Math.sin(a);
+
+				if (effPoints) {
+					ctx.beginPath();
+					ctx.fillStyle = "#0f172a";
+					ctx.arc(x, y, 4.5, 0, 2 * Math.PI);
+					ctx.fill();
+					ctx.fillStyle = "white";
+					ctx.arc(x, y, 1.8, 0, 2 * Math.PI);
+					ctx.fill();
+				}
+				if (effNumbers) {
+					ctx.font = `bold ${fontSize}px "Segoe UI"`;
+					ctx.fillStyle = isDark ? "#cccccc" : "#1e293b";
+					ctx.shadowBlur = 0;
+					const textWidth = ctx.measureText(i.toString()).width;
+					ctx.fillText(i.toString(), xTexte - textWidth / 2, yTexte + fontSize * 0.35);
+				}
+			}
+
+			ctx.shadowBlur = 0;
+			segments = buildSegments();
+
+			if (slowAnimationActive && animFrameId) {
+				for (let k = 0; k < currentSegmentIndex && k < segments.length; k++) {
+					const f = positions[segments[k].fromIdx], t = positions[segments[k].toIdx];
+					if (f && t) {
+						ctx.beginPath();
+						ctx.moveTo(f.x, f.y);
+						ctx.lineTo(t.x, t.y);
+						ctx.strokeStyle = getSegmentColor(k);
+						ctx.lineWidth = 1.5;
+						ctx.stroke();
+					}
+				}
+				if (currentSegmentIndex < segments.length && animationProgress > 0) {
+					const seg = segments[currentSegmentIndex];
+					const f = positions[seg.fromIdx], t = positions[seg.toIdx];
+					if (f && t) {
+						const tt = Math.min(1, animationProgress);
+						const cx = f.x + (t.x - f.x) * tt, cy = f.y + (t.y - f.y) * tt;
+						ctx.beginPath();
+						ctx.moveTo(f.x, f.y);
+						ctx.lineTo(cx, cy);
+						ctx.strokeStyle = getSegmentColor(currentSegmentIndex);
+						ctx.lineWidth = 2;
+						ctx.stroke();
+						ctx.beginPath();
+						ctx.arc(cx, cy, rayoncercle * 0.012, 0, 2 * Math.PI);
+						ctx.fillStyle = "#ff6b4a";
+						ctx.fill();
+					}
+				}
+			} else {
+				for (let k = 0; k < segments.length; k++) {
+					const f = positions[segments[k].fromIdx], t = positions[segments[k].toIdx];
+					if (f && t) {
+						ctx.beginPath();
+						ctx.moveTo(f.x, f.y);
+						ctx.lineTo(t.x, t.y);
+						ctx.strokeStyle = getSegmentColor(k);
+						ctx.lineWidth = 1.5;
+						ctx.stroke();
+					}
+				}
+			}
+		}
+
+		function startSlowAnimation() {
+			if (animer) stopAnim();
+			if (slowAnimationActive) return;
+			stopAllAnimations();
+			slowAnimationActive = true;
+			currentSegmentIndex = 0;
+			animationProgress = 0;
+			segments = buildSegments();
+			function step() {
+				if (!slowAnimationActive) return;
+				if (currentSegmentIndex >= segments.length) {
+					slowAnimationActive = false;
+					animFrameId = null;
+					dessinecercle();
+					return;
+				}
+				animationProgress += 0.022;
+				if (animationProgress >= 1) {
+					animationProgress = 1;
+					dessinecercle();
+					currentSegmentIndex++;
+					animationProgress = 0;
+					if (currentSegmentIndex < segments.length) animFrameId = requestAnimationFrame(step);
+					else {
+						slowAnimationActive = false;
+						animFrameId = null;
+						dessinecercle();
+					}
+				} else {
+					dessinecercle();
+					animFrameId = requestAnimationFrame(step);
+				}
+			}
+			animFrameId = requestAnimationFrame(step);
+		}
+
+		function stopAllAnimations() {
+			if (animFrameId) {
+				cancelAnimationFrame(animFrameId);
+				animFrameId = null;
+			}
+			animer = false;
+			slowAnimationActive = false;
+		}
+
+		function handleSpeedChange(newSpeed) {
+			speed1 = newSpeed;
+			updateAnimationDelay();
+			if (speedSlider) speedSlider.value = speed1;
+			if (mobileSpeedSlider) mobileSpeedSlider.value = speed1;
+
+			if (speed1 === 0) {
+				if (menuShowNumbers && !menuShowNumbers.checked) {
+					menuShowNumbers.checked = true;
+				}
+				affichagechiffre = true;
+			} else {
+				if (menuShowNumbers && menuShowNumbers.checked) {
+					menuShowNumbers.checked = false;
+				}
+				affichagechiffre = false;
+			}
+
+			dessinecercle();
+
+			if (speed1 === 0) {
+				if (animer) stopAnim();
+				startSlowAnimation();
+			} else {
+				if (slowAnimationActive) {
+					stopAllAnimations();
+					dessinecercle();
+				}
+			}
+		}
+
+		speedSlider.addEventListener("input", function () {
+			handleSpeedChange(parseInt(this.value));
+		});
+
+		if (mobileSpeedSlider) {
+			mobileSpeedSlider.addEventListener("input", function () {
+				handleSpeedChange(parseInt(this.value));
+			});
+		}
+
+		function updateTable(value) {
+			stopAllAnimations();
+			tablemultiplication = parseFloat(value);
+			tablemultiplication_back = tablemultiplication;
+			if (mainAnimValue && currentAnimType === 'table') mainAnimValue.value = tablemultiplication;
+			if (mobileMainAnimValue && currentAnimType === 'table') mobileMainAnimValue.value = tablemultiplication;
+			dessinecercle();
+		}
+
+		function updateModulo(value) {
+			stopAllAnimations();
+			let val = parseInt(value);
+			if (isNaN(val) || val < 2) val = 2;
+			nbpointcercle = val;
+			nbpointcercle_back = nbpointcercle;
+			if (mainAnimValue && currentAnimType === 'modulo') mainAnimValue.value = nbpointcercle;
+			if (mobileMainAnimValue && currentAnimType === 'modulo') mobileMainAnimValue.value = nbpointcercle;
+			dessinecercle();
+		}
+
+		function setActiveAnimType(type) {
+			currentAnimType = type;
+			const isTable = (type === 'table');
+			if (selectTableBtn) selectTableBtn.classList.toggle('active', isTable);
+			if (selectModuloBtn) selectModuloBtn.classList.toggle('active', !isTable);
+			if (mobileSelectTable) mobileSelectTable.classList.toggle('active', isTable);
+			if (mobileSelectModulo) mobileSelectModulo.classList.toggle('active', !isTable);
+			const stepVal = isTable ? 0.1 : 1;
+			const incVal = isTable ? 0.1 : 1;
+			if (mainAnimValue) {
+				mainAnimValue.step = stepVal;
+				mainAnimValue.value = isTable ? tablemultiplication : nbpointcercle;
+			}
+			if (mobileMainAnimValue) {
+				mobileMainAnimValue.step = stepVal;
+				mobileMainAnimValue.value = isTable ? tablemultiplication : nbpointcercle;
+			}
+			if (commonIncrement) {
+				commonIncrement.value = incVal;
+				commonIncrement.step = stepVal;
+			}
+			if (mobileCommonIncrement) {
+				mobileCommonIncrement.value = incVal;
+				mobileCommonIncrement.step = stepVal;
+			}
+		}
+
+		function animCommon(direction, isMobileAnim = false) {
+			if (slowAnimationActive) stopAllAnimations();
+			if (animer) stopAnim();
+
+			if (speed1 === 0) {
+				startSlowAnimation();
+				return;
+			}
+
+			animationHideElements = true;
+			dessinecercle();
+			animer = true;
+			
+			// Récupérer l'incrément à chaque étape pour permettre la modification en cours d'animation
+			function step() {
+				if (!animer) {
+					animationHideElements = false;
+					dessinecercle();
+					return;
+				}
+				
+				// Récupérer l'incrément actuel à chaque étape
+				const inc = parseFloat(isMobileAnim ? mobileCommonIncrement.value : commonIncrement.value);
+				
+				if (currentAnimType === 'table') {
+					if (direction === 'up') tablemultiplication += inc;
+					else tablemultiplication = Math.max(0, tablemultiplication - inc);
+					tablemultiplication = Math.round(tablemultiplication * 100) / 100;
+					tablemultiplication_back = tablemultiplication;
+					if (mainAnimValue) mainAnimValue.value = tablemultiplication;
+					if (mobileMainAnimValue) mobileMainAnimValue.value = tablemultiplication;
+					dessinecercle();
+				} else {
+					let newVal = nbpointcercle + (direction === 'up' ? inc : -inc);
+					if (newVal < 2) newVal = 2;
+					nbpointcercle = newVal;
+					nbpointcercle_back = nbpointcercle;
+					if (mainAnimValue) mainAnimValue.value = nbpointcercle;
+					if (mobileMainAnimValue) mobileMainAnimValue.value = nbpointcercle;
+					dessinecercle();
+				}
+				setTimeout(() => {
+					if (animer) step();
+				}, animationDelay);
+			}
+			step();
+		}
+
+		function stopAnim() {
+			animer = false;
+			stopAllAnimations();
+			animationHideElements = false;
+			dessinecercle();
+		}
+
+		function retourCommon() {
+			stopAnim();
+			if (currentAnimType === 'table') {
+				tablemultiplication = tablemultiplication_back;
+				if (mainAnimValue) mainAnimValue.value = tablemultiplication;
+				if (mobileMainAnimValue) mobileMainAnimValue.value = tablemultiplication;
+			} else {
+				nbpointcercle = nbpointcercle_back;
+				if (mainAnimValue) mainAnimValue.value = nbpointcercle;
+				if (mobileMainAnimValue) mobileMainAnimValue.value = nbpointcercle;
+			}
+			dessinecercle();
+		}
+
+		function applyPreset(tval, mval) {
+			stopAllAnimations();
+			stopAnim();
+			tablemultiplication = parseFloat(tval);
+			nbpointcercle = parseInt(mval);
+			if (isNaN(nbpointcercle) || nbpointcercle < 2) nbpointcercle = 2;
+			tablemultiplication_back = tablemultiplication;
+			nbpointcercle_back = nbpointcercle;
+			if (mainAnimValue) mainAnimValue.value = (currentAnimType === 'table') ? tablemultiplication : nbpointcercle;
+			if (mobileMainAnimValue) mobileMainAnimValue.value = (currentAnimType === 'table') ? tablemultiplication : nbpointcercle;
+			dessinecercle();
+		}
+
+		if (selectTableBtn) selectTableBtn.onclick = () => { setActiveAnimType('table'); stopAnim(); dessinecercle(); };
+		if (selectModuloBtn) selectModuloBtn.onclick = () => { setActiveAnimType('modulo'); stopAnim(); dessinecercle(); };
+		if (mobileSelectTable) mobileSelectTable.onclick = () => { setActiveAnimType('table'); stopAnim(); dessinecercle(); };
+		if (mobileSelectModulo) mobileSelectModulo.onclick = () => { setActiveAnimType('modulo'); stopAnim(); dessinecercle(); };
+
+		document.getElementById("anim_play").onclick = () => { if (currentAnimType === 'table') tablemultiplication_back = tablemultiplication; else nbpointcercle_back = nbpointcercle; animCommon('up', false); };
+		document.getElementById("anim_rev").onclick = () => { if (currentAnimType === 'table') tablemultiplication_back = tablemultiplication; else nbpointcercle_back = nbpointcercle; animCommon('down', false); };
+		document.getElementById("stop_btn").onclick = stopAnim;
+		document.getElementById("retour_btn").onclick = retourCommon;
+
+		if (mobileAnimPlay) mobileAnimPlay.onclick = () => { if (currentAnimType === 'table') tablemultiplication_back = tablemultiplication; else nbpointcercle_back = nbpointcercle; animCommon('up', true); };
+		if (mobileAnimRev) mobileAnimRev.onclick = () => { if (currentAnimType === 'table') tablemultiplication_back = tablemultiplication; else nbpointcercle_back = nbpointcercle; animCommon('down', true); };
+		if (mobileStopBtn) mobileStopBtn.onclick = stopAnim;
+		if (mobileRetourBtn) mobileRetourBtn.onclick = retourCommon;
+
+		if (mainAnimValue) mainAnimValue.addEventListener("change", function () { if (currentAnimType === 'table') updateTable(this.value); else updateModulo(this.value); });
+		if (mobileMainAnimValue) mobileMainAnimValue.addEventListener("change", function () { if (currentAnimType === 'table') updateTable(this.value); else updateModulo(this.value); });
+
+		if (presetSelect) presetSelect.addEventListener("change", function (e) { const v = e.target.value; if (!v) return; const [t, m] = v.split(","); if (t && m) applyPreset(t, m); presetSelect.value = ""; });
+		if (mobilePresetSelect) mobilePresetSelect.addEventListener("change", function (e) { const v = e.target.value; if (!v) return; const [t, m] = v.split(","); if (t && m) applyPreset(t, m); mobilePresetSelect.value = ""; });
+
+		const menuOverlay = document.getElementById('menuOverlay'), slideMenu = document.getElementById('slideMenu'), menuBtn = document.getElementById('menuBtn'), menuClose = document.getElementById('menuClose');
+		function toggleMainMenu(force) { const open = (force !== undefined) ? force : !slideMenu.classList.contains('active'); slideMenu.classList.toggle('active', open); menuOverlay.classList.toggle('active', open); }
+		if (menuBtn) menuBtn.onclick = () => toggleMainMenu();
+		if (menuClose) menuClose.onclick = () => toggleMainMenu(false);
+		if (menuOverlay) menuOverlay.onclick = () => toggleMainMenu(false);
+
+		const submenus = { presentation: document.getElementById('submenuPresentation'), shortcuts: document.getElementById('submenuShortcuts'), settings: document.getElementById('submenuSettings'), about: document.getElementById('submenuAbout') };
+		document.getElementById('openPresentationSub').onclick = () => { if (submenus.presentation) submenus.presentation.classList.add('active'); toggleMainMenu(false); };
+		document.getElementById('openShortcutsSub').onclick = () => { if (submenus.shortcuts) submenus.shortcuts.classList.add('active'); toggleMainMenu(false); };
+		document.getElementById('openSettingsSub').onclick = () => { if (submenus.settings) submenus.settings.classList.add('active'); toggleMainMenu(false); };
+		document.getElementById('openAboutSub').onclick = () => { if (submenus.about) submenus.about.classList.add('active'); toggleMainMenu(false); };
+		document.querySelectorAll('.submenu-close').forEach(btn => { btn.onclick = () => { Object.values(submenus).forEach(s => { if (s) s.classList.remove('active'); }); }; });
+
+		if (menuBaseColor) menuBaseColor.addEventListener('change', () => { gradientMode = false; if (menuGradientMode) menuGradientMode.checked = false; dessinecercle(); });
+		if (menuGradientMode) menuGradientMode.addEventListener('change', (e) => { gradientMode = e.target.checked; dessinecercle(); });
+
+		if (menuShowCircle) menuShowCircle.addEventListener('change', (e) => { showCircle = e.target.checked; dessinecercle(); });
+		if (menuShowPoints) menuShowPoints.addEventListener('change', (e) => { showPoints = e.target.checked; dessinecercle(); });
+		if (menuShowNumbers) menuShowNumbers.addEventListener('change', (e) => {
+			affichagechiffre = e.target.checked;
+			dessinecercle();
+		});
+
+		const darkToggle = document.getElementById('darkModeToggle');
+		if (darkToggle) {
+			if (localStorage.getItem('darkModeTables') === 'true') {
+				document.body.classList.add('dark-mode');
+				darkToggle.checked = true;
+			}
+			darkToggle.addEventListener('change', (e) => {
+				document.body.classList.toggle('dark-mode', e.target.checked);
+				localStorage.setItem('darkModeTables', e.target.checked);
+				dessinecercle();
+			});
+		}
+
+		document.getElementById('screenshotBtn').onclick = () => { const link = document.createElement('a'); link.download = 'multiplication_modulaire.png'; link.href = canvas.toDataURL(); link.click(); };
+		document.getElementById('homeBtn').onclick = () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+		document.getElementById('reloadBtn').onclick = () => location.reload();
+
+		const fullBtn = document.getElementById('fullscreenBtn');
+		function updateFullIcon() {
+			if (document.fullscreenElement) {
+				fullBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="10" x2="10" y2="10"/><line x1="9" y1="4" x2="9" y2="11"/><line x1="14" y1="10" x2="21" y2="10"/><line x1="15" y1="4" x2="15" y2="10"/><line x1="3" y1="15.5" x2="10" y2="15.5"/><line x1="9" y1="15" x2="9" y2="21"/><line x1="14" y1="15.5" x2="21" y2="15.5"/><line x1="15" y1="15" x2="15" y2="21"/></svg>`;
+				fullBtn.setAttribute('data-title', 'quitter plein écran');
+			} else {
+				fullBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/><line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/><line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/><line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/></svg>`;
+				fullBtn.setAttribute('data-title', 'plein écran');
+			}
+		}
+
+		if (fullBtn) fullBtn.onclick = () => { if (!document.fullscreenElement) document.documentElement.requestFullscreen().then(updateFullIcon); else document.exitFullscreen().then(updateFullIcon); };
+		document.addEventListener('fullscreenchange', updateFullIcon);
+
+		// Raccourcis clavier pour les flèches et les touches V/C
+		document.addEventListener('keydown', (e) => {
+			// Touche flèche haut ou V/v = incrémenter
+			if (e.key === 'ArrowUp' || e.key === 'v' || e.key === 'V') {
+				e.preventDefault();
+				if (currentAnimType === 'table') {
+					tablemultiplication_back = tablemultiplication;
+				} else {
+					nbpointcercle_back = nbpointcercle;
+				}
+				animCommon('up', false);
+			}
+			// Touche flèche bas ou C/c = décrémenter
+			else if (e.key === 'ArrowDown' || e.key === 'c' || e.key === 'C') {
+				e.preventDefault();
+				if (currentAnimType === 'table') {
+					tablemultiplication_back = tablemultiplication;
+				} else {
+					nbpointcercle_back = nbpointcercle;
+				}
+				animCommon('down', false);
+			}
+			// Touche Echap pour fermer les menus
+			else if (e.key === 'Escape') {
+				toggleMainMenu(false);
+			}
+			// Touche M pour ouvrir/fermer le menu
+			else if (e.key === 'm' || e.key === 'M') {
+				toggleMainMenu();
+			}
+			// Touche H pour l'accueil
+			else if (e.key === 'h' || e.key === 'H') {
+				window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+			}
+			// Touche R pour recharger
+			else if (e.key === 'r' || e.key === 'R') {
+				location.reload();
+			}
+			// Touche F pour le plein écran
+			else if (e.key === 'f' || e.key === 'F') {
+				if (!document.fullscreenElement) document.documentElement.requestFullscreen().then(updateFullIcon);
+				else document.exitFullscreen().then(updateFullIcon);
+			}
+		});
+
+		window.addEventListener('resize', () => setTimeout(resizeCanvas, 100));
+
+		window.onload = () => {
+			speed1 = 0;
+			animationDelay = computeDelayFromSpeed(0);
+
+			if (speedSlider) speedSlider.value = 0;
+			if (mobileSpeedSlider) mobileSpeedSlider.value = 0;
+
+			updateSpeedDisplay();
+
+			if (menuShowNumbers) menuShowNumbers.checked = true;
+			affichagechiffre = true;
+
+			updateAnimationDelay();
+			resizeCanvas();
+			tablemultiplication_back = tablemultiplication;
+			nbpointcercle_back = nbpointcercle;
+			setActiveAnimType('table');
+			dessinecercle();
+			updateFullIcon();
+
+			startSlowAnimation();
+		};
+
+		(function reorganiserBoutonsMobile() {
+			if (window.innerWidth <= 768) {
+				const toolbar = document.querySelector('.toolbar');
+				const leftBtns = document.querySelector('.toolbar-left');
+				const rightBtns = document.querySelector('.toolbar-right');
+				const center = document.querySelector('.toolbar-center');
+
+				if (!document.querySelector('.toolbar-unique-container')) {
+					const container = document.createElement('div');
+					container.className = 'toolbar-unique-container';
+					container.style.display = 'flex';
+					container.style.justifyContent = 'center';
+					container.style.gap = '8px';
+					container.style.width = '100%';
+					container.style.order = '1';
+
+					const allBtns = [...leftBtns.children, ...rightBtns.children];
+					allBtns.forEach(btn => {
+						const clonedBtn = btn.cloneNode(true);
+						clonedBtn.style.width = '40px';
+						clonedBtn.style.height = '40px';
+						clonedBtn.style.flex = '0 0 auto';
+						container.appendChild(clonedBtn);
+
+						if (btn.id) {
+							const newBtn = container.querySelector(`#${btn.id}`);
+							if (newBtn && btn.onclick) {
+								newBtn.onclick = btn.onclick;
+							}
+						}
+					});
+
+					leftBtns.style.display = 'none';
+					rightBtns.style.display = 'none';
+
+					toolbar.insertBefore(container, center);
+
+					if (center) {
+						center.style.width = '100%';
+						center.style.textAlign = 'center';
+						center.style.order = '2';
+						center.style.marginTop = '8px';
+					}
+
+					toolbar.style.display = 'flex';
+					toolbar.style.flexDirection = 'column';
+					toolbar.style.gap = '10px';
+				}
+			}
+		})();
+
+		window.addEventListener('resize', function () {
+			if (window.innerWidth <= 768) {
+				if (!document.querySelector('.toolbar-unique-container')) {
+					location.reload();
+				}
+			} else {
+				if (document.querySelector('.toolbar-unique-container')) {
+					location.reload();
+				}
+			}
+		});
+	</script>
+</body>
+
+</html>
