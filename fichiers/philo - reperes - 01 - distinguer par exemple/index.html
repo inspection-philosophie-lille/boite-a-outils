@@ -1,0 +1,2948 @@
+<!DOCTYPE html>
+<!-- Daniel Boulagnon -->
+<!-- daniel.boulagnon@ac-lille.fr -->
+<!-- version 2026 -->
+<!-- Exploitation à but strictement pédagogique et non lucratif -->
+<html lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<link rel="icon" href="../../src/favicon.ico" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<title id="htmlTitle"></title>
+<style>
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	touch-action: manipulation;
+}
+
+html, body {
+	height: 100%;
+	overflow: hidden;
+}
+
+:root {
+	--bg: #f0f0f0;
+	--btn: #e0e0e0;
+	--font-color: #000000;
+	--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.9);
+	--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.9);
+	--tooltip-bg: #ffffff;
+	--tooltip-color: #333333;
+	--letter-color: #e74c3c;
+	--color-correct: #28a745;
+	--color-incorrect: #dc3545;
+	--border-correct: #28a745;
+	--border-incorrect: #dc3545;
+	--selected-bg: #ffeb3b;
+	--selected-color: #000000;
+	--dropzone-hover: #e0e0e0;
+	--toast-bg: #e0e0e0;
+	--toast-text: #333333;
+	--primary-color: #e74c3c;
+	--badge-bg: #e74c3c;
+	--badge-color: #ffffff;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	background-color: var(--bg);
+	margin: 0;
+	padding: 12px 12px 20px 12px;
+	height: 100vh;
+	height: 100dvh;
+	display: flex;
+	flex-direction: column;
+	color: var(--font-color);
+	transition: background-color 0.4s, color 0.4s;
+	overflow: hidden;
+}
+
+body.no-animations,
+body.no-animations *,
+body.no-animations *::before,
+body.no-animations *::after {
+	transition: none !important;
+	animation: none !important;
+}
+
+body.menu-open .toolbar-wrapper,
+body.menu-open .main-container,
+body.menu-open .words-toaster,
+body.menu-open .container,
+body.menu-open .toolbar-mobile,
+body.menu-open .score-button-container {
+	filter: blur(5px);
+	transition: filter 0.3s ease;
+	pointer-events: none;
+}
+
+.slide-menu,
+.submenu,
+.menu-overlay {
+	filter: none !important;
+	pointer-events: auto !important;
+}
+
+@media (max-width: 600px) {
+	body.menu-open .toolbar-wrapper,
+	body.menu-open .main-container,
+	body.menu-open .words-toaster,
+	body.menu-open .container,
+	body.menu-open .toolbar-mobile,
+	body.menu-open .score-button-container {
+		filter: blur(3px);
+	}
+}
+
+.btn,
+.timer-btn,
+.menu-close,
+.submenu-close,
+.menu-item,
+.notion-select,
+.toaster-btn,
+.toaster-score,
+.stats-reload-btn,
+.quiz-btn,
+.upload-btn,
+.local-reset-btn,
+.btn-sequences,
+.select-all-btn {
+	background: var(--btn);
+	color: var(--font-color);
+	box-shadow: var(--shadow-out);
+	transition: all 0.2s ease;
+	border: none;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.btn:hover,
+.timer-btn:hover,
+.menu-close:hover,
+.submenu-close:hover,
+.menu-item:hover,
+.notion-select:hover,
+.toaster-btn:hover,
+.stats-reload-btn:hover,
+.quiz-btn:hover,
+.upload-btn:hover,
+.local-reset-btn:hover,
+.btn-sequences:hover,
+.select-all-btn:hover {
+	box-shadow: var(--shadow-in);
+	transform: translateY(-2px);
+}
+
+.btn:active,
+.timer-btn:active,
+.btn-sequences:active {
+	transform: scale(0.95);
+}
+
+.btn {
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	position: relative;
+}
+
+.btn svg {
+	width: 24px;
+	height: 24px;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2;
+	flex-shrink: 0;
+}
+
+.btn::after,
+.timer-btn::after,
+.btn-sequences::after {
+	content: attr(data-title);
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-top: 0.5rem;
+	background-color: var(--tooltip-bg);
+	color: var(--tooltip-color);
+	padding: 0.3rem 0.6rem;
+	border-radius: 5px;
+	font-size: 0.8rem;
+	white-space: nowrap;
+	opacity: 0;
+	pointer-events: none;
+	z-index: 10;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn:hover::after,
+.timer-btn:hover::after,
+.btn-sequences:hover::after {
+	opacity: 1;
+}
+
+.btn-home .icon-wrapper {
+	width: 52px;
+	height: 52px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transform-style: preserve-3d;
+	flex-shrink: 0;
+}
+
+.btn-home:hover .icon-wrapper {
+	animation: spin360 2s infinite linear;
+}
+
+@keyframes spin360 {
+	0% { transform: rotateY(0deg); }
+	100% { transform: rotateY(360deg); }
+}
+
+.btn-reload:hover svg {
+	animation: rotate 1s linear;
+}
+
+@keyframes rotate {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
+.menu-item:hover svg {
+	animation: rotate 1s linear;
+}
+
+.menu-close:hover svg,
+.submenu-close:hover svg {
+	animation: rotate 1s linear;
+}
+
+.btn-sequences:hover svg {
+	animation: rotate 1s linear;
+}
+
+.menu-icon {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	transition: transform 0.3s ease;
+	width: 22px;
+	height: 18px;
+	justify-content: center;
+}
+
+.menu-icon span {
+	display: block;
+	width: 100%;
+	height: 2px;
+	background: currentColor;
+	border-radius: 2px;
+	transition: all 0.3s ease;
+}
+
+.btn-menu:hover .menu-icon {
+	transform: rotate(90deg);
+}
+
+.btn-fullscreen .fullscreen-icon {
+	transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-fullscreen:not(.fullscreen-active):hover .fullscreen-icon {
+	transform: scale(1.5);
+}
+
+.fullscreen-exit-icon {
+	transform-origin: center;
+	transition: transform 0.3s ease;
+	stroke-width: 1.2px !important;
+}
+
+.btn-fullscreen.fullscreen-active:hover .fullscreen-exit-icon {
+	transform: scale(0.7);
+}
+
+.btn-sequences {
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	position: relative;
+}
+
+.btn-sequences svg {
+	width: 24px;
+	height: 24px;
+	stroke: currentColor;
+	stroke-width: 2;
+	fill: none;
+	flex-shrink: 0;
+}
+
+.toolbar-wrapper {
+	position: relative;
+	z-index: 10;
+	flex-shrink: 0;
+	margin-bottom: 12px;
+}
+
+.toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 8px 15px;
+	background: transparent;
+	height: 76px;
+	border-radius: 12px 12px 0 0;
+	gap: 10px;
+	position: relative;
+}
+
+.toolbar-left,
+.toolbar-right {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex: 1;
+}
+
+.toolbar-left {
+	justify-content: flex-start;
+}
+.toolbar-right {
+	justify-content: flex-end;
+}
+
+.toolbar-center {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	pointer-events: none;
+}
+
+.toolbar-title {
+	color: var(--primary-color);
+	font-size: clamp(1.8rem, 5vw, 2.5rem);
+	font-weight: bold;
+	white-space: nowrap;
+	text-transform: lowercase;
+	margin: 0;
+}
+
+.toolbar-subtitle {
+	color: #555;
+	font-size: clamp(1rem, 3vw, 1.2rem);
+	line-height: 1.2;
+	padding-top: 12px;
+}
+
+body.dark-mode .toolbar-subtitle,
+body.dark-mode .mobile-subtitle {
+	color: #8895a7;
+}
+
+/* ===== DROPDOWN REPÈRES ===== */
+.sequences-dropdown {
+	position: absolute;
+	top: 60px;
+	left: 0;
+	margin-top: 8px;
+	background: var(--bg);
+	border-radius: 12px;
+	box-shadow: var(--shadow-out);
+	display: none;
+	min-width: 220px;
+	max-width: 95vw;
+	width: auto;
+	max-height: 450px;
+	overflow-y: auto;
+	z-index: 1000;
+	padding: 6px 0;
+}
+
+.sequences-dropdown.open {
+	display: block;
+}
+
+body.dark-mode .sequences-dropdown {
+	background: #1a1a1a;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.sequences-dropdown .dropdown-header {
+	padding: 8px 16px;
+	margin-top: 0px;
+	margin-bottom: 8px;
+	font-weight: bold;
+	color: var(--primary-color);
+	font-size: 0.8rem;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+body.dark-mode .sequences-dropdown .dropdown-header {
+	border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.dropdown-notion-item {
+	display: flex;
+	align-items: center;
+	padding: 6px 16px;
+	margin: 2px 0;
+	cursor: pointer;
+	transition: background 0.15s ease;
+	white-space: nowrap;
+}
+
+.dropdown-notion-item:hover {
+	background: rgba(0, 0, 0, 0.06);
+}
+
+body.dark-mode .dropdown-notion-item:hover {
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.dropdown-notion-item input[type="checkbox"] {
+	width: 16px;
+	height: 16px;
+	margin-right: 10px;
+	cursor: pointer;
+	flex-shrink: 0;
+	accent-color: var(--primary-color);
+}
+
+.dropdown-notion-item label {
+	flex: 1;
+	cursor: pointer;
+	font-size: 0.78rem;
+	color: var(--font-color);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.dropdown-actions {
+	display: flex;
+	gap: 0;
+	padding: 4px 12px 10px 12px;
+	margin-bottom: 4px;
+}
+
+body.dark-mode .dropdown-actions {
+	border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.dropdown-actions .select-all-btn {
+	padding: 4px 10px;
+	font-size: 0.65rem;
+	flex: 1;
+	text-align: center;
+	border: none;
+	border-radius: 4px;
+	background: var(--btn);
+	color: var(--font-color);
+	box-shadow: var(--shadow-out);
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.dropdown-actions .select-all-btn:first-child {
+	border-radius: 4px 0 0 4px;
+}
+
+.dropdown-actions .select-all-btn:last-child {
+	border-radius: 0 4px 4px 0;
+	border-left: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+body.dark-mode .dropdown-actions .select-all-btn:last-child {
+	border-left-color: rgba(255, 255, 255, 0.08);
+}
+
+.dropdown-actions .select-all-btn:hover {
+	box-shadow: var(--shadow-in);
+	transform: translateY(-1px);
+	z-index: 1;
+}
+
+.dropdown-count {
+	padding: 6px 16px 4px 16px;
+	font-size: 0.65rem;
+	opacity: 0.6;
+	text-align: center;
+	border-top: 1px solid rgba(0, 0, 0, 0.06);
+	margin-top: 4px;
+}
+
+body.dark-mode .dropdown-count {
+	border-top-color: rgba(255, 255, 255, 0.06);
+}
+/* ===== FIN STYLES REPÈRES ===== */
+
+.timer-btn {
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	padding: 0;
+	line-height: 1;
+	font-size: 12px;
+	font-weight: bold;
+	font-family: monospace;
+	flex-shrink: 0;
+}
+
+.timer-btn.warning {
+	color: #ff6b6b;
+	animation: timer-pulse 0.5s ease infinite alternate;
+}
+
+.timer-btn.danger {
+	color: #ff0000;
+	animation: timer-pulse 0.3s ease infinite alternate;
+}
+
+@keyframes timer-pulse {
+	0% { transform: scale(1); }
+	100% { transform: scale(1.05); }
+}
+
+.toolbar-mobile {
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	padding: 2px 12px 0px;
+	background: transparent;
+	border-radius: 12px 12px 0 0;
+	margin-top: 9px;
+}
+
+.toolbar-mobile .btn,
+.toolbar-mobile .timer-btn,
+.toolbar-mobile .btn-sequences {
+	width: 44px;
+	height: 44px;
+}
+
+.toolbar-mobile .btn svg {
+	width: 20px;
+	height: 20px;
+}
+
+.toolbar-mobile .menu-icon {
+	width: 20px;
+	height: 16px;
+	gap: 3px;
+}
+
+.toolbar-mobile .menu-icon span {
+	height: 2px;
+}
+
+.toolbar-mobile .btn-sequences svg {
+	width: 20px;
+	height: 20px;
+}
+
+.mobile-buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: fit-content;
+	padding: 0 4px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.mobile-title-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	margin-top: 10px;
+}
+
+.mobile-title {
+	color: var(--primary-color);
+	font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+	font-weight: bold;
+	text-align: center;
+	margin-top: 5px;
+	text-transform: lowercase;
+}
+
+.mobile-subtitle {
+	display: none;
+	color: #555;
+	font-size: clamp(0.7rem, 2vw, 0.85rem);
+	text-align: center;
+	padding-top: 12px;
+}
+
+/* ===== MOBILE : PAS DE SCROLL, ESPACEMENT AJUSTÉ ===== */
+@media (max-width: 600px) {
+    html, body {
+        overflow: hidden !important;
+        height: 100% !important;
+        height: 100dvh !important;
+    }
+    
+    body {
+        padding: 0px 4px 0px 4px !important;
+        overflow: hidden !important;
+        height: 100dvh !important;
+    }
+    
+    .toolbar {
+        display: none;
+    }
+    .toolbar-mobile {
+        display: flex;
+        padding: 4px 4px 0px 4px;
+        flex-shrink: 0;
+    }
+    
+    .mobile-buttons {
+        margin-bottom: 4px;
+        gap: 3px;
+    }
+    .mobile-buttons .btn,
+    .mobile-buttons .timer-btn,
+    .mobile-buttons .btn-sequences {
+        width: 34px;
+        height: 34px;
+    }
+    .mobile-buttons .btn svg {
+        width: 14px;
+        height: 14px;
+    }
+    .mobile-buttons .btn-sequences svg {
+        width: 14px;
+        height: 14px;
+    }
+    .mobile-buttons .menu-icon {
+        width: 14px;
+        height: 12px;
+        gap: 2px;
+    }
+    .mobile-buttons .menu-icon span {
+        height: 1.5px;
+    }
+    .timer-btn {
+        font-size: 8px !important;
+    }
+    .mobile-title {
+        font-size: 0.85rem;
+        margin-top: 0;
+    }
+    .mobile-subtitle {
+        display: none !important;
+    }
+    
+    /* === CONTENEUR PRINCIPAL === */
+    .container {
+        flex: 1 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        overflow: hidden !important;
+        padding: 0 4px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        padding-bottom: 8px !important;
+    }
+    
+    /* === RANGÉE DES DROPZONES === */
+    .row {
+        flex: 1 !important;
+        min-height: 0 !important;
+        gap: 6px !important;
+        margin: 0px 0 !important;
+        overflow: hidden !important;
+    }
+    
+    /* === DROPZONES === */
+    .dropzone {
+        min-width: 0 !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        flex: 1 1 50% !important;
+        padding: 4px !important;
+        overflow-y: auto !important;
+        gap: 6px !important;
+        margin-bottom: 0px;
+        height: auto !important;
+    }
+    
+    .dropzone strong {
+        font-size: 0.75rem !important;
+        flex-shrink: 0 !important;
+        margin-bottom: 4px !important;
+    }
+    
+    .dropzone .draggable {
+        width: 100% !important;
+        padding: 6px 10px !important;
+        font-size: 0.7rem !important;
+        min-height: 0 !important;
+        height: auto !important;
+        flex-shrink: 0 !important;
+        margin-bottom: 6px !important;
+        line-height: 1.4 !important;
+    }
+    
+    /* === CONTENEUR DES BOUTONS SCORE === */
+    .score-button-container {
+        flex-shrink: 0 !important;
+        gap: 0 !important;
+        margin: 8px 0 4px 0 !important;
+        padding: 4px 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: stretch !important;
+        min-height: 44px !important;
+    }
+    
+    .button, .score {
+        padding: 6px 14px !important;
+        font-size: 0.75rem !important;
+        min-height: 36px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 0 !important;
+        flex: 1 !important;
+        max-width: 50% !important;
+    }
+    
+    .button {
+        border-radius: 8px 0 0 8px !important;
+    }
+    
+    .score {
+        border-radius: 0 8px 8px 0 !important;
+        border-left: 1px solid rgba(0,0,0,0.1) !important;
+    }
+    
+    body.dark-mode .score {
+        border-left-color: rgba(255,255,255,0.1) !important;
+    }
+    
+    .container::after {
+        content: '';
+        display: block;
+        height: 4px;
+        flex-shrink: 0;
+    }
+    
+    /* === DROPDOWN REPÈRES MOBILE === */
+    .sequences-dropdown {
+        position: fixed !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        top: 90px !important;
+        min-width: unset !important;
+        max-width: 92vw !important;
+        width: 92vw !important;
+        margin-top: 0 !important;
+        max-height: 40vh !important;
+    }
+    .dropdown-notion-item {
+        padding: 6px 12px !important;
+    }
+    .dropdown-notion-item label {
+        font-size: 0.7rem !important;
+    }
+    .dropdown-notion-item input[type="checkbox"] {
+        width: 16px !important;
+        height: 16px !important;
+    }
+    .dropdown-actions .select-all-btn {
+        padding: 4px 6px !important;
+        font-size: 0.55rem !important;
+    }
+    
+    /* === MENUS MOBILE === */
+    .slide-menu {
+        width: 260px;
+        right: -280px;
+        padding: 14px 16px;
+    }
+    .submenu {
+        width: 260px;
+        right: -280px;
+        padding: 14px 16px;
+    }
+    .menu-item {
+        padding: 10px 14px;
+        font-size: 12px;
+        min-height: 40px;
+    }
+    .menu-item svg {
+        width: 18px;
+        height: 18px;
+    }
+    .submenu-title {
+        font-size: 1.1rem;
+    }
+    .settings-info, .stats-info {
+        padding: 8px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 400px) {
+	.mobile-buttons {
+		gap: 2px;
+	}
+	.mobile-buttons .btn,
+	.mobile-buttons .timer-btn,
+	.mobile-buttons .btn-sequences {
+		width: 30px;
+		height: 30px;
+	}
+	.mobile-buttons .btn svg {
+		width: 13px;
+		height: 13px;
+	}
+	.mobile-buttons .btn-sequences svg {
+		width: 13px;
+		height: 13px;
+	}
+	.mobile-buttons .menu-icon {
+		width: 13px;
+		height: 11px;
+		gap: 2px;
+	}
+	.mobile-buttons .menu-icon span {
+		height: 1.5px;
+	}
+	.timer-btn {
+		font-size: 7px !important;
+	}
+	.mobile-title {
+		font-size: 1.5rem;
+	}
+	.sequences-dropdown {
+		top: 80px !important;
+		max-width: 95vw !important;
+		width: 95vw !important;
+		max-height: 35vh !important;
+	}
+	.dropzone .draggable {
+		font-size: 0.65rem !important;
+		padding: 5px 8px !important;
+		margin-bottom: 5px !important;
+	}
+	.dropzone strong {
+		font-size: 0.7rem !important;
+	}
+	.button, .score {
+		font-size: 0.6rem !important;
+		padding: 3px 8px !important;
+		min-height: 28px !important;
+	}
+}
+
+/* MODE SOMBRE */
+body.dark-mode {
+	--bg: #121212;
+	--btn: #3d3d3d;
+	--font-color: #ffffff;
+	--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.05);
+	--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
+	--color-correct: #2ecc71;
+	--color-incorrect: #e74c3c;
+	--border-correct: #2ecc71;
+	--border-incorrect: #e74c3c;
+	--tooltip-bg: #1a1a1a;
+	--tooltip-color: #ffffff;
+	--selected-bg: #ff9800;
+	--selected-color: #000000;
+	--dropzone-hover: #555555;
+	--toast-bg: #3d3d3d;
+	--toast-text: #e0e0e0;
+	--primary-color: #ff6b6b;
+	--badge-bg: #ff6b6b;
+	--badge-color: #ffffff;
+	background-color: #121212 !important;
+	color: #ffffff !important;
+}
+
+body.dark-mode .dropzone,
+body.dark-mode .draggable,
+body.dark-mode .btn,
+body.dark-mode .timer-btn,
+body.dark-mode .btn-sequences,
+body.dark-mode .button,
+body.dark-mode .score,
+body.dark-mode .slide-menu,
+body.dark-mode .menu-item,
+body.dark-mode .submenu {
+	background-color: #3d3d3d;
+	color: #ffffff;
+	box-shadow: 0.3rem 0.3rem 0.6rem #000000, -0.3rem -0.3rem 0.6rem #5a5a5a;
+}
+
+body.dark-mode .dropzone {
+	background-color: #2d2d2d;
+}
+body.dark-mode .draggable {
+	background: #4a4a4a !important;
+}
+
+body.dark-mode .mobile-title {
+	color: #ff6b6b !important;
+}
+
+body.dark-mode .settings-info,
+body.dark-mode .stats-info {
+	background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode kbd {
+	background-color: #1a1a1a;
+	color: #e2e8f0;
+	border: 1px solid #333;
+}
+
+body.dark-mode .shortcuts-table kbd {
+	background-color: #1a1a1a;
+	color: #e2e8f0;
+	border: 1px solid #333;
+}
+
+/* MODE DALTONIEN */
+body.colorblind-mode {
+	--color-correct: #2c7be5;
+	--color-incorrect: #1a3a5c;
+	--border-correct: #2c7be5;
+	--border-incorrect: #1a3a5c;
+	--letter-color: #2c7be5;
+	--primary-color: #2c7be5;
+	--badge-bg: #2c7be5;
+	--badge-color: #ffffff;
+}
+
+body.dark-mode.colorblind-mode {
+	--color-correct: #4a90d9;
+	--color-incorrect: #3a5a7a;
+	--border-correct: #4a90d9;
+	--border-incorrect: #3a5a7a;
+	--letter-color: #4a90d9;
+	--primary-color: #4a90d9;
+	--badge-bg: #4a90d9;
+	--badge-color: #ffffff;
+}
+
+/* MENU ET SOUS-MENUS */
+.menu-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 1000;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.3s ease;
+}
+
+.menu-overlay.open {
+	opacity: 1;
+	visibility: visible;
+}
+
+.slide-menu {
+	position: fixed;
+	top: 0;
+	right: -300px;
+	width: 280px;
+	height: 100vh;
+	background-color: var(--bg);
+	z-index: 1001;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	border-radius: 20px 0 0 20px;
+	box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+	transition: right 0.3s ease;
+	overflow-y: auto;
+}
+
+.slide-menu.open {
+	right: 0;
+}
+
+.menu-header {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 1rem;
+}
+
+.menu-close,
+.submenu-close {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.menu-close svg,
+.submenu-close svg {
+	width: 18px;
+	height: 18px;
+	stroke: currentColor;
+}
+
+.menu-item {
+	display: flex;
+	align-items: center;
+	padding: 0px 20px;
+	font-size: 14px;
+	border-radius: 8px;
+	margin-bottom: 17px;
+	width: 100%;
+	min-height: 42px;
+	border: none;
+}
+
+.menu-item:hover {
+	background: rgba(0, 0, 0, 0.08);
+	transform: translateY(-2px);
+}
+
+body.dark-mode .menu-item:hover {
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.menu-item svg {
+	width: 24px;
+	height: 24px;
+	margin-right: 16px;
+	stroke: currentColor;
+	stroke-width: 2;
+	fill: none;
+	flex-shrink: 0;
+}
+
+.menu-item .item-label {
+	flex: 1;
+	text-align: left;
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
+.menu-item .item-badge {
+	background: var(--badge-bg);
+	color: var(--badge-color);
+	border-radius: 50%;
+	width: 34px;
+	height: 34px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 10px;
+	font-weight: bold;
+	flex-shrink: 0;
+	margin-left: 8px;
+}
+
+.submenu {
+	position: fixed;
+	top: 0;
+	right: -340px;
+	width: 280px;
+	height: 100%;
+	background: var(--bg);
+	z-index: 10010;
+	box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+	border-radius: 20px 0 0 20px;
+	padding: 2rem 1.5rem;
+	overflow-y: auto;
+	transition: right 0.5s ease;
+}
+
+.submenu.active {
+	right: 0;
+}
+
+.submenu-title {
+	font-size: 1.4rem;
+	font-weight: bold;
+	color: var(--primary-color);
+	margin: 0.5rem 0 1.5rem 0;
+	text-align: center;
+	text-transform: lowercase;
+}
+
+.submenu-content {
+	color: var(--font-color);
+	font-size: 13px;
+	line-height: 1.5;
+	margin-top: 4px;
+}
+
+.settings-info,
+.stats-info {
+	margin-top: 20px;
+	padding: 15px;
+	background: rgba(0, 0, 0, 0.05);
+	border-radius: 10px;
+	text-align: left;
+}
+
+body.dark-mode .settings-info,
+body.dark-mode .stats-info {
+	background: rgba(255, 255, 255, 0.05);
+}
+
+.toggle-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.75rem;
+	min-height: 24px;
+}
+
+.toggle-label {
+	color: var(--font-color);
+	font-size: 0.9rem;
+	text-align: left;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	cursor: pointer;
+	flex: 1;
+}
+
+.toggle-label i {
+	width: 24px;
+	min-width: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	font-size: 1rem;
+	text-align: center;
+	line-height: 1;
+}
+
+.theme-switch {
+	position: relative;
+	display: inline-block;
+	width: 40px;
+	height: 20px;
+	flex-shrink: 0;
+}
+
+.theme-switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.theme-switch .slider {
+	position: absolute;
+	cursor: pointer;
+	inset: 0;
+	background: #b0b8c4;
+	border-radius: 20px;
+	transition: .3s;
+}
+
+.theme-switch .slider:before {
+	content: "";
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	left: 2px;
+	top: 2px;
+	background: #fff;
+	border-radius: 50%;
+	transition: .3s;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.theme-switch input:checked+.slider {
+	background: #3a7bb5;
+}
+
+.theme-switch input:checked+.slider:before {
+	transform: translateX(20px);
+}
+
+body.dark-mode .theme-switch .slider {
+	background: #3d3d3d;
+}
+
+body.dark-mode .theme-switch input:checked+.slider {
+	background: #4a80c0;
+}
+
+.pairs-slider-container {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-top: 0.75rem;
+	margin-bottom: 0.75rem;
+}
+
+.pairs-slider-label {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 0.9rem;
+}
+
+.pairs-slider-label .toggle-label {
+	font-size: 0.9rem;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	cursor: pointer;
+	flex: 1;
+}
+
+.pairs-slider-label .toggle-label i {
+	width: 24px;
+	min-width: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	font-size: 1rem;
+	text-align: center;
+	line-height: 1;
+}
+
+.pairs-slider-value {
+	font-weight: bold;
+	color: var(--primary-color);
+	font-size: 1rem;
+}
+
+.pairs-slider {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	height: 4px;
+	border-radius: 2px;
+	background: #b0b8c4;
+	outline: none;
+	transition: background 0.3s ease;
+}
+
+.pairs-slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #3a7bb5;
+	cursor: pointer;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	transition: background 0.2s ease;
+}
+
+.pairs-slider::-webkit-slider-thumb:hover {
+	transform: scale(1.1);
+}
+
+.pairs-slider::-moz-range-thumb {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #3a7bb5;
+	cursor: pointer;
+	border: none;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .pairs-slider {
+	background: #3d3d3d;
+}
+
+body.dark-mode .pairs-slider::-webkit-slider-thumb {
+	background: #4a80c0;
+}
+
+body.dark-mode .pairs-slider::-moz-range-thumb {
+	background: #4a80c0;
+}
+
+.slider-graduations {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	padding: 0;
+	margin-top: 5px;
+	font-size: 0.7rem;
+	opacity: 0.7;
+}
+
+.slider-graduations .infinity-symbol {
+	font-size: 1rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+}
+
+.save-indicator {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	background: #4caf50;
+	color: white;
+	padding: 8px 16px;
+	border-radius: 20px;
+	font-size: 0.85rem;
+	opacity: 0;
+	transform: translateY(20px);
+	pointer-events: none;
+	z-index: 10001;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+.save-indicator.show {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+kbd {
+	display: inline-block;
+	padding: 4px 8px;
+	font-family: monospace;
+	font-size: 0.9em;
+	font-weight: bold;
+	background-color: #d1d1d1;
+	color: #333;
+	border-radius: 6px;
+	box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 1px 0 0 rgba(255,255,255,0.6) inset;
+	min-width: 20px;
+	text-align: center;
+}
+
+.shortcuts-table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0.2rem 0.2rem;
+	font-size: 0.85rem;
+}
+
+.shortcuts-table td {
+	padding: 3px 3px;
+}
+
+.shortcuts-table kbd {
+	display: inline-block;
+	padding: 4px 8px;
+	font-family: monospace;
+	font-size: 0.9em;
+	font-weight: bold;
+	background-color: #d1d1d1;
+	color: #333;
+	border-radius: 6px;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.6) inset;
+	min-width: 20px;
+	text-align: center;
+}
+
+.shortcuts-table .key-combo {
+	white-space: nowrap;
+}
+
+.stats-reload-btn {
+	width: 100%;
+	margin-top: 15px;
+	padding: 8px 16px;
+	font-size: 0.9rem;
+	cursor: pointer;
+	background: var(--btn);
+	border: none;
+	border-radius: 0.5rem;
+	box-shadow: var(--shadow-out);
+	color: var(--font-color);
+	display: inline-flex;
+	gap: 8px;
+	justify-content: center;
+	align-items: center;
+}
+
+/* ZONES DE DÉPÔT ET ÉLÉMENTS DRAGGABLE */
+.container {
+	width: 100%;
+	max-width: 950px;
+	margin: 0 auto;
+	padding-left: 10px;
+	padding-right: 10px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 20px;
+	box-sizing: border-box;
+	min-height: 0;
+}
+
+.row {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	flex-wrap: wrap;
+	gap: 20px;
+	margin: 10px 0;
+	flex: 1;
+	min-height: 0;
+}
+
+.dropzone {
+	flex: 1 1 45%;
+	max-width: 500px;
+	min-width: 280px;
+	min-height: 320px;
+	background: #f0f0f0;
+	border-radius: 15px;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	font-weight: bold;
+	font-size: 1.1em;
+	color: var(--font-color);
+	overflow-y: auto;
+}
+
+.dropzone strong {
+	text-align: center;
+	display: block;
+	width: 100%;
+	flex-shrink: 0;
+	margin-bottom: 6px;
+}
+
+@media (min-width: 769px) {
+	.dropzone .draggable {
+		width: calc(100% - 20px);
+		max-width: 100%;
+		box-sizing: border-box;
+		text-align: center;
+		min-height: 3.2rem;
+		height: auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1.3;
+		padding: 0.8rem 1rem;
+		margin: 0 auto 10px auto;
+		word-break: break-word;
+		font-weight: normal;
+		flex-shrink: 0;
+	}
+	.dropzone {
+		align-items: stretch;
+	}
+	.dropzone .draggable {
+		width: 100%;
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
+.draggable {
+	padding: 12px 18px;
+	background: #d1d1d1;
+	border-radius: 10px;
+	box-shadow: 4px 4px 8px rgba(0,0,0,0.2), -4px -4px 8px rgba(255,255,255,0.4);
+	cursor: grab;
+	user-select: none;
+	width: fit-content;
+	position: relative;
+	font-weight: normal;
+	color: var(--font-color);
+	transition: all 0.2s ease;
+	flex-shrink: 0;
+	font-size: 0.8rem;	
+}
+
+.draggable:active { cursor: grabbing; }
+.draggable.dragging { opacity: 0.5; }
+
+.draggable.correct {
+	border: 3px solid var(--border-correct, #28a745) !important;
+	background-color: rgba(40, 167, 69, 0.15) !important;
+	color: var(--font-color) !important;
+	box-shadow: 0 0 8px rgba(40, 167, 69, 0.3) !important;
+}
+
+.draggable.incorrect {
+	border: 3px solid var(--border-incorrect, #dc3545) !important;
+	background-color: rgba(220, 53, 69, 0.15) !important;
+	color: var(--font-color) !important;
+	box-shadow: 0 0 8px rgba(220, 53, 69, 0.3) !important;
+}
+
+body.dark-mode .draggable.correct {
+	background-color: rgba(46, 204, 113, 0.15) !important;
+	border-color: var(--border-correct, #2ecc71) !important;
+}
+
+body.dark-mode .draggable.incorrect {
+	background-color: rgba(231, 76, 60, 0.15) !important;
+	border-color: var(--border-incorrect, #e74c3c) !important;
+}
+
+.draggable::after {
+	content: "";
+	position: absolute;
+	opacity: 0;
+	top: 50%;
+	right: 12px;
+	transform: translateY(-50%);
+	font-size: 1.2em;
+	font-weight: bold;
+	pointer-events: none;
+}
+
+body.colorblind-mode .draggable.correct::after {
+	content: "✓";
+	opacity: 1;
+	color: var(--color-correct, #2c7be5);
+}
+body.colorblind-mode .draggable.incorrect::after {
+	content: "✗";
+	opacity: 1;
+	color: var(--color-incorrect, #1a3a5c);
+}
+
+.score-button-container {
+	display: flex;
+	justify-content: center;
+	gap: 0;
+	margin: 20px 0;
+	flex-wrap: wrap;
+	flex-shrink: 0;
+}
+
+.button, .score {
+	padding: 10px 20px;
+	border: none;
+	background: var(--btn);
+	box-shadow: var(--shadow-out);
+	font-size: 1em;
+	color: var(--font-color);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 1 auto;
+	min-width: 120px;
+}
+
+.button {
+	border-radius: 8px 0 0 8px;
+}
+
+.score {
+	border-radius: 0 8px 8px 0;
+	border-left: 1px solid rgba(0,0,0,0.1);
+	font-weight: normal;
+}
+
+body.dark-mode .score {
+	border-left-color: rgba(255,255,255,0.1);
+}
+
+.button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* TOASTER GLOBAL UNIFORME */
+.toaster-global {
+	position: fixed;
+	top: 20px;
+	left: 50%;
+	transform: translateX(-50%) translateY(-100px);
+	background: var(--toast-bg);
+	color: var(--toast-text);
+	padding: 16px 28px;
+	border-radius: 12px;
+	font-size: 1rem;
+	font-weight: bold;
+	z-index: 99999;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+	transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+	opacity: 0;
+	pointer-events: none;
+	text-align: center;
+	max-width: 90%;
+	min-width: 200px;
+}
+
+.toaster-global.show {
+	transform: translateX(-50%) translateY(0);
+	opacity: 1;
+}
+
+.toaster-global.correct,
+.toaster-global.info,
+.toaster-global.warning {
+	background: var(--toast-bg);
+	color: var(--toast-text);
+	border: none;
+}
+
+/* CONFETTI */
+.confetti-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 99999;
+	overflow: hidden;
+}
+
+.confetti-piece {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	top: -10px;
+	animation: confetti-fall linear forwards;
+}
+
+@keyframes confetti-fall {
+	0% {
+		transform: translateY(0) rotate(0deg) scale(1);
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(110vh) rotate(720deg) scale(0.5);
+		opacity: 0;
+	}
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+	width: 4px;
+}
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+::-webkit-scrollbar-thumb {
+	background: #b0b8c4;
+	border-radius: 4px;
+}
+body.dark-mode ::-webkit-scrollbar-thumb {
+	background: #3d3d3d;
+}
+
+/* VERSION DESKTOP - boutons vérifier et score côte à côte */
+@media (min-width: 769px) {
+	.score-button-container {
+		gap: 0;
+	}
+	.button, .score {
+		flex: 1;
+		max-width: 200px;
+		min-width: 140px;
+	}
+	.button {
+		border-radius: 8px 0 0 8px;
+	}
+	.score {
+		border-radius: 0 8px 8px 0;
+		border-left: 1px solid rgba(0,0,0,0.1);
+	}
+	body.dark-mode .score {
+		border-left-color: rgba(255,255,255,0.1);
+	}
+}
+
+</style>
+</head>
+<body>
+
+<!-- TOASTER GLOBAL -->
+<div id="toasterGlobal" class="toaster-global"></div>
+
+<div class="toolbar-wrapper">
+	<div class="toolbar" id="toolbarDesktop">
+		<div class="toolbar-left">
+			<div style="position:relative;">
+				<button class="btn-sequences" id="sequencesBtn" data-title="repères (S)">
+					<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+						<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+						<line x1="12" y1="11" x2="12" y2="17"/>
+						<polyline points="9 14 12 11 15 14"/>
+					</svg>
+				</button>
+				<div class="sequences-dropdown" id="sequencesDropdown">
+					<div class="dropdown-header">📚 repères disponibles</div>
+					<div class="dropdown-actions">
+						<button class="select-all-btn" id="selectAllNotions">✓ tout sélectionner</button>
+						<button class="select-all-btn" id="deselectAllNotions">✗ tout désélectionner</button>
+					</div>
+					<div id="dropdownNotionsList"></div>
+					<div class="dropdown-count" id="dropdownNotionsCount">0 / 0 repères sélectionnés</div>
+				</div>
+			</div>
+
+			<button class="btn btn-home" data-action="home" data-title="accueil (H)">
+				<div class="icon-wrapper">
+					<svg viewBox="0 0 24 24">
+						<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+						<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+						<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-join="round" stroke-linecap="round"/>
+					</svg>
+				</div>
+			</button>
+			<button class="btn btn-reload" data-action="reload" data-title="recharger (R)">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<polyline points="23 4 23 10 17 10"/>
+					<polyline points="1 20 1 14 7 14"/>
+					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+				</svg>
+			</button>
+		</div>
+		<div class="toolbar-center">
+			<div class="toolbar-title" id="appTitle"></div>
+			<div class="toolbar-subtitle" id="appSubtitle"></div>
+		</div>
+		<div class="toolbar-right">
+			<button class="timer-btn" id="timerBtnDesktop" data-title="temps restant (T)">
+				<span id="timerValueDesktop">01:00</span>
+			</button>
+			<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (F)">
+				<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+					<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+					<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+					<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+					<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+				</svg>
+			</button>
+			<button class="btn btn-menu" data-action="menu" data-title="menu (M)">
+				<div class="menu-icon"><span></span><span></span><span></span></div>
+			</button>
+		</div>
+	</div>
+
+	<div class="toolbar-mobile" id="toolbarMobile">
+		<div class="mobile-buttons">
+			<div style="position:relative;">
+				<button class="btn-sequences" id="sequencesBtnMobile" data-title="repères (S)">
+					<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+						<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+						<line x1="12" y1="11" x2="12" y2="17"/>
+						<polyline points="9 14 12 11 15 14"/>
+					</svg>
+				</button>
+				<div class="sequences-dropdown" id="sequencesDropdownMobile">
+					<div class="dropdown-header">📚 repères disponibles</div>
+					<div class="dropdown-actions">
+						<button class="select-all-btn" id="selectAllNotionsMobile">✓ tout sélectionner</button>
+						<button class="select-all-btn" id="deselectAllNotionsMobile">✗ tout désélectionner</button>
+					</div>
+					<div id="dropdownNotionsListMobile"></div>
+					<div class="dropdown-count" id="dropdownNotionsCountMobile">0 / 0 repères sélectionnés</div>
+				</div>
+			</div>
+
+			<button class="btn btn-home" data-action="home" data-title="accueil (H)">
+				<div class="icon-wrapper">
+					<svg viewBox="0 0 24 24">
+						<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+						<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+						<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-join="round" stroke-linecap="round"/>
+					</svg>
+				</div>
+			</button>
+			<button class="btn btn-reload" data-action="reload" data-title="recharger (R)">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<polyline points="23 4 23 10 17 10"/>
+					<polyline points="1 20 1 14 7 14"/>
+					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+				</svg>
+			</button>
+			<button class="timer-btn" id="timerBtnMobile" data-title="temps restant (T)">
+				<span id="timerValueMobile">01:00</span>
+			</button>
+			<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (F)">
+				<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+					<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+					<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+					<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+					<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+				</svg>
+			</button>
+			<button class="btn btn-menu" data-action="menu" data-title="menu (M)">
+				<div class="menu-icon"><span></span><span></span><span></span></div>
+			</button>
+		</div>
+		<div class="mobile-title-wrapper">
+			<div class="mobile-title" id="mobileTitle"></div>
+		</div>
+	</div>
+</div>
+
+<main class="container">
+	<div class="row" id="reperesContainer"></div>
+	<div class="score-button-container">
+		<button id="checkButton" class="button">vérifier</button>
+		<div class="score">score&nbsp;:&nbsp;<span id="correctCount">0</span> / <span id="totalCount">0</span></div>
+
+	</div>
+</main>
+
+<!-- MENU ET SOUS-MENUS -->
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="slide-menu" id="slideMenu">
+	<div class="menu-header">
+		<button class="menu-close" id="menuClose">
+			<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+	</div>
+	<div class="menu-content">
+		<button class="menu-item" id="openInstructionsSub">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="10"></circle>
+				<line x1="12" y1="16" x2="12" y2="12"></line>
+				<line x1="12" y1="8" x2="12.01" y2="8"></line>
+			</svg>
+			<span class="item-label">présentation</span>
+		</button>
+		
+		<button class="menu-item" id="openStatsSub">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M 3 3 L 3 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+				<path d="M 3 22 L 22 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+				<path d="M 7 18 L 11 12 L 15 15 L 21 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+			</svg>
+			<span class="item-label">statistiques</span>
+			<span class="item-badge" id="statsBadge">0%</span>
+		</button>
+		
+		<button class="menu-item" id="openSettingsSub">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="3"></circle>
+				<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+			</svg>
+			<span class="item-label">paramètres</span>
+		</button>
+		
+		<button class="menu-item" id="openShortcutsSub">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<rect x="2" y="4" width="20" height="16" rx="2"></rect>
+				<line x1="6" y1="8" x2="10" y2="8"></line>
+				<line x1="14" y1="8" x2="18" y2="8"></line>
+				<line x1="6" y1="12" x2="10" y2="12"></line>
+				<line x1="14" y1="12" x2="18" y2="12"></line>
+				<line x1="6" y1="16" x2="10" y2="16"></line>
+				<line x1="14" y1="16" x2="18" y2="16"></line>
+			</svg>
+			<span class="item-label">raccourcis</span>
+		</button>
+		
+		<button class="menu-item" id="resetAppBtn">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M3 2v6h6"></path>
+				<path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
+				<path d="M21 22v-6h-6"></path>
+				<path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path>
+			</svg>
+			<span class="item-label">réinitialiser</span>
+		</button>
+		
+		<button class="menu-item" id="openAboutSub">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="10"></circle>
+				<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+				<line x1="12" y1="17" x2="12.01" y2="17"></line>
+			</svg>
+			<span class="item-label">à propos</span>
+		</button>
+	</div>
+</div>
+
+<div class="submenu" id="submenuInstructions">
+	<div class="menu-header">
+		<button class="submenu-close" data-submenu="instructions">
+			<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+	</div>
+	<div class="submenu-title">présentation</div>
+	<div class="submenu-content">
+		<div class="settings-info">
+			<p><i class="fas fa-bullseye"></i> <strong>objectif</strong><br><br>classer par glisser-déposer les exemples sous le bon repère.</p>
+		</div>
+		<div class="settings-info">
+			<p><i class="fas fa-bars"></i> <strong>options</strong></p><br>
+			<p><strong>• mode sombre :</strong> pour une lecture confortable</p>
+			<p><strong>• animations :</strong> active / désactive les effets visuels</p>
+			<p><strong>• mode daltonien :</strong> bleu / rouge remplace vert / rouge</p>
+			<p><strong>• sons :</strong> active / désactive les effets sonores</p>
+			<p><strong>• nombre de paires :</strong> 1-4</p>
+		</div>
+		<div class="settings-info">
+			<p><i class="fas fa-chart-line"></i> <strong>statistiques</strong><br><br>score cumulé sauvegardé automatiquement</p>
+		</div>
+	</div>
+</div>
+
+<div class="submenu" id="submenuStats">
+	<div class="menu-header">
+		<button class="submenu-close" data-submenu="stats">
+			<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+	</div>
+	<div class="submenu-title">statistiques</div>
+	<div class="submenu-content">
+		<div class="stats-info">
+			<p><i class="fas fa-chart-simple"></i> <strong>quelques chiffres :</strong></p>
+			<p>• score global : <span style="color: var(--primary-color);" id="statTotalCorrect">0</span> / <span id="statTotalAnswers">0</span></p>
+			<p>• taux de réussite : <span style="color: var(--primary-color);" id="statSuccessRate">0&nbsp;%</span></p>
+			<p>• parties jouées : <span style="color: var(--primary-color);" id="statGamesPlayed">0</span></p>
+		</div>
+		<div class="stats-info">
+			<p><i class="fas fa-save"></i> <strong>sauvegarde :</strong></p>
+			<p>les statistiques sont sauvegardées automatiquement</p>
+		</div>
+		<button class="stats-reload-btn" id="resetStatsBtn">
+			<i class="fas fa-sync-alt"></i> réinitialiser les statistiques
+		</button>
+	</div>
+</div>
+
+<div class="submenu" id="submenuSettings">
+	<div class="menu-header">
+		<button class="submenu-close" data-submenu="settings">
+			<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+	</div>
+	<div class="submenu-title">paramètres</div>
+	<div class="submenu-content">
+		<div class="toggle-container">
+			<span class="toggle-label"><i class="fas fa-moon"></i> mode sombre</span>
+			<label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
+		</div>
+		<div class="toggle-container">
+			<span class="toggle-label"><i class="fas fa-play"></i> animations</span>
+			<label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label>
+		</div>
+		<div class="toggle-container">
+			<span class="toggle-label"><i class="fas fa-palette"></i> mode daltonien</span>
+			<label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label>
+		</div>
+		<div class="toggle-container">
+			<span class="toggle-label"><i class="fas fa-volume-up"></i> sons</span>
+			<label class="theme-switch"><input type="checkbox" id="soundToggle" checked><span class="slider"></span></label>
+		</div>
+		<div class="pairs-slider-container">
+			<div class="pairs-slider-label">
+				<span class="toggle-label"><i class="fas fa-layer-group"></i> nombre de paires</span>
+				<span class="pairs-slider-value" id="pairsCountValue">4</span>
+			</div>
+			<input type="range" id="pairsCountSlider" class="pairs-slider" min="1" max="4" step="1" value="4">
+			<div class="slider-graduations">
+				<span>1</span><span>2</span><span>3</span><span>4</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="submenu" id="submenuShortcuts">
+	<div class="menu-header">
+		<button class="submenu-close" data-submenu="shortcuts">
+			<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+	</div>
+	<div class="submenu-title">raccourcis</div>
+	<div class="submenu-content">
+		<div class="settings-info">
+			<table class="shortcuts-table">
+				<tr><td class="key-combo"><kbd>S</kbd></td><td>ouvrir/fermer la liste des repères</td></tr>
+				<tr><td class="key-combo"><kbd>H</kbd></td><td>renvoi au site académique</td></tr>
+				<tr><td class="key-combo"><kbd>R</kbd></td><td>recharger / nouvelle partie</td></tr>
+				<tr><td class="key-combo"><kbd>T</kbd></td><td>réinitialiser le minuteur</td></tr>
+				<tr><td class="key-combo"><kbd>F</kbd></td><td>plein écran</td></tr>
+				<tr><td class="key-combo"><kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr>
+				<tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer (sous-menus, popups, menu)</td></tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="submenu" id="submenuAbout">
+	<div class="menu-header">
+		<button class="submenu-close" data-submenu="about">
+			<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+	</div>
+	<div class="submenu-title">à propos</div>
+	<div class="submenu-content">
+		<div class="settings-info"><p><i class="fas fa-user"></i> application développée par Daniel Boulagnon</p>
+		<p><i class="fas fa-envelope"></i> daniel.boulagnon@ac-lille.fr</p></div>
+		<div class="settings-info"><p><i class="fas fa-tag"></i> version 2.6.2 (2026)</p></div>
+		<div class="settings-info"><p> © exploitation pédagogique et non commerciale</p></div>
+	</div>
+</div>
+
+<div id="saveIndicator" class="save-indicator">✓ paramètre sauvegardé</div>
+
+<script src="../../src/reperes.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+	// === Récupération des données depuis les variables globales ===
+	let reperesData = window.reperes || [];
+	
+	if (!reperesData || reperesData.length === 0) {
+		console.error("ERREUR: Aucune donnée chargée depuis reperes.js");
+		const errorDiv = document.createElement('div');
+		errorDiv.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:red; color:white; padding:20px; border-radius:10px; z-index:9999; text-align:center;';
+		errorDiv.innerHTML = '<strong>ERREUR</strong><br>Le fichier reperes.js n\'a pas été chargé correctement.<br>Vérifiez qu\'il est dans le même dossier.';
+		document.body.appendChild(errorDiv);
+	}
+	
+	// Transformation des données
+	const dropzoneData = reperesData.map(item => {
+		const parts = item.parts;
+		if (parts && parts.length >= 2) {
+			return {
+				colonne_gauche: parts[0].name,
+				colonne_droite: parts[1].name,
+				exemples_gauche: parts[0].examples || [],
+				exemples_droite: parts[1].examples || []
+			};
+		}
+		return null;
+	}).filter(item => item !== null);
+	
+	// === ÉTAT ===
+	let correctCount = 0, totalCount = 0, gamesPlayed = parseInt(localStorage.getItem('gamesPlayed_classer') || '0');
+	let darkMode = false, colorblindMode = false, animationsEnabled = true, soundEnabled = true;
+	let currentCategorySet = null;
+	let currentPairsCount = 4; // Valeur par défaut à 4
+	let allNotions = [];
+	let selectedNotionIndices = new Set();
+	
+	const title = "distinguer par exemple";
+	const subtitle = "glisser les exemples dans la bonne colonne";
+	
+	document.title = title;
+	document.getElementById("appTitle").textContent = title;
+	document.getElementById("appSubtitle").textContent = subtitle;
+	document.getElementById("mobileTitle").textContent = title;
+	
+	const reperesContainer = document.getElementById("reperesContainer");
+	const dropzone1 = document.createElement("div");
+	const dropzone2 = document.createElement("div");
+	dropzone1.className = dropzone2.className = "dropzone";
+	const row = document.createElement("div"); 
+	row.className = "row";
+	row.append(dropzone1, dropzone2); 
+	reperesContainer.appendChild(row);
+	
+	// Fonction pour déterminer si un mot commence par une voyelle
+	function commenceParVoyelle(mot) {
+		if (!mot) return false;
+		const voyelles = ['a', 'e', 'i', 'o', 'u', 'y', 'à', 'â', 'ä', 'é', 'è', 'ê', 'ë', 'ï', 'î', 'ô', 'ö', 'ù', 'û', 'ü'];
+		const premier = mot.trim().charAt(0).toLowerCase();
+		return voyelles.includes(premier);
+	}
+	
+	// === SONS ===
+	function playSound(type) {
+		if (!soundEnabled) return;
+		try {
+			const soundMap = {
+				'correct': '../../src/sounds/reponse-bonne.mp3',
+				'incorrect': '../../src/sounds/reponse-mauvaise.mp3',
+				'score_good': '../../src/sounds/score-bon.mp3',
+				'score_bad': '../../src/sounds/score-mauvais.mp3',
+				'click': '../../src/sounds/bruit-clavier.mp3'
+			};
+			const soundFile = soundMap[type];
+			if (!soundFile) return;
+			const audio = new Audio(soundFile);
+			audio.volume = type === 'click' ? 0.3 : 0.8;
+			audio.preload = 'auto';
+			audio.play().catch(() => {});
+		} catch (e) {}
+	}
+	
+	function preloadSounds() {
+		if (!soundEnabled) return;
+		['reponse-bonne.mp3', 'reponse-mauvaise.mp3', 'score-bon.mp3', 'score-mauvais.mp3', 'bruit-clavier.mp3']
+			.forEach(file => {
+				const audio = new Audio();
+				audio.preload = 'auto';
+				audio.src = '../../src/sounds/' + file;
+				audio.load();
+			});
+	}
+	
+	// === CONFETTIS ===
+	let confettiLaunched = false;
+	
+	function launchConfetti() {
+		if (!animationsEnabled || confettiLaunched) return;
+		confettiLaunched = true;
+		const container = document.createElement('div');
+		container.className = 'confetti-container';
+		document.body.appendChild(container);
+		const colors = ['#ff0000', '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff', '#ff9f43', '#00d2d3', '#f368e0', '#ff9f43'];
+		for (let i = 0; i < 160; i++) {
+			const piece = document.createElement('div');
+			piece.className = 'confetti-piece';
+			piece.style.left = Math.random() * 100 + '%';
+			piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+			piece.style.width = (Math.random() * 16 + 4) + 'px';
+			piece.style.height = (Math.random() * 8 + 4) + 'px';
+			piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+			piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+			piece.style.animationDelay = (Math.random() * 1.5) + 's';
+			container.appendChild(piece);
+		}
+		setTimeout(() => container.remove(), 4000);
+	}
+	
+	// === TOASTER GLOBAL ===
+	let toasterTimeout = null;
+	function showToaster(message, type = 'info', duration = 3000) {
+		const toaster = document.getElementById('toasterGlobal');
+		if (!toaster) return;
+		toaster.innerHTML = message;
+		toaster.className = 'toaster-global';
+		toaster.classList.add('show');
+		clearTimeout(toasterTimeout);
+		if (duration > 0) {
+			toasterTimeout = setTimeout(() => {
+				toaster.classList.remove('show');
+			}, duration);
+		}
+	}
+	
+	// === STATISTIQUES ===
+	function saveGameStats() {
+		localStorage.setItem('classerGameStats', JSON.stringify({ correctCount, totalCount, gamesPlayed }));
+	}
+	
+	function loadGameStats() {
+		const s = localStorage.getItem('classerGameStats');
+		if (s) {
+			const d = JSON.parse(s);
+			correctCount = d.correctCount || 0;
+			totalCount = d.totalCount || 0;
+			gamesPlayed = d.gamesPlayed || 0;
+			document.getElementById("correctCount").textContent = correctCount;
+			document.getElementById("totalCount").textContent = totalCount;
+		}
+	}
+	
+	function updateStatsDisplay() {
+		document.getElementById('statTotalCorrect').textContent = correctCount;
+		document.getElementById('statTotalAnswers').textContent = totalCount;
+		const rate = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+		document.getElementById('statSuccessRate').textContent = rate + ' %';
+		document.getElementById('statGamesPlayed').textContent = gamesPlayed;
+		const badge = document.getElementById('statsBadge');
+		if (badge) badge.textContent = rate + '%';
+	}
+	
+	function showSaveIndicator(message, color = "#4caf50") {
+		const indicator = document.getElementById('saveIndicator');
+		indicator.textContent = message;
+		indicator.style.backgroundColor = color;
+		indicator.classList.add('show');
+		setTimeout(() => indicator.classList.remove('show'), 1800);
+	}
+	
+	function applyAnimationsSetting() {
+		if (!animationsEnabled) document.body.classList.add('no-animations');
+		else document.body.classList.remove('no-animations');
+	}
+	
+	// === UTILITAIRES ===
+	function shuffleArray(array) {
+		for (let i = array.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[array[i], array[j]] = [array[j], array[i]];
+		}
+		return array;
+	}
+	
+	// === NOTIONS (REPÈRES) ===
+	function extraireNotions() {
+		const notions = [];
+		const nomsSet = new Set();
+		dropzoneData.forEach(item => {
+			const nom1 = item.colonne_gauche;
+			const nom2 = item.colonne_droite;
+			if (nom1 && !nomsSet.has(nom1)) {
+				nomsSet.add(nom1);
+				notions.push({ id: notions.length, name: nom1 });
+			}
+			if (nom2 && !nomsSet.has(nom2)) {
+				nomsSet.add(nom2);
+				notions.push({ id: notions.length, name: nom2 });
+			}
+		});
+		notions.sort((a, b) => a.name.localeCompare(b.name));
+		notions.forEach((n, idx) => n.id = idx);
+		return notions;
+	}
+	
+	function loadSelectedNotions() {
+		const saved = localStorage.getItem('classerSelectedNotions');
+		if (saved) {
+			try {
+				const arr = JSON.parse(saved);
+				selectedNotionIndices = new Set(arr);
+			} catch(e) {}
+		}
+		if (selectedNotionIndices.size === 0 && allNotions.length > 0) {
+			allNotions.forEach((_, idx) => selectedNotionIndices.add(idx));
+			saveSelectedNotions();
+		}
+	}
+	
+	function saveSelectedNotions() {
+		localStorage.setItem('classerSelectedNotions', JSON.stringify(Array.from(selectedNotionIndices)));
+	}
+	
+	function updateNotionsDropdown() {
+		const dropdowns = [
+			document.getElementById('sequencesDropdown'),
+			document.getElementById('sequencesDropdownMobile')
+		];
+		
+		dropdowns.forEach(dropdown => {
+			if (!dropdown) return;
+			const listContainer = dropdown.querySelector('#dropdownNotionsList') || 
+				dropdown.querySelector('#dropdownNotionsListMobile');
+			const countContainer = dropdown.querySelector('#dropdownNotionsCount') || 
+				dropdown.querySelector('#dropdownNotionsCountMobile');
+			if (!listContainer || !countContainer) return;
+			
+			const total = allNotions.length;
+			const selected = selectedNotionIndices.size;
+			
+			if (selected === 0) {
+				countContainer.textContent = '⚠️ 0 / ' + total + ' repères sélectionnés';
+				countContainer.style.color = 'var(--color-incorrect)';
+			} else {
+				countContainer.textContent = selected + ' / ' + total + ' repères sélectionnés';
+				countContainer.style.color = '';
+			}
+			
+			if (total === 0) {
+				listContainer.innerHTML = '<div class="dropdown-empty">Aucun repère disponible</div>';
+				return;
+			}
+			
+			let html = '';
+			allNotions.forEach((notion, idx) => {
+				const isChecked = selectedNotionIndices.has(idx);
+				html += `
+					<div class="dropdown-notion-item" data-id="${idx}">
+						<input type="checkbox" class="notion-checkbox" ${isChecked ? 'checked' : ''}>
+						<label>${escapeHtml(notion.name)}</label>
+					</div>
+				`;
+			});
+			listContainer.innerHTML = html;
+			
+			listContainer.querySelectorAll('.dropdown-notion-item').forEach(item => {
+				const idx = parseInt(item.dataset.id);
+				const checkbox = item.querySelector('.notion-checkbox');
+				checkbox.addEventListener('change', function(e) {
+					e.stopPropagation();
+					if (this.checked) {
+						selectedNotionIndices.add(idx);
+					} else {
+						selectedNotionIndices.delete(idx);
+					}
+					saveSelectedNotions();
+					updateNotionsDropdown();
+					reload();
+					playSound('click');
+				});
+				item.addEventListener('click', function(e) {
+					if (e.target !== checkbox && e.target.tagName !== 'LABEL') {
+						checkbox.checked = !checkbox.checked;
+						const event = new Event('change');
+						checkbox.dispatchEvent(event);
+					}
+				});
+			});
+		});
+	}
+	
+	function escapeHtml(text) {
+		if (!text) return '';
+		const div = document.createElement('div');
+		div.textContent = text;
+		return div.innerHTML;
+	}
+	
+	function toggleSequencesDropdown(event) {
+		event.stopPropagation();
+		const dropdown = this.id === 'sequencesBtn' ? 
+			document.getElementById('sequencesDropdown') : 
+			document.getElementById('sequencesDropdownMobile');
+		if (dropdown) {
+			updateNotionsDropdown();
+			dropdown.classList.toggle('open');
+		}
+	}
+	
+	function closeSequencesDropdown() {
+		document.querySelectorAll('.sequences-dropdown').forEach(d => d.classList.remove('open'));
+	}
+	
+	// === DRAG & DROP ===
+	const dragStart = e => { 
+		e.dataTransfer.setData("text", e.target.id); 
+		e.target.classList.add("dragging"); 
+		setTimeout(() => e.target.style.display = "none", 0); 
+	};
+	const dragEnd = e => { 
+		e.target.style.display = ""; 
+		e.target.classList.remove("dragging"); 
+	};
+	const allowDrop = e => e.preventDefault();
+	const drop = e => { 
+		e.preventDefault(); 
+		const el = document.getElementById(e.dataTransfer.getData("text")); 
+		const zone = e.target.closest(".dropzone"); 
+		if (zone && el) { 
+			zone.appendChild(el); 
+			el.style.display = ""; 
+		} 
+	};
+	
+	dropzone1.addEventListener("dragover", allowDrop); 
+	dropzone2.addEventListener("dragover", allowDrop);
+	dropzone1.addEventListener("drop", drop); 
+	dropzone2.addEventListener("drop", drop);
+	
+	// === POPULATE ===
+	function populate(categorySet) {
+		const cat1 = categorySet.colonne_gauche;
+		const cat2 = categorySet.colonne_droite;
+		const exemplesGauche = categorySet.exemples_gauche;
+		const exemplesDroite = categorySet.exemples_droite;
+		
+		const limitedGauche = exemplesGauche.slice(0, currentPairsCount);
+		const limitedDroite = exemplesDroite.slice(0, currentPairsCount);
+		const allExamples = [...limitedGauche, ...limitedDroite];
+		
+		// Déterminer l'article correct (de ou d')
+		const article1 = commenceParVoyelle(cat1) ? "d'" : "de ";
+		const article2 = commenceParVoyelle(cat2) ? "d'" : "de ";
+		
+		dropzone1.innerHTML = `<strong>exemples ${article1}« ${cat1} »</strong>`;
+		dropzone2.innerHTML = `<strong>exemples ${article2}« ${cat2} »</strong>`;
+
+		document.querySelectorAll(".draggable").forEach(el => el.remove());
+		
+		const shuffled = shuffleArray([...allExamples]);
+		const itemsInZone1 = Math.floor(shuffled.length / 2);
+		
+		shuffled.forEach((txt, i) => {
+			const el = document.createElement("div"); 
+			el.className = "draggable"; 
+			el.textContent = txt; 
+			el.id = "d_" + Date.now() + "_" + i + "_" + Math.random(); 
+			el.draggable = true;
+			el.addEventListener("dragstart", dragStart); 
+			el.addEventListener("dragend", dragEnd);
+			el.addEventListener("click", () => { 
+				if (el.parentNode === dropzone1) dropzone2.appendChild(el); 
+				else if (el.parentNode === dropzone2) dropzone1.appendChild(el); 
+			});
+			(i < itemsInZone1 ? dropzone1 : dropzone2).appendChild(el);
+		});
+		
+		document.getElementById("checkButton").disabled = false;
+	}
+	
+	function getFilteredData() {
+		if (selectedNotionIndices.size === 0 || allNotions.length === 0) {
+			return dropzoneData;
+		}
+		const selectedNames = new Set();
+		allNotions.forEach((notion, idx) => {
+			if (selectedNotionIndices.has(idx)) {
+				selectedNames.add(notion.name);
+			}
+		});
+		return dropzoneData.filter(item => 
+			selectedNames.has(item.colonne_gauche) || selectedNames.has(item.colonne_droite)
+		);
+	}
+	
+	function getNewWords() {
+		const filteredData = getFilteredData();
+		if (!filteredData.length) {
+			showToaster("⚠️ Aucun repère sélectionné", "warning", 3000);
+			return;
+		}
+		
+		const randomIndex = Math.floor(Math.random() * filteredData.length);
+		currentCategorySet = filteredData[randomIndex];
+		
+		const totalExamplesInSet = Math.min(currentCategorySet.exemples_gauche.length, currentPairsCount) + 
+		                           Math.min(currentCategorySet.exemples_droite.length, currentPairsCount);
+		totalCount += totalExamplesInSet; 
+		document.getElementById("totalCount").textContent = totalCount;
+		
+		populate(currentCategorySet);
+		
+		gamesPlayed++;
+		localStorage.setItem('gamesPlayed_classer', gamesPlayed);
+		saveGameStats();
+		updateStatsDisplay();
+	}
+	
+	// === CHECK ===
+	const checkButton = document.getElementById("checkButton");
+	checkButton.addEventListener("click", () => {
+		if (checkButton.textContent === "vérifier") {
+			stopTimer();
+			
+			if (!currentCategorySet) {
+				console.error("Aucun ensemble de catégories chargé");
+				return;
+			}
+			
+			const limitedGauche = currentCategorySet.exemples_gauche.slice(0, currentPairsCount);
+			const limitedDroite = currentCategorySet.exemples_droite.slice(0, currentPairsCount);
+			
+			let ok = 0;
+			let total = 0;
+			dropzone1.querySelectorAll(".draggable").forEach(el => { 
+				const good = limitedGauche.includes(el.textContent); 
+				el.classList.toggle("correct", good); 
+				el.classList.toggle("incorrect", !good); 
+				if (good) ok++; 
+				total++;
+			});
+			dropzone2.querySelectorAll(".draggable").forEach(el => { 
+				const good = limitedDroite.includes(el.textContent); 
+				el.classList.toggle("correct", good); 
+				el.classList.toggle("incorrect", !good); 
+				if (good) ok++; 
+				total++;
+			});
+			
+			correctCount += ok; 
+			document.getElementById("correctCount").textContent = correctCount;
+			saveGameStats();
+			updateStatsDisplay();
+			
+			const percentage = Math.round((ok / total) * 100);
+			let message = `📝 ${ok} / ${total} bonnes réponses (${percentage}%)`;
+			if (percentage >= 80) {
+				message += ' 🌟';
+				playSound('score_good');
+				launchConfetti();
+			} else if (percentage >= 50) {
+				message += ' 📚';
+				playSound('click');
+			} else {
+				message += ' 💪';
+				playSound('score_bad');
+			}
+			showToaster(message, 'info', 4000);
+			
+			checkButton.textContent = "nouvelle partie";
+		} else {
+			document.querySelectorAll(".draggable").forEach(el => {
+				el.classList.remove("correct", "incorrect");
+				el.style.border = '';
+				el.style.backgroundColor = '';
+				el.style.boxShadow = '';
+			});
+			checkButton.textContent = "vérifier"; 
+			confettiLaunched = false;
+			getNewWords();
+			resetTimer();
+			startTimer();
+			playSound('click');
+		}
+	});
+	
+	function reload() {
+		correctCount = 0; 
+		totalCount = 0; 
+		document.getElementById("correctCount").textContent = "0";
+		document.getElementById("totalCount").textContent = "0";
+		document.querySelectorAll(".draggable").forEach(el => {
+			el.classList.remove("correct", "incorrect");
+			el.style.border = '';
+			el.style.backgroundColor = '';
+			el.style.boxShadow = '';
+		}); 
+		checkButton.textContent = "vérifier"; 
+		confettiLaunched = false;
+		getNewWords();
+		resetTimer();
+		startTimer();
+		saveGameStats();
+		updateStatsDisplay();
+		showToaster("🔄 nouvelle partie chargée", "info", 1500);
+		playSound('click');
+	}
+	
+	// === MENU ET SOUS-MENUS ===
+	const menuButtons = document.querySelectorAll('[data-action="menu"]');
+	const menuOverlay = document.getElementById('menuOverlay');
+	const slideMenu = document.getElementById('slideMenu');
+	const submenus = document.querySelectorAll('.submenu');
+	
+	function closeAllSubmenus() { submenus.forEach(s => s.classList.remove('active')); }
+	function openSubmenu(id) { 
+		closeAllSubmenus(); 
+		const el = document.getElementById(id); 
+		if (el) {
+			el.classList.add('active');
+			document.body.classList.add('menu-open');
+		}
+	}
+	function closeMenu() { 
+		slideMenu.classList.remove('open'); 
+		menuOverlay.classList.remove('open'); 
+		document.body.style.overflow = ''; 
+		document.body.classList.remove('menu-open');
+		closeAllSubmenus(); 
+		closeSequencesDropdown();
+	}
+	function toggleMenu() { 
+		playSound('click');
+		slideMenu.classList.contains('open') ? closeMenu() : (menuOverlay.classList.add('open'), slideMenu.classList.add('open'), document.body.style.overflow = 'hidden', document.body.classList.add('menu-open')); 
+	}
+	
+	menuButtons.forEach(b => b.addEventListener('click', toggleMenu));
+	document.getElementById('menuClose').addEventListener('click', () => { playSound('click'); closeMenu(); });
+	menuOverlay.addEventListener('click', () => { playSound('click'); closeMenu(); });
+	document.querySelectorAll('.submenu-close').forEach(b => b.addEventListener('click', () => { playSound('click'); closeAllSubmenus(); }));
+	
+	document.getElementById('openInstructionsSub').addEventListener('click', () => { playSound('click'); openSubmenu('submenuInstructions'); });
+	document.getElementById('openStatsSub').addEventListener('click', () => { playSound('click'); updateStatsDisplay(); openSubmenu('submenuStats'); });
+	document.getElementById('openSettingsSub').addEventListener('click', () => { playSound('click'); openSubmenu('submenuSettings'); });
+	document.getElementById('openShortcutsSub').addEventListener('click', () => { playSound('click'); openSubmenu('submenuShortcuts'); });
+	document.getElementById('openAboutSub').addEventListener('click', () => { playSound('click'); openSubmenu('submenuAbout'); });
+	document.getElementById('resetAppBtn').addEventListener('click', () => { playSound('click'); 
+		if (confirm('Réinitialiser toute l\'application ?')) {
+			localStorage.clear();
+			showToaster('Application réinitialisée ! Redémarrage...', 'info', 2000);
+			setTimeout(() => location.reload(), 1500);
+		}
+	});
+	
+	// === RÉINITIALISATION STATISTIQUES SANS CONFIRMATION ===
+	document.getElementById('resetStatsBtn').addEventListener('click', () => { 
+		playSound('click');
+		correctCount = 0; 
+		totalCount = 0; 
+		gamesPlayed = 0;
+		document.getElementById("correctCount").textContent = "0";
+		document.getElementById("totalCount").textContent = "0";
+		saveGameStats();
+		updateStatsDisplay();
+		showSaveIndicator("Statistiques réinitialisées", "#dc3545");
+		showToaster("Statistiques réinitialisées", "info", 2500);
+	});
+	
+	// === BOUTONS REPÈRES ===
+	document.getElementById('sequencesBtn').addEventListener('click', toggleSequencesDropdown);
+	document.getElementById('sequencesBtnMobile').addEventListener('click', toggleSequencesDropdown);
+	
+	document.getElementById('selectAllNotions').addEventListener('click', () => {
+		allNotions.forEach((_, idx) => selectedNotionIndices.add(idx));
+		saveSelectedNotions();
+		updateNotionsDropdown();
+		reload();
+		showToaster('Tous les repères sélectionnés', 'info', 1500);
+		playSound('click');
+	});
+	document.getElementById('deselectAllNotions').addEventListener('click', () => {
+		selectedNotionIndices.clear();
+		saveSelectedNotions();
+		updateNotionsDropdown();
+		reload();
+		showToaster('Tous les repères désélectionnés', 'info', 1500);
+		playSound('click');
+	});
+	document.getElementById('selectAllNotionsMobile').addEventListener('click', () => {
+		allNotions.forEach((_, idx) => selectedNotionIndices.add(idx));
+		saveSelectedNotions();
+		updateNotionsDropdown();
+		reload();
+		showToaster('Tous les repères sélectionnés', 'info', 1500);
+		playSound('click');
+	});
+	document.getElementById('deselectAllNotionsMobile').addEventListener('click', () => {
+		selectedNotionIndices.clear();
+		saveSelectedNotions();
+		updateNotionsDropdown();
+		reload();
+		showToaster('Tous les repères désélectionnés', 'info', 1500);
+		playSound('click');
+	});
+	
+	document.addEventListener('click', function(e) {
+		if (!e.target.closest('.btn-sequences') && !e.target.closest('.sequences-dropdown')) {
+			closeSequencesDropdown();
+		}
+	});
+	
+	// === PARAMÈTRES ===
+	const darkToggle = document.getElementById('darkModeToggle');
+	const colorblindToggle = document.getElementById('colorblindToggle');
+	const animationsToggle = document.getElementById('animationsToggle');
+	const soundToggle = document.getElementById('soundToggle');
+	const pairsSlider = document.getElementById('pairsCountSlider');
+	const pairsValue = document.getElementById('pairsCountValue');
+	
+	function loadSettings() {
+		const s = localStorage.getItem('classerSettings');
+		if (s) {
+			const d = JSON.parse(s);
+			darkMode = d.darkMode || false;
+			colorblindMode = d.colorblindMode || false;
+			animationsEnabled = d.animationsEnabled !== undefined ? d.animationsEnabled : true;
+			soundEnabled = d.soundEnabled !== undefined ? d.soundEnabled : true;
+			if (darkMode) document.body.classList.add('dark-mode');
+			if (colorblindMode) document.body.classList.add('colorblind-mode');
+			applyAnimationsSetting();
+			darkToggle.checked = darkMode;
+			colorblindToggle.checked = colorblindMode;
+			animationsToggle.checked = animationsEnabled;
+			soundToggle.checked = soundEnabled;
+			if (soundEnabled) preloadSounds();
+		} else {
+			// Par défaut, les sons sont activés
+			soundEnabled = true;
+			soundToggle.checked = true;
+			preloadSounds();
+		}
+	}
+	
+	function saveSettings() {
+		localStorage.setItem('classerSettings', JSON.stringify({ darkMode, colorblindMode, animationsEnabled, soundEnabled }));
+		showSaveIndicator("paramètre sauvegardé");
+	}
+	
+	darkToggle.addEventListener('change', e => {
+		darkMode = e.target.checked;
+		document.body.classList.toggle('dark-mode', darkMode);
+		saveSettings();
+		playSound('click');
+	});
+	colorblindToggle.addEventListener('change', e => {
+		colorblindMode = e.target.checked;
+		document.body.classList.toggle('colorblind-mode', colorblindMode);
+		saveSettings();
+		playSound('click');
+	});
+	animationsToggle.addEventListener('change', e => {
+		animationsEnabled = e.target.checked;
+		applyAnimationsSetting();
+		saveSettings();
+		playSound('click');
+	});
+	soundToggle.addEventListener('change', e => {
+		soundEnabled = e.target.checked;
+		if (soundEnabled) preloadSounds();
+		saveSettings();
+		playSound('click');
+	});
+	
+	pairsSlider.addEventListener('input', e => {
+		currentPairsCount = parseInt(e.target.value, 10);
+		pairsValue.textContent = currentPairsCount;
+		localStorage.setItem('classerPairsCount', currentPairsCount);
+		reload();
+	});
+	
+	function loadPairsCount() {
+		const saved = localStorage.getItem('classerPairsCount');
+		// Curseur étalonné de 1 à 4 quel que soit le mode
+		if (saved !== null) {
+			currentPairsCount = Math.max(1, Math.min(4, parseInt(saved, 10)));
+		} else {
+			currentPairsCount = 4; // Valeur par défaut à 4
+		}
+		pairsSlider.value = currentPairsCount;
+		pairsValue.textContent = currentPairsCount;
+	}
+	
+	// === PLEIN ÉCRAN ===
+	function toggleFullscreen() {
+		playSound('click');
+		const btns = document.querySelectorAll('.btn-fullscreen');
+		if (!document.fullscreenElement) {
+			document.documentElement.requestFullscreen();
+			btns.forEach(btn => {
+				btn.classList.add('fullscreen-active');
+				btn.dataset.title = 'quitter plein écran (F)';
+				btn.innerHTML = `
+					<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
+						<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
+						<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
+						<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
+						<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
+					</svg>
+				`;
+			});
+		} else {
+			document.exitFullscreen();
+			btns.forEach(btn => {
+				btn.classList.remove('fullscreen-active');
+				btn.dataset.title = 'plein écran (F)';
+				btn.innerHTML = `
+					<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+						<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+						<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+						<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+						<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+					</svg>
+				`;
+			});
+		}
+	}
+	
+	document.querySelectorAll('[data-action="fullscreen"]').forEach(b => b.addEventListener('click', toggleFullscreen));
+	document.addEventListener('fullscreenchange', () => {
+		const btns = document.querySelectorAll('.btn-fullscreen');
+		const fs = !!document.fullscreenElement;
+		btns.forEach(btn => {
+			if (fs) {
+				btn.classList.add('fullscreen-active');
+				btn.dataset.title = 'quitter plein écran (F)';
+				btn.innerHTML = `
+					<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
+						<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
+						<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
+						<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
+						<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
+					</svg>
+				`;
+			} else {
+				btn.classList.remove('fullscreen-active');
+				btn.dataset.title = 'plein écran (F)';
+				btn.innerHTML = `
+					<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+						<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+						<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+						<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+						<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+					</svg>
+				`;
+			}
+		});
+	});
+	
+	// === RACCOURCIS CLAVIER ===
+	document.addEventListener('keydown', e => {
+		if (e.target.matches('input, textarea, select')) return;
+		
+		if (e.key === 'Escape') {
+			if (document.querySelector('.submenu.active')) { closeAllSubmenus(); playSound('click'); }
+			else if (slideMenu.classList.contains('open')) { closeMenu(); playSound('click'); }
+			else { closeSequencesDropdown(); }
+			e.preventDefault();
+			return false;
+		}
+		
+		const key = e.key.toLowerCase();
+		switch (key) {
+			case 's':
+				e.preventDefault();
+				playSound('click');
+				const dropdown = document.getElementById('sequencesDropdown');
+				if (dropdown) {
+					updateNotionsDropdown();
+					dropdown.classList.toggle('open');
+				}
+				return false;
+			case 'h':
+				e.preventDefault();
+				playSound('click');
+				window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+				return false;
+			case 'r':
+				e.preventDefault();
+				reload();
+				return false;
+			case 't':
+				e.preventDefault();
+				playSound('click');
+				resetTimer();
+				startTimer();
+				showToaster('⏱️ Timer réinitialisé', 'info', 1500);
+				return false;
+			case 'f':
+				e.preventDefault();
+				toggleFullscreen();
+				return false;
+			case 'm':
+				e.preventDefault();
+				toggleMenu();
+				return false;
+		}
+	});
+	
+	// === BOUTONS ACCUEIL ===
+	document.querySelectorAll('[data-action="home"]').forEach(b => {
+		b.addEventListener('click', () => { playSound('click'); window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); });
+	});
+	
+	// === BOUTONS RELOAD ===
+	const rotateElement = el => { 
+		if (!animationsEnabled) return;
+		el.style.transform = "rotate(360deg)"; 
+		setTimeout(() => el.style.transform = "", 600); 
+	};
+	document.querySelectorAll('[data-action="reload"]').forEach(btn => {
+		btn.addEventListener('click', () => { 
+			rotateElement(btn.querySelector('svg')); 
+			reload(); 
+		});
+	});
+	
+	// === TIMER ===
+	let timerLimit = 60;
+	let timerInterval = null;
+	let timeLeft = 60;
+	let timerEnabled = true;
+	
+	function formatTimer(seconds) {
+		if (seconds <= 0) return '00:00';
+		const mins = Math.floor(seconds / 60);
+		const secs = seconds % 60;
+		return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+	}
+	
+	function updateTimerDisplay(value) {
+		const desktop = document.getElementById('timerValueDesktop');
+		const mobile = document.getElementById('timerValueMobile');
+		if (desktop) desktop.textContent = value;
+		if (mobile) mobile.textContent = value;
+	}
+	
+	function showTimerButtons(show) {
+		const btns = document.querySelectorAll('.timer-btn');
+		btns.forEach(btn => {
+			btn.style.display = show ? '' : 'none';
+		});
+	}
+	
+	function startTimer() {
+		if (!timerEnabled || timerLimit === 0) {
+			updateTimerDisplay('∞');
+			showTimerButtons(false);
+			return;
+		}
+		showTimerButtons(true);
+		timeLeft = timerLimit;
+		updateTimerDisplay(formatTimer(timeLeft));
+		
+		if (timerInterval) clearInterval(timerInterval);
+		timerInterval = setInterval(() => {
+			timeLeft--;
+			updateTimerDisplay(formatTimer(timeLeft));
+			const timerBtns = [document.getElementById('timerBtnDesktop'), document.getElementById('timerBtnMobile')].filter(b => b);
+			timerBtns.forEach(btn => {
+				btn.classList.remove('warning', 'danger');
+				if (timeLeft <= 30 && timeLeft > 0) btn.classList.add('warning');
+				if (timeLeft <= 15 && timeLeft > 0) btn.classList.add('danger');
+			});
+			if (timeLeft <= 0) {
+				clearInterval(timerInterval);
+				timerInterval = null;
+				showToaster("⏰ Temps écoulé !", "warning", 3000);
+				playSound('score_bad');
+				document.getElementById("checkButton").disabled = true;
+			}
+		}, 1000);
+	}
+	
+	function stopTimer() {
+		if (timerInterval) {
+			clearInterval(timerInterval);
+			timerInterval = null;
+		}
+		document.querySelectorAll('.timer-btn').forEach(btn => btn.classList.remove('warning', 'danger'));
+	}
+	
+	function resetTimer() {
+		stopTimer();
+		if (timerEnabled && timerLimit > 0) {
+			timeLeft = timerLimit;
+			updateTimerDisplay(formatTimer(timeLeft));
+			showTimerButtons(true);
+		} else {
+			updateTimerDisplay('∞');
+			showTimerButtons(false);
+		}
+		document.getElementById("checkButton").disabled = false;
+	}
+	
+	// === ÉVÉNEMENT CLICK SUR LE TIMER ===
+	document.querySelectorAll('.timer-btn').forEach(btn => {
+		btn.addEventListener('click', function(e) {
+			e.stopPropagation();
+			playSound('click');
+			resetTimer();
+			startTimer();
+			showToaster('⏱️ Timer réinitialisé', 'info', 1500);
+		});
+	});
+	
+	// === INITIALISATION ===
+	allNotions = extraireNotions();
+	loadSelectedNotions();
+	loadPairsCount();
+	loadGameStats();
+	loadSettings();
+	updateNotionsDropdown();
+	getNewWords();
+	updateStatsDisplay();
+	
+	// Démarrer le timer
+	timerLimit = 60;
+	resetTimer();
+	startTimer();
+});
+</script>
+</body>
+</html>

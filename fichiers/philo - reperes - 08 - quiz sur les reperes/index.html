@@ -1,0 +1,3361 @@
+<!DOCTYPE html>
+<!-- Daniel Boulagnon -->
+<!-- daniel.boulagnon@ac-lille.fr -->
+<!-- version 2026 -->
+<!-- Exploitation à but strictement pédagogique et non lucratif -->
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+	<link rel="icon" href="../../src/favicon.ico">
+	<title>apprendre les repères</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		html,
+		body {
+			height: 100%;
+		}
+
+		:root {
+			--bg: #f0f0f0;
+			--btn: #e0e0e0;
+			--font-color: #000000;
+			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.9);
+			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.9);
+			--tooltip-bg: #ffffff;
+			--tooltip-color: #333333;
+			--primary-color: #e74c3c;
+			--badge-bg: #e74c3c;
+			--badge-color: #ffffff;
+		}
+
+		body.dark-theme {
+			--bg: #121212;
+			--btn: #3d3d3d;
+			--font-color: #ffffff;
+			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.05);
+			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
+			--tooltip-bg: #1a1a1a;
+			--tooltip-color: #ffffff;
+			--primary-color: #ff6b6b;
+			--badge-bg: #ff6b6b;
+			--badge-color: #ffffff;
+			background-color: #121212 !important;
+			color: #ffffff !important;
+		}
+
+		body.colorblind-mode {
+			--primary-color: #2c7be5;
+			--badge-bg: #2c7be5;
+			--badge-color: #ffffff;
+		}
+
+		body.dark-theme.colorblind-mode {
+			--primary-color: #4a90d9;
+			--badge-bg: #4a90d9;
+			--badge-color: #ffffff;
+		}
+
+		body {
+			font-family: Arial, sans-serif;
+			background-color: var(--bg);
+			color: var(--font-color);
+			padding: 12px 12px 20px 12px;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			transition: background-color 0.4s, color 0.4s;
+			overflow-y: auto;
+		}
+
+		.btn,
+		.timer-btn,
+		.menu-close,
+		.submenu-close,
+		.menu-item,
+		.stats-reload-btn,
+		.upload-btn,
+		.local-reset-btn,
+		.btn-sequences,
+		.select-all-btn {
+			background: var(--btn);
+			color: var(--font-color);
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+			border: none;
+			cursor: pointer;
+			-webkit-tap-highlight-color: transparent;
+		}
+
+		.btn:hover,
+		.timer-btn:hover,
+		.menu-close:hover,
+		.submenu-close:hover,
+		.menu-item:hover,
+		.stats-reload-btn:hover,
+		.upload-btn:hover,
+		.local-reset-btn:hover,
+		.btn-sequences:hover,
+		.select-all-btn:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+
+		.btn:active,
+		.timer-btn:active,
+		.btn-sequences:active {
+			transform: scale(0.95);
+		}
+
+		.btn {
+			width: 52px;
+			height: 52px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			position: relative;
+		}
+
+		.btn svg {
+			width: 24px;
+			height: 24px;
+			fill: none;
+			stroke: currentColor;
+			stroke-width: 2;
+			flex-shrink: 0;
+		}
+
+		.btn::after,
+		.timer-btn::after,
+		.btn-sequences::after {
+			content: attr(data-title);
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: 0.5rem;
+			background-color: var(--tooltip-bg);
+			color: var(--tooltip-color);
+			padding: 0.3rem 0.6rem;
+			border-radius: 5px;
+			font-size: 0.8rem;
+			white-space: nowrap;
+			opacity: 0;
+			pointer-events: none;
+			z-index: 10;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		}
+
+		.btn:hover::after,
+		.timer-btn:hover::after,
+		.btn-sequences:hover::after {
+			opacity: 1;
+		}
+
+		.btn-home .icon-wrapper {
+			width: 52px;
+			height: 52px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transform-style: preserve-3d;
+			flex-shrink: 0;
+		}
+
+		.btn-home:hover .icon-wrapper {
+			animation: spin360 2s infinite linear;
+		}
+
+		@keyframes spin360 {
+			0% { transform: rotateY(0deg); }
+			100% { transform: rotateY(360deg); }
+		}
+
+		.btn-reload:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		@keyframes rotate {
+			from { transform: rotate(0deg); }
+			to { transform: rotate(360deg); }
+		}
+
+		.menu-item:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		.menu-close:hover svg,
+		.submenu-close:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		.btn-sequences:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		.menu-icon {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			transition: transform 0.3s ease;
+			width: 22px;
+			height: 18px;
+			justify-content: center;
+		}
+
+		.menu-icon span {
+			display: block;
+			width: 100%;
+			height: 2px;
+			background: currentColor;
+			border-radius: 2px;
+			transition: all 0.3s ease;
+		}
+
+		.btn-menu:hover .menu-icon {
+			transform: rotate(90deg);
+		}
+
+		.btn-fullscreen .fullscreen-icon {
+			transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+		}
+
+		.btn-fullscreen:not(.fullscreen-active):hover .fullscreen-icon {
+			transform: scale(1.5);
+		}
+
+		.fullscreen-exit-icon {
+			transform-origin: center;
+			transition: transform 0.3s ease;
+			stroke-width: 1.2px !important;
+		}
+
+		.btn-fullscreen.fullscreen-active:hover .fullscreen-exit-icon {
+			transform: scale(0.7);
+		}
+
+		.btn-sequences {
+			width: 52px;
+			height: 52px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			position: relative;
+		}
+
+		.btn-sequences svg {
+			width: 24px;
+			height: 24px;
+			stroke: currentColor;
+			stroke-width: 2;
+			fill: none;
+			flex-shrink: 0;
+		}
+
+		.toolbar-wrapper {
+			position: relative;
+			z-index: 10;
+			flex-shrink: 0;
+			margin-bottom: 12px;
+		}
+
+		.toolbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 8px 15px;
+			background: transparent;
+			height: 76px;
+			border-radius: 12px 12px 0 0;
+			gap: 10px;
+			position: relative;
+		}
+
+		.toolbar-left,
+		.toolbar-right {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			flex: 1;
+		}
+
+		.toolbar-left {
+			justify-content: flex-start;
+		}
+		.toolbar-right {
+			justify-content: flex-end;
+		}
+
+		.toolbar-center {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			pointer-events: none;
+		}
+
+		.toolbar-title {
+			color: var(--primary-color);
+			font-size: clamp(1.8rem, 5vw, 2.5rem);
+			font-weight: bold;
+			white-space: nowrap;
+			line-height: 1.2;
+			text-transform: lowercase;
+			margin: 0;
+		}
+
+		.toolbar-subtitle {
+			color: #555;
+			font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+			line-height: 1.2;
+			padding-top: 4px;
+			font-weight: normal;
+		}
+
+		body.dark-theme .toolbar-subtitle,
+		body.dark-theme .mobile-subtitle {
+			color: #8895a7;
+		}
+
+		.sequences-dropdown {
+			position: absolute;
+			top: 60px;
+			left: 0;
+			margin-top: 8px;
+			background: var(--bg);
+			border-radius: 12px;
+			box-shadow: var(--shadow-out);
+			display: none;
+			min-width: 220px;
+			max-width: 95vw;
+			width: auto;
+			max-height: 450px;
+			overflow-y: auto;
+			z-index: 1000;
+			padding: 6px 0;
+		}
+
+		.sequences-dropdown.open {
+			display: block;
+		}
+
+		body.dark-theme .sequences-dropdown {
+			background: #1a1a1a;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+		}
+
+		.sequences-dropdown .dropdown-header {
+			padding: 8px 16px;
+			margin-top: 0px;
+			margin-bottom: 8px;
+			font-weight: bold;
+			color: var(--primary-color);
+			font-size: 0.8rem;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+
+		body.dark-theme .sequences-dropdown .dropdown-header {
+			border-bottom-color: rgba(255, 255, 255, 0.08);
+		}
+
+		.dropdown-notion-item {
+			display: flex;
+			align-items: center;
+			padding: 6px 16px;
+			margin: 2px 0;
+			cursor: pointer;
+			transition: background 0.15s ease;
+			white-space: nowrap;
+		}
+
+		.dropdown-notion-item:hover {
+			background: rgba(0, 0, 0, 0.06);
+		}
+
+		body.dark-theme .dropdown-notion-item:hover {
+			background: rgba(255, 255, 255, 0.08);
+		}
+
+		.dropdown-notion-item input[type="checkbox"] {
+			width: 16px;
+			height: 16px;
+			margin-right: 10px;
+			cursor: pointer;
+			flex-shrink: 0;
+			accent-color: var(--primary-color);
+		}
+
+		.dropdown-notion-item label {
+			flex: 1;
+			cursor: pointer;
+			font-size: 0.78rem;
+			color: var(--font-color);
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.dropdown-actions {
+			display: flex;
+			gap: 0;
+			padding: 4px 12px 10px 12px;
+			margin-bottom: 4px;
+		}
+
+		body.dark-theme .dropdown-actions {
+			border-bottom-color: rgba(255, 255, 255, 0.06);
+		}
+
+		.dropdown-actions .select-all-btn {
+			padding: 4px 10px;
+			font-size: 0.65rem;
+			flex: 1;
+			text-align: center;
+			border: none;
+			border-radius: 4px;
+			background: var(--btn);
+			color: var(--font-color);
+			box-shadow: var(--shadow-out);
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
+
+		.dropdown-actions .select-all-btn:first-child {
+			border-radius: 4px 0 0 4px;
+		}
+
+		.dropdown-actions .select-all-btn:last-child {
+			border-radius: 0 4px 4px 0;
+			border-left: 1px solid rgba(0, 0, 0, 0.08);
+		}
+
+		body.dark-theme .dropdown-actions .select-all-btn:last-child {
+			border-left-color: rgba(255, 255, 255, 0.08);
+		}
+
+		.dropdown-actions .select-all-btn:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-1px);
+			z-index: 1;
+		}
+
+		.dropdown-count {
+			padding: 6px 16px 4px 16px;
+			font-size: 0.65rem;
+			opacity: 0.6;
+			text-align: center;
+			border-top: 1px solid rgba(0, 0, 0, 0.06);
+			margin-top: 4px;
+		}
+
+		body.dark-theme .dropdown-count {
+			border-top-color: rgba(255, 255, 255, 0.06);
+		}
+
+		.timer-btn {
+			width: 52px;
+			height: 52px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			padding: 0;
+			line-height: 1;
+			font-size: 12px;
+			font-weight: bold;
+			font-family: monospace;
+			flex-shrink: 0;
+		}
+
+		.timer-btn.warning {
+			color: #ff6b6b;
+			animation: timer-pulse 0.5s ease infinite alternate;
+		}
+
+		.timer-btn.danger {
+			color: #ff0000;
+			animation: timer-pulse 0.3s ease infinite alternate;
+		}
+
+		@keyframes timer-pulse {
+			0% { transform: scale(1); }
+			100% { transform: scale(1.05); }
+		}
+
+		.toolbar-mobile {
+			display: none;
+			flex-direction: column;
+			align-items: center;
+			width: 100%;
+			padding: 6px 8px 2px 8px;
+			background: transparent;
+			border-radius: 12px 12px 0 0;
+		}
+
+		.toolbar-mobile .btn,
+		.toolbar-mobile .timer-btn,
+		.toolbar-mobile .btn-sequences {
+			width: 44px;
+			height: 44px;
+			min-width: 44px;
+			min-height: 44px;
+		}
+
+		.toolbar-mobile .btn svg {
+			width: 20px;
+			height: 20px;
+		}
+
+		.toolbar-mobile .menu-icon {
+			width: 18px;
+			height: 14px;
+			gap: 3px;
+		}
+
+		.toolbar-mobile .menu-icon span {
+			height: 2px;
+		}
+
+		.toolbar-mobile .btn-sequences svg {
+			width: 20px;
+			height: 20px;
+		}
+
+		.mobile-buttons {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			gap: 8px;
+			padding: 0 4px;
+			margin-bottom: 2px;
+			flex-wrap: nowrap;
+		}
+
+		.mobile-title-wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 100%;
+			margin-top: 15px;
+			padding: 0 4px;
+		}
+
+		.mobile-title {
+			color: var(--primary-color);
+			font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+			font-weight: bold;
+			text-align: center;
+			line-height: 1.2;
+			margin-top: 2px;
+			text-transform: lowercase;
+		}
+
+		.mobile-subtitle {
+			color: #555;
+			font-size: clamp(0.65rem, 1.8vw, 0.8rem);
+			text-align: center;
+			line-height: 1.2;
+			padding-top: 10px;
+			margin-bottom: 0;
+		}
+
+		body.dark-theme .mobile-subtitle {
+			color: #8895a7;
+		}
+
+		@media (max-width: 600px) {
+			.toolbar {
+				display: none !important;
+			}
+			.toolbar-mobile {
+				display: flex !important;
+			}
+			
+			.mobile-buttons {
+				gap: 6px;
+			}
+			
+			.mobile-buttons .btn,
+			.mobile-buttons .timer-btn,
+			.mobile-buttons .btn-sequences {
+				width: 44px;
+				height: 44px;
+				min-width: 44px;
+				min-height: 44px;
+			}
+			
+			.mobile-buttons .btn svg {
+				width: 20px;
+				height: 20px;
+			}
+			
+			.mobile-buttons .btn-sequences svg {
+				width: 20px;
+				height: 20px;
+			}
+			
+			.timer-btn {
+				font-size: 11px !important;
+			}
+			
+			.mobile-title {
+				font-size: 1.1rem;
+				margin-top: 0px;
+			}
+			
+			.mobile-subtitle {
+				font-size: 0.7rem;
+				padding-top: 10px;
+			}
+			
+			.sequences-dropdown {
+				position: fixed !important;
+				left: 50% !important;
+				transform: translateX(-50%) !important;
+				top: 110px !important;
+				min-width: unset;
+				max-width: 92vw;
+				width: 92vw;
+				margin-top: 0 !important;
+				max-height: 50vh;
+			}
+			
+			.dropdown-notion-item {
+				padding: 8px 14px;
+			}
+			
+			.dropdown-notion-item label {
+				font-size: 0.75rem;
+			}
+			
+			.dropdown-notion-item input[type="checkbox"] {
+				width: 18px;
+				height: 18px;
+			}
+
+			.timeout-box h2 {
+				font-size: 1.6rem;
+				white-space: nowrap;
+			}
+		}
+
+		@media (max-width: 400px) {
+			.mobile-buttons {
+				gap: 4px;
+			}
+			
+			.mobile-buttons .btn,
+			.mobile-buttons .timer-btn,
+			.mobile-buttons .btn-sequences {
+				width: 38px;
+				height: 38px;
+				min-width: 38px;
+				min-height: 38px;
+			}
+			
+			.mobile-buttons .btn svg {
+				width: 17px;
+				height: 17px;
+			}
+			
+			.mobile-buttons .btn-sequences svg {
+				width: 17px;
+				height: 17px;
+			}
+			
+			.timer-btn {
+				font-size: 9px !important;
+			}
+			
+			.mobile-title {
+				font-size: 0.95rem;
+				margin-top: 0px;
+			}
+			
+			.mobile-subtitle {
+				font-size: 0.6rem;
+				padding-top: 10px;
+			}
+			
+			.sequences-dropdown {
+				top: 100px !important;
+				max-width: 95vw;
+				width: 95vw;
+			}
+
+			.timeout-box h2 {
+				font-size: 1.3rem;
+				white-space: nowrap;
+			}
+		}
+
+		.menu-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(0, 0, 0, 0.5);
+			z-index: 1000;
+			opacity: 0;
+			visibility: hidden;
+			transition: all 0.3s ease;
+		}
+
+		.menu-overlay.open {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.slide-menu {
+			position: fixed;
+			top: 0;
+			right: -300px;
+			width: 280px;
+			height: 100vh;
+			background-color: var(--bg);
+			z-index: 1001;
+			padding: 20px;
+			display: flex;
+			flex-direction: column;
+			border-radius: 20px 0 0 20px;
+			box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+			transition: right 0.3s ease;
+			overflow-y: auto;
+		}
+
+		.slide-menu.open {
+			right: 0;
+		}
+
+		.menu-header {
+			display: flex;
+			justify-content: flex-end;
+			margin-bottom: 1rem;
+		}
+
+		.menu-close,
+		.submenu-close {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.menu-close svg,
+		.submenu-close svg {
+			width: 18px;
+			height: 18px;
+			stroke: currentColor;
+		}
+
+		.menu-item {
+			display: flex;
+			align-items: center;
+			padding: 0px 20px;
+			font-size: 14px;
+			border-radius: 8px;
+			margin-bottom: 17px;
+			width: 100%;
+			min-height: 42px;
+			border: none;
+		}
+
+		.menu-item:hover {
+			background: rgba(0, 0, 0, 0.08);
+			transform: translateY(-2px);
+		}
+
+		body.dark-theme .menu-item:hover {
+			background: rgba(255, 255, 255, 0.08);
+		}
+
+		.menu-item svg {
+			width: 24px;
+			height: 24px;
+			margin-right: 16px;
+			stroke: currentColor;
+			stroke-width: 2;
+			fill: none;
+			flex-shrink: 0;
+		}
+
+		.menu-item .item-label {
+			flex: 1;
+			text-align: left;
+			display: flex;
+			align-items: center;
+			height: 100%;
+		}
+
+		.menu-item .item-badge {
+			background: var(--badge-bg);
+			color: var(--badge-color);
+			border-radius: 50%;
+			width: 34px;
+			height: 34px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 10px;
+			font-weight: bold;
+			flex-shrink: 0;
+			margin-left: 8px;
+		}
+
+		.submenu {
+			position: fixed;
+			top: 0;
+			right: -340px;
+			width: 280px;
+			height: 100%;
+			background: var(--bg);
+			z-index: 10010;
+			box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+			border-radius: 20px 0 0 20px;
+			padding: 2rem 1.5rem;
+			overflow-y: auto;
+			transition: right 0.5s ease;
+		}
+
+		.submenu.active {
+			right: 0;
+		}
+
+		.submenu-title {
+			font-size: 1.4rem;
+			font-weight: bold;
+			color: var(--primary-color);
+			margin: 0.5rem 0 1.5rem 0;
+			text-align: center;
+			text-transform: lowercase;
+		}
+
+		.submenu-content {
+			color: var(--font-color);
+			font-size: 13px;
+			line-height: 1.5;
+			margin-top: 4px;
+		}
+
+		.settings-info,
+		.stats-info {
+			margin-top: 0;
+			padding: 15px;
+			background: rgba(0, 0, 0, 0.05);
+			border-radius: 10px;
+			margin-bottom: 15px;
+		}
+
+		body.dark-theme .settings-info,
+		body.dark-theme .stats-info {
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		.toggle-container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 0.75rem;
+			min-height: 24px;
+		}
+
+		.toggle-label {
+			color: var(--font-color);
+			font-size: 0.9rem;
+			text-align: left;
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			cursor: pointer;
+			flex: 1;
+		}
+
+		.toggle-label i {
+			width: 24px;
+			min-width: 24px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			font-size: 1rem;
+			text-align: center;
+			line-height: 1;
+		}
+
+		.theme-switch {
+			position: relative;
+			display: inline-block;
+			width: 40px;
+			height: 20px;
+			flex-shrink: 0;
+		}
+
+		.theme-switch input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
+
+		.theme-switch .slider {
+			position: absolute;
+			cursor: pointer;
+			inset: 0;
+			background: #b0b8c4;
+			border-radius: 20px;
+			transition: .3s;
+		}
+
+		.theme-switch .slider:before {
+			content: "";
+			position: absolute;
+			width: 16px;
+			height: 16px;
+			left: 2px;
+			top: 2px;
+			background: #fff;
+			border-radius: 50%;
+			transition: .3s;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		}
+
+		.theme-switch input:checked+.slider {
+			background: #3a7bb5;
+		}
+
+		.theme-switch input:checked+.slider:before {
+			transform: translateX(20px);
+		}
+
+		body.dark-theme .theme-switch .slider {
+			background: #3d3d3d;
+		}
+
+		body.dark-theme .theme-switch input:checked+.slider {
+			background: #4a80c0;
+		}
+
+		.pairs-slider-container {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+			margin-top: 0.75rem;
+			margin-bottom: 0.75rem;
+		}
+
+		.pairs-slider-label {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 0.9rem;
+		}
+
+		.pairs-slider-label .toggle-label {
+			font-size: 0.9rem;
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			cursor: pointer;
+			flex: 1;
+		}
+
+		.pairs-slider-label .toggle-label i {
+			width: 24px;
+			min-width: 24px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			font-size: 1rem;
+			text-align: center;
+			line-height: 1;
+		}
+
+		.pairs-slider-value {
+			font-weight: bold;
+			color: var(--primary-color);
+			font-size: 1rem;
+		}
+
+		.pairs-slider {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 100%;
+			height: 4px;
+			border-radius: 2px;
+			background: #b0b8c4;
+			outline: none;
+			transition: background 0.3s ease;
+		}
+
+		.pairs-slider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 16px;
+			height: 16px;
+			border-radius: 50%;
+			background: #3a7bb5;
+			cursor: pointer;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+			transition: background 0.2s ease;
+		}
+
+		.pairs-slider::-webkit-slider-thumb:hover {
+			transform: scale(1.1);
+		}
+
+		.pairs-slider::-moz-range-thumb {
+			width: 16px;
+			height: 16px;
+			border-radius: 50%;
+			background: #3a7bb5;
+			cursor: pointer;
+			border: none;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		}
+
+		body.dark-theme .pairs-slider {
+			background: #3d3d3d;
+		}
+
+		body.dark-theme .pairs-slider::-webkit-slider-thumb {
+			background: #4a80c0;
+		}
+
+		body.dark-theme .pairs-slider::-moz-range-thumb {
+			background: #4a80c0;
+		}
+
+		.slider-graduations {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			padding: 0;
+			margin-top: 5px;
+			font-size: 0.7rem;
+			opacity: 0.7;
+		}
+
+		.slider-graduations .infinity-symbol {
+			font-size: 1rem;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			line-height: 1;
+		}
+
+		.main-container {
+			width: 100%;
+			max-width: 950px;
+			margin: 0 auto;
+			padding-left: 10px;
+			padding-right: 10px;
+			flex-grow: 1;
+			display: flex;
+			flex-direction: column;
+			padding-bottom: 20px;
+			box-sizing: border-box;
+		}
+
+		#text-container {
+			background: transparent;
+			border: none !important;
+			border-radius: 0 !important;
+			padding: 0.5rem 0 0 0;
+			margin-bottom: 0.5rem;
+			line-height: 1.8;
+			box-shadow: none !important;
+			min-height: 2rem;
+			font-size: calc(12px + 0.5vw);
+			color: var(--font-color);
+			transition: all 0.3s ease;
+		}
+
+		body.dark-theme #text-container {
+			background: transparent;
+			border: none !important;
+			box-shadow: none !important;
+		}
+
+		#cardsContainer {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 0.5rem;
+			width: 100%;
+			max-width: 1200px;
+			margin: 0.25rem auto 0 auto;
+			padding: 0 8px;
+		}
+
+		.card-wrapper {
+			position: relative;
+			min-height: 350px;
+			width: 100%;
+			max-width: 230px;
+			height: auto;
+			margin: 0.5rem;
+			perspective: 700px;
+			perspective-origin: bottom;
+		}
+
+		@media (hover: hover) and (pointer: fine) {
+			.card-wrapper:hover .card {
+				transform: rotateY(180deg);
+			}
+		}
+
+		.card {
+			position: relative;
+			height: 100%;
+			min-height: 350px;
+			transform-style: preserve-3d;
+			transition: 0.8s cubic-bezier(0.62, 0, 0.55, 1);
+		}
+
+		.card-wrapper.flipped .card {
+			transform: rotateY(180deg);
+		}
+
+		.card-front,
+		.card-back {
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			padding: 30px 30px 60px 30px;
+			border-radius: 8px;
+			backface-visibility: hidden;
+			box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+			background: white;
+			border: 1px solid #ddd;
+			transition: background-color 0.3s ease, border-color 0.3s ease;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: flex-start;
+		}
+
+		body.dark-theme .card-front,
+		body.dark-theme .card-back {
+			background: #1a1a1a !important;
+			border-color: #2a2a2a !important;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+		}
+
+		.card-back {
+			transform: rotateY(180deg);
+		}
+
+		.card-front h2,
+		.card-back h1 {
+			color: var(--primary-color);
+			font-size: clamp(1.2rem, 4vw, 1.5rem);
+			font-family: Arial, Helvetica, sans-serif;
+			margin-top: 0.5rem;
+			margin-bottom: 0.5rem;
+			flex-shrink: 0;
+		}
+
+		.card-divider {
+			width: 10rem;
+			height: 0.2rem;
+			border-radius: 55px;
+			background-color: #000;
+			box-shadow: inset 25px 25px 21px rgba(0, 0, 0, 0.3), inset -25px -25px 21px rgba(0, 0, 0, 0.1);
+			transition: background-color 0.3s ease;
+			margin: 0.5rem 0 1rem 0;
+			flex-shrink: 0;
+		}
+
+		body.dark-theme .card-divider {
+			background-color: #333 !important;
+		}
+
+		.card-content {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			position: relative;
+			padding: 0.5rem 0 0 0;
+		}
+
+		.card-content p,
+		.card-content h4 {
+			font-size: 16px;
+			font-family: Arial, Helvetica, sans-serif;
+			text-align: center;
+			color: black;
+			margin: 0 0.5rem;
+			width: 100%;
+		}
+
+		body.dark-theme .card-content p,
+		body.dark-theme .card-content h4 {
+			color: #e8edf5;
+		}
+
+		.card-content .question {
+			font-weight: bold;
+		}
+
+		.card-content .reponse-label {
+			color: var(--primary-color);
+			font-weight: bold;
+		}
+
+		.card-content .reponse {
+			color: black;
+		}
+
+		body.dark-theme .card-content .reponse {
+			color: #e8edf5;
+		}
+
+		.arrow {
+			position: absolute;
+			bottom: -2rem;
+			left: 50%;
+			transform: translateX(-50%);
+			height: 0.1rem;
+			width: 1.5rem;
+			transition: all 0.2s;
+			background: var(--primary-color);
+			flex-shrink: 0;
+		}
+
+		.arrow::before,
+		.arrow::after {
+			content: "";
+			position: absolute;
+			top: 0;
+			height: 0.1rem;
+			width: 0.6rem;
+			background: var(--primary-color);
+		}
+
+		.arrow-right::before {
+			right: 0;
+			transform: rotate(45deg);
+			transform-origin: right bottom;
+		}
+		.arrow-right::after {
+			right: 0;
+			transform: rotate(-45deg);
+			transform-origin: right top;
+		}
+		.card-content:hover .arrow-right {
+			width: 5rem;
+		}
+
+		.arrow-left::before {
+			left: 0;
+			transform: rotate(-45deg);
+			transform-origin: left bottom;
+		}
+		.arrow-left::after {
+			left: 0;
+			transform: rotate(45deg);
+			transform-origin: left top;
+		}
+		.card-content:hover .arrow-left {
+			width: 5rem;
+		}
+
+		.keyboard-highlight {
+			outline: 3px solid var(--primary-color);
+			outline-offset: 3px;
+			transition: outline 0.2s ease;
+			animation: pulse 0.5s ease;
+		}
+
+		@keyframes pulse {
+			0% { transform: scale(1); }
+			50% { transform: scale(1.02); }
+			100% { transform: scale(1); }
+		}
+
+		@media (max-width: 768px) {
+			.card-wrapper {
+				max-width: 90%;
+				min-height: 260px;
+				margin: 0.3rem;
+			}
+			.card {
+				min-height: 260px;
+			}
+			.card-front,
+			.card-back {
+				padding: 20px 20px 50px 20px;
+			}
+			.card-divider {
+				width: 10rem !important;
+				height: 0.2rem !important;
+				margin: 0.3rem 0 0.8rem 0 !important;
+			}
+			.card-content p,
+			.card-content h4 {
+				font-size: 14px;
+				text-align: center;
+			}
+			.card-content .reponse-label,
+			.card-content .reponse {
+				font-size: 14px;
+			}
+			.arrow {
+				bottom: -1.5rem;
+				width: 1.5rem !important;
+				height: 0.1rem !important;
+			}
+			.arrow::before,
+			.arrow::after {
+				height: 0.1rem !important;
+				width: 0.6rem !important;
+			}
+			.card-content:hover .arrow-right,
+			.card-content:hover .arrow-left {
+				width: 4rem !important;
+			}
+			#cardsContainer {
+				gap: 0.3rem;
+				margin: 0.15rem auto 0 auto;
+				padding: 0 4px;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.card-wrapper {
+				max-width: 100%;
+				min-height: 140px;
+				margin: 0.2rem;
+			}
+			.card {
+				min-height: 140px;
+			}
+			.card-front,
+			.card-back {
+				padding: 15px 15px 40px 15px;
+			}
+			.card-front h2,
+			.card-back h1 {
+				font-size: clamp(0.9rem, 3vw, 1.1rem);
+				margin-top: 0.3rem;
+				margin-bottom: 0.3rem;
+			}
+			.card-divider {
+				width: 8rem !important;
+				height: 0.15rem !important;
+				margin: 0.2rem 0 0.5rem 0 !important;
+			}
+			.card-content p,
+			.card-content h4 {
+				font-size: 13px;
+				text-align: center;
+				line-height: 1.3;
+			}
+			.card-content .reponse-label,
+			.card-content .reponse {
+				font-size: 13px;
+			}
+			.arrow {
+				bottom: -1.2rem;
+				width: 1.2rem !important;
+				height: 0.1rem !important;
+			}
+			.arrow::before,
+			.arrow::after {
+				height: 0.1rem !important;
+				width: 0.5rem !important;
+			}
+			.card-content:hover .arrow-right,
+			.card-content:hover .arrow-left {
+				width: 3rem !important;
+			}
+			#cardsContainer {
+				gap: 0.2rem;
+				margin: 0.1rem auto 0 auto;
+				padding: 0 2px;
+			}
+			#text-container {
+				padding: 0.2rem 0 0 0;
+				margin-bottom: 0.2rem;
+			}
+		}
+
+		@media (max-width: 400px) {
+			.card-wrapper {
+				min-height: 120px;
+				margin: 0.15rem;
+			}
+			.card {
+				min-height: 120px;
+			}
+			.card-front,
+			.card-back {
+				padding: 10px 10px 30px 10px;
+			}
+			.card-front h2,
+			.card-back h1 {
+				font-size: 0.85rem;
+				margin-top: 0.2rem;
+				margin-bottom: 0.2rem;
+			}
+			.card-divider {
+				width: 5rem !important;
+				height: 0.1rem !important;
+				margin: 0.15rem 0 0.3rem 0 !important;
+			}
+			.card-content p,
+			.card-content h4 {
+				font-size: 11px;
+				line-height: 1.2;
+				margin: 0 0.2rem;
+			}
+			.card-content .reponse-label,
+			.card-content .reponse {
+				font-size: 11px;
+			}
+			.arrow {
+				bottom: -1rem;
+				width: 1rem !important;
+				height: 0.08rem !important;
+			}
+			.arrow::before,
+			.arrow::after {
+				height: 0.08rem !important;
+				width: 0.4rem !important;
+			}
+			#cardsContainer {
+				gap: 0.15rem;
+				margin: 0.05rem auto 0 auto;
+				padding: 0 2px;
+			}
+			#text-container {
+				padding: 0.1rem 0 0 0;
+				margin-bottom: 0.1rem;
+			}
+		}
+
+		/* ===== TIMEOUT OVERLAY ===== */
+		.timeout-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(0, 0, 0, 0.7);
+			z-index: 9999;
+			display: none;
+			align-items: center;
+			justify-content: center;
+			animation: fadeIn 0.5s ease;
+		}
+
+		.timeout-overlay.active {
+			display: flex;
+		}
+
+		@keyframes fadeIn {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		}
+
+		.timeout-box {
+			background: var(--bg);
+			color: var(--font-color);
+			padding: 40px 50px;
+			border-radius: 20px;
+			text-align: center;
+			max-width: 500px;
+			width: 90%;
+			box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+		}
+
+		body.dark-theme .timeout-box {
+			background: #1a1a1a;
+		}
+
+		.timeout-box h2 {
+			color: var(--primary-color);
+			font-size: 2rem;
+			margin-bottom: 10px;
+			text-align: center;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+		}
+
+		.timeout-box p {
+			font-size: 1.1rem;
+			margin-bottom: 20px;
+			opacity: 0.8;
+		}
+
+		.timeout-box .stats-summary {
+			background: rgba(0, 0, 0, 0.05);
+			border-radius: 12px;
+			padding: 15px;
+			margin-bottom: 25px;
+		}
+
+		body.dark-theme .timeout-box .stats-summary {
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		.timeout-box .stats-summary span {
+			font-weight: bold;
+			color: var(--primary-color);
+		}
+
+		.timeout-box .btn-new-game {
+			padding: 12px 40px;
+			font-size: 1.1rem;
+			border-radius: 40px;
+			background: var(--primary-color);
+			color: #fff;
+			border: none;
+			cursor: pointer;
+			box-shadow: var(--shadow-out);
+			transition: all 0.3s ease;
+		}
+
+		.timeout-box .btn-new-game:hover {
+			transform: translateY(-3px);
+			box-shadow: var(--shadow-in);
+		}
+
+		.toaster-global {
+			position: fixed;
+			top: 20px;
+			left: 50%;
+			transform: translateX(-50%) translateY(-100px);
+			background: var(--toast-bg);
+			color: var(--toast-text);
+			padding: 16px 28px;
+			border-radius: 12px;
+			font-size: 1rem;
+			font-weight: bold;
+			z-index: 99999;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+			transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+			opacity: 0;
+			pointer-events: none;
+			text-align: center;
+			max-width: 90%;
+			min-width: 200px;
+			--toast-bg: #e0e0e0;
+			--toast-text: #333333;
+		}
+
+		body.dark-theme .toaster-global {
+			--toast-bg: #3d3d3d;
+			--toast-text: #e0e0e0;
+		}
+
+		.toaster-global.show {
+			transform: translateX(-50%) translateY(0);
+			opacity: 1;
+		}
+
+		.toaster-global.correct,
+		.toaster-global.info,
+		.toaster-global.warning {
+			background: var(--toast-bg);
+			color: var(--toast-text);
+			border: none;
+		}
+
+		.upload-btn {
+			width: 100%;
+			padding: 12px 14px;
+			border-radius: 10px;
+			border: 2px dashed #8895a7;
+			font-size: 13px;
+			font-family: Arial, sans-serif;
+			text-align: center;
+		}
+
+		.upload-btn:hover {
+			border-color: var(--primary-color);
+		}
+
+		#fileInputSubmenu {
+			display: none;
+		}
+
+		.local-reset-btn {
+			width: 100%;
+			margin-top: 10px;
+			padding: 10px 14px;
+			font-size: 0.9rem;
+			border: 2px solid #8895a7;
+			border-radius: 10px;
+			display: inline-flex;
+			gap: 8px;
+			justify-content: center;
+			align-items: center;
+			font-family: Arial, sans-serif;
+		}
+
+		.local-reset-btn:hover {
+			border-color: var(--primary-color);
+		}
+
+		.file-status {
+			font-size: 12px;
+			font-style: italic;
+			min-height: 18px;
+			color: var(--font-color);
+			text-align: center;
+			opacity: 0.8;
+			margin-top: 8px;
+		}
+
+		::-webkit-scrollbar {
+			width: 4px;
+		}
+		::-webkit-scrollbar-track {
+			background: transparent;
+		}
+		::-webkit-scrollbar-thumb {
+			background: #b0b8c4;
+			border-radius: 4px;
+		}
+		body.dark-theme ::-webkit-scrollbar-thumb {
+			background: #3d3d3d;
+		}
+
+		body.menu-open .toolbar-wrapper,
+		body.menu-open .main-container {
+			filter: blur(5px);
+			transition: filter 0.3s ease;
+			pointer-events: none;
+		}
+
+		.slide-menu,
+		.submenu,
+		.menu-overlay {
+			filter: none !important;
+			pointer-events: auto !important;
+		}
+
+		@media (max-width: 600px) {
+			body.menu-open .toolbar-wrapper,
+			body.menu-open .main-container {
+				filter: blur(3px);
+			}
+		}
+
+		.shortcuts-table {
+			width: 100%;
+			border-collapse: separate;
+			border-spacing: 0.2rem 0.2rem;
+			font-size: 0.85rem;
+		}
+
+		.shortcuts-table td {
+			padding: 3px 3px;
+		}
+
+		.shortcuts-table kbd {
+			display: inline-block;
+			padding: 4px 8px;
+			font-family: monospace;
+			font-size: 0.9em;
+			font-weight: bold;
+			background-color: #d1d1d1;
+			color: #333;
+			border-radius: 6px;
+			box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.6) inset;
+			min-width: 20px;
+			text-align: center;
+		}
+
+		body.dark-theme .shortcuts-table kbd {
+			background-color: #1a1a1a;
+			color: #e2e8f0;
+			border: 1px solid #333;
+		}
+
+		/* Custom confirmation toaster */
+		.toaster-global.confirm {
+			--toast-bg: #ff6b6b;
+			--toast-text: #ffffff;
+			pointer-events: auto;
+			cursor: default;
+			padding: 20px 30px;
+			min-width: 280px;
+		}
+
+		body.dark-theme .toaster-global.confirm {
+			--toast-bg: #cc4444;
+			--toast-text: #ffffff;
+		}
+
+		.toaster-global .confirm-actions {
+			display: flex;
+			gap: 12px;
+			justify-content: center;
+			margin-top: 12px;
+		}
+
+		.toaster-global .confirm-actions button {
+			padding: 6px 20px;
+			border-radius: 6px;
+			border: none;
+			font-weight: bold;
+			cursor: pointer;
+			transition: all 0.2s ease;
+			font-size: 0.9rem;
+		}
+
+		.toaster-global .confirm-actions .confirm-yes {
+			background: #ffffff;
+			color: #cc4444;
+		}
+
+		.toaster-global .confirm-actions .confirm-yes:hover {
+			transform: scale(1.05);
+		}
+
+		.toaster-global .confirm-actions .confirm-no {
+			background: transparent;
+			color: #ffffff;
+			border: 2px solid #ffffff;
+		}
+
+		.toaster-global .confirm-actions .confirm-no:hover {
+			background: rgba(255,255,255,0.1);
+		}
+
+		body.dark-theme .toaster-global .confirm-actions .confirm-yes {
+			background: #ffffff;
+			color: #cc4444;
+		}
+	</style>
+</head>
+<body>
+	<!-- Toaster global -->
+	<div id="toasterGlobal" class="toaster-global"></div>
+
+	<!-- TIMEOUT OVERLAY -->
+	<div class="timeout-overlay" id="timeoutOverlay">
+		<div class="timeout-box">
+			<h2><center>⏰ temps écoulé !</center></h2>
+			<div class="stats-summary">
+				<p>📚 repères vus : <span id="timeoutCardsSeen">0</span> sur 71</p>
+				<p>🎯 nombre de session : <span id="timeoutGamesPlayed">0</span></p>
+			</div>
+			<button class="btn-new-game" id="timeoutNewGameBtn">🔄 nouvelle session</button>
+		</div>
+	</div>
+
+	<div class="toolbar-wrapper">
+		<div class="toolbar" id="toolbarDesktop">
+			<div class="toolbar-left">
+				<div style="position:relative;">
+					<button class="btn-sequences" id="sequencesBtn" data-title="repères (S)">
+						<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+							<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+							<line x1="12" y1="11" x2="12" y2="17"/>
+							<polyline points="9 14 12 11 15 14"/>
+						</svg>
+					</button>
+					<div class="sequences-dropdown" id="sequencesDropdown">
+						<div class="dropdown-header">📚 repères à réviser</div>
+						<div class="dropdown-actions">
+							<button class="select-all-btn" id="selectAllNotions">✓ tout sélectionner</button>
+							<button class="select-all-btn" id="deselectAllNotions">✗ tout désélectionner</button>
+						</div>
+						<div id="dropdownNotionsList"></div>
+						<div class="dropdown-count" id="dropdownNotionsCount">0 / 0 repères sélectionnés</div>
+					</div>
+				</div>
+				<button class="btn btn-home" id="homeBtnDesktop" data-title="accueil (H)">
+					<div class="icon-wrapper">
+						<svg viewBox="0 0 24 24">
+							<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-join="round" stroke-linecap="round"/>
+						</svg>
+					</div>
+				</button>
+				<button class="btn btn-reload" id="reloadBtnDesktop" data-title="recharger (R)">
+					<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="23 4 23 10 17 10"/>
+						<polyline points="1 20 1 14 7 14"/>
+						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+					</svg>
+				</button>
+			</div>
+			<div class="toolbar-center">
+				<div class="toolbar-title" id="appTitle">apprendre les repères</div>
+				<div class="toolbar-subtitle" id="appSubtitle">0 repères sélectionnés</div>
+			</div>
+			<div class="toolbar-right">
+				<button class="timer-btn" id="timerBtnDesktop" data-title="temps restant (T)">
+					<span id="timerValueDesktop">∞</span>
+				</button>
+				<button class="btn btn-fullscreen" id="fullscreenBtnDesktop" data-title="plein écran (F)">
+					<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+						<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+						<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+						<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+						<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+					</svg>
+				</button>
+				<button class="btn btn-menu" id="menuBtnDesktop" data-title="menu (M)">
+					<div class="menu-icon"><span></span><span></span><span></span></div>
+				</button>
+			</div>
+		</div>
+
+		<div class="toolbar-mobile" id="toolbarMobile">
+			<div class="mobile-buttons">
+				<div style="position:relative;">
+					<button class="btn-sequences" id="sequencesBtnMobile" data-title="repères (S)">
+						<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+							<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+							<line x1="12" y1="11" x2="12" y2="17"/>
+							<polyline points="9 14 12 11 15 14"/>
+						</svg>
+					</button>
+					<div class="sequences-dropdown" id="sequencesDropdownMobile">
+						<div class="dropdown-header">📚 repères à réviser</div>
+						<div class="dropdown-actions">
+							<button class="select-all-btn" id="selectAllNotionsMobile">✓ tout sélectionner</button>
+							<button class="select-all-btn" id="deselectAllNotionsMobile">✗ tout désélectionner</button>
+						</div>
+						<div id="dropdownNotionsListMobile"></div>
+						<div class="dropdown-count" id="dropdownNotionsCountMobile">0 / 0 repères sélectionnés</div>
+					</div>
+				</div>
+				<button class="btn btn-home" id="homeBtnMobile" data-title="accueil (H)">
+					<div class="icon-wrapper">
+						<svg viewBox="0 0 24 24">
+							<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-join="round" stroke-linecap="round"/>
+						</svg>
+					</div>
+				</button>
+				<button class="btn btn-reload" id="reloadBtnMobile" data-title="recharger (R)">
+					<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="23 4 23 10 17 10"/>
+						<polyline points="1 20 1 14 7 14"/>
+						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+					</svg>
+				</button>
+				<button class="timer-btn" id="timerBtnMobile" data-title="temps restant (T)">
+					<span id="timerValueMobile">∞</span>
+				</button>
+				<button class="btn btn-fullscreen" id="fullscreenBtnMobile" data-title="plein écran (F)">
+					<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+						<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+						<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+						<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+						<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+					</svg>
+				</button>
+				<button class="btn btn-menu" id="menuBtnMobile" data-title="menu (M)">
+					<div class="menu-icon"><span></span><span></span><span></span></div>
+				</button>
+			</div>
+			<div class="mobile-title-wrapper">
+				<div class="mobile-title" id="mobileTitle">apprendre les repères</div>
+				<div class="mobile-subtitle" id="mobileSubtitle">0 repères sélectionnés</div>
+			</div>
+		</div>
+	</div>
+
+	<main class="main-container">
+		<div id="text-container">
+			<div id="cardsContainer"></div>
+		</div>
+	</main>
+
+	<!-- MENU -->
+	<div class="menu-overlay" id="menuOverlay"></div>
+	<div class="slide-menu" id="slideMenu">
+		<div class="menu-header">
+			<button class="menu-close" id="menuClose">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="menu-content">
+			<button class="menu-item" id="openInstructionsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<line x1="12" y1="16" x2="12" y2="12"></line>
+					<line x1="12" y1="8" x2="12.01" y2="8"></line>
+				</svg>
+				<span class="item-label">présentation</span>
+			</button>
+			<button class="menu-item" id="openLocalFilesSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+					<line x1="12" y1="11" x2="12" y2="17"/>
+					<polyline points="9 14 12 11 15 14"/>
+				</svg>
+				<span class="item-label">charger des repères</span>
+			</button>
+			<button class="menu-item" id="openStatsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M 3 3 L 3 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+					<path d="M 3 22 L 22 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+					<path d="M 7 18 L 11 12 L 15 15 L 21 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+				</svg>
+				<span class="item-label">statistiques</span>
+				<span class="item-badge" id="statsBadge">0%</span>
+			</button>
+			<button class="menu-item" id="openSettingsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="3"></circle>
+					<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+				</svg>
+				<span class="item-label">paramètres</span>
+			</button>
+			<button class="menu-item" id="openShortcutsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<rect x="2" y="4" width="20" height="16" rx="2"></rect>
+					<line x1="6" y1="8" x2="10" y2="8"></line>
+					<line x1="14" y1="8" x2="18" y2="8"></line>
+					<line x1="6" y1="12" x2="10" y2="12"></line>
+					<line x1="14" y1="12" x2="18" y2="12"></line>
+					<line x1="6" y1="16" x2="10" y2="16"></line>
+					<line x1="14" y1="16" x2="18" y2="16"></line>
+				</svg>
+				<span class="item-label">raccourcis</span>
+			</button>
+			<button class="menu-item" id="resetAppBtn">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M3 2v6h6"></path>
+					<path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
+					<path d="M21 22v-6h-6"></path>
+					<path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path>
+				</svg>
+				<span class="item-label">réinitialiser</span>
+			</button>
+			<button class="menu-item" id="openAboutSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+					<line x1="12" y1="17" x2="12.01" y2="17"></line>
+				</svg>
+				<span class="item-label">à propos</span>
+			</button>
+		</div>
+	</div>
+
+	<!-- SOUS-MENUS -->
+	<div class="submenu" id="submenuInstructions">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="instructions">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">présentation</div>
+		<div class="submenu-content">
+			<div class="settings-info">
+				<p><i class="fas fa-bullseye"></i> <strong>objectif</strong><br><br>réviser les repères philosophiques</p>
+			</div>
+			<div class="settings-info">
+				<p><i class="fas fa-bars"></i> <strong>options</strong></p><br>
+				<p><strong>• mode sombre :</strong> pour une lecture confortable</p>
+				<p><strong>• mode daltonien :</strong> le bleu remplace le rouge</p>
+				<p><strong>• sons :</strong> active / désactive le son</p>
+				<p><strong>• nombre de cartes :</strong> 1-5</p>
+				<p><strong>• repères :</strong> sélectionnez celui à réviser</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuLocalFiles">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="local">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">charger des repères</div>
+		<div class="submenu-content">
+			<div class="local-file-upload-area" id="loadContainerSubmenu">
+				<button class="upload-btn" id="fileLoadBtnSubmenu">
+					<i class="fas fa-file-upload"></i> charger un ou des fichiers .js
+				</button>
+				<input type="file" id="fileInputSubmenu" accept=".js" multiple />
+				<div id="fileStatus" class="file-status"><em>chargez vos fichiers .js</em></div>
+			</div>
+			<div class="settings-info" style="margin-top:15px;">
+				<p><i class="fas fa-info-circle"></i> <strong>remarque :</strong></p>
+				<p style="font-size:12px;opacity:0.8;line-height:1.5;margin-top:8px;">
+					Les fichiers doivent être au format .js et contenir la variable : reperes
+				</p>
+			</div>
+			<button class="local-reset-btn" id="localResetBtn">
+				<i class="fas fa-undo-alt"></i> réinitialiser
+			</button>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuStats">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="stats">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">statistiques</div>
+		<div class="submenu-content">
+			<div class="stats-info">
+				<p><i class="fas fa-chart-simple"></i> <strong>quelques chiffres :</strong></p>
+				<p>• repères consultés : <strong id="statCardsSeen">0</strong></p>
+				<p>• nombre de session : <strong id="statGamesPlayed">0</strong></p>
+			</div>
+			<div class="stats-info">
+				<p><i class="fas fa-save"></i> <strong>sauvegarde :</strong></p>
+				<p>les statistiques sont sauvegardées automatiquement</p>
+			</div>
+			<button class="stats-reload-btn" id="resetStatsBtn" style="width:100%;margin-top:15px;padding:8px 16px;border-radius:0.5rem;border:none;display:inline-flex;gap:8px;justify-content:center;align-items:center;">
+				<i class="fas fa-sync-alt"></i> réinitialiser les statistiques
+			</button>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuSettings">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="settings">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">paramètres</div>
+		<div class="submenu-content">
+			<div class="toggle-container">
+				<span class="toggle-label"><i class="fas fa-moon"></i> mode sombre</span>
+				<label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label"><i class="fas fa-palette"></i> mode daltonien</span>
+				<label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label"><i class="fas fa-volume-up"></i> sons</span>
+				<label class="theme-switch"><input type="checkbox" id="soundToggle"><span class="slider"></span></label>
+			</div>
+			<div class="pairs-slider-container">
+				<div class="pairs-slider-label">
+					<span class="toggle-label"><i class="fa-solid fa-list"></i> nombre de cartes</span>
+					<span class="pairs-slider-value" id="cardsCountValue">3</span>
+				</div>
+				<input type="range" id="cardsCountSlider" class="pairs-slider" min="1" max="5" step="1" value="3">
+				<div class="slider-graduations">
+					<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+				</div>
+			</div>
+			<div class="pairs-slider-container">
+				<div class="pairs-slider-label">
+					<span class="toggle-label"><i class="fas fa-hourglass-half"></i> minuteur</span>
+					<span class="pairs-slider-value" id="timerLimitValue">1 min</span>
+				</div>
+				<input type="range" id="timerLimitSlider" class="pairs-slider" min="1" max="6" step="1" value="1">
+				<div class="slider-graduations">
+					<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span class="infinity-symbol">∞</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuShortcuts">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="shortcuts">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">raccourcis</div>
+		<div class="submenu-content">
+			<div class="settings-info">
+				<table class="shortcuts-table">
+					<tr><td class="key-combo"><kbd>A-E</kbd></td><td>retourner cartes A-E</td></tr>
+					<tr><td class="key-combo"><kbd>S</kbd></td><td>ouvrir/fermer la liste des repères</td></tr>
+					<tr><td class="key-combo"><kbd>H</kbd></td><td>renvoi au site académique</td></tr>
+					<tr><td class="key-combo"><kbd>R</kbd></td><td>recharger / nouvelle session</td></tr>
+					<tr><td class="key-combo"><kbd>T</kbd></td><td>réinitialiser le minuteur</td></tr>
+					<tr><td class="key-combo"><kbd>F</kbd></td><td>plein écran</td></tr>
+					<tr><td class="key-combo"><kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr>
+					<tr><td class="key-combo"><kbd>Entrée</kbd></td><td>recharger les cartes</td></tr>
+					<tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer (sous-menus, popups, menu)</td></tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuAbout">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="about">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">à propos</div>
+		<div class="submenu-content">
+			<div class="settings-info"><p><i class="fas fa-user"></i> application développée par Daniel Boulagnon</p>
+			<p><i class="fas fa-envelope"></i> daniel.boulagnon@ac-lille.fr</p></div>
+			<div class="settings-info"><p><i class="fas fa-tag"></i> version 1.3.2 (2026)</p></div>
+			<div class="settings-info"><p> © exploitation pédagogique et non commerciale</p></div>
+		</div>
+	</div>
+
+	<script src="../../src/reperes.js"></script>
+	<script>
+	(function() {
+		'use strict';
+
+		// ===== TIMER =====
+		var timerEnabled = true;
+		var timerLimit = 60;
+		var timerInterval = null;
+		var timeLeft = 60;
+		var timerExpired = false;
+		var timerStoppedManually = false;
+
+		// ===== TOASTER =====
+		var toasterTimeout = null;
+		var pendingConfirm = null;
+
+		function showToaster(message, type, duration) {
+			type = type || 'info';
+			duration = duration || 3000;
+			var toaster = document.getElementById('toasterGlobal');
+			if (!toaster) return;
+			
+			// Remove any existing confirm buttons
+			toaster.innerHTML = '';
+			
+			// If it's a confirm type, we handle it differently
+			if (type === 'confirm') {
+				toaster.className = 'toaster-global confirm';
+				toaster.innerHTML = message;
+				toaster.classList.add('show');
+				return;
+			}
+			
+			toaster.innerHTML = message;
+			toaster.className = 'toaster-global';
+			if (type === 'correct') toaster.classList.add('correct');
+			else if (type === 'info') toaster.classList.add('info');
+			else if (type === 'warning') toaster.classList.add('warning');
+			toaster.classList.add('show');
+			clearTimeout(toasterTimeout);
+			if (duration > 0) {
+				toasterTimeout = setTimeout(function() {
+					toaster.classList.remove('show');
+				}, duration);
+			}
+		}
+
+		function showConfirmToaster(message, onConfirm, onCancel) {
+			var toaster = document.getElementById('toasterGlobal');
+			if (!toaster) return;
+			
+			// Clear any existing timeout
+			clearTimeout(toasterTimeout);
+			
+			toaster.innerHTML = message + `
+				<div class="confirm-actions">
+					<button class="confirm-yes">✓ oui</button>
+					<button class="confirm-no">✗ non</button>
+				</div>
+			`;
+			toaster.className = 'toaster-global confirm';
+			toaster.classList.add('show');
+			
+			var yesBtn = toaster.querySelector('.confirm-yes');
+			var noBtn = toaster.querySelector('.confirm-no');
+			
+			function cleanup() {
+				toaster.classList.remove('show');
+				toaster.innerHTML = '';
+				toaster.className = 'toaster-global';
+				if (yesBtn) yesBtn.removeEventListener('click', handleYes);
+				if (noBtn) noBtn.removeEventListener('click', handleNo);
+			}
+			
+			function handleYes() {
+				cleanup();
+				if (onConfirm) onConfirm();
+			}
+			
+			function handleNo() {
+				cleanup();
+				if (onCancel) onCancel();
+			}
+			
+			yesBtn.addEventListener('click', handleYes);
+			noBtn.addEventListener('click', handleNo);
+		}
+
+		// ===== TIMER FUNCTIONS =====
+		function formatTimer(seconds) {
+			if (seconds <= 0) return '00:00';
+			var mins = Math.floor(seconds / 60);
+			var secs = seconds % 60;
+			return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+		}
+
+		function updateTimerDisplay(value) {
+			var desktop = document.getElementById('timerValueDesktop');
+			var mobile = document.getElementById('timerValueMobile');
+			if (desktop) desktop.textContent = value;
+			if (mobile) mobile.textContent = value;
+		}
+
+		function showTimerButtons(show) {
+			var btns = document.querySelectorAll('.timer-btn');
+			btns.forEach(function(btn) {
+				btn.style.display = show ? '' : 'none';
+			});
+		}
+
+		function sliderPosToValue(pos) {
+			if (pos === 6) return 0;
+			return parseInt(pos) * 60;
+		}
+
+		function valueToSliderPos(val) {
+			if (val === 0) return 6;
+			var minutes = Math.round(val / 60);
+			if (minutes >= 1 && minutes <= 5) return minutes;
+			return 1;
+		}
+
+		function startTimer() {
+			timerExpired = false;
+			timerStoppedManually = false;
+			if (!timerEnabled || timerLimit === 0) {
+				updateTimerDisplay('∞');
+				showTimerButtons(false);
+				return;
+			}
+			showTimerButtons(true);
+			timeLeft = timerLimit;
+			updateTimerDisplay(formatTimer(timeLeft));
+
+			if (timerInterval) clearInterval(timerInterval);
+
+			timerInterval = setInterval(function() {
+				if (timerStoppedManually) return;
+
+				timeLeft--;
+				updateTimerDisplay(formatTimer(timeLeft));
+
+				var timerBtns = [document.getElementById('timerBtnDesktop'), document.getElementById('timerBtnMobile')].filter(function(b) { return b; });
+				timerBtns.forEach(function(btn) {
+					btn.classList.remove('warning', 'danger');
+					if (timeLeft <= 30 && timeLeft > 0) btn.classList.add('warning');
+					if (timeLeft <= 15 && timeLeft > 0) btn.classList.add('danger');
+				});
+
+				if (timeLeft <= 0) {
+					clearInterval(timerInterval);
+					timerInterval = null;
+					timerExpired = true;
+					showTimeoutOverlay();
+				}
+			}, 1000);
+		}
+
+		function stopTimer() {
+			if (timerInterval) {
+				clearInterval(timerInterval);
+				timerInterval = null;
+			}
+			var timerBtns = [document.getElementById('timerBtnDesktop'), document.getElementById('timerBtnMobile')].filter(function(b) { return b; });
+			timerBtns.forEach(function(btn) {
+				if (btn) btn.classList.remove('warning', 'danger');
+			});
+		}
+
+		function resetTimer() {
+			stopTimer();
+			timerExpired = false;
+			timerStoppedManually = false;
+			if (timerEnabled && timerLimit > 0) {
+				timeLeft = timerLimit;
+				updateTimerDisplay(formatTimer(timeLeft));
+				showTimerButtons(true);
+			} else {
+				updateTimerDisplay('∞');
+				showTimerButtons(false);
+			}
+		}
+
+		function showTimeoutOverlay() {
+			var overlay = document.getElementById('timeoutOverlay');
+			if (!overlay) return;
+			
+			document.getElementById('timeoutCardsSeen').textContent = cardsSeen;
+			document.getElementById('timeoutGamesPlayed').textContent = gamesPlayed;
+			overlay.classList.add('active');
+			playSound();
+		}
+
+		function hideTimeoutOverlay() {
+			var overlay = document.getElementById('timeoutOverlay');
+			if (overlay) overlay.classList.remove('active');
+		}
+
+		// ===== PLAY SOUND =====
+		var soundEnabled = localStorage.getItem('interrogationSound') !== 'false';
+
+		function playSound() {
+			if (!soundEnabled) return;
+			try {
+				var audio = new Audio('../../src/sounds/bruit-clavier.mp3');
+				audio.volume = 0.3;
+				audio.preload = 'auto';
+				var playPromise = audio.play();
+				if (playPromise !== undefined) {
+					playPromise.catch(function(error) {
+						console.debug('Erreur lecture audio:', error);
+					});
+				}
+			} catch (e) {
+				console.debug('Erreur audio:', e);
+			}
+		}
+
+		// ===== UTILITAIRES =====
+		function shuffleArray(arr) {
+			for (var i = arr.length - 1; i > 0; i--) {
+				var j = Math.floor(Math.random() * (i + 1));
+				var temp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = temp;
+			}
+			return arr;
+		}
+
+		function escapeHtml(str) {
+			if (!str) return '';
+			return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+		}
+
+		// ===== MISE À JOUR DU SOUS-TITRE =====
+		function updateSubtitle() {
+			var total = selectedNotionIndices.size;
+			var subtitleEl = document.getElementById('appSubtitle');
+			var mobileSubtitleEl = document.getElementById('mobileSubtitle');
+			
+			var text = total + ' repère' + (total > 1 ? 's' : '') + ' sélectionné' + (total > 1 ? 's' : '');
+			if (subtitleEl) subtitleEl.textContent = text;
+			if (mobileSubtitleEl) mobileSubtitleEl.textContent = text;
+		}
+
+		// ===== EXTRACTION DES REPERES =====
+		var reperesData = [];
+		var allNotions = [];
+		var selectedNotionIndices = new Set();
+
+		function extractAllNotions() {
+			var notions = [];
+			if (!reperesData || reperesData.length === 0) return notions;
+
+			var globalIndex = 0;
+			reperesData.forEach(function(repere) {
+				if (repere.parts && Array.isArray(repere.parts)) {
+					repere.parts.forEach(function(part) {
+						notions.push({
+							id: globalIndex,
+							name: part.name,
+							definition: part.definition,
+							repereName: repere.name
+						});
+						globalIndex++;
+					});
+				}
+			});
+
+			notions.sort(function(a, b) {
+				return a.name.localeCompare(b.name);
+			});
+			notions.forEach(function(notion, index) {
+				notion.id = index;
+			});
+
+			return notions;
+		}
+
+		// ===== SELECTION DES REPERES =====
+		function loadSelectedNotions() {
+			var saved = localStorage.getItem('interrogationSelectedNotions');
+			if (saved) {
+				try {
+					var savedArray = JSON.parse(saved);
+					selectedNotionIndices.clear();
+					savedArray.forEach(function(idx) {
+						selectedNotionIndices.add(idx);
+					});
+				} catch(e) {}
+			}
+
+			if (selectedNotionIndices.size === 0 && allNotions.length > 0) {
+				allNotions.forEach(function(_, idx) {
+					selectedNotionIndices.add(idx);
+				});
+				saveSelectedNotions();
+			}
+			updateSubtitle();
+		}
+
+		function saveSelectedNotions() {
+			var toSave = Array.from(selectedNotionIndices);
+			localStorage.setItem('interrogationSelectedNotions', JSON.stringify(toSave));
+		}
+
+		function getFilteredNotions() {
+			if (!allNotions.length) return [];
+			return allNotions.filter(function(_, idx) {
+				return selectedNotionIndices.has(idx);
+			});
+		}
+
+		// ===== STATS =====
+		var cardsSeen = 0;
+		var gamesPlayed = 0;
+
+		function updateStatsBadge() {
+			var badge = document.getElementById('statsBadge');
+			if (!badge) return;
+			
+			var total = selectedNotionIndices.size;
+			var seen = Math.min(cardsSeen, total);
+			var pct = total > 0 ? Math.round((seen / total) * 100) : 0;
+			badge.textContent = pct + '%';
+		}
+
+		function saveStats() {
+			localStorage.setItem('interrogationStats', JSON.stringify({ cardsSeen: cardsSeen, gamesPlayed: gamesPlayed }));
+		}
+
+		function loadStats() {
+			var saved = localStorage.getItem('interrogationStats');
+			if (saved) {
+				var data = JSON.parse(saved);
+				cardsSeen = data.cardsSeen || 0;
+				gamesPlayed = data.gamesPlayed || 0;
+			}
+			updateStatsDisplay();
+			updateStatsBadge();
+		}
+
+		function updateStatsDisplay() {
+			var statCards = document.getElementById('statCardsSeen');
+			var statGames = document.getElementById('statGamesPlayed');
+			if (statCards) statCards.textContent = cardsSeen;
+			if (statGames) statGames.textContent = gamesPlayed;
+		}
+
+		function resetStats() {
+			cardsSeen = 0;
+			gamesPlayed = 0;
+			saveStats();
+			updateStatsDisplay();
+			updateStatsBadge();
+			showToaster('Statistiques réinitialisées !', 'info', 2000);
+			playSound();
+		}
+
+		// ===== BUILD CARDS =====
+		var currentCardCount = 3;
+
+		function buildCards() {
+			var container = document.getElementById('cardsContainer');
+			if (!container) return;
+			container.innerHTML = '';
+
+			var notions = getFilteredNotions();
+
+			if (notions.length === 0) {
+				container.innerHTML = '<div style="text-align:center; padding:2rem; color:var(--font-color);">⚠️ Aucun repère sélectionné. Sélectionner dans la liste "repères à réviser".</div>';
+				return;
+			}
+
+			var shuffled = shuffleArray([].concat(notions));
+			var selected = shuffled.slice(0, Math.min(currentCardCount, notions.length));
+
+			if (selected.length === 0) {
+				container.innerHTML = '<div style="text-align:center; padding:2rem; color:var(--font-color);">Aucune donnée disponible</div>';
+				return;
+			}
+
+			selected.forEach(function(notion, index) {
+				var wrapper = document.createElement('div');
+				wrapper.className = 'card-wrapper';
+				wrapper.setAttribute('data-card-index', index);
+				wrapper.innerHTML = `
+					<div class="card">
+						<div class="card-front">
+							<h2>question</h2>
+							<div class="card-divider"></div>
+							<div class="card-content">
+								<h4>définir « <span class="question">${escapeHtml(notion.name)}</span> »</h4>
+								<div class="arrow arrow-right"></div>
+							</div>
+						</div>
+						<div class="card-back">
+							<h1>réponse</h1>
+							<div class="card-divider"></div>
+							<div class="card-content">
+								<p><span class="reponse-label">&#9658;</span> <span class="reponse">${escapeHtml(notion.definition)}</span></p>
+								<div class="arrow arrow-left"></div>
+							</div>
+						</div>
+					</div>
+				`;
+
+				wrapper.addEventListener('click', function(e) {
+					if (!this.classList.contains('flipped')) {
+						cardsSeen++;
+						saveStats();
+						updateStatsDisplay();
+						updateStatsBadge();
+						playSound();
+					}
+					this.classList.toggle('flipped');
+				});
+
+				container.appendChild(wrapper);
+			});
+		}
+
+		// ===== JEU =====
+		function reloadGame() {
+			hideTimeoutOverlay();
+			gamesPlayed++;
+			saveStats();
+			updateStatsDisplay();
+			updateStatsBadge();
+			buildCards();
+			playSound();
+			showToaster('nouvelle session !', 'info', 1500);
+			resetTimer();
+			startTimer();
+		}
+
+		// ===== DROPDOWN =====
+		function updateNotionsDropdown() {
+			var dropdowns = [
+				document.getElementById('sequencesDropdown'),
+				document.getElementById('sequencesDropdownMobile')
+			];
+			
+			dropdowns.forEach(function(dropdown) {
+				if (!dropdown) return;
+				
+				var listContainer = dropdown.querySelector('#dropdownNotionsList') || 
+					dropdown.querySelector('#dropdownNotionsListMobile');
+				var countContainer = dropdown.querySelector('#dropdownNotionsCount') || 
+					dropdown.querySelector('#dropdownNotionsCountMobile');
+				
+				if (!listContainer || !countContainer) return;
+				
+				var total = allNotions.length;
+				var selected = selectedNotionIndices.size;
+				
+				countContainer.textContent = selected + ' / ' + total + ' repères sélectionnés';
+				
+				if (total === 0) {
+					listContainer.innerHTML = '<div class="dropdown-empty">Aucune notion disponible</div>';
+					return;
+				}
+				
+				var html = '';
+				allNotions.forEach(function(notion, idx) {
+					var isChecked = selectedNotionIndices.has(idx);
+					html += `
+						<div class="dropdown-notion-item" data-id="${idx}">
+							<input type="checkbox" class="notion-checkbox" ${isChecked ? 'checked' : ''}>
+							<label>${escapeHtml(notion.name)}</label>
+						</div>
+					`;
+				});
+				
+				listContainer.innerHTML = html;
+				
+				listContainer.querySelectorAll('.dropdown-notion-item').forEach(function(item) {
+					var idx = parseInt(item.dataset.id);
+					var checkbox = item.querySelector('.notion-checkbox');
+					
+					checkbox.addEventListener('change', function(e) {
+						e.stopPropagation();
+						if (this.checked) {
+							selectedNotionIndices.add(idx);
+						} else {
+							selectedNotionIndices.delete(idx);
+						}
+						saveSelectedNotions();
+						updateNotionsDropdown();
+						updateSubtitle();
+						reloadGame();
+						playSound();
+					});
+					
+					item.addEventListener('click', function(e) {
+						if (e.target !== checkbox && e.target.tagName !== 'LABEL') {
+							checkbox.checked = !checkbox.checked;
+							var event = new Event('change');
+							checkbox.dispatchEvent(event);
+						}
+					});
+				});
+			});
+		}
+
+		function selectAllNotions() {
+			allNotions.forEach(function(_, idx) {
+				selectedNotionIndices.add(idx);
+			});
+			saveSelectedNotions();
+			updateNotionsDropdown();
+			updateSubtitle();
+			showToaster('Tous les repères sélectionnés', 'info', 1500);
+			reloadGame();
+			playSound();
+		}
+
+		function deselectAllNotions() {
+			selectedNotionIndices.clear();
+			saveSelectedNotions();
+			updateNotionsDropdown();
+			updateSubtitle();
+			showToaster('Tous les repères désélectionnés', 'info', 1500);
+			reloadGame();
+			playSound();
+		}
+
+		function toggleSequencesDropdown(event) {
+			event.stopPropagation();
+			var dropdown = this.id === 'sequencesBtn' ? 
+				document.getElementById('sequencesDropdown') : 
+				document.getElementById('sequencesDropdownMobile');
+			if (dropdown) {
+				updateNotionsDropdown();
+				dropdown.classList.toggle('open');
+			}
+		}
+
+		function closeSequencesDropdown() {
+			var dropdowns = [
+				document.getElementById('sequencesDropdown'),
+				document.getElementById('sequencesDropdownMobile')
+			];
+			dropdowns.forEach(function(d) {
+				if (d) d.classList.remove('open');
+			});
+		}
+
+		// ===== MENU =====
+		function setupMenu() {
+			var menuOverlay = document.getElementById('menuOverlay');
+			var slideMenu = document.getElementById('slideMenu');
+			var submenus = document.querySelectorAll('.submenu');
+
+			function closeAllSubmenus() {
+				submenus.forEach(function(s) {
+					s.classList.remove('active');
+				});
+			}
+
+			function closeMenu() {
+				slideMenu.classList.remove('open');
+				menuOverlay.classList.remove('open');
+				document.body.style.overflow = '';
+				document.body.classList.remove('menu-open');
+				closeAllSubmenus();
+				closeSequencesDropdown();
+			}
+
+			function openMenu() {
+				menuOverlay.classList.add('open');
+				slideMenu.classList.add('open');
+				document.body.style.overflow = 'hidden';
+				document.body.classList.add('menu-open');
+				closeAllSubmenus();
+			}
+
+			document.getElementById('menuBtnDesktop').addEventListener('click', function() {
+				playSound();
+				openMenu();
+			});
+			document.getElementById('menuBtnMobile').addEventListener('click', function() {
+				playSound();
+				openMenu();
+			});
+
+			document.getElementById('menuClose').addEventListener('click', function() {
+				playSound();
+				closeMenu();
+			});
+			menuOverlay.addEventListener('click', function() {
+				playSound();
+				closeMenu();
+			});
+
+			document.querySelectorAll('.submenu-close').forEach(function(btn) {
+				btn.addEventListener('click', function() {
+					playSound();
+					closeAllSubmenus();
+					document.body.classList.remove('menu-open');
+				});
+			});
+
+			document.getElementById('openInstructionsSub').addEventListener('click', function() {
+				playSound();
+				closeAllSubmenus();
+				document.getElementById('submenuInstructions').classList.add('active');
+				document.body.classList.add('menu-open');
+			});
+
+			document.getElementById('openLocalFilesSub').addEventListener('click', function() {
+				playSound();
+				closeAllSubmenus();
+				document.getElementById('submenuLocalFiles').classList.add('active');
+				document.body.classList.add('menu-open');
+			});
+
+			document.getElementById('openStatsSub').addEventListener('click', function() {
+				playSound();
+				updateStatsDisplay();
+				updateStatsBadge();
+				closeAllSubmenus();
+				document.getElementById('submenuStats').classList.add('active');
+				document.body.classList.add('menu-open');
+			});
+
+			document.getElementById('openSettingsSub').addEventListener('click', function() {
+				playSound();
+				closeAllSubmenus();
+				document.getElementById('submenuSettings').classList.add('active');
+				document.body.classList.add('menu-open');
+			});
+
+			document.getElementById('openShortcutsSub').addEventListener('click', function() {
+				playSound();
+				closeAllSubmenus();
+				document.getElementById('submenuShortcuts').classList.add('active');
+				document.body.classList.add('menu-open');
+			});
+
+			document.getElementById('resetAppBtn').addEventListener('click', function() {
+				playSound();
+				// Show confirmation toaster instead of direct reset
+				showConfirmToaster(
+					'⚠️ Voulez-vous vraiment réinitialiser l\'application ?<br>Toutes les données seront effacées.',
+					function() {
+						// On confirm
+						localStorage.clear();
+						showToaster('Application réinitialisée !', 'info', 2000);
+						setTimeout(function() { location.reload(); }, 1500);
+					},
+					function() {
+						// On cancel
+						showToaster('Réinitialisation annulée', 'info', 1500);
+					}
+				);
+			});
+
+			document.getElementById('openAboutSub').addEventListener('click', function() {
+				playSound();
+				closeAllSubmenus();
+				document.getElementById('submenuAbout').classList.add('active');
+				document.body.classList.add('menu-open');
+			});
+
+			document.getElementById('resetStatsBtn').addEventListener('click', function() {
+				playSound();
+				showConfirmToaster(
+					'⚠️ Réinitialiser toutes les statistiques ?',
+					function() {
+						resetStats();
+					},
+					function() {
+						showToaster('Annulé', 'info', 1500);
+					}
+				);
+			});
+
+			// TOGGLES
+			var darkModeToggle = document.getElementById('darkModeToggle');
+			var savedDark = localStorage.getItem('interrogationDarkMode');
+			if (savedDark === 'true') {
+				document.body.classList.add('dark-theme');
+				darkModeToggle.checked = true;
+			}
+			darkModeToggle.addEventListener('change', function(e) {
+				playSound();
+				if (this.checked) {
+					document.body.classList.add('dark-theme');
+					localStorage.setItem('interrogationDarkMode', 'true');
+				} else {
+					document.body.classList.remove('dark-theme');
+					localStorage.setItem('interrogationDarkMode', 'false');
+				}
+				showToaster("Mode sombre " + (this.checked ? "activé" : "désactivé"), 'info', 1500);
+			});
+
+			var colorblindToggle = document.getElementById('colorblindToggle');
+			var savedColorblind = localStorage.getItem('interrogationColorblind');
+			if (savedColorblind === 'true') {
+				document.body.classList.add('colorblind-mode');
+				colorblindToggle.checked = true;
+			}
+			colorblindToggle.addEventListener('change', function(e) {
+				playSound();
+				if (this.checked) {
+					document.body.classList.add('colorblind-mode');
+					localStorage.setItem('interrogationColorblind', 'true');
+				} else {
+					document.body.classList.remove('colorblind-mode');
+					localStorage.setItem('interrogationColorblind', 'false');
+				}
+				showToaster("Mode daltonien " + (this.checked ? "activé" : "désactivé"), 'info', 1500);
+			});
+
+			var soundToggle = document.getElementById('soundToggle');
+			soundToggle.checked = soundEnabled;
+			soundToggle.addEventListener('change', function(e) {
+				soundEnabled = this.checked;
+				localStorage.setItem('interrogationSound', String(soundEnabled));
+				showToaster("Sons " + (soundEnabled ? "activés" : "désactivés"), 'info', 1500);
+				if (soundEnabled) {
+					playSound();
+				}
+			});
+
+			var cardsSlider = document.getElementById('cardsCountSlider');
+			var cardsValue = document.getElementById('cardsCountValue');
+			cardsSlider.addEventListener('input', function(e) {
+				currentCardCount = parseInt(this.value, 10);
+				cardsValue.textContent = currentCardCount;
+				localStorage.setItem('interrogationCardsCount', currentCardCount);
+				showToaster("Nombre de cartes : " + currentCardCount, 'info', 1500);
+				reloadGame();
+				playSound();
+			});
+
+			var timerSlider = document.getElementById('timerLimitSlider');
+			var timerValue = document.getElementById('timerLimitValue');
+			timerSlider.addEventListener('input', function(e) {
+				var pos = parseInt(this.value, 10);
+				timerLimit = sliderPosToValue(pos);
+				timerValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
+				localStorage.setItem('interrogationTimerLimit', timerLimit);
+				showToaster("Minuteur : " + (timerLimit === 0 ? '∞' : timerLimit / 60 + ' min'), 'info', 1500);
+				if (timerLimit === 0) {
+					updateTimerDisplay('∞');
+					showTimerButtons(false);
+					stopTimer();
+				} else {
+					showTimerButtons(true);
+					updateTimerDisplay(formatTimer(timerLimit));
+					resetTimer();
+					startTimer();
+				}
+			});
+
+			var savedTimer = localStorage.getItem('interrogationTimerLimit');
+			if (savedTimer !== null) {
+				timerLimit = parseInt(savedTimer, 10);
+				var pos = valueToSliderPos(timerLimit);
+				timerSlider.value = pos;
+				timerValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
+				if (timerLimit === 0) {
+					updateTimerDisplay('∞');
+					showTimerButtons(false);
+				} else {
+					updateTimerDisplay(formatTimer(timerLimit));
+					showTimerButtons(true);
+				}
+			}
+
+			document.getElementById('sequencesBtn').addEventListener('click', toggleSequencesDropdown);
+			document.getElementById('sequencesBtnMobile').addEventListener('click', toggleSequencesDropdown);
+
+			document.addEventListener('click', function(e) {
+				if (!e.target.closest('.btn-sequences') && !e.target.closest('.sequences-dropdown')) {
+					closeSequencesDropdown();
+				}
+			});
+
+			document.getElementById('selectAllNotions')?.addEventListener('click', selectAllNotions);
+			document.getElementById('deselectAllNotions')?.addEventListener('click', deselectAllNotions);
+			document.getElementById('selectAllNotionsMobile')?.addEventListener('click', selectAllNotions);
+			document.getElementById('deselectAllNotionsMobile')?.addEventListener('click', deselectAllNotions);
+
+			// Bouton nouvelle session dans l'overlay
+			document.getElementById('timeoutNewGameBtn').addEventListener('click', function() {
+				reloadGame();
+			});
+		}
+
+		// ===== TOOLBAR =====
+		function setupToolbarButtons() {
+			var homeUrl = 'https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/';
+			
+			document.getElementById('homeBtnDesktop').addEventListener('click', function() {
+				playSound();
+				window.open(homeUrl, '_blank');
+			});
+			document.getElementById('homeBtnMobile').addEventListener('click', function() {
+				playSound();
+				window.open(homeUrl, '_blank');
+			});
+
+			document.getElementById('reloadBtnDesktop').addEventListener('click', function() {
+				playSound();
+				reloadGame();
+			});
+			document.getElementById('reloadBtnMobile').addEventListener('click', function() {
+				playSound();
+				reloadGame();
+			});
+
+			document.getElementById('fullscreenBtnDesktop').addEventListener('click', function() {
+				playSound();
+				toggleFullscreen();
+			});
+			document.getElementById('fullscreenBtnMobile').addEventListener('click', function() {
+				playSound();
+				toggleFullscreen();
+			});
+
+			// ============================================================
+			// RACCOURCIS CLAVIER - VERSION AVEC TOUCHES UNIQUES
+			// (SANS RÉTROCOMPATIBILITÉ CTRL)
+			// ============================================================
+			document.addEventListener('keydown', function(e) {
+				// Ignorer si l'utilisateur est en train de taper dans un champ
+				if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+
+				// Échap - fermer tout
+				if (e.key === 'Escape') {
+					if (document.querySelector('.slide-menu.open')) {
+						document.getElementById('menuClose')?.click();
+					}
+					document.querySelectorAll('.submenu.active').forEach(function(s) {
+						s.querySelector('.submenu-close')?.click();
+					});
+					closeSequencesDropdown();
+					hideTimeoutOverlay();
+					e.preventDefault();
+					return false;
+				}
+
+				// Gestion des touches uniques (sans Ctrl)
+				var key = e.key.toLowerCase();
+
+				switch (key) {
+					case 's': // Sélection des repères (Sequences)
+						e.preventDefault();
+						playSound();
+						var dropdowns = [document.getElementById('sequencesDropdown'), document.getElementById('sequencesDropdownMobile')];
+						var dropdown = dropdowns[0];
+						if (dropdown) {
+							updateNotionsDropdown();
+							dropdown.classList.toggle('open');
+						}
+						return false;
+
+					case 'h': // Accueil (Home)
+						e.preventDefault();
+						playSound();
+						window.open(homeUrl, '_blank');
+						return false;
+
+					case 'r': // Recharger (Reload)
+						e.preventDefault();
+						playSound();
+						reloadGame();
+						return false;
+
+					case 't': // Timer (minuteur)
+						e.preventDefault();
+						playSound();
+						if (timerEnabled && timerLimit > 0) {
+							resetTimer();
+							startTimer();
+							showToaster('⏱️ Timer réinitialisé', 'info', 1500);
+						}
+						return false;
+
+					case 'f': // Plein écran (Fullscreen)
+						e.preventDefault();
+						playSound();
+						toggleFullscreen();
+						return false;
+
+					case 'm': // Menu
+						e.preventDefault();
+						playSound();
+						document.getElementById('menuBtnDesktop')?.click();
+						return false;
+
+					case 'enter': // Entrée - recharger
+						e.preventDefault();
+						document.getElementById('reloadBtnDesktop')?.click();
+						return false;
+				}
+
+				// Raccourcis pour retourner les cartes (A, B, C, D, E)
+				var keyMap = { 'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4 };
+				if (keyMap.hasOwnProperty(key)) {
+					var index = keyMap[key];
+					var wrappers = document.querySelectorAll('.card-wrapper');
+					if (index < wrappers.length) {
+						e.preventDefault();
+						var wrapper = wrappers[index];
+						if (!wrapper.classList.contains('flipped')) {
+							cardsSeen++;
+							saveStats();
+							updateStatsDisplay();
+							updateStatsBadge();
+							playSound();
+						}
+						wrapper.classList.toggle('flipped');
+						wrapper.classList.add('keyboard-highlight');
+						setTimeout(function() { wrapper.classList.remove('keyboard-highlight'); }, 1000);
+					}
+				}
+			});
+		}
+
+		// ===== FULLSCREEN =====
+		function toggleFullscreen() {
+			var btns = document.querySelectorAll('.btn-fullscreen');
+			if (!document.fullscreenElement) {
+				document.documentElement.requestFullscreen();
+				btns.forEach(function(b) {
+					b.classList.add('fullscreen-active');
+					b.dataset.title = 'quitter plein écran (F)';
+					b.innerHTML = `
+						<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
+							<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
+							<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
+							<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
+							<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
+						</svg>
+					`;
+				});
+			} else {
+				document.exitFullscreen();
+				btns.forEach(function(b) {
+					b.classList.remove('fullscreen-active');
+					b.dataset.title = 'plein écran (F)';
+					b.innerHTML = `
+						<svg class="fullscreen-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+							<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+							<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+							<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+							<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+						</svg>
+					`;
+				});
+			}
+			playSound();
+		}
+
+		document.addEventListener('fullscreenchange', function() {
+			var btns = document.querySelectorAll('.btn-fullscreen');
+			var fs = !!document.fullscreenElement;
+			btns.forEach(function(b) {
+				if (fs) {
+					b.classList.add('fullscreen-active');
+					b.dataset.title = 'quitter plein écran (F)';
+					b.innerHTML = `
+						<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
+							<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
+							<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
+							<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
+							<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
+						</svg>
+					`;
+				} else {
+					b.classList.remove('fullscreen-active');
+					b.dataset.title = 'plein écran (F)';
+					b.innerHTML = `
+						<svg class="fullscreen-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+							<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+							<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+							<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+							<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+						</svg>
+					`;
+				}
+			});
+		});
+
+		// ===== LOAD CARDS COUNT =====
+		function loadCardsCount() {
+			var saved = localStorage.getItem('interrogationCardsCount');
+			if (saved) {
+				currentCardCount = parseInt(saved, 10);
+				if (isNaN(currentCardCount) || currentCardCount < 1) currentCardCount = 3;
+				if (currentCardCount > 5) currentCardCount = 5;
+			} else {
+				currentCardCount = 3;
+			}
+			var slider = document.getElementById('cardsCountSlider');
+			var valueEl = document.getElementById('cardsCountValue');
+			if (slider) slider.value = currentCardCount;
+			if (valueEl) valueEl.textContent = currentCardCount;
+		}
+
+		// ===== CHARGEMENT DES FICHIERS JS =====
+		function loadQuizData(file) {
+			return new Promise(function(resolve, reject) {
+				var reader = new FileReader();
+				reader.onload = function(event) {
+					try {
+						var code = event.target.result;
+						
+						var sandbox = new Function(`
+							var localReperes = [];
+							${code}
+							localReperes = typeof reperes !== 'undefined' ? reperes : [];
+							return { reperes: localReperes };
+						`);
+						
+						var result = sandbox();
+						
+						if (result && result.reperes && Array.isArray(result.reperes) && result.reperes.length > 0) {
+							userFileLoaded = true;
+							userFileData = result.reperes;
+							reperesData = result.reperes;
+							
+							var titleEl = document.getElementById('appTitle');
+							var mobileTitleEl = document.getElementById('mobileTitle');
+							if (titleEl) titleEl.textContent = file.name.replace('.js', '');
+							if (mobileTitleEl) mobileTitleEl.textContent = file.name.replace('.js', '');
+							
+							allNotions = extractAllNotions();
+							loadSelectedNotions();
+							updateSubtitle();
+							updateNotionsDropdown();
+							
+							resolve({
+								name: file.name.replace('.js', ''),
+								data: result.reperes
+							});
+						} else {
+							reject(new Error('Aucun repère trouvé dans le fichier ' + file.name));
+						}
+						
+					} catch (err) {
+						reject(new Error('Erreur dans le fichier ' + file.name + ' : ' + err.message));
+					}
+				};
+				reader.onerror = function() {
+					reject(new Error('Erreur de lecture du fichier ' + file.name));
+				};
+				reader.readAsText(file);
+			});
+		}
+
+		var loadedQuizzes = [];
+		var userFileLoaded = false;
+		var userFileData = null;
+
+		function loadMultipleQuizzes(files) {
+			var validFiles = Array.from(files).filter(function(f) { return f.name.endsWith('.js'); });
+			if (validFiles.length === 0) {
+				showToaster('Veuillez sélectionner des fichiers .js valides.', 'error', 3000);
+				return;
+			}
+
+			var loadedCount = 0;
+			var errorCount = 0;
+			var results = [];
+			
+			validFiles.forEach(function(file) {
+				loadQuizData(file)
+					.then(function(result) {
+						loadedCount++;
+						results.push(result);
+						showToaster('✅ ' + result.name + ' chargé (' + result.data.length + ' repères)', 'info', 1500);
+						
+						if (loadedCount + errorCount === validFiles.length) {
+							if (results.length > 0) {
+								loadedQuizzes = results;
+								try {
+									localStorage.setItem('loadedQuizzes', JSON.stringify(loadedQuizzes));
+									loadedQuizzes.forEach(function(qz, idx) {
+										localStorage.setItem('quizData_' + idx, JSON.stringify(qz.data));
+									});
+								} catch (e) {
+									console.error('Erreur sauvegarde:', e);
+								}
+								updateNotionsDropdown();
+								if (loadedQuizzes.length > 0) {
+									loadQuizByIndex(0);
+								}
+								showToaster(results.length + ' fichier(s) chargé(s) avec succès !', 'correct', 2500);
+							}
+						}
+					})
+					.catch(function(err) {
+						errorCount++;
+						console.error('Erreur:', err);
+						showToaster('❌ Erreur: ' + err.message, 'error', 3000);
+					});
+			});
+		}
+
+		function loadQuizByIndex(index) {
+			if (index < 0 || index >= loadedQuizzes.length) return;
+			var quiz = loadedQuizzes[index];
+			var data = quiz.data;
+			
+			showToaster('📚 Quiz "' + quiz.name + '" chargé (' + data.length + ' repères)', 'info', 2000);
+			
+			userFileLoaded = true;
+			userFileData = data;
+			reperesData = data;
+			
+			var titleEl = document.getElementById('appTitle');
+			var mobileTitleEl = document.getElementById('mobileTitle');
+			if (titleEl) titleEl.textContent = quiz.name;
+			if (mobileTitleEl) mobileTitleEl.textContent = quiz.name;
+			
+			allNotions = extractAllNotions();
+			loadSelectedNotions();
+			updateSubtitle();
+			updateNotionsDropdown();
+			reloadGame();
+		}
+
+		function restoreLoadedQuizzes() {
+			try {
+				var savedQuizzes = localStorage.getItem('loadedQuizzes');
+				if (savedQuizzes) {
+					var parsed = JSON.parse(savedQuizzes);
+					if (Array.isArray(parsed) && parsed.length > 0) {
+						loadedQuizzes = parsed;
+						loadedQuizzes.forEach(function(qz, idx) {
+							var data = localStorage.getItem('quizData_' + idx);
+							if (data) {
+								qz.data = JSON.parse(data);
+							}
+						});
+						if (loadedQuizzes.length > 0 && loadedQuizzes[0].data) {
+							userFileLoaded = true;
+							userFileData = loadedQuizzes[0].data;
+							reperesData = loadedQuizzes[0].data;
+							allNotions = extractAllNotions();
+							loadSelectedNotions();
+							updateSubtitle();
+						}
+						updateNotionsDropdown();
+					}
+				}
+			} catch (e) {
+				console.error('Erreur restauration quiz:', e);
+			}
+		}
+
+		// ===== ATTENTE DES DONNEES =====
+		function waitForData() {
+			if (window.reperes && window.reperes.length > 0) {
+				reperesData = window.reperes;
+				allNotions = extractAllNotions();
+				loadSelectedNotions();
+				updateSubtitle();
+				loadStats();
+				loadCardsCount();
+				buildCards();
+				setupMenu();
+				setupToolbarButtons();
+				updateNotionsDropdown();
+				resetTimer();
+				startTimer();
+			} else {
+				setTimeout(waitForData, 100);
+			}
+		}
+
+		document.addEventListener('DOMContentLoaded', function() {
+			restoreLoadedQuizzes();
+			waitForData();
+			
+			var fileLoadBtn = document.getElementById('fileLoadBtnSubmenu');
+			var fileInput = document.getElementById('fileInputSubmenu');
+			var fileStatus = document.getElementById('fileStatus');
+
+			if (fileLoadBtn && fileInput) {
+				fileLoadBtn.addEventListener('click', function() {
+					playSound();
+					fileInput.click();
+				});
+
+				fileInput.addEventListener('change', function(e) {
+					var files = e.target.files;
+					if (!files || files.length === 0) return;
+					playSound();
+					loadMultipleQuizzes(files);
+					fileInput.value = '';
+				});
+			}
+
+			document.getElementById('localResetBtn')?.addEventListener('click', function() {
+				playSound();
+				showConfirmToaster(
+					'⚠️ Réinitialiser tous les fichiers chargés ?<br>Toutes les données locales seront effacées.',
+					function() {
+						localStorage.removeItem('loadedQuizzes');
+						localStorage.removeItem('currentQuizIndex');
+						var keys = Object.keys(localStorage);
+						keys.forEach(function(key) {
+							if (key.startsWith('quizData_')) {
+								localStorage.removeItem(key);
+							}
+						});
+						loadedQuizzes = [];
+						userFileLoaded = false;
+						userFileData = null;
+						if (fileStatus) {
+							fileStatus.textContent = '🔄 fichiers réinitialisés, rechargement...';
+						}
+						showToaster('Fichiers réinitialisés !', 'info', 2000);
+						setTimeout(function() { location.reload(); }, 1000);
+					},
+					function() {
+						showToaster('Annulé', 'info', 1500);
+					}
+				);
+			});
+		});
+	})();
+	</script>
+</body>
+</html>
