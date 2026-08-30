@@ -1,0 +1,4685 @@
+<!DOCTYPE html>
+<!-- Daniel Boulagnon -->
+<!-- daniel.boulagnon@ac-lille.fr -->
+<!-- version 2026 -->
+<!-- Exploitation à but strictement pédagogique et non lucratif -->
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+	<link rel="icon" href="../../src/favicon.ico">
+	<title>texte à trous</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		html,
+		body {
+			height: 100%;
+		}
+
+		:root {
+			--bg: #f0f0f0;
+			--btn: #e0e0e0;
+			--font-color: #000000;
+			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.9);
+			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.9);
+			--tooltip-bg: #ffffff;
+			--tooltip-color: #333333;
+			--letter-color: #e74c3c;
+			--color-correct: #28a745;
+			--color-incorrect: #dc3545;
+			--border-correct: #28a745;
+			--border-incorrect: #dc3545;
+			--selected-bg: #ffeb3b;
+			--selected-color: #000000;
+			--dropzone-hover: #e0e0e0;
+			--toast-bg: #e0e0e0;
+			--toast-text: #333333;
+		}
+
+		body.dark-theme {
+			--bg: #121212;
+			--btn: #3d3d3d;
+			--font-color: #ffffff;
+			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.05);
+			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
+			--color-correct: #2ecc71;
+			--color-incorrect: #e74c3c;
+			--tooltip-bg: #1a1a1a;
+			--tooltip-color: #ffffff;
+			--selected-bg: #ff9800;
+			--selected-color: #000000;
+			--dropzone-hover: #555555;
+			--toast-bg: #3d3d3d;
+			--toast-text: #e0e0e0;
+			background-color: #121212 !important;
+			color: #ffffff !important;
+		}
+
+		body.colorblind-mode {
+			--color-correct: #2c7be5;
+			--color-incorrect: #1a3a5c;
+			--border-correct: #2c7be5;
+			--border-incorrect: #1a3a5c;
+			--letter-color: #2c7be5;
+		}
+
+		body.dark-theme.colorblind-mode {
+			--color-correct: #4a90d9;
+			--color-incorrect: #3a5a7a;
+			--border-correct: #4a90d9;
+			--border-incorrect: #3a5a7a;
+			--letter-color: #4a90d9;
+		}
+
+		body {
+			font-family: Arial, sans-serif;
+			background-color: var(--bg);
+			color: var(--font-color);
+			padding: 12px 12px 20px 12px;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			transition: background-color 0.4s, color 0.4s;
+			overflow-y: auto;
+		}
+
+		body.menu-open .toolbar-wrapper,
+		body.menu-open .main-container,
+		body.menu-open .words-toaster {
+			filter: blur(5px);
+			transition: filter 0.3s ease;
+			pointer-events: none;
+		}
+
+		body.menu-open .words-toaster {
+			pointer-events: none !important;
+		}
+
+		body.menu-open .toolbar-mobile,
+		body.menu-open .main-container,
+		body.menu-open .words-toaster {
+			filter: blur(5px);
+			transition: filter 0.3s ease;
+			pointer-events: none;
+		}
+
+		.slide-menu,
+		.submenu,
+		.menu-overlay {
+			filter: none !important;
+			pointer-events: auto !important;
+		}
+
+		@media (max-width: 600px) {
+			body.menu-open .toolbar-wrapper,
+			body.menu-open .main-container,
+			body.menu-open .words-toaster {
+				filter: blur(3px);
+			}
+			
+			body.menu-open .toolbar-mobile,
+			body.menu-open .main-container,
+			body.menu-open .words-toaster {
+				filter: blur(3px);
+			}
+		}
+
+		.btn,
+		.timer-btn,
+		.menu-close,
+		.submenu-close,
+		.menu-item,
+		.notion-select,
+		.toaster-btn,
+		.toaster-score,
+		.stats-reload-btn,
+		.quiz-btn,
+		.upload-btn,
+		.local-reset-btn,
+		.btn-sequences {
+			background: var(--btn);
+			color: var(--font-color);
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+			border: none;
+			cursor: pointer;
+		}
+
+		.btn:hover,
+		.timer-btn:hover,
+		.menu-close:hover,
+		.submenu-close:hover,
+		.menu-item:hover,
+		.notion-select:hover,
+		.toaster-btn:hover,
+		.stats-reload-btn:hover,
+		.quiz-btn:hover,
+		.upload-btn:hover,
+		.local-reset-btn:hover,
+		.btn-sequences:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+
+		.btn {
+			width: 52px;
+			height: 52px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			position: relative;
+		}
+
+		.btn svg {
+			width: 24px;
+			height: 24px;
+			fill: none;
+			stroke: currentColor;
+			stroke-width: 2;
+			flex-shrink: 0;
+		}
+
+		.btn::after,
+		.timer-btn::after,
+		.btn-sequences::after {
+			content: attr(data-title);
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: 0.5rem;
+			background-color: var(--tooltip-bg);
+			color: var(--tooltip-color);
+			padding: 0.3rem 0.6rem;
+			border-radius: 5px;
+			font-size: 0.8rem;
+			white-space: nowrap;
+			opacity: 0;
+			pointer-events: none;
+			z-index: 10;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		}
+
+		.btn:hover::after,
+		.timer-btn:hover::after,
+		.btn-sequences:hover::after {
+			opacity: 1;
+		}
+
+		.btn-home .icon-wrapper {
+			width: 52px;
+			height: 52px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transform-style: preserve-3d;
+			flex-shrink: 0;
+		}
+
+		.btn-home:hover .icon-wrapper {
+			animation: spin360 2s infinite linear;
+		}
+
+		@keyframes spin360 {
+			0% {
+				transform: rotateY(0deg);
+			}
+			100% {
+				transform: rotateY(360deg);
+			}
+		}
+
+		.btn-reload:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		@keyframes rotate {
+			from {
+				transform: rotate(0deg);
+			}
+			to {
+				transform: rotate(360deg);
+			}
+		}
+
+		.menu-item:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		.menu-close:hover svg,
+		.submenu-close:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		.btn-sequences:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		.menu-icon {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			transition: transform 0.3s ease;
+			width: 22px;
+			height: 18px;
+			justify-content: center;
+		}
+
+		.menu-icon span {
+			display: block;
+			width: 100%;
+			height: 2px;
+			background: currentColor;
+			border-radius: 2px;
+			transition: all 0.3s ease;
+		}
+
+		.btn-menu:hover .menu-icon {
+			transform: rotate(90deg);
+		}
+
+		.btn-fullscreen .fullscreen-icon {
+			transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+		}
+
+		.btn-fullscreen:not(.fullscreen-active):hover .fullscreen-icon {
+			transform: scale(1.5);
+		}
+
+		.fullscreen-exit-icon {
+			transform-origin: center;
+			transition: transform 0.3s ease;
+			stroke-width: 1.2px !important;
+		}
+
+		.btn-fullscreen.fullscreen-active:hover .fullscreen-exit-icon {
+			transform: scale(0.7);
+		}
+
+		.btn-sequences {
+			width: 52px;
+			height: 52px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			position: relative;
+		}
+
+		.btn-sequences svg {
+			width: 24px;
+			height: 24px;
+			stroke: currentColor;
+			stroke-width: 2;
+			fill: none;
+			flex-shrink: 0;
+		}
+
+		.toolbar-wrapper {
+			position: relative;
+			z-index: 10;
+			flex-shrink: 0;
+			margin-bottom: 12px;
+		}
+
+		.toolbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 8px 15px;
+			background: transparent;
+			height: 76px;
+			border-radius: 12px 12px 0 0;
+			gap: 10px;
+			position: relative;
+		}
+
+		.toolbar-left,
+		.toolbar-right {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			flex: 1;
+		}
+
+		.toolbar-left {
+			justify-content: flex-start;
+		}
+		.toolbar-right {
+			justify-content: flex-end;
+		}
+
+		.toolbar-center {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			pointer-events: none;
+		}
+
+		.toolbar-title {
+			color: red;
+			font-size: clamp(1.8rem, 5vw, 2.5rem);
+			font-weight: bold;
+			white-space: nowrap;
+			line-height: 1.2;
+			text-transform: lowercase;
+			margin: 0;
+		}
+
+		.toolbar-subtitle {
+			color: #555;
+			font-size: clamp(1rem, 3vw, 1.2rem);
+			line-height: 1.2;
+			padding-top: 12px;
+		}
+
+		body.dark-theme .toolbar-subtitle,
+		body.dark-theme .mobile-subtitle {
+			color: #8895a7;
+		}
+
+		.notion-select-wrapper {
+			position: relative;
+			width: auto;
+			min-width: 140px;
+		}
+
+		.notion-select {
+			width: 100%;
+			padding: 0 12px;
+			height: 52px;
+			border: none;
+			border-radius: 30px;
+			box-shadow: var(--shadow-out);
+			color: var(--font-color);
+			font-size: 0.9rem;
+			cursor: pointer;
+			font-family: inherit;
+			appearance: none;
+			-webkit-appearance: none;
+			text-align: center;
+			font-weight: bold;
+		}
+
+		.notion-select option {
+			background: var(--bg);
+			color: var(--font-color);
+		}
+
+		/* DROPDOWN DES SÉQUENCES */
+		.sequences-dropdown {
+			position: absolute;
+			top: 60px;
+			left: 0;
+			margin-top: 8px;
+			background: var(--bg);
+			border-radius: 12px;
+			box-shadow: var(--shadow-out);
+			display: none;
+			min-width: 200px;
+			max-width: 95vw;
+			width: auto;
+			max-height: 350px;
+			overflow-y: auto;
+			z-index: 1000;
+			padding: 6px 0;
+			white-space: nowrap;
+		}
+
+		.sequences-dropdown.open {
+			display: block;
+		}
+
+		body.dark-theme .sequences-dropdown {
+			background: #1a1a1a;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+		}
+
+		.sequences-dropdown .dropdown-header {
+			padding: 8px 16px;
+			margin-top: 0px;
+			margin-bottom: 12px;
+			font-weight: bold;
+			color: red;
+			font-size: 0.8rem;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+
+		body.dark-theme .sequences-dropdown .dropdown-header {
+			border-bottom-color: rgba(255, 255, 255, 0.08);
+		}
+
+		.sequences-dropdown .dropdown-item {
+			display: block;
+			width: 100%;
+			padding: 0px 16px;
+			border: none;
+			background: transparent;
+			color: var(--font-color);
+			font-size: 0.78rem;
+			text-align: left;
+			cursor: pointer;
+			transition: background 0.2s ease;
+			font-family: inherit;
+			line-height: 1.4;
+			white-space: nowrap;
+			word-break: normal;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.sequences-dropdown .dropdown-item:last-child {
+			border-bottom: none;
+			margin-bottom: 14px;
+		}
+
+		.sequences-dropdown .dropdown-item:hover {
+			background: rgba(0, 0, 0, 0.06);
+		}
+
+		body.dark-theme .sequences-dropdown .dropdown-item:hover {
+			background: rgba(255, 255, 255, 0.08);
+		}
+
+		.sequences-dropdown .dropdown-item.active {
+			font-weight: bold;
+			color: red;
+			background: rgba(255, 0, 0, 0.06);
+		}
+
+		body.dark-theme .sequences-dropdown .dropdown-item.active {
+			background: rgba(255, 0, 0, 0.12);
+		}
+
+		.sequences-dropdown .dropdown-divider {
+			height: 1px;
+			background: rgba(0, 0, 0, 0.08);
+			margin: 4px 12px;
+		}
+
+		body.dark-theme .sequences-dropdown .dropdown-divider {
+			background: rgba(255, 255, 255, 0.08);
+		}
+
+		.sequences-dropdown .dropdown-empty {
+			padding: 12px 16px;
+			color: var(--font-color);
+			opacity: 0.6;
+			font-style: italic;
+			font-size: 0.8rem;
+			text-align: center;
+		}
+
+		.timer-btn {
+			width: 52px;
+			height: 52px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			padding: 0;
+			line-height: 1;
+			font-size: 12px;
+			font-weight: bold;
+			font-family: monospace;
+			flex-shrink: 0;
+		}
+
+		.timer-btn.warning {
+			color: #ff6b6b;
+			animation: timer-pulse 0.5s ease infinite alternate;
+		}
+
+		.timer-btn.danger {
+			color: #ff0000;
+			animation: timer-pulse 0.3s ease infinite alternate;
+		}
+
+		@keyframes timer-pulse {
+			0% {
+				transform: scale(1);
+			}
+			100% {
+				transform: scale(1.05);
+			}
+		}
+
+		.toolbar-mobile {
+			display: none;
+			flex-direction: column;
+			align-items: center;
+			width: 100%;
+			padding: 6px 12px 4px;
+			background: transparent;
+			border-radius: 12px 12px 0 0;
+		}
+
+		.toolbar-mobile .btn,
+		.toolbar-mobile .timer-btn,
+		.toolbar-mobile .btn-sequences {
+			width: 44px;
+			height: 44px;
+		}
+
+		.toolbar-mobile .btn svg {
+			width: 20px;
+			height: 20px;
+		}
+
+		.toolbar-mobile .menu-icon {
+			width: 18px;
+			height: 14px;
+			gap: 3px;
+		}
+
+		.toolbar-mobile .menu-icon span {
+			height: 2px;
+		}
+
+		.toolbar-mobile .btn-sequences svg {
+			width: 20px;
+			height: 20px;
+		}
+
+		.mobile-buttons {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: fit-content;
+			gap: 6px;
+			padding: 0 4px;
+			margin-bottom: 8px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		.mobile-title-wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 100%;
+			margin-top: 10px;
+		}
+
+		.mobile-title {
+			color: red;
+			font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+			font-weight: bold;
+			text-align: center;
+			line-height: 1.2;
+			margin-top: 5px;
+			text-transform: lowercase;
+		}
+
+		.mobile-subtitle {
+			color: #555;
+			font-size: clamp(0.7rem, 2vw, 0.85rem);
+			text-align: center;
+			line-height: 1.2;
+			padding-top: 12px;
+		}
+
+		.mobile-select-row {
+			display: none !important;
+		}
+
+		@media (max-width: 600px) {
+			.mobile-author-select {
+				min-width: 0;
+				max-width: 80px;
+			}
+			.mobile-author-select .notion-select {
+				height: 32px;
+				font-size: 0.55rem;
+				padding: 0 6px;
+				min-width: 50px;
+				max-width: 80px;
+				border-radius: 20px;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+			.mobile-buttons {
+				gap: 3px;
+				flex-wrap: nowrap;
+			}
+			.mobile-buttons .btn,
+			.mobile-buttons .timer-btn,
+			.mobile-buttons .btn-sequences {
+				width: 34px;
+				height: 34px;
+				flex-shrink: 0;
+			}
+			.mobile-buttons .btn svg {
+				width: 14px;
+				height: 14px;
+			}
+			.mobile-buttons .btn-sequences svg {
+				width: 14px;
+				height: 14px;
+			}
+			.sequences-dropdown {
+				position: fixed !important;
+				left: 50% !important;
+				transform: translateX(-50%) !important;
+				top: 120px !important;
+				min-width: unset;
+				max-width: 95vw;
+				width: 95vw;
+				margin-top: 0 !important;
+			}
+			.sequences-dropdown .dropdown-item {
+				font-size: 0.7rem;
+				padding: 6px 12px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+
+		@media (max-width: 400px) {
+			.mobile-buttons .btn,
+			.mobile-buttons .timer-btn,
+			.mobile-buttons .btn-sequences {
+				width: 32px;
+				height: 32px;
+			}
+			.mobile-buttons .btn svg {
+				width: 14px;
+				height: 14px;
+			}
+			.mobile-buttons .btn-sequences svg {
+				width: 14px;
+				height: 14px;
+			}
+			.timer-btn {
+				font-size: 9px !important;
+			}
+			.mobile-title {
+				font-size: 0.8rem;
+			}
+		}
+
+		.menu-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(0, 0, 0, 0.5);
+			z-index: 1000;
+			opacity: 0;
+			visibility: hidden;
+			transition: all 0.3s ease;
+		}
+
+		.menu-overlay.open {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.slide-menu {
+			position: fixed;
+			top: 0;
+			right: -300px;
+			width: 280px;
+			height: 100vh;
+			background-color: var(--bg);
+			z-index: 1001;
+			padding: 20px;
+			display: flex;
+			flex-direction: column;
+			border-radius: 20px 0 0 20px;
+			box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+			transition: right 0.3s ease;
+			overflow-y: auto;
+		}
+
+		.slide-menu.open {
+			right: 0;
+		}
+
+		.menu-header {
+			display: flex;
+			justify-content: flex-end;
+			margin-bottom: 1rem;
+		}
+
+		.menu-close,
+		.submenu-close {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.menu-close svg,
+		.submenu-close svg {
+			width: 18px;
+			height: 18px;
+			stroke: currentColor;
+		}
+
+		.menu-item {
+			display: flex;
+			align-items: center;
+			padding: 0px 20px;
+			font-size: 14px;
+			border-radius: 8px;
+			margin-bottom: 17px;
+			width: 100%;
+			min-height: 42px;
+			border: none;
+		}
+
+		.menu-item:hover {
+			background: rgba(0, 0, 0, 0.08);
+			transform: translateY(-2px);
+		}
+
+		body.dark-theme .menu-item:hover {
+			background: rgba(255, 255, 255, 0.08);
+		}
+
+		.menu-item svg {
+			width: 24px;
+			height: 24px;
+			margin-right: 16px;
+			stroke: currentColor;
+			stroke-width: 2;
+			fill: none;
+			flex-shrink: 0;
+		}
+
+		.menu-item .item-label {
+			flex: 1;
+			text-align: left;
+			display: flex;
+			align-items: center;
+			height: 100%;
+		}
+
+		.menu-item .item-badge {
+			background: red;
+			color: #fff;
+			border-radius: 50%;
+			width: 34px;
+			height: 34px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 10px;
+			font-weight: bold;
+			flex-shrink: 0;
+			margin-left: 8px;
+		}
+
+		.submenu {
+			position: fixed;
+			top: 0;
+			right: -340px;
+			width: 280px;
+			height: 100%;
+			background: var(--bg);
+			z-index: 10010;
+			box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+			border-radius: 20px 0 0 20px;
+			padding: 2rem 1.5rem;
+			overflow-y: auto;
+			transition: right 0.5s ease;
+		}
+
+		.submenu.active {
+			right: 0;
+		}
+
+		.submenu-title {
+			font-size: 1.4rem;
+			font-weight: bold;
+			color: red;
+			margin: 0.5rem 0 1.5rem 0;
+			text-align: center;
+			text-transform: lowercase;
+		}
+
+		.submenu-content {
+			color: var(--font-color);
+			font-size: 13px;
+			line-height: 1.5;
+			margin-top: 4px;
+		}
+
+		.settings-info,
+		.stats-info {
+			margin-top: 0;
+			padding: 15px;
+			background: rgba(0, 0, 0, 0.05);
+			border-radius: 10px;
+			margin-bottom: 15px;
+		}
+
+		body.dark-theme .settings-info,
+		body.dark-theme .stats-info {
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		.toggle-container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 0.75rem;
+			min-height: 24px;
+		}
+
+		.toggle-label {
+			color: var(--font-color);
+			font-size: 0.9rem;
+			text-align: left;
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			cursor: pointer;
+			flex: 1;
+		}
+
+		.toggle-label i {
+			width: 24px;
+			min-width: 24px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			font-size: 1rem;
+			text-align: center;
+			line-height: 1;
+		}
+
+		.theme-switch {
+			position: relative;
+			display: inline-block;
+			width: 40px;
+			height: 20px;
+			flex-shrink: 0;
+		}
+
+		.theme-switch input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
+
+		.theme-switch .slider {
+			position: absolute;
+			cursor: pointer;
+			inset: 0;
+			background: #b0b8c4;
+			border-radius: 20px;
+			transition: .3s;
+		}
+
+		.theme-switch .slider:before {
+			content: "";
+			position: absolute;
+			width: 16px;
+			height: 16px;
+			left: 2px;
+			top: 2px;
+			background: #fff;
+			border-radius: 50%;
+			transition: .3s;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		}
+
+		.theme-switch input:checked+.slider {
+			background: #3a7bb5;
+		}
+
+		.theme-switch input:checked+.slider:before {
+			transform: translateX(20px);
+		}
+
+		body.dark-theme .theme-switch .slider {
+			background: #3d3d3d;
+		}
+
+		body.dark-theme .theme-switch input:checked+.slider {
+			background: #4a80c0;
+		}
+
+		.pairs-slider-container {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+			margin-top: 0.75rem;
+			margin-bottom: 0.75rem;
+		}
+
+		.pairs-slider-label {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 0.9rem;
+		}
+
+		.pairs-slider-label .toggle-label {
+			font-size: 0.9rem;
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			cursor: pointer;
+			flex: 1;
+		}
+
+		.pairs-slider-label .toggle-label i {
+			width: 24px;
+			min-width: 24px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			font-size: 1rem;
+			text-align: center;
+			line-height: 1;
+		}
+
+		.pairs-slider-value {
+			font-weight: bold;
+			color: red;
+			font-size: 1rem;
+		}
+
+		.pairs-slider {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 100%;
+			height: 4px;
+			border-radius: 2px;
+			background: #b0b8c4;
+			outline: none;
+			transition: background 0.3s ease;
+		}
+
+		.pairs-slider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 16px;
+			height: 16px;
+			border-radius: 50%;
+			background: #3a7bb5;
+			cursor: pointer;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+			transition: background 0.2s ease;
+		}
+
+		.pairs-slider::-webkit-slider-thumb:hover {
+			transform: scale(1.1);
+		}
+
+		.pairs-slider::-moz-range-thumb {
+			width: 16px;
+			height: 16px;
+			border-radius: 50%;
+			background: #3a7bb5;
+			cursor: pointer;
+			border: none;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		}
+
+		body.dark-theme .pairs-slider {
+			background: #3d3d3d;
+		}
+
+		body.dark-theme .pairs-slider::-webkit-slider-thumb {
+			background: #4a80c0;
+		}
+
+		body.dark-theme .pairs-slider::-moz-range-thumb {
+			background: #4a80c0;
+		}
+
+		.slider-graduations {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			padding: 0;
+			margin-top: 5px;
+			font-size: 0.7rem;
+			opacity: 0.7;
+		}
+
+		.slider-graduations .infinity-symbol {
+			font-size: 1rem;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			line-height: 1;
+		}
+
+		.main-container {
+			width: 100%;
+			max-width: 950px;
+			margin: 0 auto;
+			padding-left: 10px;
+			padding-right: 10px;
+			flex-grow: 1;
+			display: flex;
+			flex-direction: column;
+			padding-bottom: 180px;
+			box-sizing: border-box;
+		}
+
+		.evaluation-progress {
+			text-align: center;
+			font-size: 0.9rem;
+			margin-top: 1.5rem;
+			margin-bottom: 0 !important;
+			padding: 0.5rem;
+			border-radius: 14px 14px 0 0 !important;
+			color: var(--font-color);
+			background: var(--btn);
+			box-shadow: var(--shadow-out);
+		}
+
+		body.dark-theme .evaluation-progress {
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		#text-container {
+			background: #ffffff;
+			border: 6px solid #ffffff;
+			border-top: none !important;
+			border-radius: 0px 0px 14px 14px !important;
+			padding: 1.5rem;
+			margin-bottom: 1rem;
+			line-height: 1.8;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+			min-height: 4rem;
+			font-size: calc(12px + 0.5vw);
+			color: var(--font-color);
+			transition: all 0.3s ease;
+		}
+
+		#text-container.stats-mode {
+			border-radius: 14px 14px 14px 14px !important;
+			border-top: 6px solid #ffffff !important;
+		}
+
+		body.dark-theme #text-container {
+			background: #1a1a1a;
+			border-color: #1a1a1a;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+		}
+
+		body.dark-theme #text-container.stats-mode {
+			border-color: #1a1a1a !important;
+		}
+
+		.text-header-info {
+			font-weight: bold;
+			margin-bottom: 1rem;
+			padding-bottom: 0.5rem;
+			border-bottom: 2px solid var(--font-color);
+			color: var(--font-color);
+			display: flex;
+			justify-content: space-between;
+			align-items: baseline;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+
+		.text-number {
+			font-size: 0.9rem;
+			background: var(--btn);
+			padding: 0.2rem 0.8rem;
+			border-radius: 20px;
+			display: inline-block;
+		}
+
+		.text-author-badge {
+			font-size: 1.0rem;
+			color: #e74c3c;
+			font-weight: bold;
+		}
+
+		.dropzone {
+			display: inline-flex;
+			justify-content: center;
+			align-items: center;
+			min-width: 60px;
+			width: auto;
+			height: clamp(28px, 5vw, 32px);
+			border: 2px solid #8895a7;
+			background-color: rgba(255, 255, 255, 0.05);
+			margin: 0 0.2rem;
+			border-radius: 0.3rem;
+			vertical-align: middle;
+			box-shadow: var(--shadow-in);
+			font-size: calc(10px + 0.5vw);
+			text-align: center;
+			position: relative;
+			padding: 0 0.8rem;
+			transition: all 0.2s ease;
+			color: var(--font-color);
+		}
+
+		.dropzone.drag-over {
+			background-color: var(--dropzone-hover);
+			transform: scale(1.02);
+		}
+
+		.dropzone.selected {
+			background-color: var(--selected-bg);
+			color: var(--selected-color);
+		}
+
+		.dropzone.filled {
+			box-shadow: var(--shadow-in);
+		}
+
+		.dropzone.correct {
+			border-color: var(--color-correct) !important;
+			background-color: rgba(40, 167, 69, 0.15) !important;
+			color: var(--font-color) !important;
+		}
+
+		.dropzone.incorrect {
+			border-color: var(--color-incorrect) !important;
+			background-color: rgba(220, 53, 69, 0.15) !important;
+			color: var(--font-color) !important;
+		}
+
+		body.dark-theme .dropzone.correct {
+			background-color: rgba(46, 204, 113, 0.15) !important;
+		}
+
+		body.dark-theme .dropzone.incorrect {
+			background-color: rgba(231, 76, 60, 0.15) !important;
+		}
+
+		.words-toaster {
+			display: flex;
+			position: fixed;
+			bottom: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: calc(100% - 40px);
+			max-width: 950px;
+			border-radius: 14px;
+			padding: 16px;
+			z-index: 500;
+			flex-direction: column;
+			gap: 12px;
+			backdrop-filter: blur(4px);
+		}
+
+		.toaster-words {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 10px;
+		}
+
+		.toaster-buttons {
+			display: flex;
+			justify-content: center;
+			margin-top: 4px;
+		}
+
+		.button-group {
+			display: flex;
+			align-items: stretch;
+			border-radius: 40px;
+			overflow: hidden;
+			box-shadow: var(--shadow-out);
+		}
+
+	.toaster-btn,
+		.toaster-score {
+			padding: 10px 24px;
+			font-size: calc(10px + 0.5vw);
+			font-family: Arial, sans-serif;
+			text-align: center;
+			background-color: var(--btn);
+			color: var(--font-color);
+			border: none;
+			transition: all 0.2s ease;
+			min-width: 120px;
+			flex: 1;
+			white-space: nowrap;
+		}
+
+		.toaster-btn {
+			font-weight: normal;
+			cursor: pointer;
+		}
+
+		.toaster-btn:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+
+		.toaster-score {
+			cursor: default;
+			font-weight: normal;
+			background-color: var(--btn);
+			border-left: 1px solid rgba(128, 128, 128, 0.5);
+		}
+
+		.words-toaster .draggable-word {
+			background: var(--toast-bg);
+			color: var(--toast-text);
+			padding: 8px 18px;
+			border-radius: 40px;
+			font-size: calc(10px + 0.5vw);
+			font-weight: normal;
+			box-shadow: var(--shadow-out);
+			cursor: pointer;
+			transition: 0.1s linear;
+			user-select: none;
+			font-family: Arial, sans-serif;
+		}
+
+		.words-toaster .draggable-word:active {
+			transform: scale(0.96);
+		}
+
+		.words-toaster .draggable-word.selected {
+			background-color: var(--selected-bg);
+			color: var(--selected-color);
+			transform: scale(1.02);
+		}
+
+		.final-correction-message {
+			text-align: center;
+			margin: 1rem 0;
+			padding: 1rem;
+			background: #e74c3c;
+			color: white;
+			border-radius: 40px;
+			font-weight: bold;
+		}
+
+		/* TOASTER UNIFORME */
+		.toaster-global {
+			position: fixed;
+			top: 20px;
+			left: 50%;
+			transform: translateX(-50%) translateY(-100px);
+			background: var(--toast-bg);
+			color: var(--toast-text);
+			padding: 16px 28px;
+			border-radius: 12px;
+			font-size: 1rem;
+			font-weight: bold;
+			z-index: 99999;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+			transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+			opacity: 0;
+			pointer-events: none;
+			text-align: center;
+			max-width: 90%;
+			min-width: 200px;
+		}
+
+		.toaster-global.show {
+			transform: translateX(-50%) translateY(0);
+			opacity: 1;
+		}
+
+		.toaster-global.correct,
+		.toaster-global.info,
+		.toaster-global.warning {
+			background: var(--toast-bg);
+			color: var(--toast-text);
+			border: none;
+		}
+
+		.confetti-container {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			z-index: 99999;
+			overflow: hidden;
+		}
+
+		.confetti-piece {
+			position: absolute;
+			width: 10px;
+			height: 10px;
+			top: -10px;
+			animation: confetti-fall linear forwards;
+		}
+
+		@keyframes confetti-fall {
+			0% {
+				transform: translateY(0) rotate(0deg) scale(1);
+				opacity: 1;
+			}
+			100% {
+				transform: translateY(110vh) rotate(720deg) scale(0.5);
+				opacity: 0;
+			}
+		}
+
+		.shortcuts-table {
+			width: 100%;
+			border-collapse: separate;
+			border-spacing: 0.2rem 0.2rem;
+			font-size: 0.85rem;
+		}
+
+		.shortcuts-table td {
+			padding: 3px 3px;
+		}
+
+		.shortcuts-table kbd {
+			display: inline-block;
+			padding: 4px 8px;
+			font-family: monospace;
+			font-size: 0.9em;
+			font-weight: bold;
+			background-color: #d1d1d1;
+			color: #333;
+			border-radius: 6px;
+			box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.6) inset;
+			min-width: 20px;
+			text-align: center;
+		}
+
+		body.dark-theme .shortcuts-table kbd {
+			background-color: #1a1a1a;
+			color: #e2e8f0;
+			border: 1px solid #333;
+		}
+
+		.shortcuts-table .key-combo {
+			white-space: nowrap;
+		}
+
+		.container--quiz-end {
+			min-height: 300px;
+			height: 100%;
+			position: relative;
+			display: flex;
+			align-items: stretch;
+			justify-content: center;
+			overflow: auto;
+			flex: 1;
+			padding: 10px 0;
+		}
+
+		.container--quiz-results {
+			color: var(--font-color);
+			font-family: Arial, sans-serif;
+			width: 100%;
+			max-height: 100%;
+			overflow: auto;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.container--quiz-results .bento-score,
+		.container--quiz-results .bento-stats-global .stat-item,
+		.container--quiz-results .bento-stats-personal .stat-item-mini,
+		.container--quiz-results .bento-message,
+		.container--quiz-results .bento-details {
+			background: var(--btn);
+			box-shadow: var(--shadow-out);
+			border-radius: 10px;
+		}
+
+		.container--quiz-results .bento-score {
+			width: 100%;
+			max-width: 596px;
+			padding: 16px 20px;
+			text-align: center;
+		}
+
+		.container--quiz-results .bento-score .quiz-end__score,
+		.container--quiz-results .bento-score .quiz-end__total {
+			font-size: 1.3rem;
+			font-weight: bold;
+		}
+
+		.container--quiz-results .bento-score .quiz-end__score {
+			color: red;
+		}
+
+		.container--quiz-results .bento-score .quiz-end__total {
+			color: var(--font-color);
+		}
+
+		.container--quiz-results .bento-stats-global {
+			width: 100%;
+			max-width: 596px;
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 12px;
+		}
+
+		.container--quiz-results .bento-stats-global .stat-item {
+			padding: 12px 8px;
+			text-align: center;
+			min-width: 0;
+		}
+
+		.container--quiz-results .bento-stats-global .stat-item .stat-value {
+			font-size: 1.2rem;
+			font-weight: bold;
+			color: red;
+			display: block;
+			line-height: 1.1;
+			margin-bottom: 6px;
+		}
+
+		.container--quiz-results .bento-stats-global .stat-item .stat-label {
+			font-size: 0.8rem;
+			opacity: 0.8;
+			display: block;
+			margin-top: 2px;
+		}
+
+		.container--quiz-results .bento-stats-personal {
+			width: 100%;
+			max-width: 596px;
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 12px;
+		}
+
+		.container--quiz-results .bento-stats-personal .stat-item-mini {
+			padding: 12px 8px;
+			text-align: center;
+			min-width: 0;
+		}
+
+		.container--quiz-results .bento-stats-personal .stat-item-mini .stat-value {
+			font-size: 1.2rem;
+			font-weight: bold;
+			color: red;
+			display: block;
+			line-height: 1.1;
+			margin-bottom: 6px;
+		}
+
+		.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
+			font-size: 0.8rem;
+			opacity: 0.8;
+			display: block;
+			margin-top: 2px;
+		}
+
+		.container--quiz-results .bento-message {
+			width: 100%;
+			max-width: 596px;
+			padding: 12px 16px;
+			text-align: center;
+			font-size: 14px;
+			line-height: 1.4;
+		}
+
+		.container--quiz-results .bento-details {
+			width: 100%;
+			max-width: 596px;
+			padding: 12px 16px;
+		}
+
+		.bento-actions {
+			width: 100%;
+			max-width: 596px;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 10px;
+			margin-top: 5px;
+		}
+
+		.bento-actions .quiz-btn {
+			border: 2px solid #8895a7;
+			border-radius: 27px;
+			padding: 10px 20px;
+			font-size: 0.85rem;
+			font-family: Arial, sans-serif;
+			min-width: 130px;
+			flex: 1;
+			text-align: center;
+		}
+
+		body.dark-theme .bento-actions .quiz-btn {
+			border-color: #5a5a5a;
+		}
+
+		#detailedResults {
+			text-align: left;
+			margin-top: 10px;
+			padding: 10px 14px;
+			max-height: 260px;
+			overflow-y: auto;
+			color: var(--font-color);
+		}
+
+		#detailedResults.hidden {
+			display: none;
+		}
+
+		#detailedResults h3 {
+			color: red;
+			margin-bottom: 8px;
+			font-size: 0.9rem;
+			text-align: center;
+		}
+
+		.review-item {
+			padding: 8px 12px;
+			margin-bottom: 8px;
+			border-radius: 8px;
+			border-left: 4px solid #b0b8c4;
+			font-size: 0.8rem;
+			background: rgba(0, 0, 0, 0.02);
+		}
+
+		.review-item.correct-item {
+			background: rgba(40, 167, 69, 0.08);
+			border-left-color: var(--color-correct, #28a745);
+		}
+
+		.review-item.incorrect-item {
+			background: rgba(220, 53, 69, 0.08);
+			border-left-color: var(--color-incorrect, #dc3545);
+		}
+
+		.upload-btn {
+			width: 100%;
+			padding: 12px 14px;
+			border-radius: 10px;
+			border: 2px dashed #8895a7;
+			font-size: 13px;
+			font-family: Arial, sans-serif;
+			text-align: center;
+		}
+
+		.upload-btn:hover {
+			border-color: var(--color-correct);
+		}
+
+		#fileInputSubmenu {
+			display: none;
+		}
+
+		.local-reset-btn {
+			width: 100%;
+			margin-top: 10px;
+			padding: 10px 14px;
+			font-size: 0.9rem;
+			border: 2px solid #8895a7;
+			border-radius: 10px;
+			display: inline-flex;
+			gap: 8px;
+			justify-content: center;
+			align-items: center;
+			font-family: Arial, sans-serif;
+		}
+
+		.local-reset-btn:hover {
+			border-color: var(--color-correct);
+		}
+
+		.file-status {
+			font-size: 12px;
+			font-style: italic;
+			min-height: 18px;
+			color: var(--font-color);
+			text-align: center;
+			opacity: 0.8;
+			margin-top: 8px;
+		}
+
+		::-webkit-scrollbar {
+			width: 4px;
+		}
+
+		::-webkit-scrollbar-track {
+			background: transparent;
+		}
+
+		::-webkit-scrollbar-thumb {
+			background: #b0b8c4;
+			border-radius: 4px;
+		}
+
+		body.dark-theme ::-webkit-scrollbar-thumb {
+			background: #3d3d3d;
+		}
+
+		@media (max-width: 820px) {
+			.toolbar {
+				height: 64px;
+				padding: 6px 12px;
+			}
+			.btn {
+				width: 46px;
+				height: 46px;
+			}
+			.btn svg {
+				width: 20px;
+				height: 20px;
+			}
+			.btn-home .icon-wrapper {
+				width: 46px;
+				height: 46px;
+			}
+			.timer-btn {
+				width: 46px;
+				height: 46px;
+			}
+			.btn-sequences {
+				width: 46px;
+				height: 46px;
+			}
+			.btn-sequences svg {
+				width: 20px;
+				height: 20px;
+			}
+			.toolbar-title {
+				font-size: clamp(1.4rem, 4vw, 1.8rem);
+			}
+			.toolbar-subtitle {
+				font-size: clamp(0.8rem, 2vw, 1rem);
+			}
+			.notion-select {
+				height: 46px;
+				font-size: 0.8rem;
+				min-width: 120px;
+			}
+			.words-toaster {
+				padding: 12px;
+				bottom: 10px;
+			}
+			.toaster-btn,
+			.toaster-score {
+				padding: 8px 16px;
+				min-width: 100px;
+				white-space: nowrap;
+			}
+			.bento-actions .quiz-btn {
+				min-width: 100px;
+				font-size: 0.75rem;
+				padding: 8px 14px;
+			}
+		}
+
+		@media (max-width: 600px) {
+			.toolbar {
+				display: none;
+			}
+			.toolbar-mobile {
+				display: flex;
+				padding: 6px 12px 4px;
+			}
+			body {
+				padding: 4px 4px 12px 4px;
+				overflow-y: auto;
+				height: auto;
+				min-height: 100vh;
+			}
+			
+			.mobile-buttons {
+				margin-bottom: 8px;
+				gap: 4px;
+			}
+			.mobile-buttons .btn,
+			.mobile-buttons .timer-btn,
+			.mobile-buttons .btn-sequences {
+				width: 38px;
+				height: 38px;
+			}
+			.mobile-buttons .btn svg {
+				width: 16px;
+				height: 16px;
+			}
+			.mobile-buttons .btn-sequences svg {
+				width: 16px;
+				height: 16px;
+			}
+			.mobile-title {
+				font-size: 0.95rem;
+				margin-top: 0;
+			}
+			.mobile-select-row {
+				display: none !important;
+			}
+			.mobile-select-row .notion-select {
+				height: 32px;
+				font-size: 0.7rem;
+				padding: 0 12px;
+			}
+			
+			.main-container {
+				padding-left: 10px !important;
+				padding-right: 10px !important;
+				padding-bottom: 0 !important;
+				overflow-y: visible !important;
+				flex: 1 !important;
+				max-height: none !important;
+			}
+			
+			.evaluation-progress {
+				margin-top: 0 !important;
+				margin-bottom: 0 !important;
+				padding: 4px 8px !important;
+				font-size: 0.7rem !important;
+				border-radius: 10px 10px 0 0 !important;
+			}
+			
+			#text-container {
+				min-height: 100px;
+				padding: 8px 8px !important;
+				margin-bottom: 4px !important;
+				font-size: 0.78rem !important;
+				line-height: 1.7 !important;
+				border-width: 3px;
+				border-radius: 0 0 10px 10px !important;
+				flex: 1 !important;
+				overflow-y: visible !important;
+				max-height: none !important;
+			}
+			
+			#text-container.stats-mode {
+				border-radius: 10px 10px 10px 10px !important;
+				border-top: 3px solid #ffffff !important;
+			}
+			
+			body.dark-theme #text-container.stats-mode {
+				border-color: #1a1a1a !important;
+			}
+			
+			.dropzone {
+				min-width: 44px;
+				height: 24px;
+				padding: 0 0.4rem;
+				font-size: 0.7rem;
+			}
+			
+			.words-toaster {
+				position: sticky !important;
+				bottom: 0 !important;
+				left: 0 !important;
+				transform: none !important;
+				background: transparent !important;
+				border-radius: 14px 14px 0 0 !important;
+				padding: 6px 8px 8px 8px !important;
+				width: 100% !important;
+				max-width: 100% !important;
+				z-index: 10 !important;	
+				gap: 4px !important;
+				flex-shrink: 0 !important;
+			}
+			
+			body.dark-theme .words-toaster {
+				background: #1a1a1a !important;
+				border-top-color: rgba(255,255,255,0.08) !important;
+			}
+			
+			.toaster-words {
+				gap: 4px !important;
+			}
+			
+			.words-toaster .draggable-word {
+				padding: 2px 4px !important;
+				font-size: 0.6rem !important;
+				border-radius: 10px !important;
+				height: 38px !important;
+				display: inline-flex !important;
+				align-items: center !important;
+				justify-content: center !important;
+				line-height: 1 !important;
+			}
+			
+			.toaster-buttons {
+				margin-top: 2px !important;
+			}
+			
+			.toaster-btn,
+			.toaster-score {
+				padding: 4px 12px !important;
+				min-width: 60px !important;
+				font-size: 0.6rem !important;
+				height: 38px !important;
+				display: inline-flex !important;
+				align-items: center !important;
+				justify-content: center !important;
+				line-height: 1 !important;
+			}
+			
+			.slide-menu {
+				width: 260px;
+				right: -280px;
+				padding: 14px 16px;
+			}
+			.submenu {
+				width: 260px;
+				right: -280px;
+				padding: 14px 16px;
+			}
+			.menu-item {
+				padding: 10px 14px;
+				font-size: 12px;
+				min-height: 44px;
+			}
+			.menu-item svg {
+				width: 18px;
+				height: 18px;
+			}
+			
+			.container--quiz-end {
+				padding: 0 !important;
+				min-height: auto !important;
+				height: auto !important;
+			}
+			.container--quiz-results {
+				gap: 6px !important;
+				padding: 0 !important;
+				margin-top: 0 !important;
+			}
+			.container--quiz-results .bento-score {
+				padding: 8px 10px !important;
+				margin-bottom: 2px !important;
+				border-radius: 10px !important;
+			}
+			.container--quiz-results .bento-score .quiz-end__score,
+			.container--quiz-results .bento-score .quiz-end__total {
+				font-size: 1.4rem !important;
+			}
+			
+			.container--quiz-results .bento-stats-global {
+				gap: 4px !important;
+				grid-template-columns: repeat(3, 1fr) !important;
+			}
+			.container--quiz-results .bento-stats-global .stat-item {
+				padding: 4px 2px !important;
+				font-size: 0.65rem !important;
+				border-radius: 8px !important;
+			}
+			.container--quiz-results .bento-stats-global .stat-item .stat-value {
+				font-size: 1.0rem !important;
+				margin-bottom: 2px !important;
+			}
+			.container--quiz-results .bento-stats-global .stat-item .stat-label {
+				font-size: 0.65rem !important;
+			}
+
+			.container--quiz-results .bento-stats-personal {
+				gap: 4px !important;
+				grid-template-columns: repeat(3, 1fr) !important;
+			}
+			.container--quiz-results .bento-stats-personal .stat-item-mini {
+				padding: 4px 2px !important;
+				font-size: 0.65rem !important;
+				border-radius: 8px !important;
+			}
+			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-value {
+				font-size: 1.0rem !important;
+				margin-bottom: 2px !important;
+			}
+			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
+				font-size: 0.65rem !important;
+			}
+			
+			.container--quiz-results .bento-message {
+				padding: 6px 10px !important;
+				font-size: 0.75rem !important;
+				line-height: 1.2 !important;
+				margin-bottom: 2px !important;
+				border-radius: 8px !important;
+			}
+			.container--quiz-results .bento-details {
+				padding: 6px 8px !important;
+				max-height: 120px !important;
+				overflow-y: auto !important;
+				border-radius: 8px !important;
+			}
+			#detailedResults {
+				padding: 4px 8px !important;
+				max-height: 100px !important;
+			}
+			#detailedResults h3 {
+				font-size: 0.7rem !important;
+				margin-bottom: 4px !important;
+			}
+			.review-item {
+				padding: 4px 8px !important;
+				margin-bottom: 4px !important;
+				font-size: 0.65rem !important;
+			}
+			.bento-actions {
+				gap: 4px !important;
+				margin-top: 2px !important;
+			}
+			.bento-actions .quiz-btn {
+				min-width: 60px !important;
+				height: 38px !important;
+				font-size: 0.6rem !important;
+				padding: 2px 4px !important;
+				border-radius: 10px !important;
+				flex: 1 1 auto !important;
+				display: inline-flex !important;
+				align-items: center !important;
+				justify-content: center !important;
+				line-height: 1 !important;
+			}
+			#text-container .container--quiz-end {
+				padding-top: 0 !important;
+			}
+			.toaster-global {
+				padding: 12px 20px;
+				font-size: 0.85rem;
+				max-width: 95%;
+				min-width: 150px;
+			}
+		}
+
+		@media (max-width: 400px) {
+			body {
+				padding: 2px 2px 10px 2px;
+			}
+			.mobile-buttons .btn,
+			.mobile-buttons .timer-btn,
+			.mobile-buttons .btn-sequences {
+				width: 32px;
+				height: 32px;
+			}
+			.mobile-buttons .btn svg {
+				width: 14px;
+				height: 14px;
+			}
+			.mobile-buttons .btn-sequences svg {
+				width: 14px;
+				height: 14px;
+			}
+			.timer-btn {
+				font-size: 9px !important;
+			}
+			.mobile-title {
+				font-size: 0.8rem;
+			}
+			.mobile-select-row .notion-select {
+				height: 28px;
+				font-size: 0.6rem;
+				padding: 0 8px;
+			}
+			#text-container {
+				font-size: 0.7rem !important;
+				padding: 6px 6px !important;
+			}
+			.dropzone {
+				min-width: 36px;
+				height: 20px;
+				padding: 0 0.3rem;
+				font-size: 0.6rem;
+			}
+			.words-toaster .draggable-word {
+				padding: 0 20px !important;
+				font-size: 0.7rem !important;
+			}
+			.toaster-btn,
+			.toaster-score {
+				padding: 0 40px !important;
+				min-width: 40px !important;
+				font-size: 0.7rem !important;
+			}
+			.container--quiz-results .bento-stats-global {
+				grid-template-columns: repeat(3, 1fr) !important;
+			}
+			.container--quiz-results .bento-stats-personal {
+				grid-template-columns: repeat(3, 1fr) !important;
+			}
+			.container--quiz-results .bento-stats-global .stat-item .stat-value,
+			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-value {
+				font-size: 0.85rem !important;
+			}
+			.container--quiz-results .bento-stats-global .stat-item .stat-label,
+			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
+				font-size: 0.55rem !important;
+			}
+			.toaster-global {
+				padding: 10px 16px;
+				font-size: 0.75rem;
+				min-width: 120px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Toaster global uniforme -->
+	<div id="toasterGlobal" class="toaster-global"></div>
+
+	<div class="toolbar-wrapper">
+		<div class="toolbar" id="toolbarDesktop">
+			<div class="toolbar-left">
+				<!-- BOUTON SÉQUENCES AVEC DROPDOWN -->
+				<div style="position:relative;">
+					<button class="btn-sequences" id="sequencesBtn" data-title="auteurs (S)">
+						<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+							<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+							<line x1="12" y1="11" x2="12" y2="17"/>
+							<polyline points="9 14 12 11 15 14"/>
+						</svg>
+					</button>
+					<div class="sequences-dropdown" id="sequencesDropdown">
+						<div class="dropdown-header">📚 tous les auteurs</div>
+						<div class="dropdown-item" data-value="loading" disabled style="opacity:0.6;font-style:italic;">chargement...</div>
+					</div>
+				</div>
+				<button class="btn btn-home" data-action="home" data-title="accueil (H)">
+					<div class="icon-wrapper">
+						<svg viewBox="0 0 24 24">
+							<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-join="round" stroke-linecap="round"/>
+						</svg>
+					</div>
+				</button>
+				<button class="btn btn-reload" data-action="reload" data-title="recharger (R)">
+					<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="23 4 23 10 17 10"/>
+						<polyline points="1 20 1 14 7 14"/>
+						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+					</svg>
+				</button>
+			</div>
+			<div class="toolbar-center">
+				<div class="toolbar-title" id="appTitle"></div>
+				<div class="toolbar-subtitle" id="appSubtitle"></div>
+			</div>
+			<div class="toolbar-right">
+				<button class="timer-btn" id="timerBtnDesktop" data-title="temps restant (T)">
+					<span id="timerValueDesktop">01:00</span>
+				</button>
+				<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (F)">
+					<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+						<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+						<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+						<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+						<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+					</svg>
+				</button>
+				<button class="btn btn-menu" data-action="menu" data-title="menu (M)">
+					<div class="menu-icon"><span></span><span></span><span></span></div>
+				</button>
+			</div>
+		</div>
+
+		<div class="toolbar-mobile" id="toolbarMobile">
+			<div class="mobile-buttons">
+				<!-- BOUTON SÉQUENCES MOBILE -->
+				<div style="position:relative;">
+					<button class="btn-sequences" id="sequencesBtnMobile" data-title="textes (S)">
+						<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+							<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+							<line x1="12" y1="11" x2="12" y2="17"/>
+							<polyline points="9 14 12 11 15 14"/>
+						</svg>
+					</button>
+					<div class="sequences-dropdown" id="sequencesDropdownMobile">
+						<div class="dropdown-header">📚 tous les textes</div>
+						<div class="dropdown-item" data-value="loading" disabled style="opacity:0.6;font-style:italic;">chargement...</div>
+					</div>
+				</div>
+				<button class="btn btn-home" data-action="home" data-title="accueil (H)">
+					<div class="icon-wrapper">
+						<svg viewBox="0 0 24 24">
+							<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-join="round" stroke-linecap="round"/>
+						</svg>
+					</div>
+				</button>
+				<button class="btn btn-reload" data-action="reload" data-title="recharger (R)">
+					<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="23 4 23 10 17 10"/>
+						<polyline points="1 20 1 14 7 14"/>
+						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+					</svg>
+				</button>
+				<button class="timer-btn" id="timerBtnMobile" data-title="temps restant (T)">
+					<span id="timerValueMobile">01:00</span>
+				</button>
+				<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (F)">
+					<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+						<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+						<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+						<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+						<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+					</svg>
+				</button>
+				<button class="btn btn-menu" data-action="menu" data-title="menu (M)">
+					<div class="menu-icon"><span></span><span></span><span></span></div>
+				</button>
+			</div>
+			<div class="mobile-title-wrapper">
+				<div class="mobile-title" id="mobileTitle"></div>
+			</div>
+		</div>
+	</div>
+
+	<main class="main-container">
+		<div id="text-container"></div>
+		<div id="wordsToaster" class="words-toaster">
+			<div class="toaster-words" id="toasterWords"></div>
+			<div class="toaster-buttons">
+				<div class="button-group">
+					<button id="toaster-action-button" class="toaster-btn" disabled>vérifier</button>
+					<div id="toaster-score-button" class="toaster-score">score : 0 / 0</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<div class="menu-overlay" id="menuOverlay"></div>
+	<div class="slide-menu" id="slideMenu">
+		<div class="menu-header">
+			<button class="menu-close" id="menuClose">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="menu-content">
+			<button class="menu-item" id="openInstructionsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<line x1="12" y1="16" x2="12" y2="12"></line>
+					<line x1="12" y1="8" x2="12.01" y2="8"></line>
+				</svg>
+				<span class="item-label">présentation</span>
+			</button>
+			
+			<button class="menu-item" id="openLocalFilesSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+					<line x1="12" y1="11" x2="12" y2="17"/>
+					<polyline points="9 14 12 11 15 14"/>
+				</svg>
+				<span class="item-label">charger des quiz</span>
+			</button>
+			
+			<button class="menu-item" id="openStatsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M 3 3 L 3 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+					<path d="M 3 22 L 22 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+					<path d="M 7 18 L 11 12 L 15 15 L 21 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+				</svg>
+				<span class="item-label">statistiques</span>
+				<span class="item-badge" id="statsBadge">0%</span>
+			</button>
+			
+			<button class="menu-item" id="openSettingsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="3"></circle>
+					<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+				</svg>
+				<span class="item-label">paramètres</span>
+			</button>
+			
+			<button class="menu-item" id="openShortcutsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<rect x="2" y="4" width="20" height="16" rx="2"></rect>
+					<line x1="6" y1="8" x2="10" y2="8"></line>
+					<line x1="14" y1="8" x2="18" y2="8"></line>
+					<line x1="6" y1="12" x2="10" y2="12"></line>
+					<line x1="14" y1="12" x2="18" y2="12"></line>
+					<line x1="6" y1="16" x2="10" y2="16"></line>
+					<line x1="14" y1="16" x2="18" y2="16"></line>
+				</svg>
+				<span class="item-label">raccourcis</span>
+			</button>
+			
+			<button class="menu-item" id="resetAppBtn">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M3 2v6h6"></path>
+					<path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
+					<path d="M21 22v-6h-6"></path>
+					<path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path>
+				</svg>
+				<span class="item-label">réinitialiser</span>
+			</button>
+			
+			<button class="menu-item" id="openAboutSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+					<line x1="12" y1="17" x2="12.01" y2="17"></line>
+				</svg>
+				<span class="item-label">à propos</span>
+			</button>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuInstructions">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="instructions">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">présentation</div>
+		<div class="submenu-content">
+			<div class="settings-info">
+				<p><i class="fas fa-bullseye"></i> <strong>objectif</strong><br><br>compléter un texte à trous par glisser-déposer des mots manquants.</p>
+			</div>
+			<div class="settings-info">
+				<p><i class="fas fa-bars"></i> <strong>options</strong></p><br>
+				<p><strong>• mode sombre :</strong> pour une lecture confortable</p>
+				<p><strong>• animations :</strong> active / désactive les effets visuels</p>
+				<p><strong>• mode daltonien :</strong> bleu / rouge remplace vert / rouge</p>
+				<p><strong>• sons :</strong> active / désactive les effets sonores</p>
+				<p><strong>• mode évaluation :</strong> enchaîne plusieurs textes</p>
+				<p><strong>• nombre de textes :</strong> 1-10</p>
+				<p><strong>• nombre de lacunes :</strong> 4-12</p>
+				<p><strong>• minuteur :</strong> chronométrage du temps de réponse</p>
+			</div>
+			<div class="settings-info">
+				<p><i class="fas fa-chart-line"></i> <strong>statistiques</strong><br><br>score cumulé sauvegardé automatiquement</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuLocalFiles">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="local">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">charger des quiz</div>
+		<div class="submenu-content">
+			<div class="local-file-upload-area" id="loadContainerSubmenu">
+				<button class="upload-btn" id="fileLoadBtnSubmenu">
+					<i class="fas fa-file-upload"></i> charger un ou des fichiers .js
+				</button>
+				<input type="file" id="fileInputSubmenu" accept=".js" multiple />
+				<div id="fileStatus" class="file-status"><em>chargez vos fichiers .js</em></div>
+			</div>
+			<div class="settings-info" style="margin-top:15px;">
+				<p><i class="fas fa-info-circle"></i> <strong>remarque :</strong></p>
+				<p style="font-size:12px;opacity:0.8;line-height:1.5;margin-top:8px;">
+					Les fichiers doivent être au format .js et contenir les variables : titre, sousTitre, philosophyData, questions
+				</p>
+			</div>
+			<button class="local-reset-btn" id="localResetBtn">
+				<i class="fas fa-undo-alt"></i> réinitialiser
+			</button>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuStats">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="stats">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">statistiques</div>
+		<div class="submenu-content">
+			<div class="stats-info">
+				<p><i class="fas fa-chart-simple"></i> <strong>quelques chiffres :</strong></p>
+				<p>• score global : <span style="color: red;" id="statTotalCorrect">0</span> / <span id="statTotalAnswers">0</span></p>
+				<p>• taux de réussite : <span style="color: red;" id="statSuccessRate">0&nbsp;%</span></p>
+				<p>• parties jouées : <span style="color: red;" id="statGamesPlayed">0</span></p>
+				<p>• meilleur score : <span style="color: red;" id="statBestScore">0&nbsp;%</span></p>
+			</div>
+			<div class="stats-info">
+				<p><i class="fas fa-save"></i> <strong>sauvegarde :</strong></p>
+				<p>les statistiques sont sauvegardées automatiquement</p>
+			</div>
+			<button class="stats-reload-btn" id="resetStatsBtn" style="width:100%;margin-top:15px;padding:8px 16px;border-radius:0.5rem;border:none;display:inline-flex;gap:8px;justify-content:center;align-items:center;">
+				<i class="fas fa-sync-alt"></i> réinitialiser les statistiques
+			</button>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuSettings">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="settings">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">paramètres</div>
+		<div class="submenu-content">
+			<div class="toggle-container">
+				<span class="toggle-label"><i class="fas fa-moon"></i> mode sombre</span>
+				<label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label"><i class="fas fa-play"></i> animations</span>
+				<label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label"><i class="fas fa-palette"></i> mode daltonien</span>
+				<label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label"><i class="fas fa-volume-up"></i> sons</span>
+				<label class="theme-switch"><input type="checkbox" id="soundToggle"><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label"><i class="fas fa-graduation-cap"></i> mode évaluation</span>
+				<label class="theme-switch"><input type="checkbox" id="evalModeToggle"><span class="slider"></span></label>
+			</div>
+			<div class="pairs-slider-container">
+				<div class="pairs-slider-label">
+					<span class="toggle-label"><i class="fas fa-chalkboard-teacher"></i> nombre de textes</span>
+					<span class="pairs-slider-value" id="evalCountValue">5</span>
+				</div>
+				<input type="range" id="evalCountSlider" class="pairs-slider" min="1" max="10" step="1" value="5">
+				<div class="slider-graduations">
+					<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+				</div>
+			</div>
+			<div class="pairs-slider-container">
+				<div class="pairs-slider-label">
+					<span class="toggle-label"><i class="fas fa-layer-group"></i> nombre de lacunes</span>
+					<span class="pairs-slider-value" id="pairsCountValue">8</span>
+				</div>
+				<input type="range" id="pairsCountSlider" class="pairs-slider" min="4" max="12" step="1" value="8">
+				<div class="slider-graduations">
+					<span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+				</div>
+			</div>
+			<div class="pairs-slider-container">
+				<div class="pairs-slider-label">
+					<span class="toggle-label"><i class="fas fa-hourglass-half"></i> minuteur</span>
+					<span class="pairs-slider-value" id="timerLimitValue">1 min</span>
+				</div>
+				<input type="range" id="timerLimitSlider" class="pairs-slider" min="1" max="6" step="1" value="1">
+				<div class="slider-graduations">
+					<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span class="infinity-symbol">∞</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuShortcuts">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="shortcuts">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">raccourcis</div>
+		<div class="submenu-content">
+			<div class="settings-info">
+				<table class="shortcuts-table">
+					<tr><td class="key-combo"><kbd>S</kbd></td><td>ouvrir/fermer la liste des auteurs</td></tr>
+					<tr><td class="key-combo"><kbd>H</kbd></td><td>renvoi au site académique</td></tr>
+					<tr><td class="key-combo"><kbd>R</kbd></td><td>recharger / nouvelle partie</td></tr>
+					<tr><td class="key-combo"><kbd>T</kbd></td><td>réinitialiser le minuteur</td></tr>
+					<tr><td class="key-combo"><kbd>F</kbd></td><td>plein écran</td></tr>
+					<tr><td class="key-combo"><kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr>
+					<tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer (sous-menus, popups, menu)</td></tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuAbout">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="about">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">à propos</div>
+		<div class="submenu-content">
+			<div class="settings-info"><p><i class="fas fa-user"></i> application développée par Daniel Boulagnon</p>
+			<p><i class="fas fa-envelope"></i> daniel.boulagnon@ac-lille.fr</p></div>
+			<div class="settings-info"><p><i class="fas fa-tag"></i> version 2.5.0 (2026)</p></div>
+			<div class="settings-info"><p> © exploitation pédagogique et non commerciale</p></div>
+		</div>
+	</div>
+
+	<script src="fichier_ressource.js"></script>
+	<script>
+		// ============================================================
+		// ÉTAT DE L'APPLICATION
+		// ============================================================
+		let currentState = "verify";
+		let correctAnswers = 0;
+		let totalAnswers = 0;
+		let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
+		let bestScore = parseInt(localStorage.getItem('bestScore') || '0');
+		let darkMode = false,
+			colorblindMode = false,
+			animationsEnabled = true;
+		let pairsCount = 8;
+		let currentFilterNotion = "all";
+		let answered = false;
+
+		let evalModeActive = false;
+		let evalTextsCount = 5;
+		let currentTextIndex = 0;
+		let originalTextsList = [];
+		let sessionInProgress = false;
+		let sessionTextResults = [];
+		let sessionEnded = false;
+		let totalTextsToDo = 0;
+
+		let sessionCorrect = 0;
+		let sessionTotal = 0;
+
+		let timerEnabled = true;
+		let timerLimit = 60;
+		let timerInterval = null;
+		let timeLeft = 60;
+		let timerExpired = false;
+		let timerStoppedManually = false;
+
+		let totalTimeSpent = 0;
+		let totalGamesWithTime = 0;
+
+		let soundEnabled = localStorage.getItem('soundEnabled') === 'true';
+
+		// Chargement des fichiers JS (remplacement)
+		let loadedQuizzes = [];
+		let currentQuizIndex = -1;
+
+		// Variable pour savoir si un fichier utilisateur a été chargé
+		let userFileLoaded = false;
+		let userFileData = null;
+
+		const isMobile = window.innerWidth <= 768;
+
+		if (isMobile) {
+			document.body.classList.add('touch-interface');
+		} else {
+			document.body.classList.add('mouse-interface');
+		}
+
+		let selectedWord = null;
+		let touchTimeout = null;
+
+		const textContainer = document.getElementById("text-container");
+		const toasterWordsDiv = document.getElementById("toasterWords");
+		const toasterActionBtn = document.getElementById("toaster-action-button");
+		const toasterScoreDiv = document.getElementById("toaster-score-button");
+
+		// --- Toaster global uniforme ---
+		let toasterTimeout = null;
+
+		function showToaster(message, type = 'info', duration = 3000) {
+			const toaster = document.getElementById('toasterGlobal');
+			if (!toaster) return;
+			
+			toaster.innerHTML = message;
+			toaster.className = 'toaster-global';
+			toaster.classList.add('show');
+			
+			clearTimeout(toasterTimeout);
+			if (duration > 0) {
+				toasterTimeout = setTimeout(() => {
+					toaster.classList.remove('show');
+				}, duration);
+			}
+		}
+
+		// --- Sons ---
+		function playSound(type) {
+			if (!soundEnabled) return;
+			try {
+				const soundMap = {
+					'correct': '../../src/sounds/reponse-bonne.mp3',
+					'incorrect': '../../src/sounds/reponse-mauvaise.mp3',
+					'score_good': '../../src/sounds/score-bon.mp3',
+					'score_bad': '../../src/sounds/score-mauvais.mp3',
+					'click': '../../src/sounds/bruit-clavier.mp3'
+				};
+				const soundFile = soundMap[type];
+				if (!soundFile) return;
+				const audio = new Audio(soundFile);
+				audio.volume = type === 'click' ? 0.3 : 0.8;
+				audio.preload = 'auto';
+				audio.play().catch(() => {});
+			} catch (e) {}
+		}
+
+		function preloadSounds() {
+			if (!soundEnabled) return;
+			['reponse-bonne.mp3', 'reponse-mauvaise.mp3', 'score-bon.mp3', 'score-mauvais.mp3', 'bruit-clavier.mp3']
+				.forEach(file => {
+					const audio = new Audio();
+					audio.preload = 'auto';
+					audio.src = '../../src/sounds/' + file;
+					audio.load();
+				});
+		}
+
+		// --- Timer ---
+		function formatTimer(seconds) {
+			if (seconds <= 0) return '00:00';
+			const mins = Math.floor(seconds / 60);
+			const secs = seconds % 60;
+			return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+		}
+
+		function updateTimerDisplay(value) {
+			const desktop = document.getElementById('timerValueDesktop');
+			const mobile = document.getElementById('timerValueMobile');
+			if (desktop) desktop.textContent = value;
+			if (mobile) mobile.textContent = value;
+		}
+
+		function showTimerButtons(show) {
+			const btns = document.querySelectorAll('.timer-btn');
+			btns.forEach(btn => {
+				btn.style.display = show ? '' : 'none';
+			});
+		}
+
+		function sliderPosToValue(pos) {
+			if (pos === 6) return 0;
+			return parseInt(pos) * 60;
+		}
+
+		function valueToSliderPos(val) {
+			if (val === 0) return 6;
+			const minutes = Math.round(val / 60);
+			if (minutes >= 1 && minutes <= 5) return minutes;
+			return 1;
+		}
+
+		function saveGameTime(timeInSeconds) {
+			if (timeInSeconds <= 0) return;
+			let times = JSON.parse(localStorage.getItem('gameTimes') || '[]');
+			times.push(timeInSeconds);
+			if (times.length > 100) times = times.slice(-100);
+			localStorage.setItem('gameTimes', JSON.stringify(times));
+			totalTimeSpent += timeInSeconds;
+			totalGamesWithTime++;
+		}
+
+		function loadTimeStats() {
+			const times = JSON.parse(localStorage.getItem('gameTimes') || '[]');
+			totalGamesWithTime = times.length;
+			totalTimeSpent = times.reduce((sum, t) => sum + t, 0);
+		}
+
+		function getAverageTime() {
+			if (totalGamesWithTime === 0) return 0;
+			return Math.round(totalTimeSpent / totalGamesWithTime);
+		}
+
+		function startTimer() {
+			timerExpired = false;
+			timerStoppedManually = false;
+			if (!timerEnabled || timerLimit === 0) {
+				updateTimerDisplay('∞');
+				showTimerButtons(false);
+				return;
+			}
+			showTimerButtons(true);
+			timeLeft = timerLimit;
+			updateTimerDisplay(formatTimer(timeLeft));
+
+			if (timerInterval) clearInterval(timerInterval);
+
+			timerInterval = setInterval(() => {
+				if (timerStoppedManually) return;
+
+				timeLeft--;
+				updateTimerDisplay(formatTimer(timeLeft));
+
+				const timerBtns = [document.getElementById('timerBtnDesktop'), document.getElementById('timerBtnMobile')].filter(b => b);
+				timerBtns.forEach(btn => {
+					btn.classList.remove('warning', 'danger');
+					if (timeLeft <= 30 && timeLeft > 0) btn.classList.add('warning');
+					if (timeLeft <= 15 && timeLeft > 0) btn.classList.add('danger');
+				});
+
+				if (timeLeft <= 0) {
+					clearInterval(timerInterval);
+					timerInterval = null;
+					timerExpired = true;
+					handleTimerExpired();
+				}
+			}, 1000);
+		}
+
+		function stopTimer() {
+			if (timerInterval) {
+				clearInterval(timerInterval);
+				timerInterval = null;
+			}
+			[document.getElementById('timerBtnDesktop'), document.getElementById('timerBtnMobile')].forEach(btn => {
+				if (btn) btn.classList.remove('warning', 'danger');
+			});
+		}
+
+		function resetTimer() {
+			stopTimer();
+			timerExpired = false;
+			timerStoppedManually = false;
+			if (timerEnabled && timerLimit > 0) {
+				timeLeft = timerLimit;
+				updateTimerDisplay(formatTimer(timeLeft));
+				showTimerButtons(true);
+			} else {
+				updateTimerDisplay('∞');
+				showTimerButtons(false);
+			}
+		}
+
+		function handleTimerExpired() {
+			if (!sessionInProgress || sessionEnded) return;
+
+			sessionEnded = true;
+			sessionInProgress = false;
+
+			const dropzones = document.querySelectorAll(".dropzone");
+			let finalCorrect = 0;
+			let finalTotal = 0;
+			dropzones.forEach(zone => {
+				finalTotal++;
+				const userAnswer = zone.textContent.trim();
+				const correctAnswer = zone.dataset.answer;
+				if (userAnswer === correctAnswer) {
+					finalCorrect++;
+				}
+			});
+
+			sessionCorrect += finalCorrect;
+			sessionTotal += finalTotal;
+
+			correctAnswers += finalCorrect;
+			totalAnswers += finalTotal;
+			updateScoreDisplay();
+			saveGameStats();
+			updateStatsDisplay();
+
+			showFinalCorrection();
+			showToaster(`⏰ temps écoulé ! score : ${finalCorrect} / ${finalTotal}`, 'info', 4000);
+
+			if (toasterActionBtn) {
+				toasterActionBtn.disabled = true;
+				toasterActionBtn.textContent = "score";
+			}
+		}
+
+		// --- Confettis ---
+		let confettiLaunched = false;
+
+		function launchConfetti() {
+			if (!animationsEnabled || confettiLaunched) return;
+			confettiLaunched = true;
+			const container = document.createElement('div');
+			container.className = 'confetti-container';
+			document.body.appendChild(container);
+			const colors = ['#ff0000', '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff', '#ff9f43', '#00d2d3', '#f368e0', '#ff9f43'];
+			for (let i = 0; i < 160; i++) {
+				const piece = document.createElement('div');
+				piece.className = 'confetti-piece';
+				piece.style.left = Math.random() * 100 + '%';
+				piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+				piece.style.width = (Math.random() * 16 + 4) + 'px';
+				piece.style.height = (Math.random() * 8 + 4) + 'px';
+				piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+				piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+				piece.style.animationDelay = (Math.random() * 1.5) + 's';
+				container.appendChild(piece);
+			}
+			setTimeout(() => container.remove(), 4000);
+		}
+
+		// --- Utilitaires ---
+		function extractPlainText(html) {
+			const tempDiv = document.createElement('div');
+			tempDiv.innerHTML = html;
+			return tempDiv.textContent || tempDiv.innerText || '';
+		}
+
+		function extraireListeAuteurs() {
+			const auteursSet = new Set();
+			// Si un fichier utilisateur est chargé, on utilise ses données
+			if (userFileLoaded && userFileData && Array.isArray(userFileData)) {
+				for (const texte of userFileData) {
+					if (texte.source && texte.source.trim()) {
+						auteursSet.add(texte.source.trim());
+					}
+				}
+				return Array.from(auteursSet).sort((a, b) => a.localeCompare(b, 'fr', { sensitivity: 'base' }));
+			}
+			// Sinon on utilise la variable globale textesAvecTrous
+			if (typeof textesAvecTrous !== 'undefined' && Array.isArray(textesAvecTrous)) {
+				for (const texte of textesAvecTrous) {
+					if (texte.source && texte.source.trim()) {
+						auteursSet.add(texte.source.trim());
+					}
+				}
+			}
+			return Array.from(auteursSet).sort((a, b) => a.localeCompare(b, 'fr', { sensitivity: 'base' }));
+		}
+
+		function getTextesFiltres() {
+			// Si un fichier utilisateur est chargé, on utilise ses données
+			if (userFileLoaded && userFileData && Array.isArray(userFileData)) {
+				if (currentFilterNotion === "all") return userFileData;
+				return userFileData.filter(txt => txt.source === currentFilterNotion);
+			}
+			// Sinon on utilise la variable globale textesAvecTrous
+			if (typeof textesAvecTrous === 'undefined' || !Array.isArray(textesAvecTrous)) {
+				return [];
+			}
+			if (currentFilterNotion === "all") return textesAvecTrous;
+			return textesAvecTrous.filter(txt => txt.source === currentFilterNotion);
+		}
+
+		function remplirMenusAuteurs() {
+			const auteurs = extraireListeAuteurs();
+			const selectDesktop = document.getElementById('notionFilter');
+			const selectMobile = document.getElementById('notionFilterMobile');
+			if (!selectDesktop || !selectMobile) return;
+
+			let optionsHTML = '<option value="all">tous les auteurs</option>';
+			for (const auteur of auteurs) {
+				optionsHTML += `<option value="${escapeForAttribute(auteur)}">${auteur}</option>`;
+			}
+			if (selectDesktop) selectDesktop.innerHTML = optionsHTML;
+			if (selectMobile) selectMobile.innerHTML = optionsHTML;
+
+			const savedFilter = localStorage.getItem('selectedAuthorFilter');
+			if (savedFilter && auteurs.includes(savedFilter)) {
+				if (selectDesktop) selectDesktop.value = savedFilter;
+				if (selectMobile) selectMobile.value = savedFilter;
+				currentFilterNotion = savedFilter;
+			} else {
+				if (selectDesktop) selectDesktop.value = "all";
+				if (selectMobile) selectMobile.value = "all";
+				currentFilterNotion = "all";
+			}
+		}
+
+		function escapeForAttribute(text) {
+			if (!text) return '';
+			return text
+				.replace(/&/g, '&amp;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;')
+				.replace(/"/g, '&quot;')
+				.replace(/'/g, '&#39;');
+		}
+
+		function extraireMotsEntreAsterisques(texte) {
+			const regex = /\*\*(.*?)\*\*/g;
+			const mots = [];
+			let match;
+			while ((match = regex.exec(texte)) !== null) {
+				mots.push(extractPlainText(match[1]));
+			}
+			return mots;
+		}
+
+		function applyAnimationsSetting() {
+			if (!animationsEnabled) document.body.classList.add('no-animations');
+			else document.body.classList.remove('no-animations');
+		}
+
+		// --- Statistiques ---
+		function saveGameStats() {
+			localStorage.setItem('gameStats', JSON.stringify({ correctAnswers, totalAnswers, gamesPlayed }));
+			const currentPercentage = totalAnswers > 0 ? Math.round((correctAnswers / totalAnswers) * 100) : 0;
+			if (currentPercentage > bestScore) {
+				bestScore = currentPercentage;
+				localStorage.setItem('bestScore', bestScore.toString());
+			}
+		}
+
+		function loadGameStats() {
+			const s = localStorage.getItem('gameStats');
+			if (s) {
+				const d = JSON.parse(s);
+				correctAnswers = d.correctAnswers || 0;
+				totalAnswers = d.totalAnswers || 0;
+				gamesPlayed = d.gamesPlayed || 0;
+			}
+			bestScore = parseInt(localStorage.getItem('bestScore') || '0');
+			loadTimeStats();
+			updateScoreDisplay();
+			updateStatsDisplay();
+		}
+
+		function updateScoreDisplay() {
+			const scoreText = `score : ${correctAnswers} / ${totalAnswers}`;
+			if (toasterScoreDiv) toasterScoreDiv.textContent = scoreText;
+		}
+
+		function updateStatsDisplay() {
+			const statCorrect = document.getElementById('statTotalCorrect');
+			const statAnswers = document.getElementById('statTotalAnswers');
+			const statRate = document.getElementById('statSuccessRate');
+			const statGames = document.getElementById('statGamesPlayed');
+			const statBestScore = document.getElementById('statBestScore');
+			if (statCorrect) statCorrect.textContent = correctAnswers;
+			if (statAnswers) statAnswers.textContent = totalAnswers;
+			const percentage = totalAnswers > 0 ? Math.round((correctAnswers / totalAnswers) * 100) : 0;
+			if (statRate) statRate.textContent = percentage + ' %';
+			if (statGames) statGames.textContent = gamesPlayed;
+			if (statBestScore) statBestScore.textContent = bestScore + ' %';
+			const badge = document.getElementById('statsBadge');
+			if (badge) badge.textContent = percentage + '%';
+		}
+
+		function resetStats() {
+			correctAnswers = 0;
+			totalAnswers = 0;
+			gamesPlayed = 0;
+			bestScore = 0;
+			localStorage.removeItem('bestScore');
+			localStorage.removeItem('gameTimes');
+			totalTimeSpent = 0;
+			totalGamesWithTime = 0;
+			saveGameStats();
+			updateStatsDisplay();
+			updateScoreDisplay();
+			showToaster('Statistiques réinitialisées !', 'info', 2500);
+			playSound('click');
+		}
+
+		function resetApplication() {
+			localStorage.clear();
+			showToaster('Application réinitialisée ! Redémarrage...', 'info', 2000);
+			playSound('click');
+			setTimeout(() => location.reload(), 1500);
+		}
+
+		// --- Sauvegarde des paramètres ---
+		function saveSettings() {
+			localStorage.setItem('appSettings', JSON.stringify({
+				darkMode, colorblindMode, animationsEnabled, pairsCount,
+				evalTextsCount, evalModeActive, timerLimit, soundEnabled
+			}));
+			localStorage.setItem('selectedAuthorFilter', currentFilterNotion);
+		}
+
+		function loadSettings() {
+			const s = localStorage.getItem('appSettings');
+			if (s) {
+				const d = JSON.parse(s);
+				darkMode = d.darkMode || false;
+				colorblindMode = d.colorblindMode || false;
+				animationsEnabled = d.animationsEnabled !== undefined ? d.animationsEnabled : true;
+				pairsCount = d.pairsCount || 8;
+				evalTextsCount = d.evalTextsCount || 5;
+				evalModeActive = d.evalModeActive || false;
+				timerLimit = d.timerLimit || 60;
+				soundEnabled = d.soundEnabled !== undefined ? d.soundEnabled : false;
+				if (darkMode) document.body.classList.add('dark-theme');
+				if (colorblindMode) document.body.classList.add('colorblind-mode');
+				applyAnimationsSetting();
+				const darkToggle = document.getElementById('darkModeToggle');
+				const colorblindToggle = document.getElementById('colorblindToggle');
+				const animationsToggle = document.getElementById('animationsToggle');
+				const evalModeToggle = document.getElementById('evalModeToggle');
+				const soundToggle = document.getElementById('soundToggle');
+				const pairsSlider = document.getElementById('pairsCountSlider');
+				const evalSlider = document.getElementById('evalCountSlider');
+				const timerSlider = document.getElementById('timerLimitSlider');
+				const timerValue = document.getElementById('timerLimitValue');
+				if (darkToggle) darkToggle.checked = darkMode;
+				if (colorblindToggle) colorblindToggle.checked = colorblindMode;
+				if (animationsToggle) animationsToggle.checked = animationsEnabled;
+				if (evalModeToggle) evalModeToggle.checked = evalModeActive;
+				if (soundToggle) soundToggle.checked = soundEnabled;
+				if (pairsSlider) pairsSlider.value = pairsCount;
+				if (evalSlider) evalSlider.value = evalTextsCount;
+				if (timerSlider) {
+					const pos = valueToSliderPos(timerLimit);
+					timerSlider.value = pos;
+					timerValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
+				}
+				const pairsValue = document.getElementById('pairsCountValue');
+				const evalValue = document.getElementById('evalCountValue');
+				if (pairsValue) pairsValue.textContent = pairsCount;
+				if (evalValue) evalValue.textContent = evalTextsCount;
+			}
+			const savedFilter = localStorage.getItem('selectedAuthorFilter');
+			if (savedFilter && savedFilter !== "all") {
+				const auteurs = extraireListeAuteurs();
+				if (auteurs.includes(savedFilter)) currentFilterNotion = savedFilter;
+				else currentFilterNotion = "all";
+			} else {
+				currentFilterNotion = "all";
+			}
+			timerEnabled = true;
+			if (timerLimit === 0) {
+				updateTimerDisplay('∞');
+				showTimerButtons(false);
+			} else {
+				updateTimerDisplay(formatTimer(timerLimit));
+				showTimerButtons(true);
+			}
+			if (soundEnabled) preloadSounds();
+		}
+
+		// --- Mélange ---
+		function melangerTableau(tableau) {
+			const resultat = [...tableau];
+			for (let i = resultat.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[resultat[i], resultat[j]] = [resultat[j], resultat[i]];
+			}
+			return resultat;
+		}
+
+		// --- Génération du jeu ---
+		function genererJeuDepuisTexte(texteConfig, preserveContent = false) {
+			let texteOriginale = texteConfig.texte;
+			const sourceCitation = texteConfig.source || "";
+
+			const tousLesMots = extraireMotsEntreAsterisques(texteOriginale);
+
+			const regexPattern = /\*\*([^*]+)\*\*/g;
+			const matches = [];
+			let match;
+			while ((match = regexPattern.exec(texteOriginale)) !== null) {
+				matches.push({ fullMatch: match[0], innerHtml: match[1] });
+			}
+
+			const indicesDisponibles = [...Array(tousLesMots.length).keys()];
+			const indicesChoisis = [];
+			const nbASelectionner = Math.min(pairsCount, tousLesMots.length);
+
+			for (let i = 0; i < nbASelectionner; i++) {
+				const idxAleatoire = Math.floor(Math.random() * indicesDisponibles.length);
+				indicesChoisis.push(indicesDisponibles[idxAleatoire]);
+				indicesDisponibles.splice(idxAleatoire, 1);
+			}
+
+			indicesChoisis.sort((a, b) => a - b);
+
+			const sequencesTrous = indicesChoisis.map(i => tousLesMots[i]);
+
+			let texteFinal = texteOriginale;
+
+			for (let i = 0; i < matches.length; i++) {
+				const motBrut = tousLesMots[i];
+				const pattern = matches[i].fullMatch;
+
+				if (indicesChoisis.includes(i)) {
+					const zoneDepot = `<span class="dropzone" data-answer="${escapeForAttribute(motBrut)}"></span>`;
+					texteFinal = texteFinal.replace(pattern, zoneDepot);
+				} else {
+					texteFinal = texteFinal.replace(pattern, motBrut);
+				}
+			}
+
+			if (sequencesTrous.length === 0) {
+				return { texte: "Erreur : Aucun trou trouvé", mots: ["erreur"], reponses: ["erreur"], source: "" };
+			}
+
+			const motsPourJeu = melangerTableau([...sequencesTrous]);
+
+			return { texte: texteFinal, mots: motsPourJeu, reponses: sequencesTrous, source: sourceCitation };
+		}
+
+		function getOriginalTextIndex(texteConfig) {
+			// Si un fichier utilisateur est chargé, on cherche dans ses données
+			if (userFileLoaded && userFileData && Array.isArray(userFileData)) {
+				for (let i = 0; i < userFileData.length; i++) {
+					if (userFileData[i] === texteConfig) {
+						return i + 1;
+					}
+				}
+				return null;
+			}
+			// Sinon on cherche dans la variable globale
+			if (typeof textesAvecTrous === 'undefined') return null;
+			for (let i = 0; i < textesAvecTrous.length; i++) {
+				if (textesAvecTrous[i] === texteConfig) {
+					return i + 1;
+				}
+			}
+			return null;
+		}
+
+		function demarrerNouvelleSession() {
+			const textesFiltres = getTextesFiltres();
+			if (!textesFiltres || textesFiltres.length === 0) return false;
+
+			const nbTextes = Math.min(evalTextsCount, textesFiltres.length);
+			totalTextsToDo = nbTextes;
+
+			const shuffled = melangerTableau(textesFiltres);
+			originalTextsList = shuffled.slice(0, nbTextes);
+			currentTextIndex = 0;
+			sessionInProgress = true;
+			sessionEnded = false;
+			sessionTextResults = [];
+			confettiLaunched = false;
+
+			sessionCorrect = 0;
+			sessionTotal = 0;
+
+			const oldMsg = document.getElementById('finalCorrectionMsg');
+			if (oldMsg) oldMsg.remove();
+
+			return true;
+		}
+
+		function evaluateCurrentText(addToStats = true) {
+			const dropzones = document.querySelectorAll(".dropzone");
+			let correctCount = 0;
+			dropzones.forEach(zone => {
+				if (zone.textContent.trim() === zone.dataset.answer) {
+					correctCount++;
+				}
+			});
+			const totalCount = dropzones.length;
+
+			if (addToStats) {
+				correctAnswers += correctCount;
+				totalAnswers += totalCount;
+				updateScoreDisplay();
+				saveGameStats();
+				updateStatsDisplay();
+			}
+
+			return { correctCount, totalCount };
+		}
+
+		function clearColors() {
+			const dropzones = document.querySelectorAll(".dropzone");
+			dropzones.forEach(zone => {
+				zone.classList.remove('correct', 'incorrect');
+			});
+		}
+
+		function nextText() {
+			currentTextIndex++;
+
+			if (currentTextIndex < originalTextsList.length) {
+				const jeu = genererJeuDepuisTexte(originalTextsList[currentTextIndex]);
+				const originalIndex = getOriginalTextIndex(originalTextsList[currentTextIndex]);
+
+				const textHeader = `<div class="text-header-info">
+									<span class="text-number">texte n°${originalIndex !== null ? originalIndex : '?'}</span>
+									<span class="text-author-badge">${escapeForAttribute(jeu.source) || "Auteur inconnu"}</span>
+								</div>`;
+				textContainer.innerHTML = textHeader + jeu.texte;
+
+				toasterWordsDiv.innerHTML = jeu.mots.map(mot => `<span class="draggable-word">${escapeForAttribute(mot)}</span>`).join("");
+
+				if (isMobile) {
+					disableNativeDragOnMobile();
+					attachMobileEventListeners();
+				} else {
+					initDragAndDrop();
+				}
+
+				updateDropzoneState();
+				afficherProgression();
+
+				answered = false;
+				timerStoppedManually = false;
+				resetTimer();
+				if (timerEnabled && timerLimit > 0) {
+					startTimer();
+				}
+
+				if (toasterActionBtn) {
+					if (evalModeActive) {
+						toasterActionBtn.textContent = "suivant";
+						toasterActionBtn.disabled = false;
+					} else {
+						toasterActionBtn.textContent = "vérifier";
+						toasterActionBtn.disabled = true;
+					}
+				}
+
+			} else {
+				sessionInProgress = false;
+				afficherProgression();
+				showFinalCorrection();
+				stopTimer();
+			}
+		}
+
+		function showFinalCorrection() {
+			sessionEnded = true;
+			stopTimer();
+
+			const timeSpent = timerLimit - timeLeft;
+			if (timeSpent > 0 && timerLimit > 0) {
+				saveGameTime(timeSpent);
+			}
+
+			const progressDiv = document.getElementById('evaluationProgress');
+			if (progressDiv) progressDiv.remove();
+
+			const endContainer = document.createElement('div');
+			endContainer.className = 'container--quiz-end';
+			endContainer.id = 'finalCorrectionMsg';
+
+			let html = '<div class="container--quiz-results">';
+
+			const sessionPercentage = sessionTotal > 0 ? Math.round((sessionCorrect / sessionTotal) * 100) : 0;
+			
+			const reponsePluriel = sessionCorrect > 1 ? 's' : '';
+			html += `
+				<div class="bento-score">
+					<p>
+						<span style="color: var(--font-color);">score : </span>
+						<span class="quiz-end__score">${sessionCorrect}</span>
+						<span style="font-size:0.9rem; color: var(--font-color);">bonne réponse${reponsePluriel}</span>
+						<span style="font-size:0.9rem; color: var(--font-color);">sur</span>
+						<span class="quiz-end__total">${sessionTotal}</span>
+					</p>
+				</div>
+			`;
+
+			const avgTime = getAverageTime();
+			const avgTimeDisplay = avgTime > 0 ? Math.floor(avgTime / 60) + 'm ' + (avgTime % 60) + 's' : '--';
+			const bestScoreDisplay = bestScore > 0 ? bestScore : 0;
+			const globalPercentage = totalAnswers > 0 ? Math.round((correctAnswers / totalAnswers) * 100) : 0;		
+			const reussitePluriel = correctAnswers > 1 ? 's' : '';
+			const tentativePluriel = gamesPlayed > 1 ? 's' : '';
+		
+			// Section des statistiques globales - 3 indicateurs (2ème ligne)
+			html += `
+				<div class="bento-stats-global">
+					<div class="stat-item">
+						<span class="stat-value">${sessionPercentage}%</span>
+						<span class="stat-label">score</span>
+					</div>
+					<div class="stat-item">
+						<span class="stat-value">${bestScoreDisplay}%</span>
+						<span class="stat-label">meilleur score</span>
+					</div>
+					<div class="stat-item">
+						<span class="stat-value">${correctAnswers}</span>
+						<span class="stat-label">bonne${reussitePluriel} réponse${reussitePluriel}</span>		
+					</div>
+				</div>
+			`;
+			
+			// Section des statistiques personnelles - 3 indicateurs (1ère ligne)
+			html += `
+				<div class="bento-stats-personal">
+					<div class="stat-item-mini">
+						<span class="stat-value">${globalPercentage}%</span>
+						<span class="stat-label-mini">moyenne</span>
+					</div>
+					<div class="stat-item-mini">
+						<span class="stat-value" id="avgTimeDisplay">${avgTimeDisplay}</span>
+						<span class="stat-label-mini">moyenne temps</span>
+					</div>
+					<div class="stat-item-mini">
+						<span class="stat-value">${gamesPlayed}</span>
+						<span class="stat-label-mini">partie${tentativePluriel} jouées</span>
+					</div>
+				</div>
+			`;
+
+			let message = '';
+			if (sessionPercentage >= 80) message = '🌟 excellent ! vous maîtrisez parfaitement ce quiz';
+			else if (sessionPercentage >= 60) message = '👏 très bon score ! continuez comme ça';
+			else if (sessionPercentage >= 40) message = '📚 score correct : continuez à étudier';
+			else if (sessionPercentage >= 20) message = '📖 vous avez des bases : relisez l\'essentiel';
+			else message = '💪 n\'hésitez pas à refaire le quiz pour progresser';
+
+			html += `
+				<div class="bento-message">${message}</div>
+			`;
+
+			html += `
+				<div class="bento-actions">
+					<button class="quiz-btn" id="quizReviewBtn">réponses</button>
+					<button class="quiz-btn" id="quizRetryBtn">réessayer</button>
+					<button class="quiz-btn" id="quizBackBtn">retour</button>
+				</div>
+			`;
+
+			html += `
+				<div class="bento-details hidden" id="detailedResults">
+					<h3>📋 détail des réponses :</h3>
+					<div id="questionsReview"></div>
+				</div>
+			`;
+
+			html += '</div>';
+			endContainer.innerHTML = html;
+			
+			const mainContainer = document.querySelector('.main-container');
+			const oldTextContainer = document.getElementById('text-container');
+			const wordsToaster = document.getElementById('wordsToaster');
+			
+			if (wordsToaster) wordsToaster.style.display = 'none';
+			
+			if (oldTextContainer) {
+				oldTextContainer.innerHTML = '';
+				oldTextContainer.appendChild(endContainer);
+				oldTextContainer.style.minHeight = '400px';
+				oldTextContainer.classList.add('stats-mode');
+			}
+
+			if (sessionPercentage >= 80) {
+				setTimeout(() => {
+					launchConfetti();
+					playSound('score_good');
+				}, 600);
+			} else if (sessionPercentage >= 50 && sessionPercentage < 80) {
+				setTimeout(() => playSound('click'), 600);
+			} else if (sessionPercentage < 50 && sessionTotal > 0) {
+				setTimeout(() => playSound('score_bad'), 600);
+			}
+
+			document.getElementById('quizReviewBtn')?.addEventListener('click', function() {
+				playSound('click');
+				const details = document.getElementById('detailedResults');
+				if (details) {
+					details.classList.toggle('hidden');
+					if (!details.classList.contains('hidden')) {
+						showDetailedReview();
+					}
+				}
+			});
+
+			document.getElementById('quizRetryBtn')?.addEventListener('click', function() {
+				playSound('click');
+				if (oldTextContainer) {
+					oldTextContainer.innerHTML = '';
+					oldTextContainer.style.minHeight = '';
+					oldTextContainer.classList.remove('stats-mode');
+				}
+				if (wordsToaster) wordsToaster.style.display = 'flex';
+				reload();
+			});
+
+			document.getElementById('quizBackBtn')?.addEventListener('click', function() {
+				playSound('click');
+				if (oldTextContainer) {
+					oldTextContainer.innerHTML = '';
+					oldTextContainer.style.minHeight = '';
+					oldTextContainer.classList.remove('stats-mode');
+				}
+				if (wordsToaster) wordsToaster.style.display = 'flex';
+				sessionInProgress = false;
+				sessionEnded = false;
+				originalTextsList = [];
+				currentTextIndex = 0;
+				afficherNouvelletexte();
+			});
+
+			if (toasterActionBtn) {
+				toasterActionBtn.disabled = true;
+				toasterActionBtn.textContent = "terminé";
+			}
+		}
+
+		function showDetailedReview() {
+			const reviewContainer = document.getElementById('questionsReview');
+			if (!reviewContainer) return;
+
+			reviewContainer.innerHTML = '';
+
+			for (let idx = 0; idx < originalTextsList.length; idx++) {
+				const texteConfig = originalTextsList[idx];
+				const jeu = genererJeuDepuisTexte(texteConfig);
+				const originalIndex = getOriginalTextIndex(texteConfig);
+
+				let textWithAnswers = jeu.texte;
+				const dropzoneRegex = /<span class="dropzone" data-answer="([^"]+)"><\/span>/g;
+
+				textWithAnswers = textWithAnswers.replace(dropzoneRegex, (match, answer) => {
+					return `<span style="background-color: var(--color-correct); color: white; padding: 0 0.5rem; border-radius: 0.3rem;">${answer}</span>`;
+				});
+
+				const div = document.createElement('div');
+				div.style.cssText = 'margin-bottom: 1.5rem; padding: 1rem; background: var(--bg); border-radius: 0.5rem; box-shadow: var(--shadow-out);';
+				div.innerHTML = `
+					<div style="font-weight: bold; margin-bottom: 0.5rem; color: #e74c3c;">texte n°${originalIndex !== null ? originalIndex : '?'} : ${texteConfig.source || "Auteur inconnu"}</div>
+					<div>${textWithAnswers}</div>
+				`;
+				reviewContainer.appendChild(div);
+			}
+		}
+
+		function afficherProgression() {
+			let progressDiv = document.getElementById('evaluationProgress');
+			if (progressDiv) progressDiv.remove();
+
+			if (sessionInProgress && !sessionEnded && originalTextsList.length > 0) {
+				progressDiv = document.createElement('div');
+				progressDiv.id = 'evaluationProgress';
+				progressDiv.className = 'evaluation-progress';
+				const modeText = evalModeActive ? '📖 mode évaluation' : '📝 session';
+				progressDiv.textContent = `${modeText} : texte ${currentTextIndex + 1} / ${originalTextsList.length}`;
+				textContainer.parentNode.insertBefore(progressDiv, textContainer);
+			}
+		}
+
+		function updateButtonState() {
+			if (sessionEnded) return;
+
+			if (evalModeActive) {
+				if (toasterActionBtn) {
+					toasterActionBtn.disabled = false;
+					toasterActionBtn.textContent = "suivant";
+				}
+			} else {
+				const dropzones = document.querySelectorAll(".dropzone");
+				const allFilled = Array.from(dropzones).every(zone => zone.textContent.trim() !== "");
+
+				if (!answered && allFilled) {
+					toasterActionBtn.disabled = false;
+					toasterActionBtn.textContent = "vérifier";
+				} else if (answered) {
+					toasterActionBtn.disabled = false;
+				} else {
+					toasterActionBtn.disabled = true;
+				}
+			}
+		}
+
+		function updateDropzoneState() {
+			const dropzones = document.querySelectorAll(".dropzone");
+			dropzones.forEach(zone => {
+				if (zone.textContent.trim() !== "") {
+					zone.classList.add("filled");
+				} else {
+					zone.classList.remove("filled");
+				}
+			});
+		}
+
+		function handleAction() {
+			playSound('click');
+			
+			if (sessionEnded) return;
+
+			if (evalModeActive) {
+				const dropzones = document.querySelectorAll(".dropzone");
+				const allFilled = Array.from(dropzones).every(zone => zone.textContent.trim() !== "");
+				
+				if (!allFilled && currentTextIndex < originalTextsList.length - 1) {
+					showToaster('Veuillez remplir toutes les lacunes avant de continuer.', 'warning', 2500);
+					return;
+				}
+
+				if (currentTextIndex >= originalTextsList.length - 1) {
+					sessionInProgress = false;
+					showFinalCorrection();
+				} else {
+					nextText();
+				}
+			} else {
+				if (!answered) {
+					checkAndColorAnswers();
+				} else {
+					const currentBtnText = toasterActionBtn ? toasterActionBtn.textContent : "";
+					if (currentBtnText === "solutions") {
+						showAllCorrectAnswers();
+					} else if (currentBtnText === "texte suivant") {
+						if (currentTextIndex < originalTextsList.length - 1) {
+							nextText();
+						} else {
+							sessionInProgress = false;
+							showFinalCorrection();
+						}
+					} else if (currentBtnText === "score") {
+						sessionInProgress = false;
+						showFinalCorrection();
+					}
+				}
+			}
+		}
+
+		function checkAndColorAnswers() {
+			const dropzones = document.querySelectorAll(".dropzone");
+			let correctCount = 0;
+			let hasIncorrect = false;
+
+			dropzones.forEach(zone => {
+				const userAnswer = zone.textContent.trim();
+				const correctAnswer = zone.dataset.answer;
+
+				if (userAnswer === correctAnswer) {
+					zone.classList.add('correct');
+					zone.classList.remove('incorrect');
+					correctCount++;
+				} else if (userAnswer !== "") {
+					zone.classList.add('incorrect');
+					zone.classList.remove('correct');
+					hasIncorrect = true;
+				} else {
+					zone.classList.add('incorrect');
+					zone.classList.remove('correct');
+					hasIncorrect = true;
+				}
+			});
+
+			const totalCount = dropzones.length;
+
+			sessionCorrect += correctCount;
+			sessionTotal += totalCount;
+
+			correctAnswers += correctCount;
+			totalAnswers += totalCount;
+			updateScoreDisplay();
+			saveGameStats();
+			updateStatsDisplay();
+
+			const percentage = Math.round((correctCount / totalCount) * 100);
+			let message = `📝 ${correctCount} / ${totalCount} bonnes réponses (${percentage}%)`;
+			if (percentage >= 80) {
+				message += ' 🌟';
+				playSound('correct');
+			} else if (percentage >= 50) {
+				message += ' 📚';
+				playSound('click');
+			} else {
+				message += ' 💪';
+				playSound('incorrect');
+			}
+			showToaster(message, 'info', 4000);
+
+			answered = true;
+			timerStoppedManually = true;
+			stopTimer();
+
+			if (correctCount === totalCount && totalCount > 0) {
+				if (currentTextIndex >= originalTextsList.length - 1) {
+					sessionInProgress = false;
+					if (toasterActionBtn) {
+						toasterActionBtn.textContent = "score";
+						toasterActionBtn.disabled = false;
+					}
+					showToaster('✅ Toutes les réponses sont correctes ! Cliquez sur "score" pour voir le bilan.', 'correct', 4000);
+				} else {
+					showToaster('✅ Toutes les réponses sont correctes ! Passage au texte suivant.', 'correct', 3000);
+					setTimeout(() => {
+						nextText();
+					}, 1500);
+				}
+				return { correctCount, totalCount };
+			}
+
+			if (toasterActionBtn) {
+				if (currentTextIndex >= originalTextsList.length - 1) {
+					toasterActionBtn.textContent = "solutions";
+				} else {
+					toasterActionBtn.textContent = "solutions";
+				}
+				toasterActionBtn.disabled = false;
+			}
+
+			return { correctCount, totalCount };
+		}
+
+		function showAllCorrectAnswers() {
+			const dropzones = document.querySelectorAll(".dropzone");
+			let correctedCount = 0;
+
+			dropzones.forEach(zone => {
+				const correctAnswer = zone.dataset.answer;
+				const currentAnswer = zone.textContent.trim();
+
+				if (currentAnswer === correctAnswer) {
+					zone.classList.add('correct');
+					zone.classList.remove('incorrect');
+				} else {
+					zone.textContent = correctAnswer;
+					zone.classList.add('correct');
+					zone.classList.remove('incorrect', 'filled');
+					correctedCount++;
+				}
+			});
+
+			const totalCount = dropzones.length;
+			showToaster(`✅ Correction appliquée : ${correctedCount} réponse(s) corrigée(s) sur ${totalCount}`, 'correct', 3500);
+			playSound('correct');
+
+			if (toasterActionBtn) {
+				if (currentTextIndex >= originalTextsList.length - 1) {
+					toasterActionBtn.textContent = "score";
+				} else {
+					toasterActionBtn.textContent = "texte suivant";
+				}
+				toasterActionBtn.disabled = false;
+			}
+		}
+
+		// --- Drag & Drop ---
+		let draggedItem = null;
+
+		function dragStartHandler(e) {
+			const target = e.target.closest('.draggable-word, .dropzone');
+			if (!target) return;
+
+			draggedItem = target;
+			e.dataTransfer.setData('text/plain', target.textContent);
+			e.dataTransfer.effectAllowed = 'move';
+
+			if (target.classList.contains('draggable-word')) {
+				e.dataTransfer.setData('type', 'word');
+			} else if (target.classList.contains('dropzone')) {
+				e.dataTransfer.setData('type', 'zone');
+			}
+			e.target.style.opacity = '0.5';
+		}
+
+		function dragEndHandler(e) {
+			if (e.target.style) e.target.style.opacity = '';
+			draggedItem = null;
+			document.querySelectorAll('.dropzone').forEach(zone => zone.classList.remove('drag-over'));
+		}
+
+		function dragOverHandler(e) {
+			e.preventDefault();
+			e.dataTransfer.dropEffect = 'move';
+		}
+
+		function dragEnterHandler(e) {
+			const dropzone = e.target.closest('.dropzone');
+			if (dropzone) {
+				dropzone.classList.add('drag-over');
+			}
+		}
+
+		function dragLeaveHandler(e) {
+			const dropzone = e.target.closest('.dropzone');
+			if (dropzone) {
+				dropzone.classList.remove('drag-over');
+			}
+		}
+
+		function dropHandler(e) {
+			e.preventDefault();
+			const targetDropzone = e.target.closest('.dropzone');
+			if (!targetDropzone) return;
+
+			targetDropzone.classList.remove('drag-over');
+
+			if (!draggedItem) return;
+
+			const draggedText = draggedItem.textContent;
+			const type = e.dataTransfer.getData('type');
+
+			if (type === 'word' && draggedItem.classList.contains('draggable-word')) {
+				if (targetDropzone.textContent.trim() === "") {
+					targetDropzone.textContent = draggedText;
+					draggedItem.remove();
+					if (answered && !evalModeActive) {
+						clearColors();
+						answered = false;
+						if (toasterActionBtn) {
+							toasterActionBtn.textContent = "vérifier";
+							toasterActionBtn.disabled = true;
+						}
+						updateButtonState();
+					}
+				} else {
+					const existingWord = targetDropzone.textContent;
+					targetDropzone.textContent = draggedText;
+					draggedItem.textContent = existingWord;
+					if (answered && !evalModeActive) {
+						clearColors();
+						answered = false;
+						if (toasterActionBtn) {
+							toasterActionBtn.textContent = "vérifier";
+							toasterActionBtn.disabled = true;
+						}
+						updateButtonState();
+					}
+				}
+			} else if (type === 'zone' && draggedItem.classList.contains('dropzone')) {
+				if (targetDropzone === draggedItem) return;
+
+				const sourceText = draggedItem.textContent;
+				const targetText = targetDropzone.textContent;
+
+				if (targetDropzone.textContent.trim() === "") {
+					targetDropzone.textContent = sourceText;
+					draggedItem.textContent = "";
+					draggedItem.classList.remove('filled', 'correct', 'incorrect');
+				} else {
+					draggedItem.textContent = targetText;
+					targetDropzone.textContent = sourceText;
+				}
+				draggedItem.classList.remove('filled', 'correct', 'incorrect');
+				targetDropzone.classList.remove('filled', 'correct', 'incorrect');
+
+				if (answered && !evalModeActive) {
+					clearColors();
+					answered = false;
+					if (toasterActionBtn) {
+						toasterActionBtn.textContent = "vérifier";
+						toasterActionBtn.disabled = true;
+					}
+					updateButtonState();
+				}
+			}
+
+			draggedItem.style.opacity = '';
+			draggedItem = null;
+			updateDropzoneState();
+			updateButtonState();
+			initDragAndDrop();
+		}
+
+		function dropOnContainerHandler(e) {
+			e.preventDefault();
+			if (!draggedItem) return;
+
+			const type = e.dataTransfer.getData('type');
+
+			if (type === 'zone' && draggedItem.classList.contains('dropzone') && draggedItem.textContent.trim() !== "") {
+				const wordToMove = draggedItem.textContent;
+				const newWord = document.createElement('span');
+				newWord.className = 'draggable-word';
+				newWord.textContent = wordToMove;
+				toasterWordsDiv.appendChild(newWord);
+				draggedItem.textContent = "";
+				draggedItem.classList.remove('filled', 'correct', 'incorrect');
+				draggedItem.style.opacity = '';
+				draggedItem = null;
+
+				if (answered && !evalModeActive) {
+					clearColors();
+					answered = false;
+					if (toasterActionBtn) {
+						toasterActionBtn.textContent = "vérifier";
+						toasterActionBtn.disabled = true;
+					}
+					updateButtonState();
+				}
+
+				initDragAndDrop();
+			} else if (type === 'word' && draggedItem) {
+				draggedItem.style.opacity = '';
+				draggedItem = null;
+			} else {
+				if (draggedItem) draggedItem.style.opacity = '';
+				draggedItem = null;
+			}
+
+			updateDropzoneState();
+			updateButtonState();
+		}
+
+		function initDragAndDrop() {
+			if (isMobile) return;
+
+			const draggables = document.querySelectorAll('.draggable-word');
+			const dropzones = document.querySelectorAll('.dropzone');
+
+			draggables.forEach(word => {
+				word.setAttribute('draggable', 'true');
+				word.removeEventListener('dragstart', dragStartHandler);
+				word.removeEventListener('dragend', dragEndHandler);
+				word.addEventListener('dragstart', dragStartHandler);
+				word.addEventListener('dragend', dragEndHandler);
+			});
+
+			dropzones.forEach(zone => {
+				zone.setAttribute('draggable', 'true');
+				zone.removeEventListener('dragstart', dragStartHandler);
+				zone.removeEventListener('dragend', dragEndHandler);
+				zone.removeEventListener('dragover', dragOverHandler);
+				zone.removeEventListener('dragenter', dragEnterHandler);
+				zone.removeEventListener('dragleave', dragLeaveHandler);
+				zone.removeEventListener('drop', dropHandler);
+
+				zone.addEventListener('dragstart', dragStartHandler);
+				zone.addEventListener('dragend', dragEndHandler);
+				zone.addEventListener('dragover', dragOverHandler);
+				zone.addEventListener('dragenter', dragEnterHandler);
+				zone.addEventListener('dragleave', dragLeaveHandler);
+				zone.addEventListener('drop', dropHandler);
+			});
+
+			toasterWordsDiv.removeEventListener('dragover', dragOverHandler);
+			toasterWordsDiv.removeEventListener('drop', dropOnContainerHandler);
+			toasterWordsDiv.addEventListener('dragover', dragOverHandler);
+			toasterWordsDiv.addEventListener('drop', dropOnContainerHandler);
+		}
+
+		// --- Mobile ---
+		function clearSelection() {
+			if (selectedWord) {
+				selectedWord.classList.remove('selected');
+				selectedWord = null;
+			}
+			if (touchTimeout) {
+				clearTimeout(touchTimeout);
+				touchTimeout = null;
+			}
+		}
+
+		function placeWordInDropzone(wordElement, dropzone) {
+			const wordText = wordElement.textContent;
+			const existingText = dropzone.textContent;
+
+			if (existingText && existingText.trim() !== "") {
+				const newWordElement = document.createElement('span');
+				newWordElement.className = 'draggable-word';
+				newWordElement.textContent = existingText;
+				toasterWordsDiv.appendChild(newWordElement);
+				if (isMobile) addTouchListenersToWord(newWordElement);
+			}
+
+			dropzone.textContent = wordText;
+			dropzone.classList.add("filled");
+			wordElement.remove();
+
+			if (answered && !evalModeActive) {
+				clearColors();
+				answered = false;
+				if (toasterActionBtn) {
+					toasterActionBtn.textContent = "vérifier";
+					toasterActionBtn.disabled = true;
+				}
+			}
+
+			updateButtonState();
+			updateDropzoneState();
+			clearSelection();
+		}
+
+		function removeWordFromDropzone(dropzone) {
+			const wordText = dropzone.textContent;
+			if (wordText && wordText.trim() !== "") {
+				const newWordElement = document.createElement('span');
+				newWordElement.className = 'draggable-word';
+				newWordElement.textContent = wordText;
+				toasterWordsDiv.appendChild(newWordElement);
+				if (isMobile) addTouchListenersToWord(newWordElement);
+
+				dropzone.textContent = "";
+				dropzone.classList.remove("filled", "correct", "incorrect");
+
+				if (answered && !evalModeActive) {
+					clearColors();
+					answered = false;
+					if (toasterActionBtn) {
+						toasterActionBtn.textContent = "vérifier";
+						toasterActionBtn.disabled = true;
+					}
+				}
+			}
+			updateButtonState();
+			updateDropzoneState();
+			clearSelection();
+		}
+
+		function onWordTap(e) {
+			e.stopPropagation();
+			e.preventDefault();
+			playSound('click');
+
+			const word = e.currentTarget;
+
+			if (selectedWord === word) {
+				clearSelection();
+			} else {
+				clearSelection();
+				selectedWord = word;
+				selectedWord.classList.add('selected');
+
+				touchTimeout = setTimeout(() => {
+					clearSelection();
+				}, 3000);
+			}
+		}
+
+		function onDropzoneTap(e) {
+			e.stopPropagation();
+			e.preventDefault();
+			playSound('click');
+
+			const dropzone = e.currentTarget;
+			const isFilled = dropzone.textContent && dropzone.textContent.trim() !== "";
+
+			if (isFilled) {
+				removeWordFromDropzone(dropzone);
+				return;
+			}
+
+			if (selectedWord) {
+				placeWordInDropzone(selectedWord, dropzone);
+			} else {
+				clearSelection();
+			}
+		}
+
+		function addTouchListenersToWord(wordElement) {
+			wordElement.removeEventListener('click', onWordTap);
+			wordElement.removeEventListener('touchend', onWordTap);
+			wordElement.addEventListener('click', onWordTap);
+			wordElement.addEventListener('touchend', onWordTap);
+		}
+
+		function addTouchListenersToDropzone(dropzone) {
+			dropzone.removeEventListener('click', onDropzoneTap);
+			dropzone.removeEventListener('touchend', onDropzoneTap);
+			dropzone.addEventListener('click', onDropzoneTap);
+			dropzone.addEventListener('touchend', onDropzoneTap);
+		}
+
+		function attachMobileEventListeners() {
+			document.querySelectorAll('#toasterWords .draggable-word').forEach(word => addTouchListenersToWord(word));
+			document.querySelectorAll('.dropzone').forEach(zone => addTouchListenersToDropzone(zone));
+		}
+
+		function disableNativeDragOnMobile() {
+			const allElements = document.querySelectorAll('.draggable-word, .dropzone');
+			allElements.forEach(el => {
+				el.setAttribute('draggable', 'false');
+				el.addEventListener('dragstart', (e) => {
+					e.preventDefault();
+					return false;
+				});
+			});
+		}
+
+		function setupGlobalTouchHandler() {
+			document.addEventListener('click', (e) => {
+				if (!e.target.classList ||
+					(!e.target.classList.contains('draggable-word') &&
+						!e.target.classList.contains('dropzone'))) {
+					clearSelection();
+				}
+			});
+		}
+
+		// ============================================================
+		// CHARGEMENT DES FICHIERS JS - VERSION CORRIGÉE
+		// ============================================================
+		function loadQuizData(file) {
+			return new Promise((resolve, reject) => {
+				const reader = new FileReader();
+				reader.onload = function(event) {
+					try {
+						const code = event.target.result;
+						
+						// Créer un sandbox avec new Function()
+						const sandbox = new Function(`
+							// Variables locales pour stocker les données
+							var localTitle = '';
+							var localSubtitle = '';
+							var localTextesAvecTrous = [];
+							
+							// Exécuter le code du fichier
+							${code}
+							
+							// Récupérer les valeurs
+							localTitle = typeof title !== 'undefined' ? title : '';
+							localSubtitle = typeof subtitle !== 'undefined' ? subtitle : '';
+							localTextesAvecTrous = typeof textesAvecTrous !== 'undefined' ? textesAvecTrous : [];
+							
+							return {
+								title: localTitle,
+								subtitle: localSubtitle,
+								textesAvecTrous: localTextesAvecTrous
+							};
+						`);
+						
+						const result = sandbox();
+						
+						if (result && result.textesAvecTrous && 
+							Array.isArray(result.textesAvecTrous) && 
+							result.textesAvecTrous.length > 0) {
+							
+							// Stocker les données du fichier utilisateur
+							userFileLoaded = true;
+							userFileData = result.textesAvecTrous;
+							
+							// Mettre à jour les titres dans le DOM
+							if (result.title) {
+								document.title = result.title;
+								const appTitle = document.getElementById("appTitle");
+								const mobileTitle = document.getElementById("mobileTitle");
+								if (appTitle) appTitle.innerHTML = result.title;
+								if (mobileTitle) mobileTitle.innerHTML = result.title;
+								
+								const appSubtitle = document.getElementById("appSubtitle");
+								if (appSubtitle && result.subtitle) appSubtitle.innerHTML = result.subtitle;
+							}
+							
+							// Mettre à jour la liste des auteurs et le dropdown
+							remplirMenusAuteurs();
+							updateSequencesDropdown();
+							
+							resolve({
+								name: file.name.replace('.js', ''),
+								data: {
+									titre: result.title || file.name.replace('.js', ''),
+									sousTitre: result.subtitle || '',
+									textesAvecTrous: result.textesAvecTrous
+								}
+							});
+						} else {
+							reject(new Error('Aucun texte trouvé dans le fichier ' + file.name));
+						}
+						
+					} catch (err) {
+						reject(new Error('Erreur dans le fichier ' + file.name + ' : ' + err.message));
+					}
+				};
+				reader.onerror = function() {
+					reject(new Error('Erreur de lecture du fichier ' + file.name));
+				};
+				reader.readAsText(file);
+			});
+		}
+
+		function loadMultipleQuizzes(files) {
+			const validFiles = Array.from(files).filter(f => f.name.endsWith('.js'));
+			if (validFiles.length === 0) {
+				showToaster('Veuillez sélectionner des fichiers .js valides.', 'error', 3000);
+				return;
+			}
+
+			let loadedCount = 0;
+			let errorCount = 0;
+			const results = [];
+			
+			validFiles.forEach((file) => {
+				loadQuizData(file)
+					.then(result => {
+						loadedCount++;
+						results.push(result);
+						showToaster(`✅ ${result.name} chargé (${result.data.textesAvecTrous.length} textes)`, 'info', 1500);
+						
+						if (loadedCount + errorCount === validFiles.length) {
+							if (results.length > 0) {
+								loadedQuizzes = results;
+								currentQuizIndex = 0;
+								
+								try {
+									localStorage.setItem('loadedQuizzes', JSON.stringify(loadedQuizzes));
+									loadedQuizzes.forEach((qz, idx) => {
+										localStorage.setItem('quizData_' + idx, JSON.stringify(qz.data));
+									});
+								} catch (e) {
+									console.error('Erreur sauvegarde:', e);
+								}
+								
+								updateSequencesDropdown();
+								
+								if (loadedQuizzes.length > 0) {
+									loadQuizByIndex(0);
+								}
+								
+								showToaster(`${results.length} quiz chargé(s) avec succès !`, 'correct', 2500);
+							}
+						}
+					})
+					.catch(err => {
+						errorCount++;
+						console.error('Erreur:', err);
+						showToaster(`❌ Erreur: ${err.message}`, 'error', 3000);
+					});
+			});
+		}
+
+		function loadQuizByIndex(index) {
+			if (index < 0 || index >= loadedQuizzes.length) return;
+			const quiz = loadedQuizzes[index];
+			currentQuizIndex = index;
+			const data = quiz.data;
+			
+			showToaster(`📚 Quiz "${quiz.name}" chargé (${data.textesAvecTrous.length} textes)`, 'info', 2000);
+			
+			// Stocker les données du fichier utilisateur
+			userFileLoaded = true;
+			userFileData = data.textesAvecTrous;
+			
+			// Mettre à jour les titres
+			if (data.titre) {
+				document.title = data.titre;
+				const appTitle = document.getElementById("appTitle");
+				const mobileTitle = document.getElementById("mobileTitle");
+				if (appTitle) appTitle.innerHTML = data.titre;
+				if (mobileTitle) mobileTitle.innerHTML = data.titre;
+				
+				const appSubtitle = document.getElementById("appSubtitle");
+				if (appSubtitle && data.sousTitre) appSubtitle.innerHTML = data.sousTitre;
+			}
+			
+			remplirMenusAuteurs();
+			updateSequencesDropdown();
+			
+			reload();
+		}
+
+		// --- Affichage du texte ---
+		function afficherNouvelletexte() {
+			if (!demarrerNouvelleSession()) {
+				textContainer.innerHTML = "Erreur : Aucun texte disponible pour ce filtre.";
+				return;
+			}
+
+			const jeu = genererJeuDepuisTexte(originalTextsList[0]);
+			const originalIndex = getOriginalTextIndex(originalTextsList[0]);
+
+			const textHeader = `<div class="text-header-info">
+								<span class="text-number">texte n°${originalIndex !== null ? originalIndex : '?'}</span>
+								<span class="text-author-badge">${escapeForAttribute(jeu.source) || "Auteur inconnu"}</span>
+							</div>`;
+			textContainer.innerHTML = textHeader + jeu.texte;
+
+			toasterWordsDiv.innerHTML = jeu.mots.map(mot => `<span class="draggable-word">${escapeForAttribute(mot)}</span>`).join("");
+
+			if (isMobile) {
+				disableNativeDragOnMobile();
+				attachMobileEventListeners();
+				setupGlobalTouchHandler();
+			} else {
+				initDragAndDrop();
+			}
+
+			updateDropzoneState();
+
+			if (!evalModeActive) {
+				gamesPlayed++;
+				saveGameStats();
+				updateStatsDisplay();
+			}
+
+			clearSelection();
+			afficherProgression();
+
+			answered = false;
+			timerStoppedManually = false;
+
+			if (evalModeActive) {
+				if (toasterActionBtn) {
+					toasterActionBtn.textContent = "suivant";
+					toasterActionBtn.disabled = false;
+				}
+			} else {
+				if (toasterActionBtn) {
+					toasterActionBtn.textContent = "vérifier";
+					toasterActionBtn.disabled = true;
+				}
+			}
+			
+			resetTimer();
+			if (timerEnabled && timerLimit > 0) {
+				startTimer();
+			}
+			toasterActionBtn?.classList.remove('reload-mode');
+			
+			// Mettre à jour le dropdown des séquences
+			updateSequencesDropdown();
+		}
+
+		function reload() {
+			playSound('click');
+			clearSelection();
+			answered = false;
+			sessionInProgress = false;
+			sessionEnded = false;
+			originalTextsList = [];
+			currentTextIndex = 0;
+			sessionTextResults = [];
+			confettiLaunched = false;
+
+			sessionCorrect = 0;
+			sessionTotal = 0;
+
+			const oldMsg = document.getElementById('finalCorrectionMsg');
+			if (oldMsg) oldMsg.remove();
+
+			const textContainer = document.getElementById('text-container');
+			if (textContainer) {
+				textContainer.innerHTML = '';
+				textContainer.style.minHeight = '';
+				textContainer.classList.remove('stats-mode');
+			}
+			const wordsToaster = document.getElementById('wordsToaster');
+			if (wordsToaster) wordsToaster.style.display = 'flex';
+
+			stopTimer();
+			afficherNouvelletexte();
+			if (!evalModeActive) {
+				saveGameStats();
+				updateStatsDisplay();
+			}
+		}
+
+		// --- Menu et paramètres ---
+		function setupMenuAndSettings() {
+			const menuOverlay = document.getElementById('menuOverlay');
+			const slideMenu = document.getElementById('slideMenu');
+			const submenus = document.querySelectorAll('.submenu');
+
+			function closeAllSubmenus() { 
+				submenus.forEach(s => s.classList.remove('active'));
+				if (!slideMenu.classList.contains('open')) {
+					document.body.classList.remove('menu-open');
+				}
+			}
+			
+			function openSubmenu(id) { 
+				closeAllSubmenus(); 
+				const el = document.getElementById(id); 
+				if (el) {
+					el.classList.add('active');
+					document.body.classList.add('menu-open');
+				}
+			}
+			
+			function closeMenu() {
+				slideMenu.classList.remove('open');
+				menuOverlay.classList.remove('open');
+				document.body.style.overflow = '';
+				document.body.classList.remove('menu-open');
+				closeAllSubmenus();
+				closeSequencesDropdown();
+			}
+			
+			function toggleMenu() {
+				playSound('click');
+				if (slideMenu.classList.contains('open')) {
+					closeMenu();
+				} else {
+					menuOverlay.classList.add('open');
+					slideMenu.classList.add('open');
+					document.body.style.overflow = 'hidden';
+					document.body.classList.add('menu-open');
+				}
+			}
+
+			document.querySelectorAll('[data-action="menu"]').forEach(b => b.addEventListener('click', toggleMenu));
+			const menuClose = document.getElementById('menuClose');
+			if (menuClose) menuClose.addEventListener('click', () => { playSound('click'); closeMenu(); });
+			if (menuOverlay) menuOverlay.addEventListener('click', () => { playSound('click'); closeMenu(); });
+			document.querySelectorAll('.submenu-close').forEach(b => b.addEventListener('click', () => { playSound('click'); closeAllSubmenus(); }));
+
+			document.getElementById('openInstructionsSub')?.addEventListener('click', () => { playSound('click'); openSubmenu('submenuInstructions'); });
+			document.getElementById('openLocalFilesSub')?.addEventListener('click', () => { playSound('click'); openSubmenu('submenuLocalFiles'); });
+			document.getElementById('openStatsSub')?.addEventListener('click', () => { playSound('click'); updateStatsDisplay(); openSubmenu('submenuStats'); });
+			document.getElementById('openSettingsSub')?.addEventListener('click', () => { playSound('click'); openSubmenu('submenuSettings'); });
+			document.getElementById('openShortcutsSub')?.addEventListener('click', () => { playSound('click'); openSubmenu('submenuShortcuts'); });
+			document.getElementById('openAboutSub')?.addEventListener('click', () => { playSound('click'); openSubmenu('submenuAbout'); });
+			document.getElementById('resetAppBtn')?.addEventListener('click', () => { playSound('click'); resetApplication(); });
+
+			document.getElementById('resetStatsBtn')?.addEventListener('click', resetStats);
+
+			const fileLoadBtn = document.getElementById('fileLoadBtnSubmenu');
+			const fileInput = document.getElementById('fileInputSubmenu');
+			const fileStatus = document.getElementById('fileStatus');
+
+			if (fileLoadBtn && fileInput) {
+				fileLoadBtn.addEventListener('click', () => {
+					playSound('click');
+					fileInput.click();
+				});
+
+				fileInput.addEventListener('change', function(e) {
+					const files = e.target.files;
+					if (!files || files.length === 0) return;
+					
+					playSound('click');
+					loadMultipleQuizzes(files);
+					fileInput.value = '';
+				});
+			}
+
+			document.getElementById('localResetBtn')?.addEventListener('click', function() {
+				playSound('click');
+				localStorage.removeItem('loadedQuizzes');
+				localStorage.removeItem('currentQuizIndex');
+				const keys = Object.keys(localStorage);
+				keys.forEach(key => {
+					if (key.startsWith('quizData_')) {
+						localStorage.removeItem(key);
+					}
+				});
+				loadedQuizzes = [];
+				userFileLoaded = false;
+				userFileData = null;
+				updateSequencesDropdown();
+				const fileStatus = document.getElementById('fileStatus');
+				if (fileStatus) {
+					fileStatus.textContent = '🔄 fichiers réinitialisés, rechargement...';
+				}
+				showToaster('Fichiers réinitialisés !', 'info', 2000);
+				setTimeout(() => location.reload(), 1000);
+			});
+
+			// --- Boutons séquences ---
+			const sequencesBtn = document.getElementById('sequencesBtn');
+			const sequencesBtnMobile = document.getElementById('sequencesBtnMobile');
+			if (sequencesBtn) sequencesBtn.addEventListener('click', toggleSequencesDropdown);
+			if (sequencesBtnMobile) sequencesBtnMobile.addEventListener('click', toggleSequencesDropdown);
+
+			// Fermer le dropdown en cliquant ailleurs
+			document.addEventListener('click', function(e) {
+				if (!e.target.closest('.btn-sequences') && !e.target.closest('.sequences-dropdown')) {
+					closeSequencesDropdown();
+				}
+			});
+
+			// --- Paramètres ---
+			const darkToggle = document.getElementById('darkModeToggle');
+			const colorblindToggle = document.getElementById('colorblindToggle');
+			const animationsToggle = document.getElementById('animationsToggle');
+			const soundToggle = document.getElementById('soundToggle');
+			const evalModeToggle = document.getElementById('evalModeToggle');
+			const pairsSlider = document.getElementById('pairsCountSlider');
+			const pairsValue = document.getElementById('pairsCountValue');
+			const evalSlider = document.getElementById('evalCountSlider');
+			const evalValue = document.getElementById('evalCountValue');
+			const timerSlider = document.getElementById('timerLimitSlider');
+			const timerValue = document.getElementById('timerLimitValue');
+
+			if (darkToggle) darkToggle.addEventListener('change', e => {
+				darkMode = e.target.checked;
+				document.body.classList.toggle('dark-theme', darkMode);
+				saveSettings();
+				playSound('click');
+			});
+			if (colorblindToggle) colorblindToggle.addEventListener('change', e => {
+				colorblindMode = e.target.checked;
+				document.body.classList.toggle('colorblind-mode', colorblindMode);
+				saveSettings();
+				playSound('click');
+			});
+			if (animationsToggle) animationsToggle.addEventListener('change', e => {
+				animationsEnabled = e.target.checked;
+				applyAnimationsSetting();
+				saveSettings();
+				playSound('click');
+			});
+			if (soundToggle) soundToggle.addEventListener('change', e => {
+				soundEnabled = e.target.checked;
+				if (soundEnabled) preloadSounds();
+				saveSettings();
+				playSound('click');
+			});
+			if (evalModeToggle) evalModeToggle.addEventListener('change', e => {
+				evalModeActive = e.target.checked;
+				saveSettings();
+				reload();
+				playSound('click');
+			});
+			if (pairsSlider && pairsValue) {
+				pairsSlider.addEventListener('input', (e) => {
+					pairsCount = parseInt(e.target.value);
+					pairsValue.textContent = pairsCount;
+					saveSettings();
+					reload();
+				});
+			}
+			if (evalSlider && evalValue) {
+				evalSlider.addEventListener('input', (e) => {
+					evalTextsCount = parseInt(e.target.value);
+					evalValue.textContent = evalTextsCount;
+					saveSettings();
+					reload();
+				});
+			}
+			if (timerSlider && timerValue) {
+				timerSlider.addEventListener('input', (e) => {
+					const pos = parseInt(e.target.value);
+					timerLimit = sliderPosToValue(pos);
+					timerValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
+					saveSettings();
+					if (timerLimit === 0) {
+						updateTimerDisplay('∞');
+						showTimerButtons(false);
+						stopTimer();
+					} else {
+						showTimerButtons(true);
+						updateTimerDisplay(formatTimer(timerLimit));
+						resetTimer();
+						if (sessionInProgress && !sessionEnded) {
+							startTimer();
+						}
+					}
+				});
+			}
+
+			// --- Actions toolbar ---
+			document.querySelectorAll('[data-action="home"]').forEach(btn => {
+				btn.addEventListener('click', () => { playSound('click'); window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); });
+			});
+
+			document.querySelectorAll('[data-action="reload"]').forEach(btn => {
+				btn.addEventListener('click', reload);
+			});
+
+			// --- Plein écran ---
+			function toggleFullscreen() {
+				const btns = document.querySelectorAll('.btn-fullscreen');
+				if (!document.fullscreenElement) {
+					document.documentElement.requestFullscreen();
+					btns.forEach(btn => {
+						btn.classList.add('fullscreen-active');
+						btn.dataset.title = 'quitter plein écran (F)';
+						btn.innerHTML = `
+							<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
+								<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
+								<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
+								<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
+								<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
+							</svg>
+						`;
+					});
+				} else {
+					document.exitFullscreen();
+					btns.forEach(btn => {
+						btn.classList.remove('fullscreen-active');
+						btn.dataset.title = 'plein écran (F)';
+						btn.innerHTML = `
+							<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+								<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+								<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+								<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+								<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+							</svg>
+						`;
+					});
+				}
+				playSound('click');
+			}
+
+			document.querySelectorAll('[data-action="fullscreen"]').forEach(btn => {
+				btn.addEventListener('click', toggleFullscreen);
+			});
+
+			document.addEventListener('fullscreenchange', () => {
+				const btns = document.querySelectorAll('.btn-fullscreen');
+				const fs = !!document.fullscreenElement;
+				btns.forEach(btn => {
+					if (fs) {
+						btn.classList.add('fullscreen-active');
+						btn.dataset.title = 'quitter plein écran (F)';
+						btn.innerHTML = `
+							<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
+								<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
+								<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
+								<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
+								<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
+							</svg>
+						`;
+					} else {
+						btn.classList.remove('fullscreen-active');
+						btn.dataset.title = 'plein écran (F)';
+						btn.innerHTML = `
+							<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+								<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+								<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+								<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+								<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+							</svg>
+						`;
+					}
+				});
+			});
+
+			// ============================================================
+			// RACCOURCIS CLAVIER - VERSION AVEC TOUCHES UNIQUES
+			// (SANS RÉTROCOMPATIBILITÉ CTRL)
+			// ============================================================
+			document.addEventListener('keydown', e => {
+				if (e.target.matches('input, textarea, select')) return;
+
+				// Échap - fermer tout
+				if (e.key === 'Escape') {
+					clearSelection();
+					if (document.querySelector('.submenu.active')) {
+						closeAllSubmenus();
+						playSound('click');
+					} else if (slideMenu.classList.contains('open')) {
+						closeMenu();
+						playSound('click');
+					} else {
+						closeSequencesDropdown();
+						const finalMsg = document.getElementById('finalCorrectionMsg');
+						if (finalMsg) {
+							finalMsg.remove();
+							playSound('click');
+						}
+					}
+					e.preventDefault();
+					return false;
+				}
+
+				// Gestion des touches uniques (sans Ctrl)
+				const key = e.key.toLowerCase();
+
+				switch (key) {
+					case 's': // Auteurs (Sequences)
+						e.preventDefault();
+						playSound('click');
+						const dropdowns = [document.getElementById('sequencesDropdown'), document.getElementById('sequencesDropdownMobile')];
+						const dropdown = dropdowns[0];
+						if (dropdown) dropdown.classList.toggle('open');
+						return false;
+
+					case 'h': // Accueil (Home)
+						e.preventDefault();
+						playSound('click');
+						window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+						return false;
+
+					case 'r': // Recharger (Reload)
+						e.preventDefault();
+						reload();
+						return false;
+
+					case 't': // Timer (minuteur)
+						e.preventDefault();
+						playSound('click');
+						if (timerEnabled && timerLimit > 0) {
+							resetTimer();
+							startTimer();
+							showToaster('⏱️ Timer réinitialisé', 'info', 1500);
+						}
+						return false;
+
+					case 'f': // Plein écran (Fullscreen)
+						e.preventDefault();
+						toggleFullscreen();
+						return false;
+
+					case 'm': // Menu
+						e.preventDefault();
+						toggleMenu();
+						return false;
+				}
+			});
+
+			// --- Filtre auteurs ---
+			const notionSelectDesktop = document.getElementById('notionFilter');
+			const notionSelectMobile = document.getElementById('notionFilterMobile');
+			const updateNotion = (value) => {
+				if (value !== currentFilterNotion) {
+					currentFilterNotion = value;
+					saveSettings();
+					reload();
+					if (notionSelectDesktop) notionSelectDesktop.value = value;
+					if (notionSelectMobile) notionSelectMobile.value = value;
+					updateSequencesDropdown();
+				}
+			};
+			if (notionSelectDesktop) notionSelectDesktop.addEventListener('change', (e) => { playSound('click'); updateNotion(e.target.value); });
+			if (notionSelectMobile) notionSelectMobile.addEventListener('change', (e) => { playSound('click'); updateNotion(e.target.value); });
+		}
+
+		// --- Chargement des titres ---
+		function chargerTitres() {
+			const titleHtml = typeof title !== 'undefined' ? title.replace(/&nbsp;/g, ' ') : 'textes à trous';
+			document.title = titleHtml.replace(/<[^>]*>/g, '');
+			const appTitle = document.getElementById("appTitle");
+			const mobileTitle = document.getElementById("mobileTitle");
+			if (appTitle) appTitle.innerHTML = titleHtml;
+			if (mobileTitle) mobileTitle.innerHTML = titleHtml.replace(/<[^>]*>/g, '');
+
+			const appSubtitle = document.getElementById("appSubtitle");
+			if (appSubtitle && typeof subtitle !== 'undefined') appSubtitle.innerHTML = subtitle;
+		}
+
+		// --- Restauration des quiz chargés ---
+		function restoreLoadedQuizzes() {
+			try {
+				const savedQuizzes = localStorage.getItem('loadedQuizzes');
+				if (savedQuizzes) {
+					const parsed = JSON.parse(savedQuizzes);
+					if (Array.isArray(parsed) && parsed.length > 0) {
+						loadedQuizzes = parsed;
+						loadedQuizzes.forEach((qz, idx) => {
+							const data = localStorage.getItem('quizData_' + idx);
+							if (data) {
+								qz.data = JSON.parse(data);
+							}
+						});
+						// Restaurer les données utilisateur
+						if (loadedQuizzes.length > 0 && loadedQuizzes[0].data) {
+							userFileLoaded = true;
+							userFileData = loadedQuizzes[0].data.textesAvecTrous;
+						}
+						updateSequencesDropdown();
+					}
+				}
+			} catch (e) {
+				console.error('Erreur restauration quiz:', e);
+			}
+		}
+
+		// ============================================================
+		// DROPDOWN DES SÉQUENCES
+		// ============================================================
+		function updateSequencesDropdown() {
+			const dropdowns = [
+				document.getElementById('sequencesDropdown'),
+				document.getElementById('sequencesDropdownMobile')
+			];
+			
+			const auteurs = extraireListeAuteurs();
+			
+			dropdowns.forEach(dropdown => {
+				if (!dropdown) return;
+				
+				let html = '<div class="dropdown-header">📚 liste des auteurs</div>';
+				
+				if (auteurs.length === 0 && loadedQuizzes.length === 0) {
+					html += '<div class="dropdown-empty">aucun auteur disponible</div>';
+				} else {
+					for (const auteur of auteurs) {
+						const isActive = currentFilterNotion === auteur;
+						html += `<div class="dropdown-item${isActive ? ' active' : ''}" data-value="${escapeForAttribute(auteur)}">${auteur}</div>`;
+					}
+					
+					if (auteurs.length > 0 && loadedQuizzes.length > 0) {
+						html += '<div class="dropdown-divider"></div>';
+					}
+					
+					for (const qz of loadedQuizzes) {
+						const name = qz.name.replace('.js', '');
+						const isActive = currentFilterNotion === name;
+						html += `<div class="dropdown-item${isActive ? ' active' : ''}" data-value="${escapeForAttribute(name)}">📁 ${name}</div>`;
+					}
+				}
+				
+				dropdown.innerHTML = html;
+				
+				dropdown.querySelectorAll('.dropdown-item[data-value]').forEach(el => {
+					el.addEventListener('click', function(e) {
+						e.stopPropagation();
+						const value = this.dataset.value;
+						if (!value || value === 'loading') return;
+						
+						const auteursList = extraireListeAuteurs();
+						if (auteursList.includes(value)) {
+							currentFilterNotion = value;
+							localStorage.setItem('selectedAuthorFilter', value);
+							const selectDesktop = document.getElementById('notionFilter');
+							const selectMobile = document.getElementById('notionFilterMobile');
+							if (selectDesktop) selectDesktop.value = value;
+							if (selectMobile) selectMobile.value = value;
+							reload();
+						} else {
+							const idx = loadedQuizzes.findIndex(q => q.name === value || q.name.replace('.js', '') === value);
+							if (idx !== -1) {
+								currentFilterNotion = value;
+								loadQuizByIndex(idx);
+							}
+						}
+						
+						closeSequencesDropdown();
+						playSound('click');
+					});
+				});
+			});
+		}
+
+		function closeSequencesDropdown() {
+			const dropdowns = [
+				document.getElementById('sequencesDropdown'),
+				document.getElementById('sequencesDropdownMobile')
+			];
+			dropdowns.forEach(d => {
+				if (d) d.classList.remove('open');
+			});
+		}
+
+		function toggleSequencesDropdown(event) {
+			event.stopPropagation();
+			const dropdown = this.id === 'sequencesBtn' ? 
+				document.getElementById('sequencesDropdown') : 
+				document.getElementById('sequencesDropdownMobile');
+			if (dropdown) {
+				dropdown.classList.toggle('open');
+			}
+		}
+
+		// --- Démarrage ---
+		function demarrerApplication() {
+			if (typeof textesAvecTrous === 'undefined' && !userFileLoaded) {
+				console.warn("La variable 'textesAvecTrous' n'est pas définie. Utilisation des quiz chargés si disponibles.");
+				restoreLoadedQuizzes();
+				if (loadedQuizzes.length > 0) {
+					loadQuizByIndex(0);
+					return;
+				}
+				textContainer.innerHTML = "⚠️ Aucune donnée disponible. Veuillez charger un fichier .js.";
+				return;
+			}
+			chargerTitres();
+			remplirMenusAuteurs();
+			loadSettings();
+			loadGameStats();
+			restoreLoadedQuizzes();
+			afficherNouvelletexte();
+
+			if (toasterActionBtn) toasterActionBtn.addEventListener('click', handleAction);
+
+			setupMenuAndSettings();
+		}
+
+		document.addEventListener("DOMContentLoaded", demarrerApplication);
+	</script>
+</body>
+</html>
