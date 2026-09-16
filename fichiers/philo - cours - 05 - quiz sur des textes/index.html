@@ -10,12 +10,12 @@
 	<title>quiz φ</title>
 	<meta name="description" content="tester ses connaissances">
 	<link rel="icon" type="image/svg+xml" href="src/favicon.ico" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<style>
+		/* ===== STYLES ===== */
 		* {
-			box-sizing: border-box;
 			margin: 0;
 			padding: 0;
+			box-sizing: border-box;
 		}
 
 		html,
@@ -39,8 +39,12 @@
 			--selected-bg: #ffeb3b;
 			--selected-color: #000000;
 			--dropzone-hover: #e0e0e0;
-			--toast-bg: #888888;
-			--toast-text: #f5f5f5;
+			--toast-bg: #e0e0e0;
+			--toast-text: #333333;
+			--primary-color: red;
+			--badge-bg: red;
+			--badge-color: #ffffff;
+			--card-content-bg: #ffffff;
 		}
 
 		body.dark-theme {
@@ -53,13 +57,24 @@
 			--color-incorrect: #e74c3c;
 			--tooltip-bg: #1a1a1a;
 			--tooltip-color: #ffffff;
+			--letter-color: #ff6b6b;
 			--selected-bg: #ff9800;
 			--selected-color: #000000;
 			--dropzone-hover: #555555;
-			--toast-bg: #555555;
+			--toast-bg: #3d3d3d;
 			--toast-text: #e0e0e0;
+			--primary-color: #ff6b6b;
+			--badge-bg: #ff6b6b;
+			--badge-color: #ffffff;
+			--card-content-bg: #3d3d3d;
 			background-color: #121212;
 			color: #ffffff;
+		}
+
+		body.dark-theme .quiz-end__score,
+		body.dark-theme .stat-value,
+		body.dark-theme .stat-num {
+			color: #ef5350;
 		}
 
 		body.colorblind-mode {
@@ -68,6 +83,10 @@
 			--border-correct: #2c7be5;
 			--border-incorrect: #1a3a5c;
 			--letter-color: #2c7be5;
+			--result-color: #2c7be5;
+			--primary-color: #2c7be5;
+			--badge-bg: #2c7be5;
+			--badge-color: #ffffff;
 		}
 
 		body.dark-theme.colorblind-mode {
@@ -76,6 +95,10 @@
 			--border-correct: #4a90d9;
 			--border-incorrect: #3a5a7a;
 			--letter-color: #4a90d9;
+			--result-color: #4a90d9;
+			--primary-color: #4a90d9;
+			--badge-bg: #4a90d9;
+			--badge-color: #ffffff;
 		}
 
 		body {
@@ -88,6 +111,13 @@
 			flex-direction: column;
 			transition: background-color 0.4s, color 0.4s;
 			overflow-y: auto;
+		}
+
+		.no-animations *,
+		.no-animations *::before,
+		.no-animations *::after {
+			animation: none !important;
+			transition: none !important;
 		}
 
 		/* ===== TOASTER ===== */
@@ -110,6 +140,7 @@
 			text-align: center;
 			max-width: 90%;
 			min-width: 200px;
+			border: none;
 		}
 
 		.toaster.show {
@@ -117,60 +148,67 @@
 			opacity: 1;
 		}
 
-		.toaster.correct {
-			background: var(--toast-bg);
-			color: var(--toast-text);
-		}
-
-		.toaster.info {
-			background: var(--toast-bg);
-			color: var(--toast-text);
-		}
-
+		.toaster.correct,
+		.toaster.info,
 		.toaster.warning {
 			background: var(--toast-bg);
 			color: var(--toast-text);
-		}
-
-		.toaster .toaster-buttons {
-			display: flex;
-			gap: 12px;
-			justify-content: center;
-			margin-top: 12px;
-		}
-
-		.toaster .toaster-btn {
-			padding: 6px 20px;
 			border: none;
-			border-radius: 6px;
-			font-size: 0.9rem;
-			font-weight: bold;
-			cursor: pointer;
-			transition: all 0.2s ease;
-		}
-
-		.toaster .toaster-btn-confirm {
-			background: #4CAF50;
-			color: white;
-		}
-
-		.toaster .toaster-btn-confirm:hover {
-			background: #45a049;
-			transform: scale(1.05);
-		}
-
-		.toaster .toaster-btn-cancel {
-			background: #f44336;
-			color: white;
-		}
-
-		.toaster .toaster-btn-cancel:hover {
-			background: #d32f2f;
-			transform: scale(1.05);
 		}
 
 		.hidden {
 			display: none !important;
+		}
+
+		/* ===== SLIDERS ===== */
+		.questions-slider {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 100%;
+			height: 4px;
+			border-radius: 2px;
+			background: #b0b8c4;
+			outline: none;
+			transition: background 0.3s ease;
+			margin-top: 7px;
+		}
+
+		.questions-slider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 16px;
+			height: 16px;
+			border-radius: 50%;
+			background: #3a7bb5;
+			cursor: pointer;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+			transition: background 0.2s ease;
+		}
+
+		.questions-slider::-webkit-slider-thumb:hover {
+			transform: scale(1.1);
+		}
+
+		.questions-slider::-moz-range-thumb {
+			width: 16px;
+			height: 16px;
+			border-radius: 50%;
+			background: #3a7bb5;
+			cursor: pointer;
+			border: none;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		}
+
+		body.dark-theme .questions-slider {
+			background: #3d3d3d;
+		}
+
+		body.dark-theme .questions-slider::-webkit-slider-thumb {
+			background: #4a80c0;
+		}
+
+		body.dark-theme .questions-slider::-moz-range-thumb {
+			background: #4a80c0;
 		}
 
 		/* ===== TOOLBAR ===== */
@@ -201,7 +239,6 @@
 			gap: 8px;
 			flex: 1;
 		}
-
 		.toolbar-left {
 			justify-content: flex-start;
 		}
@@ -223,7 +260,7 @@
 		}
 
 		.toolbar-title {
-			color: red;
+			color: var(--primary-color);
 			font-size: clamp(1.8rem, 5vw, 2.5rem);
 			font-weight: bold;
 			white-space: nowrap;
@@ -234,17 +271,17 @@
 
 		.toolbar-subtitle {
 			color: #555;
-			font-size: clamp(1rem, 3vw, 1.2rem);
+			font-size: clamp(0.8rem, 2.5vw, 1.1rem);
 			line-height: 1.2;
-			padding-top: 12px;
+			padding-top: 4px;
+			font-weight: normal;
 		}
 
-		body.dark-theme .toolbar-subtitle,
-		body.dark-theme .mobile-subtitle {
+		body.dark-theme .toolbar-subtitle {
 			color: #8895a7;
 		}
 
-		/* ===== BOUTON SÉQUENCES ===== */
+		/* ===== BOUTONS ===== */
 		.btn-sequences {
 			width: 52px;
 			height: 52px;
@@ -269,11 +306,6 @@
 
 		.btn-sequences:hover svg {
 			animation: rotate 1s linear;
-		}
-
-		@keyframes rotate {
-			from { transform: rotate(0deg); }
-			to { transform: rotate(360deg); }
 		}
 
 		.btn-sequences svg {
@@ -308,156 +340,31 @@
 			opacity: 1;
 		}
 
-		/* ===== DROPDOWN DES SÉQUENCES ===== */
-		.sequences-dropdown {
-			position: absolute;
-			top: 92px;
-			left: 0;
-			margin-top: 8px;
-			background: var(--bg);
-			border-radius: 12px;
-			box-shadow: var(--shadow-out);
-			display: none;
-			min-width: 200px;
-			max-width: 95vw;
-			width: auto;
-			max-height: 350px;
-			overflow-y: auto;
-			z-index: 1000;
-			padding: 6px 0 15px 0;
-			white-space: nowrap;
-		}
-
-		.sequences-dropdown.open {
-			display: block;
-		}
-
-		body.dark-theme .sequences-dropdown {
-			background: #1a1a1a;
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-		}
-
-		.sequences-dropdown .dropdown-header {
-			padding: 8px 16px;
-			margin-top: 0px;margin-bottom: 12px;
-			font-weight: bold;
-			color: red;
-			font-size: 0.8rem;
-			border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-			text-transform: uppercase;
-			letter-spacing: 0.5px;
-		}
-
-		body.dark-theme .sequences-dropdown .dropdown-header {
-			border-bottom-color: rgba(255, 255, 255, 0.08);
-		}
-
-		.sequences-dropdown .dropdown-item {
-			display: block;
-			width: 100%;
-			padding: 0px 16px;
-			border: none;
-			background: transparent;
-			color: var(--font-color);
-			font-size: 0.78rem;
-			text-align: left;
-			cursor: pointer;
-			transition: background 0.2s ease;
-			font-family: inherit;
-			line-height: 1.4;
-			white-space: nowrap;
-			word-break: normal;
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
-
-		.sequences-dropdown .dropdown-item:last-child {
-			border-bottom: none;
-		}
-
-		.sequences-dropdown .dropdown-item:hover {
-			background: rgba(0, 0, 0, 0.06);
-		}
-
-		body.dark-theme .sequences-dropdown .dropdown-item:hover {
-			background: rgba(255, 255, 255, 0.08);
-		}
-
-		.sequences-dropdown .dropdown-item.active {
-			font-weight: bold;
-			color: red;
-			background: rgba(255, 0, 0, 0.06);
-		}
-
-		body.dark-theme .sequences-dropdown .dropdown-item.active {
-			background: rgba(255, 0, 0, 0.12);
-		}
-
-		.sequences-dropdown .dropdown-divider {
-			height: 1px;
-			background: rgba(0, 0, 0, 0.08);
-			margin: 4px 12px;
-		}
-
-		body.dark-theme .sequences-dropdown .dropdown-divider {
-			background: rgba(255, 255, 255, 0.08);
-		}
-
-		.sequences-dropdown .dropdown-empty {
-			padding: 12px 16px;
-			color: var(--font-color);
-			opacity: 0.6;
-			font-style: italic;
-			font-size: 0.8rem;
-			text-align: center;
-		}
-
-		/* ===== BOUTONS ===== */
-		.btn,
-		.timer-btn,
-		.menu-close,
-		.submenu-close,
-		.menu-item,
-		.quiz-select,
-		.upload-btn,
-		.local-reset-btn,
-		.stats-reload-btn,
-		.bento-actions .quiz-btn,
-		.next-button-container .quiz-btn,
-		.container--quiz-btn .quiz-btn {
-			background: var(--btn);
-			color: var(--font-color);
-			box-shadow: var(--shadow-out);
-			transition: all 0.2s ease;
-			border: none;
-			cursor: pointer;
-		}
-
-		.btn:hover,
-		.timer-btn:hover,
-		.menu-close:hover,
-		.submenu-close:hover,
-		.menu-item:hover,
-		.quiz-select:hover,
-		.upload-btn:hover,
-		.local-reset-btn:hover,
-		.stats-reload-btn:hover,
-		.bento-actions .quiz-btn:hover,
-		.next-button-container .quiz-btn:hover,
-		.container--quiz-btn .quiz-btn:hover {
-			box-shadow: var(--shadow-in);
-			transform: translateY(-2px);
-		}
-
 		.btn {
 			width: 52px;
 			height: 52px;
 			border-radius: 50%;
+			background: var(--btn);
+			border: none;
+			color: var(--font-color);
+			cursor: pointer;
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
 			flex-shrink: 0;
 			position: relative;
+			-webkit-tap-highlight-color: transparent;
+		}
+
+		.btn:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+
+		.btn:active {
+			transform: scale(0.95);
 		}
 
 		.btn svg {
@@ -469,8 +376,7 @@
 			flex-shrink: 0;
 		}
 
-		.btn::after,
-		.timer-btn::after {
+		.btn::after {
 			content: attr(data-title);
 			position: absolute;
 			top: 100%;
@@ -489,8 +395,7 @@
 			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 		}
 
-		.btn:hover::after,
-		.timer-btn:hover::after {
+		.btn:hover::after {
 			opacity: 1;
 		}
 
@@ -517,35 +422,29 @@
 			animation: rotate 1s linear;
 		}
 
-		.menu-item:hover svg {
-			animation: rotate 1s linear;
+		@keyframes rotate {
+			from { transform: rotate(0deg); }
+			to { transform: rotate(360deg); }
 		}
 
-		.menu-close:hover svg {
-			animation: rotate 1s linear;
-		}
-
-		.submenu-close:hover svg {
-			animation: rotate 1s linear;
-		}
-
+		/* ===== MENU ICON PARFAITEMENT CENTRÉ ET NET ===== */
 		.menu-icon {
 			display: flex;
-			flex-direction: column;
-			gap: 4px;
-			transition: transform 0.3s ease;
-			width: 22px;
-			height: 18px;
+			align-items: center;
 			justify-content: center;
+			width: 24px;
+			height: 24px;
+			transition: transform 0.3s ease;
+			color: currentColor;
 		}
 
-		.menu-icon span {
+		.menu-icon svg {
+			width: 24px;
+			height: 24px;
 			display: block;
-			width: 100%;
-			height: 2px;
-			background: currentColor;
-			border-radius: 2px;
-			transition: all 0.3s ease;
+			stroke: currentColor;
+			fill: none;
+			overflow: visible;
 		}
 
 		.btn-menu:hover .menu-icon {
@@ -570,6 +469,7 @@
 			transform: scale(0.7);
 		}
 
+		/* ===== TIMER ===== */
 		.timer-btn {
 			width: 52px;
 			height: 52px;
@@ -584,6 +484,44 @@
 			font-weight: bold;
 			font-family: monospace;
 			flex-shrink: 0;
+			background: var(--btn);
+			border: none;
+			color: var(--font-color);
+			cursor: pointer;
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+		}
+
+		.timer-btn:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+
+		.timer-btn:active {
+			transform: scale(0.95);
+		}
+
+		.timer-btn::after {
+			content: attr(data-title);
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: 0.5rem;
+			background-color: var(--tooltip-bg);
+			color: var(--tooltip-color);
+			padding: 0.3rem 0.6rem;
+			border-radius: 5px;
+			font-size: 0.8rem;
+			white-space: nowrap;
+			opacity: 0;
+			pointer-events: none;
+			z-index: 10;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		}
+
+		.timer-btn:hover::after {
+			opacity: 1;
 		}
 
 		.timer-btn.warning {
@@ -601,6 +539,196 @@
 			100% { transform: scale(1.05); }
 		}
 
+		/* ===== DROPDOWN AVEC SCROLL VERTICAL ===== */
+		#sequencesDropdown,
+		#sequencesDropdownMobile {
+			position: fixed;
+			top: 119px;
+			left: 50px;
+			margin-top: 8px;
+			background: var(--bg) !important;
+			border-radius: 12px;
+			box-shadow: var(--shadow-out);
+			display: none;
+			min-width: 220px;
+			max-width: 95vw;
+			width: auto;
+			max-height: 60vh;
+			overflow-y: auto;
+			overflow-x: hidden;
+			padding: 4px 0;
+			white-space: nowrap;
+			opacity: 1 !important;
+			z-index: 99999999 !important;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		#sequencesDropdown.open,
+		#sequencesDropdownMobile.open {
+			display: block !important;
+		}
+
+		body.dark-theme #sequencesDropdown,
+		body.dark-theme #sequencesDropdownMobile,
+		body.dark-theme #sequencesDropdown.open,
+		body.dark-theme #sequencesDropdownMobile.open {
+			background: #1a1a1a !important;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+		}
+
+		#sequencesDropdown::-webkit-scrollbar,
+		#sequencesDropdownMobile::-webkit-scrollbar {
+			width: 6px;
+		}
+
+		#sequencesDropdown::-webkit-scrollbar-track,
+		#sequencesDropdownMobile::-webkit-scrollbar-track {
+			background: transparent;
+		}
+
+		#sequencesDropdown::-webkit-scrollbar-thumb,
+		#sequencesDropdownMobile::-webkit-scrollbar-thumb {
+			background: #b0b8c4;
+			border-radius: 4px;
+		}
+
+		body.dark-theme #sequencesDropdown::-webkit-scrollbar-thumb,
+		body.dark-theme #sequencesDropdownMobile::-webkit-scrollbar-thumb {
+			background: #3d3d3d;
+		}
+
+		#sequencesDropdown .dropdown-header,
+		#sequencesDropdownMobile .dropdown-header {
+			padding: 6px 16px;
+			margin-top: 0px;
+			margin-bottom: 4px;
+			font-weight: bold;
+			color: var(--primary-color);
+			font-size: 0.85rem;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			text-align: center;
+			position: sticky;
+			top: 0;
+			background: var(--bg) !important;
+			z-index: 2;
+		}
+
+		body.dark-theme #sequencesDropdown .dropdown-header,
+		body.dark-theme #sequencesDropdownMobile .dropdown-header {
+			background: #1a1a1a !important;
+		}
+
+		#sequencesDropdown .dropdown-item,
+		#sequencesDropdownMobile .dropdown-item {
+			display: block;
+			width: 100%;
+			padding: 3px 16px;
+			border: none;
+			background: transparent !important;
+			color: var(--font-color);
+			font-size: 0.85rem;
+			text-align: left;
+			cursor: pointer;
+			transition: background 0.2s ease;
+			font-family: inherit;
+			line-height: 1.4;
+			white-space: nowrap;
+			word-break: normal;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			opacity: 1 !important;
+			margin-bottom: 1px;
+		}
+
+		#sequencesDropdown .dropdown-item:hover,
+		#sequencesDropdownMobile .dropdown-item:hover {
+			background: rgba(0, 0, 0, 0.06) !important;
+		}
+
+		body.dark-theme #sequencesDropdown .dropdown-item:hover,
+		body.dark-theme #sequencesDropdownMobile .dropdown-item:hover {
+			background: rgba(255, 255, 255, 0.08) !important;
+		}
+
+		#sequencesDropdown .dropdown-item.active,
+		#sequencesDropdownMobile .dropdown-item.active {
+			font-weight: bold;
+			color: var(--primary-color);
+			background: rgba(255, 0, 0, 0.06);
+		}
+
+		#sequencesDropdown .dropdown-empty,
+		#sequencesDropdownMobile .dropdown-empty {
+			padding: 12px 16px;
+			color: var(--font-color);
+			opacity: 0.6;
+			font-style: italic;
+			font-size: 0.85rem;
+			text-align: center;
+		}
+
+		#sequencesDropdown .dropdown-divider,
+		#sequencesDropdownMobile .dropdown-divider {
+			height: 1px;
+			background: rgba(0, 0, 0, 0.08);
+			margin: 4px 12px;
+		}
+
+		body.dark-theme #sequencesDropdown .dropdown-divider,
+		body.dark-theme #sequencesDropdownMobile .dropdown-divider {
+			background: rgba(255, 255, 255, 0.08);
+		}
+
+		#sequencesDropdown .dropdown-action,
+		#sequencesDropdownMobile .dropdown-action {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			width: 100%;
+			padding: 6px 16px;
+			border: none;
+			background: transparent;
+			color: var(--font-color);
+			font-size: 0.8rem;
+			text-align: left;
+			cursor: pointer;
+			font-family: inherit;
+			line-height: 1.4;
+			transition: background 0.2s ease;
+			font-weight: bold;
+		}
+
+		#sequencesDropdown .dropdown-action:hover,
+		#sequencesDropdownMobile .dropdown-action:hover {
+			background: rgba(0, 0, 0, 0.06);
+		}
+
+		body.dark-theme #sequencesDropdown .dropdown-action:hover,
+		body.dark-theme #sequencesDropdownMobile .dropdown-action:hover {
+			background: rgba(255, 255, 255, 0.08);
+		}
+
+		#sequencesDropdown .dropdown-action.primary,
+		#sequencesDropdownMobile .dropdown-action.primary {
+			color: #1a56db;
+		}
+
+		#sequencesDropdown .dropdown-action.danger,
+		#sequencesDropdownMobile .dropdown-action.danger {
+			color: #c0392b;
+		}
+
+		#sequencesDropdown .dropdown-action svg,
+		#sequencesDropdownMobile .dropdown-action svg {
+			width: 16px;
+			height: 16px;
+			flex-shrink: 0;
+			stroke: currentColor;
+			fill: none;
+			stroke-width: 2;
+		}
+
 		/* ===== TOOLBAR MOBILE ===== */
 		.toolbar-mobile {
 			display: none;
@@ -613,9 +741,12 @@
 		}
 
 		.toolbar-mobile .btn,
-		.toolbar-mobile .timer-btn {
+		.toolbar-mobile .timer-btn,
+		.toolbar-mobile .btn-sequences {
 			width: 44px;
 			height: 44px;
+			min-width: 44px;
+			min-height: 44px;
 		}
 
 		.toolbar-mobile .btn svg {
@@ -624,18 +755,13 @@
 		}
 
 		.toolbar-mobile .menu-icon {
-			width: 18px;
-			height: 14px;
-			gap: 3px;
+			width: 24px;
+			height: 24px;
 		}
 
-		.toolbar-mobile .menu-icon span {
-			height: 2px;
-		}
-
-		.toolbar-mobile .btn-sequences {
-			width: 44px;
-			height: 44px;
+		.toolbar-mobile .menu-icon svg {
+			width: 24px;
+			height: 24px;
 		}
 
 		.toolbar-mobile .btn-sequences svg {
@@ -650,6 +776,7 @@
 			width: 100%;
 			gap: 6px;
 			padding: 0 4px;
+			flex-wrap: nowrap;
 		}
 
 		.mobile-title-wrapper {
@@ -657,105 +784,34 @@
 			flex-direction: column;
 			align-items: center;
 			width: 100%;
-			margin-top: 6px;
+			margin-top: 8px;
+			padding: 0 4px;
 		}
 
 		.mobile-title {
-			color: red;
+			color: var(--primary-color);
 			font-size: clamp(1.1rem, 3.5vw, 1.4rem);
 			font-weight: bold;
 			text-align: center;
 			line-height: 1.2;
-			margin-top: 5px;
+			margin-top: 2px;
 			text-transform: lowercase;
 		}
 
 		.mobile-subtitle {
 			color: #555;
-			font-size: clamp(0.7rem, 2vw, 0.85rem);
+			font-size: clamp(0.65rem, 1.8vw, 0.8rem);
 			text-align: center;
 			line-height: 1.2;
-			padding-top: 12px;
+			padding-top: 8px;
+			margin-bottom: 0;
 		}
 
-	/* ===== VERSION MOBILE DROPDOWN ===== */
-		@media (max-width: 600px) {
-			.sequences-dropdown {
-			position: fixed !important;
-			left: 50% !important;
-			transform: translateX(-50%) !important;
-			top: 120px !important;
-			min-width: unset;
-			max-width: 95vw;
-			width: 95vw;
-			margin-top: 0 !important;
-			}
-			.sequences-dropdown .dropdown-item {
-				font-size: 0.7rem;
-				padding: 6px 12px;
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-			}
-			.toolbar-mobile .btn-sequences {
-				position: relative;
-			}
+		body.dark-theme .mobile-subtitle {
+			color: #8895a7;
 		}
 
-		@media (max-width: 400px) {
-			.toolbar-mobile .btn,
-			.toolbar-mobile .timer-btn {
-				width: 36px;
-				height: 36px;
-			}
-			.toolbar-mobile .btn svg {
-				width: 16px;
-				height: 16px;
-			}
-			.toolbar-mobile .menu-icon {
-				width: 14px;
-				height: 10px;
-				gap: 2px;
-			}
-			.toolbar-mobile .menu-icon span {
-				height: 1.5px;
-			}
-			.toolbar-mobile .btn-sequences {
-				width: 36px;
-				height: 36px;
-			}
-			.toolbar-mobile .btn-sequences svg {
-				width: 16px;
-				height: 16px;
-			}
-			.mobile-title {
-				font-size: 1rem;
-			}
-			.mobile-subtitle {
-				font-size: 0.7rem;
-			}
-			.timer-btn {
-				width: 36px;
-				height: 36px;
-				font-size: 9px !important;
-			}
-			.timer-btn span {
-				font-size: 9px !important;
-			}
-			.sequences-dropdown {
-				left: 50% !important;
-				transform: translateX(-50%) !important;
-				min-width: unset;
-				max-width: 95vw;
-				width: 95vw;
-			}
-			.sequences-dropdown .dropdown-item {
-				font-size: 0.7rem;
-				padding: 0px 10px;
-			}
-		}
-
-		/* ===== SURVOL POUR LA TOOLBAR EN PLEIN ÉCRAN ===== */
+		/* ===== PLEIN ÉCRAN ===== */
 		.hover-trigger {
 			display: none;
 		}
@@ -801,7 +857,705 @@
 			pointer-events: auto;
 		}
 
-		/* ===== QUIZ QUESTIONS ===== */
+		/* ===== MENU ===== */
+		.menu-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(0, 0, 0, 0.5);
+			z-index: 1000;
+			opacity: 0;
+			visibility: hidden;
+			transition: all 0.3s ease;
+		}
+
+		.menu-overlay.open {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.slide-menu {
+			position: fixed;
+			top: 0;
+			right: -300px;
+			width: 280px;
+			height: 100vh;
+			background-color: var(--bg);
+			z-index: 1001;
+			padding: 20px;
+			display: flex;
+			flex-direction: column;
+			border-radius: 20px 0 0 20px;
+			box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+			transition: right 0.3s ease;
+			overflow-y: auto;
+		}
+
+		.slide-menu.open {
+			right: 0;
+		}
+
+		.menu-header {
+			display: flex;
+			justify-content: flex-end;
+			margin-bottom: 1rem;
+		}
+
+		.menu-close,
+		.submenu-close {
+			background: var(--btn);
+			border: none;
+			cursor: pointer;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: var(--shadow-out);
+			color: var(--font-color);
+		}
+
+		.menu-close svg,
+		.submenu-close svg {
+			width: 18px;
+			height: 18px;
+			stroke: currentColor;
+		}
+
+		.menu-close:hover,
+		.submenu-close:hover {
+			box-shadow: var(--shadow-in);
+		}
+
+		.menu-close:hover svg,
+		.submenu-close:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		.menu-item {
+			display: flex;
+			align-items: center;
+			padding: 0px 20px;
+			background: var(--btn);
+			color: var(--font-color);
+			font-size: 14px;
+			cursor: pointer;
+			border-radius: 8px;
+			margin-bottom: 17px;
+			width: 100%;
+			box-shadow: var(--shadow-out);
+			border: none;
+			transition: all 0.2s ease;
+			min-height: 42px;
+			-webkit-tap-highlight-color: transparent;
+		}
+
+		.menu-item:hover {
+			background: rgba(0, 0, 0, 0.08);
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+
+		body.dark-theme .menu-item:hover {
+			background: rgba(255, 255, 255, 0.08);
+		}
+
+		.menu-item:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		.menu-item svg {
+			width: 24px;
+			height: 24px;
+			margin-right: 16px;
+			stroke: currentColor;
+			stroke-width: 2;
+			fill: none;
+			flex-shrink: 0;
+		}
+
+		.menu-item .item-label {
+			flex: 1;
+			text-align: left;
+			display: flex;
+			align-items: center;
+			height: 100%;
+		}
+
+		.menu-item .item-badge {
+			background: var(--badge-bg);
+			color: var(--badge-color);
+			border-radius: 50%;
+			width: 34px;
+			height: 34px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 10px;
+			font-weight: bold;
+			flex-shrink: 0;
+			margin-left: 8px;
+		}
+
+		/* ===== SOUS-MENUS ===== */
+		.submenu {
+			position: fixed;
+			top: 0;
+			right: -340px;
+			width: 280px;
+			height: 100%;
+			background: var(--bg);
+			z-index: 10010;
+			box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+			border-radius: 20px 0 0 20px;
+			padding: 2rem 1.5rem;
+			overflow-y: auto;
+			transition: right 0.5s ease;
+		}
+
+		.submenu.active {
+			right: 0;
+		}
+
+		.submenu-title {
+			font-size: 1.4rem;
+			font-weight: bold;
+			color: var(--primary-color);
+			margin: 0.5rem 0 1.5rem 0;
+			text-align: center;
+			text-transform: lowercase;
+			letter-spacing: 0.3px;
+		}
+
+		.submenu-content {
+			color: var(--font-color);
+			font-size: 13px;
+			line-height: 1.5;
+			margin-top: 4px;
+		}
+
+		.settings-info,
+		.stats-info {
+			margin-top: 0;
+			padding: 15px;
+			background: rgba(0, 0, 0, 0.05);
+			border-radius: 10px;
+			text-align: left;
+			margin-bottom: 15px;
+		}
+
+		body.dark-theme .settings-info,
+		body.dark-theme .stats-info {
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		.settings-info p,
+		.stats-info p {
+			margin: 0 0 8px 0;
+		}
+
+		.settings-info p:last-child,
+		.stats-info p:last-child {
+			margin-bottom: 0;
+		}
+
+		.settings-info i {
+			width: 20px;
+			margin-right: 6px;
+		}
+
+		.submenu-icon {
+			width: 24px;
+			height: 24px;
+			flex-shrink: 0;
+			color: var(--font-color);
+			stroke: currentColor;
+			stroke-width: 2;
+			fill: none;
+			transition: transform 0.3s ease;
+			display: inline-block;
+			vertical-align: middle;
+			margin-right: 8px;
+			pointer-events: auto;
+		}
+
+		.submenu-icon:hover {
+			animation: rotate 1s linear;
+		}
+
+		.about-row {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			width: 100%;
+		}
+
+		.about-row > .about-text {
+			flex: 1;
+			min-width: 0;
+			text-align: left;
+			color: var(--font-color);
+			font-size: 13px;
+			line-height: 1.4;
+			word-break: break-word;
+			padding: 6px 0;
+		}
+
+		.about-row > .about-text p {
+			margin: 0;
+		}
+
+		.about-text a {
+			color: var(--font-color);
+			text-decoration: none;
+			border-bottom: 1px dotted var(--font-color);
+		}
+
+		.about-text a:hover {
+			border-bottom: 2px solid var(--font-color);
+		}
+
+		/* ===== TOGGLES ===== */
+		.toggle-container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 0.75rem;
+			min-height: 24px;
+			gap: 10px;
+		}
+
+		.toggle-label {
+			color: var(--font-color);
+			font-size: 0.9rem;
+			text-align: left;
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			cursor: pointer;
+			flex: 1;
+			line-height: 1;
+			min-height: 24px;
+		}
+
+		.toggle-label i,
+		.toggle-label svg {
+			width: 24px;
+			min-width: 24px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			font-size: 1rem;
+			text-align: center;
+			line-height: 1;
+			stroke: currentColor;
+			fill: none;
+			stroke-width: 2;
+		}
+
+		.theme-switch {
+			position: relative;
+			display: inline-block;
+			width: 40px;
+			height: 20px;
+			flex-shrink: 0;
+		}
+
+		.theme-switch input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
+
+		.theme-switch .slider {
+			position: absolute;
+			cursor: pointer;
+			inset: 0;
+			background: #b0b8c4;
+			border-radius: 20px;
+			transition: .3s;
+		}
+
+		.theme-switch .slider:before {
+			content: "";
+			position: absolute;
+			width: 16px;
+			height: 16px;
+			left: 2px;
+			top: 2px;
+			background: #fff;
+			border-radius: 50%;
+			transition: .3s;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		}
+
+		.theme-switch input:checked+.slider {
+			background: #3a7bb5;
+		}
+
+		.theme-switch input:checked+.slider:before {
+			transform: translateX(20px);
+		}
+
+		body.dark-theme .theme-switch .slider {
+			background: #3d3d3d;
+		}
+
+		body.dark-theme .theme-switch input:checked+.slider {
+			background: #4a80c0;
+		}
+
+		/* ===== QUESTIONS SLIDER ===== */
+		.questions-slider-container {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+			margin-top: 0.75rem;
+			padding-top: 0.75rem;
+			margin-bottom: 0.75rem;
+		}
+
+		.questions-slider-label {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 0.9rem;
+			min-height: 24px;
+		}
+
+		.questions-slider-label .toggle-label {
+			font-size: 0.9rem;
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			cursor: pointer;
+			flex: 1;
+			line-height: 1;
+			min-height: 24px;
+		}
+
+		.questions-slider-label .toggle-label i,
+		.questions-slider-label .toggle-label svg {
+			width: 24px;
+			min-width: 24px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			font-size: 1rem;
+			text-align: center;
+			line-height: 1;
+			stroke: currentColor;
+			fill: none;
+			stroke-width: 2;
+		}
+
+		.questions-slider-value {
+			font-weight: bold;
+			color: var(--primary-color);
+			font-size: 1rem;
+			line-height: 1;
+			flex-shrink: 0;
+		}
+
+		.slider-graduations {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			padding: 0;
+			margin-top: 5px;
+			font-size: 0.7rem;
+			opacity: 0.7;
+		}
+
+		.slider-graduations .infinity-symbol {
+			font-size: 1rem;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			line-height: 1;
+		}
+
+		/* ===== CHARGER DES QUIZ ===== */
+		.local-file-upload-area {
+			text-align: center;
+			padding: 10px 0;
+		}
+
+		.local-file-upload-area .upload-btn {
+			width: 100%;
+			padding: 12px 14px;
+			border-radius: 10px;
+			background: var(--btn);
+			border: 2px dashed #8895a7;
+			font-size: 13px;
+			font-family: Arial, sans-serif;
+			transition: all 0.3s ease;
+			text-align: center;
+			cursor: pointer;
+			color: var(--font-color);
+			box-shadow: var(--shadow-out);
+		}
+
+		.local-file-upload-area .upload-btn:hover {
+			box-shadow: var(--shadow-in);
+			border-color: var(--color-correct);
+		}
+
+		body.dark-theme .local-file-upload-area .upload-btn {
+			background: #3d3d3d;
+			color: #ffffff;
+			border-color: #5a5a5a;
+		}
+
+		body.dark-theme .local-file-upload-area .upload-btn:hover {
+			background: #4a4a4a;
+			border-color: var(--color-correct);
+		}
+
+		#fileInputSubmenu {
+			display: none;
+		}
+
+		.quiz-selector-container-submenu {
+			width: 100%;
+			max-width: 100%;
+			margin-bottom: 8px;
+			display: none;
+		}
+
+		.quiz-selector-container-submenu .quiz-select {
+			width: 100%;
+		}
+
+		.quiz-select {
+			width: 100%;
+			padding: 10px 14px;
+			border-radius: 10px;
+			background: var(--btn);
+			border: 2px solid #8895a7;
+			color: var(--font-color);
+			font-size: 13px;
+			cursor: pointer;
+			font-family: Arial, sans-serif;
+			transition: all 0.3s ease;
+			box-sizing: border-box;
+			appearance: auto;
+			box-shadow: var(--shadow-out);
+		}
+
+		.quiz-select:hover {
+			border-color: var(--color-correct);
+			transform: translateY(-2px);
+		}
+
+		.quiz-select option {
+			background: var(--bg);
+			color: var(--font-color);
+			padding: 6px;
+		}
+
+		body.dark-theme .quiz-select {
+			background: #3d3d3d;
+			color: #ffffff;
+			border-color: #5a5a5a;
+		}
+
+		body.dark-theme .quiz-select option {
+			background: #1a1a1a;
+			color: #ffffff;
+		}
+
+		.local-reset-btn {
+			width: 100%;
+			margin-top: 10px;
+			padding: 10px 14px;
+			font-size: 0.9rem;
+			cursor: pointer;
+			background: var(--btn);
+			border: 2px solid #8895a7;
+			border-radius: 10px;
+			box-shadow: var(--shadow-out);
+			color: var(--font-color);
+			display: inline-flex;
+			gap: 8px;
+			justify-content: center;
+			align-items: center;
+			transition: all 0.3s ease;
+			font-family: Arial, sans-serif;
+		}
+
+		.local-reset-btn:hover {
+			box-shadow: var(--shadow-in);
+			border-color: var(--color-correct);
+			transform: translateY(-2px);
+		}
+
+		body.dark-theme .local-reset-btn {
+			background: #3d3d3d;
+			color: #ffffff;
+			border-color: #5a5a5a;
+		}
+
+		body.dark-theme .local-reset-btn:hover {
+			background: #4a4a4a;
+			border-color: var(--color-correct);
+		}
+
+		.stats-reload-btn {
+			width: 100%;
+			margin-top: 15px;
+			padding: 8px 16px;
+			font-size: 1rem;
+			cursor: pointer;
+			background: var(--btn);
+			border: none;
+			border-radius: 0.5rem;
+			box-shadow: var(--shadow-out);
+			color: var(--font-color);
+			display: inline-flex;
+			gap: 8px;
+			justify-content: center;
+			align-items: center;
+			transition: all 0.3s ease;
+		}
+
+		.stats-reload-btn:hover {
+			transform: translateY(-2px);
+		}
+
+		.file-status {
+			font-size: 12px;
+			font-style: italic;
+			min-height: 18px;
+			color: var(--font-color);
+			text-align: center;
+			opacity: 0.8;
+		}
+
+		/* ===== QUIZ ===== */
+		.content--v2 {
+			flex: 1;
+			padding: 0 8px 8px;
+			width: 100%;
+			max-width: 100vw;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: flex-start;
+			min-height: 0;
+			transition: filter 0.3s ease;
+		}
+
+		.wrapper--grid-playlist {
+			width: 100%;
+			max-width: 1100px;
+			display: flex;
+			justify-content: center;
+		}
+
+		.grid-area--player {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: flex-start;
+		}
+
+		.container--quiz {
+			background: #ffffff;
+			width: 100% !important;
+			max-width: 850px !important;
+			border-radius: 14px;
+			position: relative;
+			color: var(--font-color);
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+			transition: all 0.3s ease;
+			margin: 0 auto 20px !important;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+		}
+
+		body.dark-theme .container--quiz {
+			background: #1a1a1a;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+		}
+
+		.container--quiz-start {
+			position: relative;
+			border-radius: 14px;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			min-height: 400px;
+			height: 100%;
+		}
+
+		.quiz-start__img {
+			position: absolute;
+			inset: 0;
+			z-index: 1;
+		}
+
+		.quiz-start__img img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+		}
+
+		.quiz-start__opacity {
+			position: absolute;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.4);
+			z-index: 2;
+			transition: background 0.3s ease;
+		}
+
+		body.dark-theme .quiz-start__opacity {
+			background: rgba(0, 0, 0, 0.55);
+		}
+
+		.quiz-start__content {
+			position: relative;
+			z-index: 3;
+			width: 100%;
+			height: 100%;
+			min-height: 400px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			padding: 14px 18px 20px;
+		}
+
+		.quiz-start__button {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 10px;
+			text-align: center;
+		}
+
+		.quiz-start__hint {
+			color: rgba(255, 255, 255, 0.95);
+			font-size: clamp(1rem, 2vw, 1.2rem);
+			line-height: 1.5;
+			text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+			max-width: 90%;
+		}
+
+		.quiz-start__hint strong {
+			color: #ffffff;
+			font-weight: bold;
+		}
+
+		/* ===== QUESTIONS ===== */
 		#quizQuestions {
 			display: flex;
 			flex-direction: column;
@@ -818,7 +1572,7 @@
 			background: var(--btn);
 			box-shadow: var(--shadow-out);
 			margin: 0 !important;
-			border-radius: 14px 14px 0 0 !important;
+			border-radius: 0 !important;
 			display: none;
 			width: 100% !important;
 			border-bottom: none !important;
@@ -836,7 +1590,7 @@
 			overflow: hidden;
 			background: #ffffff;
 			border: none !important;
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+			box-shadow: none !important;
 			width: 100% !important;
 			margin: 0 !important;
 			box-sizing: border-box;
@@ -844,7 +1598,7 @@
 		}
 
 		.philosophy-text-wrapper.border-radius-top-only {
-			border-radius: 14px 14px 0 0 !important;
+			border-radius: 0 !important;
 		}
 
 		.philosophy-text-wrapper.border-radius-none {
@@ -881,11 +1635,10 @@
 			font-size: 0.75rem;
 			font-weight: bold;
 			text-transform: uppercase;
-			color: red;
+			color: var(--primary-color);
 			letter-spacing: 0.5px;
 		}
 
-		/* ===== TOOLTIP POUR LE BOUTON DE BASCULE DE TEXTE ===== */
 		.text-toggle-btn {
 			padding: 2px;
 			color: #555;
@@ -917,7 +1670,7 @@
 			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 			transition: opacity 0.2s ease;
 		}
-		
+
 		.text-toggle-btn:not(.collapsed)::after {
 			position: absolute;
 			top: -9px;
@@ -938,7 +1691,7 @@
 		}
 
 		.philosophy-text-content {
-			padding: 6px 12px 8px;
+			padding: 8px 12px 10px;
 			max-height: none;
 			overflow-y: visible;
 			transition: padding 0.3s ease;
@@ -995,9 +1748,6 @@
 			width: 100% !important;
 			box-sizing: border-box;
 			background: #ffffff;
-			border-left: 1px solid #e0e4ea;
-			border-right: 1px solid #e0e4ea;
-			border-bottom: 1px solid #e0e4ea;
 			border-radius: 0 0 14px 14px;
 		}
 
@@ -1012,6 +1762,22 @@
 			flex-direction: column;
 			width: 100% !important;
 			box-sizing: border-box;
+			text-align: left;
+			position: relative;
+			opacity: 0;
+			transform: translateY(20px) scale(0.98);
+			transition: opacity 0.5s ease, transform 0.5s ease;
+			pointer-events: none;
+		}
+
+		.container--question.visible {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+			pointer-events: auto;
+		}
+
+		.container--question.hidden {
+			display: none !important;
 		}
 
 		.container--question fieldset {
@@ -1023,29 +1789,99 @@
 			box-sizing: border-box;
 		}
 
-		.container--question legend p {
+		.quiz__question {
+			margin-bottom: 8px;
+			font-size: 14px;
+			line-height: 24px;
+			text-align: left !important;
 			font-weight: bold;
-			font-size: clamp(0.7rem, 1.1vw, 0.8rem);
-			margin: 10px 0;
+			padding: 0 !important;
+			width: 100% !important;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			max-width: 100% !important;
+			white-space: normal;
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+			overflow: visible;
+		}
+
+		fieldset {
+			margin-bottom: 0;
 			padding: 0;
-			line-height: 1.3;
+			border: none;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			min-height: 0;
+			margin-bottom: -5px;
+		}
+
+		legend p {
+			margin: 0;
+			padding: 0 !important;
+			text-align: left !important;
+			font-weight: bold;
+			line-height: 1.4;
+			margin-bottom: 7px;
+			flex-shrink: 0;
+			width: 100% !important;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			max-width: 100% !important;
+			padding: 0 0 0 0 !important;
+			white-space: normal;
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+			overflow: visible;
+			font-size: clamp(0.7rem, 1.1vw, 0.8rem);
+		}
+
+		.quiz-answer {
 			text-align: left;
-			word-break: break-word;
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			background: #ffffff;
+			box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.06);
+			border-radius: 8px;
+			margin-bottom: 4px;
+			padding: 6px 12px;
+			border: 2px solid #e0e4ea;
+			width: 100% !important;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			position: relative;
+			cursor: pointer;
+			min-height: 32px;
+			height: auto;
+			font-size: clamp(0.65rem, 0.9vw, 0.75rem);
+			line-height: 1.3;
+			transition: all 0.2s ease;
+			flex-shrink: 0;
+			max-width: 100% !important;
+			overflow: hidden;
+			box-sizing: border-box;
+			gap: 8px;
 			color: var(--font-color);
 		}
 
-		body.dark-theme .container--question legend p {
+		body.dark-theme .quiz-answer {
+			background: #242a33;
 			color: #e8edf5;
+			box-shadow: 0.2rem 0.2rem 0.5rem #0b0d10, -0.2rem -0.2rem 0.5rem #3d4653;
+			border-color: #2a303a;
 		}
 
-		.container--question ul {
+		.answer-text {
+			flex: 1;
 			display: flex;
-			flex-direction: column;
-			gap: 4px;
-			list-style: none;
-			padding: 0;
-			width: 100% !important;
-			box-sizing: border-box;
+			align-items: center;
+			height: 100%;
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+			max-width: 100%;
+			gap: 12px;
 		}
 
 		.answer-letter {
@@ -1076,8 +1912,8 @@
 			border-color: var(--color-incorrect) !important;
 		}
 
-		.daltonic-icon {
-			display: none;
+		.answer-icon {
+			display: none !important;
 			position: absolute;
 			right: 15px;
 			top: 50%;
@@ -1085,40 +1921,16 @@
 			width: 24px;
 			height: 24px;
 			flex-shrink: 0;
-			z-index: 5;
 		}
 
-		.daltonic-icon svg {
+		.answer-icon svg {
 			width: 100%;
 			height: 100%;
 			display: block;
 		}
 
-		.quiz-answer {
-			display: flex;
-			align-items: center;
-			background: #ffffff;
-			box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.06);
-			border-radius: 8px;
-			padding: 6px 12px;
-			border: 2px solid #e0e4ea;
-			width: 100% !important;
-			cursor: pointer;
-			min-height: 32px;
-			font-size: clamp(0.65rem, 0.9vw, 0.75rem);
-			line-height: 1.3;
-			transition: all 0.2s ease;
-			position: relative;
-			gap: 8px;
-			color: var(--font-color);
-			box-sizing: border-box;
-		}
-
-		body.dark-theme .quiz-answer {
-			background: #242a33;
-			color: #e8edf5;
-			box-shadow: 0.2rem 0.2rem 0.5rem #0b0d10, -0.2rem -0.2rem 0.5rem #3d4653;
-			border-color: #2a303a;
+		.quiz-answer:last-child {
+			margin-bottom: 4px;
 		}
 
 		.quiz-answer:hover {
@@ -1164,16 +1976,32 @@
 		}
 
 		.quiz-explanation {
+			position: relative;
+			margin: 3px auto 10px;
 			background: #f8f9fb;
 			border: 1px solid #e0e4ea;
 			border-radius: 8px;
+			font-size: 14px;
+			line-height: 1.5;
+			text-align: left;
 			padding: 6px 12px;
-			margin: 3px 0 2px;
-			font-size: clamp(0.6rem, 0.85vw, 0.7rem);
-			line-height: 1.4;
+			width: 100% !important;
+			max-width: 850px !important;
 			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 			flex-shrink: 0;
+			max-height: none;
+			overflow-y: visible;
+			opacity: 0;
+			transform: translateY(-10px);
+			transition: opacity 0.3s ease, transform 0.3s ease;
+			font-size: clamp(0.6rem, 0.85vw, 0.7rem);
+			line-height: 1.4;
 			color: var(--font-color);
+		}
+
+		.quiz-explanation.visible {
+			opacity: 1;
+			transform: translateY(0);
 		}
 
 		body.dark-theme .quiz-explanation {
@@ -1185,14 +2013,15 @@
 		.quiz-explanation__label {
 			display: flex;
 			align-items: center;
-			gap: 6px;
+			gap: 10px;
+			margin-bottom: 0px;
 			font-weight: bold;
-			margin-bottom: 2px;
 		}
 
-		.quiz-explanation__label .emoji {
-			width: 14px;
-			height: 14px;
+		.quiz-explanation__label img {
+			width: 24px;
+			height: 24px;
+			object-fit: contain;
 		}
 
 		.next-button-container {
@@ -1200,9 +2029,17 @@
 			padding: 4px 0 8px;
 			flex-shrink: 0;
 			margin-top: 8px;
+			width: 100% !important;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			max-width: 850px !important;
+			border: none !important;
+			box-shadow: none !important;
 		}
 
 		.next-button-container .quiz-btn {
+			margin: 0 auto;
+			display: block;
 			min-width: 100px;
 			padding: 6px 16px;
 			border-radius: 27px;
@@ -1213,6 +2050,28 @@
 
 		body.dark-theme .next-button-container .quiz-btn {
 			border-color: #3d4653;
+		}
+
+		.quiz-btn {
+			border: 1px solid #d0d5dd;
+			color: var(--font-color);
+			cursor: pointer;
+			font-family: Arial, sans-serif;
+			font-size: 14px;
+			padding: 12px 20px;
+			text-align: center;
+			width: auto;
+			min-width: 140px;
+			background: var(--btn);
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+			border-radius: 27px;
+			margin-bottom: 25px;
+		}
+
+		.quiz-btn:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
 		}
 
 		/* ===== RÉSULTATS ===== */
@@ -1232,6 +2091,7 @@
 			color: var(--font-color);
 			font-family: Arial, sans-serif;
 			width: 100%;
+			max-width: 850px;
 			max-height: 100%;
 			overflow: auto;
 			display: flex;
@@ -1240,24 +2100,18 @@
 			gap: 12px;
 		}
 
-		.container--quiz-results .bento-score,
-		.container--quiz-results .bento-stats,
-		.container--quiz-results .bento-message,
-		.container--quiz-results .bento-actions {
+		.container--quiz-results .bento-score {
 			width: 100%;
 			max-width: 596px;
-		}
-
-		.container--quiz-results .bento-score {
-			padding: 16px 20px;
-			text-align: center;
 			background: var(--btn);
-			box-shadow: var(--shadow-out);
 			border-radius: 10px;
+			padding: 16px 20px;
+			box-shadow: var(--shadow-out);
+			text-align: center;
 		}
 
 		.container--quiz-results .bento-score .quiz-end__score {
-			color: red;
+			color: var(--primary-color);
 			font-weight: bold;
 			font-size: 1.3rem;
 		}
@@ -1273,7 +2127,9 @@
 			font-size: 14px;
 		}
 
-		.container--quiz-results .bento-stats {
+		.container--quiz-results .bento-stats-global {
+			width: 100%;
+			max-width: 596px;
 			display: grid;
 			grid-template-columns: repeat(3, 1fr);
 			gap: 12px;
@@ -1282,40 +2138,58 @@
 			padding: 0;
 		}
 
-		.container--quiz-results .bento-stats .stat-item {
-			padding: 12px 8px;
-			text-align: center;
+		.container--quiz-results .bento-stats-global .stat-item {
 			background: var(--btn);
-			box-shadow: var(--shadow-out);
 			border-radius: 10px;
+			padding: 12px 8px;
+			box-shadow: var(--shadow-out);
+			text-align: center;
 		}
 
-		.container--quiz-results .bento-stats .stat-item .stat-value {
+		.container--quiz-results .bento-stats-global .stat-item .stat-value,
+		.container--quiz-results .bento-stats-global .stat-item .stat-num {
 			font-size: 1.2rem;
 			font-weight: bold;
-			color: red;
+			color: var(--primary-color);
 			display: block;
 			line-height: 1.1;
 			margin-bottom: 6px;
 		}
 
-		.container--quiz-results .bento-stats .stat-item .stat-label {
+		.container--quiz-results .bento-stats-global .stat-item .stat-label,
+		.container--quiz-results .bento-stats-global .stat-item .stat-label-mini {
 			font-size: 0.8rem;
 			opacity: 0.8;
 			display: block;
 			margin-top: 2px;
 		}
 
-		.container--quiz-results .bento-stats .stat-item .stat-num {
+		.container--quiz-results .bento-stats-personal {
+			width: 100%;
+			max-width: 596px;
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 12px;
+		}
+
+		.container--quiz-results .bento-stats-personal .stat-item-mini {
+			background: var(--btn);
+			border-radius: 10px;
+			padding: 12px 8px;
+			box-shadow: var(--shadow-out);
+			text-align: center;
+		}
+
+		.container--quiz-results .bento-stats-personal .stat-item-mini .stat-num {
 			font-size: 1.2rem;
 			font-weight: bold;
-			color: red;
+			color: var(--primary-color);
 			display: block;
 			line-height: 1.1;
 			margin-bottom: 6px;
 		}
 
-		.container--quiz-results .bento-stats .stat-item .stat-label-mini {
+		.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
 			font-size: 0.8rem;
 			opacity: 0.8;
 			display: block;
@@ -1323,16 +2197,20 @@
 		}
 
 		.container--quiz-results .bento-message {
+			width: 100%;
+			max-width: 596px;
+			background: var(--btn);
+			border-radius: 10px;
 			padding: 12px 16px;
+			box-shadow: var(--shadow-out);
 			text-align: center;
 			font-size: 14px;
 			line-height: 1.4;
-			background: var(--btn);
-			box-shadow: var(--shadow-out);
-			border-radius: 10px;
 		}
 
-		.bento-actions {
+		.container--quiz-results .bento-actions {
+			width: 100%;
+			max-width: 596px;
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: center;
@@ -1343,7 +2221,7 @@
 			padding: 0;
 		}
 
-		.bento-actions .quiz-btn {
+		.container--quiz-results .bento-actions .quiz-btn {
 			border: 2px solid #8895a7;
 			border-radius: 27px;
 			padding: 10px 20px;
@@ -1356,36 +2234,31 @@
 			box-shadow: var(--shadow-out);
 			color: var(--font-color);
 			transition: all 0.2s ease;
+			margin-bottom: 0;
 		}
 
-		.bento-actions .quiz-btn:hover {
+		.container--quiz-results .bento-actions .quiz-btn:hover {
 			box-shadow: var(--shadow-in);
 			border-color: var(--color-correct);
 			transform: translateY(-2px);
 		}
 
-		body.dark-theme .bento-actions .quiz-btn {
-			border-color: #5a5a5a;
-		}
-
-		body.dark-theme .bento-actions .quiz-btn:hover {
-			background: #4a4a4a;
-			border-color: var(--color-correct);
-		}
-
 		.container--quiz-results .bento-details {
 			width: 100%;
 			max-width: 596px;
-			padding: 12px 16px;
 			background: var(--btn);
-			box-shadow: var(--shadow-out);
 			border-radius: 10px;
+			padding: 12px 16px;
+			box-shadow: var(--shadow-out);
 		}
 
 		#detailedResults {
 			text-align: left;
 			margin-top: 10px;
 			padding: 10px 14px;
+			background: #f8f9fb;
+			border-radius: 10px;
+			box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.06);
 			max-height: 260px;
 			overflow-y: auto;
 			color: var(--font-color);
@@ -1397,7 +2270,7 @@
 		}
 
 		#detailedResults h3 {
-			color: red;
+			color: var(--primary-color);
 			margin-bottom: 8px;
 			font-size: 0.9rem;
 			text-align: center;
@@ -1435,584 +2308,11 @@
 			background: rgba(231, 76, 60, 0.12);
 		}
 
-		/* ===== MENUS ===== */
-		.menu-overlay {
-			position: fixed;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background: rgba(0, 0, 0, 0.5);
-			z-index: 1000;
-			opacity: 0;
-			visibility: hidden;
-			transition: all 0.3s ease;
-		}
-
-		.menu-overlay.open {
-			opacity: 1;
-			visibility: visible;
-		}
-
-		.slide-menu {
-			position: fixed;
-			top: 0;
-			right: -300px;
-			width: 280px;
-			height: 100vh;
-			background-color: var(--bg);
-			z-index: 1001;
-			padding: 20px;
-			display: flex;
-			flex-direction: column;
-			border-radius: 20px 0 0 20px;
-			box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-			transition: right 0.3s ease;
-			overflow-y: auto;
-		}
-
-		.slide-menu.open {
-			right: 0;
-		}
-
-		.menu-header {
-			display: flex;
-			justify-content: flex-end;
-			margin-bottom: 1rem;
-		}
-
-		.menu-close,
-		.submenu-close {
-			width: 40px;
-			height: 40px;
-			border-radius: 50%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-
-		.menu-close svg,
-		.submenu-close svg {
-			width: 18px;
-			height: 18px;
-			stroke: currentColor;
-		}
-
-		.menu-item {
-			display: flex;
-			align-items: center;
-			padding: 0px 20px;
-			font-size: 14px;
-			border-radius: 8px;
-			margin-bottom: 17px;
-			width: 100%;
-			min-height: 42px;
-			border: none;
-		}
-
-		.menu-item:hover {
-			background: rgba(0, 0, 0, 0.08);
-			transform: translateY(-2px);
-		}
-
-		body.dark-theme .menu-item:hover {
-			background: rgba(255, 255, 255, 0.08);
-		}
-
-		.menu-item svg {
-			width: 24px;
-			height: 24px;
-			margin-right: 16px;
-			stroke: currentColor;
-			stroke-width: 2;
-			fill: none;
-			flex-shrink: 0;
-		}
-
-		.menu-item .item-label {
-			flex: 1;
-			text-align: left;
-			display: flex;
-			align-items: center;
-			height: 100%;
-		}
-
-		.menu-item .item-badge {
-			background: red;
-			color: #fff;
-			border-radius: 50%;
-			width: 34px;
-			height: 34px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-size: 10px;
-			font-weight: bold;
-			flex-shrink: 0;
-			margin-left: 8px;
-		}
-
-		.submenu {
-			position: fixed;
-			top: 0;
-			right: -340px;
-			width: 280px;
-			height: 100%;
-			background: var(--bg);
-			z-index: 10010;
-			box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
-			border-radius: 20px 0 0 20px;
-			padding: 2rem 1.5rem;
-			overflow-y: auto;
-			transition: right 0.5s ease;
-		}
-
-		.submenu.active {
-			right: 0;
-		}
-
-		.submenu-title {
-			font-size: 1.4rem;
-			font-weight: bold;
-			color: red;
-			margin: 0.5rem 0 1.5rem 0;
-			text-align: center;
-			text-transform: lowercase;
-		}
-
-		.submenu-content {
-			color: var(--font-color);
-			font-size: 13px;
-			line-height: 1.5;
-			margin-top: 4px;
-		}
-
-		.settings-info {
-			margin-top: 20px;
-			padding: 15px;
-			background: rgba(0, 0, 0, 0.05);
-			border-radius: 10px;
-			text-align: left;
-		}
-
-		body.dark-theme .settings-info {
-			background: rgba(255, 255, 255, 0.05);
-		}
-
-		.stats-reload-btn {
-			width: 100%;
-			margin-top: 15px;
-			padding: 8px 16px;
-			font-size: 1rem;
-			border-radius: 0.5rem;
-			display: inline-flex;
-			gap: 8px;
-			justify-content: center;
-			align-items: center;
-			border: none;
-		}
-
-		.toggle-container {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: 0.75rem;
-			min-height: 24px;
-		}
-
-		.toggle-label {
-			color: var(--font-color);
-			font-size: 0.9rem;
-			text-align: left;
-			display: flex;
-			align-items: center;
-			gap: 0.75rem;
-			cursor: pointer;
-			flex: 1;
-		}
-
-		.toggle-label i {
-			width: 24px;
-			min-width: 24px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			flex-shrink: 0;
-			font-size: 1rem;
-			text-align: center;
-			line-height: 1;
-		}
-
-		.questions-slider-label {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			font-size: 0.9rem;
-		}
-
-		.questions-slider-label .toggle-label {
-			font-size: 0.9rem;
-			display: flex;
-			align-items: center;
-			gap: 0.75rem;
-			cursor: pointer;
-			flex: 1;
-		}
-
-		.questions-slider-label .toggle-label i {
-			width: 24px;
-			min-width: 24px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			flex-shrink: 0;
-			font-size: 1rem;
-			text-align: center;
-			line-height: 1;
-		}
-
-		.theme-switch {
-			position: relative;
-			display: inline-block;
-			width: 40px;
-			height: 20px;
-			flex-shrink: 0;
-		}
-
-		.theme-switch input {
-			opacity: 0;
-			width: 0;
-			height: 0;
-		}
-
-		.theme-switch .slider {
-			position: absolute;
-			cursor: pointer;
-			inset: 0;
-			background: #b0b8c4;
-			border-radius: 20px;
-			transition: .3s;
-		}
-
-		.theme-switch .slider:before {
-			content: "";
-			position: absolute;
-			width: 16px;
-			height: 16px;
-			left: 2px;
-			top: 2px;
-			background: #fff;
-			border-radius: 50%;
-			transition: .3s;
-			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-		}
-
-		.theme-switch input:checked+.slider {
-			background: #3a7bb5;
-		}
-
-		.theme-switch input:checked+.slider:before {
-			transform: translateX(20px);
-		}
-
-		body.dark-theme .theme-switch .slider {
-			background: #3d3d3d;
-		}
-
-		body.dark-theme .theme-switch input:checked+.slider {
-			background: #4a80c0;
-		}
-
-		.questions-slider-container {
-			display: flex;
-			flex-direction: column;
-			gap: 0.5rem;
-			margin-top: 0.75rem;
-			padding-top: 0.75rem;
-			margin-bottom: 0.75rem;
-		}
-
-		.questions-slider-value {
-			font-weight: bold;
-			color: red;
-			font-size: 1rem;
-		}
-
-		.questions-slider {
-			-webkit-appearance: none;
-			appearance: none;
-			width: 100%;
-			height: 4px;
-			border-radius: 2px;
-			background: #b0b8c4;
-			outline: none;
-			transition: background 0.3s ease;
-		}
-
-		.questions-slider::-webkit-slider-thumb {
-			-webkit-appearance: none;
-			appearance: none;
-			width: 16px;
-			height: 16px;
-			border-radius: 50%;
-			background: #3a7bb5;
-			cursor: pointer;
-			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-			transition: background 0.2s ease;
-		}
-
-		.questions-slider::-webkit-slider-thumb:hover {
-			transform: scale(1.1);
-		}
-
-		.questions-slider::-moz-range-thumb {
-			width: 16px;
-			height: 16px;
-			border-radius: 50%;
-			background: #3a7bb5;
-			cursor: pointer;
-			border: none;
-			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-		}
-
-		body.dark-theme .questions-slider {
-			background: #3d3d3d;
-		}
-
-		body.dark-theme .questions-slider::-webkit-slider-thumb {
-			background: #4a80c0;
-		}
-
-		body.dark-theme .questions-slider::-moz-range-thumb {
-			background: #4a80c0;
-		}
-
-		.slider-graduations {
-			display: flex;
-			justify-content: space-between;
-			width: 100%;
-			padding: 0;
-			margin-top: 5px;
-			font-size: 0.7rem;
-			opacity: 0.7;
-		}
-
-		.slider-graduations span {
-			text-align: center;
-			flex: 1;
-		}
-
-		.slider-graduations .infinity-symbol {
-			font-size: 1rem;
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			line-height: 1;
-		}
-
-		.quiz-selector-container {
-			width: 100%;
-			max-width: 320px;
-		}
-
-		.quiz-select {
-			width: 100%;
-			padding: 10px 14px;
-			border-radius: 10px;
-			border: 2px solid #8895a7;
-			font-size: 13px;
-			font-family: Arial, sans-serif;
-			appearance: auto;
-			box-sizing: border-box;
-		}
-
-		.quiz-select option {
-			background: var(--bg);
-			color: var(--font-color);
-			padding: 6px;
-		}
-
-		body.dark-theme .quiz-select option {
-			background: #1a1a1a;
-			color: #ffffff;
-		}
-
-		.file-status {
-			font-size: 12px;
-			font-style: italic;
-			min-height: 18px;
-			color: var(--font-color);
-			text-align: center;
-			opacity: 0.8;
-		}
-
-		.local-file-upload-area {
-			text-align: center;
-			padding: 10px 0;
-		}
-
-		.upload-btn {
-			width: 100%;
-			padding: 12px 14px;
-			border-radius: 10px;
-			border: 2px dashed #8895a7;
-			font-size: 13px;
-			font-family: Arial, sans-serif;
-			text-align: center;
-		}
-
-		.upload-btn:hover {
-			border-color: var(--color-correct);
-		}
-
-		#fileInputSubmenu {
-			display: none;
-		}
-
-		.quiz-selector-container-submenu {
-			width: 100%;
-			max-width: 100%;
-			margin-bottom: 8px;
-			display: none;
-		}
-
-		.quiz-selector-container-submenu .quiz-select {
-			width: 100%;
-		}
-
-		.local-reset-btn {
-			width: 100%;
-			margin-top: 10px;
-			padding: 10px 14px;
-			font-size: 0.9rem;
-			border: 2px solid #8895a7;
-			border-radius: 10px;
-			display: inline-flex;
-			gap: 8px;
-			justify-content: center;
-			align-items: center;
-			font-family: Arial, sans-serif;
-		}
-
-		.local-reset-btn:hover {
-			border-color: var(--color-correct);
-		}
-
-		.content--v2 {
-			flex: 1;
-			padding: 0 8px 8px;
-			width: 100%;
-			max-width: 100vw;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: flex-start;
-			min-height: 0;
-			transition: filter 0.3s ease;
-		}
-
-		.wrapper--grid-playlist {
-			width: 100%;
-			max-width: 1100px;
-			display: flex;
-			justify-content: center;
-		}
-
-		.grid-area--player {
-			width: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: flex-start;
-		}
-
-		.container--quiz {
-			background: #ffffff;
-			width: 100%;
-			max-width: 850px;
-			border-radius: 14px;
-			position: relative;
-			color: var(--font-color);
-			display: flex;
-			flex-direction: column;
-			overflow: hidden;
-			transition: all 0.3s ease;
-			margin-bottom: 20px;
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-			margin-left: auto;
-			margin-right: auto;
-		}
-
-		body.dark-theme .container--quiz {
-			background: #1a1a1a;
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-		}
-
-		.container--quiz-start {
-			position: relative;
-			border-radius: 14px;
-			overflow: hidden;
-			display: flex;
-			flex-direction: column;
-			min-height: 400px;
-			height: 100%;
-		}
-
-		.quiz-start__img {
-			position: absolute;
-			inset: 0;
-			z-index: 1;
-		}
-
-		.quiz-start__img img {
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-			display: block;
-		}
-
-		.quiz-start__opacity {
-			position: absolute;
-			inset: 0;
-			background: rgba(0, 0, 0, 0.4);
-			z-index: 2;
-			transition: background 0.3s ease;
-		}
-
-		body.dark-theme .quiz-start__opacity {
-			background: rgba(0, 0, 0, 0.55);
-		}
-
-		.quiz-start__content {
-			position: relative;
-			z-index: 3;
-			width: 100%;
-			height: 100%;
-			min-height: 400px;
-			display: flex;
-			flex-direction: column;
-			justify-content: flex-end;
-			align-items: center;
-			padding: 14px 18px 20px;
-		}
-
-		.quiz-start__button {
-			width: 100%;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			gap: 10px;
-		}
-
-		body.menu-open .toolbar-wrapper,
-		body.menu-open #content,
-		body.menu-open .container--quiz {
+		/* ===== EFFET DE FLOU QUAND LE MENU EST OUVERT ===== */
+		body.menu-open > *:not(.slide-menu):not(.submenu):not(.menu-overlay):not(#toaster):not(#sequencesDropdown):not(#sequencesDropdownMobile) {
 			filter: blur(4px);
 			pointer-events: none;
 			transition: filter 0.3s ease;
-		}
-
-		body.menu-open .toolbar-wrapper {
-			pointer-events: none;
 		}
 
 		body.menu-open .slide-menu,
@@ -2022,22 +2322,27 @@
 		}
 
 		body.menu-open .menu-overlay {
+			filter: none !important;
 			pointer-events: auto;
 		}
 
-		.star-particle {
-			position: fixed;
-			pointer-events: none;
-			font-size: 24px;
-			z-index: 99998;
-			animation: star-float 1.2s ease-out forwards;
+		/* ===== ANIMATIONS ===== */
+		@keyframes shakeX {
+			0%, 100% { transform: translateX(0); }
+			10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+			20%, 40%, 60%, 80% { transform: translateX(5px); }
 		}
 
-		@keyframes star-float {
-			0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
-			100% { opacity: 0; transform: translateY(-150px) scale(0) rotate(180deg); }
+		@keyframes shakeY {
+			0%, 100% { transform: translateY(0); }
+			10%, 30%, 50%, 70%, 90% { transform: translateY(-5px); }
+			20%, 40%, 60%, 80% { transform: translateY(5px); }
 		}
 
+		.shake-x { animation: shakeX 0.9s ease; }
+		.shake-y { animation: shakeY 0.9s ease; }
+
+		/* ===== CONFETTIS ===== */
 		.confetti-container {
 			position: fixed;
 			top: 0;
@@ -2062,68 +2367,77 @@
 			100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
 		}
 
-		.stat-value,
-		.stat-num {
-			color: red;
+		/* ===== MODE DALTONIEN ===== */
+		body.colorblind-mode .toolbar-title,
+		body.colorblind-mode .mobile-title,
+		body.colorblind-mode .submenu-title {
+			color: var(--primary-color) !important;
 		}
 
-		.quiz-end__score {
-			color: red;
+		body.colorblind-mode .answer-icon {
+			display: none !important;
 		}
 
-		::-webkit-scrollbar {
-			width: 4px;
+		body.colorblind-mode .quiz-answer.correct .answer-icon,
+		body.colorblind-mode .quiz-answer.incorrect .answer-icon {
+			display: block !important;
 		}
 
-		::-webkit-scrollbar-track {
-			background: transparent;
+		body.colorblind-mode .quiz-answer.correct .answer-icon svg polyline {
+			stroke: var(--color-correct) !important;
 		}
 
-		::-webkit-scrollbar-thumb {
-			background: #b0b8c4;
-			border-radius: 4px;
+		body.colorblind-mode .quiz-answer.incorrect .answer-icon svg line {
+			stroke: var(--color-incorrect) !important;
 		}
 
-		body.dark-theme ::-webkit-scrollbar-thumb {
-			background: #3d3d3d;
+		body.colorblind-mode .quiz-answer.correct {
+			background: rgba(44, 123, 229, 0.15) !important;
+			border-color: var(--color-correct) !important;
 		}
 
-		@keyframes shakeX {
-			0%, 100% { transform: translateX(0); }
-			10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-			20%, 40%, 60%, 80% { transform: translateX(5px); }
+		body.colorblind-mode .quiz-answer.incorrect {
+			background: rgba(231, 76, 60, 0.15) !important;
+			border-color: var(--color-incorrect) !important;
 		}
 
-		@keyframes shakeY {
-			0%, 100% { transform: translateY(0); }
-			10%, 30%, 50%, 70%, 90% { transform: translateY(-5px); }
-			20%, 40%, 60%, 80% { transform: translateY(5px); }
+		body.dark-theme.colorblind-mode .quiz-answer.correct {
+			background: rgba(74, 144, 217, 0.2) !important;
+			border-color: var(--color-correct) !important;
 		}
 
-		.shake-x {
-			animation: shakeX 0.9s ease;
+		body.dark-theme.colorblind-mode .quiz-answer.incorrect {
+			background: rgba(231, 76, 60, 0.2) !important;
+			border-color: var(--color-incorrect) !important;
 		}
 
-		.shake-y {
-			animation: shakeY 0.9s ease;
+		body.colorblind-mode .answer-letter {
+			background: var(--color-correct) !important;
+			color: white !important;
+			border: 2px solid var(--color-correct) !important;
 		}
 
-		@media (min-width: 601px) {
-			.toolbar-center {
-				padding-top: 20px;
-				padding-bottom: 10px;
-			}
-			.toolbar-title {
-				margin-bottom: 10px;
-			}
-			.toolbar-subtitle {
-				padding-top: 10px;
-			}
-			.container--quiz {
-				top: 25px !important;
-			}
+		body.colorblind-mode .quiz-answer.correct .answer-letter {
+			background: var(--color-correct) !important;
+			border-color: var(--color-correct) !important;
 		}
 
+		body.colorblind-mode .quiz-answer.incorrect .answer-letter {
+			background: var(--color-incorrect) !important;
+			border-color: var(--color-incorrect) !important;
+		}
+
+		body.colorblind-mode .stat-value,
+		body.colorblind-mode .stat-num,
+		body.colorblind-mode .quiz-end__score {
+			color: var(--color-correct);
+		}
+
+		body.colorblind-mode .menu-item .item-badge {
+			background: var(--color-correct);
+		}
+
+		/* ===== RESPONSIVE ===== */
 		@media (max-width: 820px) {
 			.toolbar {
 				height: 64px;
@@ -2141,16 +2455,6 @@
 				width: 46px;
 				height: 46px;
 			}
-			.timer-btn {
-				width: 46px;
-				height: 46px;
-			}
-			.toolbar-title {
-				font-size: clamp(1.4rem, 4vw, 1.8rem);
-			}
-			.toolbar-subtitle {
-				font-size: clamp(0.8rem, 2vw, 1rem);
-			}
 			.btn-sequences {
 				width: 46px;
 				height: 46px;
@@ -2158,6 +2462,16 @@
 			.btn-sequences svg {
 				width: 20px;
 				height: 20px;
+			}
+			.toolbar-title {
+				font-size: clamp(1.4rem, 4vw, 1.8rem);
+			}
+			.toolbar-subtitle {
+				font-size: clamp(0.75rem, 2vw, 0.95rem);
+			}
+			.timer-btn {
+				width: 46px;
+				height: 46px;
 			}
 			.container--quiz-start {
 				min-height: 350px;
@@ -2169,10 +2483,10 @@
 
 		@media (max-width: 600px) {
 			.toolbar {
-				display: none;
+				display: none !important;
 			}
 			.toolbar-mobile {
-				display: flex;
+				display: flex !important;
 			}
 			body {
 				padding: 6px 6px 16px 6px;
@@ -2180,7 +2494,7 @@
 			.container--quiz {
 				border-width: 0;
 				border-radius: 10px;
-				max-width: 100%;
+				max-width: 100% !important;
 				width: 100%;
 				margin-left: 0;
 				margin-right: 0;
@@ -2191,6 +2505,60 @@
 			}
 			.quiz-start__content {
 				min-height: 300px;
+			}
+			.slide-menu {
+				width: 260px;
+				right: -280px;
+				padding: 14px 16px;
+			}
+			.submenu {
+				width: 260px;
+				right: -280px;
+				padding: 14px 16px;
+			}
+			.menu-item {
+				padding: 10px 14px;
+				font-size: 12px;
+				min-height: 48px;
+				border-radius: 8px;
+			}
+			.menu-item svg {
+				width: 20px;
+				height: 20px;
+			}
+			.mobile-buttons {
+				gap: 6px;
+			}
+			.mobile-buttons .btn,
+			.mobile-buttons .timer-btn,
+			.mobile-buttons .btn-sequences {
+				width: 44px;
+				height: 44px;
+				min-width: 44px;
+				min-height: 44px;
+			}
+			.mobile-buttons .btn svg {
+				width: 20px;
+				height: 20px;
+			}
+			.mobile-buttons .btn-sequences svg {
+				width: 20px;
+				height: 20px;
+			}
+			.toolbar-mobile .menu-icon {
+				width: 24px;
+				height: 24px;
+			}
+			.toolbar-mobile .menu-icon svg {
+				width: 24px;
+				height: 24px;
+			}
+			.mobile-title {
+				font-size: 1.1rem;
+			}
+			.mobile-subtitle {
+				font-size: 0.7rem;
+				padding-top: 8px;
 			}
 			.container--question {
 				padding: 2px 8px 2px;
@@ -2212,9 +2580,6 @@
 				border-radius: 0 !important;
 				width: 100% !important;
 				box-sizing: border-box;
-			}
-			.philosophy-text-container {
-				margin: 0 !important;
 			}
 			.next-button-container .quiz-btn {
 				min-width: 80px;
@@ -2241,91 +2606,39 @@
 			.container--quiz-results .bento-score .quiz-end__total {
 				font-size: 1.2rem;
 			}
-			.container--quiz-results .bento-stats {
+			.container--quiz-results .bento-stats-global,
+			.container--quiz-results .bento-stats-personal {
 				gap: 6px;
-				grid-template-columns: repeat(3, 1fr);
 			}
-			.container--quiz-results .bento-stats .stat-item {
+			.container--quiz-results .bento-stats-global .stat-item,
+			.container--quiz-results .bento-stats-personal .stat-item-mini {
 				padding: 6px 4px;
-				font-size: 0.7rem;
 			}
-			.container--quiz-results .bento-stats .stat-item .stat-value,
-			.container--quiz-results .bento-stats .stat-item .stat-num {
+			.container--quiz-results .bento-stats-global .stat-item .stat-value,
+			.container--quiz-results .bento-stats-global .stat-item .stat-num,
+			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-num {
 				font-size: 1rem;
 			}
-			.container--quiz-results .bento-stats .stat-item .stat-label,
-			.container--quiz-results .bento-stats .stat-item .stat-label-mini {
+			.container--quiz-results .bento-stats-global .stat-item .stat-label,
+			.container--quiz-results .bento-stats-global .stat-item .stat-label-mini,
+			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
 				font-size: 0.6rem;
 			}
 			.container--quiz-results .bento-message {
 				font-size: 0.8rem;
 				padding: 8px 12px;
 			}
-			.container--quiz-results .bento-details {
-				padding: 8px 10px;
-			}
 			.bento-actions .quiz-btn {
 				min-width: 80px;
 				font-size: 0.7rem;
 				padding: 6px 12px;
 			}
-			.slide-menu {
-				width: 260px;
-				right: -280px;
-				padding: 14px 16px;
-			}
-			.submenu {
-				width: 260px;
-				right: -280px;
-				padding: 14px 16px;
-			}
-			.menu-item {
-				padding: 10px 14px;
-				font-size: 12px;
-				min-height: 48px;
-				border-radius: 8px;
-			}
-			.menu-item svg {
-				width: 20px;
-				height: 20px;
-			}
-			.quiz-start__content {
-				padding: 10px 14px 16px;
-			}
-			.toolbar-mobile .btn,
-			.toolbar-mobile .timer-btn {
-				width: 40px;
-				height: 40px;
-			}
-			.toolbar-mobile .btn svg {
-				width: 18px;
-				height: 18px;
-			}
-			.toolbar-mobile .menu-icon {
-				width: 16px;
-				height: 12px;
-				gap: 2.5px;
-			}
-			.toolbar-mobile .menu-icon span {
-				height: 1.5px;
-			}
-			.toolbar-mobile .btn-sequences {
-				width: 40px;
-				height: 40px;
-			}
-			.toolbar-mobile .btn-sequences svg {
-				width: 18px;
-				height: 18px;
-			}
-			.mobile-buttons {
-				gap: 4px;
-			}
 			.container--quiz-end {
 				min-height: 300px;
 			}
 			.timer-btn {
-				width: 40px;
-				height: 40px;
+				width: 44px;
+				height: 44px;
 				font-size: 10px !important;
 			}
 			.timer-btn span {
@@ -2334,22 +2647,63 @@
 			.evaluation-progress {
 				font-size: 0.7rem !important;
 				padding: 4px 0 !important;
-				border-radius: 10px 10px 0 0 !important;
+				border-radius: 0 !important;
 				width: 100% !important;
 				box-sizing: border-box;
 			}
 			#questionsContainer {
 				border-radius: 0 0 10px 10px;
 			}
-			.philosophy-text-wrapper.border-radius-top-only {
-				border-radius: 10px 10px 0 0 !important;
-			}
+			.philosophy-text-wrapper.border-radius-top-only,
 			.philosophy-text-wrapper.border-radius-none {
 				border-radius: 0 !important;
+			}
+			.container--quiz-results .bento-actions .quiz-btn {
+				min-width: 80px;
+				font-size: 0.7rem;
+				padding: 6px 12px;
+			}
+			.philosophy-text-content blockquote {
+				font-size: 0.7rem;
+			}
+			.quiz-start__hint {
+				font-size: 0.9rem;
 			}
 		}
 
 		@media (max-width: 400px) {
+			.mobile-buttons {
+				gap: 4px;
+			}
+			.mobile-buttons .btn,
+			.mobile-buttons .timer-btn,
+			.mobile-buttons .btn-sequences {
+				width: 38px;
+				height: 38px;
+				min-width: 38px;
+				min-height: 38px;
+			}
+			.mobile-buttons .btn svg,
+			.mobile-buttons .btn-sequences svg {
+				width: 17px;
+				height: 17px;
+			}
+			.toolbar-mobile .menu-icon {
+				width: 22px;
+				height: 22px;
+			}
+			.toolbar-mobile .menu-icon svg {
+				width: 22px;
+				height: 22px;
+			}
+			.timer-btn {
+				width: 38px;
+				height: 38px;
+				font-size: 9px !important;
+			}
+			.timer-btn span {
+				font-size: 9px !important;
+			}
 			.container--quiz-start {
 				min-height: 250px;
 			}
@@ -2369,19 +2723,22 @@
 				padding: 4px 10px;
 				font-size: 0.6rem;
 			}
-			.container--quiz-results .bento-stats {
+			.container--quiz-results .bento-stats-global,
+			.container--quiz-results .bento-stats-personal {
 				gap: 4px;
-				grid-template-columns: repeat(3, 1fr);
 			}
-			.container--quiz-results .bento-stats .stat-item {
+			.container--quiz-results .bento-stats-global .stat-item,
+			.container--quiz-results .bento-stats-personal .stat-item-mini {
 				padding: 4px 2px;
 			}
-			.container--quiz-results .bento-stats .stat-item .stat-value,
-			.container--quiz-results .bento-stats .stat-item .stat-num {
+			.container--quiz-results .bento-stats-global .stat-item .stat-value,
+			.container--quiz-results .bento-stats-global .stat-item .stat-num,
+			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-num {
 				font-size: 0.8rem;
 			}
-			.container--quiz-results .bento-stats .stat-item .stat-label,
-			.container--quiz-results .bento-stats .stat-item .stat-label-mini {
+			.container--quiz-results .bento-stats-global .stat-item .stat-label,
+			.container--quiz-results .bento-stats-global .stat-item .stat-label-mini,
+			.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
 				font-size: 0.55rem;
 			}
 			.bento-actions .quiz-btn {
@@ -2389,24 +2746,51 @@
 				font-size: 0.6rem;
 				padding: 4px 8px;
 			}
-			.philosophy-text-wrapper.border-radius-top-only {
-				border-radius: 10px 10px 0 0 !important;
-			}
+			.philosophy-text-wrapper.border-radius-top-only,
 			.philosophy-text-wrapper.border-radius-none {
 				border-radius: 0 !important;
+			}
+			.quiz-start__hint {
+				font-size: 0.8rem;
+			}
+		}
+
+		@media (min-width: 601px) {
+			.toolbar-center {
+				padding-top: 20px;
+				padding-bottom: 10px;
+			}
+			.toolbar-title {
+				margin-bottom: 10px;
+			}
+			.toolbar-subtitle {
+				padding-top: 10px;
+			}
+			.container--quiz {
+				top: 25px !important;
 			}
 		}
 	</style>
 </head>
 <body>
 	<div class="hover-trigger" id="hoverTrigger"></div>
+	<!-- ===== TOASTER ===== -->
 	<div id="toaster" class="toaster"></div>
 
-	<!-- ===== TOOLBAR ===== -->
+	<!-- ===== DROPDOWN DES SÉQUENCES ===== -->
+	<div id="sequencesDropdown" class="sequences-dropdown">
+		<div class="dropdown-header">📚 textes disponibles</div>
+		<div class="dropdown-empty">chargement...</div>
+	</div>
+	<div id="sequencesDropdownMobile" class="sequences-dropdown">
+		<div class="dropdown-header">📚 textes disponibles</div>
+		<div class="dropdown-empty">chargement...</div>
+	</div>
+
+	<!-- ===== TOOLBAR DESKTOP ===== -->
 	<div class="toolbar-wrapper">
 		<div class="toolbar" id="toolbarDesktop">
 			<div class="toolbar-left">
-				<!-- BOUTON SÉQUENCES AVEC DROPDOWN LISTE COMPLÈTE -->
 				<div style="position:relative;">
 					<button class="btn-sequences" id="sequencesBtn" data-title="textes (S)">
 						<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
@@ -2415,12 +2799,7 @@
 							<polyline points="9 14 12 11 15 14"/>
 						</svg>
 					</button>
-					<div class="sequences-dropdown" id="sequencesDropdown">
-						<div class="dropdown-header">📚 textes disponibles</div>
-						<div class="dropdown-item" data-value="loading" disabled style="opacity:0.6;font-style:italic;">chargement...</div>
-					</div>
 				</div>
-				<!-- ACCUEIL -->
 				<button class="btn btn-home" data-action="home" data-title="accueil (H)">
 					<div class="icon-wrapper">
 						<svg viewBox="0 0 24 24">
@@ -2430,7 +2809,6 @@
 						</svg>
 					</div>
 				</button>
-				<!-- RECHARGER -->
 				<button class="btn btn-reload" data-action="reload" data-title="recharger (R)">
 					<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<polyline points="23 4 23 10 17 10"/>
@@ -2444,11 +2822,9 @@
 				<div class="toolbar-subtitle" id="appSubtitle">tester ses connaissances</div>
 			</div>
 			<div class="toolbar-right">
-				<!-- TIMER -->
-				<button class="timer-btn" id="timerBtnDesktop" data-title="temps restant (T)">
+				<button class="timer-btn" id="timerBtnDesktop" data-title="réinitialiser le timer (T)">
 					<span id="timerValueDesktop">01:00</span>
 				</button>
-				<!-- PLEIN ÉCRAN -->
 				<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (F)">
 					<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
 						<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
@@ -2457,16 +2833,21 @@
 						<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
 					</svg>
 				</button>
-				<!-- MENU -->
 				<button class="btn btn-menu" data-action="menu" data-title="menu (M)">
-					<div class="menu-icon"><span></span><span></span><span></span></div>
+					<div class="menu-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" shape-rendering="crispEdges">
+							<line x1="3" y1="6" x2="21" y2="6"/>
+							<line x1="3" y1="12" x2="21" y2="12"/>
+							<line x1="3" y1="18" x2="21" y2="18"/>
+						</svg>
+					</div>
 				</button>
 			</div>
 		</div>
 
+		<!-- ===== TOOLBAR MOBILE ===== -->
 		<div class="toolbar-mobile" id="toolbarMobile">
 			<div class="mobile-buttons">
-				<!-- BOUTON SÉQUENCES MOBILE -->
 				<div style="position:relative;">
 					<button class="btn-sequences" id="sequencesBtnMobile" data-title="textes (S)">
 						<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
@@ -2475,12 +2856,7 @@
 							<polyline points="9 14 12 11 15 14"/>
 						</svg>
 					</button>
-					<div class="sequences-dropdown" id="sequencesDropdownMobile">
-						<div class="dropdown-header">📚 textes disponibles</div>
-						<div class="dropdown-item" data-value="loading" disabled style="opacity:0.6;font-style:italic;">chargement...</div>
-					</div>
 				</div>
-				<!-- ACCUEIL -->
 				<button class="btn btn-home" data-action="home" data-title="accueil (H)">
 					<div class="icon-wrapper">
 						<svg viewBox="0 0 24 24">
@@ -2490,7 +2866,6 @@
 						</svg>
 					</div>
 				</button>
-				<!-- RECHARGER -->
 				<button class="btn btn-reload" data-action="reload" data-title="recharger (R)">
 					<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<polyline points="23 4 23 10 17 10"/>
@@ -2498,11 +2873,9 @@
 						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
 					</svg>
 				</button>
-				<!-- TIMER -->
-				<button class="timer-btn" id="timerBtnMobile" data-title="temps restant (T)">
+				<button class="timer-btn" id="timerBtnMobile" data-title="réinitialiser le timer (T)">
 					<span id="timerValueMobile">01:00</span>
 				</button>
-				<!-- PLEIN ÉCRAN -->
 				<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (F)">
 					<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
 						<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
@@ -2511,9 +2884,14 @@
 						<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
 					</svg>
 				</button>
-				<!-- MENU -->
 				<button class="btn btn-menu" data-action="menu" data-title="menu (M)">
-					<div class="menu-icon"><span></span><span></span><span></span></div>
+					<div class="menu-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" shape-rendering="crispEdges">
+							<line x1="3" y1="6" x2="21" y2="6"/>
+							<line x1="3" y1="12" x2="21" y2="12"/>
+							<line x1="3" y1="18" x2="21" y2="18"/>
+						</svg>
+					</div>
 				</button>
 			</div>
 			<div class="mobile-title-wrapper">
@@ -2528,7 +2906,6 @@
 		<div class="wrapper--grid-playlist">
 			<div class="grid-area--player">
 				<div id="quiz" class="container--quiz">
-					<!-- PAGE D'ACCUEIL DU QUIZ (SANS MENU DÉROULANT CENTRAL) -->
 					<div id="quizStart">
 						<div class="container--quiz-start">
 							<div class="quiz-start__img">
@@ -2537,8 +2914,8 @@
 							<div class="quiz-start__opacity"></div>
 							<div class="quiz-start__content">
 								<div class="quiz-start__button">
-									<div id="fileStatus" class="file-status" style="font-size:1.1rem; color:var(--font-color);">
-										<em>cliquez sur le bouton <strong>textes</strong> <span style="display:inline-block;vertical-align:middle;">📁</span> pour charger un quiz</em>
+									<div class="quiz-start__hint" id="fileStatus">
+										cliquez sur « 📁 » dans la barre d'outils<br>pour charger un quiz
 									</div>
 								</div>
 							</div>
@@ -2569,7 +2946,7 @@
 						<div id="questionsContainer"></div>
 					</div>
 
-					<!-- ===== RÉSULTATS ===== -->
+					<!-- RÉSULTATS -->
 					<div id="quizEnd" class="hidden">
 						<div class="container--quiz-end">
 							<div class="container--quiz-results">
@@ -2582,42 +2959,40 @@
 										<span class="quiz-end__total" id="finalTotalDisplay">0</span>
 									</p>
 								</div>
-
-								<div class="bento-stats">
+								<div class="bento-stats-global">
 									<div class="stat-item">
 										<span class="stat-value" id="statsPercentage">0%</span>
 										<span class="stat-label">score</span>
 									</div>
 									<div class="stat-item">
 										<span class="stat-num" id="statsBestScore">0%</span>
-										<span class="stat-label-mini">meilleur score</span>
-									</div>									
+										<span class="stat-label">meilleur score</span>
+									</div>
 									<div class="stat-item">
 										<span class="stat-num" id="statsTotalCorrect">0</span>
-										<span class="stat-label-mini" id="totalCorrectLabel">bonne(s) réponse(s)</span>
-									</div>									
-									<div class="stat-item">
+										<span class="stat-label" id="totalCorrectLabel">bonne(s) réponse(s)</span>
+									</div>
+								</div>
+								<div class="bento-stats-personal">
+									<div class="stat-item-mini">
 										<span class="stat-num" id="statsAvgScore">0%</span>
 										<span class="stat-label-mini">moyenne</span>
 									</div>
-									<div class="stat-item">
-										<span class="stat-value" id="statsAvgTime">0s</span>
-										<span class="stat-label">moyenne</span>
+									<div class="stat-item-mini">
+										<span class="stat-num" id="statsAvgTime">0s</span>
+										<span class="stat-label-mini">temps moyen</span>
 									</div>
-									<div class="stat-item">
+									<div class="stat-item-mini">
 										<span class="stat-num" id="statsGamesPlayed">0</span>
-										<span class="stat-label-mini" id="gamesPlayedLabel">partie(s) jouée(s)</span>
+										<span class="stat-label-mini" id="gamesPlayedLabel">partie(s)</span>
 									</div>
 								</div>
-
 								<div class="bento-message" id="summaryMessage"></div>
-
 								<div class="bento-actions">
 									<button class="quiz-btn" id="quizReviewBtn">réponses</button>
 									<button class="quiz-btn" id="quizRetryBtn">réessayer</button>
 									<button class="quiz-btn" id="quizBackBtn">retour</button>
 								</div>
-
 								<div class="bento-details hidden" id="detailedResults">
 									<h3>📋 détail des réponses :</h3>
 									<div id="questionsReview"></div>
@@ -2630,8 +3005,10 @@
 		</div>
 	</main>
 
-	<!-- ===== MENUS ===== -->
+	<!-- ===== MENU OVERLAY ===== -->
 	<div class="menu-overlay" id="menuOverlay"></div>
+
+	<!-- ===== MENU PRINCIPAL ===== -->
 	<div class="slide-menu" id="slideMenu">
 		<div class="menu-header">
 			<button class="menu-close" id="menuClose">
@@ -2713,17 +3090,42 @@
 		<div class="submenu-title">présentation</div>
 		<div class="submenu-content">
 			<div class="settings-info">
-				<p><i class="fas fa-bullseye"></i> <strong>objectif</strong><br><br>réviser le cours d'HLP</p>
+				<p>
+					<svg class="submenu-icon" viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:24px;">
+						<line x1="1" y1="12" x2="12" y2="12"/>
+						<polyline points="8,9 12,12 8,15"/>
+						<circle cx="28" cy="12" r="10"/>
+						<circle cx="28" cy="12" r="6"/>
+						<circle cx="28" cy="12" r="2"/>
+					</svg>
+					<strong>objectif : </strong>réviser le cours
+				</p>
 			</div>
 			<div class="settings-info">
-				<p><i class="fas fa-bars"></i> <strong>options</strong></p><br>
-				<p><strong>• mode sombre :</strong> pour une lecture confortable</p>
-				<p><strong>• animations :</strong> active / désactive les effets visuels</p>
-				<p><strong>• mode daltonien :</strong> bleu / rouge remplace vert / rouge</p>
-				<p><strong>• mode évaluation :</strong> solutions en fin de quiz</p>
-				<p><strong>• sons :</strong> active / désactive le son</p>
-				<p><strong>• minuteur :</strong> chronométrage du temps de réponse</p>
-				<p><strong>• nombre de questions :</strong> 1-10</p>
+				<p>
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+						<line x1="12" y1="11" x2="12" y2="17"/>
+						<polyline points="9 14 12 11 15 14"/>
+					</svg>
+					<strong>charger des textes : </strong>cliquez sur 📁 puis sur « charger un ou des fichiers .js »</p>
+			</div>
+			<div class="settings-info">
+				<p>
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<line x1="3" y1="6" x2="21" y2="6"/>
+						<line x1="3" y1="12" x2="21" y2="12"/>
+						<line x1="3" y1="18" x2="21" y2="18"/>
+					</svg>
+					<strong>options</strong>
+				</p>
+				<p>• animations : activées/désactivées</p>
+				<p>• mode daltonien</p>
+				<p>• mode évaluation : solutions en fin de quiz</p>
+				<p>• mode sombre</p>
+				<p>• nombre de questions : de 1 à 10</p>
+				<p>• sons : activé/désactivé</p>
+				<p>• timer : chronométrage du temps</p>
 			</div>
 		</div>
 	</div>
@@ -2738,7 +3140,7 @@
 		<div class="submenu-content">
 			<div class="local-file-upload-area" id="loadContainerSubmenu">
 				<button class="upload-btn" id="fileLoadBtnSubmenu">
-					<i class="fas fa-file-upload"></i> charger un ou des fichiers .js
+					charger un ou des fichiers .js
 				</button>
 				<input type="file" id="fileInputSubmenu" accept=".js" multiple />
 			</div>
@@ -2748,10 +3150,19 @@
 				</select>
 			</div>
 			<button class="local-reset-btn" id="localResetBtn">
-				<i class="fas fa-undo-alt"></i> réinitialiser
+				réinitialiser
 			</button>
+			
+			<br><br>
 			<div class="settings-info">
-				<p><i class="fas fa-info-circle"></i> <strong>remarque :</strong></p>
+				<p>
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="12" cy="12" r="10"></circle>
+						<line x1="12" y1="16" x2="12" y2="12"></line>
+						<line x1="12" y1="8" x2="12.01" y2="8"></line>
+					</svg>
+					<strong>remarque</strong>
+				</p>
 				<p style="font-size:12px;opacity:0.8;line-height:1.5;margin-top:8px;">
 					Les fichiers doivent être au format .js et contenir les variables : titre, sous-titre, philosophyData, questions
 				</p>
@@ -2768,19 +3179,38 @@
 		<div class="submenu-title">statistiques</div>
 		<div class="submenu-content">
 			<div class="stats-info">
-				<div class="settings-info">
-					<p><i class="fas fa-chart-simple"></i> <strong>quelques chiffres :</strong></p>
-					<p>• score actuel : <span style="color: red;" id="statsCorrectCount2">0</span> / <span id="statsTotalCount2">0</span></p>
-					<p>• taux de réussite : <span style="color: red;" id="statsPercentage2">0&nbsp;%</span></p>
-					<p>• parties jouées : <span style="color: red;" id="gamesPlayed2">0</span></p>
-				</div>
-				<div class="settings-info">
-					<p><i class="fas fa-save"></i> <strong>sauvegarde :</strong></p>
-					<p>les statistiques sont sauvegardées automatiquement</p>
-				</div>
+				<p>
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M 3 3 L 3 22" />
+						<path d="M 3 22 L 22 22" />
+						<path d="M 7 18 L 11 12 L 15 15 L 21 6" />
+					</svg>
+					<strong>quelques chiffres</strong>
+				</p>
+				<br>
+				<p>• score actuel : <span style="color: var(--primary-color);" id="statsCorrectCount2">0</span> / <span id="statsTotalCount2">0</span></p>
+				<p>• taux de réussite : <span style="color: var(--primary-color);" id="statsPercentage2">0&nbsp;%</span></p>
+				<p>• parties jouées : <span style="color: var(--primary-color);" id="gamesPlayed2">0</span></p>
+			</div>
+			<div class="stats-info">
+				<p>
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+						<polyline points="17 21 17 13 7 13 7 21"/>
+						<polyline points="7 3 7 8 15 8"/>
+					</svg>
+					<strong>sauvegarde</strong>
+				</p>
+				<br>
+				<p>les statistiques sont sauvegardées automatiquement</p>
 			</div>
 			<button class="stats-reload-btn" id="resetStatsBtn" style="font-size: 13px;">
-				<i class="fas fa-sync-alt"></i> réinitialiser les statistiques
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;">
+					<polyline points="23 4 23 10 17 10"/>
+					<polyline points="1 20 1 14 7 14"/>
+					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+				</svg>
+				réinitialiser les statistiques
 			</button>
 		</div>
 	</div>
@@ -2794,28 +3224,68 @@
 		<div class="submenu-title">paramètres</div>
 		<div class="submenu-content">
 			<div class="toggle-container">
-				<span class="toggle-label"><i class="fas fa-moon"></i> mode sombre</span>
-				<label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
-			</div>
-			<div class="toggle-container">
-				<span class="toggle-label"><i class="fas fa-play"></i> animations</span>
+				<span class="toggle-label">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polygon points="5 3 19 12 5 21 5 3"></polygon>
+					</svg>
+					animations
+				</span>
 				<label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label>
-			</div>
+			</div>		
 			<div class="toggle-container">
-				<span class="toggle-label"><i class="fas fa-palette"></i> mode daltonien</span>
+				<span class="toggle-label">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="13.5" cy="6.5" r="0.5" fill="currentColor"/>
+						<circle cx="17.5" cy="10.5" r="0.5" fill="currentColor"/>
+						<circle cx="8.5" cy="7.5" r="0.5" fill="currentColor"/>
+						<circle cx="6.5" cy="12.5" r="0.5" fill="currentColor"/>
+						<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+					</svg>
+					mode daltonien
+				</span>
 				<label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label>
 			</div>
 			<div class="toggle-container">
-				<span class="toggle-label"><i class="fas fa-graduation-cap"></i> mode évaluation</span>
+				<span class="toggle-label">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M12 3L2 8.5L12 14L22 8.5L12 3Z"></path>
+						<path d="M6 11.5V17.5C6 17.5 8 20 12 20C16 20 18 17.5 18 17.5V11.5"></path>
+						<line x1="2" y1="8.5" x2="2" y2="17"></line>
+						<circle cx="2" cy="17" r="2" fill="currentColor" stroke="none"></circle>
+					</svg>
+					mode évaluation
+				</span>
 				<label class="theme-switch"><input type="checkbox" id="deferredEvaluationToggle"><span class="slider"></span></label>
 			</div>
 			<div class="toggle-container">
-				<span class="toggle-label"><i class="fas fa-volume-up"></i> sons</span>
+				<span class="toggle-label">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+					</svg>
+					mode sombre
+				</span>
+				<label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+						<path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+						<path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+					</svg>
+					sons
+				</span>
 				<label class="theme-switch"><input type="checkbox" id="soundToggle"><span class="slider"></span></label>
 			</div>
 			<div class="questions-slider-container" style="margin-top:0;">
 				<div class="questions-slider-label">
-					<span class="toggle-label"><i class="fas fa-hourglass-half"></i> minuteur</span>
+					<span class="toggle-label">
+						<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="12" cy="12" r="10"></circle>
+							<polyline points="12 6 12 12 16 14"></polyline>
+						</svg>
+						minuteur
+					</span>
 					<span class="questions-slider-value" id="timerLimitValue">1 min</span>
 				</div>
 				<input type="range" id="timerLimitSlider" class="questions-slider" min="1" max="6" step="1" value="1">
@@ -2825,7 +3295,17 @@
 			</div>
 			<div class="questions-slider-container">
 				<div class="questions-slider-label">
-					<span class="toggle-label"><i class="fa-solid fa-list"></i> nombre de questions</span>
+					<span class="toggle-label">
+						<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<line x1="8" y1="6" x2="21" y2="6"></line>
+							<line x1="8" y1="12" x2="21" y2="12"></line>
+							<line x1="8" y1="18" x2="21" y2="18"></line>
+							<line x1="3" y1="6" x2="3.01" y2="6"></line>
+							<line x1="3" y1="12" x2="3.01" y2="12"></line>
+							<line x1="3" y1="18" x2="3.01" y2="18"></line>
+						</svg>
+						nombre de questions
+					</span>
 					<span class="questions-slider-value" id="questionCountDisplay">5</span>
 				</div>
 				<input type="range" id="questionCountSlider" class="questions-slider" min="1" max="10" value="5">
@@ -2856,7 +3336,7 @@
 					<tr><td class="key-combo"><kbd>F</kbd></td><td>plein écran</td></tr>
 					<tr><td class="key-combo"><kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr>
 					<tr><td class="key-combo"><kbd>Entrée</kbd></td><td>question suivante</td></tr>
-					<tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer</td></tr>
+					<tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer (sous-menus, popups, menu)</td></tr>
 				</table>
 			</div>
 		</div>
@@ -2870,33 +3350,67 @@
 		</div>
 		<div class="submenu-title">à propos</div>
 		<div class="submenu-content">
-			<div class="settings-info"><p><i class="fas fa-user"></i> application développée par Daniel Boulagnon</p>
-			<p><i class="fas fa-envelope"></i> daniel.boulagnon@ac-lille.fr</p></div>
-			<div class="settings-info"><p><i class="fas fa-tag"></i> version 1.6.5 (2026)</p></div>
-			<div class="settings-info"><p> © exploitation pédagogique et non commerciale</p></div>
+			<div class="settings-info">
+				<div class="about-row">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+						<circle cx="12" cy="7" r="4"/>
+					</svg>
+					<div class="about-text">
+						<p>application développée<br>par Daniel Boulagnon</p>
+					</div>
+				</div>
+				<div class="about-row">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+						<polyline points="22,6 12,13 2,6"/>
+					</svg>
+					<div class="about-text">
+						<p><a href="mailto:daniel.boulagnon@ac-lille.fr?subject=Question%20sur%20la%20boîte%20à%20outils"title="envoyer un mail à Daniel Boulagnon">daniel.boulagnon@ac-lille.fr</a></p>
+					</div>
+				</div>
+				<div class="about-row">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">	
+						<circle cx="12" cy="12" r="10" />
+						<path d="M14.5 9a3.5 3.5 0 1 0 0 6" />
+					</svg>
+					<div class="about-text">
+						<p>exploitation pédagogique</p>
+						<p>et non commerciale</p>
+					</div>
+				</div>
+				<div class="about-row">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+						<line x1="7" y1="7" x2="7.01" y2="7"/>
+					</svg>
+					<div class="about-text">
+						<p>version 2.1.0 (2026)</p>
+					</div>
+				</div>
+				<br>
+			</div>
 		</div>
 	</div>
 
+	<!-- ===== SCRIPTS ===== -->
 	<script>
 	(function() {
 		'use strict';
 
-		// === TITRE PRINCIPAL ===
+		// ===== TITRE =====
 		const APP_TITRE = "quiz φ sur des textes";
 		const APP_SOUS_TITRE = "tester ses connaissances";
 
-		document.querySelectorAll('#appTitle, #mobileTitle, #quizTitle').forEach(el => {
-			if (el) el.textContent = APP_TITRE;
-		});
-		document.querySelectorAll('#appSubtitle, #mobileSubtitle').forEach(el => {
-			if (el) el.textContent = APP_SOUS_TITRE;
-		});
+		document.querySelectorAll('#appTitle, #mobileTitle').forEach(el => { if (el) el.textContent = APP_TITRE; });
+		document.querySelectorAll('#appSubtitle, #mobileSubtitle').forEach(el => { if (el) el.textContent = APP_SOUS_TITRE; });
 
-		// === CHEMIN GITHUB ===
+		// ===== CHEMIN GITHUB =====
 		const GITHUB_REPO = 'inspection-philosophie-lille/boite-a-outils';
 		const GITHUB_PATH = 'fichiers/philo - cours - 05 - quiz sur des textes/quiz';
 		const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/contents/${encodeURIComponent(GITHUB_PATH)}`;
 
+		// ===== ÉTAT GLOBAL =====
 		let philosophyData = { texte: "", source: "" };
 		let questions = [];
 		let currentQuestionIndex = 0;
@@ -2920,7 +3434,10 @@
 		let stats = JSON.parse(localStorage.getItem('quizStats') || '{}');
 		let loadedQuizzes = [];
 		let currentQuizIndex = -1;
+		let currentSequenceInfo = null;
+		let toasterTimeout = null;
 
+		// ===== DOM =====
 		const quizStart = document.getElementById('quizStart');
 		const quizQuestions = document.getElementById('quizQuestions');
 		const quizEnd = document.getElementById('quizEnd');
@@ -2961,41 +3478,37 @@
 		const philosophyTextWrapper = document.getElementById('philosophyTextWrapper');
 		const appSubtitle = document.getElementById('appSubtitle');
 		const mobileSubtitle = document.getElementById('mobileSubtitle');
-
-		// === DROPDOWN DES SÉQUENCES ===
 		const sequencesBtn = document.getElementById('sequencesBtn');
 		const sequencesBtnMobile = document.getElementById('sequencesBtnMobile');
 		const sequencesDropdown = document.getElementById('sequencesDropdown');
 		const sequencesDropdownMobile = document.getElementById('sequencesDropdownMobile');
+		const toggleTextBtn = document.getElementById('toggleTextBtn');
+
+		// ===== SELECT CACHÉ POUR GITHUB =====
+		const githubFileSelect = document.createElement('select');
+		githubFileSelect.id = 'githubFileSelect';
+		githubFileSelect.style.display = 'none';
+		document.body.appendChild(githubFileSelect);
 
 		let currentFilter = "all";
-		let allTextsList = [];
-		let toasterTimeout = null;
 
-		// === FONCTIONS UTILITAIRES ===
-		function capitalizeFirstLetter(str) {
-			if (!str) return str;
-			return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-		}
-
+		// ===== UTILITAIRES =====
+		function capitalizeFirstLetter(str) { if (!str) return str; return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase(); }
 		function getAuthorFromSource(source) {
 			if (!source) return '';
 			const comma = source.indexOf(',');
 			return comma === -1 ? source.trim() : source.substring(0, comma).trim();
 		}
-
 		function updateSubtitleWithAuthor(author) {
 			if (author && author.trim() !== '') {
 				const subtitleText = "tester ses connaissances sur un texte de " + capitalizeFirstLetter(author);
 				if (appSubtitle) appSubtitle.textContent = subtitleText;
 				if (mobileSubtitle) mobileSubtitle.textContent = subtitleText;
 			} else {
-				const defaultSub = "tester ses connaissances";
-				if (appSubtitle) appSubtitle.textContent = defaultSub;
-				if (mobileSubtitle) mobileSubtitle.textContent = defaultSub;
+				if (appSubtitle) appSubtitle.textContent = APP_SOUS_TITRE;
+				if (mobileSubtitle) mobileSubtitle.textContent = APP_SOUS_TITRE;
 			}
 		}
-
 		function showToaster(message, type = 'error', duration = 3000) {
 			const toaster = document.getElementById('toaster');
 			if (!toaster) return;
@@ -3003,13 +3516,8 @@
 			toaster.className = 'toaster';
 			toaster.classList.add('show');
 			clearTimeout(toasterTimeout);
-			if (duration > 0) {
-				toasterTimeout = setTimeout(() => {
-					toaster.classList.remove('show');
-				}, duration);
-			}
+			if (duration > 0) toasterTimeout = setTimeout(() => toaster.classList.remove('show'), duration);
 		}
-
 		function shuffleArray(arr) {
 			for (let i = arr.length - 1; i > 0; i--) {
 				const j = Math.floor(Math.random() * (i + 1));
@@ -3017,105 +3525,59 @@
 			}
 			return arr;
 		}
-
 		function extractSequenceInfo(fileName) {
 			if (!fileName) return { number: "", title: "", cleanTitle: "", partTitle: "", partShort: "", sequenceIndex: "", sequenceIndexLong: "" };
 			let name = fileName.replace('.js', '');
 			let cleanName = name;
 			const firstDashIndex = name.search(/[-–—]/);
-			if (firstDashIndex !== -1) {
-				cleanName = name.substring(firstDashIndex + 1).trim();
-			}
+			if (firstDashIndex !== -1) cleanName = name.substring(firstDashIndex + 1).trim();
 			const fullTitle = cleanName;
 			let cleanTitle = fullTitle;
 			const titleMatch = fullTitle.match(/^\d+\.\d+\s*[-–—]\s*(.+)$/);
-			if (titleMatch) {
-				cleanTitle = titleMatch[1].trim();
-			}
+			if (titleMatch) cleanTitle = titleMatch[1].trim();
 			const numMatch = name.match(/(\d+)\.(\d+)/);
 			if (numMatch) {
 				const partNum = parseInt(numMatch[1]);
 				const seqNum = parseInt(numMatch[2]);
 				let partTitle = "";
 				let partShort = `PART. ${partNum}`;
-				if (partNum === 1) {
-					partTitle = `PARTIE ${partNum} : LES POUVOIRS DE LA PAROLE`;
-				} else if (partNum === 2) {
-					partTitle = `PARTIE ${partNum} : LES REPRÉSENTATIONS DU MONDE`;
-				} else {
-					partTitle = `PARTIE ${partNum}`;
-				}
-				return {
-					number: `${partNum}.${seqNum}`,
-					title: fullTitle,
-					cleanTitle: cleanTitle,
-					partTitle: partTitle,
-					partShort: partShort,
-					sequenceIndex: `SÉQ. ${seqNum}`,
-					sequenceIndexLong: `SÉQUENCE ${seqNum}`
-				};
+				if (partNum === 1) partTitle = `PARTIE ${partNum} : LES POUVOIRS DE LA PAROLE`;
+				else if (partNum === 2) partTitle = `PARTIE ${partNum} : LES REPRÉSENTATIONS DU MONDE`;
+				else partTitle = `PARTIE ${partNum}`;
+				return { number: `${partNum}.${seqNum}`, title: fullTitle, cleanTitle, partTitle, partShort, sequenceIndex: `SÉQ. ${seqNum}`, sequenceIndexLong: `SÉQUENCE ${seqNum}` };
 			}
-			return {
-				number: "",
-				title: fullTitle,
-				cleanTitle: cleanTitle,
-				partTitle: "",
-				partShort: "",
-				sequenceIndex: "",
-				sequenceIndexLong: ""
-			};
+			return { number: "", title: fullTitle, cleanTitle, partTitle: "", partShort: "", sequenceIndex: "", sequenceIndexLong: "" };
 		}
-
 		function protectSpacesAroundTags(text) {
 			if (!text) return text;
 			return text
-				.replace(/(\s+)<(\/?\w+)([^>]*)>/g, (m, spaces, tag, attrs) => {
-					return spaces.replace(/ /g, '&nbsp;') + `<${tag}${attrs}>`;
-				})
-				.replace(/<\/(\w+)>(\s+)/g, (m, tag, spaces) => {
-					return `</${tag}>` + spaces.replace(/ /g, '&nbsp;');
-				});
+				.replace(/(\s+)<(\/?\w+)([^>]*)>/g, (m, spaces, tag, attrs) => spaces.replace(/ /g, '&nbsp;') + `<${tag}${attrs}>`)
+				.replace(/<\/(\w+)>(\s+)/g, (m, tag, spaces) => `</${tag}>` + spaces.replace(/ /g, '&nbsp;'));
 		}
-
-		function protectSpacesInAnswers(answers) {
-			return answers.map(a => protectSpacesAroundTags(a));
-		}
-
+		function protectSpacesInAnswers(answers) { return answers.map(a => protectSpacesAroundTags(a)); }
 		function formatPhilosophyText(text) {
 			if (!text) return '';
 			let formatted = text.replace(/\[(\d+)\]/g, '<span class="bracket-number">[$1]</span>');
-			return formatted.split('\n').filter(p => p.trim()).map(p =>
-				`<p class="philosophy-paragraph">${p.trim()}</p>`
-			).join('');
+			return formatted.split('\n').filter(p => p.trim()).map(p => `<p class="philosophy-paragraph">${p.trim()}</p>`).join('');
 		}
-
 		function extractWorkTitle(source) {
 			if (!source) return null;
 			const firstComma = source.indexOf(',');
 			if (firstComma === -1) return null;
 			let endIndex = source.indexOf(',', firstComma + 1);
-			if (endIndex === -1) {
-				endIndex = source.indexOf('.', firstComma + 1);
-			}
-			if (endIndex === -1) {
-				endIndex = source.length;
-			}
+			if (endIndex === -1) endIndex = source.indexOf('.', firstComma + 1);
+			if (endIndex === -1) endIndex = source.length;
 			let title = source.substring(firstComma + 1, endIndex).trim();
 			title = title.replace(/^["']|["']$/g, '').trim();
 			if (!title) return null;
-			return {
-				title: title,
-				before: source.substring(0, firstComma + 1) + ' ',
-				after: source.substring(endIndex)
-			};
+			return { title, before: source.substring(0, firstComma + 1) + ' ', after: source.substring(endIndex) };
 		}
-
 		function launchConfetti() {
 			if (!animationsEnabled) return;
 			const container = document.createElement('div');
 			container.className = 'confetti-container';
 			document.body.appendChild(container);
-			const colors = ['#ff0000', '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff', '#ff9f43', '#00d2d3', '#f368e0', '#ff9f43'];
+			const colors = ['#ff0000', '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff', '#ff9f43', '#00d2d3', '#f368e0'];
 			for (let i = 0; i < 160; i++) {
 				const piece = document.createElement('div');
 				piece.className = 'confetti-piece';
@@ -3130,7 +3592,6 @@
 			}
 			setTimeout(() => container.remove(), 4000);
 		}
-
 		function playSound(type) {
 			if (!soundEnabled) return;
 			try {
@@ -3149,49 +3610,35 @@
 				audio.play().catch(() => {});
 			} catch (e) {}
 		}
-
 		function preloadSounds() {
 			if (!soundEnabled) return;
-			['reponse-bonne.mp3', 'reponse-mauvaise.mp3', 'score-bon.mp3', 'score-mauvais.mp3', 'bruit-clavier.mp3']
-				.forEach(file => {
-					const audio = new Audio();
-					audio.preload = 'auto';
-					audio.src = '../../src/sounds/' + file;
-					audio.load();
-				});
+			['reponse-bonne.mp3', 'reponse-mauvaise.mp3', 'score-bon.mp3', 'score-mauvais.mp3', 'bruit-clavier.mp3'].forEach(file => {
+				const audio = new Audio();
+				audio.preload = 'auto';
+				audio.src = '../../src/sounds/' + file;
+				audio.load();
+			});
 		}
-
 		function formatTimer(seconds) {
 			if (seconds <= 0) return '00:00';
 			const mins = Math.floor(seconds / 60);
 			const secs = seconds % 60;
 			return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
 		}
-
-		function sliderPosToValue(pos) {
-			if (pos === 6) return 0;
-			return parseInt(pos) * 60;
-		}
-
+		function sliderPosToValue(pos) { if (pos === 6) return 0; return parseInt(pos) * 60; }
 		function valueToSliderPos(val) {
 			if (val === 0) return 6;
 			const minutes = Math.round(val / 60);
 			if (minutes >= 1 && minutes <= 5) return minutes;
 			return 1;
 		}
-
 		function updateTimerDisplay(value) {
 			if (timerValueDesktop) timerValueDesktop.textContent = value;
 			if (timerValueMobile) timerValueMobile.textContent = value;
 		}
-
 		function showTimerButtons(show) {
-			const btns = document.querySelectorAll('.timer-btn');
-			btns.forEach(btn => {
-				btn.style.display = show ? '' : 'none';
-			});
+			document.querySelectorAll('.timer-btn').forEach(btn => { btn.style.display = show ? '' : 'none'; });
 		}
-
 		function startTimer() {
 			timerExpired = false;
 			timerStoppedManually = false;
@@ -3203,31 +3650,23 @@
 			showTimerButtons(true);
 			timeLeft = timerLimit;
 			updateTimerDisplay(formatTimer(timeLeft));
-
 			if (timerInterval) clearInterval(timerInterval);
-
 			timerInterval = setInterval(() => {
 				if (timerStoppedManually) return;
-
 				timeLeft--;
 				updateTimerDisplay(formatTimer(timeLeft));
-
-				const timerBtns = [timerBtnDesktop, timerBtnMobile].filter(b => b);
-				timerBtns.forEach(btn => {
+				[timerBtnDesktop, timerBtnMobile].filter(b => b).forEach(btn => {
 					btn.classList.remove('warning', 'danger');
 					if (timeLeft <= 30 && timeLeft > 0) btn.classList.add('warning');
 					if (timeLeft <= 15 && timeLeft > 0) btn.classList.add('danger');
 				});
-
 				if (timeLeft <= 0) {
 					clearInterval(timerInterval);
 					timerInterval = null;
 					timerExpired = true;
 					if (!quizEnd.classList.contains('hidden') || quizQuestions.classList.contains('hidden')) {
 					} else {
-						if (questionsContainer) {
-							questionsContainer.innerHTML = '';
-						}
+						if (questionsContainer) questionsContainer.innerHTML = '';
 						philosophyText?.classList.add('hidden');
 						forceEndQuiz();
 					}
@@ -3235,17 +3674,10 @@
 				}
 			}, 1000);
 		}
-
 		function stopTimer() {
-			if (timerInterval) {
-				clearInterval(timerInterval);
-				timerInterval = null;
-			}
-			[timerBtnDesktop, timerBtnMobile].forEach(btn => {
-				if (btn) btn.classList.remove('warning', 'danger');
-			});
+			if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+			[timerBtnDesktop, timerBtnMobile].forEach(btn => { if (btn) btn.classList.remove('warning', 'danger'); });
 		}
-
 		function resetTimer() {
 			stopTimer();
 			timerExpired = false;
@@ -3260,7 +3692,17 @@
 			}
 		}
 
-		function displayPhilosophyText(sequenceInfo) {
+		// ===== CLIC SUR LE TIMER : RÉINITIALISATION =====
+		function handleTimerClick() {
+			playSound('click');
+			if (timerLimit > 0) {
+				resetTimer();
+				startTimer();
+				showToaster('⏱️ timer réinitialisé', 'info', 1500);
+			}
+		}
+
+		function displayPhilosophyText() {
 			const textContent = document.getElementById('philosophyTextContent');
 			const sourceContent = document.getElementById('philosophyTextSource');
 			const section = document.getElementById('philosophyText');
@@ -3287,31 +3729,16 @@
 			let authorName = '';
 			if (philosophyData.source && philosophyData.source.trim()) {
 				authorName = getAuthorFromSource(philosophyData.source);
-				const capitalizedAuthor = capitalizeFirstLetter(authorName);
 				updateSubtitleWithAuthor(authorName);
-
 				const workInfo = extractWorkTitle(philosophyData.source);
-				if (workInfo) {
-					formattedSource = workInfo.before +
-						'<span class="work-title">' + workInfo.title + '</span>' +
-						workInfo.after;
-				} else {
-					formattedSource = philosophyData.source;
-				}
-
-				if (textNumber && authorName) {
-					titleEl.textContent = 'TEXTE N°' + textNumber + ' DE ' + authorName.toUpperCase();
-				} else if (textNumber) {
-					titleEl.textContent = 'TEXTE N°' + textNumber;
-				} else if (authorName) {
-					titleEl.textContent = 'TEXTE DE ' + authorName.toUpperCase();
-				}
+				if (workInfo) formattedSource = workInfo.before + '<span class="work-title">' + workInfo.title + '</span>' + workInfo.after;
+				else formattedSource = philosophyData.source;
+				if (textNumber && authorName) titleEl.textContent = 'TEXTE N°' + textNumber + ' DE ' + authorName.toUpperCase();
+				else if (textNumber) titleEl.textContent = 'TEXTE N°' + textNumber;
+				else if (authorName) titleEl.textContent = 'TEXTE DE ' + authorName.toUpperCase();
 			} else {
-				if (textNumber) {
-					titleEl.textContent = 'TEXTE N°' + textNumber;
-				} else {
-					titleEl.textContent = 'TEXTE';
-				}
+				if (textNumber) titleEl.textContent = 'TEXTE N°' + textNumber;
+				else titleEl.textContent = 'TEXTE';
 				updateSubtitleWithAuthor('');
 			}
 
@@ -3331,33 +3758,24 @@
 			}
 		}
 
-		// === GESTION DU BOUTON DE BASCULE DE TEXTE AVEC TOOLTIP ===
-		const toggleTextBtn = document.getElementById('toggleTextBtn');
 		if (toggleTextBtn) {
 			toggleTextBtn.addEventListener('click', function() {
 				playSound('click');
 				togglePhilosophyText();
 			});
 		}
-
 		function togglePhilosophyText() {
 			const btn = document.getElementById('toggleTextBtn');
 			const content = document.querySelector('.philosophy-text-content');
 			if (btn && content) {
 				btn.classList.toggle('collapsed');
 				content.classList.toggle('collapsed');
-				if (btn.classList.contains('collapsed')) {
-					btn.dataset.title = 'montrer le texte';
-				} else {
-					btn.dataset.title = 'cacher le texte';
-				}
+				btn.dataset.title = btn.classList.contains('collapsed') ? 'montrer le texte' : 'cacher le texte';
 			}
 		}
 
 		function updateStats(notionId, correct, total) {
-			if (!stats[notionId]) {
-				stats[notionId] = { attempts: 0, totalCorrect: 0, totalQuestions: 0, bestScore: 0, scores: [] };
-			}
+			if (!stats[notionId]) stats[notionId] = { attempts: 0, totalCorrect: 0, totalQuestions: 0, bestScore: 0, scores: [] };
 			const s = stats[notionId];
 			s.attempts++;
 			s.totalCorrect += correct;
@@ -3369,7 +3787,6 @@
 			localStorage.setItem('quizStats', JSON.stringify(stats));
 			updateGlobalStatsDisplay();
 		}
-
 		function updateGlobalStatsDisplay() {
 			const pct = totalQuestionsAnswered ? Math.round((totalCorrectAnswers / totalQuestionsAnswered) * 100) : 0;
 			document.querySelectorAll('#statsCorrectCount2').forEach(el => el.textContent = totalCorrectAnswers);
@@ -3379,7 +3796,6 @@
 			const badge = document.getElementById('statsBadge');
 			if (badge) badge.textContent = pct + '%';
 		}
-
 		function resetStats() {
 			stats = {};
 			localStorage.setItem('quizStats', JSON.stringify(stats));
@@ -3390,251 +3806,10 @@
 			localStorage.setItem('totalQuestionsAnswered', '0');
 			localStorage.setItem('gamesPlayed', '0');
 			updateGlobalStatsDisplay();
-			if (currentSequenceInfo?.cleanTitle) {
-				updateGlobalStatsDisplay();
-			}
 			showToaster('Statistiques réinitialisées !', 'info', 2500);
 		}
 
-		let currentSequenceInfo = null;
-
-		function loadQuizData(file) {
-			return new Promise((resolve, reject) => {
-				const reader = new FileReader();
-				reader.onload = function(event) {
-					try {
-						const code = event.target.result + '\nreturn {titre, sousTitre, philosophyData, questions};';
-						const func = new Function(code);
-						const result = func();
-						if (result.philosophyData && Array.isArray(result.questions) && result.questions.length > 0) {
-							resolve({
-								name: file.name.replace('.js', ''),
-								data: result
-							});
-						} else {
-							reject(new Error('Données incomplètes dans le fichier'));
-						}
-					} catch (err) {
-						reject(err);
-					}
-				};
-				reader.onerror = function() {
-					reject(new Error('Erreur de lecture du fichier'));
-				};
-				reader.readAsText(file);
-			});
-		}
-
-		function loadMultipleQuizzes(files) {
-			const validFiles = Array.from(files).filter(f => f.name.endsWith('.js'));
-			if (validFiles.length === 0) {
-				showToaster('Veuillez sélectionner des fichiers .js valides.', 'error', 3000);
-				return;
-			}
-
-			Promise.all(validFiles.map(f => loadQuizData(f)))
-				.then(results => {
-					loadedQuizzes = loadedQuizzes.concat(results);
-					updateSelectorSubmenu();
-					updateSequencesDropdown();
-					try {
-						localStorage.setItem('loadedQuizzes', JSON.stringify(loadedQuizzes));
-						loadedQuizzes.forEach((qz, index) => {
-							localStorage.setItem('quizData_' + index, JSON.stringify(qz.data));
-						});
-					} catch (e) {
-						console.error('Erreur sauvegarde:', e);
-					}
-					showToaster(`${results.length} quiz chargé(s) avec succès !`, 'info', 2500);
-				})
-				.catch(err => {
-					console.error('Erreur de chargement:', err);
-					showToaster('Erreur lors du chargement des fichiers: ' + err.message, 'error', 3000);
-				});
-		}
-
-		// Fonction pour formater le nom d'un fichier : garder le début du nom complet
-		function getCleanFileName(fileName) {
-			let name = fileName.replace('.js', '');
-			// On ne supprime pas le préfixe pour garder le début du titre
-			// On garde le nom complet mais on peut retirer l'extension
-			return name;
-		}
-
-		// Fonction pour afficher un nom tronqué avec des points de suspension
-		function truncateName(name, maxLength) {
-			if (!name) return '';
-			if (name.length <= maxLength) return name;
-			return name.substring(0, maxLength) + '...';
-		}
-
-		function updateSelectorSubmenu() {
-			if (!quizSelectorSubmenu) return;
-
-			let optionsHtml = '<option value="">-- sélectionner un texte --</option>';
-			loadedQuizzes.forEach((qz, index) => {
-				// On garde le nom complet du fichier (sans l'extension)
-				const displayName = getCleanFileName(qz.name);
-				// On tronque pour l'affichage dans la liste déroulante
-				const truncatedDisplay = truncateName(displayName, 45);
-				const isSelected = index === currentQuizIndex ? 'selected' : '';
-				optionsHtml += `<option value="${index}" ${isSelected}>${truncatedDisplay}</option>`;
-			});
-			quizSelectorSubmenu.innerHTML = optionsHtml;
-
-			if (loadedQuizzes.length > 0) {
-				selectorContainerSubmenu.style.display = 'block';
-				loadContainerSubmenu.style.display = 'none';
-			} else {
-				selectorContainerSubmenu.style.display = 'none';
-				loadContainerSubmenu.style.display = 'block';
-			}
-		}
-
-		// === MISE À JOUR DU DROPDOWN DES SÉQUENCES (AFFICHAGE COMPLET) ===
-		function updateSequencesDropdown() {
-			const items = [];
-			
-			// Récupérer les textes depuis GitHub
-			if (githubFileSelect) {
-				for (let i = 0; i < githubFileSelect.options.length; i++) {
-					const opt = githubFileSelect.options[i];
-					if (opt.value && opt.value !== 'loading' && opt.value !== 'error') {
-						items.push({
-							name: opt.textContent,
-							value: opt.value,
-							display: opt.textContent
-						});
-					}
-				}
-			}
-			
-			// Ajouter les textes chargés localement - on garde le nom complet
-			loadedQuizzes.forEach(qz => {
-				const displayName = getCleanFileName(qz.name);
-				if (!items.find(t => t.name === displayName)) {
-					items.push({
-						name: displayName,
-						value: 'local_' + qz.name,
-						display: displayName
-					});
-				}
-			});
-
-			allTextsList = items;
-
-			let html = '<div class="dropdown-header">📚 textes disponibles</div>';
-			
-			if (items.length === 0) {
-				html += '<div class="dropdown-empty">aucun texte disponible</div>';
-			} else {
-				// Trier par ordre alphabétique
-				items.sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
-				
-				for (const item of items) {
-					const isActive = (currentFilter === item.value || currentFilter === item.name);
-					// On tronque l'affichage si nécessaire (les points de suspension sont gérés par CSS)
-					const displayText = item.display;
-					html += `<div class="dropdown-item${isActive ? ' active' : ''}" data-value="${item.value.replace(/"/g, '&quot;')}" data-fullname="${item.name.replace(/"/g, '&quot;')}" title="${displayText}">${displayText}</div>`;
-				}
-			}
-
-			sequencesDropdown.innerHTML = html;
-			sequencesDropdownMobile.innerHTML = html;
-
-			// Événements pour les items du dropdown
-			document.querySelectorAll('.sequences-dropdown .dropdown-item[data-value]').forEach(el => {
-				el.addEventListener('click', function(e) {
-					e.stopPropagation();
-					const value = this.dataset.value;
-					if (!value || value === 'loading') return;
-					
-					currentFilter = value;
-					localStorage.setItem('selectedTextFilter', value);
-					
-					updateSequencesDropdown();
-					
-					if (value === "all") {
-						if (githubFileSelect && githubFileSelect.options.length > 1) {
-							const firstOpt = githubFileSelect.options[1];
-							if (firstOpt && firstOpt.value) {
-								githubFileSelect.value = firstOpt.value;
-								loadFromGitHub(firstOpt.value);
-							}
-						}
-					} else {
-						if (githubFileSelect) {
-							for (let i = 0; i < githubFileSelect.options.length; i++) {
-								const opt = githubFileSelect.options[i];
-								if (opt.textContent === value || opt.value === value) {
-									githubFileSelect.value = opt.value;
-									loadFromGitHub(opt.value);
-									break;
-								}
-							}
-						}
-					}
-					
-					closeSequencesDropdown();
-					playSound('click');
-				});
-			});
-		}
-
-		// === GESTION DU DROPDOWN ===
-		function toggleSequencesDropdown(event) {
-			event.stopPropagation();
-			const dropdown = this.id === 'sequencesBtn' ? sequencesDropdown : sequencesDropdownMobile;
-			dropdown.classList.toggle('open');
-		}
-
-		function closeSequencesDropdown() {
-			if (sequencesDropdown) sequencesDropdown.classList.remove('open');
-			if (sequencesDropdownMobile) sequencesDropdownMobile.classList.remove('open');
-		}
-
-		if (sequencesBtn) {
-			sequencesBtn.addEventListener('click', toggleSequencesDropdown);
-		}
-		if (sequencesBtnMobile) {
-			sequencesBtnMobile.addEventListener('click', toggleSequencesDropdown);
-		}
-
-		document.addEventListener('click', function(e) {
-			if (!e.target.closest('.btn-sequences') && !e.target.closest('.sequences-dropdown')) {
-				closeSequencesDropdown();
-			}
-		});
-
-		function loadQuizByIndex(index) {
-			if (index < 0 || index >= loadedQuizzes.length) return;
-			const quiz = loadedQuizzes[index];
-			currentQuizIndex = index;
-			const data = quiz.data;
-			const fileName = quiz.name;
-			currentSequenceInfo = extractSequenceInfo(fileName + '.js');
-			philosophyData = data.philosophyData || { texte: "", source: "" };
-			questions = data.questions || [];
-
-			if (fileStatus) {
-				const displayName = getCleanFileName(fileName);
-				fileStatus.textContent = `✅ "${truncateName(displayName, 50)}" chargé !`;
-			}
-
-			updateSelectorSubmenu();
-			localStorage.setItem('currentQuizIndex', index.toString());
-
-			if (questions.length > 0) {
-				setTimeout(startQuiz, 300);
-			}
-		}
-
-		// === CRÉATION D'UN SELECT CACHÉ POUR GITHUB (utilisé en interne) ===
-		const githubFileSelect = document.createElement('select');
-		githubFileSelect.id = 'githubFileSelect';
-		githubFileSelect.style.display = 'none';
-		document.body.appendChild(githubFileSelect);
-
+		// ===== GITHUB =====
 		async function fetchGitHubFiles() {
 			try {
 				fileStatus.textContent = 'Connexion à GitHub...';
@@ -3653,12 +3828,10 @@
 					githubFileSelect.appendChild(opt);
 				});
 
-				fileStatus.textContent = `${jsFiles.length} texte${jsFiles.length > 1 ? 's' : ''} disponible${jsFiles.length > 1 ? 's' : ''}`;
-
+				fileStatus.innerHTML = 'cliquez sur « 📁 » dans la barre d\'outils<br>pour charger un quiz';
 				updateSequencesDropdown();
-
 			} catch (err) {
-				fileStatus.textContent = `Erreur: ${err.message}`;
+				fileStatus.innerHTML = 'cliquez sur « 📁 » dans la barre d\'outils<br>pour charger un quiz';
 				githubFileSelect.innerHTML = `<option value="">-- Erreur --</option><option value="error" disabled>Impossible de charger</option>`;
 				updateSequencesDropdown();
 			}
@@ -3680,82 +3853,264 @@
 					currentSequenceInfo = extractSequenceInfo(fileName);
 					const displayName = getCleanFileName(fileName);
 					fileStatus.textContent = `✅ "${truncateName(displayName, 50)}" chargé !`;
-					
 					updateSequencesDropdown();
-					
 					setTimeout(startQuiz, 600);
 				} else {
 					throw new Error('Données incomplètes');
 				}
 			} catch (err) {
-				fileStatus.textContent = `❌ Erreur: ${err.message}`;
+				fileStatus.innerHTML = 'cliquez sur « 📁 » dans la barre d\'outils<br>pour charger un quiz';
 			}
 		}
 
+		// ===== CHARGEMENT LOCAL =====
+		function loadQuizData(file) {
+			return new Promise((resolve, reject) => {
+				const reader = new FileReader();
+				reader.onload = function(event) {
+					try {
+						const code = event.target.result + '\nreturn {titre, sousTitre, philosophyData, questions};';
+						const func = new Function(code);
+						const result = func();
+						if (result.philosophyData && Array.isArray(result.questions) && result.questions.length > 0) {
+							resolve({ name: file.name.replace('.js', ''), data: result });
+						} else {
+							reject(new Error('Données incomplètes dans ' + file.name));
+						}
+					} catch (err) {
+						reject(new Error('Erreur dans ' + file.name + ' : ' + err.message));
+					}
+				};
+				reader.onerror = function() { reject(new Error('Erreur de lecture de ' + file.name)); };
+				reader.readAsText(file);
+			});
+		}
+
+		function loadMultipleQuizzes(files) {
+			const validFiles = Array.from(files).filter(f => f.name.endsWith('.js'));
+			if (validFiles.length === 0) {
+				showToaster('Veuillez sélectionner des fichiers .js valides.', 'error', 3000);
+				return;
+			}
+			Promise.all(validFiles.map(f => loadQuizData(f)))
+				.then(results => {
+					results.forEach(newQuiz => {
+						const existingIdx = loadedQuizzes.findIndex(q => q.name === newQuiz.name);
+						if (existingIdx >= 0) loadedQuizzes[existingIdx] = newQuiz;
+						else loadedQuizzes.push(newQuiz);
+					});
+					saveLoadedQuizzesToBuffer();
+					updateSelectorSubmenu();
+					updateSequencesDropdown();
+					showToaster(`✅ ${results.length} quiz chargé(s) dans la mémoire tampon !`, 'info', 3000);
+					if (loadedQuizzes.length >= 1 && currentQuizIndex === -1) loadQuizByIndex(0);
+				})
+				.catch(err => {
+					console.error('Erreur de chargement:', err);
+					showToaster('❌ ' + err.message, 'error', 4000);
+				});
+		}
+
+		function saveLoadedQuizzesToBuffer() {
+			try {
+				const serializable = loadedQuizzes.map(q => ({ name: q.name, data: q.data }));
+				localStorage.setItem('loadedQuizzes', JSON.stringify(serializable));
+				localStorage.setItem('currentQuizIndex', currentQuizIndex.toString());
+			} catch (e) {
+				console.error('Erreur sauvegarde mémoire tampon:', e);
+			}
+		}
+
+		function restoreLoadedQuizzesFromBuffer() {
+			try {
+				const saved = localStorage.getItem('loadedQuizzes');
+				if (!saved) return false;
+				const parsed = JSON.parse(saved);
+				if (Array.isArray(parsed) && parsed.length > 0) {
+					loadedQuizzes = parsed;
+					updateSelectorSubmenu();
+					const savedIndex = parseInt(localStorage.getItem('currentQuizIndex') || '-1');
+					if (savedIndex >= 0 && savedIndex < loadedQuizzes.length) loadQuizByIndex(savedIndex);
+					return true;
+				}
+			} catch (e) {
+				console.error('Erreur restauration mémoire tampon:', e);
+			}
+			return false;
+		}
+
+		function getCleanFileName(fileName) { return fileName.replace('.js', ''); }
+		function truncateName(name, maxLength) {
+			if (!name) return '';
+			if (name.length <= maxLength) return name;
+			return name.substring(0, maxLength) + '...';
+		}
+
+		function updateSelectorSubmenu() {
+			if (!quizSelectorSubmenu) return;
+			let optionsHtml = '<option value="">-- sélectionner un texte --</option>';
+			loadedQuizzes.forEach((qz, index) => {
+				const displayName = getCleanFileName(qz.name);
+				const truncatedDisplay = truncateName(displayName, 45);
+				const isSelected = index === currentQuizIndex ? 'selected' : '';
+				optionsHtml += `<option value="${index}" ${isSelected}>${truncatedDisplay}</option>`;
+			});
+			quizSelectorSubmenu.innerHTML = optionsHtml;
+			if (loadedQuizzes.length > 0) {
+				selectorContainerSubmenu.style.display = 'block';
+				loadContainerSubmenu.style.display = 'none';
+			} else {
+				selectorContainerSubmenu.style.display = 'none';
+				loadContainerSubmenu.style.display = 'block';
+			}
+		}
+
+		// ===== DROPDOWN =====
+		function updateSequencesDropdown() {
+			const items = [];
+			if (githubFileSelect) {
+				for (let i = 0; i < githubFileSelect.options.length; i++) {
+					const opt = githubFileSelect.options[i];
+					if (opt.value && opt.value !== 'loading' && opt.value !== 'error' && opt.value !== '') {
+						items.push({ name: opt.textContent, value: opt.value, display: opt.textContent });
+					}
+				}
+			}
+			loadedQuizzes.forEach(qz => {
+				const displayName = getCleanFileName(qz.name);
+				if (!items.find(t => t.name === displayName)) {
+					items.push({ name: displayName, value: 'local_' + qz.name, display: displayName });
+				}
+			});
+
+			let html = '<div class="dropdown-header">📚 textes disponibles</div>';
+			if (items.length === 0) {
+				html += '<div class="dropdown-empty">chargement...</div>';
+			} else {
+				items.sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
+				for (const item of items) {
+					html += `<div class="dropdown-item" data-value="${item.value.replace(/"/g, '&quot;')}" data-fullname="${item.name.replace(/"/g, '&quot;')}" title="${item.display}">${item.display}</div>`;
+				}
+			}
+
+			html += '<div class="dropdown-divider"></div>';
+			html += `<button class="dropdown-action primary" id="ddLoadBtn">
+				<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+				charger un ou des fichiers .js
+			</button>`;
+
+			[sequencesDropdown, sequencesDropdownMobile].forEach(dropdown => {
+				if (!dropdown) return;
+				dropdown.innerHTML = html;
+
+				dropdown.querySelectorAll('.dropdown-item[data-value]').forEach(el => {
+					el.addEventListener('click', function(e) {
+						e.stopPropagation();
+						const value = this.dataset.value;
+						if (!value || value === 'loading') return;
+						if (value.startsWith('local_')) {
+							const idx = loadedQuizzes.findIndex(qz => 'local_' + qz.name === value);
+							if (idx >= 0) loadQuizByIndex(idx);
+						} else {
+							loadFromGitHub(value);
+						}
+						closeSequencesDropdown();
+						playSound('click');
+					});
+				});
+
+				const ddLoadBtn = dropdown.querySelector('#ddLoadBtn');
+				if (ddLoadBtn) {
+					ddLoadBtn.addEventListener('click', function(e) {
+						e.stopPropagation();
+						closeSequencesDropdown();
+						playSound('click');
+						document.getElementById('localFilesButton')?.click();
+					});
+				}
+			});
+		}
+
+		function toggleSequencesDropdown(event) {
+			event.stopPropagation();
+			const dropdown = this.id === 'sequencesBtn' ? sequencesDropdown : sequencesDropdownMobile;
+			dropdown.classList.toggle('open');
+		}
+		function closeSequencesDropdown() {
+			if (sequencesDropdown) sequencesDropdown.classList.remove('open');
+			if (sequencesDropdownMobile) sequencesDropdownMobile.classList.remove('open');
+		}
+		if (sequencesBtn) sequencesBtn.addEventListener('click', toggleSequencesDropdown);
+		if (sequencesBtnMobile) sequencesBtnMobile.addEventListener('click', toggleSequencesDropdown);
+		document.addEventListener('click', function(e) {
+			if (!e.target.closest('.btn-sequences') && !e.target.closest('.sequences-dropdown')) closeSequencesDropdown();
+		});
+
+		function loadQuizByIndex(index) {
+			if (index < 0 || index >= loadedQuizzes.length) return;
+			const quiz = loadedQuizzes[index];
+			currentQuizIndex = index;
+			const data = quiz.data;
+			const fileName = quiz.name;
+			currentSequenceInfo = extractSequenceInfo(fileName + '.js');
+			philosophyData = data.philosophyData || { texte: "", source: "" };
+			questions = data.questions || [];
+
+			const displayName = getCleanFileName(fileName);
+			if (fileStatus) fileStatus.innerHTML = `✅ "${truncateName(displayName, 50)}" chargé !`;
+
+			updateSelectorSubmenu();
+			updateSequencesDropdown();
+			localStorage.setItem('currentQuizIndex', index.toString());
+			if (questions.length > 0) setTimeout(startQuiz, 300);
+		}
+
+		// ===== QUIZ =====
 		function startQuiz() {
 			if (questions.length < totalQuestions) {
 				showToaster(`Le texte ne contient que ${questions.length} questions. Il en faut ${totalQuestions}.`, 'error', 3000);
 				return;
 			}
-
 			const indices = Array.from({ length: questions.length }, (_, i) => i);
 			shuffleArray(indices);
 			shuffledQuestions = indices.slice(0, totalQuestions).map(i => questions[i]);
-
 			currentQuestionIndex = 0;
 			score = 0;
 			userAnswers = [];
 			questionTimes = [];
-
 			quizStart.classList.add('hidden');
 			quizEnd.classList.add('hidden');
 			quizQuestions.classList.remove('hidden');
 			detailedResults.classList.add('hidden');
-
-			displayPhilosophyText(currentSequenceInfo);
+			displayPhilosophyText();
 			philosophyText?.classList.remove('hidden');
-
 			const btn = document.getElementById('toggleTextBtn');
 			const content = document.querySelector('.philosophy-text-content');
-			if (btn) {
-				btn.classList.add('collapsed');
-				btn.dataset.title = 'montrer le texte';
-			}
+			if (btn) { btn.classList.add('collapsed'); btn.dataset.title = 'montrer le texte'; }
 			if (content) content.classList.add('collapsed');
-
-			const totalSpan = document.getElementById('totalQuestions');
-			if (totalSpan) totalSpan.textContent = totalQuestions;
-
 			if (isDeferredEvaluation && evalCurrentText && evalTotalTexts) {
 				evalCurrentText.textContent = '1';
 				evalTotalTexts.textContent = totalQuestions;
 			}
-
 			gamesPlayed++;
 			localStorage.setItem('gamesPlayed', gamesPlayed);
 			updateGlobalStatsDisplay();
-
 			resetTimer();
-			if (timerEnabled && timerLimit > 0) {
-				startTimer();
-			}
-
+			if (timerEnabled && timerLimit > 0) startTimer();
 			displayNextQuestion();
 		}
 
 		function displayNextQuestion() {
 			if (!questionsContainer) return;
 			questionsContainer.innerHTML = '';
-
 			if (currentQuestionIndex < totalQuestions) {
 				const q = shuffledQuestions[currentQuestionIndex];
 				const shuffledAnswers = [...q.answers];
 				shuffleArray(shuffledAnswers);
 				const protectedAnswers = protectSpacesInAnswers(shuffledAnswers);
 				const letters = ['A', 'B', 'C', 'D', 'E'];
-
 				const el = document.createElement('div');
-				el.className = 'container--question';
+				el.className = 'container--question visible';
 				el.innerHTML = `
 					<fieldset>
 						<legend><p>${q.question}</p></legend>
@@ -3765,50 +4120,38 @@
 									<span class="answer-letter">${letters[i]}</span>
 									<span>${a}</span>
 								</div>
-								<div class="daltonic-icon correct-icon">
+								<div class="answer-icon">
 									<svg viewBox="0 0 24 24" width="24" height="24" fill="none">
-										<polyline class="check-mark" points="4 12 9 17 20 6" stroke="var(--color-correct)" stroke-width="2"/>
-									</svg>
-								</div>
-								<div class="daltonic-icon incorrect-icon">
-									<svg viewBox="0 0 24 24" width="24" height="24" fill="none">
-										<line class="cross-mark" x1="6" y1="6" x2="18" y2="18" stroke="var(--color-incorrect)" stroke-width="2"/>
-										<line class="cross-mark" x1="18" y1="6" x2="6" y2="18" stroke="var(--color-incorrect)" stroke-width="2"/>
+										${q.answers[q.correct - 1] === shuffledAnswers[i] ? '<polyline points="4 12 9 17 20 6" stroke="var(--color-correct)" stroke-width="2"/>' : '<line x1="6" y1="6" x2="18" y2="18" stroke="var(--color-incorrect)" stroke-width="2"/><line x1="18" y1="6" x2="6" y2="18" stroke="var(--color-incorrect)" stroke-width="2"/>'}
 									</svg>
 								</div>
 							</li>
 						`).join('')}</ul>
 					</fieldset>
 					<div class="next-button-container">
-						<button class="quiz-btn next-question-btn">${currentQuestionIndex === totalQuestions - 1 ? 'score' : 'question suivante'}</button>
+						<button class="quiz-btn next-question-btn">${currentQuestionIndex === totalQuestions - 1 ? 'score' : 'suivant'}</button>
 					</div>
 					<div class="quiz-explanation hidden">
-						<div class="quiz-explanation__label"><span></span></div>
-						<p class="quiz-explanation__detail"><strong>Explication : </strong>${q.explanation ? q.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>') : ''}</p>
+						<div class="quiz-explanation__label">
+							<img src="src/emoji-happy.gif" alt="bonne réponse" class="success" style="display: none;">
+							<img src="src/emoji-sad.gif" alt="mauvaise réponse" class="error" style="display: none;">
+							<span>Mauvaise réponse !</span>
+						</div>
+						<p class="quiz-explanation__detail">${q.explanation ? q.explanation.replace('Exemple :', '<br><br><strong>Exemple :</strong>') : ''}</p>
 					</div>
 				`;
 				questionsContainer.appendChild(el);
-
 				const answers = el.querySelectorAll('.quiz-answer');
 				answers.forEach((ansEl, i) => {
-					ansEl.addEventListener('click', function(e) {
+					ansEl.addEventListener('click', function() {
 						const container = this.closest('.container--question');
 						const alreadyAnswered = container.querySelector('.quiz-answer.correct, .quiz-answer.incorrect, .quiz-answer.selected');
 						if (alreadyAnswered) return;
-
-						if (!timerStoppedManually) {
-							timerStoppedManually = true;
-							stopTimer();
-						}
-
-						if (isDeferredEvaluation) {
-							selectAnswer(this, shuffledAnswers[i]);
-						} else {
-							checkAnswer(this, shuffledAnswers[i], shuffledAnswers);
-						}
+						if (!timerStoppedManually) { timerStoppedManually = true; stopTimer(); }
+						if (isDeferredEvaluation) selectAnswer(this, shuffledAnswers[i]);
+						else checkAnswer(this, shuffledAnswers[i], shuffledAnswers);
 					});
 				});
-
 				const nextBtn = el.querySelector('.next-question-btn');
 				nextBtn.onclick = () => {
 					if (!isDeferredEvaluation) {
@@ -3817,29 +4160,15 @@
 							return;
 						}
 					} else if (!userAnswers[currentQuestionIndex]) {
-						const q = shuffledQuestions[currentQuestionIndex];
-						userAnswers[currentQuestionIndex] = {
-							question: q.question,
-							userAnswer: null,
-							correctAnswer: '',
-							explanation: q.explanation,
-							allAnswers: shuffledAnswers
-						};
+						const q2 = shuffledQuestions[currentQuestionIndex];
+						userAnswers[currentQuestionIndex] = { question: q2.question, userAnswer: null, correctAnswer: '', explanation: q2.explanation, allAnswers: shuffledAnswers };
 					}
-
 					currentQuestionIndex++;
 					resetTimer();
-					if (timerEnabled && timerLimit > 0 && currentQuestionIndex < totalQuestions) {
-						startTimer();
-					}
-					if (isDeferredEvaluation && evalCurrentText) {
-						evalCurrentText.textContent = currentQuestionIndex + 1;
-					}
+					if (timerEnabled && timerLimit > 0 && currentQuestionIndex < totalQuestions) startTimer();
+					if (isDeferredEvaluation && evalCurrentText) evalCurrentText.textContent = currentQuestionIndex + 1;
 					displayNextQuestion();
 				};
-
-				const currentSpan = document.getElementById('currentQuestion');
-				if (currentSpan) currentSpan.textContent = currentQuestionIndex + 1;
 			} else {
 				stopTimer();
 				endQuiz();
@@ -3848,99 +4177,71 @@
 
 		function selectAnswer(selected, selectedText) {
 			stopTimer();
-
 			const parent = selected.parentNode;
 			Array.from(parent.children).forEach(a => a.classList.remove('selected'));
 			selected.classList.add('selected');
-
 			const q = shuffledQuestions[currentQuestionIndex];
-
 			const timeSpent = timerLimit - timeLeft;
 			questionTimes.push(timeSpent);
-
 			userAnswers[currentQuestionIndex] = {
-				question: q.question,
-				userAnswer: selectedText,
-				correctAnswerIndex: q.correct - 1,
-				explanation: q.explanation,
-				allAnswers: Array.from(parent.children).map(el => el.dataset.original || el.textContent)
+				question: q.question, userAnswer: selectedText, correctAnswerIndex: q.correct - 1,
+				explanation: q.explanation, allAnswers: Array.from(parent.children).map(el => el.dataset.original || el.textContent)
 			};
 		}
 
 		function checkAnswer(selected, selectedText, shuffledAnswers) {
 			stopTimer();
-
 			const parent = selected.parentNode;
 			const container = selected.closest('.container--question');
 			const label = container.querySelector('.quiz-explanation__label span');
+			const successIcon = container.querySelector('.quiz-explanation__label .success');
+			const errorIcon = container.querySelector('.quiz-explanation__label .error');
 			totalQuestionsAnswered++;
 			localStorage.setItem('totalQuestionsAnswered', totalQuestionsAnswered);
-
 			const q = shuffledQuestions[currentQuestionIndex];
 			const correctText = q.answers[q.correct - 1] || q.answers[0];
-
 			const timeSpent = timerLimit - timeLeft;
 			questionTimes.push(timeSpent);
-
 			userAnswers[currentQuestionIndex] = {
-				question: q.question,
-				userAnswer: selectedText,
-				correctAnswerIndex: q.correct - 1,
-				explanation: q.explanation,
-				allAnswers: shuffledAnswers
+				question: q.question, userAnswer: selectedText, correctAnswerIndex: q.correct - 1,
+				explanation: q.explanation, allAnswers: shuffledAnswers
 			};
-
 			if (selectedText === correctText) {
 				selected.classList.add('correct');
 				score++;
 				totalCorrectAnswers++;
 				localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
-				if (label) label.innerHTML = '<img src="src/emoji-happy.gif" alt="emoji" class="emoji"> bonne réponse !';
-				if (animationsEnabled) {
-					selected.classList.remove('shake-x');
-					selected.classList.add('shake-y');
-					setTimeout(() => selected.classList.remove('shake-y'), 900);
-				}
+				if (label) label.textContent = 'Bonne réponse !';
+				if (successIcon) successIcon.style.display = 'block';
+				if (errorIcon) errorIcon.style.display = 'none';
+				if (animationsEnabled) { selected.classList.remove('shake-x'); selected.classList.add('shake-y'); setTimeout(() => selected.classList.remove('shake-y'), 900); }
 				playSound('correct');
 			} else {
 				selected.classList.add('incorrect');
-				if (label) label.innerHTML = '<img src="src/emoji-sad.gif" alt="emoji" class="emoji"> mauvaise réponse !';
-				if (animationsEnabled) {
-					selected.classList.remove('shake-y');
-					selected.classList.add('shake-x');
-					setTimeout(() => selected.classList.remove('shake-x'), 900);
-				}
+				if (label) label.textContent = 'Mauvaise réponse !';
+				if (successIcon) successIcon.style.display = 'none';
+				if (errorIcon) errorIcon.style.display = 'block';
+				if (animationsEnabled) { selected.classList.remove('shake-y'); selected.classList.add('shake-x'); setTimeout(() => selected.classList.remove('shake-x'), 900); }
 				playSound('incorrect');
-
 				Array.from(parent.children).forEach(a => {
-					if ((a.dataset.original || a.textContent) === correctText) {
-						a.classList.add('correct');
-					}
+					if ((a.dataset.original || a.textContent) === correctText) a.classList.add('correct');
 				});
 			}
-
 			Array.from(parent.children).forEach(a => {
 				const isCorrect = (a.dataset.original || a.textContent) === correctText;
-				if (!isCorrect && a !== selected) {
-					a.classList.add('incorrect');
-				}
+				if (!isCorrect && a !== selected) a.classList.add('incorrect');
+				const icon = a.querySelector('.answer-icon');
+				if (icon) icon.style.display = 'block';
 			});
-
 			const expl = container.querySelector('.quiz-explanation');
-			if (expl) expl.classList.remove('hidden');
+			if (expl) { expl.classList.remove('hidden'); setTimeout(() => expl.classList.add('visible'), 50); }
 		}
 
 		function forceEndQuiz() {
 			for (let i = 0; i < shuffledQuestions.length; i++) {
 				if (!userAnswers[i] || userAnswers[i].userAnswer === null || userAnswers[i].userAnswer === undefined) {
 					const q = shuffledQuestions[i];
-					userAnswers[i] = {
-						question: q.question,
-						userAnswer: "Non répondue",
-						correctAnswerIndex: q.correct - 1,
-						explanation: q.explanation,
-						allAnswers: q.answers
-					};
+					userAnswers[i] = { question: q.question, userAnswer: "Non répondue", correctAnswerIndex: q.correct - 1, explanation: q.explanation, allAnswers: q.answers };
 					totalQuestionsAnswered++;
 				}
 			}
@@ -3951,35 +4252,19 @@
 		function endQuiz() {
 			quizQuestions.classList.add('hidden');
 			quizEnd.classList.remove('hidden');
-
 			if (isDeferredEvaluation) {
 				let newScore = 0;
 				userAnswers.forEach((ans, idx) => {
 					if (!ans) {
 						const q = shuffledQuestions[idx];
-						if (q) {
-							userAnswers[idx] = {
-								question: q.question,
-								userAnswer: "Non répondue",
-								correctAnswerIndex: q.correct - 1,
-								explanation: q.explanation,
-								allAnswers: q.answers
-							};
-							totalQuestionsAnswered++;
-						}
+						if (q) { userAnswers[idx] = { question: q.question, userAnswer: "Non répondue", correctAnswerIndex: q.correct - 1, explanation: q.explanation, allAnswers: q.answers }; totalQuestionsAnswered++; }
 						return;
 					}
-					if (ans.userAnswer === "Non répondue" || ans.userAnswer === null) {
-						totalQuestionsAnswered++;
-						return;
-					}
+					if (ans.userAnswer === "Non répondue" || ans.userAnswer === null) { totalQuestionsAnswered++; return; }
 					const q = shuffledQuestions[idx];
 					if (!q) return;
 					const correct = q.answers[q.correct - 1] || q.answers[0];
-					if (ans.userAnswer === correct) {
-						newScore++;
-						totalCorrectAnswers++;
-					}
+					if (ans.userAnswer === correct) { newScore++; totalCorrectAnswers++; }
 					if (ans.userAnswer !== null) totalQuestionsAnswered++;
 				});
 				score = newScore;
@@ -3993,44 +4278,31 @@
 						const q = shuffledQuestions[i];
 						if (q) {
 							const correct = q.answers[q.correct - 1] || q.answers[0];
-							if (ans.userAnswer === correct) {
-								calculatedScore++;
-							}
+							if (ans.userAnswer === correct) calculatedScore++;
 						}
 					}
 				}
 				score = calculatedScore;
 			}
-
 			finalScoreDisplay.textContent = score;
 			scoreLabel.textContent = score <= 1 ? 'bonne réponse' : 'bonnes réponses';
 			finalTotalDisplay.textContent = totalQuestions;
-
 			const percentage = Math.round((score / totalQuestions) * 100);
 			statsPercentage.textContent = percentage + '%';
-
 			let bestScoreGlobal = parseInt(localStorage.getItem('bestScore') || '0');
-			if (percentage > bestScoreGlobal) {
-				bestScoreGlobal = percentage;
-				localStorage.setItem('bestScore', bestScoreGlobal.toString());
-			}
+			if (percentage > bestScoreGlobal) { bestScoreGlobal = percentage; localStorage.setItem('bestScore', bestScoreGlobal.toString()); }
 			statsBestScore.textContent = bestScoreGlobal + '%';
-
 			statsTotalCorrect.textContent = totalCorrectAnswers;
 			const reponsePluriel = totalCorrectAnswers > 1 ? 's' : '';
 			totalCorrectLabel.textContent = 'bonne' + reponsePluriel + ' réponse' + reponsePluriel;
-
 			const globalPercentage = totalQuestionsAnswered > 0 ? Math.round((totalCorrectAnswers / totalQuestionsAnswered) * 100) : 0;
 			statsAvgScore.textContent = globalPercentage + '%';
-
 			const avgTime = questionTimes.length > 0 ? Math.round(questionTimes.reduce((a, b) => a + b, 0) / questionTimes.length) : 0;
 			const avgTimeDisplay = avgTime > 0 ? Math.floor(avgTime / 60) + 'm ' + (avgTime % 60) + 's' : '0s';
 			statsAvgTime.textContent = avgTimeDisplay;
-
 			statsGamesPlayed.textContent = gamesPlayed;
 			const partiesPluriel = gamesPlayed > 1 ? 's' : '';
 			gamesPlayedLabel.textContent = 'partie' + partiesPluriel + ' jouée' + partiesPluriel;
-
 			const messages = [
 				{ min: 90, text: "🌟 excellent ! vous maîtrisez parfaitement ce quiz" },
 				{ min: 70, text: "👏 très bon score ! vous avez une bonne connaissance de ce quiz" },
@@ -4040,45 +4312,25 @@
 			];
 			const msg = messages.find(m => percentage >= m.min) || messages[messages.length - 1];
 			summaryMessage.textContent = msg.text;
-
 			const notionId = currentSequenceInfo?.cleanTitle || 'quiz';
 			updateStats(notionId, score, totalQuestions);
-
-			if (percentage >= 80) {
-				setTimeout(() => {
-					launchConfetti();
-					playSound('score_good');
-				}, 300);
-			} else if (percentage < 20) {
-				setTimeout(() => playSound('score_bad'), 500);
-			}
-
+			if (percentage >= 80) setTimeout(() => { launchConfetti(); playSound('score_good'); }, 300);
+			else if (percentage < 20) setTimeout(() => playSound('score_bad'), 500);
 			philosophyText?.classList.add('hidden');
-			if (evaluationProgress) {
-				evaluationProgress.classList.remove('visible');
-			}
+			if (evaluationProgress) evaluationProgress.classList.remove('visible');
 			updateGlobalStatsDisplay();
-
 			detailedResults.classList.add('hidden');
 		}
 
 		function showDetailedReview() {
 			if (!questionsReview) return;
 			questionsReview.innerHTML = '';
-
 			for (let i = 0; i < shuffledQuestions.length; i++) {
 				if (!userAnswers[i] || userAnswers[i].userAnswer === null || userAnswers[i].userAnswer === undefined) {
 					const q = shuffledQuestions[i];
-					userAnswers[i] = {
-						question: q.question,
-						userAnswer: "Non répondue",
-						correctAnswerIndex: q.correct - 1,
-						explanation: q.explanation,
-						allAnswers: q.answers
-					};
+					userAnswers[i] = { question: q.question, userAnswer: "Non répondue", correctAnswerIndex: q.correct - 1, explanation: q.explanation, allAnswers: q.answers };
 				}
 			}
-
 			userAnswers.forEach((ans, idx) => {
 				if (!ans) return;
 				const q = shuffledQuestions[idx];
@@ -4097,10 +4349,7 @@
 			});
 		}
 
-		function closeAllSubmenus() {
-			document.querySelectorAll('.submenu').forEach(s => s.classList.remove('active'));
-		}
-
+		function closeAllSubmenus() { document.querySelectorAll('.submenu').forEach(s => s.classList.remove('active')); }
 		function closeMenu() {
 			document.getElementById('slideMenu')?.classList.remove('open');
 			document.getElementById('menuOverlay')?.classList.remove('open');
@@ -4109,13 +4358,11 @@
 			closeAllSubmenus();
 			closeSequencesDropdown();
 		}
-
 		function toggleMenu() {
 			const menu = document.getElementById('slideMenu');
 			const overlay = document.getElementById('menuOverlay');
-			if (menu?.classList.contains('open')) {
-				closeMenu();
-			} else {
+			if (menu?.classList.contains('open')) closeMenu();
+			else {
 				overlay?.classList.add('open');
 				menu?.classList.add('open');
 				document.body.style.overflow = 'hidden';
@@ -4131,43 +4378,26 @@
 			document.body.classList.toggle('fullscreen', isFullscreen);
 			const trigger = document.getElementById('hoverTrigger');
 			if (trigger) trigger.classList.toggle('active', isFullscreen);
-
 			document.querySelectorAll('.btn-fullscreen').forEach(btn => {
 				btn.classList.toggle('fullscreen-active', isFullscreen);
 				btn.dataset.title = isFullscreen ? 'quitter plein écran (F)' : 'plein écran (F)';
 				if (isFullscreen) {
-					btn.innerHTML = `
-						<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
-							<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
-							<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
-							<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
-							<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
-						</svg>
-					`;
+					btn.innerHTML = `<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt"><line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/><line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/><line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/><line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/></svg>`;
 				} else {
-					btn.innerHTML = `<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
-						<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
-						<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
-						<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
-						<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
-					</svg>`;
+					btn.innerHTML = `<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt"><line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/><line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/><line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/><line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/></svg>`;
 				}
 			});
 		}
-
 		function resetApplication() {
 			localStorage.clear();
 			showToaster('application réinitialisée !', 'info', 2000);
 			setTimeout(() => location.reload(), 1500);
 		}
 
-		// === RACCOURCIS CLAVIER ===
+		// ===== RACCOURCIS =====
 		document.addEventListener('keydown', function(e) {
 			if (e.target.matches('input, textarea, select, [contenteditable]')) return;
-
 			const key = e.key.toLowerCase();
-
-			// Touches A, B, C pour les réponses
 			const keyMap = { 'a': 0, 'b': 1, 'c': 2 };
 			if (keyMap.hasOwnProperty(key)) {
 				const currentQuestion = document.querySelector('.container--question');
@@ -4176,182 +4406,67 @@
 					const alreadyAnswered = currentQuestion.querySelector('.quiz-answer.correct, .quiz-answer.incorrect, .quiz-answer.selected');
 					if (!alreadyAnswered) {
 						const targetIndex = keyMap[key];
-						if (targetIndex < answers.length) {
-							e.preventDefault();
-							answers[targetIndex].click();
-						}
+						if (targetIndex < answers.length) { e.preventDefault(); answers[targetIndex].click(); }
 					}
 				}
 				return;
 			}
-
-			// S - Ouvrir/fermer la liste des textes
-			if (key === 's') {
-				e.preventDefault();
-				playSound('click');
-				const dropdown = sequencesDropdown;
-				if (dropdown) dropdown.classList.toggle('open');
-				if (sequencesDropdownMobile) sequencesDropdownMobile.classList.remove('open');
-				return;
-			}
-
-			// H - Accueil
-			if (key === 'h') {
-				e.preventDefault();
-				playSound('click');
-				window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
-				return;
-			}
-
-			// R - Recharger
-			if (key === 'r') {
-				e.preventDefault();
-				playSound('click');
-				if (questions.length) startQuiz();
-				return;
-			}
-
-			// T - Timer
-			if (key === 't') {
-				e.preventDefault();
-				playSound('click');
-				if (timerLimit > 0) {
-					resetTimer();
-					startTimer();
-					showToaster('⏱️ Timer réinitialisé', 'info', 1500);
-				}
-				return;
-			}
-
-			// F - Plein écran
-			if (key === 'f') {
-				e.preventDefault();
-				playSound('click');
-				if (!document.fullscreenElement) {
-					document.documentElement.requestFullscreen();
-				} else {
-					document.exitFullscreen();
-				}
-				return;
-			}
-
-			// M - Menu
-			if (key === 'm') {
-				e.preventDefault();
-				playSound('click');
-				toggleMenu();
-				return;
-			}
-
-			// Entrée - question suivante
+			if (key === 's') { e.preventDefault(); playSound('click'); if (sequencesDropdown) sequencesDropdown.classList.toggle('open'); if (sequencesDropdownMobile) sequencesDropdownMobile.classList.remove('open'); return; }
+			if (key === 'h') { e.preventDefault(); playSound('click'); window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); return; }
+			if (key === 'r') { e.preventDefault(); playSound('click'); if (questions.length) startQuiz(); return; }
+			if (key === 't') { e.preventDefault(); handleTimerClick(); return; }
+			if (key === 'f') { e.preventDefault(); playSound('click'); if (!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); return; }
+			if (key === 'm') { e.preventDefault(); playSound('click'); toggleMenu(); return; }
 			if (e.key === 'Enter') {
 				const nextBtn = document.querySelector('.next-question-btn');
-				if (nextBtn && !nextBtn.disabled) {
-					e.preventDefault();
-					nextBtn.click();
-				}
+				if (nextBtn && !nextBtn.disabled) { e.preventDefault(); nextBtn.click(); }
 				return;
 			}
-
-			// Échap - fermer
-			if (e.key === 'Escape') {
-				closeMenu();
-				closeAllSubmenus();
-				closeSequencesDropdown();
-			}
+			if (e.key === 'Escape') { closeMenu(); closeAllSubmenus(); closeSequencesDropdown(); }
 		});
 
-		// === INITIALISATION ===
+		// ===== INITIALISATION =====
 		document.addEventListener('DOMContentLoaded', function() {
 			const darkMode = localStorage.getItem('darkMode') === 'true';
 			const colorblindMode = localStorage.getItem('colorblindMode') === 'true';
-
-			if (darkMode) {
-				document.body.classList.add('dark-theme');
-				document.getElementById('darkModeToggle').checked = true;
-			}
-			if (colorblindMode) {
-				document.body.classList.add('colorblind-mode');
-				document.getElementById('colorblindToggle').checked = true;
-			}
+			if (darkMode) { document.body.classList.add('dark-theme'); document.getElementById('darkModeToggle').checked = true; }
+			if (colorblindMode) { document.body.classList.add('colorblind-mode'); document.getElementById('colorblindToggle').checked = true; }
 			if (isDeferredEvaluation) {
 				document.getElementById('deferredEvaluationToggle').checked = true;
-				const evaluationProgress = document.getElementById('evaluationProgress');
-				if (evaluationProgress) {
-					evaluationProgress.classList.add('visible');
-				}
+				if (evaluationProgress) evaluationProgress.classList.add('visible');
 			}
-			if (!animationsEnabled) {
-				document.getElementById('animationsToggle').checked = false;
-			}
-
+			if (!animationsEnabled) document.getElementById('animationsToggle').checked = false;
 			const soundToggle = document.getElementById('soundToggle');
-			if (soundToggle) {
-				soundToggle.checked = soundEnabled;
-				if (soundEnabled) preloadSounds();
-			}
-
+			if (soundToggle) { soundToggle.checked = soundEnabled; if (soundEnabled) preloadSounds(); }
 			timerEnabled = true;
-
 			if (timerLimitSlider) {
-				const sliderPos = valueToSliderPos(timerLimit);
-				timerLimitSlider.value = sliderPos;
+				timerLimitSlider.value = valueToSliderPos(timerLimit);
 				timerLimitValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
 			}
-			if (timerLimit === 0) {
-				updateTimerDisplay('∞');
-				showTimerButtons(false);
-			} else {
-				updateTimerDisplay(formatTimer(timerLimit));
-				showTimerButtons(true);
-			}
-
+			if (timerLimit === 0) { updateTimerDisplay('∞'); showTimerButtons(false); }
+			else { updateTimerDisplay(formatTimer(timerLimit)); showTimerButtons(true); }
 			const savedCount = parseInt(localStorage.getItem('questionCount') || '5');
 			totalQuestions = savedCount;
 			if (questionCountSlider) questionCountSlider.value = savedCount;
 			if (questionCountDisplay) questionCountDisplay.textContent = savedCount;
 
+			// Charger les fichiers GitHub
 			fetchGitHubFiles();
 
-			try {
-				const savedQuizzes = localStorage.getItem('loadedQuizzes');
-				if (savedQuizzes) {
-					const parsed = JSON.parse(savedQuizzes);
-					if (Array.isArray(parsed) && parsed.length > 0) {
-						loadedQuizzes = parsed;
-						updateSelectorSubmenu();
-						const savedIndex = parseInt(localStorage.getItem('currentQuizIndex') || '-1');
-						if (savedIndex >= 0 && savedIndex < loadedQuizzes.length) {
-							const quizData = localStorage.getItem('quizData_' + savedIndex);
-							if (quizData) {
-								try {
-									const data = JSON.parse(quizData);
-									currentQuizIndex = savedIndex;
-									currentSequenceInfo = extractSequenceInfo(loadedQuizzes[savedIndex].name + '.js');
-									philosophyData = data.philosophyData || { texte: "", source: "" };
-									questions = data.questions || [];
-									const displayName = getCleanFileName(loadedQuizzes[savedIndex].name);
-									fileStatus.textContent = `✅ "${truncateName(displayName, 50)}" chargé !`;
-									if (questions.length > 0) {
-										setTimeout(startQuiz, 500);
-									}
-								} catch (e) {
-									console.error('Erreur restauration quiz :', e);
-								}
-								}
-							}
-						}
-					}
-			} catch (e) {
-				console.error('Erreur restauration quiz :', e);
-			}
+			// Restaurer les quiz locaux
+			const restored = restoreLoadedQuizzesFromBuffer();
+			updateSelectorSubmenu();
+			updateSequencesDropdown();
 
-			// === ÉVÉNEMENTS ===
+			// ===== CLIC SUR LE TIMER : RÉINITIALISATION =====
+			if (timerBtnDesktop) timerBtnDesktop.addEventListener('click', handleTimerClick);
+			if (timerBtnMobile) timerBtnMobile.addEventListener('click', handleTimerClick);
+
+			// Événements
 			fileLoadBtnSubmenu.addEventListener('click', () => {
 				playSound('click');
 				fileInputSubmenu.click();
 			});
-
 			fileInputSubmenu.addEventListener('change', (e) => {
 				const files = e.target.files;
 				if (!files || files.length === 0) return;
@@ -4359,7 +4474,6 @@
 				loadMultipleQuizzes(files);
 				fileInputSubmenu.value = '';
 			});
-
 			quizSelectorSubmenu.addEventListener('change', function() {
 				const val = parseInt(this.value);
 				if (!isNaN(val) && val >= 0 && val < loadedQuizzes.length) {
@@ -4367,13 +4481,10 @@
 					loadQuizByIndex(val);
 				}
 			});
-
-			if (localResetBtn) {
-				localResetBtn.addEventListener('click', function() {
-					playSound('click');
-					resetApplication();
-				});
-			}
+			localResetBtn.addEventListener('click', function() {
+				playSound('click');
+				resetApplication();
+			});
 
 			document.querySelectorAll('[data-action]').forEach(btn => {
 				btn.addEventListener('click', (e) => {
@@ -4381,126 +4492,80 @@
 					e.preventDefault();
 					playSound('click');
 					switch (action) {
-						case 'home':
-							window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
-							break;
-						case 'reload':
-							if (questions.length) startQuiz();
-							break;
+						case 'home': window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); break;
+						case 'reload': if (questions.length) startQuiz(); break;
 						case 'fullscreen':
-							if (!document.fullscreenElement) {
-								document.documentElement.requestFullscreen();
-							} else {
-								document.exitFullscreen();
-							}
+							if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+							else document.exitFullscreen();
 							break;
-						case 'menu':
-							toggleMenu();
-							break;
+						case 'menu': toggleMenu(); break;
 					}
 				});
 			});
 
-			document.getElementById('menuClose')?.addEventListener('click', function() {
-				playSound('click');
-				closeMenu();
-			});
-			document.getElementById('menuOverlay')?.addEventListener('click', function() {
-				playSound('click');
-				closeMenu();
-			});
+			document.getElementById('menuClose')?.addEventListener('click', function() { playSound('click'); closeMenu(); });
+			document.getElementById('menuOverlay')?.addEventListener('click', function() { playSound('click'); closeMenu(); });
 
 			document.getElementById('instructionsButton')?.addEventListener('click', function() {
-				playSound('click');
-				closeAllSubmenus();
+				playSound('click'); closeAllSubmenus();
 				document.getElementById('submenuInstructions')?.classList.add('active');
 				document.body.classList.add('menu-open');
 			});
-
 			document.getElementById('localFilesButton')?.addEventListener('click', function() {
-				playSound('click');
-				closeAllSubmenus();
+				playSound('click'); closeAllSubmenus();
 				document.getElementById('submenuLocalFiles')?.classList.add('active');
 				document.body.classList.add('menu-open');
 			});
-
 			document.getElementById('statsButton')?.addEventListener('click', function() {
-				playSound('click');
-				closeAllSubmenus();
+				playSound('click'); closeAllSubmenus();
 				updateGlobalStatsDisplay();
 				document.getElementById('submenuStats')?.classList.add('active');
 				document.body.classList.add('menu-open');
 			});
-
 			document.getElementById('settingsButton')?.addEventListener('click', function() {
-				playSound('click');
-				closeAllSubmenus();
+				playSound('click'); closeAllSubmenus();
 				document.getElementById('submenuSettings')?.classList.add('active');
 				document.body.classList.add('menu-open');
 			});
-
 			document.getElementById('shortcutsButton')?.addEventListener('click', function() {
-				playSound('click');
-				closeAllSubmenus();
+				playSound('click'); closeAllSubmenus();
 				document.getElementById('submenuShortcuts')?.classList.add('active');
 				document.body.classList.add('menu-open');
 			});
-
 			document.getElementById('aboutButton')?.addEventListener('click', function() {
-				playSound('click');
-				closeAllSubmenus();
+				playSound('click'); closeAllSubmenus();
 				document.getElementById('submenuAbout')?.classList.add('active');
 				document.body.classList.add('menu-open');
 			});
-
-			document.getElementById('resetButton')?.addEventListener('click', function() {
-				playSound('click');
-				resetApplication();
-			});
+			document.getElementById('resetButton')?.addEventListener('click', function() { playSound('click'); resetApplication(); });
 
 			document.querySelectorAll('.submenu-close').forEach(btn => {
 				btn.addEventListener('click', function() {
-					playSound('click');
-					closeAllSubmenus();
+					playSound('click'); closeAllSubmenus();
 					document.body.classList.remove('menu-open');
 				});
 			});
 
-			document.getElementById('resetStatsBtn')?.addEventListener('click', function() {
-				playSound('click');
-				resetStats();
-			});
+			document.getElementById('resetStatsBtn')?.addEventListener('click', function() { playSound('click'); resetStats(); });
 
 			document.getElementById('quizReviewBtn')?.addEventListener('click', function() {
 				playSound('click');
 				const details = document.getElementById('detailedResults');
 				if (details) {
 					details.classList.toggle('hidden');
-					if (!details.classList.contains('hidden')) {
-						showDetailedReview();
-					}
+					if (!details.classList.contains('hidden')) showDetailedReview();
 				}
 			});
-
-			document.getElementById('quizRetryBtn')?.addEventListener('click', function() {
-				playSound('click');
-				if (questions.length) startQuiz();
-			});
-
+			document.getElementById('quizRetryBtn')?.addEventListener('click', function() { playSound('click'); if (questions.length) startQuiz(); });
 			document.getElementById('quizBackBtn')?.addEventListener('click', function() {
 				playSound('click');
 				quizEnd.classList.add('hidden');
 				quizQuestions.classList.add('hidden');
 				quizStart.classList.remove('hidden');
-				currentQuestionIndex = 0;
-				score = 0;
-				userAnswers = [];
-				shuffledQuestions = [];
+				currentQuestionIndex = 0; score = 0; userAnswers = []; shuffledQuestions = [];
 				stopTimer();
-				fileStatus.textContent = 'cliquez sur le bouton textes 📁 pour charger un quiz';
-				if (evaluationProgress) {
-					evaluationProgress.classList.remove('visible');
-				}
+				fileStatus.innerHTML = 'cliquez sur « 📁 » dans la barre d\'outils<br>pour charger un quiz';
+				if (evaluationProgress) evaluationProgress.classList.remove('visible');
 				philosophyText?.classList.add('hidden');
 			});
 
@@ -4509,20 +4574,14 @@
 				localStorage.setItem('darkMode', this.checked);
 				playSound('click');
 			});
-
 			document.getElementById('colorblindToggle')?.addEventListener('change', function() {
 				document.body.classList.toggle('colorblind-mode', this.checked);
 				localStorage.setItem('colorblindMode', this.checked);
 				playSound('click');
 			});
-
 			document.getElementById('deferredEvaluationToggle')?.addEventListener('change', function() {
 				isDeferredEvaluation = this.checked;
 				localStorage.setItem('deferredEvaluation', this.checked);
-
-				const evaluationProgress = document.getElementById('evaluationProgress');
-				const philosophyTextWrapper = document.getElementById('philosophyTextWrapper');
-
 				if (isDeferredEvaluation) {
 					evaluationProgress.classList.add('visible');
 					if (evalCurrentText) evalCurrentText.textContent = currentQuestionIndex + 1;
@@ -4534,29 +4593,24 @@
 					philosophyTextWrapper.classList.remove('border-radius-none');
 					philosophyTextWrapper.classList.add('border-radius-top-only');
 				}
-
 				playSound('click');
 			});
-
 			document.getElementById('animationsToggle')?.addEventListener('change', function() {
 				animationsEnabled = this.checked;
 				localStorage.setItem('animations', this.checked);
 				playSound('click');
 			});
-
 			document.getElementById('soundToggle')?.addEventListener('change', function() {
 				soundEnabled = this.checked;
 				localStorage.setItem('soundEnabled', String(this.checked));
 				if (soundEnabled) preloadSounds();
 				playSound('click');
 			});
-
 			document.getElementById('timerLimitSlider')?.addEventListener('input', function(e) {
 				const pos = parseInt(e.target.value, 10);
 				timerLimit = sliderPosToValue(pos);
 				timerLimitValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
 				localStorage.setItem('timerLimit', timerLimit);
-
 				if (timerLimit === 0) {
 					updateTimerDisplay('∞');
 					showTimerButtons(false);
@@ -4565,13 +4619,10 @@
 					showTimerButtons(true);
 					updateTimerDisplay(formatTimer(timerLimit));
 					resetTimer();
-					if (!quizEnd.classList.contains('hidden') && !quizQuestions.classList.contains('hidden')) {
-						startTimer();
-					}
+					if (!quizEnd.classList.contains('hidden') && !quizQuestions.classList.contains('hidden')) startTimer();
 				}
 				playSound('click');
 			});
-
 			if (questionCountSlider) {
 				questionCountSlider.addEventListener('input', function() {
 					const val = parseInt(questionCountSlider.value);
@@ -4581,15 +4632,10 @@
 					playSound('click');
 				});
 			}
-
 			document.addEventListener('fullscreenchange', updateFullscreen);
 			updateFullscreen();
-
 			updateGlobalStatsDisplay();
-
-			if (soundEnabled) {
-				preloadSounds();
-			}
+			if (soundEnabled) preloadSounds();
 		});
 
 	})();
