@@ -1039,7 +1039,7 @@
 
 		.settings-info,
 		.stats-info {
-			margin-top: 0;
+			margin-top: 25px;
 			padding: 15px;
 			background: rgba(0, 0, 0, 0.05);
 			border-radius: 10px;
@@ -1116,6 +1116,99 @@
 
 		.about-text a:hover {
 			border-bottom: 2px solid var(--font-color);
+		}
+
+		/* ===== TOUCHES CLAVIER (KBD) ===== */
+		kbd {
+			display: inline-block;
+			padding: 5px 7px;
+			font-family: monospace;
+			font-size: 0.9em;
+			font-weight: bold;
+			background-color: #d1d1d1;
+			color: #333;
+			border-radius: 5px;
+			box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.6) inset;
+			min-width: 18px;
+			text-align: center;
+			line-height: 1.2;
+		}
+
+		.shortcuts-table {
+			width: 100%;
+			border-collapse: separate;
+			border-spacing: 0.15rem 0.05rem;
+			font-size: 0.8rem;
+		}
+
+		.shortcuts-table td {
+			padding: 0px 2px;
+			line-height: 1.15;
+		}
+
+		.shortcuts-table kbd {
+			display: inline-block;
+			padding: 2px 4px;
+			margin: 5px 0px;
+			font-family: monospace;
+			font-size: 0.9em;
+			font-weight: bold;
+			background-color: #d1d1d1;
+			color: #333;
+			border-radius: 5px;
+			box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.6) inset;
+			min-width: 18px;
+			text-align: center;
+			line-height: 1.2;
+		}
+
+		.shortcuts-table .key-combo {
+			white-space: nowrap;
+		}
+
+		/* ===== SOUS-MENU RACCOURCIS : COMPACT POUR ÉVITER LE SCROLL ===== */
+		#submenuShortcuts {
+			padding: 1rem 1.2rem 1rem 1.2rem;
+		}
+
+		#submenuShortcuts .menu-header {
+			margin-bottom: 0.2rem;
+		}
+
+		#submenuShortcuts .submenu-title {
+			margin: 0.1rem 0 0.6rem 0;
+			font-size: 1.2rem;
+		}
+
+		#submenuShortcuts .submenu-content {
+			margin-top: 0;
+		}
+
+		#submenuShortcuts .settings-info {
+			padding: 8px 10px;
+			margin-bottom: 0;
+		}
+
+		/* ===== MODES SOMBRE / DALTONIEN POUR KBD ===== */
+		body.dark-theme kbd,
+		body.dark-theme .shortcuts-table kbd {
+			background-color: #1a1a1a;
+			color: #e2e8f0;
+			border: 1px solid #333;
+		}
+
+		body.colorblind-mode kbd,
+		body.colorblind-mode .shortcuts-table kbd {
+			background-color: #2c7be5;
+			color: #ffffff;
+			border: 1px solid #1a56db;
+		}
+
+		body.dark-theme.colorblind-mode kbd,
+		body.dark-theme.colorblind-mode .shortcuts-table kbd {
+			background-color: #4a90d9;
+			color: #ffffff;
+			border: 1px solid #2c7be5;
 		}
 
 		/* ===== TOGGLES ===== */
@@ -2669,6 +2762,36 @@
 			.quiz-start__hint {
 				font-size: 0.9rem;
 			}
+
+			/* ===== RACCOURCIS COMPACT MOBILE ===== */
+			#submenuShortcuts {
+				padding: 0.6rem 0.8rem;
+			}
+			#submenuShortcuts .menu-header {
+				margin-bottom: 0.2rem;
+			}
+			#submenuShortcuts .submenu-title {
+				margin: 0.1rem 0 0.4rem 0;
+				font-size: 1rem;
+			}
+			#submenuShortcuts .settings-info {
+				padding: 6px 6px;
+				margin-bottom: 0;
+			}
+			#submenuShortcuts .shortcuts-table {
+				font-size: 0.7rem;
+				border-spacing: 0.1rem 0.05rem;
+			}
+			#submenuShortcuts .shortcuts-table td {
+				padding: 0px 2px;
+				line-height: 1;
+			}
+			#submenuShortcuts .shortcuts-table kbd {
+				padding: 1px 4px;
+				font-size: 0.75em;
+				min-width: 16px;
+				border-radius: 4px;
+			}
 		}
 
 		@media (max-width: 400px) {
@@ -2752,6 +2875,29 @@
 			}
 			.quiz-start__hint {
 				font-size: 0.8rem;
+			}
+
+			/* ===== RACCOURCIS ENCORE PLUS COMPACT ===== */
+			#submenuShortcuts {
+				padding: 0.4rem 0.6rem;
+			}
+			#submenuShortcuts .submenu-title {
+				margin: 0 0 0.3rem 0;
+				font-size: 0.9rem;
+			}
+			#submenuShortcuts .settings-info {
+				padding: 4px 4px;
+			}
+			#submenuShortcuts .shortcuts-table {
+				font-size: 0.65rem;
+			}
+			#submenuShortcuts .shortcuts-table td {
+				padding: 0px 1px;
+			}
+			#submenuShortcuts .shortcuts-table kbd {
+				padding: 1px 3px;
+				font-size: 0.7em;
+				min-width: 14px;
 			}
 		}
 
@@ -3329,14 +3475,14 @@
 					<tr><td class="key-combo"><kbd>A</kbd></td><td>choisir la réponse A</td></tr>
 					<tr><td class="key-combo"><kbd>B</kbd></td><td>choisir la réponse B</td></tr>
 					<tr><td class="key-combo"><kbd>C</kbd></td><td>choisir la réponse C</td></tr>
-					<tr><td class="key-combo"><kbd>S</kbd></td><td>ouvrir/fermer la liste des textes</td></tr>
+					<tr><td class="key-combo"><kbd>S</kbd></td><td>ouvrir/fermer la liste</td></tr>
 					<tr><td class="key-combo"><kbd>H</kbd></td><td>renvoi au site académique</td></tr>
 					<tr><td class="key-combo"><kbd>R</kbd></td><td>recharger / nouvelle partie</td></tr>
 					<tr><td class="key-combo"><kbd>T</kbd></td><td>réinitialiser le minuteur</td></tr>
 					<tr><td class="key-combo"><kbd>F</kbd></td><td>plein écran</td></tr>
 					<tr><td class="key-combo"><kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr>
 					<tr><td class="key-combo"><kbd>Entrée</kbd></td><td>question suivante</td></tr>
-					<tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer (sous-menus, popups, menu)</td></tr>
+					<tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer sous-menus, menu...</td></tr>
 				</table>
 			</div>
 		</div>
