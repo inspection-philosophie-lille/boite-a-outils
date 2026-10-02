@@ -11,9 +11,9 @@ const sousTitre = "Tester ses connaissances sur un texte de Nietzsche";
 // ============================================
 
 const philosophyData = {
-	source: "Friedrich NIETZSCHE, <em>Humain, trop humain</em>, 1ère partie, §54",
-	texte: "« [1] L'action est la seule activité qui mette directement en rapport les hommes, sans l'intermédiaire des choses ou de la matière. [2] **En effet**, elle correspond à la condition humaine de la pluralité. [3] **Cependant**, elle a deux caractéristiques déroutantes : elle est irréversible et imprévisible. [4] **C'est pourquoi** les hommes ont cherché, depuis l'Antiquité, à y échapper. [5] Par exemple, en lui substituant la fabrication, qui maîtrise son matériau. [6] **Mais** l'action possède la vertu rédemptrice de la promesse, qui pallie l'imprévisibilité, et du pardon, qui remédie à l'irréversibilité. [7] **Ainsi**, sans être maîtrisable, l'action peut être sauvée de sa futilité. [8] **Car** elle fonde le pouvoir, qui n'est pas la violence **mais** la capacité d'agir de concert. [9] **Par conséquent**, l'espace public est le lieu où la parole et l'action révèlent qui nous sommes. [10] **En définitive**, c'est dans l'action que l'homme fait l'expérience de la liberté. »"
-	};
+	texte: "« [1] L'action est la seule activité qui mette directement en rapport les hommes, sans l'intermédiaire des choses ou de la matière. [2] **En effet**, elle correspond à la condition humaine de la pluralité. [3] **Cependant**, elle a deux caractéristiques déroutantes : elle est irréversible et imprévisible. [4] **C'est pourquoi** les hommes ont cherché, depuis l'Antiquité, à y échapper. [5] Par exemple, en lui substituant la fabrication, qui maîtrise son matériau. [6] **Mais** l'action possède la vertu rédemptrice de la promesse, qui pallie l'imprévisibilité, et du pardon, qui remédie à l'irréversibilité. [7] **Ainsi**, sans être maîtrisable, l'action peut être sauvée de sa futilité. [8] **Car** elle fonde le pouvoir, qui n'est pas la violence **mais** la capacité d'agir de concert. [9] **Par conséquent**, l'espace public est le lieu où la parole et l'action révèlent qui nous sommes. [10] **En définitive**, c'est dans l'action que l'homme fait l'expérience de la liberté. »",
+	source: "Friedrich NIETZSCHE, <em>Humain, trop humain</em>, 1ère partie, §54"
+};
 
 
 // ============================================

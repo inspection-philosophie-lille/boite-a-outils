@@ -11,8 +11,7 @@ const sousTitre = "Tester ses connaissances sur un texte de MONTESQUIEU";
 // ============================================
 
 const philosophyData = {
-	texte: `« [1] **Il est vrai que** dans les démocraties le peuple paraît faire ce qu'il veut ; **mais** la liberté politique ne consiste point à faire ce que l'on veut. [2] Dans un Etat, **c'est-à-dire** dans une société où il y a des lois, la liberté ne peut consister qu'à vouloir faire ce que l'on doit vouloir, et à n'être pas contraint de faire ce que l'on ne doit pas vouloir.
-	[3] Il faut se mettre dans l'esprit ce que c'est que l'indépendance, et ce que c'est que la liberté. [4] La liberté est le droit de faire tout ce que les lois permettent ; et **si** un citoyen pouvait faire ce qu'elles défendent, il n'aurait plus de liberté, **parce que** les autres auraient **tout de même** ce pouvoir. »`,
+	texte: "« [1] **Il est vrai que** dans les démocraties le peuple paraît faire ce qu'il veut ; **mais** la liberté politique ne consiste point à faire ce que l'on veut. [2] Dans un Etat, **c'est-à-dire** dans une société où il y a des lois, la liberté ne peut consister qu'à vouloir faire ce que l'on doit vouloir, et à n'être pas contraint de faire ce que l'on ne doit pas vouloir.\n[3] Il faut se mettre dans l'esprit ce que c'est que l'indépendance, et ce que c'est que la liberté. [4] La liberté est le droit de faire tout ce que les lois permettent ; et **si** un citoyen pouvait faire ce qu'elles défendent, il n'aurait plus de liberté, **parce que** les autres auraient **tout de même** ce pouvoir. »",
 	source: "MONTESQUIEU, <em>De l'esprit des lois</em> (1748) Livre XI, chap. II, 3, pp 394-395, Bibliothèque de la Pléiade 1970 (GF, tome I, pp 291-292)"
 };
 

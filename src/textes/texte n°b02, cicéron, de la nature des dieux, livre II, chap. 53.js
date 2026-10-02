@@ -4,14 +4,14 @@
 
 // Titre et description du fichier
 const titre = "QUIZ";
-const sousTitre = "Tester ses connaissances sur un texte de CICÉRON";
+const sousTitre = "Tester ses connaissances sur un texte de Cicéron";
 
 // ============================================
 // DONNÉES DU TEXTE PHILOSOPHIQUE
 // ============================================
 
 const philosophyData = {
-	texte: `« [1] **Ainsi**, **quel que soit** le point de vue où l'on se place, on arrive à cette conclusion qu'une intelligence et un calcul divins ont présidé à l'arrangement merveilleux de ce monde, pour la conservation et le salut de tous ses habitants. [2] On demandera ici **pour quels** êtres tant de dispositions s'étendant à tant d'objets ont pu être prises. [3] Est-ce en faveur des arbres et des végétaux en général qui, **bien que** dépourvus de sentiment, possèdent une sorte d'activité interne qui les fait se maintenir en vie ? [4] **Mais** cela est absurde. [5] Est-ce en faveur des bêtes ? [6] Il n'est pas plus probable que les dieux aient pris tant de peine pour des êtres muets et sans connaissance. [7] **Pour qui donc** le monde a-t-il été fait, qui nous le dira ? Pour les êtres animés qui ont la raison en partage. [8] Ce sont les dieux et les hommes au-dessus desquels il n'y a rien, **car** la raison est de toutes choses celle qui vaut le plus. [9] Il est **donc** à croire que le monde, avec tout ce qu'il contient a été fait pour les dieux et pour les hommes. »`,
+	texte: "« [1] **Ainsi**, **quel que soit** le point de vue où l'on se place, on arrive à cette conclusion qu'une intelligence et un calcul divins ont présidé à l'arrangement merveilleux de ce monde, pour la conservation et le salut de tous ses habitants. [2] On demandera ici **pour quels** êtres tant de dispositions s'étendant à tant d'objets ont pu être prises. [3] Est-ce en faveur des arbres et des végétaux en général qui, **bien que** dépourvus de sentiment, possèdent une sorte d'activité interne qui les fait se maintenir en vie ? [4] **Mais** cela est absurde. [5] Est-ce en faveur des bêtes ? [6] Il n'est pas plus probable que les dieux aient pris tant de peine pour des êtres muets et sans connaissance. [7] **Pour qui donc** le monde a-t-il été fait, qui nous le dira ? Pour les êtres animés qui ont la raison en partage. [8] Ce sont les dieux et les hommes au-dessus desquels il n'y a rien, **car** la raison est de toutes choses celle qui vaut le plus. [9] Il est **donc** à croire que le monde, avec tout ce qu'il contient a été fait pour les dieux et pour les hommes. »",
 	source: "CICÉRON, <em>De la nature des dieux</em>, livre II, chap. 53, Paris, Garnier, 1935"
 };
 
