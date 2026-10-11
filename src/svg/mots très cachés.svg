@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="571" height="300"
+     viewBox="0 0 571 300">
+
+  <defs>
+    <mask id="masqueContour" maskUnits="userSpaceOnUse"
+          x="0" y="0" width="600" height="600">
+      <rect x="0" y="0" width="600" height="600" fill="#ffffff"/>
+      <g fill="#000000">
+        <g transform="rotate(45 300 300)">
+          <rect x="-28" y="257" width="296" height="96" rx="48" ry="48"/>
+        </g>
+        <rect x="192" y="200" width="96" height="336" rx="48" ry="48"/>
+        <rect x="192" y="444" width="336" height="96" rx="48" ry="48"/>
+      </g>
+    </mask>
+  </defs>
+
+  <rect x="0" y="0" width="571" height="300" fill="#c6202e"/>
+
+  <g transform="translate(165.5, 30) scale(0.4)">
+    <svg xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 600 600"
+         width="600" height="600"
+         role="img"
+         aria-labelledby="titre desc">
+      <title id="titre">Mots cachés</title>
+      <desc id="desc">Carré 6×6 de lettres « motscachés » répété. Le mot « MOTS » est écrit en grandes lettres verticales.</desc>
+
+      <rect x="0" y="0" width="600" height="600" fill="#c6202e"/>
+
+      <g fill="#ffffff"
+         font-family="Arial, Helvetica, sans-serif"
+         font-weight="bold"
+         font-size="70"
+         text-anchor="middle"
+         dominant-baseline="middle">
+        <text x="50"  y="50">m</text><text x="150" y="50">o</text><text x="250" y="50">t</text>
+        <text x="350" y="50">s</text><text x="450" y="50">t</text><text x="550" y="50">r</text>
+
+        <text x="50"  y="150">è</text><text x="150" y="150">s</text><text x="250" y="150">c</text>
+        <text x="350" y="150">a</text><text x="450" y="150">c</text><text x="550" y="150">h</text>
+
+        <text x="50"  y="250">é</text><text x="150" y="250">s</text><text x="250" y="250">m</text>
+        <text x="350" y="250">o</text><text x="450" y="250">t</text><text x="550" y="250">s</text>
+
+        <text x="50"  y="350">t</text><text x="150" y="350">r</text><text x="250" y="350">è</text>
+        <text x="350" y="350">s</text><text x="450" y="350">c</text><text x="550" y="350">a</text>
+
+        <text x="50"  y="450">c</text><text x="150" y="450">h</text><text x="250" y="450">é</text>
+        <text x="350" y="450">s</text><text x="450" y="450">m</text><text x="550" y="450">o</text>
+
+        <text x="50"  y="550">t</text><text x="150" y="550">s</text><text x="250" y="550">t</text>
+        <text x="350" y="550">r</text><text x="450" y="550">è</text><text x="550" y="550">s</text>
+      </g>
+
+      <!-- Masque opaque rouge (cache les lettres du fond) -->
+      <g fill="#c6202e">
+        <g transform="rotate(45 300 300)">
+          <rect x="-40" y="245" width="320" height="120" rx="60" ry="60"/>
+        </g>
+        <rect x="180" y="188" width="120" height="360" rx="60" ry="60"/>
+        <rect x="180" y="432" width="360" height="120" rx="60" ry="60"/>
+      </g>
+
+      <!-- Contour BLANC épaisseur constante -->
+      <g fill="none" stroke="#ffffff" stroke-width="24" mask="url(#masqueContour)">
+        <g transform="rotate(45 300 300)">
+          <rect x="-40" y="245" width="320" height="120" rx="60" ry="60"/>
+        </g>
+        <rect x="180" y="188" width="120" height="360" rx="60" ry="60"/>
+        <rect x="180" y="432" width="360" height="120" rx="60" ry="60"/>
+      </g>
+
+      <!-- Lettres M O S -->
+      <g transform="rotate(45 300 300)">
+        <g fill="#ffffff"
+           font-family="Arial, Helvetica, sans-serif"
+           font-weight="bold"
+           font-size="85"
+           text-anchor="middle"
+           dominant-baseline="middle">
+          <text x="35.55"  y="309.24" transform="rotate(-45 35.55 309.24)">M</text>
+          <text x="225.55" y="309.24" transform="rotate(-45 225.55 309.24)">O</text>
+          <text x="568.69" y="316.31" transform="rotate(-45 568.69 316.31)">S</text>
+        </g>
+      </g>
+
+      <!-- Lettre T isolée -->
+      <text x="236.8" y="494.5"
+            fill="#ffffff"
+            font-family="Arial, Helvetica, sans-serif"
+            font-weight="bold"
+            font-size="85"
+            text-anchor="middle"
+            dominant-baseline="middle">T</text>
+
+    </svg>
+  </g>
+</svg>
