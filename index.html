@@ -7,10 +7,10 @@
 	<link rel="icon" href="src/favicon.ico">
 	
 	<style>
-		/* ===== VARIABLES ET BASE ===== */
 		:root {
 			--bg-light: #F9F9FB;
 			--bg-dark: #121212;
+			--text-light: #15141a;
 			--text-light: #15141a;
 			--text-dark: #f5f5f5;
 			--primary: #ff0000;
@@ -80,7 +80,6 @@
 			min-height: 100vh;
 		}
 
-		/* ===== STRUCTURE PRINCIPALE ===== */
 		.container {
 			max-width: 1300px;
 			margin: 0 auto;
@@ -107,7 +106,6 @@
 			opacity: 0.7;
 		}
 
-		/* ===== BARRE D'OUTILS ===== */
 		.toolbar {
 			display: flex;
 			justify-content: space-between;
@@ -151,7 +149,6 @@
 			font-weight: 500;
 		}
 
-		/* ===== BOUTONS ===== */
 		.btn {
 			width: 60px;
 			height: 60px;
@@ -287,7 +284,6 @@
 			transition: var(--transition);
 		}
 
-		/* ===== BOUTONS DU HAUT (conservé pour compatibilité) ===== */
 		.top-buttons {
 			display: flex;
 			flex-wrap: wrap;
@@ -345,7 +341,6 @@
 			color: var(--text-light);
 		}
 
-		/* ===== MENU ET SOUS-MENUS ===== */
 		.menu-overlay {
 			position: fixed;
 			top: 0;
@@ -364,7 +359,6 @@
 			pointer-events: all;
 		}
 
-		/* menu principal (slide) */
 		.menu {
 			position: fixed;
 			top: 0;
@@ -373,7 +367,6 @@
 			max-width: 300px;
 			height: 100%;
 			background-color: var(--bg-light);
-
 			z-index: 1000;
 			transition: right 0.6s ease;
 			padding: 2rem 1.5rem;
@@ -459,7 +452,6 @@
 			animation: rotate 1s linear;
 		}
 
-		/* sous-menus */
 		.submenu {
 			position: fixed;
 			top: 0;
@@ -605,7 +597,6 @@
 			transform: scale(1.3);
 		}
 
-		/* ===== SECTIONS ===== */
 		.section {
 			margin-bottom: 50px;
 			scroll-margin-top: 20px;
@@ -622,7 +613,6 @@
 			color: var(--text-light);
 		}
 
-		/* ===== GRILLE DE CARTES ===== */
 		.card-grid {
 			display: grid;
 			gap: 25px;
@@ -758,7 +748,9 @@
 			}
 		}
 
-		/* ===== RESPONSIVE ===== */
+		/* NOTE : La classe .svg-icon a été supprimée car toutes les vignettes
+		   utilisent maintenant <img src="src/svg/...svg"> (approche factorisée). */
+
 		@media (min-width: 769px) and (max-width: 1024px) {
 			.card-grid {
 				grid-template-columns: repeat(3, 1fr);
@@ -874,7 +866,6 @@
 </head>
 
 <body>
-	<!-- Barre d'outils avec les 4 boutons -->
 	<div class="toolbar">
 		<div class="toolbar-left">
 			<button class="btn home-btn" id="home-btn" data-title="accueil">
@@ -896,7 +887,7 @@
 		</div>
 		<div class="toolbar-title">
 			<h1>boîte à outils</h1>
-			<h2>φ / spécialité HLP / option math-φ (new : 30 / 57)</h2>
+			<h2>φ / spécialité HLP / option math-φ (new : 33 / 59)</h2>
 		</div>
 		<div class="toolbar-right">
 			<button class="btn fullscreen" id="fullscreen-btn" data-title="plein écran">
@@ -929,12 +920,11 @@
 					<h2 class="section-title">réviser les repères</h2>
 				</div>
 				<div class="card-grid">
-					<!-- Carte 1 -->
 					<article class="card">
 						<a href="fichiers/philo - reperes - 01 - distinguer par exemple/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/distinction.svg" alt="Mise en pratique" class="card-image">
-								<span class="new-badge">new !!!</span>									
+								<span class="new-badge">new !!!!</span>									
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">distinguer par exemple</h3>
@@ -952,12 +942,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 2 -->
 					<article class="card">
-						<a href="fichiers/philo - reperes - 02 - reperes a trous/index.html" class="card-link">
+						<a href="fichiers/philo - reperes - 02 - definitions a trous/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/texte à trous.svg" alt="repères à trous" class="card-image">
-								<span class="new-badge">new !!!</span>								
+								<span class="new-badge">new !!!!</span>								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">définitions à trous</h3>
@@ -975,16 +964,15 @@
 						</a>
 					</article>
 
-					<!-- Carte 3 -->
 					<article class="card">
 						<a href="fichiers/philo - reperes - 03 - mots caches/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/mots cachés.svg" alt="Mots cachés" class="card-image">
-								
+								<span class="new-badge">new !!!!</span>		
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">mots cachés</h3>
-								<p class="card-description">distinguer dans une grille</p>
+								<p class="card-description">découvrir les repères</p>
 								<div class="difficulty">
 									<div class="difficulty-stars">
 										<span class="star">★</span>
@@ -998,16 +986,15 @@
 						</a>
 					</article>
 
-					<!-- Carte 4 -->
 					<article class="card">
 						<a href="fichiers/philo - reperes - 04 - pendu/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/pendu.svg" alt="Jeu du pendu" class="card-image">
-								
+								<span class="new-badge">new !!!!</span>	
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">jeu du pendu</h3>
-								<p class="card-description">de la définition au repère</p>
+								<p class="card-description">découvrir les définitions</p>
 								<div class="difficulty">
 									<div class="difficulty-stars">
 										<span class="star">★</span>
@@ -1021,12 +1008,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 5 -->
 					<article class="card">
 						<a href="fichiers/philo - reperes - 05 - definir un repere/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/matching words.svg" alt="lier repère et définition" class="card-image">
-								<span class="new-badge">new !!!</span>								
+								<span class="new-badge">new !!!!</span>								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">définir un repère</h3>
@@ -1044,12 +1030,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 6 -->
 					<article class="card">
 						<a href="fichiers/philo - reperes - 06 - exemplifier un repere/index.html" class="card-link">
 							<div class="card-image-container">
-								<img src="src/svg/matching words.svg" alt="Appariement de mots" class="card-image">
-								<span class="new-badge">new !!!</span>								
+								<img src="src/svg/matching words.svg" alt="appariement de mots" class="card-image">
+								<span class="new-badge">new !!!!</span>
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">exemplifier un repère</h3>
@@ -1067,12 +1052,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 7 -->
 					<article class="card">
 						<a href="fichiers/philo - reperes - 07 - reperes croises/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/repères croisés.svg" alt="repères croisés" class="card-image">
-								
+								<span class="new-badge">new !!!!</span>
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">repères croisés</h3>
@@ -1090,16 +1074,15 @@
 						</a>
 					</article>
 
-					<!-- Carte 8 -->
 					<article class="card">
 						<a href="fichiers/philo - reperes - 08 - quiz sur les reperes/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/quiz.svg" alt="interrogation" class="card-image">
-								<span class="new-badge">new</span>
+								<span class="new-badge">new !!!!</span>
 							</div>
 							<div class="card-content">
-								<h3 class="card-title">apprendre les repères</h3>
-								<p class="card-description">71 repères x 1 définition</p>
+								<h3 class="card-title">quiz sur les repères</h3>
+								<p class="card-description">apprendre les repères</p>
 								<div class="difficulty">
 									<div class="difficulty-stars">
 										<span class="star">★</span>
@@ -1113,16 +1096,15 @@
 						</a>
 					</article>
 
-					<!-- Carte 9 -->
 					<article class="card">
 						<a href="fichiers/philo - reperes - 09 - mots tres caches/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/mots très cachés.svg" alt="Mots très cachés" class="card-image">
-								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">mots très cachés</h3>
-								<p class="card-description">apprendre en profondeur</p>
+								<span class="new-badge">new !!!!</span>								
+								<p class="card-description">repérer les repères</p>
 								<div class="difficulty">
 									<div class="difficulty-stars">
 										<span class="star">★</span>
@@ -1136,16 +1118,15 @@
 						</a>
 					</article>
 
-					<!-- Carte 10 -->
 					<article class="card">
-						<a href="fichiers/philo - reperes - 10 - moty-phi/index.html" class="card-link">
+						<a href="fichiers/philo - reperes - 10 - reperes-mind/index.html" class="card-link">
 							<div class="card-image-container">
-								<img src="src/svg/moty-phi.svg" alt="moty-φ" class="card-image">
-								
+								<img src="src/svg/repères-mind.svg" alt="repères-mind" class="card-image">
+								<span class="new-badge">new !!!!</span>	
 							</div>
 							<div class="card-content">
-								<h3 class="card-title">repérer les repères</h3>
-								<p class="card-description">de la définition au repère</p>
+								<h3 class="card-title">repères-mind</h3>
+								<p class="card-description">repérer les repères</p>
 								<div class="difficulty">
 									<div class="difficulty-stars">
 										<span class="star">★</span>
@@ -1167,12 +1148,11 @@
 					<h2 class="section-title">réviser les notions</h2>
 				</div>
 				<div class="card-grid">
-					<!-- Carte 1 -->
 					<article class="card">
 						<a href="fichiers/philo - notions - 01 - quiz/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/quiz.svg" alt="quiz notions" class="card-image">
-								<span class="new-badge">new</span>									
+								<span class="new-badge">new !!!!</span>									
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">quiz sur les notions</h3>
@@ -1190,15 +1170,14 @@
 						</a>
 					</article>
 
-					<!-- Carte 2 -->
 					<article class="card">
-						<a href="fichiers/philo - notions - 02 - notion liberté/index.html" class="card-link">
+						<a href="fichiers/philo - notions - 02 - liberté/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/boids.svg" alt="quiz notions" class="card-image">
 								<span class="new-badge">nouveau</span>								
 							</div>
 							<div class="card-content">
-								<h3 class="card-title"><span class="ok-badge">OK</span>notion : liberté</h3>
+								<h3 class="card-title">notion « liberté »</h3>
 								<p class="card-description">le libre arbitre et les boids</p>
 								<div class="difficulty">
 									<div class="difficulty-stars">
@@ -1212,7 +1191,28 @@
 							</div>
 						</a>
 					</article>
-					
+
+					<article class="card">
+						<a href="fichiers/philo - notions - 03 - philosophie/index.html" class="card-link">
+							<div class="card-image-container">
+								<img src="src/svg/reconstituer.svg" alt="reconstituer" class="card-image">
+								<span class="new-badge">new !!!!</span>
+							</div>
+							<div class="card-content">
+								<h3 class="card-title">notion « philosophie »</h3>
+								<p class="card-description">1 notion x 50 questions</p>
+								<div class="difficulty">
+									<div class="difficulty-stars">
+										<span class="star">★</span>
+										<span class="star empty">★</span>
+										<span class="star empty">★</span>
+										<span class="star empty">★</span>
+										<span class="star empty">★</span>
+									</div>
+								</div>
+							</div>
+						</a>
+					</article>
 				</div>
 			</section>
 
@@ -1222,12 +1222,10 @@
 					<h2 class="section-title">réviser les cours</h2>
 				</div>
 				<div class="card-grid">
-					<!-- Carte 1 -->
 					<article class="card">
 						<a href="fichiers/philo - cours - 01 - cartes mentales/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/carte mentale.svg" alt="Cartes mentales" class="card-image">
-								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">cartes mentales</h3>
@@ -1245,12 +1243,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 2 -->
 					<article class="card">
 						<a href="fichiers/philo - cours - 02 - textes a trous (notions)/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/texte à trous.svg" alt="textes à trous" class="card-image">
-								<span class="new-badge">new</span>										
+								<span class="new-badge">new !!!!</span>										
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">textes à trous (notions)</h3>
@@ -1268,12 +1265,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 3 -->
 					<article class="card">
 						<a href="fichiers/philo - cours - 03 - textes a trous (auteurs)/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/texte à trous.svg" alt="Textes à trous auteurs" class="card-image">
-								<span class="new-badge">new</span>					
+								<span class="new-badge">new !!!!</span>					
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">textes à trous (auteurs)</h3>
@@ -1291,12 +1287,10 @@
 						</a>
 					</article>
 
-					<!-- Carte 4 -->
 					<article class="card">
 						<a href="fichiers/philo - cours - 04 - qui veut gagner des millions/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/millions.svg" alt="Qui veut gagner des millions" class="card-image">
-								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">qui veut gagner des millions ?</h3>
@@ -1314,16 +1308,15 @@
 						</a>
 					</article>
 
-					<!-- Carte 5 -->
 					<article class="card">
 						<a href="fichiers/philo - cours - 05 - quiz sur des textes/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/quiz.svg" alt="quiz sur textes" class="card-image">
-								<span class="new-badge">new</span>	
+								<span class="new-badge">new !!!!</span>	
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">quiz textes φ</h3>
-								<p class="card-description">14 textes x 50 questions</p>
+								<p class="card-description">36 textes x 50 questions</p>
 								<div class="difficulty">
 									<div class="difficulty-stars">
 										<span class="star">★</span>
@@ -1337,12 +1330,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 6 -->
 					<article class="card">
 						<a href="fichiers/hlp - 1ere - quiz sur le cours/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/quiz.svg" alt="quiz HLP 1ère" class="card-image">
-								<span class="new-badge">new !</span>	
+								<span class="new-badge">new !!!!</span>	
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">quiz hlp première</h3>
@@ -1360,12 +1352,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 7 -->
 					<article class="card">
 						<a href="fichiers/hlp - term - quiz sur le cours/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/quiz.svg" alt="quiz HLP terminale" class="card-image">
-								<span class="new-badge">new !</span>	
+								<span class="new-badge">new !!!!</span>	
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">quiz hlp terminale</h3>
@@ -1391,7 +1382,6 @@
 					<h2 class="section-title">réviser la méthodologie</h2>
 				</div>
 				<div class="card-grid">
-					<!-- Carte 1 -->
 					<article class="card">
 						<a href="fichiers/philo - methodologie - 01 - organiser l'intro de l'explication/index.html" class="card-link">
 							<div class="card-image-container">
@@ -1414,12 +1404,10 @@
 						</a>
 					</article>
 
-					<!-- Carte 2 -->
 					<article class="card">
 						<a href="fichiers/philo - methodologie - 02 - algorigramme/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/algorigramme.svg" alt="Algorigramme" class="card-image">
-								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">algorigramme</h3>
@@ -1437,12 +1425,10 @@
 						</a>
 					</article>
 
-					<!-- Carte 3 -->
 					<article class="card">
 						<a href="fichiers/philo - methodologie - 03 - enchainement des idees/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/enchaînement des idées.svg" alt="travailler l'enchaînement des idées" class="card-image">
-								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">classer / enchaînement des idées</h3>
@@ -1460,16 +1446,15 @@
 						</a>
 					</article>
 
-					<!-- Carte 4 -->
 					<article class="card">
 						<a href="fichiers/philo - methodologie - 04 - connecteurs logiques/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/repérer.svg" alt="travailler la logique" class="card-image">
-								<span class="new-badge">NEW</span>
+								<span class="new-badge">NEW !!!!</span>
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">connecteurs logiques</h3>
-								<p class="card-description">24 textes</p>
+								<p class="card-description">36 textes</p>
 								<div class="difficulty">
 									<div class="difficulty-stars">
 										<span class="star">★</span>
@@ -1482,7 +1467,6 @@
 							</div>
 						</a>
 					</article>
-
 				</div>
 			</section>
 
@@ -1492,12 +1476,11 @@
 					<h2 class="section-title">réviser le questionnement</h2>
 				</div>
 				<div class="card-grid">
-					<!-- Carte 1 -->
 					<article class="card">
 						<a href="fichiers/philo - questionnement - 01 - identifier un argument/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/matching words.svg" alt="identifier un argument" class="card-image">
-								<span class="new-badge">new !</span>
+								<span class="new-badge">new !!!!</span>
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">identifier un argument</h3>
@@ -1515,12 +1498,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 2 -->
 					<article class="card">
 						<a href="fichiers/philo - questionnement - 02 - identifier un sophisme/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/matching words.svg" alt="identifier un sophisme" class="card-image">
-								<span class="new-badge">new !</span>						
+								<span class="new-badge">new !!!!</span>						
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">identifier un sophisme</h3>
@@ -1538,12 +1520,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 3 -->
 					<article class="card">
 						<a href="fichiers/philo - questionnement - 03 - identifier un probleme/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/matching words.svg" alt="de deux questions à un problème" class="card-image">
-								<span class="new-badge">new !</span>							
+								<span class="new-badge">new !!!!</span>							
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">identifier un problème</h3>
@@ -1561,12 +1542,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 4 -->
 					<article class="card">
 						<a href="fichiers/philo - questionnement - 04 - probleme-enjeu/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/matching words.svg" alt="Problème et enjeu" class="card-image">
-								<span class="new-badge">new !</span>							
+								<span class="new-badge">new !!!!</span>							
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">problème → enjeu</h3>
@@ -1584,12 +1564,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 5 -->
 					<article class="card">
 						<a href="fichiers/philo - questionnement - 05 - intitule-probleme/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/matching words.svg" alt="de l'intitulé au problème" class="card-image">
-								<span class="new-badge">new !</span>								
+								<span class="new-badge">new !!!!</span>								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">intitulé → problème</h3>
@@ -1607,12 +1586,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 6 -->
 					<article class="card">
 						<a href="fichiers/philo - questionnement - 06 - probleme-intitule/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/matching words.svg" alt="du problème à l'intitulé" class="card-image">
-								<span class="new-badge">new !</span>								
+								<span class="new-badge">new !!!!</span>								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">problème → intitulé</h3>
@@ -1630,12 +1608,10 @@
 						</a>
 					</article>
 
-					<!-- Carte 7 -->
 					<article class="card">
 						<a href="fichiers/philo - questionnement - 07 - construire un questionnement/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/transformer un intitulé en problème.svg" alt="Construire questionnement" class="card-image">
-								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">classer/construire un questionnement</h3>
@@ -1653,12 +1629,10 @@
 						</a>
 					</article>
 
-					<!-- Carte 8 -->
 					<article class="card">
 						<a href="fichiers/philo - questionnement - 08 - construire un raisonnement/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/raisonnement.svg" alt="Raisonnement logique" class="card-image">
-								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">quiz / raisonnement logique</h3>
@@ -1684,12 +1658,11 @@
 					<h2 class="section-title">réviser les auteurs</h2>
 				</div>
 				<div class="card-grid">
-					<!-- Carte 1 -->
 					<article class="card">
 						<a href="fichiers/philo - auteurs - 01 - quiz/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/quiz.svg" alt="quiz auteurs" class="card-image">
-								<span class="new-badge">new</span>								
+								<span class="new-badge">new !!!!</span>								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">quiz sur les auteurs</h3>
@@ -1707,7 +1680,6 @@
 						</a>
 					</article>
 
-					<!-- Carte 2 -->
 					<article class="card">
 						<a href="fichiers/philo - auteurs - 02 - puzzle/index.html" class="card-link">
 							<div class="card-image-container">
@@ -1729,12 +1701,10 @@
 						</a>
 					</article>
 
-					<!-- Carte 3 -->
 					<article class="card">
 						<a href="fichiers/philo - auteurs - 03 - d'ac ou pas d'ac/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/auteurs.svg" alt="D'accord ou pas d'accord" class="card-image">
-								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">distinguer : d'ac ou pas ?</h3>
@@ -1752,12 +1722,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 4 -->
 					<article class="card">
 						<a href="fichiers/philo - auteurs - 04 - citations a trous/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/texte à trous.svg" alt="textes à trous (citations)" class="card-image">
-								<span class="new-badge">new</span>								
+								<span class="new-badge">new !!!!</span>								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">citations à trous</h3>
@@ -1783,12 +1752,11 @@
 					<h2 class="section-title">baccalauréat φ</h2>
 				</div>
 				<div class="card-grid">
-					<!-- Carte 1 -->
 					<article class="card">
 						<a href="fichiers/philo - bac - 01 - horloge ecrits/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/minuteur.svg" alt="horloge pour les écrits" class="card-image">
-								<span class="new-badge">new</span>								
+								<span class="new-badge">new !!!!</span>								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">horloge</h3>
@@ -1806,12 +1774,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 2 -->
 					<article class="card">
 						<a href="fichiers/philo - bac - 02 - notation/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/écrit.svg" alt="Paliers de notation" class="card-image">
-								<span class="new-badge">new</span>								
+								<span class="new-badge">new !!!!</span>								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">paliers de notation</h3>
@@ -1829,12 +1796,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 3 -->
 					<article class="card">
 						<a href="fichiers/philo - bac - 03 - oral de controle/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/minuteur.svg" alt="Minuteur oral" class="card-image">
-								<span class="new-badge">new</span>								
+								<span class="new-badge">new !!!!</span>								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">minuteur oral</h3>
@@ -1860,12 +1826,11 @@
 					<h2 class="section-title">baccalauréat HLP</h2>
 				</div>
 				<div class="card-grid">
-					<!-- Carte 1 -->
 					<article class="card">
 						<a href="fichiers/hlp - bac - 01 - horloge ecrits/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/minuteur.svg" alt="horloge pour les écrits" class="card-image">
-								<span class="new-badge">new</span>								
+								<span class="new-badge">new !!!!</span>								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">horloge</h3>
@@ -1882,15 +1847,14 @@
 							</div>
 						</a>
 					</article>
-					<!-- Carte 2 -->
 					<article class="card">
 						<a href="fichiers/hlp - bac - 02 - notation/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/écrit.svg" alt="paliers notation HLP" class="card-image">
-								<span class="new-badge">nouveau</span>
+								<span class="new-badge">new !!!!</span>
 							</div>
 							<div class="card-content">
-								<h3 class="card-title"><span class="ok-badge">OK</span>paliers de notation</h3>
+								<h3 class="card-title">paliers de notation</h3>
 								<p class="card-description">évaluer les écrits d'hlp</p>
 								<div class="difficulty">
 									<div class="difficulty-stars">
@@ -1905,15 +1869,14 @@
 						</a>
 					</article>
 
-					<!-- Carte 6 -->
 					<article class="card">
 						<a href="fichiers/hlp - bac - 06 - correction partagee/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/écrit.svg" alt="correction partagée HLP" class="card-image">						
-								<span class="new-badge">nouveau</span>
+								<span class="new-badge">new !!!!</span>
 							</div>
 							<div class="card-content">
-								<h3 class="card-title"><span class="ok-badge">OK</span>correction partagée</h3>
+								<h3 class="card-title">correction partagée</h3>
 								<p class="card-description">mode d'emploi</p>
 								<div class="difficulty">
 									<div class="difficulty-stars">
@@ -1928,12 +1891,11 @@
 						</a>
 					</article>
 
-					<!-- Carte 3 -->
 					<article class="card">
 						<a href="fichiers/hlp - bac - 03 - minuteur oral/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/minuteur.svg" alt="minuteur oral" class="card-image">
-								<span class="new-badge">new</span>
+								<span class="new-badge">new !!!!</span>
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">minuteur oral</h3>
@@ -1951,7 +1913,6 @@
 						</a>
 					</article>
 
-					<!-- Carte 4 -->
 					<article class="card">
 						<a href="fichiers/hlp - bac - 04 - evaluation grand oral/index.html" class="card-link">
 							<div class="card-image-container">
@@ -1974,12 +1935,10 @@
 						</a>
 					</article>
 
-					<!-- Carte 5 -->
 					<article class="card">
 						<a href="fichiers/hlp - bac - 05 - prompteur/index.html" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/prompteur.png" alt="Prompteur" class="card-image">
-								
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">prompteur</h3>
@@ -2005,7 +1964,6 @@
 					<h2 class="section-title">option math-philo</h2>
 				</div>
 				<div class="card-grid">
-					<!-- Carte 1 -->
 					<article class="card">
 						<a href="fichiers/math philo - harmonie - 01 - harmonie temporelle/index.html" class="card-link">
 							<div class="card-image-container">
@@ -2027,7 +1985,6 @@
 						</a>
 					</article>
 
-					<!-- Carte 2 -->
 					<article class="card">
 						<a href="fichiers/math philo - harmonie - 02 - harmonie spatiale des longueurs/index.html" class="card-link">
 							<div class="card-image-container">
@@ -2049,7 +2006,6 @@
 						</a>
 					</article>
 
-					<!-- Carte 3 -->
 					<article class="card">
 						<a href="fichiers/math philo - harmonie - 03 - harmonie spatiale des intervalles/index.html" class="card-link">
 							<div class="card-image-container">
@@ -2071,7 +2027,6 @@
 						</a>
 					</article>
 
-					<!-- Carte 4 -->
 					<article class="card">
 						<a href="fichiers/math philo - harmonie - 04 - harmonie spatiale des longueurs (version 2)/index.html" class="card-link">
 							<div class="card-image-container">
@@ -2093,7 +2048,6 @@
 						</a>
 					</article>
 
-					<!-- Carte 5 -->
 					<article class="card">
 						<a href="fichiers/math philo - 01 - pixel art/index.html" class="card-link">
 							<div class="card-image-container">
@@ -2115,7 +2069,6 @@
 						</a>
 					</article>
 
-					<!-- Carte 6 -->
 					<article class="card">
 						<a href="fichiers/math philo - 02 - monty hall/index.html" class="card-link">
 							<div class="card-image-container">
@@ -2137,7 +2090,6 @@
 						</a>
 					</article>
 					
-					<!-- Carte 7 -->
 					<article class="card">
 						<a href="fichiers/math philo - 03 - chemin de table de x/index.html" class="card-link">
 							<div class="card-image-container">
@@ -2160,7 +2112,6 @@
 						</a>
 					</article>					
 
-					<!-- Carte 8 -->
 					<article class="card">
 						<a href="fichiers/math philo - 04 - multiplication modulaire/index.html" class="card-link">
 							<div class="card-image-container">
@@ -2182,7 +2133,6 @@
 							</div>
 						</a>
 					</article>	
-		
 				</div>
 			</section>
 
@@ -2192,7 +2142,6 @@
 					<h2 class="section-title">créer une application (fichiers zippés)</h2>
 				</div>
 				<div class="card-grid">
-					<!-- Carte 1 -->
 					<article class="card">
 						<a href="fichiers/philo - pattern - 01 - apparier/application « apparier ».zip" class="card-link">
 							<div class="card-image-container">
@@ -2215,7 +2164,6 @@
 						</a>
 					</article>
 
-					<!-- Carte 2 -->
 					<article class="card">
 						<a href="fichiers/philo - pattern - 02 - completer/application « compléter ».zip" class="card-link">
 							<div class="card-image-container">
@@ -2238,7 +2186,6 @@
 						</a>
 					</article>
 
-					<!-- Carte 3-->
 					<article class="card">
 						<a href="fichiers/philo - pattern - 03 - distinguer/application « distinguer ».zip" class="card-link">
 							<div class="card-image-container">
@@ -2261,7 +2208,6 @@
 						</a>
 					</article>
 
-					<!-- Carte 4 -->
 					<article class="card">
 						<a href="fichiers/philo - pattern - 04 - questionner/application « questionner ».zip" class="card-link">
 							<div class="card-image-container">
@@ -2270,7 +2216,7 @@
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">« questionner »</h3>
-								<p class="card-description">par des quiz interactifs</p>
+								<p class="card-description">par quiz</p>
 								<div class="difficulty">
 									<div class="difficulty-stars">
 										<span class="star empty">★</span>
@@ -2284,16 +2230,37 @@
 						</a>
 					</article>
 
-					<!-- Carte 5 -->
 					<article class="card">
-						<a href="fichiers/philo - pattern - 05 - reperer/application « repérer ».zip" class="card-link">
+						<a href="fichiers/philo - pattern - 05 - reconstituer/application « reconstituer ».zip" class="card-link">
+							<div class="card-image-container">
+								<img src="src/svg/reconstituer.svg" alt="reconstituer" class="card-image">
+								<span class="new-badge">new !!!!</span>	
+							</div>
+							<div class="card-content">
+								<h3 class="card-title">« reconstituer »</h3>
+								<p class="card-description">par classement</p>
+								<div class="difficulty">
+									<div class="difficulty-stars">
+										<span class="star empty">★</span>
+										<span class="star empty">★</span>
+										<span class="star empty">★</span>
+										<span class="star empty">★</span>
+										<span class="star empty">★</span>
+									</div>
+								</div>
+							</div>
+						</a>
+					</article>
+
+					<article class="card">
+						<a href="fichiers/philo - pattern - 06 - reperer/application « repérer ».zip" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/repérer.svg" alt="Repérer" class="card-image">
 								<span class="new-badge">new</span>
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">« repérer »</h3>
-								<p class="card-description">par le surlignage</p>
+								<p class="card-description">par surlignage</p>
 								<div class="difficulty">
 									<div class="difficulty-stars">
 										<span class="star empty">★</span>
@@ -2457,35 +2424,28 @@
 		(function() {
 			'use strict';
 
-			// Éléments
 			const body = document.body;
 			const menuOverlay = document.getElementById('menu-overlay');
 			const slideMenu = document.getElementById('slideMenu');
 			const menuBtn = document.getElementById('menu-btn');
 			const menuClose = document.getElementById('menu-close');
 
-			// Sous-menus
 			const subPresentation = document.getElementById('submenuPresentation');
 			const subSettings = document.getElementById('submenuSettings');
 			const subShortcuts = document.getElementById('submenuShortcuts');
 			const subAbout = document.getElementById('submenuAbout');
 			const submenus = [subPresentation, subSettings, subShortcuts, subAbout];
 
-			// Boutons d'ouverture des sous-menus
 			const openPresentation = document.getElementById('openPresentationSub');
 			const openSettings = document.getElementById('openSettingsSub');
 			const openShortcuts = document.getElementById('openShortcutsSub');
 			const openAbout = document.getElementById('openAboutSub');
 
-			// Toggle
 			const darkModeToggle = document.getElementById('darkModeToggle');
-
-			// Boutons home, reload, fullscreen
 			const homeBtn = document.getElementById('home-btn');
 			const reloadBtn = document.getElementById('reload-btn');
 			const fullscreenBtn = document.getElementById('fullscreen-btn');
 
-			// ===== FONCTIONS MENU =====
 			function toggleMainMenu(force) {
 				const willOpen = (force !== undefined) ? force : !slideMenu.classList.contains('active');
 				slideMenu.classList.toggle('active', willOpen);
@@ -2502,7 +2462,6 @@
 				if (submenu) submenu.classList.add('active');
 			}
 
-			// ===== GESTION THEME =====
 			function applyDarkMode(enabled) {
 				body.classList.toggle('dark-mode', enabled);
 				if (darkModeToggle) darkModeToggle.checked = enabled;
@@ -2517,27 +2476,22 @@
 				darkModeToggle.addEventListener('change', (e) => applyDarkMode(e.target.checked));
 			}
 
-			// ===== EVENEMENTS MENU =====
 			if (menuBtn) menuBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMainMenu(); });
 			if (menuClose) menuClose.addEventListener('click', () => toggleMainMenu(false));
 			if (menuOverlay) menuOverlay.addEventListener('click', () => toggleMainMenu(false));
 
-			// Ouverture sous-menus
 			if (openPresentation) openPresentation.addEventListener('click', (e) => { e.stopPropagation(); openSubmenu(subPresentation); });
 			if (openSettings) openSettings.addEventListener('click', (e) => { e.stopPropagation(); openSubmenu(subSettings); });
 			if (openShortcuts) openShortcuts.addEventListener('click', (e) => { e.stopPropagation(); openSubmenu(subShortcuts); });
 			if (openAbout) openAbout.addEventListener('click', (e) => { e.stopPropagation(); openSubmenu(subAbout); });
 
-			// Fermeture sous-menus par leur bouton close
 			document.querySelectorAll('.submenu-close').forEach(btn => {
 				btn.addEventListener('click', (e) => { e.stopPropagation(); closeAllSubmenus(); });
 			});
 
-			// Empêcher propagation clics dans menus
 			if (slideMenu) slideMenu.addEventListener('click', e => e.stopPropagation());
 			submenus.forEach(s => s && s.addEventListener('click', e => e.stopPropagation()));
 
-			// ===== PLEIN ECRAN =====
 			function toggleFullscreen() {
 				if (!document.fullscreenElement) {
 					document.documentElement.requestFullscreen().catch(err => console.warn(err));
@@ -2552,25 +2506,13 @@
 				if (fullscreenBtn) {
 					fullscreenBtn.classList.toggle('fullscreen-active', isFullscreen);
 					if (isFullscreen) {
-						fullscreenBtn.innerHTML = `<svg class="fullscreen-exit-icon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
-							<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path>
-						</svg>`;
+						fullscreenBtn.innerHTML = `<svg class="fullscreen-exit-icon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path></svg>`;
 					} else {
-						fullscreenBtn.innerHTML = `<svg class="fullscreen-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
-							<line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" />
-							<line x1="5" y1="6" x2="5" y2="10" stroke="currentColor" />
-							<line x1="14" y1="5" x2="20" y2="5" stroke="currentColor" />
-							<line x1="19" y1="6" x2="19" y2="10" stroke="currentColor" />
-							<line x1="5" y1="14" x2="5" y2="20" stroke="currentColor" />
-							<line x1="6" y1="19" x2="10" y2="19" stroke="currentColor" />
-							<line x1="14" y1="19" x2="20" y2="19" stroke="currentColor" />
-							<line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" />		 
-						</svg>`;
+						fullscreenBtn.innerHTML = `<svg class="fullscreen-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt"><line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" /><line x1="5" y1="6" x2="5" y2="10" stroke="currentColor" /><line x1="14" y1="5" x2="20" y2="5" stroke="currentColor" /><line x1="19" y1="6" x2="19" y2="10" stroke="currentColor" /><line x1="5" y1="14" x2="5" y2="20" stroke="currentColor" /><line x1="6" y1="19" x2="10" y2="19" stroke="currentColor" /><line x1="14" y1="19" x2="20" y2="19" stroke="currentColor" /><line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" /></svg>`;
 					}
 				}
 			});
 
-			// ===== BOUTONS HOME / RELOAD =====
 			if (reloadBtn) reloadBtn.addEventListener('click', () => location.reload());
 			if (homeBtn) {
 				homeBtn.addEventListener('click', () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'));
@@ -2586,7 +2528,6 @@
 				}
 			}
 
-			// ===== RACCOURCIS CLAVIER =====
 			document.addEventListener('keydown', (e) => {
 				if (e.target.matches('input, textarea, select, [contenteditable]')) return;
 				const key = e.key.toLowerCase();
@@ -2602,7 +2543,6 @@
 				}
 			});
 
-			// ===== REORGANISATION RESPONSIVE =====
 			function rearrangeToolbarForMobile() {
 				const toolbarLeft = document.querySelector('.toolbar-left');
 				const toolbarRight = document.querySelector('.toolbar-right');
@@ -2629,7 +2569,6 @@
 			window.addEventListener('load', rearrangeToolbarForMobile);
 			window.addEventListener('resize', rearrangeToolbarForMobile);
 
-			// ===== BOUTON AU HASARD =====
 			document.addEventListener('DOMContentLoaded', function() {
 				const randomButton = document.getElementById('randomButton');
 				if (randomButton) {
