@@ -1,0 +1,3498 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<link rel="icon" href="../../src/favicon.ico">
+<title>repères croisés</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+
+:root {
+  --bg: #f0f0f0;
+  --btn: #e0e0e0;
+  --font-color: #000000;
+  --shadow-out: 0.3rem 0.3rem 0.6rem rgba(0,0,0,0.1), -0.3rem -0.3rem 0.6rem rgba(255,255,255,0.9);
+  --shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0,0,0,0.1), inset -0.2rem -0.2rem 0.4rem rgba(255,255,255,0.9);
+  --tooltip-bg: #ffffff;
+  --tooltip-color: #333333;
+  --color-correct: #28a745;
+  --color-incorrect: #dc3545;
+  --border-correct: #28a745;
+  --border-incorrect: #dc3545;
+  --selected-bg: #ffeb3b;
+  --selected-color: #000000;
+  --toast-bg: #e0e0e0;
+  --toast-text: #333333;
+  --primary-color: red;
+  --badge-bg: red;
+  --badge-color: #ffffff;
+  --cell-font-size: 27px;
+  --disk-color: #FCD34D;
+}
+body.dark-theme {
+  --bg: #121212;
+  --btn: #3d3d3d;
+  --font-color: #ffffff;
+  --shadow-out: 0.3rem 0.3rem 0.6rem rgba(0,0,0,0.5), -0.3rem -0.3rem 0.6rem rgba(255,255,255,0.05);
+  --shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0,0,0,0.5), inset -0.2rem -0.2rem 0.4rem rgba(255,255,255,0.05);
+  --tooltip-bg: #1a1a1a;
+  --tooltip-color: #ffffff;
+  --selected-bg: #ff9800;
+  --selected-color: #000000;
+  --toast-bg: #3d3d3d;
+  --toast-text: #e0e0e0;
+  --primary-color: #ff6b6b;
+  --badge-bg: #ff6b6b;
+  --disk-color: #FFB300;
+  background-color: #121212 !important;
+  color: #ffffff !important;
+}
+body.colorblind-mode {
+  --color-correct: #2c7be5;
+  --color-incorrect: #1a3a5c;
+  --border-correct: #2c7be5;
+  --border-incorrect: #1a3a5c;
+  --primary-color: #2c7be5;
+  --badge-bg: #2c7be5;
+}
+body.dark-theme.colorblind-mode {
+  --color-correct: #4a90d9;
+  --color-incorrect: #3a5a7a;
+  --border-correct: #4a90d9;
+  --border-incorrect: #3a5a7a;
+  --primary-color: #4a90d9;
+  --badge-bg: #4a90d9;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--font-color);
+  padding: 12px 12px 20px 12px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.4s, color 0.4s;
+  overflow-y: auto;
+}
+
+body.menu-open .toolbar-wrapper,
+body.menu-open .main-container,
+body.menu-open .words-toaster,
+body.menu-open .toaster-global {
+  filter: blur(5px);
+  transition: filter 0.3s ease;
+  pointer-events: none;
+}
+.slide-menu, .submenu, .menu-overlay, .sequences-dropdown {
+  filter: none !important;
+  pointer-events: auto !important;
+}
+
+.btn, .timer-btn, .menu-close, .submenu-close, .menu-item,
+.stats-reload-btn, .quiz-btn, .btn-sequences, .select-all-btn {
+  background: var(--btn);
+  color: var(--font-color);
+  box-shadow: var(--shadow-out);
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:hover, .timer-btn:hover, .menu-close:hover, .submenu-close:hover,
+.menu-item:hover, .stats-reload-btn:hover, .quiz-btn:hover,
+.btn-sequences:hover, .select-all-btn:hover {
+  box-shadow: var(--shadow-in);
+  transform: translateY(-2px);
+}
+.btn:active, .timer-btn:active, .btn-sequences:active { transform: scale(0.95); }
+
+.btn {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; position: relative;
+}
+.btn svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; flex-shrink: 0; }
+
+.btn::after, .timer-btn::after, .btn-sequences::after {
+  content: attr(data-title);
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  margin-top: 0.5rem; background-color: var(--tooltip-bg); color: var(--tooltip-color);
+  padding: 0.3rem 0.6rem; border-radius: 5px; font-size: 0.8rem;
+  white-space: nowrap; opacity: 0; pointer-events: none; z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.btn:hover::after, .timer-btn:hover::after, .btn-sequences:hover::after { opacity: 1; }
+
+.btn-home .icon-wrapper {
+  width: 52px; height: 52px; display: flex; align-items: center; justify-content: center;
+  transform-style: preserve-3d; flex-shrink: 0;
+}
+.btn-home:hover .icon-wrapper { animation: spin360 2s infinite linear; }
+@keyframes spin360 { 0% { transform: rotateY(0deg);} 100% { transform: rotateY(360deg);} }
+
+.btn-reload:hover svg { animation: rotate 1s linear; }
+@keyframes rotate { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
+.menu-item:hover svg { animation: rotate 1s linear; }
+.menu-close:hover svg, .submenu-close:hover svg { animation: rotate 1s linear; }
+
+.btn-sequences {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; position: relative;
+}
+.btn-sequences .arrow-svg, .btn-sequences .plate-svg {
+  position: absolute; width: 24px; height: 24px;
+  left: 50%; top: 50%; transform: translate(-50%, -50%);
+  pointer-events: none; fill: none; stroke: currentColor; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.btn-sequences .arrow-svg { clip-path: inset(0 0 20.83% 0); z-index: 1; }
+.btn-sequences .plate-svg { z-index: 2; }
+.btn-sequences:hover .arrow-group { animation: download-arrow 1.6s linear infinite; }
+@keyframes download-arrow { 0% { transform: translateY(-6px);} 100% { transform: translateY(6px);} }
+
+.menu-icon { width: 22px; height: 18px; transition: transform 0.3s ease; stroke: currentColor; }
+.btn-menu:hover .menu-icon { transform: rotate(90deg); }
+
+.btn-fullscreen .fullscreen-icon { transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+.btn-fullscreen:not(.fullscreen-active):hover .fullscreen-icon { transform: scale(1.5); }
+.fullscreen-exit-icon { transform-origin: center; transition: transform 0.3s ease; stroke-width: 1.2px !important; }
+.btn-fullscreen.fullscreen-active:hover .fullscreen-exit-icon { transform: scale(0.7); }
+
+.toolbar-wrapper { position: relative; z-index: 10; flex-shrink: 0; top: 15px; margin-bottom: 12px; }
+.toolbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 15px; background: transparent; height: 76px;
+  border-radius: 12px 12px 0 0; gap: 10px; position: relative;
+}
+.toolbar-left, .toolbar-right { display: flex; align-items: center; gap: 8px; flex: 1; }
+.toolbar-left { justify-content: flex-start; }
+.toolbar-right { justify-content: flex-end; }
+.toolbar-center {
+  position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  pointer-events: none;
+}
+.toolbar-title {
+  color: var(--primary-color);
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  font-weight: bold; white-space: nowrap; line-height: 1.2;
+  text-transform: lowercase; margin: 0;
+}
+.toolbar-subtitle {
+  color: #555; font-size: clamp(1rem, 3vw, 1.2rem);
+  line-height: 1.2; padding-top: 12px;
+}
+body.dark-theme .toolbar-subtitle { color: #8895a7; }
+
+.sequences-dropdown {
+  position: absolute; top: 60px; left: 0; margin-top: 8px;
+  background: var(--bg); border-radius: 12px; box-shadow: var(--shadow-out);
+  display: none; min-width: 220px; max-width: 95vw; width: auto;
+  max-height: 400px; overflow-y: auto; z-index: 1000; padding: 6px 0;
+}
+.sequences-dropdown.open { display: block; }
+body.dark-theme .sequences-dropdown { background: #1a1a1a; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+.sequences-dropdown .dropdown-header {
+  padding: 8px 16px; margin-bottom: 8px; font-weight: bold;
+  color: var(--primary-color); font-size: 0.8rem;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.dropdown-notion-item {
+  display: flex; align-items: center; padding: 6px 16px;
+  margin: 2px 0; cursor: pointer; transition: background 0.15s ease; white-space: nowrap;
+}
+.dropdown-notion-item:hover { background: rgba(0,0,0,0.06); }
+body.dark-theme .dropdown-notion-item:hover { background: rgba(255,255,255,0.08); }
+.dropdown-notion-item input[type="checkbox"] {
+  width: 16px; height: 16px; margin-right: 10px; cursor: pointer;
+  flex-shrink: 0; accent-color: var(--primary-color);
+}
+.dropdown-notion-item label {
+  flex: 1; cursor: pointer; font-size: 0.78rem; color: var(--font-color);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.dropdown-actions { display: flex; gap: 0; padding: 4px 12px 10px 12px; margin-bottom: 4px; }
+.dropdown-actions .select-all-btn {
+  padding: 4px 10px; font-size: 0.65rem; flex: 1; text-align: center;
+  border: none; border-radius: 4px; background: var(--btn); color: var(--font-color);
+  box-shadow: var(--shadow-out); cursor: pointer; transition: all 0.2s ease;
+}
+.dropdown-actions .select-all-btn:first-child { border-radius: 4px 0 0 4px; }
+.dropdown-actions .select-all-btn:last-child {
+  border-radius: 0 4px 4px 0; border-left: 1px solid rgba(0,0,0,0.08);
+}
+.dropdown-count { padding: 6px 16px 4px 16px; font-size: 0.65rem; opacity: 0.6; text-align: center; margin-top: 4px; }
+
+.timer-btn {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; padding: 0; line-height: 1;
+  font-size: 12px; font-weight: bold; font-family: monospace; flex-shrink: 0;
+}
+.timer-btn.warning { color: #ff6b6b; animation: timer-pulse 0.5s ease infinite alternate; }
+.timer-btn.danger { color: #ff0000; animation: timer-pulse 0.3s ease infinite alternate; }
+@keyframes timer-pulse { 0% { transform: scale(1);} 100% { transform: scale(1.05);} }
+
+.toolbar-mobile {
+  display: none; flex-direction: column; align-items: center; width: 100%;
+  padding: 6px 12px 4px; background: transparent; border-radius: 12px 12px 0 0;
+}
+.toolbar-mobile .btn, .toolbar-mobile .timer-btn, .toolbar-mobile .btn-sequences { width: 44px; height: 44px; }
+.toolbar-mobile .btn svg { width: 20px; height: 20px; }
+.toolbar-mobile .menu-icon { width: 18px; height: 14px; }
+.toolbar-mobile .btn-sequences .arrow-svg, .toolbar-mobile .btn-sequences .plate-svg { width: 20px; height: 20px; }
+.mobile-buttons {
+  display: flex; justify-content: center; align-items: center;
+  width: fit-content; gap: 6px; padding: 0 4px; margin-bottom: 8px;
+  margin-left: auto; margin-right: auto;
+}
+.mobile-title-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 10px; }
+.mobile-title {
+  color: var(--primary-color); font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+  font-weight: bold; text-align: center; line-height: 1.2;
+  margin-top: 5px; text-transform: lowercase;
+}
+
+.menu-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 1000;
+  opacity: 0; visibility: hidden; transition: all 0.3s ease;
+}
+.menu-overlay.open { opacity: 1; visibility: visible; }
+.slide-menu {
+  position: fixed; top: 0; right: -300px; width: 280px; height: 100vh;
+  background-color: var(--bg); z-index: 1001; padding: 20px;
+  display: flex; flex-direction: column; border-radius: 20px 0 0 20px;
+  box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+  transition: right 0.3s ease; overflow-y: auto;
+}
+.slide-menu.open { right: 0; }
+.menu-header { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+.menu-close, .submenu-close {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.menu-close svg, .submenu-close svg { width: 18px; height: 18px; stroke: currentColor; }
+.menu-item {
+  display: flex; align-items: center; padding: 0px 20px; font-size: 14px;
+  border-radius: 8px; margin-bottom: 17px; width: 100%;
+  min-height: 42px; border: none;
+}
+.menu-item:hover { background: rgba(0,0,0,0.08); transform: translateY(-2px); }
+body.dark-theme .menu-item:hover { background: rgba(255,255,255,0.08); }
+.menu-item svg {
+  width: 24px; height: 24px; margin-right: 16px;
+  stroke: currentColor; stroke-width: 2; fill: none; flex-shrink: 0;
+}
+.menu-item .item-label { flex: 1; text-align: left; display: flex; align-items: center; height: 100%; }
+.menu-item .item-badge {
+  background: var(--badge-bg); color: var(--badge-color); border-radius: 50%;
+  width: 34px; height: 34px; display: flex; align-items: center;
+  justify-content: center; font-size: 10px; font-weight: bold;
+  flex-shrink: 0; margin-left: 8px;
+}
+
+.submenu {
+  position: fixed; top: 0; right: -340px; width: 280px; height: 100%;
+  background: var(--bg); z-index: 10010; box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  border-radius: 20px 0 0 20px; padding: 2rem 1.5rem;
+  overflow-y: auto; transition: right 0.5s ease;
+}
+.submenu.active { right: 0; }
+.submenu-title {
+  font-size: 1.4rem; font-weight: bold; color: var(--primary-color);
+  margin: 0.5rem 0 1.5rem 0; text-align: center; text-transform: lowercase;
+}
+.submenu-content { color: var(--font-color); font-size: 13px; line-height: 1.5; margin-top: 4px; }
+.settings-info, .stats-info {
+  margin-top: 0; padding: 6px; background: rgba(0,0,0,0.05);
+  border-radius: 10px; margin-bottom: 15px;
+}
+body.dark-theme .settings-info, body.dark-theme .stats-info { background: rgba(255,255,255,0.05); }
+.toggle-container {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 0.75rem; min-height: 24px;
+}
+.toggle-label {
+  color: var(--font-color); font-size: 0.9rem; text-align: left;
+  display: flex; align-items: center; gap: 0.75rem; cursor: pointer; flex: 1;
+}
+.theme-switch { position: relative; display: inline-block; width: 40px; height: 20px; flex-shrink: 0; }
+.theme-switch input { opacity: 0; width: 0; height: 0; }
+.theme-switch .slider {
+  position: absolute; cursor: pointer; inset: 0;
+  background: #b0b8c4; border-radius: 20px; transition: .3s;
+}
+.theme-switch .slider:before {
+  content: ""; position: absolute; width: 16px; height: 16px;
+  left: 2px; top: 2px; background: #fff; border-radius: 50%;
+  transition: .3s; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.theme-switch input:checked+.slider { background: #3a7bb5; }
+.theme-switch input:checked+.slider:before { transform: translateX(20px); }
+body.dark-theme .theme-switch .slider { background: #3d3d3d; }
+body.dark-theme .theme-switch input:checked+.slider { background: #4a80c0; }
+
+.pairs-slider-container { display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.2rem; margin-bottom: 0.5rem; }
+.pairs-slider-label { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
+.pairs-slider-label .toggle-label { font-size: 0.9rem; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; flex: 1; }
+.pairs-slider-value { font-weight: bold; color: var(--primary-color); font-size: 1rem; }
+.pairs-slider {
+  -webkit-appearance: none; appearance: none; width: 100%; height: 4px;
+  border-radius: 2px; background: #b0b8c4; outline: none; margin: 0;
+}
+.pairs-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none; width: 16px; height: 16px;
+  border-radius: 50%; background: #3a7bb5; cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.pairs-slider::-moz-range-thumb {
+  width: 16px; height: 16px; border-radius: 50%; background: #3a7bb5;
+  cursor: pointer; border: none; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+body.dark-theme .pairs-slider { background: #3d3d3d; }
+body.dark-theme .pairs-slider::-webkit-slider-thumb { background: #4a80c0; }
+.slider-graduations {
+  display: flex; justify-content: space-between; width: 100%;
+  padding: 0; margin-top: 3px; font-size: 0.7rem; opacity: 0.7;
+}
+.slider-graduations .infinity-symbol {
+  font-size: 1rem; display: inline-flex; align-items: center; justify-content: center; line-height: 1;
+}
+
+.submenu {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.submenu .pairs-slider-container {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.submenu .pairs-slider {
+  touch-action: pan-y;
+  cursor: pointer;
+}
+
+.main-container {
+  width: 100%; max-width: 950px; margin: 0 auto;
+  padding-left: 10px; padding-right: 10px;
+  flex-grow: 1; display: flex; flex-direction: column;
+  padding-bottom: 90px; box-sizing: border-box;
+}
+
+.grid-wrapper {
+  display: flex; justify-content: center; align-items: center;
+  margin-bottom: 15px; width: 100%;
+}
+
+.grid-container {
+  display: grid;
+  gap: 3px;
+  margin: 15px auto;
+  position: relative;
+}
+
+.grid-cell {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-weight: normal;
+  font-size: var(--cell-font-size, 27px);
+  text-transform: uppercase;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  color: var(--font-color);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.grid-cell::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 140%;
+  height: 140%;
+  background-color: var(--disk-color);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.grid-cell.animee::before {
+  animation: grandirDisque 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes grandirDisque {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.grid-cell .cell-letter {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+.grid-cell .cell-number {
+  z-index: 3;
+}
+.grid-cell.animee .cell-letter {
+  color: #000000 !important;
+}
+
+.grid-cell.word-correct {
+  background: #ffffff !important;
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.08), inset -2px -2px 5px rgba(255,255,255,0.9) !important;
+}
+body.dark-theme .grid-cell.word-correct {
+  background: #ffffff !important;
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3), inset -2px -2px 5px rgba(255,255,255,0.1) !important;
+}
+.grid-cell.word-correct .cell-letter {
+  color: #000000 !important;
+}
+.grid-cell.word-correct .cell-number {
+  color: #5a6c7d !important;
+}
+
+body.dark-theme .grid-cell.empty {
+  background: transparent; box-shadow: none; cursor: default;
+}
+.grid-cell.empty::before { display: none; }
+.grid-cell.space { visibility: hidden; }
+.grid-cell.space::before { display: none; }
+.grid-cell.filled {
+  background: var(--bg);
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1), inset -2px -2px 5px rgba(255,255,255,0.7);
+}
+body.dark-theme .grid-cell.filled {
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.4), inset -2px -2px 5px rgba(255,255,255,0.03);
+}
+.grid-cell.correct { color: var(--color-correct); }
+.grid-cell.incorrect { color: var(--color-incorrect); }
+.grid-cell.highlighted {
+  background: var(--selected-bg) !important; color: var(--selected-color) !important;
+}
+.grid-cell.selected {
+  outline: 3px solid var(--primary-color);
+  outline-offset: -2px;
+  z-index: 2;
+}
+.grid-cell.numbered { position: relative; }
+.cell-number {
+  position: absolute; top: 1px; left: 2px;
+  font-size: clamp(0.35rem, 1.5vw, 0.5rem);
+  color: #5a6c7d; font-weight: bold;
+  pointer-events: none;
+  line-height: 1;
+}
+body.dark-theme .cell-number { color: #8895a7; }
+
+.words-toaster {
+  display: flex;
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 950px;
+  border-radius: 14px;
+  padding: 0;
+  z-index: 500;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(4px);
+}
+
+.toaster-buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.button-group {
+  display: flex;
+  align-items: stretch;
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: var(--shadow-out);
+  max-width: 250px;
+  width: 100%;
+  height: 44px;
+}
+
+.toaster-btn, .toaster-score {
+  padding: 0 20px;
+  font-size: 0.85rem;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: var(--btn);
+  color: var(--font-color);
+  border: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  line-height: 1;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.toaster-btn {
+  white-space: normal;
+  line-height: 1.1;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  border-left: 1px solid rgba(128, 128, 128, 0.5);
+  letter-spacing: 0.5px;
+}
+.toaster-btn:hover { box-shadow: var(--shadow-in); }
+.toaster-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.toaster-score {
+  cursor: default;
+  font-weight: bold;
+  font-family: monospace;
+  font-variant-numeric: tabular-nums;
+  border-left: 1px solid rgba(128, 128, 128, 0.5);
+}
+
+.toaster-btn#help-btn {
+  font-size: 0.85rem;
+  padding: 0 20px;
+}
+
+.tooltip {
+  position: fixed;
+  background-color: var(--tooltip-bg);
+  color: var(--tooltip-color);
+  padding: 10px 12px;
+  border-radius: 8px;
+  z-index: 200;
+  max-width: 280px;
+  box-shadow: 4px 4px 12px rgba(0,0,0,0.15);
+  font-size: 0.85rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  border: 1px solid rgba(0,0,0,0.1);
+  display: none;
+}
+body.dark-theme .tooltip { border-color: #333; }
+
+.tooltip.tooltip-touch {
+  position: fixed !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  top: 20px !important;
+  max-width: 92vw !important;
+  z-index: 9999 !important;
+  font-size: 0.9rem;
+  padding: 12px 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+.toaster-global {
+  position: fixed; top: 20px; left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: var(--toast-bg); color: var(--toast-text);
+  padding: 16px 28px; border-radius: 12px;
+  font-size: 1rem; font-weight: bold; z-index: 99999;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
+  opacity: 0; pointer-events: none; text-align: center;
+  max-width: 90%; min-width: 200px;
+}
+.toaster-global.show {
+  transform: translateX(-50%) translateY(0); opacity: 1;
+}
+
+.confetti-container {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 99999; overflow: hidden;
+}
+.confetti-piece {
+  position: absolute; width: 10px; height: 10px; top: -10px;
+  animation: confetti-fall linear forwards;
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
+}
+
+.container--quiz-end {
+  min-height: 300px; position: relative; display: flex;
+  align-items: stretch; justify-content: center; overflow: auto;
+  flex: 1; padding: 10px 0;
+}
+.container--quiz-results {
+  color: var(--font-color); font-family: Arial, sans-serif;
+  width: 100%; max-height: 100%; overflow: auto; display: flex;
+  flex-direction: column; align-items: center; gap: 12px;
+}
+.container--quiz-results .bento-score,
+.container--quiz-results .bento-stats-global .stat-item,
+.container--quiz-results .bento-stats-personal .stat-item-mini,
+.container--quiz-results .bento-message {
+  background: var(--btn); box-shadow: var(--shadow-out); border-radius: 10px;
+}
+.container--quiz-results .bento-score {
+  width: 100%; max-width: 596px; margin-top: 45px; padding: 16px 20px; text-align: center;
+}
+.container--quiz-results .bento-score .quiz-end__score,
+.container--quiz-results .bento-score .quiz-end__total {
+  font-size: 1.3rem; font-weight: bold;
+}
+.container--quiz-results .bento-score .quiz-end__score { color: var(--primary-color); }
+.container--quiz-results .bento-stats-global {
+  width: 100%; max-width: 596px; display: grid;
+  grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+.container--quiz-results .bento-stats-global .stat-item {
+  padding: 12px 8px; text-align: center; min-width: 0;
+}
+.container--quiz-results .bento-stats-global .stat-item .stat-value {
+  font-size: 1.2rem; font-weight: bold; color: var(--primary-color);
+  display: block; line-height: 1.1; margin-bottom: 6px;
+}
+.container--quiz-results .bento-stats-global .stat-item .stat-label {
+  font-size: 0.8rem; opacity: 0.8; display: block; margin-top: 2px;
+}
+.container--quiz-results .bento-stats-personal {
+  width: 100%; max-width: 596px; display: grid;
+  grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+.container--quiz-results .bento-stats-personal .stat-item-mini {
+  padding: 12px 8px; text-align: center; min-width: 0;
+}
+.container--quiz-results .bento-stats-personal .stat-item-mini .stat-value {
+  font-size: 1.2rem; font-weight: bold; color: var(--primary-color);
+  display: block; line-height: 1.1; margin-bottom: 6px;
+}
+.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
+  font-size: 0.8rem; opacity: 0.8; display: block; margin-top: 2px;
+}
+.container--quiz-results .bento-message {
+  width: 100%; max-width: 596px; padding: 12px 16px;
+  text-align: center; font-size: 14px; line-height: 1.4;
+}
+.bento-actions {
+  width: 100%; max-width: 596px; display: flex;
+  flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 5px;
+}
+.bento-actions .quiz-btn {
+  border: 2px solid #8895a7; border-radius: 27px; padding: 10px 20px;
+  font-size: 0.85rem; font-family: Arial, sans-serif;
+  min-width: 130px; flex: 1; text-align: center;
+}
+body.dark-theme .bento-actions .quiz-btn { border-color: #5a5a5a; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #b0b8c4; border-radius: 4px; }
+body.dark-theme ::-webkit-scrollbar-thumb { background: #3d3d3d; }
+
+.shortcuts-table { width: 100%; border-collapse: separate; border-spacing: 0.2rem 0.2rem; font-size: 0.85rem; }
+.shortcuts-table td { padding: 3px 3px; }
+.shortcuts-table kbd {
+  display: inline-block; padding: 4px 8px; font-family: monospace;
+  font-size: 0.9em; font-weight: bold; background-color: #d1d1d1;
+  color: #333; border-radius: 6px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 1px 0 0 rgba(255,255,255,0.6) inset;
+  min-width: 20px; text-align: center;
+}
+body.dark-theme .shortcuts-table kbd {
+  background-color: #1a1a1a; color: #e2e8f0; border: 1px solid #333;
+}
+.shortcuts-table .key-combo { white-space: nowrap; }
+
+.submenu-icon {
+  width: 24px; height: 24px; flex-shrink: 0; color: var(--font-color);
+  stroke: currentColor; stroke-width: 2; fill: none;
+  transition: transform 0.3s ease; display: inline-block;
+  vertical-align: middle; margin-right: 8px;
+}
+.submenu-icon:hover { animation: rotate 1s linear; }
+.about-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 0.4rem 0; margin-left: 8px; width: 100%;
+  box-sizing: border-box; padding-right: 21px;
+}
+.about-icon {
+  width: 22px; height: 22px; flex-shrink: 0; color: var(--font-color);
+  stroke: currentColor; stroke-width: 2; fill: none;
+  transition: transform 0.3s ease; margin-top: 1px;
+}
+.about-item:hover .about-icon { animation: rotate 1s linear; }
+.about-text {
+  flex: 1; min-width: 0; text-align: left; color: var(--font-color);
+  font-size: 13px; line-height: 1.4; word-break: break-word;
+}
+.about-text a {
+  color: var(--font-color); text-decoration: none;
+  border-bottom: 1px dotted var(--font-color);
+}
+.about-text a:hover { border-bottom: 2px solid var(--font-color); }
+
+.slide-menu:not(.open),
+.submenu:not(.active) {
+  box-shadow: none !important;
+}
+
+@media (max-width: 820px) {
+  :root { --cell-font-size: 17px; }
+  .toolbar { height: 64px; padding: 6px 12px; }
+  .btn { width: 46px; height: 46px; }
+  .btn svg { width: 20px; height: 20px; }
+  .btn-home .icon-wrapper { width: 46px; height: 46px; }
+  .timer-btn { width: 46px; height: 46px; }
+  .btn-sequences { width: 46px; height: 46px; }
+  .btn-sequences .arrow-svg, .btn-sequences .plate-svg { width: 20px; height: 20px; }
+  .toolbar-title { font-size: clamp(1.4rem, 4vw, 1.8rem); }
+  .toolbar-subtitle { font-size: clamp(0.8rem, 2vw, 1rem); }
+  .bento-actions .quiz-btn { min-width: 100px; font-size: 0.75rem; padding: 8px 14px; }
+}
+
+@media (max-width: 600px) {
+  .toolbar { display: none; }
+  .toolbar-mobile { display: flex; padding: 6px 12px 4px; }
+  body { padding: 4px 4px 12px 4px; overflow-y: auto; height: auto; min-height: 100vh; }
+  .mobile-buttons { margin-bottom: 8px; gap: 4px; }
+  .mobile-buttons .btn, .mobile-buttons .timer-btn, .mobile-buttons .btn-sequences { width: 38px; height: 38px; }
+  .mobile-buttons .btn svg { width: 16px; height: 16px; }
+  .mobile-buttons .btn-sequences .arrow-svg, .mobile-buttons .btn-sequences .plate-svg { width: 16px; height: 16px; }
+  .mobile-title { font-size: 0.95rem; margin-top: 0; }
+  .sequences-dropdown {
+    position: fixed !important; left: 50% !important;
+    transform: translateX(-50%) !important; top: 110px !important;
+    min-width: unset; max-width: 92vw; width: 92vw;
+    margin-top: 0 !important; max-height: 50vh;
+  }
+  .dropdown-notion-item { padding: 8px 14px; }
+  .dropdown-notion-item label { font-size: 0.75rem; }
+  .dropdown-notion-item input[type="checkbox"] { width: 18px; height: 18px; }
+  .slide-menu { width: 260px; right: -280px; padding: 14px 16px; }
+  .submenu { width: 260px; right: -280px; padding: 14px 16px; }
+  .menu-item { padding: 0px 14px; font-size: 12px; min-height: 44px; }
+  .menu-item svg { width: 18px; height: 18px; }
+
+  .main-container {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-bottom: 80px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: calc(100vh - 120px) !important;
+  }
+  .grid-wrapper {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    flex: 0 0 auto !important;
+  }
+
+  .words-toaster {
+    position: fixed !important;
+    bottom: 15px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: transparent !important;
+    padding: 0 !important;
+    width: calc(100% - 16px) !important;
+    max-width: 100% !important;
+    z-index: 10 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .toaster-buttons {
+    max-width: 220px !important;
+    margin: 0 auto !important;
+  }
+  .button-group {
+    border-radius: 30px;
+    max-width: 220px !important;
+    width: 100% !important;
+    height: 34px;
+  }
+
+  .toaster-btn, .toaster-score {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    padding: 0 6px !important;
+    font-size: 0.7rem !important;
+  }
+  .toaster-btn#help-btn {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    padding: 0 6px !important;
+    font-size: 0.75rem !important;
+  }
+
+  .container--quiz-end { padding: 0 !important; min-height: auto !important; height: auto !important; }
+  .container--quiz-results { gap: 6px !important; padding: 0 !important; margin-top: 0 !important; }
+  .container--quiz-results .bento-score { padding: 8px 10px !important; margin-bottom: 2px !important; }
+  .container--quiz-results .bento-score .quiz-end__score,
+  .container--quiz-results .bento-score .quiz-end__total { font-size: 1.4rem !important; }
+  .container--quiz-results .bento-stats-global,
+  .container--quiz-results .bento-stats-personal { gap: 4px !important; }
+  .container--quiz-results .bento-stats-global .stat-item,
+  .container--quiz-results .bento-stats-personal .stat-item-mini {
+    padding: 4px 2px !important; font-size: 0.65rem !important;
+  }
+  .container--quiz-results .bento-stats-global .stat-item .stat-value,
+  .container--quiz-results .bento-stats-personal .stat-item-mini .stat-value {
+    font-size: 1.0rem !important; margin-bottom: 2px !important;
+  }
+  .container--quiz-results .bento-stats-global .stat-item .stat-label,
+  .container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
+    font-size: 0.65rem !important;
+  }
+  .container--quiz-results .bento-message { padding: 6px 10px !important; font-size: 0.75rem !important; }
+  .bento-actions { gap: 4px !important; }
+  .bento-actions .quiz-btn {
+    min-width: 60px !important; height: 38px !important;
+    font-size: 0.6rem !important; padding: 2px 4px !important;
+  }
+  .toaster-global {
+    padding: 12px 20px; font-size: 0.85rem;
+    max-width: 95%; min-width: 150px;
+  }
+  .tooltip.tooltip-touch {
+    top: 60px !important;
+    max-width: 94vw !important;
+    font-size: 0.85rem;
+    padding: 10px 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  body { padding: 2px 2px 10px 2px; }
+  .mobile-buttons .btn, .mobile-buttons .timer-btn, .mobile-buttons .btn-sequences { width: 32px; height: 32px; }
+  .mobile-buttons .btn svg { width: 14px; height: 14px; }
+  .mobile-buttons .btn-sequences .arrow-svg, .mobile-buttons .btn-sequences .plate-svg { width: 14px; height: 14px; }
+  .timer-btn { font-size: 9px !important; }
+  .mobile-title { font-size: 1.8rem; }
+  .toaster-global { padding: 10px 16px; font-size: 0.75rem; min-width: 120px; }
+  .toaster-btn, .toaster-score {
+    font-size: 0.65rem !important;
+    padding: 0 4px !important;
+  }
+  .button-group { height: 34px; max-width: 200px !important; }
+  .toaster-buttons { max-width: 200px !important; }
+  .tooltip.tooltip-touch {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+}
+
+.mobile-definition-bar {
+  display: none;
+  position: fixed;
+  left: 0; right: 0; top: 0;
+  background: var(--bg);
+  border-bottom: 2px solid var(--primary-color);
+  padding: 10px 14px;
+  z-index: 900;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.mobile-definition-bar.visible { opacity: 1; pointer-events: auto; }
+.mobile-definition-bar .def-content {
+  font-size: 1rem; font-weight: 600; line-height: 1.35;
+  color: var(--font-color);
+  max-height: 4.2em; overflow: hidden;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+}
+.mobile-definition-bar .def-label {
+  font-size: 0.65rem; text-transform: uppercase;
+  letter-spacing: 0.5px; color: var(--primary-color);
+  font-weight: bold; margin-bottom: 4px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.mobile-definition-bar .def-direction {
+  font-size: 0.7rem; opacity: 0.7; font-weight: normal; text-transform: none;
+}
+
+.mobile-keyboard {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--bg);
+  padding: 6px 4px 10px 4px;
+  z-index: 950;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.2);
+  border-top: 1px solid rgba(128,128,128,0.3);
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  max-height: 280px; overflow-y: auto;
+}
+.mobile-keyboard.visible { transform: translateY(0); }
+
+.keyboard-row {
+  display: flex; justify-content: center; gap: 4px; margin-bottom: 5px; width: 100%;
+}
+.keyboard-key {
+  flex: 1 1 0; min-width: 0; max-width: 44px; height: 42px;
+  border-radius: 6px; background: var(--btn); color: var(--font-color);
+  border: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15), inset 0 -2px 0 rgba(0,0,0,0.08);
+  font-size: 1.05rem; font-weight: bold; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.1s ease; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  font-family: Arial, sans-serif;
+}
+body.dark-theme .keyboard-key {
+  background: #3d3d3d;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4), inset 0 -2px 0 rgba(0,0,0,0.3);
+}
+.keyboard-key:active, .keyboard-key.pressed {
+  transform: scale(0.92); background: var(--primary-color); color: #fff;
+}
+.keyboard-key.wide { flex: 2 2 0; max-width: 80px; font-size: 0.75rem; }
+.keyboard-key.action { flex: 1.5 1 0; max-width: 70px; font-size: 0.7rem; }
+.keyboard-key.action.primary { background: var(--primary-color); color: #fff; }
+
+body.mobile-keyboard-open .main-container { padding-bottom: 340px !important; }
+
+.keyboard-toggle-btn {
+  display: none;
+  position: fixed;
+  bottom: 15px !important;
+  right: 15px !important;
+  padding-bottom: 9px;
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 960;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.keyboard-toggle-btn:active { transform: scale(0.9); }
+
+@media (max-width: 820px) {
+  .mobile-definition-bar { display: block; }
+  .mobile-keyboard { display: block; }
+  .keyboard-toggle-btn { display: flex; }
+}
+
+@media (max-width: 600px) {
+  .mobile-definition-bar .def-content { font-size: 0.9rem; -webkit-line-clamp: 2; }
+  .keyboard-key { height: 38px; font-size: 0.95rem; }
+  .keyboard-key.wide { font-size: 0.7rem; }
+  .keyboard-key.action { font-size: 0.6rem; }
+  body.mobile-keyboard-open .main-container { padding-bottom: 320px !important; }
+}
+
+@media (max-width: 400px) {
+  .keyboard-key { height: 34px; font-size: 0.85rem; }
+  .keyboard-key.wide { font-size: 0.65rem; }
+  .keyboard-key.action { font-size: 0.55rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="toasterGlobal" class="toaster-global"></div>
+
+<div id="mobileDefinitionBar" class="mobile-definition-bar">
+  <div class="def-label">
+    <span>définition :</span>
+  </div>
+  <div class="def-content" id="mobileDefContent">touchez une case pour commencer</div>
+</div>
+
+<div id="mobileKeyboard" class="mobile-keyboard"></div>
+
+<button id="keyboardToggleBtn" class="keyboard-toggle-btn" title="Afficher/masquer le clavier">⌨️</button>
+
+<div class="toolbar-wrapper">
+  <div class="toolbar" id="toolbarDesktop">
+    <div class="toolbar-left">
+      <div style="position:relative;">
+        <button class="btn-sequences" id="sequencesBtn" data-title="repères (Alt+S)">
+          <svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <g class="arrow-group">
+              <line x1="12" y1="4" x2="12" y2="14"/>
+              <polyline points="7 10 12 15 17 10"/>
+            </g>
+          </svg>
+          <svg class="plate-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <g class="plate-group">
+              <line x1="4" y1="19" x2="20" y2="19"/>
+              <line x1="4" y1="19" x2="4" y2="16"/>
+              <line x1="20" y1="19" x2="20" y2="16"/>
+            </g>
+          </svg>
+        </button>
+        <div class="sequences-dropdown" id="sequencesDropdown">
+          <div class="dropdown-header">📚 liste des repères</div>
+          <div class="dropdown-actions">
+            <button class="select-all-btn" id="selectAllNotions">✓ tout sélectionner</button>
+            <button class="select-all-btn" id="deselectAllNotions">✗ tout désélectionner</button>
+          </div>
+          <div class="dropdown-count" id="dropdownNotionsCount">0 / 0 repères sélectionnés</div>
+          <div id="dropdownNotionsList"></div>
+        </div>
+      </div>
+      <button class="btn btn-home" data-action="home" data-title="accueil (Alt+H)">
+        <div class="icon-wrapper">
+          <svg viewBox="0 0 24 24">
+            <polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </button>
+      <button class="btn btn-reload" data-action="reload" data-title="recharger (Alt+R)">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"/>
+          <polyline points="1 20 1 14 7 14"/>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+        </svg>
+      </button>
+    </div>
+    <div class="toolbar-center">
+      <div class="toolbar-title" id="appTitle">repères croisés</div>
+      <div class="toolbar-subtitle" id="appSubtitle">résoudre des mots croisés</div>
+    </div>
+    <div class="toolbar-right">
+      <button class="timer-btn" id="timerBtnDesktop" data-title="réinitialiser le minuteur (Alt+T)">
+        <span id="timerValueDesktop">∞</span>
+      </button>
+      <button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (Alt+F)">
+        <svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+          <line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+          <line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+          <line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+          <line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+        </svg>
+      </button>
+      <button class="btn btn-menu" data-action="menu" data-title="menu (Alt+M)">
+        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="toolbar-mobile" id="toolbarMobile">
+    <div class="mobile-buttons">
+      <div style="position:relative;">
+        <button class="btn-sequences" id="sequencesBtnMobile" data-title="repères (Alt+S)">
+          <svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <g class="arrow-group">
+              <line x1="12" y1="4" x2="12" y2="14"/>
+              <polyline points="7 10 12 15 17 10"/>
+            </g>
+          </svg>
+          <svg class="plate-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <g class="plate-group">
+              <line x1="4" y1="19" x2="20" y2="19"/>
+              <line x1="4" y1="19" x2="4" y2="16"/>
+              <line x1="20" y1="19" x2="20" y2="16"/>
+            </g>
+          </svg>
+        </button>
+        <div class="sequences-dropdown" id="sequencesDropdownMobile">
+          <div class="dropdown-header">📚 repères à réviser</div>
+          <div class="dropdown-actions">
+            <button class="select-all-btn" id="selectAllNotionsMobile">✓ tout sélectionner</button>
+            <button class="select-all-btn" id="deselectAllNotionsMobile">✗ tout désélectionner</button>
+          </div>
+          <div id="dropdownNotionsListMobile"></div>
+          <div class="dropdown-count" id="dropdownNotionsCountMobile">0 / 0 repères sélectionnés</div>
+        </div>
+      </div>
+      <button class="btn btn-home" data-action="home" data-title="accueil (Alt+H)">
+        <div class="icon-wrapper">
+          <svg viewBox="0 0 24 24">
+            <polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </button>
+      <button class="btn btn-reload" data-action="reload" data-title="recharger (Alt+R)">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"/>
+          <polyline points="1 20 1 14 7 14"/>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+        </svg>
+      </button>
+      <button class="timer-btn" id="timerBtnMobile" data-title="réinitialiser le minuteur (Alt+T)">
+        <span id="timerValueMobile">∞</span>
+      </button>
+      <button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (Alt+F)">
+        <svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+          <line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+          <line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+          <line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+          <line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+        </svg>
+      </button>
+      <button class="btn btn-menu" data-action="menu" data-title="menu (Alt+M)">
+        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="mobile-title-wrapper">
+      <div class="mobile-title" id="mobileTitle">repères croisés</div>
+    </div>
+  </div>
+</div>
+
+<main class="main-container">
+  <div class="grid-wrapper">
+    <div id="grid-container" class="grid-container"></div>
+  </div>
+</main>
+
+<div class="words-toaster" id="wordsToaster">
+  <div class="toaster-buttons">
+    <div class="button-group">
+      <button id="help-btn" class="toaster-btn" data-title="remplir quelques lettres">💡</button>
+      <button id="toaster-action-button" class="toaster-btn" data-title="vérifier les réponses">corriger</button>
+      <div id="toaster-score-button" class="toaster-score" title="score actuel">0 / 0</div>
+    </div>
+  </div>
+</div>
+
+<div id="tooltip" class="tooltip"></div>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<div class="slide-menu" id="slideMenu">
+  <div class="menu-header">
+    <button class="menu-close" id="menuClose">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="menu-content">
+    <button class="menu-item" id="openInstructionsSub">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <span class="item-label">présentation</span>
+    </button>
+    <button class="menu-item" id="openStatsSub">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M 3 3 L 3 22"/><path d="M 3 22 L 22 22"/>
+        <path d="M 7 18 L 11 12 L 15 15 L 21 6"/>
+      </svg>
+      <span class="item-label">statistiques</span>
+      <span class="item-badge" id="statsBadge">0%</span>
+    </button>
+    <button class="menu-item" id="openSettingsSub">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+      <span class="item-label">paramètres</span>
+    </button>
+    <button class="menu-item" id="openShortcutsSub">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+        <line x1="6" y1="8" x2="10" y2="8"></line><line x1="14" y1="8" x2="18" y2="8"></line>
+        <line x1="6" y1="12" x2="10" y2="12"></line><line x1="14" y1="12" x2="18" y2="12"></line>
+        <line x1="6" y1="16" x2="10" y2="16"></line><line x1="14" y1="16" x2="18" y2="16"></line>
+      </svg>
+      <span class="item-label">raccourcis</span>
+    </button>
+    <button class="menu-item" id="resetAppBtn">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 2v6h6"></path><path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
+        <path d="M21 22v-6h-6"></path><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path>
+      </svg>
+      <span class="item-label">réinitialiser</span>
+    </button>
+    <button class="menu-item" id="openAboutSub">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      <span class="item-label">à propos</span>
+    </button>
+  </div>
+</div>
+
+<div class="submenu" id="submenuInstructions">
+  <div class="menu-header">
+    <button class="submenu-close" data-submenu="instructions">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="submenu-title">présentation</div>
+  <div class="submenu-content">
+    <div class="settings-info">
+      <p><strong>objectif</strong><br><br>résoudre des mots croisés à partir des définitions des repères</p>
+    </div>
+    <div class="settings-info">
+      <p><strong>saisie</strong></p><br>
+      <p>• cliquer sur la grille → sélection du mot / change de direction</p>
+      <p>• taper les lettres au clavier</p>
+      <p>• flèches → changer de direction</p>
+      <p>• tab → passe au mot suivant</p>
+    </div>
+    <div class="settings-info">
+      <p><strong>accents</strong><br>
+	  <br>les accents sont ignorés automatiquement</p><br>
+    </div>
+  </div>
+</div>
+
+<div class="submenu" id="submenuStats">
+  <div class="menu-header">
+    <button class="submenu-close" data-submenu="stats">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="submenu-title">statistiques</div>
+  <div class="submenu-content">
+    <div class="stats-info">
+      <p><strong>quelques chiffres</strong></p><br>
+      <p>• score global : <span style="color: var(--primary-color);" id="statTotalCorrect">0</span> / <span id="statTotalAnswers">0</span></p>
+      <p>• taux de réussite : <span style="color: var(--primary-color);" id="statSuccessRate">0 %</span></p>
+      <p>• parties jouées : <span style="color: var(--primary-color);" id="statGamesPlayed">0</span></p>
+      <p>• meilleur score : <span style="color: var(--primary-color);" id="statBestScore">0 %</span></p><br>
+    </div>
+    <div class="stats-info">
+      <p><strong>sauvegarde</strong></p><br>
+      <p>les statistiques sont sauvegardées automatiquement</p><br>
+    </div>
+    <button class="stats-reload-btn" id="resetStatsBtn" style="width:100%;padding:8px 16px;border-radius:0.5rem;border:none;display:inline-flex;gap:8px;justify-content:center;align-items:center;">
+      <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 4 23 10 17 10"></polyline>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+      </svg>
+      réinitialiser les statistiques
+    </button>
+  </div>
+</div>
+
+<div class="submenu" id="submenuSettings">
+  <div class="menu-header">
+    <button class="submenu-close" data-submenu="settings">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="submenu-title">paramètres</div>
+  <div class="submenu-content">
+    <div class="toggle-container">
+      <span class="toggle-label">
+        <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        mode sombre
+      </span>
+      <label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
+    </div>
+    <div class="toggle-container">
+      <span class="toggle-label">
+        <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        animations
+      </span>
+      <label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label>
+    </div>
+    <div class="toggle-container">
+      <span class="toggle-label">
+        <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="13.5" cy="6.5" r="0.5" fill="currentColor"/>
+          <circle cx="17.5" cy="10.5" r="0.5" fill="currentColor"/>
+          <circle cx="8.5" cy="7.5" r="0.5" fill="currentColor"/>
+          <circle cx="6.5" cy="12.5" r="0.5" fill="currentColor"/>
+          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+        </svg>
+        mode daltonien
+      </span>
+      <label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label>
+    </div>
+    <div class="toggle-container">
+      <span class="toggle-label">
+        <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+        sons
+      </span>
+      <label class="theme-switch"><input type="checkbox" id="soundToggle"><span class="slider"></span></label>
+    </div>
+
+    <div class="pairs-slider-container">
+      <div class="pairs-slider-label" style="padding-bottom: 9px;">
+        <span class="toggle-label">
+          <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="3" y1="15" x2="21" y2="15"></line>
+            <line x1="9" y1="21" x2="9" y2="9"></line>
+          </svg>
+          nombre de mots
+        </span>
+        <span class="pairs-slider-value" id="wordsCountValue">11</span>
+      </div>
+      <input type="range" id="wordsCountSlider" class="pairs-slider" min="1" max="50" step="1" value="11">
+      <div class="slider-graduations" id="wordsCountGraduations">
+        <span>1</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span>
+      </div>
+    </div>
+
+    <div class="pairs-slider-container">
+      <div class="pairs-slider-label" style="padding-bottom: 9px;">
+        <span class="toggle-label">
+          <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          minuteur
+        </span>
+        <span class="pairs-slider-value" id="timerLimitValue">∞</span>
+      </div>
+      <input type="range" id="timerLimitSlider" class="pairs-slider" min="1" max="6" step="1" value="6">
+      <div class="slider-graduations">
+        <span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span class="infinity-symbol">∞</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="submenu" id="submenuShortcuts">
+  <div class="menu-header">
+    <button class="submenu-close" data-submenu="shortcuts">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="submenu-title">raccourcis</div>
+  <div class="submenu-content">
+    <div class="settings-info">
+      <table class="shortcuts-table">
+        <tr><td class="key-combo"><kbd>Alt</kbd>+<kbd>S</kbd></td><td>ouvrir/fermer la liste des repères</td></tr>
+        <tr><td class="key-combo"><kbd>Alt</kbd>+<kbd>H</kbd></td><td>accueil</td></tr>
+        <tr><td class="key-combo"><kbd>Alt</kbd>+<kbd>R</kbd></td><td>nouvelle grille</td></tr>
+        <tr><td class="key-combo"><kbd>Alt</kbd>+<kbd>T</kbd></td><td>réinitialiser le minuteur</td></tr>
+        <tr><td class="key-combo"><kbd>Alt</kbd>+<kbd>F</kbd></td><td>plein écran</td></tr>
+        <tr><td class="key-combo"><kbd>Alt</kbd>+<kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr>
+        <tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer (sous-menus, menu)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="submenu" id="submenuAbout">
+  <div class="menu-header">
+    <button class="submenu-close" data-submenu="about">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="submenu-title">à propos</div>
+  <div class="submenu-content">
+    <div class="settings-info">
+      <div class="about-item">
+        <svg class="about-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span class="about-text">application développée<br>par Daniel Boulagnon</span>
+      </div>
+      <div class="about-item">
+        <svg class="about-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        <div class="about-text">
+          <p><a href="mailto:daniel.boulagnon@ac-lille.fr" title="envoyer un mail">daniel.boulagnon@ac-lille.fr</a></p>
+        </div>
+      </div>
+      <div class="about-item">
+        <svg class="about-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" /><path d="M14.5 9a3.5 3.5 0 1 0 0 6" />
+        </svg>
+        <span class="about-text">exploitation pédagogique<br>et non commerciale</span>
+      </div>
+      <div class="about-item">
+        <svg class="about-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+          <line x1="7" y1="7" x2="7.01" y2="7"/>
+        </svg>
+        <span class="about-text">version 2.9.7 (2026)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../../src/reperes.js"></script>
+<script>
+/* ==========================================================
+   LOGIQUE DE JEU - MOTS CROISÉS
+   ========================================================== */
+
+let currentScore = 0;
+let totalScore = 0;
+let totalWordsInGame = 0;
+let correctionShown = false;
+let gridSize = 11;
+let wordsCount = 11;
+let maxWordsAvailable = 0;
+let grid = [];
+let solutionGrid = [];
+let words = [];
+let placedWords = [];
+let wordNumber = 1;
+let isHelpMode = false;
+let selectedCell = null;
+let selectedDirection = 'horizontal';
+
+const validatedWords = new Set();
+
+let mobileKeyboardVisible = false;
+
+const helpBtn = document.getElementById('help-btn');
+const gridContainer = document.getElementById('grid-container');
+const tooltip = document.getElementById('tooltip');
+const toasterActionBtn = document.getElementById('toaster-action-button');
+const toasterScoreDiv = document.getElementById('toaster-score-button');
+const mobileDefBar = document.getElementById('mobileDefinitionBar');
+const mobileDefContent = document.getElementById('mobileDefContent');
+const mobileDefDirection = document.getElementById('mobileDefDirection');
+const mobileKeyboard = document.getElementById('mobileKeyboard');
+const keyboardToggleBtn = document.getElementById('keyboardToggleBtn');
+
+let correctAnswers = 0;
+let totalAnswers = 0;
+let gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
+let bestScore = parseInt(localStorage.getItem('bestScore') || '0');
+let darkMode = false, colorblindMode = false, animationsEnabled = true, soundEnabled = true;
+let timerLimit = 0, timerInterval = null, timeLeft = 60;
+
+/* ---------- DEBOUNCE POUR LA RÉGÉNÉRATION DE GRILLE ---------- */
+let regenerateTimeout = null;
+function scheduleGridRegeneration() {
+  if (regenerateTimeout) clearTimeout(regenerateTimeout);
+  regenerateTimeout = setTimeout(() => {
+    regenerateTimeout = null;
+    if (selectedNotionIndices.size > 0) {
+      generateGrid();
+    } else {
+      emptyGridAndWarn();
+    }
+  }, 350);
+}
+
+function emptyGridAndWarn() {
+  removeBento();
+  validatedWords.clear();
+  grid = []; solutionGrid = []; words = []; placedWords = []; wordNumber = 1;
+  selectedCell = null;
+  correctionShown = false;
+  if (gridContainer) {
+    gridContainer.innerHTML = '';
+    gridContainer._currentTooltipCell = null;
+  }
+  const gw = document.querySelector('.grid-wrapper');
+  if (gw) gw.style.display = 'none';
+  if (gridContainer) gridContainer.style.display = 'none';
+
+  hideMobileKeyboard();
+  hideMobileDefinitionBar();
+
+  if (toasterScoreDiv) toasterScoreDiv.textContent = '0 / 0';
+  if (toasterActionBtn) {
+    toasterActionBtn.textContent = 'corriger';
+    toasterActionBtn.disabled = true;
+  }
+  if (helpBtn) helpBtn.disabled = true;
+
+  const wordsToaster = document.getElementById('wordsToaster');
+  if (wordsToaster) wordsToaster.style.display = 'none';
+  if (keyboardToggleBtn) keyboardToggleBtn.style.display = 'none';
+
+  showToaster('⚠️ sélectionnez au moins un repère pour commencer', 'info', 3500);
+}
+
+function ensureGridVisible() {
+  const gw = document.querySelector('.grid-wrapper');
+  if (gw) gw.style.display = '';
+  if (gridContainer) gridContainer.style.display = '';
+  const wordsToaster = document.getElementById('wordsToaster');
+  if (wordsToaster) wordsToaster.style.display = '';
+  if (keyboardToggleBtn && window.innerWidth <= 820) keyboardToggleBtn.style.display = 'flex';
+  if (toasterActionBtn) toasterActionBtn.disabled = false;
+  if (helpBtn) helpBtn.disabled = false;
+}
+
+function normalizeChar(ch) {
+  if (!ch) return '';
+  return ch
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toUpperCase()
+    .replace(/[^A-Z ]/g, '');
+}
+
+function sortKey(str) {
+  return (str || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
+
+function getCellText(cell) {
+  const span = cell.querySelector('.cell-letter');
+  return span ? span.textContent : '';
+}
+
+function setCellLetter(cell, letter) {
+  const display = letter === ' ' ? '' : letter;
+  let span = cell.querySelector('.cell-letter');
+  if (!span) {
+    span = document.createElement('span');
+    span.className = 'cell-letter';
+    const numEl = cell.querySelector('.cell-number');
+    if (numEl && numEl.nextSibling) cell.insertBefore(span, numEl.nextSibling);
+    else if (numEl) cell.appendChild(span);
+    else cell.insertBefore(span, cell.firstChild);
+  }
+  span.textContent = display;
+}
+
+function cellToChar(cell) {
+  const raw = getCellText(cell);
+  const r = parseInt(cell.dataset.row);
+  const c = parseInt(cell.dataset.col);
+  if (raw === '' || raw === '\u00A0') {
+    if (solutionGrid[r] && solutionGrid[r][c] === ' ') return ' ';
+    return '';
+  }
+  return normalizeChar(raw);
+}
+
+function isEditableCell(cell) {
+  if (!cell) return false;
+  const r = parseInt(cell.dataset.row);
+  const c = parseInt(cell.dataset.col);
+  return solutionGrid[r] !== undefined && solutionGrid[r][c] !== '';
+}
+
+function hideGrid() {
+  const gw = document.querySelector('.grid-wrapper');
+  if (gw) gw.style.display = 'none';
+  if (gridContainer) gridContainer.style.display = 'none';
+  hideMobileKeyboard();
+  hideMobileDefinitionBar();
+}
+function showGrid() {
+  if (document.getElementById('bentoFinal')) return;
+  const gw = document.querySelector('.grid-wrapper');
+  if (gw) gw.style.display = '';
+  if (gridContainer) gridContainer.style.display = '';
+}
+
+function wordAt(r, c, direction) {
+  for (const w of placedWords) {
+    if (direction === 'horizontal' && w.horizontal) {
+      if (w.row === r && c >= w.col && c < w.col + w.word.length) return w;
+    } else if (direction === 'vertical' && !w.horizontal) {
+      if (w.col === c && r >= w.row && r < w.row + w.word.length) return w;
+    }
+  }
+  return null;
+}
+
+function pickBestDirection(r, c) {
+  const wH = wordAt(r, c, 'horizontal');
+  const wV = wordAt(r, c, 'vertical');
+  if (wH && wV) return wH.word.length >= wV.word.length ? 'horizontal' : 'vertical';
+  if (wH) return 'horizontal';
+  if (wV) return 'vertical';
+  return 'horizontal';
+}
+
+function getWordCells(wordInfo) {
+  const cells = [];
+  for (let i = 0; i < wordInfo.word.length; i++) {
+    const r = wordInfo.horizontal ? wordInfo.row : wordInfo.row + i;
+    const c = wordInfo.horizontal ? wordInfo.col + i : wordInfo.col;
+    const cell = document.querySelector(`.grid-cell[data-row="${r}"][data-col="${c}"]`);
+    if (cell) cells.push(cell);
+  }
+  return cells;
+}
+
+function refreshWordCorrectStates() {
+  document.querySelectorAll('.grid-cell.word-correct').forEach(c => c.classList.remove('word-correct'));
+  for (const w of placedWords) {
+    const wk = `${w.row},${w.col},${w.horizontal ? 'h' : 'v'}`;
+    if (!validatedWords.has(wk)) continue;
+    const cells = getWordCells(w);
+    cells.forEach(c => c.classList.add('word-correct'));
+  }
+}
+
+function deselectAllCells() {
+  document.querySelectorAll('.grid-cell.selected, .grid-cell.highlighted')
+    .forEach(c => c.classList.remove('selected', 'highlighted'));
+  selectedCell = null;
+  if (window.innerWidth <= 820) {
+    hideMobileKeyboard();
+    hideMobileDefinitionBar();
+    if (mobileDefContent) mobileDefContent.textContent = 'Touchez une case pour commencer';
+  }
+}
+
+function clearCellLetter(cell) {
+  const span = cell.querySelector('.cell-letter');
+  if (span) span.textContent = '';
+  cell.classList.remove('filled', 'correct', 'incorrect', 'animee', 'word-correct');
+
+  const r = parseInt(cell.dataset.row);
+  const c = parseInt(cell.dataset.col);
+
+  for (const w of placedWords) {
+    const wk = `${w.row},${w.col},${w.horizontal ? 'h' : 'v'}`;
+    if (!validatedWords.has(wk)) continue;
+    const inWord = w.horizontal
+      ? (w.row === r && c >= w.col && c < w.col + w.word.length)
+      : (w.col === c && r >= w.row && r < w.row + w.word.length);
+    if (inWord) validatedWords.delete(wk);
+  }
+
+  refreshWordCorrectStates();
+
+  if (solutionGrid[r] && solutionGrid[r][c] !== '') cell.classList.add('empty');
+}
+
+function checkWordCompletion() {
+  const newlyValidated = [];
+  const completedWords = [];
+
+  for (const w of placedWords) {
+    const wordKey = `${w.row},${w.col},${w.horizontal ? 'h' : 'v'}`;
+    if (validatedWords.has(wordKey)) continue;
+
+    const cells = getWordCells(w);
+    if (cells.length === 0) continue;
+
+    let complete = true;
+    for (const cell of cells) {
+      if (getCellText(cell) === '') { complete = false; break; }
+    }
+    if (!complete) continue;
+
+    completedWords.push(w);
+
+    cells.forEach(cell => {
+      cell.classList.remove('animee', 'correct', 'incorrect');
+    });
+
+    let allCorrect = true;
+    for (let i = 0; i < w.word.length; i++) {
+      const userChar = normalizeChar(getCellText(cells[i]));
+      const expected = w.word[i] === ' ' ? ' ' : normalizeChar(w.word[i]);
+      if (userChar !== expected) { allCorrect = false; break; }
+    }
+
+    if (allCorrect) {
+      validatedWords.add(wordKey);
+      newlyValidated.push(w);
+    }
+  }
+
+  refreshWordCorrectStates();
+
+  if (completedWords.length > 0) {
+    let selectedBelongsToCompleted = false;
+    if (selectedCell) {
+      const sr = parseInt(selectedCell.dataset.row);
+      const sc = parseInt(selectedCell.dataset.col);
+      for (const w of completedWords) {
+        const inWord = w.horizontal
+          ? (w.row === sr && sc >= w.col && sc < w.col + w.word.length)
+          : (w.col === sc && sr >= w.row && sr < w.row + w.word.length);
+        if (inWord) { selectedBelongsToCompleted = true; break; }
+      }
+    }
+    completedWords.forEach(w => {
+      getWordCells(w).forEach(cell => {
+        cell.classList.remove('selected', 'highlighted');
+      });
+    });
+    if (selectedBelongsToCompleted) {
+      selectedCell = null;
+      if (window.innerWidth <= 820) {
+        hideMobileKeyboard();
+        hideMobileDefinitionBar();
+        if (mobileDefContent) mobileDefContent.textContent = 'Touchez une case pour commencer';
+      }
+    }
+  }
+
+  if (newlyValidated.length > 0) {
+    document.querySelectorAll('.grid-cell.animee').forEach(c => c.classList.remove('animee'));
+
+    const allCells = gridContainer.querySelectorAll('.grid-cell');
+    allCells.forEach(c => void c.offsetWidth);
+
+    newlyValidated.forEach(w => {
+      const cells = getWordCells(w);
+      setTimeout(() => {
+        cells.forEach((cell, index) => {
+          setTimeout(() => {
+            cell.classList.add('animee');
+          }, index * 400);
+        });
+      }, 50);
+      playSound('correct');
+    });
+  }
+}
+
+function buildMobileKeyboard() {
+  if (!mobileKeyboard) return;
+  const rows = [
+    ['A','Z','E','R','T','Y','U','I','O','P'],
+    ['Q','S','D','F','G','H','J','K','L','M'],
+    ['W','X','C','V','B','N','⌫']
+  ];
+  let html = '';
+  rows.forEach(row => {
+    html += '<div class="keyboard-row">';
+    row.forEach(key => {
+      const cls = key === '⌫' ? 'keyboard-key action' : 'keyboard-key';
+      html += `<button class="${cls}" data-key="${key}">${key}</button>`;
+    });
+    html += '</div>';
+  });
+  html += '<div class="keyboard-row">';
+  html += `<button class="keyboard-key wide" data-key="toggle-direction">↔️ / ↕️</button>`;
+  html += `<button class="keyboard-key wide" data-key=" ">espace</button>`;
+  html += `<button class="keyboard-key wide action primary" data-key="reveal">💡 révéler</button>`;
+  html += '</div>';
+  mobileKeyboard.innerHTML = html;
+  mobileKeyboard.querySelectorAll('.keyboard-key').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault(); e.stopPropagation();
+      handleMobileKey(this.dataset.key);
+    });
+    btn.addEventListener('touchstart', function() { this.classList.add('pressed'); }, { passive: true });
+    btn.addEventListener('touchend', function() { this.classList.remove('pressed'); }, { passive: true });
+  });
+}
+
+function handleMobileKey(key) {
+  if (!selectedCell) { showToaster('Touchez d\'abord une case', 'info', 1500); return; }
+  const row = parseInt(selectedCell.dataset.row);
+  const col = parseInt(selectedCell.dataset.col);
+
+  if (key === '⌫') {
+    clearCellLetter(selectedCell);
+    playSound('click');
+    if (selectedDirection === 'horizontal') moveSelection(row, col, 0, -1);
+    else moveSelection(row, col, -1, 0);
+    return;
+  }
+  if (key === 'toggle-direction') {
+    selectedDirection = (selectedDirection === 'horizontal') ? 'vertical' : 'horizontal';
+    selectCell(selectedCell, selectedDirection);
+    playSound('click');
+    return;
+  }
+  if (key === ' ') {
+    setCellLetter(selectedCell, ' ');
+    selectedCell.classList.remove('empty', 'correct', 'incorrect', 'animee', 'word-correct');
+    selectedCell.classList.add('filled');
+    playSound('click');
+    if (selectedDirection === 'horizontal') moveSelection(row, col, 0, 1);
+    else moveSelection(row, col, 1, 0);
+    checkWordCompletion();
+    return;
+  }
+  if (key === 'reveal') { revealLetterOrWord(); return; }
+  if (/^[A-Z]$/.test(key)) {
+    setCellLetter(selectedCell, key);
+    selectedCell.classList.remove('empty', 'correct', 'incorrect', 'animee', 'word-correct');
+    selectedCell.classList.add('filled');
+    playSound('click');
+    if (selectedDirection === 'horizontal') moveSelection(row, col, 0, 1);
+    else moveSelection(row, col, 1, 0);
+    checkWordCompletion();
+  }
+}
+
+function revealLetterOrWord() {
+  if (!selectedCell) return;
+  const row = parseInt(selectedCell.dataset.row);
+  const col = parseInt(selectedCell.dataset.col);
+  const word = wordAt(row, col, selectedDirection);
+  if (!word) { showToaster('Aucun mot sélectionné', 'info', 1500); return; }
+  for (let i = 0; i < word.word.length; i++) {
+    const r = word.horizontal ? word.row : word.row + i;
+    const c = word.horizontal ? word.col + i : word.col;
+    const cell = document.querySelector(`.grid-cell[data-row="${r}"][data-col="${c}"]`);
+    if (cell && word.word[i] !== ' ' && getCellText(cell) === '') {
+      setCellLetter(cell, word.word[i]);
+      cell.classList.remove('empty', 'correct', 'incorrect', 'word-correct');
+      cell.classList.add('filled');
+      playSound('click');
+      showToaster(`💡 lettre révélée : ${word.word[i]}`, 'info', 1500);
+      selectCell(cell, selectedDirection);
+      checkWordCompletion();
+      return;
+    }
+  }
+  showToaster('Le mot est déjà complet', 'info', 1500);
+}
+
+function showMobileKeyboard() {
+  if (!mobileKeyboard) return;
+  mobileKeyboard.classList.add('visible');
+  mobileKeyboardVisible = true;
+  document.body.classList.add('mobile-keyboard-open');
+  updateMobileDefinitionBar();
+}
+function hideMobileKeyboard() {
+  if (!mobileKeyboard) return;
+  mobileKeyboard.classList.remove('visible');
+  mobileKeyboardVisible = false;
+  document.body.classList.remove('mobile-keyboard-open');
+  hideMobileDefinitionBar();
+}
+function toggleMobileKeyboard() {
+  if (mobileKeyboardVisible) hideMobileKeyboard();
+  else showMobileKeyboard();
+}
+function updateMobileDefinitionBar() {
+  if (!mobileDefContent) return;
+  if (!selectedCell) {
+    mobileDefContent.textContent = 'Touchez une case pour commencer';
+    if (mobileDefDirection) mobileDefDirection.textContent = '';
+    return;
+  }
+  const row = parseInt(selectedCell.dataset.row);
+  const col = parseInt(selectedCell.dataset.col);
+  const word = wordAt(row, col, selectedDirection);
+  if (word) {
+    mobileDefContent.textContent = word.definition || word.word;
+    if (mobileDefDirection) {
+      mobileDefDirection.textContent = selectedDirection === 'horizontal' ? '↔️' : '↕️';
+    }
+    mobileDefBar.classList.add('visible');
+  } else {
+    mobileDefBar.classList.remove('visible');
+  }
+}
+function hideMobileDefinitionBar() {
+  if (mobileDefBar) mobileDefBar.classList.remove('visible');
+}
+
+function loadGameStats() {
+  const s = localStorage.getItem('gameStats');
+  if (s) {
+    const d = JSON.parse(s);
+    correctAnswers = d.correctAnswers || 0;
+    totalAnswers = d.totalAnswers || 0;
+    gamesPlayed = d.gamesPlayed || 0;
+  }
+  bestScore = parseInt(localStorage.getItem('bestScore') || '0');
+  updateStatsDisplay();
+}
+function saveGameStats() {
+  localStorage.setItem('gameStats', JSON.stringify({ correctAnswers, totalAnswers, gamesPlayed }));
+  const pct = totalAnswers > 0 ? Math.round((correctAnswers / totalAnswers) * 100) : 0;
+  if (pct > bestScore) { bestScore = pct; localStorage.setItem('bestScore', bestScore.toString()); }
+}
+function updateStatsDisplay() {
+  const a = document.getElementById('statTotalCorrect');
+  const b = document.getElementById('statTotalAnswers');
+  const c = document.getElementById('statSuccessRate');
+  const d = document.getElementById('statGamesPlayed');
+  const e = document.getElementById('statBestScore');
+  if (a) a.textContent = correctAnswers;
+  if (b) b.textContent = totalAnswers;
+  const pct = totalAnswers > 0 ? Math.round((correctAnswers / totalAnswers) * 100) : 0;
+  if (c) c.textContent = pct + ' %';
+  if (d) d.textContent = gamesPlayed;
+  if (e) e.textContent = bestScore + ' %';
+  const badge = document.getElementById('statsBadge');
+  if (badge) badge.textContent = pct + '%';
+}
+function resetStats() {
+  correctAnswers = 0; totalAnswers = 0; gamesPlayed = 0; bestScore = 0;
+  localStorage.removeItem('bestScore');
+  saveGameStats(); updateStatsDisplay();
+  showToaster('Statistiques réinitialisées !', 'info', 2500);
+  playSound('click');
+}
+
+let toasterTimeout = null;
+function showToaster(message, type = 'info', duration = 3000) {
+  const t = document.getElementById('toasterGlobal');
+  if (!t) return;
+  t.innerHTML = message;
+  t.className = 'toaster-global show';
+  clearTimeout(toasterTimeout);
+  if (duration > 0) toasterTimeout = setTimeout(() => t.classList.remove('show'), duration);
+}
+function playSound(type) {
+  if (!soundEnabled) return;
+  try {
+    const map = {
+      'correct': '../../src/sounds/reponse-bonne.mp3',
+      'incorrect': '../../src/sounds/reponse-mauvaise.mp3',
+      'score_good': '../../src/sounds/score-bon.mp3',
+      'score_bad': '../../src/sounds/score-mauvais.mp3',
+      'click': '../../src/sounds/bruit-clavier.mp3'
+    };
+    const f = map[type]; if (!f) return;
+    const audio = new Audio(f);
+    audio.volume = type === 'click' ? 0.3 : 0.8;
+    audio.play().catch(() => {});
+  } catch (e) {}
+}
+function preloadSounds() {
+  if (!soundEnabled) return;
+  ['reponse-bonne.mp3', 'reponse-mauvaise.mp3', 'score-bon.mp3', 'score-mauvais.mp3', 'bruit-clavier.mp3']
+    .forEach(f => { const a = new Audio(); a.preload = 'auto'; a.src = '../../src/sounds/' + f; a.load(); });
+}
+
+function formatTimer(sec) {
+  if (sec <= 0) return '00:00';
+  const m = Math.floor(sec / 60), s = sec % 60;
+  return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+function updateTimerDisplay(value) {
+  const d = document.getElementById('timerValueDesktop');
+  const m = document.getElementById('timerValueMobile');
+  const btns = [document.getElementById('timerBtnDesktop'), document.getElementById('timerBtnMobile')];
+  if (timerLimit === 0) { btns.forEach(btn => { if (btn) btn.style.display = 'none'; }); return; }
+  else { btns.forEach(btn => { if (btn) btn.style.display = ''; }); }
+  if (d) d.textContent = value;
+  if (m) m.textContent = value;
+}
+function startTimer() {
+  if (timerLimit === 0) { updateTimerDisplay('∞'); return; }
+  timeLeft = timerLimit;
+  updateTimerDisplay(formatTimer(timeLeft));
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay(formatTimer(timeLeft));
+    const btns = [document.getElementById('timerBtnDesktop'), document.getElementById('timerBtnMobile')].filter(b => b);
+    btns.forEach(btn => {
+      btn.classList.remove('warning', 'danger');
+      if (timeLeft <= 30 && timeLeft > 0) btn.classList.add('warning');
+      if (timeLeft <= 15 && timeLeft > 0) btn.classList.add('danger');
+    });
+    if (timeLeft <= 0) { clearInterval(timerInterval); timerInterval = null; handleTimerExpired(); }
+  }, 1000);
+}
+function stopTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  [document.getElementById('timerBtnDesktop'), document.getElementById('timerBtnMobile')].forEach(b => {
+    if (b) b.classList.remove('warning', 'danger');
+  });
+}
+function resetTimer() {
+  stopTimer();
+  if (timerLimit === 0) { updateTimerDisplay('∞'); return; }
+  timeLeft = timerLimit;
+  updateTimerDisplay(formatTimer(timeLeft));
+  startTimer();
+}
+function handleTimerExpired() {
+  playSound('incorrect');
+  showToaster('⏰ temps écoulé !', 'info', 4000);
+  showCorrection();
+}
+
+let confettiLaunched = false;
+function launchConfetti() {
+  if (!animationsEnabled || confettiLaunched) return;
+  confettiLaunched = true;
+  const c = document.createElement('div');
+  c.className = 'confetti-container';
+  document.body.appendChild(c);
+  const colors = ['#ff0000', '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff', '#ff9f43', '#00d2d3'];
+  for (let i = 0; i < 160; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.width = (Math.random() * 16 + 4) + 'px';
+    p.style.height = (Math.random() * 8 + 4) + 'px';
+    p.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    p.style.animationDuration = (Math.random() * 2 + 2) + 's';
+    p.style.animationDelay = (Math.random() * 1.5) + 's';
+    c.appendChild(p);
+  }
+  setTimeout(() => c.remove(), 4000);
+}
+
+/* ==========================================================
+   DONNÉES
+   ========================================================== */
+let allNotions = [];
+let selectedNotionIndices = new Set();
+
+function buildNotionsList() {
+  allNotions = [];
+  if (typeof reperes !== 'undefined' && reperes.length > 0) {
+    let globalIdx = 0;
+    reperes.forEach((cat) => {
+      cat.parts.forEach((p) => {
+        allNotions.push({
+          id: globalIdx,
+          name: p.name,
+          definition: p.definition,
+          catDefinition: cat.definition || ''
+        });
+        globalIdx++;
+      });
+    });
+  }
+  if (selectedNotionIndices.size === 0 && allNotions.length > 0) {
+    if (!localStorage.getItem('selectedReperes')) {
+      allNotions.forEach((_, i) => selectedNotionIndices.add(i));
+    }
+  }
+}
+
+function computeGridSizeForWordCount(nbWords) {
+  const pool = getSelectedReperes();
+  const source = pool.length > 0 ? pool : getAllReperes();
+  if (source.length === 0) return 11;
+  const allLengths = source.map(p => p.name.length);
+  const avgLen = allLengths.reduce((a, b) => a + b, 0) / allLengths.length;
+  const maxLen = Math.max(...allLengths);
+  const totalLetters = nbWords * avgLen;
+  // Marge augmentée pour faciliter le placement connecté
+  const surfaceNeeded = totalLetters * 2.2;
+  let size = Math.ceil(Math.sqrt(surfaceNeeded));
+  size = Math.max(size, maxLen + 2);
+  size = Math.max(8, Math.min(28, size));
+  return size;
+}
+
+function getAllReperes() {
+  const out = [];
+  if (typeof reperes === 'undefined') return out;
+  for (const cat of reperes) {
+    for (const p of cat.parts) out.push(p);
+  }
+  return out;
+}
+
+function getSelectedReperes() {
+  const out = [];
+  if (typeof reperes === 'undefined') return out;
+  let idx = 0;
+  for (const cat of reperes) {
+    for (const p of cat.parts) {
+      if (selectedNotionIndices.has(idx)) out.push(p);
+      idx++;
+    }
+  }
+  return out;
+}
+
+function updateWordsGraduations(slider) {
+  const grad = document.getElementById('wordsCountGraduations');
+  if (!grad) return;
+  const min = parseInt(slider.min);
+  const max = parseInt(slider.max);
+  const range = max - min;
+
+  let values = [];
+  if (range <= 0) {
+    values = [min];
+  } else if (range <= 5) {
+    for (let v = min; v <= max; v++) values.push(v);
+  } else {
+    const steps = 5;
+    for (let i = 0; i <= steps; i++) {
+      const v = Math.round(min + range * i / steps);
+      if (values.length === 0 || v !== values[values.length - 1]) values.push(v);
+    }
+    if (values[values.length - 1] !== max) values.push(max);
+  }
+
+  grad.innerHTML = values.map(v => `<span>${v}</span>`).join('');
+}
+
+function saveSettings() {
+  localStorage.setItem('appSettings', JSON.stringify({
+    darkMode, colorblindMode, animationsEnabled, soundEnabled, timerLimit, wordsCount
+  }));
+  try {
+    localStorage.setItem('selectedReperes', JSON.stringify(Array.from(selectedNotionIndices)));
+  } catch (e) {}
+}
+function loadSettings() {
+  const s = localStorage.getItem('appSettings');
+  if (s) {
+    const d = JSON.parse(s);
+    darkMode = d.darkMode || false;
+    colorblindMode = d.colorblindMode || false;
+    animationsEnabled = d.animationsEnabled !== undefined ? d.animationsEnabled : true;
+    soundEnabled = d.soundEnabled !== undefined ? d.soundEnabled : true;
+    timerLimit = d.timerLimit || 0;
+    wordsCount = d.wordsCount || 11;
+    if (darkMode) document.body.classList.add('dark-theme');
+    if (colorblindMode) document.body.classList.add('colorblind-mode');
+  }
+
+  buildNotionsList();
+
+  try {
+    const sr = localStorage.getItem('selectedReperes');
+    if (sr) {
+      const arr = JSON.parse(sr);
+      if (Array.isArray(arr)) {
+        selectedNotionIndices = new Set(arr.filter(i => i >= 0 && i < allNotions.length));
+      }
+    }
+  } catch (e) {}
+
+  maxWordsAvailable = selectedNotionIndices.size;
+
+  const dt = document.getElementById('darkModeToggle');
+  const ct = document.getElementById('colorblindToggle');
+  const at = document.getElementById('animationsToggle');
+  const st = document.getElementById('soundToggle');
+  const tls = document.getElementById('timerLimitSlider');
+  const tlv = document.getElementById('timerLimitValue');
+  if (dt) dt.checked = darkMode;
+  if (ct) ct.checked = colorblindMode;
+  if (at) at.checked = animationsEnabled;
+  if (st) st.checked = soundEnabled;
+  if (tls) {
+    const pos = timerLimit === 0 ? 6 : Math.round(timerLimit / 60);
+    tls.value = pos;
+    if (tlv) tlv.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
+  }
+  updateWordsCountSliderBounds();
+  gridSize = computeGridSizeForWordCount(wordsCount);
+  if (soundEnabled) preloadSounds();
+  updateTimerDisplay(timerLimit === 0 ? '∞' : formatTimer(timerLimit));
+}
+
+function updateWordsCountSliderBounds() {
+  const totalSelected = selectedNotionIndices.size;
+  maxWordsAvailable = totalSelected;
+  const wcs = document.getElementById('wordsCountSlider');
+  const wcv = document.getElementById('wordsCountValue');
+  if (!wcs) return;
+
+  if (totalSelected === 0) {
+    wcs.min = 0;
+    wcs.max = 0;
+    wcs.value = 0;
+    wcs.disabled = true;
+    if (wcv) wcv.textContent = '—';
+    updateWordsGraduations(wcs);
+    return;
+  }
+
+  wcs.disabled = false;
+  wcs.min = 1;
+  wcs.max = totalSelected;
+  if (wordsCount > totalSelected) wordsCount = totalSelected;
+  if (wordsCount < 1) wordsCount = 1;
+  wcs.value = wordsCount;
+  if (wcv) wcv.textContent = wordsCount;
+  updateWordsGraduations(wcs);
+}
+
+function computeCellSize() {
+  const containerWidth = Math.min(window.innerWidth - 30, 950);
+  const isMobile = window.innerWidth < 768;
+  const gap = isMobile ? 2 : 3;
+  const totalGaps = (gridSize - 1) * gap;
+  let cellSize = Math.floor((containerWidth - totalGaps) / gridSize);
+  if (isMobile) cellSize = Math.max(18, cellSize);
+  else cellSize = Math.min(40, Math.max(24, cellSize));
+  return { cellSize, gap, isMobile };
+}
+
+function applyCellFontSize(cellSize) {
+  const isMobile = window.innerWidth <= 820;
+  const maxFontSize = isMobile ? 17 : 27;
+  const minFontSize = isMobile ? 9 : 12;
+  const rawFontSize = (cellSize / 40) * maxFontSize;
+  const fontSize = Math.max(minFontSize, Math.min(maxFontSize, rawFontSize));
+  document.documentElement.style.setProperty('--cell-font-size', fontSize + 'px');
+}
+
+function applyGridDimensions() {
+  if (!gridContainer || gridContainer.children.length === 0) return;
+  if (document.getElementById('bentoFinal')) return;
+  const { cellSize, gap, isMobile } = computeCellSize();
+  gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, ${cellSize}px)`;
+  gridContainer.style.gap = gap + 'px';
+  gridContainer.style.margin = isMobile ? '8px auto' : '15px auto';
+  applyCellFontSize(cellSize);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  helpBtn.addEventListener('click', function () { playSound('click'); toggleHelpMode(); });
+  toasterActionBtn.addEventListener('click', handleAction);
+
+  setupMenu();
+  setupKeyboardShortcuts();
+  setupKeyboardInput();
+  loadSettings();
+  loadGameStats();
+
+  buildNotionsList();
+  updateNotionsDropdown();
+
+  buildMobileKeyboard();
+  if (keyboardToggleBtn) {
+    keyboardToggleBtn.addEventListener('click', function () {
+      playSound('click');
+      toggleMobileKeyboard();
+    });
+  }
+
+  const tbd = document.getElementById('timerBtnDesktop');
+  const tbm = document.getElementById('timerBtnMobile');
+  [tbd, tbm].forEach(b => {
+    if (b) b.addEventListener('click', function () {
+      playSound('click');
+      if (timerLimit > 0) { resetTimer(); showToaster('⏱️ Timer réinitialisé', 'info', 1500); }
+      else { showToaster('Timer désactivé (∞)', 'info', 1500); }
+    });
+  });
+
+  ['wordsCountSlider', 'timerLimitSlider'].forEach(id => {
+    const slider = document.getElementById(id);
+    if (!slider) return;
+    slider.addEventListener('touchstart', e => e.stopPropagation(), { passive: true });
+    slider.addEventListener('touchmove', e => e.stopPropagation(), { passive: true });
+    slider.addEventListener('pointerdown', e => e.stopPropagation());
+    slider.addEventListener('input', () => {
+      const submenu = slider.closest('.submenu');
+      if (submenu) submenu.style.overflowY = 'hidden';
+    });
+    slider.addEventListener('change', () => {
+      const submenu = slider.closest('.submenu');
+      if (submenu) submenu.style.overflowY = 'auto';
+    });
+    slider.addEventListener('touchend', () => {
+      const submenu = slider.closest('.submenu');
+      if (submenu) submenu.style.overflowY = 'auto';
+    });
+    slider.addEventListener('pointerup', () => {
+      const submenu = slider.closest('.submenu');
+      if (submenu) submenu.style.overflowY = 'auto';
+    });
+  });
+
+  if (selectedNotionIndices.size > 0) {
+    generateGrid();
+  } else {
+    emptyGridAndWarn();
+  }
+
+  let resizeTimeout;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(applyGridDimensions, 200);
+  });
+});
+
+function handleAction() {
+  playSound('click');
+  const btnText = (toasterActionBtn.textContent || '').trim().toLowerCase();
+  if (btnText === 'corriger') showCorrection();
+  else if (btnText === 'score') showFinalBento();
+  else if (btnText === 'nouvelle grille') generateGrid();
+}
+
+function setupKeyboardInput() {
+  document.addEventListener('keydown', function (e) {
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    if (!selectedCell) return;
+    if (!isEditableCell(selectedCell)) return;
+
+    const row = parseInt(selectedCell.dataset.row);
+    const col = parseInt(selectedCell.dataset.col);
+
+    if (/^[a-zA-ZÀ-ÿ]$/.test(e.key)) {
+      e.preventDefault();
+      const normalized = normalizeChar(e.key) || e.key.toUpperCase();
+      setCellLetter(selectedCell, normalized);
+      selectedCell.classList.remove('empty', 'correct', 'incorrect', 'animee', 'word-correct');
+      selectedCell.classList.add('filled');
+      playSound('click');
+      if (selectedDirection === 'horizontal') moveSelection(row, col, 0, 1);
+      else moveSelection(row, col, 1, 0);
+      checkWordCompletion();
+      return;
+    }
+    if (e.key === ' ' || e.code === 'Space') {
+      e.preventDefault();
+      setCellLetter(selectedCell, ' ');
+      selectedCell.classList.remove('empty', 'correct', 'incorrect', 'animee', 'word-correct');
+      selectedCell.classList.add('filled');
+      playSound('click');
+      if (selectedDirection === 'horizontal') moveSelection(row, col, 0, 1);
+      else moveSelection(row, col, 1, 0);
+      checkWordCompletion();
+      return;
+    }
+    if (e.key === 'Backspace') {
+      e.preventDefault();
+      clearCellLetter(selectedCell);
+      if (selectedDirection === 'horizontal') moveSelection(row, col, 0, -1);
+      else moveSelection(row, col, -1, 0);
+      return;
+    }
+    if (e.key === 'Delete') { e.preventDefault(); clearCellLetter(selectedCell); return; }
+    if (e.key === 'ArrowRight') { e.preventDefault(); selectedDirection = 'horizontal'; moveSelection(row, col, 0, 1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); selectedDirection = 'horizontal'; moveSelection(row, col, 0, -1); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); selectedDirection = 'vertical'; moveSelection(row, col, 1, 0); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); selectedDirection = 'vertical'; moveSelection(row, col, -1, 0); }
+    else if (e.key === 'Tab') { e.preventDefault(); jumpToNextWord(); }
+  });
+}
+
+function moveSelection(row, col, dr, dc) {
+  let r = row + dr, c = col + dc;
+  let safety = 0;
+  while (r >= 0 && r < gridSize && c >= 0 && c < gridSize && safety < gridSize * 2) {
+    const next = document.querySelector(`.grid-cell[data-row="${r}"][data-col="${c}"]`);
+    if (next && !next.classList.contains('space') && isEditableCell(next)) {
+      selectCell(next, selectedDirection);
+      return;
+    }
+    r += dr; c += dc; safety++;
+  }
+}
+
+function jumpToNextWord() {
+  if (placedWords.length === 0 || !selectedCell) return;
+  const row = parseInt(selectedCell.dataset.row);
+  const col = parseInt(selectedCell.dataset.col);
+  let idx = -1;
+  for (let i = 0; i < placedWords.length; i++) {
+    const w = placedWords[i];
+    if (w.horizontal) {
+      if (w.row === row && col >= w.col && col < w.col + w.word.length) { idx = i; break; }
+    } else {
+      if (w.col === col && row >= w.row && row < w.row + w.word.length) { idx = i; break; }
+    }
+  }
+  const next = placedWords[(idx + 1) % placedWords.length];
+  const cell = document.querySelector(`.grid-cell[data-row="${next.row}"][data-col="${next.col}"]`);
+  if (cell && isEditableCell(cell)) {
+    selectCell(cell, next.horizontal ? 'horizontal' : 'vertical');
+  }
+}
+
+function generateGrid() {
+  if (selectedNotionIndices.size === 0) {
+    emptyGridAndWarn();
+    return;
+  }
+
+  removeBento();
+  ensureGridVisible();
+  hideMobileKeyboard();
+
+  validatedWords.clear();
+
+  const wordsToaster = document.getElementById('wordsToaster');
+  if (wordsToaster) wordsToaster.style.display = '';
+  if (keyboardToggleBtn && window.innerWidth <= 820) keyboardToggleBtn.style.display = 'flex';
+
+  gridSize = computeGridSizeForWordCount(wordsCount);
+
+  grid = []; solutionGrid = []; words = []; placedWords = []; wordNumber = 1;
+  isHelpMode = false; selectedCell = null; correctionShown = false;
+  helpBtn.textContent = "💡";
+  helpBtn.disabled = false;
+  gridContainer.innerHTML = '';
+  gridContainer._currentTooltipCell = null;
+  confettiLaunched = false;
+
+  if (toasterActionBtn) {
+    toasterActionBtn.textContent = 'corriger';
+    toasterActionBtn.disabled = false;
+  }
+
+  const { cellSize, gap, isMobile } = computeCellSize();
+  gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, ${cellSize}px)`;
+  gridContainer.style.gap = gap + 'px';
+  gridContainer.style.margin = isMobile ? '8px auto' : '15px auto';
+  applyCellFontSize(cellSize);
+
+  for (let i = 0; i < gridSize; i++) {
+    grid[i] = []; solutionGrid[i] = [];
+    for (let j = 0; j < gridSize; j++) {
+      const cell = document.createElement('div');
+      cell.className = 'grid-cell empty';
+      cell.dataset.row = i; cell.dataset.col = j;
+      const letterSpan = document.createElement('span');
+      letterSpan.className = 'cell-letter';
+      cell.appendChild(letterSpan);
+      cell.addEventListener('click', function () {
+        if (!isEditableCell(this)) return;
+        if (this === selectedCell) {
+          selectedDirection = (selectedDirection === 'horizontal') ? 'vertical' : 'horizontal';
+        }
+        selectCell(this, selectedDirection);
+      });
+      gridContainer.appendChild(cell);
+      grid[i][j] = ''; solutionGrid[i][j] = '';
+    }
+  }
+
+  const success = useReperesDataWithRetry();
+
+  if (!success) {
+    showToaster('⚠️ Impossible de générer une grille connectée avec ces repères. Essayez d\'en sélectionner d\'autres ou d\'augmenter le nombre de repères disponibles.', 'info', 5500);
+    if (toasterActionBtn) toasterActionBtn.disabled = true;
+    if (helpBtn) helpBtn.disabled = true;
+    return;
+  }
+
+  showNumberedCells();
+  currentScore = 0;
+  updateScoreDisplay();
+
+  if (timerLimit > 0) startTimer();
+  else updateTimerDisplay('∞');
+}
+
+function selectCell(cell, forceDirection) {
+  if (!isEditableCell(cell)) return;
+  const row = parseInt(cell.dataset.row);
+  const col = parseInt(cell.dataset.col);
+  const sameCell = (selectedCell === cell);
+  if (sameCell && !forceDirection) {
+    selectedDirection = (selectedDirection === 'horizontal') ? 'vertical' : 'horizontal';
+  } else if (forceDirection) {
+    selectedDirection = forceDirection;
+  } else {
+    selectedDirection = pickBestDirection(row, col);
+  }
+  document.querySelectorAll('.grid-cell.selected, .grid-cell.highlighted')
+    .forEach(c => c.classList.remove('selected', 'highlighted'));
+  cell.classList.add('selected');
+  selectedCell = cell;
+  if (!wordAt(row, col, selectedDirection)) {
+    selectedDirection = (selectedDirection === 'horizontal') ? 'vertical' : 'horizontal';
+  }
+  highlightWordFromCell(cell);
+  if (window.innerWidth <= 820) {
+    updateMobileDefinitionBar();
+    showMobileKeyboard();
+  }
+}
+
+function highlightWordFromCell(cell) {
+  const row = parseInt(cell.dataset.row);
+  const col = parseInt(cell.dataset.col);
+  const w = wordAt(row, col, selectedDirection);
+  if (w) { highlightWord(w); return; }
+  for (const wordInfo of placedWords) {
+    if (wordInfo.horizontal && wordInfo.row === row && col >= wordInfo.col && col < wordInfo.col + wordInfo.word.length) {
+      highlightWord(wordInfo); return;
+    }
+    if (!wordInfo.horizontal && wordInfo.col === col && row >= wordInfo.row && row < wordInfo.row + wordInfo.word.length) {
+      highlightWord(wordInfo); return;
+    }
+  }
+}
+
+function highlightWord(w) {
+  document.querySelectorAll('.grid-cell.highlighted').forEach(c => c.classList.remove('highlighted'));
+  if (w.horizontal) {
+    for (let i = 0; i < w.word.length; i++) {
+      const c = document.querySelector(`.grid-cell[data-row="${w.row}"][data-col="${w.col + i}"]`);
+      if (c && !c.classList.contains('space')) c.classList.add('highlighted');
+    }
+  } else {
+    for (let i = 0; i < w.word.length; i++) {
+      const c = document.querySelector(`.grid-cell[data-row="${w.row + i}"][data-col="${w.col}"]`);
+      if (c && !c.classList.contains('space')) c.classList.add('highlighted');
+    }
+  }
+}
+
+/* ==========================================================
+   GÉNÉRATION AVEC RETRY : garantit nombre exact + croisements
+   ========================================================== */
+const MAX_GENERATION_ATTEMPTS = 40;
+
+function resetGridState() {
+  for (let i = 0; i < gridSize; i++) {
+    for (let j = 0; j < gridSize; j++) {
+      solutionGrid[i][j] = '';
+    }
+  }
+  placedWords = [];
+  wordNumber = 1;
+}
+
+function useReperesDataWithRetry() {
+  if (typeof reperes === 'undefined' || reperes.length === 0) {
+    showToaster("Erreur : données reperes.js introuvables", 'info', 4000);
+    return false;
+  }
+
+  buildNotionsList();
+
+  const allWords = [];
+  let globalIdx = 0;
+  for (const cat of reperes) {
+    for (const p of cat.parts) {
+      if (selectedNotionIndices.has(globalIdx)) {
+        allWords.push({ name: p.name.toUpperCase(), definition: p.definition });
+      }
+      globalIdx++;
+    }
+  }
+
+  if (allWords.length === 0) {
+    showToaster('Aucun repère sélectionné : ouvrez la liste des repères', 'info', 3500);
+    return false;
+  }
+
+  const targetCount = Math.min(wordsCount, allWords.length);
+
+  for (let attempt = 0; attempt < MAX_GENERATION_ATTEMPTS; attempt++) {
+    resetGridState();
+
+    // Tirage aléatoire de mots
+    const pool = allWords.slice();
+    pool.sort(() => Math.random() - 0.5);
+    words = pool.slice(0, targetCount);
+    totalWordsInGame = words.length;
+
+    const success = placeWordsInGrid();
+
+    if (success && placedWords.length === words.length) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function placeWordsInGrid() {
+  if (words.length === 0) return false;
+
+  // Premier mot : le plus long, centré
+  const sortedByLength = [...words].sort((a, b) => b.name.length - a.name.length);
+  const first = sortedByLength[0];
+  const name = first.name;
+  const cr = Math.floor(gridSize / 2);
+  const cc = Math.max(0, Math.floor((gridSize - name.length) / 2));
+  placeWordHorizontally(name, cr, cc);
+  placedWords.push({
+    word: name, row: cr, col: cc, horizontal: true,
+    definition: first.definition, number: wordNumber++
+  });
+
+  const remaining = sortedByLength.slice(1);
+  const unplaced = [];
+
+  for (const obj of remaining) {
+    const w = obj.name;
+    const placement = findBestPlacement(w);
+
+    if (placement) {
+      if (placement.horizontal) {
+        placeWordHorizontally(w, placement.row, placement.col);
+      } else {
+        placeWordVertically(w, placement.row, placement.col);
+      }
+      placedWords.push({
+        word: w, row: placement.row, col: placement.col,
+        horizontal: placement.horizontal, definition: obj.definition,
+        number: wordNumber++
+      });
+    } else {
+      unplaced.push(obj);
+    }
+  }
+
+  // Deuxième passe pour les mots non placés (nouveaux croisements possibles)
+  const stillUnplaced = [];
+  for (const obj of unplaced) {
+    const w = obj.name;
+    const placement = findBestPlacement(w);
+    if (placement) {
+      if (placement.horizontal) {
+        placeWordHorizontally(w, placement.row, placement.col);
+      } else {
+        placeWordVertically(w, placement.row, placement.col);
+      }
+      placedWords.push({
+        word: w, row: placement.row, col: placement.col,
+        horizontal: placement.horizontal, definition: obj.definition,
+        number: wordNumber++
+      });
+    } else {
+      stillUnplaced.push(obj);
+    }
+  }
+
+  if (stillUnplaced.length > 0) return false;
+
+  // Vérification finale : chaque mot doit avoir au moins 1 croisement
+  if (!allWordsAreCrossed()) return false;
+
+  return true;
+}
+
+// Vérifie que chaque mot croise au moins un autre mot
+function allWordsAreCrossed() {
+  if (placedWords.length <= 1) return true;
+  for (let i = 0; i < placedWords.length; i++) {
+    const w = placedWords[i];
+    let crossed = false;
+    for (let k = 0; k < w.word.length && !crossed; k++) {
+      const r = w.horizontal ? w.row : w.row + k;
+      const c = w.horizontal ? w.col + k : w.col;
+      // Compter combien de mots différents passent par cette cellule
+      let wordCount = 0;
+      for (const other of placedWords) {
+        if (other === w) continue;
+        const inOther = other.horizontal
+          ? (other.row === r && c >= other.col && c < other.col + other.word.length)
+          : (other.col === c && r >= other.row && r < other.row + other.word.length);
+        if (inOther) { wordCount++; break; }
+      }
+      if (wordCount > 0) crossed = true;
+    }
+    if (!crossed) return false;
+  }
+  return true;
+}
+
+// Trouve la meilleure position pour un mot (parmi toutes les positions valides)
+function findBestPlacement(word) {
+  const candidates = [];
+
+  for (let i = 0; i < word.length; i++) {
+    const ch = word[i];
+    if (ch === ' ') continue;
+
+    const matching = findMatchingCells(ch);
+
+    for (const cell of matching) {
+      const cr = parseInt(cell.dataset.row);
+      const cc = parseInt(cell.dataset.col);
+
+      // Test horizontal
+      const hRow = cr;
+      const hCol = cc - i;
+      if (canPlaceWordHorizontally(word, hRow, hCol) &&
+          checkCrossingConstraints(word, hRow, hCol, true)) {
+        const crossings = countCrossings(word, hRow, hCol, true);
+        if (crossings > 0) {
+          candidates.push({ row: hRow, col: hCol, horizontal: true, crossings });
+        }
+      }
+
+      // Test vertical
+      const vRow = cr - i;
+      const vCol = cc;
+      if (canPlaceWordVertically(word, vRow, vCol) &&
+          checkCrossingConstraints(word, vRow, vCol, false)) {
+        const crossings = countCrossings(word, vRow, vCol, false);
+        if (crossings > 0) {
+          candidates.push({ row: vRow, col: vCol, horizontal: false, crossings });
+        }
+      }
+    }
+  }
+
+  if (candidates.length === 0) return null;
+
+  // Privilégier ceux qui croisent le plus, avec de la variété
+  const maxCrossings = Math.max(...candidates.map(c => c.crossings));
+  const best = candidates.filter(c => c.crossings === maxCrossings);
+  return best[Math.floor(Math.random() * best.length)];
+}
+
+function countCrossings(word, row, col, horiz) {
+  let count = 0;
+  for (let i = 0; i < word.length; i++) {
+    const r = horiz ? row : row + i;
+    const c = horiz ? col + i : col;
+    if (r < 0 || r >= gridSize || c < 0 || c >= gridSize) continue;
+    if (solutionGrid[r][c] !== '' && solutionGrid[r][c] !== ' ') {
+      if (normalizeChar(solutionGrid[r][c]) === normalizeChar(word[i])) {
+        count++;
+      }
+    }
+  }
+  return count;
+}
+
+function showNumberedCells() {
+  const cellTooltipMap = new Map();
+  for (const w of placedWords) {
+    for (let k = 0; k < w.word.length; k++) {
+      const r = w.horizontal ? w.row : w.row + k;
+      const c = w.horizontal ? w.col + k : w.col;
+      const key = r + ',' + c;
+      if (!cellTooltipMap.has(key)) cellTooltipMap.set(key, w.definition);
+    }
+  }
+  for (let i = 0; i < gridSize; i++) {
+    for (let j = 0; j < gridSize; j++) {
+      const cell = document.querySelector(`.grid-cell[data-row="${i}"][data-col="${j}"]`);
+      const val = solutionGrid[i][j];
+      if (val !== '') {
+        cell.classList.remove('empty');
+        cell.classList.add('filled');
+        if (val !== ' ') {
+          for (const w of placedWords) {
+            if (w.row === i && w.col === j) {
+              cell.classList.add('numbered');
+              const n = document.createElement('span');
+              n.className = 'cell-number';
+              n.textContent = w.number;
+              cell.appendChild(n);
+            }
+          }
+        }
+      }
+      const def = cellTooltipMap.get(i + ',' + j);
+      if (def) {
+        cell._tooltipDef = def;
+        cell.setAttribute('tabindex', '0');
+        cell.setAttribute('role', 'button');
+        cell.setAttribute('aria-label', 'définition : ' + def);
+      }
+    }
+  }
+  if (!gridContainer._tooltipListeners) {
+    gridContainer._tooltipListeners = true;
+    gridContainer.addEventListener('mouseover', handleGridMouseOver);
+    gridContainer.addEventListener('mouseout', handleGridMouseOut);
+    gridContainer.addEventListener('touchstart', handleGridTouchStart, { passive: true });
+    gridContainer.addEventListener('focusin', handleGridFocusIn);
+    gridContainer.addEventListener('focusout', handleGridFocusOut);
+  }
+}
+
+function handleGridMouseOver(e) {
+  const cell = e.target.closest('.grid-cell');
+  if (!cell || !cell._tooltipDef) return;
+  if (gridContainer._currentTooltipCell === cell) return;
+  gridContainer._currentTooltipCell = cell;
+  showTooltip(e, cell._tooltipDef);
+}
+function handleGridMouseOut(e) {
+  const cell = e.target.closest('.grid-cell');
+  if (!cell) return;
+  const related = e.relatedTarget;
+  if (related && cell.contains(related)) return;
+  const relatedCell = related && related.closest ? related.closest('.grid-cell') : null;
+  if (relatedCell) return;
+  gridContainer._currentTooltipCell = null;
+  hideTooltip();
+}
+let touchTooltipTimeout = null;
+function handleGridTouchStart(e) {
+  if (window.innerWidth <= 820) return;
+  const cell = e.target.closest('.grid-cell');
+  if (!cell || !cell._tooltipDef) return;
+  const touch = e.touches[0] || e;
+  showTooltip(touch, cell._tooltipDef);
+  if (touchTooltipTimeout) clearTimeout(touchTooltipTimeout);
+  touchTooltipTimeout = setTimeout(() => hideTooltip(), 3500);
+}
+function handleGridFocusIn(e) {
+  const cell = e.target.closest('.grid-cell');
+  if (!cell || !cell._tooltipDef) return;
+  const rect = cell.getBoundingClientRect();
+  const fakeEvent = { clientX: rect.left + rect.width / 2, clientY: rect.top };
+  showTooltip(fakeEvent, cell._tooltipDef);
+}
+function handleGridFocusOut(e) {
+  const cell = e.target.closest('.grid-cell');
+  if (!cell) return;
+  hideTooltip();
+}
+
+function findMatchingCells(ch) {
+  const cells = [];
+  const normalizedCh = normalizeChar(ch);
+  // On ne cherche que dans les cellules des mots déjà placés (pour garantir le croisement)
+  for (const w of placedWords) {
+    for (let i = 0; i < w.word.length; i++) {
+      const r = w.horizontal ? w.row : w.row + i;
+      const c = w.horizontal ? w.col + i : w.col;
+      if (normalizeChar(w.word[i]) === normalizedCh) {
+        const cell = document.querySelector(`.grid-cell[data-row="${r}"][data-col="${c}"]`);
+        if (cell && !cells.includes(cell)) cells.push(cell);
+      }
+    }
+  }
+  return cells;
+}
+
+function canPlaceWordHorizontally(word, row, col) {
+  if (col < 0 || col + word.length > gridSize) return false;
+  if (row < 0 || row >= gridSize) return false;
+  for (let i = 0; i < word.length; i++) {
+    const cur = solutionGrid[row][col + i];
+    if (cur !== '' && normalizeChar(cur) !== normalizeChar(word[i])) return false;
+  }
+  return true;
+}
+function canPlaceWordVertically(word, row, col) {
+  if (row < 0 || row + word.length > gridSize) return false;
+  if (col < 0 || col >= gridSize) return false;
+  for (let i = 0; i < word.length; i++) {
+    const cur = solutionGrid[row + i][col];
+    if (cur !== '' && normalizeChar(cur) !== normalizeChar(word[i])) return false;
+  }
+  return true;
+}
+
+function checkCrossingConstraints(word, row, col, horiz) {
+  const allWordsSet = new Set(words.map(w => w.name.toUpperCase()));
+  if (horiz) {
+    if (col > 0) {
+      const leftCell = solutionGrid[row][col - 1];
+      if (leftCell !== '' && leftCell !== ' ') {
+        let leftWord = '';
+        let c2 = col - 1;
+        while (c2 >= 0 && solutionGrid[row][c2] !== '' && solutionGrid[row][c2] !== ' ') {
+          leftWord = solutionGrid[row][c2] + leftWord;
+          c2--;
+        }
+        const concatenated = leftWord + word;
+        if (!allWordsSet.has(concatenated)) return false;
+      }
+    }
+    if (col + word.length < gridSize) {
+      const rightCell = solutionGrid[row][col + word.length];
+      if (rightCell !== '' && rightCell !== ' ') {
+        let rightWord = '';
+        let c2 = col + word.length;
+        while (c2 < gridSize && solutionGrid[row][c2] !== '' && solutionGrid[row][c2] !== ' ') {
+          rightWord += solutionGrid[row][c2];
+          c2++;
+        }
+        const concatenated = word + rightWord;
+        if (!allWordsSet.has(concatenated)) return false;
+      }
+    }
+    for (let i = 0; i < word.length; i++) {
+      const r = row, c = col + i;
+      const ch = word[i];
+      const occupied = solutionGrid[r][c] !== '';
+      if (occupied) continue;
+      if (ch === ' ') {
+        if (r > 0 && solutionGrid[r-1][c] !== '' && solutionGrid[r-1][c] !== ' ') return false;
+        if (r < gridSize-1 && solutionGrid[r+1][c] !== '' && solutionGrid[r+1][c] !== ' ') return false;
+        continue;
+      }
+      if (r > 0 && solutionGrid[r-1][c] !== '' && solutionGrid[r-1][c] !== ' ') {
+        if (!formsKnownVerticalWord(r, c)) return false;
+      }
+      if (r < gridSize-1 && solutionGrid[r+1][c] !== '' && solutionGrid[r+1][c] !== ' ') {
+        if (!formsKnownVerticalWord(r, c)) return false;
+      }
+    }
+  } else {
+    if (row > 0) {
+      const topCell = solutionGrid[row - 1][col];
+      if (topCell !== '' && topCell !== ' ') {
+        let topWord = '';
+        let r2 = row - 1;
+        while (r2 >= 0 && solutionGrid[r2][col] !== '' && solutionGrid[r2][col] !== ' ') {
+          topWord = solutionGrid[r2][col] + topWord;
+          r2--;
+        }
+        const concatenated = topWord + word;
+        if (!allWordsSet.has(concatenated)) return false;
+      }
+    }
+    if (row + word.length < gridSize) {
+      const bottomCell = solutionGrid[row + word.length][col];
+      if (bottomCell !== '' && bottomCell !== ' ') {
+        let bottomWord = '';
+        let r2 = row + word.length;
+        while (r2 < gridSize && solutionGrid[r2][col] !== '' && solutionGrid[r2][col] !== ' ') {
+          bottomWord += solutionGrid[r2][col];
+          r2++;
+        }
+        const concatenated = word + bottomWord;
+        if (!allWordsSet.has(concatenated)) return false;
+      }
+    }
+    for (let i = 0; i < word.length; i++) {
+      const r = row + i, c = col;
+      const ch = word[i];
+      const occupied = solutionGrid[r][c] !== '';
+      if (occupied) continue;
+      if (ch === ' ') {
+        if (c > 0 && solutionGrid[r][c-1] !== '' && solutionGrid[r][c-1] !== ' ') return false;
+        if (c < gridSize-1 && solutionGrid[r][c+1] !== '' && solutionGrid[r][c+1] !== ' ') return false;
+        continue;
+      }
+      if (c > 0 && solutionGrid[r][c-1] !== '' && solutionGrid[r][c-1] !== ' ') {
+        if (!formsKnownHorizontalWord(r, c)) return false;
+      }
+      if (c < gridSize-1 && solutionGrid[r][c+1] !== '' && solutionGrid[r][c+1] !== ' ') {
+        if (!formsKnownHorizontalWord(r, c)) return false;
+      }
+    }
+  }
+  return true;
+}
+
+function formsKnownVerticalWord(r, c) {
+  let top = '';
+  let r2 = r;
+  while (r2 >= 0 && solutionGrid[r2][c] !== '' && solutionGrid[r2][c] !== ' ') {
+    top = solutionGrid[r2][c] + top;
+    r2--;
+  }
+  let bottom = '';
+  r2 = r;
+  while (r2 < gridSize && solutionGrid[r2][c] !== '' && solutionGrid[r2][c] !== ' ') {
+    bottom += solutionGrid[r2][c];
+    r2++;
+  }
+  const combined = top + bottom;
+  return words.some(w => w.name.toUpperCase() === combined);
+}
+
+function formsKnownHorizontalWord(r, c) {
+  let left = '';
+  let c2 = c;
+  while (c2 >= 0 && solutionGrid[r][c2] !== '' && solutionGrid[r][c2] !== ' ') {
+    left = solutionGrid[r][c2] + left;
+    c2--;
+  }
+  let right = '';
+  c2 = c;
+  while (c2 < gridSize && solutionGrid[r][c2] !== '' && solutionGrid[r][c2] !== ' ') {
+    right += solutionGrid[r][c2];
+    c2++;
+  }
+  const combined = left + right;
+  return words.some(w => w.name.toUpperCase() === combined);
+}
+
+function placeWordHorizontally(word, row, col) { for (let i = 0; i < word.length; i++) solutionGrid[row][col + i] = word[i]; }
+function placeWordVertically(word, row, col) { for (let i = 0; i < word.length; i++) solutionGrid[row + i][col] = word[i]; }
+
+function showCorrection() {
+  deselectAllCells();
+
+  let correctCells = 0;
+  let totalCells = 0;
+
+  for (let i = 0; i < gridSize; i++) {
+    for (let j = 0; j < gridSize; j++) {
+      if (solutionGrid[i][j] !== '') {
+        const cell = document.querySelector(`.grid-cell[data-row="${i}"][data-col="${j}"]`);
+        const userChar = cellToChar(cell);
+        const expected = solutionGrid[i][j] === ' ' ? ' ' : normalizeChar(solutionGrid[i][j]);
+
+        cell.classList.remove('correct', 'incorrect', 'animee', 'word-correct', 'selected', 'highlighted');
+        if (userChar === expected) {
+          cell.classList.add('correct');
+          correctCells++;
+        } else {
+          cell.classList.add('incorrect');
+        }
+        totalCells++;
+
+        setCellLetter(cell, solutionGrid[i][j]);
+        cell.classList.add('filled');
+      }
+    }
+  }
+
+  currentScore = correctCells;
+  totalScore += correctCells;
+  updateScoreDisplay();
+
+  correctAnswers += correctCells;
+  totalAnswers += totalCells;
+  gamesPlayed++;
+  saveGameStats();
+  updateStatsDisplay();
+
+  helpBtn.disabled = true;
+  correctionShown = true;
+
+  if (correctCells > 0) playSound('correct'); else playSound('incorrect');
+
+  if (toasterActionBtn) {
+    toasterActionBtn.textContent = 'score';
+    toasterActionBtn.disabled = false;
+  }
+  hideMobileKeyboard();
+  hideMobileDefinitionBar();
+  if (mobileDefContent) mobileDefContent.textContent = 'Touchez une case pour commencer';
+}
+
+function toggleHelpMode() {
+  if (helpBtn.disabled) return;
+  isHelpMode = !isHelpMode;
+  helpBtn.textContent = isHelpMode ? "💡✓" : "💡";
+  if (isHelpMode) addHelpLetters();
+}
+function addHelpLetters() {
+  let added = 0;
+  const max = Math.floor(placedWords.length * 0.3);
+  let safety = 0;
+  while (added < max && safety < 500) {
+    safety++;
+    const w = placedWords[Math.floor(Math.random() * placedWords.length)];
+    const word = w.word;
+    const idx = Math.floor(Math.random() * word.length);
+    if (word[idx] === ' ') continue;
+    let row, col;
+    if (w.horizontal) { row = w.row; col = w.col + idx; }
+    else { row = w.row + idx; col = w.col; }
+    const cell = document.querySelector(`.grid-cell[data-row="${row}"][data-col="${col}"]`);
+    if (!cell || cell.classList.contains('space')) continue;
+    if (!isEditableCell(cell)) continue;
+    if (getCellText(cell) === '') {
+      setCellLetter(cell, word[idx]);
+      cell.classList.remove('empty', 'word-correct');
+      cell.classList.add('filled');
+      added++;
+    }
+  }
+  checkWordCompletion();
+}
+
+function updateScoreDisplay() {
+  const totalCells = solutionGrid.flat ? solutionGrid.flat().filter(c => c !== '' && c !== ' ').length : 0;
+  if (toasterScoreDiv) toasterScoreDiv.textContent = `${currentScore} / ${totalCells}`;
+}
+
+function removeBento() {
+  const old = document.getElementById('bentoFinal');
+  if (old) old.remove();
+}
+function showFinalBento() {
+  removeBento();
+  hideGrid();
+  hideMobileKeyboard();
+  hideMobileDefinitionBar();
+
+  const wordsToaster = document.getElementById('wordsToaster');
+  if (wordsToaster) wordsToaster.style.display = 'none';
+  if (keyboardToggleBtn) keyboardToggleBtn.style.display = 'none';
+
+  const totalCells = solutionGrid.flat().filter(c => c !== '').length;
+  const pct = totalCells > 0 ? Math.round((currentScore / totalCells) * 100) : 0;
+  const globalPct = totalAnswers > 0 ? Math.round((correctAnswers / totalAnswers) * 100) : 0;
+  let message = '';
+  if (pct >= 80) message = '🌟 excellent ! vous maîtrisez parfaitement ces repères';
+  else if (pct >= 60) message = '👏 très bon score ! continuez comme ça';
+  else if (pct >= 40) message = '📚 score correct : continuez à étudier';
+  else if (pct >= 20) message = '📖 vous avez des bases : relisez l\'essentiel';
+  else message = '💪 n\'hésitez pas à recommencer pour progresser';
+
+  const html = `
+    <div class="container--quiz-end" id="bentoFinal">
+      <div class="container--quiz-results">
+        <div class="bento-score">
+          <p>
+            <span style="color: var(--font-color);">score : </span>
+            <span class="quiz-end__score">${currentScore}</span>
+            <span style="font-size:0.9rem; color: var(--font-color);">bonne${currentScore > 1 ? 's' : ''} réponse${currentScore > 1 ? 's' : ''}</span>
+            <span style="font-size:0.9rem; color: var(--font-color);">sur</span>
+            <span class="quiz-end__total">${totalCells}</span>
+          </p>
+        </div>
+        <div class="bento-stats-global">
+          <div class="stat-item"><span class="stat-value">${pct}%</span><span class="stat-label">score</span></div>
+          <div class="stat-item"><span class="stat-value">${bestScore}%</span><span class="stat-label">meilleur score</span></div>
+          <div class="stat-item"><span class="stat-value">${correctAnswers}</span><span class="stat-label">bonne${correctAnswers > 1 ? 's' : ''} réponse${correctAnswers > 1 ? 's' : ''}</span></div>
+        </div>
+        <div class="bento-stats-personal">
+          <div class="stat-item-mini"><span class="stat-value">${globalPct}%</span><span class="stat-label-mini">moyenne</span></div>
+          <div class="stat-item-mini"><span class="stat-value">${gamesPlayed}</span><span class="stat-label-mini">partie${gamesPlayed > 1 ? 's' : ''} jouée${gamesPlayed > 1 ? 's' : ''}</span></div>
+          <div class="stat-item-mini"><span class="stat-value">${totalScore}</span><span class="stat-label-mini">score cumulé</span></div>
+        </div>
+        <div class="bento-message">${message}</div>
+        <div class="bento-actions">
+          <button class="quiz-btn" id="bentoRestart">recommencer</button>
+        </div>
+      </div>
+    </div>
+  `;
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = html;
+  document.querySelector('.main-container').appendChild(wrapper.firstElementChild);
+
+  document.getElementById('bentoRestart')?.addEventListener('click', () => {
+    playSound('click');
+    removeBento();
+    const wt = document.getElementById('wordsToaster');
+    if (wt) wt.style.display = '';
+    if (keyboardToggleBtn && window.innerWidth <= 820) keyboardToggleBtn.style.display = 'flex';
+    generateGrid();
+  });
+
+  if (toasterActionBtn) {
+    toasterActionBtn.textContent = 'nouvelle grille';
+    toasterActionBtn.disabled = false;
+  }
+
+  if (pct >= 80) {
+    setTimeout(() => { launchConfetti(); playSound('score_good'); }, 400);
+  } else if (pct >= 50 && pct < 80) {
+    setTimeout(() => playSound('click'), 400);
+  } else if (pct < 50 && totalCells > 0) {
+    setTimeout(() => playSound('score_bad'), 400);
+  }
+}
+
+function showTooltip(e, def) {
+  if (!def) return;
+  if (window.innerWidth <= 820) return;
+  clearTimeout(tooltip._hideTimer);
+  tooltip.innerHTML = `<div>${def}</div>`;
+  tooltip.style.display = 'block';
+  tooltip.style.opacity = '1';
+  tooltip.classList.remove('tooltip-touch');
+  tooltip.style.transform = '';
+  moveTooltip(e);
+}
+function moveTooltip(e) {
+  let clientX = e.clientX;
+  let clientY = e.clientY;
+  if (clientX === undefined && e.touches && e.touches[0]) {
+    clientX = e.touches[0].clientX;
+    clientY = e.touches[0].clientY;
+  }
+  if (clientX === undefined) { clientX = window.innerWidth / 2; clientY = 80; }
+  const x = Math.min(clientX + 12, window.innerWidth - 300);
+  const y = Math.min(clientY + 12, window.innerHeight - 100);
+  tooltip.style.left = Math.max(10, x) + 'px';
+  tooltip.style.top = Math.max(10, y) + 'px';
+}
+function hideTooltip() {
+  if (!tooltip) return;
+  tooltip.style.opacity = '0';
+  clearTimeout(tooltip._hideTimer);
+  tooltip._hideTimer = setTimeout(() => {
+    if (tooltip.style.opacity === '0') tooltip.style.display = 'none';
+  }, 150);
+}
+
+function setupMenu() {
+  const menuOverlay = document.getElementById('menuOverlay');
+  const slideMenu = document.getElementById('slideMenu');
+  const submenus = document.querySelectorAll('.submenu');
+
+  function closeAllSubmenus() {
+    submenus.forEach(s => s.classList.remove('active'));
+    if (!slideMenu.classList.contains('open')) document.body.classList.remove('menu-open');
+  }
+  function openSubmenu(id) {
+    closeAllSubmenus();
+    const el = document.getElementById(id);
+    if (el) { el.classList.add('active'); document.body.classList.add('menu-open'); }
+  }
+  function closeMenu() {
+    slideMenu.classList.remove('open');
+    menuOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+    document.body.classList.remove('menu-open');
+    closeAllSubmenus();
+    closeSequencesDropdown();
+  }
+  function toggleMenu() {
+    playSound('click');
+    if (slideMenu.classList.contains('open')) closeMenu();
+    else {
+      menuOverlay.classList.add('open');
+      slideMenu.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.body.classList.add('menu-open');
+    }
+  }
+
+  document.querySelectorAll('[data-action="menu"]').forEach(b => b.addEventListener('click', toggleMenu));
+  document.getElementById('menuClose')?.addEventListener('click', () => { playSound('click'); closeMenu(); });
+  menuOverlay?.addEventListener('click', () => { playSound('click'); closeMenu(); });
+  document.querySelectorAll('.submenu-close').forEach(b => b.addEventListener('click', () => { playSound('click'); closeAllSubmenus(); }));
+
+  document.getElementById('openInstructionsSub')?.addEventListener('click', () => { playSound('click'); openSubmenu('submenuInstructions'); });
+  document.getElementById('openStatsSub')?.addEventListener('click', () => { playSound('click'); updateStatsDisplay(); openSubmenu('submenuStats'); });
+  document.getElementById('openSettingsSub')?.addEventListener('click', () => { playSound('click'); openSubmenu('submenuSettings'); });
+  document.getElementById('openShortcutsSub')?.addEventListener('click', () => { playSound('click'); openSubmenu('submenuShortcuts'); });
+  document.getElementById('openAboutSub')?.addEventListener('click', () => { playSound('click'); openSubmenu('submenuAbout'); });
+  document.getElementById('resetAppBtn')?.addEventListener('click', () => {
+    playSound('click');
+    localStorage.clear();
+    showToaster('application réinitialisée ! redémarrage...', 'info', 2000);
+    setTimeout(() => location.reload(), 1500);
+  });
+  document.getElementById('resetStatsBtn')?.addEventListener('click', resetStats);
+
+  document.getElementById('darkModeToggle')?.addEventListener('change', e => {
+    darkMode = e.target.checked;
+    document.body.classList.toggle('dark-theme', darkMode);
+    saveSettings(); playSound('click');
+  });
+  document.getElementById('colorblindToggle')?.addEventListener('change', e => {
+    colorblindMode = e.target.checked;
+    document.body.classList.toggle('colorblind-mode', colorblindMode);
+    saveSettings(); playSound('click');
+  });
+  document.getElementById('animationsToggle')?.addEventListener('change', e => {
+    animationsEnabled = e.target.checked;
+    saveSettings(); playSound('click');
+  });
+  document.getElementById('soundToggle')?.addEventListener('change', e => {
+    soundEnabled = e.target.checked;
+    if (soundEnabled) preloadSounds();
+    saveSettings(); playSound('click');
+  });
+  document.getElementById('timerLimitSlider')?.addEventListener('input', e => {
+    const pos = parseInt(e.target.value);
+    timerLimit = pos === 6 ? 0 : pos * 60;
+    const v = document.getElementById('timerLimitValue');
+    if (v) v.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
+    saveSettings();
+    if (timerLimit === 0) { stopTimer(); updateTimerDisplay('∞'); }
+    else { resetTimer(); }
+  });
+  document.getElementById('wordsCountSlider')?.addEventListener('input', e => {
+    wordsCount = parseInt(e.target.value);
+    const v = document.getElementById('wordsCountValue');
+    if (v) v.textContent = wordsCount;
+    gridSize = computeGridSizeForWordCount(wordsCount);
+    saveSettings();
+    if (selectedNotionIndices.size > 0) generateGrid();
+  });
+
+  const sBtn = document.getElementById('sequencesBtn');
+  const sBtnM = document.getElementById('sequencesBtnMobile');
+  if (sBtn) sBtn.addEventListener('click', toggleSequencesDropdown);
+  if (sBtnM) sBtnM.addEventListener('click', toggleSequencesDropdown);
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.btn-sequences') && !e.target.closest('.sequences-dropdown')) closeSequencesDropdown();
+  });
+  document.getElementById('selectAllNotions')?.addEventListener('click', selectAllNotions);
+  document.getElementById('deselectAllNotions')?.addEventListener('click', deselectAllNotions);
+  document.getElementById('selectAllNotionsMobile')?.addEventListener('click', selectAllNotions);
+  document.getElementById('deselectAllNotionsMobile')?.addEventListener('click', deselectAllNotions);
+
+  document.querySelectorAll('[data-action="fullscreen"]').forEach(b => b.addEventListener('click', toggleFullscreen));
+  document.querySelectorAll('[data-action="home"]').forEach(b => b.addEventListener('click', () => { playSound('click'); window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); }));
+  document.querySelectorAll('[data-action="reload"]').forEach(b => b.addEventListener('click', () => { playSound('click'); generateGrid(); }));
+}
+
+function toggleFullscreen() {
+  playSound('click');
+  const btns = document.querySelectorAll('.btn-fullscreen');
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+    btns.forEach(b => { b.classList.add('fullscreen-active'); b.dataset.title = 'quitter plein écran (Alt+F)'; });
+  } else {
+    document.exitFullscreen();
+    btns.forEach(b => { b.classList.remove('fullscreen-active'); b.dataset.title = 'plein écran (Alt+F)'; });
+  }
+}
+
+function setupKeyboardShortcuts() {
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (document.querySelector('.submenu.active')) {
+        document.querySelectorAll('.submenu').forEach(s => s.classList.remove('active'));
+        document.body.classList.remove('menu-open');
+        playSound('click');
+      } else if (document.getElementById('slideMenu').classList.contains('open')) {
+        document.getElementById('slideMenu').classList.remove('open');
+        document.getElementById('menuOverlay').classList.remove('open');
+        document.body.classList.remove('menu-open');
+        playSound('click');
+      } else {
+        closeSequencesDropdown();
+      }
+      e.preventDefault(); return;
+    }
+    if (!e.altKey) return;
+    const k = e.key.toLowerCase();
+    if (k === 's') { e.preventDefault(); playSound('click'); toggleSequencesDropdown(); }
+    else if (k === 'h') { e.preventDefault(); playSound('click'); window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); }
+    else if (k === 'r') { e.preventDefault(); generateGrid(); }
+    else if (k === 't') { e.preventDefault(); playSound('click'); resetTimer(); }
+    else if (k === 'f') { e.preventDefault(); toggleFullscreen(); }
+    else if (k === 'm') {
+      e.preventDefault();
+      const sm = document.getElementById('slideMenu');
+      if (sm.classList.contains('open')) {
+        sm.classList.remove('open');
+        document.getElementById('menuOverlay').classList.remove('open');
+        document.body.classList.remove('menu-open');
+      } else {
+        sm.classList.add('open');
+        document.getElementById('menuOverlay').classList.add('open');
+        document.body.classList.add('menu-open');
+      }
+    }
+  });
+}
+
+function toggleSequencesDropdown() {
+  if (typeof event !== 'undefined' && event && event.stopPropagation) event.stopPropagation();
+  const isDesktop = this && this.id === 'sequencesBtn';
+  const dd = isDesktop ? document.getElementById('sequencesDropdown') : document.getElementById('sequencesDropdownMobile');
+  if (!dd) return;
+  buildNotionsList();
+  updateNotionsDropdown();
+  dd.classList.toggle('open');
+}
+
+function updateNotionsDropdown() {
+  const lists = [document.getElementById('dropdownNotionsList'), document.getElementById('dropdownNotionsListMobile')];
+  const counts = [document.getElementById('dropdownNotionsCount'), document.getElementById('dropdownNotionsCountMobile')];
+
+  const sortedNotions = allNotions
+    .map((n, originalIdx) => ({ ...n, originalIdx }))
+    .sort((a, b) => {
+      const ka = sortKey(a.name);
+      const kb = sortKey(b.name);
+      if (ka < kb) return -1;
+      if (ka > kb) return 1;
+      const ca = sortKey(a.catDefinition);
+      const cb = sortKey(b.catDefinition);
+      if (ca < cb) return -1;
+      if (ca > cb) return 1;
+      return a.originalIdx - b.originalIdx;
+    });
+
+  lists.forEach((list, li) => {
+    if (!list) return;
+    const count = counts[li];
+    const total = allNotions.length;
+    const sel = selectedNotionIndices.size;
+    if (count) count.textContent = `${sel} / ${total} repères sélectionnés`;
+    if (total === 0) {
+      list.innerHTML = '<div style="padding:10px;text-align:center;opacity:0.7;font-size:0.8rem;">Aucun repère disponible</div>';
+      return;
+    }
+    let html = '';
+    sortedNotions.forEach((n) => {
+      const catLabel = n.catDefinition
+        ? ` <span style="opacity:0.55;font-size:0.85em;">— ${n.catDefinition}</span>`
+        : '';
+      html += `<div class="dropdown-notion-item" data-id="${n.originalIdx}">
+        <input type="checkbox" ${selectedNotionIndices.has(n.originalIdx) ? 'checked' : ''}>
+        <label>${n.name}${catLabel}</label>
+      </div>`;
+    });
+    list.innerHTML = html;
+    list.querySelectorAll('.dropdown-notion-item').forEach(item => {
+      const idx = parseInt(item.dataset.id);
+      const cb = item.querySelector('input');
+      cb.addEventListener('change', e => {
+        if (e.target.checked) selectedNotionIndices.add(idx);
+        else selectedNotionIndices.delete(idx);
+        updateNotionsDropdown();
+        updateWordsCountSliderBounds();
+        saveSettings();
+        playSound('click');
+        scheduleGridRegeneration();
+      });
+      item.addEventListener('click', e => {
+        if (e.target !== cb && e.target.tagName !== 'LABEL') {
+          cb.checked = !cb.checked;
+          cb.dispatchEvent(new Event('change'));
+        }
+      });
+    });
+  });
+}
+
+function selectAllNotions() {
+  allNotions.forEach((_, i) => selectedNotionIndices.add(i));
+  updateNotionsDropdown();
+  updateWordsCountSliderBounds();
+  saveSettings();
+  showToaster('Tous les repères sélectionnés', 'info', 1500);
+  playSound('click');
+  scheduleGridRegeneration();
+}
+function deselectAllNotions() {
+  selectedNotionIndices.clear();
+  updateNotionsDropdown();
+  updateWordsCountSliderBounds();
+  saveSettings();
+  showToaster('Tous les repères désélectionnés', 'info', 1500);
+  playSound('click');
+  scheduleGridRegeneration();
+}
+function closeSequencesDropdown() {
+  [document.getElementById('sequencesDropdown'), document.getElementById('sequencesDropdownMobile')]
+    .forEach(d => { if (d) d.classList.remove('open'); });
+}
+
+window.addEventListener('resize', function() {
+  if (window.innerWidth > 820) {
+    hideMobileKeyboard();
+    hideMobileDefinitionBar();
+  }
+  if (keyboardToggleBtn) {
+    if (document.getElementById('bentoFinal')) {
+      keyboardToggleBtn.style.display = 'none';
+    } else if (window.innerWidth <= 820 && selectedNotionIndices.size > 0) {
+      keyboardToggleBtn.style.display = 'flex';
+    } else {
+      keyboardToggleBtn.style.display = '';
+    }
+  }
+});
+</script>
+</body>
+</html>

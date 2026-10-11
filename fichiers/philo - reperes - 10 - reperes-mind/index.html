@@ -1,0 +1,3066 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
+<meta name="theme-color" content="#00CC00">
+<meta name="description" content="Devinez un mot de longueur variable en 6 essais !">
+<link rel="icon" href="../../src/favicon.ico" />
+<title id="htmlTitle">repères-mind</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; touch-action: manipulation; }
+html, body { height: 100%; }
+
+:root {
+	--bg: #f0f0f0;
+	--btn: #e0e0e0;
+	--font-color: #000000;
+	--letter-color: #000000;
+	--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.9);
+	--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.9);
+	--tooltip-bg: #ffffff;
+	--tooltip-color: #333333;
+	--primary-color: red;
+	--badge-bg: red;
+	--badge-color: #ffffff;
+	--toast-bg: #e0e0e0;
+	--toast-text: #333333;
+	--color-correct: #28a745;
+	--color-present: #e0a800;
+	--color-absent: #e0e0e0;
+	--color-incorrect: #dc3545;
+
+	/* Neumorphisme spécifique */
+	--letter-inset: inset 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.12), inset -0.25rem -0.25rem 0.5rem rgba(255, 255, 255, 0.95);
+	--key-raised: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.12), -0.25rem -0.25rem 0.5rem rgba(255, 255, 255, 0.95);
+	--key-raised-hover: 0.35rem 0.35rem 0.7rem rgba(0, 0, 0, 0.15), -0.35rem -0.35rem 0.7rem rgba(255, 255, 255, 1);
+}
+
+body.dark-theme {
+	--bg: #121212;
+	--btn: #3d3d3d;
+	--font-color: #ffffff;
+	--letter-color: #ffffff;
+	--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.05);
+	--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
+	--primary-color: #ff6b6b;
+	--badge-bg: #ff6b6b;
+	--badge-color: #ffffff;
+	--tooltip-bg: #1a1a1a;
+	--tooltip-color: #ffffff;
+	--toast-bg: #3d3d3d;
+	--toast-text: #e0e0e0;
+	--color-correct: #2ecc71;
+	--color-present: #d4a934;
+	--color-absent: #666666;
+	background-color: #121212 !important;
+	color: #ffffff !important;
+
+	--letter-inset: inset 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.6), inset -0.25rem -0.25rem 0.5rem rgba(255, 255, 255, 0.06);
+	--key-raised: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.55), -0.25rem -0.25rem 0.5rem rgba(255, 255, 255, 0.06);
+	--key-raised-hover: 0.35rem 0.35rem 0.7rem rgba(0, 0, 0, 0.65), -0.35rem -0.35rem 0.7rem rgba(255, 255, 255, 0.08);
+}
+
+body.colorblind-mode {
+	--color-correct: #2c7be5;
+	--color-present: #ff8c00;
+	--color-absent: #666666;
+	--primary-color: #2c7be5;
+	--badge-bg: #2c7be5;
+}
+body.dark-theme.colorblind-mode {
+	--color-correct: #4a90d9;
+	--color-present: #ffa500;
+	--color-absent: #888888;
+	--primary-color: #4a90d9;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	background-color: var(--bg);
+	color: var(--font-color);
+	padding: 12px 12px 20px 12px;
+	height: 100vh;
+	height: 100dvh;
+	display: flex;
+	flex-direction: column;
+	transition: background-color 0.4s, color 0.4s;
+	overflow: hidden;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body.no-animations,
+body.no-animations *,
+body.no-animations *::before,
+body.no-animations *::after {
+	transition: none !important;
+	animation: none !important;
+}
+
+body.menu-open .toolbar-wrapper,
+body.menu-open .game-container,
+body.menu-open .hint-float-btn {
+	filter: blur(5px);
+	transition: filter 0.3s ease;
+	pointer-events: none;
+}
+
+.slide-menu, .submenu, .menu-overlay { filter: none !important; pointer-events: auto !important; }
+
+@media (max-width: 600px) {
+	body.menu-open .toolbar-wrapper,
+	body.menu-open .game-container { filter: blur(3px); }
+}
+
+/* ===== BOUTONS ===== */
+.btn, .timer-btn, .menu-close, .submenu-close, .menu-item,
+.stats-reload-btn, .quiz-btn {
+	background: var(--btn);
+	color: var(--font-color);
+	box-shadow: var(--shadow-out);
+	transition: all 0.2s ease;
+	border: none;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+}
+.btn:hover, .timer-btn:hover, .menu-close:hover, .submenu-close:hover,
+.menu-item:hover, .stats-reload-btn:hover, .quiz-btn:hover {
+	box-shadow: var(--shadow-in);
+	transform: translateY(-2px);
+}
+.btn:active, .timer-btn:active { transform: scale(0.95); }
+
+.btn {
+	width: 52px; height: 52px; border-radius: 50%;
+	display: flex; align-items: center; justify-content: center;
+	flex-shrink: 0; position: relative;
+}
+.btn svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; flex-shrink: 0; }
+.btn::after, .timer-btn::after {
+	content: attr(data-title);
+	position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+	margin-top: 0.5rem; background-color: var(--tooltip-bg); color: var(--tooltip-color);
+	padding: 0.3rem 0.6rem; border-radius: 5px; font-size: 0.8rem; white-space: nowrap;
+	opacity: 0; pointer-events: none; z-index: 10;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.btn:hover::after, .timer-btn:hover::after { opacity: 1; }
+
+.btn-home .icon-wrapper {
+	width: 52px; height: 52px; display: flex; align-items: center; justify-content: center;
+	transform-style: preserve-3d; flex-shrink: 0;
+}
+.btn-home:hover .icon-wrapper { animation: spin360 2s infinite linear; }
+@keyframes spin360 { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+.btn-reload:hover svg { animation: rotate 1s linear; }
+@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.menu-icon { width: 22px; height: 18px; transition: transform 0.3s ease; stroke: currentColor; }
+.btn-menu:hover .menu-icon { transform: rotate(90deg); }
+
+.btn-fullscreen .fullscreen-icon { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.btn-fullscreen:not(.fullscreen-active):hover .fullscreen-icon { transform: scale(1.5); }
+.fullscreen-exit-icon { transform-origin: center; transition: transform 0.3s ease; stroke-width: 1.2px !important; }
+.btn-fullscreen.fullscreen-active:hover .fullscreen-exit-icon { transform: scale(0.7); }
+
+/* ===== BOUTON REPÈRES ET DROPDOWN ===== */
+.btn-sequences {
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	position: relative;
+	background: var(--btn);
+	color: var(--font-color);
+	box-shadow: var(--shadow-out);
+	transition: all 0.2s ease;
+	border: none;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+}
+.btn-sequences:hover { box-shadow: var(--shadow-in); transform: translateY(-2px); }
+.btn-sequences:active { transform: scale(0.95); }
+
+.btn-sequences .arrow-svg,
+.btn-sequences .plate-svg {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	pointer-events: none;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+.btn-sequences .arrow-svg { clip-path: inset(0 0 20.83% 0); z-index: 1; }
+.btn-sequences .plate-svg { z-index: 2; }
+.btn-sequences:hover .arrow-group { animation: download-arrow 1.6s linear infinite; }
+@keyframes download-arrow {
+	0%   { transform: translateY(-6px); }
+	100% { transform: translateY(6px); }
+}
+.btn-sequences::after {
+	content: attr(data-title);
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-top: 0.5rem;
+	background-color: var(--tooltip-bg);
+	color: var(--tooltip-color);
+	padding: 0.3rem 0.6rem;
+	border-radius: 5px;
+	font-size: 0.8rem;
+	white-space: nowrap;
+	opacity: 0;
+	pointer-events: none;
+	z-index: 10;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.btn-sequences:hover::after { opacity: 1; }
+
+.sequences-dropdown {
+	position: absolute;
+	top: 60px;
+	left: 0;
+	margin-top: 8px;
+	background: var(--bg);
+	border-radius: 12px;
+	box-shadow: var(--shadow-out);
+	display: none;
+	min-width: 220px;
+	max-width: 95vw;
+	width: auto;
+	max-height: 400px;
+	overflow-y: auto;
+	z-index: 1000;
+	padding: 6px 0;
+}
+.sequences-dropdown.open { display: block; }
+body.dark-theme .sequences-dropdown { background: #1a1a1a; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); }
+
+.sequences-dropdown .dropdown-header {
+	padding: 8px 16px;
+	margin-bottom: 8px;
+	font-weight: bold;
+	color: var(--primary-color);
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+.dropdown-notion-item {
+	display: flex;
+	align-items: center;
+	padding: 6px 16px;
+	margin: 2px 0;
+	cursor: pointer;
+	transition: background 0.15s ease;
+	white-space: nowrap;
+}
+.dropdown-notion-item:hover { background: rgba(0, 0, 0, 0.06); }
+body.dark-theme .dropdown-notion-item:hover { background: rgba(255, 255, 255, 0.08); }
+
+.dropdown-notion-item input[type="checkbox"] {
+	width: 16px;
+	height: 16px;
+	margin-right: 10px;
+	cursor: pointer;
+	flex-shrink: 0;
+	accent-color: var(--primary-color);
+}
+.dropdown-notion-item label {
+	flex: 1;
+	cursor: pointer;
+	font-size: 0.78rem;
+	color: var(--font-color);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.dropdown-actions {
+	display: flex;
+	gap: 0;
+	padding: 4px 12px 10px 12px;
+	margin-bottom: 4px;
+}
+.dropdown-actions .select-all-btn {
+	padding: 4px 10px;
+	font-size: 0.65rem;
+	flex: 1;
+	text-align: center;
+	border: none;
+	border-radius: 4px;
+	background: var(--btn);
+	color: var(--font-color);
+	box-shadow: var(--shadow-out);
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+.dropdown-actions .select-all-btn:first-child { border-radius: 4px 0 0 4px; }
+.dropdown-actions .select-all-btn:last-child {
+	border-radius: 0 4px 4px 0;
+	border-left: 1px solid rgba(0, 0, 0, 0.08);
+}
+body.dark-theme .dropdown-actions .select-all-btn:last-child { border-left-color: rgba(255, 255, 255, 0.08); }
+.dropdown-actions .select-all-btn:hover {
+	box-shadow: var(--shadow-in);
+	transform: translateY(-1px);
+	z-index: 1;
+}
+.dropdown-count {
+	padding: 6px 16px 4px 16px;
+	font-size: 0.65rem;
+	opacity: 0.6;
+	text-align: center;
+	margin-top: 4px;
+}
+
+/* ===== TOOLBAR ===== */
+.toolbar-wrapper { position: relative; z-index: 10; flex-shrink: 0; margin-bottom: 12px; }
+.toolbar {
+	display: flex; justify-content: space-between; align-items: center;
+	padding: 8px 15px; background: transparent; height: 76px;
+	border-radius: 12px 12px 0 0; gap: 10px; position: relative;
+}
+.toolbar-left, .toolbar-right { display: flex; align-items: center; gap: 8px; flex: 1; }
+.toolbar-left { justify-content: flex-start; }
+.toolbar-right { justify-content: flex-end; }
+.toolbar-center {
+	position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+	display: flex; flex-direction: column; justify-content: center; align-items: center;
+	pointer-events: none;
+}
+.toolbar-title {
+	color: var(--primary-color); font-size: clamp(1.8rem, 5vw, 2.5rem);
+	font-weight: bold; white-space: nowrap; line-height: 1.2;
+	text-transform: lowercase; margin: 0; position: relative;
+}
+.toolbar-subtitle { color: #555; font-size: clamp(1rem, 3vw, 1.2rem); line-height: 1.2; padding-top: 12px; }
+body.dark-theme .toolbar-subtitle, body.dark-theme .mobile-subtitle { color: #8895a7; }
+
+.infinity {
+	position: absolute; top: 70%; left: calc(50% - 80px);
+	padding: 3px 10px; line-height: 1; font-size: 12px; color: #fff; white-space: nowrap;
+	background-color: var(--primary-color); transform: rotate(-7deg);
+	box-shadow: 0 5px 10px -2px rgba(0,0,0,.3);
+	display: none; border-radius: 10px;
+}
+
+.timer-btn {
+	width: 52px; height: 52px; border-radius: 50%;
+	display: flex; align-items: center; justify-content: center;
+	position: relative; padding: 0; line-height: 1; font-size: 12px;
+	font-weight: bold; font-family: monospace; flex-shrink: 0;
+}
+.timer-btn.warning { color: #ff6b6b; animation: timer-pulse 0.5s ease infinite alternate; }
+.timer-btn.danger { color: #ff0000; animation: timer-pulse 0.3s ease infinite alternate; }
+@keyframes timer-pulse { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+
+.toolbar-mobile {
+	margin-top: 12px;
+	display: none; flex-direction: column; align-items: center;
+	width: 100%; padding: 6px 12px 4px; background: transparent;
+	border-radius: 12px 12px 0 0;
+}
+.toolbar-mobile .btn, .toolbar-mobile .timer-btn, .toolbar-mobile .btn-sequences { width: 44px; height: 44px; }
+.toolbar-mobile .btn svg { width: 20px; height: 20px; }
+.toolbar-mobile .menu-icon { width: 18px; height: 14px; }
+.toolbar-mobile .btn-sequences .arrow-svg,
+.toolbar-mobile .btn-sequences .plate-svg { width: 20px; height: 20px; }
+.mobile-buttons {
+	display: flex; justify-content: center; align-items: center;
+	width: fit-content; gap: 6px; padding: 0 4px;
+	margin-bottom: 8px; margin-left: auto; margin-right: auto;
+}
+.mobile-title-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 10px; }
+.mobile-title {
+	color: var(--primary-color); font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+	font-weight: bold; text-align: center; line-height: 1.2;
+	margin-top: 5px; text-transform: lowercase;
+}
+.mobile-subtitle { color: #555; font-size: clamp(0.7rem, 2vw, 0.85rem); text-align: center; line-height: 1.2; padding-top: 12px; }
+
+/* ===== RESPONSIVE MOBILE ===== */
+@media (max-width: 600px) {
+	html, body { overflow: hidden !important; height: 100% !important; height: 100dvh !important; }
+	body { padding: 0px 4px 0px 4px !important; }
+	.toolbar { display: none; }
+	.toolbar-mobile { display: flex; }
+	.mobile-buttons { margin-bottom: 4px; gap: 3px; }
+	.mobile-buttons .btn, .mobile-buttons .timer-btn, .mobile-buttons .btn-sequences { width: 34px; height: 34px; }
+	.mobile-buttons .btn svg { width: 14px; height: 14px; }
+	.mobile-buttons .menu-icon { width: 14px; height: 12px; }
+	.mobile-buttons .btn-sequences .arrow-svg,
+	.mobile-buttons .btn-sequences .plate-svg { width: 14px; height: 14px; }
+	.timer-btn { font-size: 8px !important; }
+	.mobile-title { font-size: 0.85rem; margin-top: 0; }
+	.slide-menu { width: 260px; right: -280px; padding: 14px 16px; }
+	.submenu { width: 260px; right: -280px; padding: 14px 16px; }
+	.menu-item { padding: 10px 14px; font-size: 12px; min-height: 44px; }
+	.menu-item svg { width: 18px; height: 18px; }
+	.submenu-title { font-size: 1.1rem; }
+	.settings-info, .stats-info { padding: 8px; font-size: 11px; }
+	.sequences-dropdown {
+		position: fixed !important;
+		left: 50% !important;
+		transform: translateX(-50%) !important;
+		top: 110px !important;
+		min-width: unset;
+		max-width: 92vw;
+		width: 92vw;
+		margin-top: 0 !important;
+		max-height: 50vh;
+	}
+	.dropdown-notion-item { padding: 8px 14px; }
+	.dropdown-notion-item label { font-size: 0.75rem; }
+	.dropdown-notion-item input[type="checkbox"] { width: 18px; height: 18px; }
+}
+
+@media (max-width: 400px) {
+	.mobile-buttons { gap: 2px; }
+	.mobile-buttons .btn, .mobile-buttons .timer-btn, .mobile-buttons .btn-sequences { width: 32px; height: 32px; }
+	.mobile-buttons .btn svg { width: 13px; height: 13px; }
+	.mobile-buttons .menu-icon { width: 13px; height: 11px; }
+	.mobile-buttons .btn-sequences .arrow-svg,
+	.mobile-buttons .btn-sequences .plate-svg { width: 13px; height: 13px; }
+	.timer-btn { font-size: 7px !important; }
+	.sequences-dropdown { top: 100px !important; max-width: 95vw; width: 95vw; }
+}
+
+/* ===== MENU ===== */
+.menu-overlay {
+	position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+	background: rgba(0, 0, 0, 0.5); z-index: 1000;
+	opacity: 0; visibility: hidden; transition: all 0.3s ease;
+}
+.menu-overlay.open { opacity: 1; visibility: visible; }
+
+.slide-menu {
+	position: fixed; top: 0; right: -300px; width: 280px; height: 100vh;
+	background-color: var(--bg); z-index: 1001; padding: 20px;
+	display: flex; flex-direction: column; border-radius: 20px 0 0 20px;
+	box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+	transition: right 0.3s ease; overflow-y: auto;
+}
+.slide-menu.open { right: 0; }
+.menu-header { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+.menu-close, .submenu-close {
+	width: 40px; height: 40px; border-radius: 50%;
+	display: flex; align-items: center; justify-content: center;
+}
+.menu-close svg, .submenu-close svg { width: 18px; height: 18px; stroke: currentColor; }
+.menu-item {
+	display: flex; align-items: center; padding: 0px 20px; font-size: 14px;
+	border-radius: 8px; margin-bottom: 17px; width: 100%; min-height: 42px; border: none;
+}
+.menu-item:hover { background: rgba(0, 0, 0, 0.08); transform: translateY(-2px); }
+body.dark-theme .menu-item:hover { background: rgba(255, 255, 255, 0.08); }
+.menu-item svg { width: 24px; height: 24px; margin-right: 16px; stroke: currentColor; stroke-width: 2; fill: none; flex-shrink: 0; }
+.menu-item .item-label { flex: 1; text-align: left; display: flex; align-items: center; height: 100%; }
+.menu-item .item-badge {
+	background: var(--badge-bg); color: var(--badge-color);
+	border-radius: 50%; width: 34px; height: 34px;
+	display: flex; align-items: center; justify-content: center;
+	font-size: 10px; font-weight: bold; flex-shrink: 0; margin-left: 8px;
+}
+.menu-item:hover svg { animation: rotate 1s linear; }
+.menu-close:hover svg, .submenu-close:hover svg { animation: rotate 1s linear; }
+
+/* ===== SOUS-MENUS ===== */
+.submenu {
+	position: fixed; top: 0; right: -340px; width: 280px; height: 100%;
+	background: var(--bg); z-index: 10010;
+	box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+	border-radius: 20px 0 0 20px; padding: 2rem 1.5rem;
+	overflow-y: auto; transition: right 0.5s ease;
+}
+.submenu.active { right: 0; }
+.submenu-title {
+	font-size: 1.4rem; font-weight: bold; color: var(--primary-color);
+	margin: 0.5rem 0 1.5rem 0; text-align: center; text-transform: lowercase;
+}
+.submenu-content { color: var(--font-color); font-size: 13px; line-height: 1.5; margin-top: 4px; }
+
+.settings-info, .stats-info {
+	margin-top: 0; padding: 6px;
+	background: rgba(0, 0, 0, 0.05);
+	border-radius: 10px; margin-bottom: 15px; text-align: left;
+}
+body.dark-theme .settings-info, body.dark-theme .stats-info { background: rgba(255, 255, 255, 0.05); }
+
+.toggle-container {
+	display: flex; justify-content: space-between; align-items: center;
+	margin-bottom: 0.75rem; min-height: 24px;
+}
+.toggle-label {
+	color: var(--font-color); font-size: 0.9rem; text-align: left;
+	display: flex; align-items: center; gap: 0.75rem; cursor: pointer; flex: 1;
+}
+.theme-switch { position: relative; display: inline-block; width: 40px; height: 20px; flex-shrink: 0; }
+.theme-switch input { opacity: 0; width: 0; height: 0; }
+.theme-switch .slider {
+	position: absolute; cursor: pointer; inset: 0;
+	background: #b0b8c4; border-radius: 20px; transition: .3s;
+}
+.theme-switch .slider:before {
+	content: ""; position: absolute; width: 16px; height: 16px;
+	left: 2px; top: 2px; background: #fff; border-radius: 50%;
+	transition: .3s; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.theme-switch input:checked+.slider { background: #3a7bb5; }
+.theme-switch input:checked+.slider:before { transform: translateX(20px); }
+body.dark-theme .theme-switch .slider { background: #3d3d3d; }
+body.dark-theme .theme-switch input:checked+.slider { background: #4a80c0; }
+
+.submenu-icon {
+	width: 24px; height: 24px; flex-shrink: 0; color: var(--font-color);
+	stroke: currentColor; stroke-width: 2; fill: none;
+	transition: transform 0.3s ease; display: inline-block;
+	vertical-align: middle; margin-right: 8px;
+}
+.submenu-icon:hover { animation: rotate 1s linear; }
+
+/* Sliders unifiés */
+.pairs-slider-container {
+	display: flex; flex-direction: column; gap: 0.3rem;
+	margin-top: 0.2rem; margin-bottom: 0.5rem;
+}
+.pairs-slider-label {
+	display: flex; justify-content: space-between; align-items: center;
+	font-size: 0.9rem; margin-bottom: 0px;
+}
+.pairs-slider-label .toggle-label {
+	font-size: 0.9rem; display: flex; align-items: center;
+	gap: 0.75rem; cursor: pointer; flex: 1;
+}
+.pairs-slider-value { font-weight: bold; color: var(--primary-color); font-size: 1rem; }
+.pairs-slider {
+	-webkit-appearance: none; appearance: none;
+	width: 100%; height: 4px; border-radius: 2px;
+	background: #b0b8c4; outline: none;
+	transition: background 0.3s ease; margin: 0;
+}
+.pairs-slider::-webkit-slider-thumb {
+	-webkit-appearance: none; appearance: none;
+	width: 16px; height: 16px; border-radius: 50%;
+	background: #3a7bb5; cursor: pointer;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	transition: background 0.2s ease;
+}
+.pairs-slider::-webkit-slider-thumb:hover { transform: scale(1.1); }
+.pairs-slider::-moz-range-thumb {
+	width: 16px; height: 16px; border-radius: 50%;
+	background: #3a7bb5; cursor: pointer; border: none;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+body.dark-theme .pairs-slider { background: #3d3d3d; }
+body.dark-theme .pairs-slider::-webkit-slider-thumb { background: #4a80c0; }
+body.dark-theme .pairs-slider::-moz-range-thumb { background: #4a80c0; }
+.slider-graduations {
+	display: flex; justify-content: space-between; width: 100%;
+	padding: 0; margin-top: 3px; font-size: 0.7rem; opacity: 0.7;
+}
+.slider-graduations .infinity-symbol {
+	font-size: 1rem; display: inline-flex;
+	align-items: center; justify-content: center; line-height: 1;
+}
+
+/* Raccourcis */
+kbd {
+	display: inline-block; padding: 4px 8px; font-family: monospace;
+	font-size: 0.9em; font-weight: bold; background-color: #d1d1d1;
+	color: #333; border-radius: 6px;
+	box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 1px 0 0 rgba(255,255,255,0.6) inset;
+	min-width: 20px; text-align: center;
+}
+body.dark-theme kbd { background-color: #1a1a1a; color: #e2e8f0; border: 1px solid #333; }
+.shortcuts-table { width: 100%; border-collapse: separate; border-spacing: 0.2rem 0.2rem; font-size: 0.85rem; }
+.shortcuts-table td { padding: 3px 3px; }
+.shortcuts-table .key-combo { white-space: nowrap; }
+
+.stats-reload-btn {
+	width: 100%; margin-top: 10px; padding: 10px 14px; font-size: 13px;
+	cursor: pointer; border: none; border-radius: 0.5rem;
+	box-shadow: var(--shadow-out); color: var(--font-color);
+	display: inline-flex; gap: 8px; justify-content: center; align-items: center;
+}
+
+/* À propos */
+.about-item {
+	display: flex; align-items: flex-start; gap: 12px;
+	padding: 0.4rem 0; margin-left: 8px; width: 100%;
+	box-sizing: border-box; padding-right: 21px;
+}
+.about-icon {
+	width: 22px; height: 22px; flex-shrink: 0; color: var(--font-color);
+	stroke: currentColor; stroke-width: 2; fill: none;
+	transition: transform 0.3s ease; margin-top: 1px;
+}
+.about-item:hover .about-icon { animation: rotate 1s linear; }
+.about-text { flex: 1; min-width: 0; text-align: left; color: var(--font-color); font-size: 13px; line-height: 1.4; word-break: break-word; }
+.about-text a { color: var(--font-color); text-decoration: none; border-bottom: 1px dotted var(--font-color); }
+.about-text a:hover { border-bottom: 2px solid var(--font-color); }
+
+/* ===== ZONE DE JEU ===== */
+.game-container {
+	flex: 1; display: flex; flex-direction: column;
+	min-height: 0; overflow: hidden; padding: 0; gap: 0;
+	position: relative;
+}
+
+.user-entries {
+	padding: 5px; background: var(--bg);
+	flex: 0 1 auto;
+	display: flex; flex-direction: column;
+	justify-content: center;
+	min-height: 0; overflow: hidden;
+	margin-bottom: 0;
+}
+
+.entry {
+	display: flex; justify-content: center;
+	margin-bottom: 2px; flex-shrink: 0;
+}
+
+/* ===== LETTRES EN NEUMORPHISME CREUX ===== */
+.letter {
+	margin: 1px; display: flex; align-items: center; justify-content: center;
+	font-size: 24px; font-weight: bold; border-radius: 8px;
+	background: var(--bg);
+	color: var(--letter-color);
+	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	position: relative; flex-shrink: 0;
+	min-width: 40px; height: 50px;
+	transform-style: preserve-3d;
+	flex: 1; max-width: 60px;
+	box-shadow: var(--letter-inset);
+	border: none;
+	overflow: hidden;
+}
+.letter::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+	pointer-events: none;
+}
+body.dark-theme .letter::before {
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.letter.flip { animation: flip 0.6s ease-in-out; }
+.letter.pop { animation: pop 0.2s ease-in-out; }
+.letter.shake { animation: shake 0.5s ease-in-out; }
+@keyframes flip { 0% { transform: rotateX(0); } 50% { transform: rotateX(90deg); } 100% { transform: rotateX(0); } }
+@keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+@keyframes shake {
+	0%, 100% { transform: translateX(0); }
+	10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+	20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* États colorés : texte noir en mode clair, blanc en mode sombre */
+.letter.v0 {
+	background: var(--color-absent);
+	color: var(--letter-color);
+	box-shadow: var(--letter-inset);
+}
+.letter.v1 {
+	background: var(--color-present);
+	color: var(--letter-color);
+	box-shadow: var(--letter-inset);
+}
+.letter.v2 {
+	background: var(--color-correct);
+	color: var(--letter-color);
+	box-shadow: var(--letter-inset);
+}
+
+/* Case d'espace : totalement vide, aucun contenu visuel */
+.letter.space-cell {
+	font-size: 0;
+}
+.letter.space-cell::after {
+	content: none;
+}
+
+@media (min-width: 768px) { .letter { max-width: 50px; height: 60px; font-size: 28px; } }
+@media (max-width: 480px) {
+	.letter { height: 40px; margin: 1px; font-size: 18px; max-width: 35px; border-radius: 6px; }
+}
+@media (max-width: 380px) {
+	.letter { height: 35px; margin: 1px; font-size: 16px; max-width: 30px; border-radius: 6px; }
+	.entry { margin-bottom: 1px; }
+}
+@media (max-height: 700px) {
+	.letter { height: 40px; margin: 1px; }
+	.entry { margin-bottom: 1px; }
+	.user-entries { padding: 3px; }
+}
+@media (max-height: 600px) {
+	.letter { height: 35px; margin: 1px; }
+	.user-entries { padding: 2px; }
+}
+@media (max-height: 500px) {
+	.letter { height: 30px; margin: 1px; font-size: 14px; }
+	.user-entries { padding: 1px; }
+}
+
+/* ===== CLAVIER VIRTUEL EN NEUMORPHISME PLEIN ===== */
+.keyboard {
+	flex-shrink: 0; padding: 8px; margin: 0; background: var(--bg);
+	border-radius: 0;
+	display: flex; flex-direction: column; gap: 4px;
+}
+.keyboard-row { display: flex; justify-content: center; }
+
+/* Ligne dédiée à la barre d'espace (pleine largeur) */
+.keyboard-row.space-row { margin-top: 2px; }
+.keyboard-row.space-row .keyboard-key.space-key {
+	width: 100%;
+	max-width: 310px;
+	flex: 1;
+	min-width: 0;
+	height: 42px;
+	font-size: 12px;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+}
+
+.keyboard-key {
+	height: 50px; margin: 2px;
+	display: flex; align-items: center; justify-content: center;
+	font-size: 16px; font-weight: bold; cursor: pointer;
+	border-radius: 10px; background: var(--btn); color: var(--letter-color);
+	border: none; min-width: 30px; transition: all 0.2s ease;
+	flex: 1; max-width: 45px;
+	box-shadow: var(--key-raised);
+	position: relative;
+}
+.keyboard-key::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+	pointer-events: none;
+}
+body.dark-theme .keyboard-key::after {
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+.keyboard-key:hover {
+	background: var(--btn);
+	box-shadow: var(--key-raised-hover);
+	transform: translateY(-1px);
+}
+.keyboard-key:active {
+	box-shadow: var(--shadow-in);
+	transform: translateY(0) scale(0.97);
+}
+body.dark-theme .keyboard-key:hover { background: var(--btn); }
+.keyboard-key.fn { background: #c0c0c0; color: var(--letter-color); }
+body.dark-theme .keyboard-key.fn { background: #3d3d3d; }
+
+.keyboard-key.k0 { background: var(--color-absent); color: var(--letter-color); }
+.keyboard-key.k1 { background: var(--color-present); color: var(--letter-color); }
+.keyboard-key.k2 { background: var(--color-correct); color: var(--letter-color); }
+
+@media (min-width: 768px) { .keyboard-key { height: 55px; max-width: 50px; font-size: 18px; } }
+@media (max-height: 700px) {
+	.keyboard-key { height: 32px; font-size: 14px; min-width: 25px; max-width: 35px; margin: 1px; }
+	.keyboard-row.space-row .keyboard-key.space-key { height: 36px; font-size: 11px; }
+	.keyboard { padding: 6px; }
+}
+@media (max-height: 600px) {
+	.keyboard-key { height: 35px; font-size: 13px; min-width: 22px; max-width: 30px; margin: 1px; }
+	.keyboard-row.space-row .keyboard-key.space-key { height: 32px; font-size: 10px; }
+	.keyboard { padding: 4px; gap: 3px; }
+}
+@media (max-height: 500px) {
+	.keyboard-key { height: 30px; font-size: 12px; min-width: 20px; max-width: 25px; margin: 1px; }
+	.keyboard-row.space-row .keyboard-key.space-key { height: 26px; font-size: 9px; letter-spacing: 2px; }
+	.keyboard { padding: 3px; gap: 2px; }
+}
+@media (max-width: 380px) {
+	.keyboard-key { height: 35px; font-size: 13px; min-width: 22px; max-width: 28px; margin: 1px; border-radius: 8px; }
+	.keyboard-key.wide { min-width: 40px; }
+	.keyboard-row.space-row .keyboard-key.space-key { height: 30px; font-size: 9px; letter-spacing: 2px; }
+}
+.keyboard-key.wide { min-width: 56px; flex: 1.5; display: flex; align-items: center; justify-content: center; }
+.keyboard-key.enter-key { font-size: 28px; line-height: 1; padding-top: 0; padding-bottom: 5px; }
+@media (max-width: 380px) { .keyboard-key.enter-key { font-size: 24px; } }
+
+/* ===== TOASTER ===== */
+.toaster-global {
+	position: fixed; top: 20px; left: 50%;
+	transform: translateX(-50%) translateY(-100px);
+	background: var(--toast-bg); color: var(--toast-text);
+	padding: 16px 28px; border-radius: 12px; font-size: 1rem; font-weight: bold;
+	z-index: 99999; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+	transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+	opacity: 0; pointer-events: none; text-align: center;
+	max-width: 90%; min-width: 200px;
+}
+.toaster-global.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ===== CONFETTIS ===== */
+.confetti-container {
+	position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+	pointer-events: none; z-index: 99999; overflow: hidden;
+}
+.confetti-piece {
+	position: absolute; width: 10px; height: 10px; top: -10px;
+	animation: confetti-fall linear forwards;
+}
+@keyframes confetti-fall {
+	0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+	100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
+}
+
+/* ===== SAVE INDICATOR ===== */
+.save-indicator {
+	position: fixed; bottom: 20px; right: 20px;
+	background: #4caf50; color: white; padding: 8px 16px;
+	border-radius: 20px; font-size: 0.85rem;
+	opacity: 0; transform: translateY(20px);
+	pointer-events: none; z-index: 10001;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+	transition: all 0.3s ease;
+}
+.save-indicator.show { opacity: 1; transform: translateY(0); }
+
+/* ===== BOUTON INDICE FLOTTANT ===== */
+.hint-float-btn {
+	position: fixed; bottom: 20px; right: 20px;
+	width: 52px; height: 52px; border-radius: 50%;
+	background: var(--primary-color); color: white;
+	border: none; cursor: pointer;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+	display: flex; align-items: center; justify-content: center;
+	z-index: 500; transition: all 0.25s ease;
+	-webkit-tap-highlight-color: transparent;
+}
+.hint-float-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); }
+.hint-float-btn:active { transform: scale(0.95); }
+.hint-float-btn svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.hint-float-btn::after {
+	content: attr(data-title);
+	position: absolute; bottom: 100%; right: 0; margin-bottom: 0.5rem;
+	background-color: var(--tooltip-bg); color: var(--tooltip-color);
+	padding: 0.3rem 0.6rem; border-radius: 5px; font-size: 0.8rem;
+	white-space: nowrap; opacity: 0; pointer-events: none;
+	transition: opacity 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.hint-float-btn:hover::after { opacity: 1; }
+
+@media (max-width: 600px) {
+	.hint-float-btn { width: 42px; height: 42px; bottom: 12px; right: 12px; }
+	.hint-float-btn svg { width: 20px; height: 20px; }
+	.hint-float-btn::after { display: none; }
+}
+@media (max-width: 600px) and (max-height: 700px) {
+	.hint-float-btn { bottom: auto; top: 60px; }
+}
+
+/* ===== ÉCRAN DE FIN BENTO ===== */
+.container--quiz-end {
+	min-height: 300px;
+	height: 100%;
+	position: relative;
+	display: flex;
+	align-items: stretch;
+	justify-content: center;
+	overflow: auto;
+	flex: 1;
+	padding: 10px 0;
+}
+
+.container--quiz-results {
+	color: var(--font-color);
+	font-family: Arial, sans-serif;
+	width: 100%;
+	max-height: 100%;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0 8px;
+	gap: 12px;
+}
+
+.container--quiz-results .bento-score,
+.container--quiz-results .bento-stats-global .stat-item,
+.container--quiz-results .bento-stats-personal .stat-item-mini,
+.container--quiz-results .bento-message,
+.container--quiz-results .bento-details {
+	background: var(--btn);
+	box-shadow: var(--shadow-out);
+	border-radius: 10px;
+}
+
+.container--quiz-results .bento-score {
+	width: 100%;
+	max-width: 596px;
+	padding: 16px 20px;
+	text-align: center;
+}
+.container--quiz-results .bento-score .quiz-end__score,
+.container--quiz-results .bento-score .quiz-end__total {
+	font-size: 1.3rem;
+	font-weight: bold;
+}
+.container--quiz-results .bento-score .quiz-end__score { color: var(--primary-color); }
+.container--quiz-results .bento-score .quiz-end__total { color: var(--font-color); }
+
+.container--quiz-results .bento-stats-global {
+	width: 100%;
+	max-width: 596px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 12px;
+}
+.container--quiz-results .bento-stats-global .stat-item {
+	padding: 12px 8px;
+	text-align: center;
+	min-width: 0;
+}
+.container--quiz-results .bento-stats-global .stat-item .stat-value {
+	font-size: 1.2rem;
+	font-weight: bold;
+	color: var(--primary-color);
+	display: block;
+	line-height: 1.1;
+	margin-bottom: 6px;
+}
+.container--quiz-results .bento-stats-global .stat-item .stat-label {
+	font-size: 0.8rem;
+	opacity: 0.8;
+	display: block;
+	margin-top: 2px;
+}
+
+.container--quiz-results .bento-stats-personal {
+	width: 100%;
+	max-width: 596px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 12px;
+}
+.container--quiz-results .bento-stats-personal .stat-item-mini {
+	padding: 12px 8px;
+	text-align: center;
+	min-width: 0;
+}
+.container--quiz-results .bento-stats-personal .stat-item-mini .stat-value {
+	font-size: 1.2rem;
+	font-weight: bold;
+	color: var(--primary-color);
+	display: block;
+	line-height: 1.1;
+	margin-bottom: 6px;
+}
+.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini {
+	font-size: 0.8rem;
+	opacity: 0.8;
+	display: block;
+	margin-top: 2px;
+}
+
+.container--quiz-results .bento-message {
+	width: 100%;
+	max-width: 596px;
+	padding: 12px 16px;
+	text-align: center;
+	font-size: 14px;
+	line-height: 1.4;
+}
+.container--quiz-results .bento-details {
+	width: 100%;
+	max-width: 596px;
+	padding: 12px 16px;
+}
+
+.bento-actions {
+	width: 100%;
+	max-width: 596px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 10px;
+	margin-top: 5px;
+}
+.bento-actions .quiz-btn {
+	border: 2px solid #8895a7;
+	border-radius: 27px;
+	padding: 10px 20px;
+	font-size: 0.85rem;
+	font-family: Arial, sans-serif;
+	min-width: 130px;
+	flex: 1;
+	text-align: center;
+	background: var(--btn);
+	color: var(--font-color);
+	cursor: pointer;
+	box-shadow: var(--shadow-out);
+	transition: all 0.2s ease;
+}
+.bento-actions .quiz-btn:hover {
+	box-shadow: var(--shadow-in);
+	transform: translateY(-2px);
+}
+body.dark-theme .bento-actions .quiz-btn { border-color: #5a5a5a; }
+
+#detailedResults {
+	text-align: left;
+	margin-top: 10px;
+	padding: 10px 14px;
+	max-height: 260px;
+	overflow-y: auto;
+	color: var(--font-color);
+}
+#detailedResults.hidden { display: none; }
+#detailedResults h3 {
+	color: var(--primary-color);
+	margin-bottom: 8px;
+	font-size: 0.9rem;
+	text-align: center;
+}
+
+.review-item {
+	padding: 8px 12px;
+	margin-bottom: 8px;
+	border-radius: 8px;
+	border-left: 4px solid #b0b8c4;
+	font-size: 0.8rem;
+	background: rgba(0, 0, 0, 0.02);
+}
+.review-item.correct-item {
+	background: rgba(40, 167, 69, 0.08);
+	border-left-color: var(--color-correct, #28a745);
+}
+.review-item.incorrect-item {
+	background: rgba(220, 53, 69, 0.08);
+	border-left-color: var(--color-incorrect, #dc3545);
+}
+
+/* Écran de fin - mobile */
+@media (max-width: 600px) {
+	.container--quiz-end { padding: 0 !important; min-height: auto !important; height: auto !important; }
+	.container--quiz-results { gap: 6px !important; padding: 0 !important; margin-top: 0 !important; }
+	.container--quiz-results .bento-score { padding: 8px 10px !important; margin-bottom: 2px !important; border-radius: 10px !important; }
+	.container--quiz-results .bento-score .quiz-end__score,
+	.container--quiz-results .bento-score .quiz-end__total { font-size: 1.4rem !important; }
+	.container--quiz-results .bento-stats-global,
+	.container--quiz-results .bento-stats-personal { gap: 4px !important; grid-template-columns: repeat(3, 1fr) !important; }
+	.container--quiz-results .bento-stats-global .stat-item,
+	.container--quiz-results .bento-stats-personal .stat-item-mini { padding: 4px 2px !important; font-size: 0.65rem !important; border-radius: 8px !important; }
+	.container--quiz-results .bento-stats-global .stat-item .stat-value,
+	.container--quiz-results .bento-stats-personal .stat-item-mini .stat-value { font-size: 1.0rem !important; margin-bottom: 2px !important; }
+	.container--quiz-results .bento-stats-global .stat-item .stat-label,
+	.container--quiz-results .bento-stats-personal .stat-item-mini .stat-label-mini { font-size: 0.65rem !important; }
+	.container--quiz-results .bento-message { padding: 6px 10px !important; font-size: 0.75rem !important; line-height: 1.2 !important; margin-bottom: 2px !important; border-radius: 8px !important; }
+	.container--quiz-results .bento-details { padding: 6px 8px !important; max-height: 120px !important; overflow-y: auto !important; border-radius: 8px !important; }
+	#detailedResults { padding: 4px 8px !important; max-height: 100px !important; }
+	#detailedResults h3 { font-size: 0.7rem !important; margin-bottom: 4px !important; }
+	.review-item { padding: 4px 8px !important; margin-bottom: 4px !important; font-size: 0.65rem !important; }
+	.bento-actions { gap: 4px !important; margin-top: 2px !important; }
+	.bento-actions .quiz-btn { min-width: 60px !important; height: 38px !important; font-size: 0.6rem !important; padding: 2px 4px !important; border-radius: 10px !important; flex: 1 1 auto !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; line-height: 1 !important; }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #b0b8c4; border-radius: 4px; }
+body.dark-theme ::-webkit-scrollbar-thumb { background: #3d3d3d; }
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- TOASTER GLOBAL -->
+<div id="toasterGlobal" class="toaster-global"></div>
+
+<div class="toolbar-wrapper">
+	<!-- TOOLBAR DESKTOP -->
+	<div class="toolbar" id="toolbarDesktop">
+		<div class="toolbar-left">
+			<div style="position:relative;">
+				<button class="btn-sequences" id="sequencesBtn" data-title="repères (Alt+S)">
+					<svg class="arrow-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"
+					     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+						<g class="arrow-group">
+							<line x1="12" y1="4" x2="12" y2="14"/>
+							<polyline points="7 10 12 15 17 10"/>
+						</g>
+					</svg>
+					<svg class="plate-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"
+					     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+						<g class="plate-group">
+							<line x1="4" y1="19" x2="20" y2="19"/>
+							<line x1="4" y1="19" x2="4" y2="16"/>
+							<line x1="20" y1="19" x2="20" y2="16"/>
+						</g>
+					</svg>
+				</button>
+				<div class="sequences-dropdown" id="sequencesDropdown">
+					<div class="dropdown-header">📚 liste des repères</div>
+					<div class="dropdown-actions">
+						<button class="select-all-btn" id="selectAllNotions">✓ tout sélectionner</button>
+						<button class="select-all-btn" id="deselectAllNotions">✗ tout désélectionner</button>
+					</div>
+					<div class="dropdown-count" id="dropdownNotionsCount">0 / 0 repères sélectionnés</div>
+					<div id="dropdownNotionsList"></div>
+				</div>
+			</div>
+			<button class="btn btn-home" data-action="home" data-title="accueil (Alt+H)">
+				<div class="icon-wrapper">
+					<svg viewBox="0 0 24 24">
+						<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+						<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+						<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+					</svg>
+				</div>
+			</button>
+			<button class="btn btn-reload" data-action="reload" data-title="recharger (Alt+R)">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<polyline points="23 4 23 10 17 10"/>
+					<polyline points="1 20 1 14 7 14"/>
+					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+				</svg>
+			</button>
+		</div>
+		<div class="toolbar-center">
+			<div class="toolbar-title" id="appTitle">repères-mind
+				<div class="infinity" id="infinityBadge">mode INFINI</div>
+			</div>
+		</div>
+		<div class="toolbar-right">
+			<button class="timer-btn" id="timerBtnDesktop" data-title="temps restant (Alt+T)">
+				<span id="timerValueDesktop">∞</span>
+			</button>
+			<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (Alt+F)">
+				<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+					<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+					<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+					<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+					<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+				</svg>
+			</button>
+			<button class="btn btn-menu" data-action="menu" data-title="menu (Alt+M)">
+				<svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+					<line x1="3" y1="6" x2="21" y2="6"/>
+					<line x1="3" y1="12" x2="21" y2="12"/>
+					<line x1="3" y1="18" x2="21" y2="18"/>
+				</svg>
+			</button>
+		</div>
+	</div>
+
+	<!-- TOOLBAR MOBILE -->
+	<div class="toolbar-mobile" id="toolbarMobile">
+		<div class="mobile-buttons">
+			<div style="position:relative;">
+				<button class="btn-sequences" id="sequencesBtnMobile" data-title="repères (Alt+S)">
+					<svg class="arrow-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"
+					     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+						<g class="arrow-group">
+							<line x1="12" y1="4" x2="12" y2="14"/>
+							<polyline points="7 10 12 15 17 10"/>
+						</g>
+					</svg>
+					<svg class="plate-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"
+					     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+						<g class="plate-group">
+							<line x1="4" y1="19" x2="20" y2="19"/>
+							<line x1="4" y1="19" x2="4" y2="16"/>
+							<line x1="20" y1="19" x2="20" y2="16"/>
+						</g>
+					</svg>
+				</button>
+				<div class="sequences-dropdown" id="sequencesDropdownMobile">
+					<div class="dropdown-header">📚 liste des repères</div>
+					<div class="dropdown-actions">
+						<button class="select-all-btn" id="selectAllNotionsMobile">✓ tout sélectionner</button>
+						<button class="select-all-btn" id="deselectAllNotionsMobile">✗ tout désélectionner</button>
+					</div>
+					<div id="dropdownNotionsListMobile"></div>
+					<div class="dropdown-count" id="dropdownNotionsCountMobile">0 / 0 repères sélectionnés</div>
+				</div>
+			</div>
+			<button class="btn btn-home" data-action="home" data-title="accueil (Alt+H)">
+				<div class="icon-wrapper">
+					<svg viewBox="0 0 24 24">
+						<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+						<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+						<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+					</svg>
+				</div>
+			</button>
+			<button class="btn btn-reload" data-action="reload" data-title="recharger (Alt+R)">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<polyline points="23 4 23 10 17 10"/>
+					<polyline points="1 20 1 14 7 14"/>
+					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+				</svg>
+			</button>
+			<button class="timer-btn" id="timerBtnMobile" data-title="temps restant (Alt+T)">
+				<span id="timerValueMobile">∞</span>
+			</button>
+			<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (Alt+F)">
+				<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+					<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+					<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+					<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+					<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+				</svg>
+			</button>
+			<button class="btn btn-menu" data-action="menu" data-title="menu (Alt+M)">
+				<svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+					<line x1="3" y1="6" x2="21" y2="6"/>
+					<line x1="3" y1="12" x2="21" y2="12"/>
+					<line x1="3" y1="18" x2="21" y2="18"/>
+				</svg>
+			</button>
+		</div>
+		<div class="mobile-title-wrapper">
+			<div class="mobile-title" id="mobileTitle">repères-mind</div>
+		</div>
+	</div>
+</div>
+
+<!-- ZONE DE JEU -->
+<div class="game-container" id="gameContainer">
+	<div class="user-entries" id="userEntries"></div>
+	<div class="keyboard">
+		<div class="keyboard-row" id="keyboardRow1"></div>
+		<div class="keyboard-row" id="keyboardRow2"></div>
+		<div class="keyboard-row" id="keyboardRow3"></div>
+		<div class="keyboard-row space-row" id="keyboardRowSpace"></div>
+	</div>
+</div>
+
+<!-- MENU -->
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="slide-menu" id="slideMenu">
+	<div class="menu-header">
+		<button class="menu-close" id="menuClose">
+			<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+	</div>
+	<div class="menu-content">
+		<button class="menu-item" id="openInstructionsSub">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="10"></circle>
+				<line x1="12" y1="16" x2="12" y2="12"></line>
+				<line x1="12" y1="8" x2="12.01" y2="8"></line>
+			</svg>
+			<span class="item-label">présentation</span>
+		</button>
+		<button class="menu-item" id="openStatsSub">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M 3 3 L 3 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+				<path d="M 3 22 L 22 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+				<path d="M 7 18 L 11 12 L 15 15 L 21 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+			</svg>
+			<span class="item-label">statistiques</span>
+			<span class="item-badge" id="statsBadge">0%</span>
+		</button>
+		<button class="menu-item" id="openSettingsSub">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="3"></circle>
+				<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+			</svg>
+			<span class="item-label">paramètres</span>
+		</button>
+		<button class="menu-item" id="openShortcutsSub">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<rect x="2" y="4" width="20" height="16" rx="2"></rect>
+				<line x1="6" y1="8" x2="10" y2="8"></line>
+				<line x1="14" y1="8" x2="18" y2="8"></line>
+				<line x1="6" y1="12" x2="10" y2="12"></line>
+				<line x1="14" y1="12" x2="18" y2="12"></line>
+				<line x1="6" y1="16" x2="10" y2="16"></line>
+				<line x1="14" y1="16" x2="18" y2="16"></line>
+			</svg>
+			<span class="item-label">raccourcis</span>
+		</button>
+		<button class="menu-item" id="resetAppBtn">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M3 2v6h6"></path>
+				<path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
+				<path d="M21 22v-6h-6"></path>
+				<path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path>
+			</svg>
+			<span class="item-label">réinitialiser</span>
+		</button>
+		<button class="menu-item" id="openAboutSub">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="10"></circle>
+				<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+				<line x1="12" y1="17" x2="12.01" y2="17"></line>
+			</svg>
+			<span class="item-label">à propos</span>
+		</button>
+	</div>
+</div>
+
+<!-- SOUS-MENU présentation -->
+<div class="submenu" id="submenuInstructions">
+	<div class="menu-header">
+		<button class="submenu-close" data-submenu="instructions">
+			<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+	</div>
+	<div class="submenu-title">présentation</div>
+	<div class="submenu-content">
+		<div class="settings-info">
+			<p>
+				<svg class="submenu-icon" viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:24px;">
+					<line x1="1" y1="12" x2="12" y2="12"/>
+					<polyline points="8,9 12,12 8,15"/>
+					<circle cx="28" cy="12" r="10"/>
+					<circle cx="28" cy="12" r="6"/>
+					<circle cx="28" cy="12" r="2"/>
+				</svg>
+				<strong>objectif</strong><br>deviner le repère caché en 6 essais maximum.
+			</p>
+			<br>
+			<p>
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="13.5" cy="6.5" r="0.5" fill="currentColor"/>
+					<circle cx="17.5" cy="10.5" r="0.5" fill="currentColor"/>
+					<circle cx="8.5" cy="7.5" r="0.5" fill="currentColor"/>
+					<circle cx="6.5" cy="12.5" r="0.5" fill="currentColor"/>
+					<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+				</svg>
+				<strong>indices couleurs</strong></p>
+			<div style="display:flex;flex-direction:column;gap:8px;margin:12px 0;">
+				<div style="display:flex;align-items:center;gap:10px;">
+					<div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:bold;border-radius:8px;background:var(--color-correct);color:var(--letter-color);flex-shrink:0;">X</div>
+					<span>lettre dans le mot et à la bonne place</span>
+				</div>
+				<div style="display:flex;align-items:center;gap:10px;">
+					<div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:bold;border-radius:8px;background:var(--color-present);color:var(--letter-color);flex-shrink:0;">X</div>
+					<span>lettre dans le mot mais mal placée</span>
+				</div>
+				<div style="display:flex;align-items:center;gap:10px;">
+					<div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:bold;border-radius:8px;border:1px solid #6c757d;background:var(--color-absent);color:var(--letter-color);flex-shrink:0;">X</div>
+					<span>lettre absente du mot</span>
+				</div>
+			</div>
+			<p>
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+					<line x1="3" y1="9" x2="21" y2="9"></line>
+					<line x1="3" y1="15" x2="21" y2="15"></line>
+					<line x1="9" y1="21" x2="9" y2="9"></line>
+				</svg>
+				<strong>options<br>
+				animations, mode daltonien, mode infini, mode sombre, sons...</strong>
+			</p>
+			<br>
+			<p>
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M9 18h6"/>
+					<path d="M10 22h4"/>
+					<path d="M12 2a7 7 0 0 0-4 12.7c.5.4.8 1 .8 1.6V17h6.4v-.7c0-.6.3-1.2.8-1.6A7 7 0 0 0 12 2z"/>
+				</svg>
+				<strong>indice</strong>
+			</p>
+			<br>
+			<p>
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M20 7h-4V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path>
+					<line x1="10" y1="7" x2="14" y2="7"></line>
+				</svg>
+				<strong>sélection des repères</strong>
+			</p>
+		</div>
+	</div>
+</div>
+
+<!-- SOUS-MENU STATISTIQUES -->
+<div class="submenu" id="submenuStats">
+	<div class="menu-header">
+		<button class="submenu-close" data-submenu="stats">
+			<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+	</div>
+	<div class="submenu-title">statistiques</div>
+	<div class="submenu-content">
+		<div class="stats-info">
+			<p>
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M 3 3 L 3 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+					<path d="M 3 22 L 22 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+					<path d="M 7 18 L 11 12 L 15 15 L 21 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+				</svg>
+				<strong>quelques chiffres</strong>
+			</p>
+			<p>• parties jouées : <span style="color: var(--primary-color);" id="statGames">0</span></p>
+			<p>• victoires : <span style="color: var(--primary-color);" id="statVictories">0</span> (<span id="statVictoriesPc">0</span>%)</p>
+			<p>• série actuelle : <span style="color: var(--primary-color);" id="statCurrentStreak">0</span></p>
+			<p>• meilleure série : <span style="color: var(--primary-color);" id="statBestStreak">0</span></p>
+		</div>
+		<div class="stats-info">
+			<p><strong>distribution des résultats :</strong></p><br>
+			<div id="statsDistribution"></div>
+		</div>
+		<button class="stats-reload-btn" id="resetStatsBtn">
+			<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<polyline points="23 4 23 10 17 10"></polyline>
+				<path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+			</svg>
+			réinitialiser les statistiques
+		</button>
+	</div>
+</div>
+
+<!-- SOUS-MENU PARAMÈTRES -->
+<div class="submenu" id="submenuSettings">
+	<div class="menu-header">
+		<button class="submenu-close" data-submenu="settings">
+			<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+	</div>
+	<div class="submenu-title">paramètres</div>
+	<div class="submenu-content">
+		<div class="toggle-container">
+			<span class="toggle-label">
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+				</svg>
+				mode sombre
+			</span>
+			<label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
+		</div>
+		<div class="toggle-container">
+			<span class="toggle-label">
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<polygon points="5 3 19 12 5 21 5 3"></polygon>
+				</svg>
+				animations
+			</span>
+			<label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label>
+		</div>
+		<div class="toggle-container">
+			<span class="toggle-label">
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="13.5" cy="6.5" r="0.5" fill="currentColor"/>
+					<circle cx="17.5" cy="10.5" r="0.5" fill="currentColor"/>
+					<circle cx="8.5" cy="7.5" r="0.5" fill="currentColor"/>
+					<circle cx="6.5" cy="12.5" r="0.5" fill="currentColor"/>
+					<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+				</svg>
+				mode daltonien
+			</span>
+			<label class="theme-switch"><input type="checkbox" id="colorBlindToggle"><span class="slider"></span></label>
+		</div>
+		<div class="toggle-container">
+			<span class="toggle-label">
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+					<path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+					<path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+				</svg>
+				sons
+			</span>
+			<label class="theme-switch"><input type="checkbox" id="soundToggle" checked><span class="slider"></span></label>
+		</div>
+		<div class="toggle-container">
+			<span class="toggle-label">
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"></path>
+				</svg>
+				mode infini
+			</span>
+			<label class="theme-switch"><input type="checkbox" id="infinityToggle"><span class="slider"></span></label>
+		</div>
+
+		<div class="pairs-slider-container">
+			<div class="pairs-slider-label" style="padding-bottom: 9px;">
+				<span class="toggle-label">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<line x1="4" y1="12" x2="20" y2="12"></line>
+						<circle cx="4" cy="12" r="2"></circle>
+						<circle cx="20" cy="12" r="2"></circle>
+					</svg>
+					longueur du mot
+				</span>
+				<span class="pairs-slider-value" id="lengthValue">5</span>
+			</div>
+			<input type="range" id="lengthSlider" class="pairs-slider" min="3" max="12" step="1" value="5">
+			<div class="slider-graduations">
+				<span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+			</div>
+		</div>
+
+		<div class="pairs-slider-container">
+			<div class="pairs-slider-label" style="padding-bottom: 9px;">
+				<span class="toggle-label">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="12" cy="12" r="10"></circle>
+						<polyline points="12 6 12 12 16 14"></polyline>
+					</svg>
+					minuteur
+				</span>
+				<span class="pairs-slider-value" id="timerLimitValue">∞</span>
+			</div>
+			<input type="range" id="timerLimitSlider" class="pairs-slider" min="1" max="6" step="1" value="6">
+			<div class="slider-graduations">
+				<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span class="infinity-symbol">∞</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- SOUS-MENU RACCOURCIS -->
+<div class="submenu" id="submenuShortcuts">
+	<div class="menu-header">
+		<button class="submenu-close" data-submenu="shortcuts">
+			<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+	</div>
+	<div class="submenu-title">raccourcis</div>
+	<div class="submenu-content">
+		<div class="settings-info">	
+			<table class="shortcuts-table">
+				<tr><td class="key-combo"><kbd>Alt</kbd>+<kbd>S</kbd></td><td>ouvrir/fermer la liste des repères</td></tr>
+				<tr><td class="key-combo"><kbd>Alt</kbd>+<kbd>H</kbd></td><td>renvoi au site académique</td></tr>
+				<tr><td class="key-combo"><kbd>Alt</kbd>+<kbd>I</kbd></td><td>obtenir un indice</td></tr>
+				<tr><td class="key-combo"><kbd>Alt</kbd>+<kbd>R</kbd></td><td>recharger / nouvelle partie</td></tr>
+				<tr><td class="key-combo"><kbd>Alt</kbd>+<kbd>T</kbd></td><td>réinitialiser le minuteur</td></tr>
+				<tr><td class="key-combo"><kbd>Alt</kbd>+<kbd>F</kbd></td><td>plein écran</td></tr>
+				<tr><td class="key-combo"><kbd>Alt</kbd>+<kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr>
+				<tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer (sous-menus, popups, menu)</td></tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+<!-- SOUS-MENU À PROPOS -->
+<div class="submenu" id="submenuAbout">
+	<div class="menu-header">
+		<button class="submenu-close" data-submenu="about">
+			<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+	</div>
+	<div class="submenu-title">à propos</div>
+	<div class="submenu-content">
+		<div class="settings-info">
+			<div class="about-item">
+				<svg class="about-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+					<circle cx="12" cy="7" r="4"/>
+				</svg>
+				<span class="about-text">application développée<br>par Daniel Boulagnon</span>
+			</div>
+			<div class="about-item">
+				<svg class="about-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+					<polyline points="22,6 12,13 2,6"/>
+				</svg>
+				<div class="about-text">
+					<p><a href="mailto:daniel.boulagnon@ac-lille.fr?subject=Question%20sur%20moty-phi">daniel.boulagnon@ac-lille.fr</a></p>
+				</div>
+			</div>
+			<div class="about-item">
+				<svg class="about-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10" />
+					<path d="M14.5 9a3.5 3.5 0 1 0 0 6" />
+				</svg>
+				<div class="about-text">
+					<p>exploitation pédagogique<br>et non commerciale</p>
+				</div>
+			</div>
+			<div class="about-item">
+				<svg class="about-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+					<line x1="7" y1="7" x2="7.01" y2="7"/>
+				</svg>
+				<div class="about-text">
+					<p>version 2.6.5 (2026)</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- BOUTON INDICE FLOTTANT -->
+<button class="hint-float-btn" id="hintButton" data-title="obtenir un indice (Alt+I)">
+	<svg viewBox="0 0 24 24">
+		<path d="M9 18h6"/>
+		<path d="M10 22h4"/>
+		<path d="M12 2a7 7 0 0 0-4 12.7c.5.4.8 1 .8 1.6V17h6.4v-.7c0-.6.3-1.2.8-1.6A7 7 0 0 0 12 2z"/>
+	</svg>
+</button>
+
+<div id="saveIndicator" class="save-indicator">✓ paramètre sauvegardé</div>
+
+<script src="../../src/reperes.js"></script>
+
+<script>
+// ============================================================
+// ÉTAT GLOBAL
+// ============================================================
+const gameState = {
+	motyngth: 5,
+	nbTries: 6,
+	userInput: '',
+	currentLine: 0,
+	gameFinished: false,
+	gameSuccess: false,
+	targetWord: '',
+	words: [],
+	keys: {},
+	darkMode: false,
+	colorBlindMode: false,
+	animations: true,
+	soundEnabled: true,
+	infinityMode: false,
+	keyboardType: 'azerty',
+	stats: {
+		games: 0,
+		victories: 0,
+		victoriesPc: 0,
+		currentStreak: 0,
+		bestStreak: 0,
+		tries: [0, 0, 0, 0, 0, 0]
+	},
+	keyboardLayouts: {
+		azerty: [
+			['A', 'Z', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+			['Q', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M'],
+			['BACKSPACE', 'W', 'X', 'C', 'V', 'B', 'N', 'ENTER']
+		],
+		qwerty: [
+			['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+			['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+			['BACKSPACE', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'ENTER']
+		],
+		bepo: [
+			['B', 'É', 'P', 'O', 'È', 'V', 'D', 'L', 'J', 'Z'],
+			['A', 'U', 'I', 'E', ',', 'C', 'T', 'S', 'R', 'N'],
+			['BACKSPACE', 'À', 'Y', 'X', '.', 'K', 'Ê', 'M', 'ENTER']
+		],
+		qwertz: [
+			['Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O', 'P'],
+			['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+			['BACKSPACE', 'Y', 'X', 'C', 'V', 'B', 'N', 'M', 'ENTER']
+		]
+	}
+};
+
+let validWordsCache = null;
+let toasterTimeout = null;
+let timerInterval = null;
+let timeLeft = 60;
+let timerLimit = 0;
+let timerEnabled = true;
+let confettiLaunched = false;
+let sessionTimeSpent = 0;
+let sessionStartTime = 0;
+
+// Notions (repères)
+let allNotions = [];
+let selectedNotionIndices = new Set();
+
+// ============================================================
+// UTILITAIRE : normalisation des espaces
+// ============================================================
+const ESPACE_REGEX = /[\s\u00A0\u2000-\u200B\u202F\u205F\u3000]/;
+const ESPACES_MULTIPLES_REGEX = /[\s\u00A0\u2000-\u200B\u202F\u205F\u3000]+/g;
+
+function estUnEspace(char) {
+	return char === ' ' || ESPACE_REGEX.test(char);
+}
+
+function normaliserEspaces(texte) {
+	return texte.replace(ESPACES_MULTIPLES_REGEX, ' ');
+}
+
+// ============================================================
+// DÉTECTION MOBILE
+// ============================================================
+function isMobileDevice() {
+	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+}
+
+// ============================================================
+// INITIALISATION
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+	loadSettings();
+	loadStats();
+	loadKeyboardSettings();
+	loadTimerSettings();
+
+	if (isMobileDevice() && gameState.motyngth > 6) {
+		gameState.motyngth = 6;
+		saveSettings();
+	}
+
+	allNotions = extraireNotions();
+	loadSelectedNotions();
+	updateNotionsDropdown();
+
+	initGame();
+	setupEventListeners();
+	startNewGame();
+	applyTheme();
+	preloadSounds();
+});
+
+function initGame() {
+	updateHelpmotyngth();
+	renderKeyboard();
+	const badge = document.getElementById('infinityBadge');
+	if (badge) badge.style.display = 'none';
+	document.getElementById('mobileTitle').textContent = 'repères-mind';
+}
+
+// ============================================================
+// SONS
+// ============================================================
+function playSound(type) {
+	if (!gameState.soundEnabled) return;
+	try {
+		const soundMap = {
+			'correct': '../../src/sounds/reponse-bonne.mp3',
+			'incorrect': '../../src/sounds/reponse-mauvaise.mp3',
+			'score_good': '../../src/sounds/score-bon.mp3',
+			'score_bad': '../../src/sounds/score-mauvais.mp3',
+			'click': '../../src/sounds/bruit-clavier.mp3'
+		};
+		const soundFile = soundMap[type];
+		if (!soundFile) return;
+		const audio = new Audio(soundFile);
+		audio.volume = type === 'click' ? 0.3 : 0.8;
+		audio.preload = 'auto';
+		audio.play().catch(() => {});
+	} catch (e) {}
+}
+
+function preloadSounds() {
+	if (!gameState.soundEnabled) return;
+	['reponse-bonne.mp3', 'reponse-mauvaise.mp3', 'score-bon.mp3', 'score-mauvais.mp3', 'bruit-clavier.mp3']
+		.forEach(file => {
+			const audio = new Audio();
+			audio.preload = 'auto';
+			audio.src = '../../src/sounds/' + file;
+			audio.load();
+		});
+}
+
+// ============================================================
+// CONFETTIS
+// ============================================================
+function launchConfetti() {
+	if (!gameState.animations || confettiLaunched) return;
+	confettiLaunched = true;
+	const container = document.createElement('div');
+	container.className = 'confetti-container';
+	document.body.appendChild(container);
+	const colors = ['#ff0000', '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff', '#ff9f43', '#00d2d3', '#f368e0'];
+	for (let i = 0; i < 160; i++) {
+		const piece = document.createElement('div');
+		piece.className = 'confetti-piece';
+		piece.style.left = Math.random() * 100 + '%';
+		piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+		piece.style.width = (Math.random() * 16 + 4) + 'px';
+		piece.style.height = (Math.random() * 8 + 4) + 'px';
+		piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+		piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+		piece.style.animationDelay = (Math.random() * 1.5) + 's';
+		container.appendChild(piece);
+	}
+	setTimeout(() => container.remove(), 4000);
+}
+
+// ============================================================
+// TOASTER GLOBAL
+// ============================================================
+function showToaster(message, type = 'info', duration = 3000) {
+	const toaster = document.getElementById('toasterGlobal');
+	if (!toaster) return;
+	toaster.innerHTML = message;
+	toaster.className = 'toaster-global';
+	toaster.classList.add('show');
+	clearTimeout(toasterTimeout);
+	if (duration > 0) {
+		toasterTimeout = setTimeout(() => {
+			toaster.classList.remove('show');
+		}, duration);
+	}
+}
+
+// ============================================================
+// SAVE INDICATOR
+// ============================================================
+function showSaveIndicator(message, color = "#4caf50") {
+	const indicator = document.getElementById('saveIndicator');
+	indicator.textContent = message;
+	indicator.style.backgroundColor = color;
+	indicator.classList.add('show');
+	setTimeout(() => indicator.classList.remove('show'), 1800);
+}
+
+// ============================================================
+// STATISTIQUES
+// ============================================================
+function saveStats() {
+	localStorage.setItem('motyStats', JSON.stringify(gameState.stats));
+}
+
+function loadStats() {
+	const savedStats = localStorage.getItem('motyStats');
+	if (savedStats) {
+		gameState.stats = JSON.parse(savedStats);
+	}
+	updateStatsDisplay();
+}
+
+function updateStatsDisplay() {
+	const s = gameState.stats;
+	const el = (id) => document.getElementById(id);
+	if (el('statGames')) el('statGames').textContent = s.games;
+	if (el('statVictories')) el('statVictories').textContent = s.victories;
+	if (el('statVictoriesPc')) el('statVictoriesPc').textContent = s.victoriesPc;
+	if (el('statCurrentStreak')) el('statCurrentStreak').textContent = s.currentStreak;
+	if (el('statBestStreak')) el('statBestStreak').textContent = s.bestStreak;
+
+	const badge = document.getElementById('statsBadge');
+	if (badge) {
+		const rate = s.games > 0 ? Math.round((s.victories / s.games) * 100) : 0;
+		badge.textContent = rate + '%';
+	}
+
+	const distribution = document.getElementById('statsDistribution');
+	if (!distribution) return;
+	distribution.innerHTML = '';
+
+	let bestTriesIndex = 0, maxCount = 0;
+	for (let i = 0; i < 6; i++) {
+		if (s.tries[i] > maxCount && s.tries[i] > 0) {
+			maxCount = s.tries[i];
+			bestTriesIndex = i;
+		}
+	}
+
+	const labels = ['• un essai ', '• deux essais ', '• trois essais ', '• quatre essais ', '• cinq essais ', '• six essais '];
+
+	for (let i = 0; i < 6; i++) {
+		const percentage = s.games > 0 ? (s.tries[i] / s.games * 100) : 0;
+		const percentageText = percentage > 0 ? ` (${percentage.toFixed(1).replace('.', ',')}%)` : '';
+		const div = document.createElement('div');
+		div.style.cssText = 'position:relative;height:25px;line-height:25px;background:rgba(0,0,0,0.05);border-radius:12px;overflow:hidden;margin-bottom:8px;';
+		div.innerHTML = `
+			<div style="position:relative;z-index:2;display:inline-block;padding-left:10px;color:var(--font-color);font-size:12px;">${labels[i]}${percentageText}</div>
+			<div style="position:absolute;left:0;top:0;bottom:0;z-index:1;background:${i === bestTriesIndex ? 'var(--primary-color)' : 'rgba(0,0,0,0.15)'};width:${percentage}%;border-radius:12px;"></div>
+		`;
+		distribution.appendChild(div);
+	}
+}
+
+function updateStats(success) {
+	gameState.stats.games++;
+	if (success) {
+		gameState.stats.victories++;
+		gameState.stats.currentStreak++;
+		if (gameState.stats.currentStreak > gameState.stats.bestStreak) {
+			gameState.stats.bestStreak = gameState.stats.currentStreak;
+		}
+		gameState.stats.tries[gameState.currentLine]++;
+	} else {
+		gameState.stats.currentStreak = 0;
+		gameState.stats.tries[5]++;
+	}
+	gameState.stats.victoriesPc = ((gameState.stats.victories / gameState.stats.games) * 100).toFixed(1).replace('.', ',');
+	saveStats();
+	updateStatsDisplay();
+}
+
+// ============================================================
+// PARAMÈTRES / THÈME
+// ============================================================
+function applyTheme() {
+	document.body.classList.toggle('dark-theme', gameState.darkMode);
+	document.body.classList.toggle('colorblind-mode', gameState.colorBlindMode);
+	document.body.classList.toggle('no-animations', !gameState.animations);
+}
+
+function saveSettings() {
+	localStorage.setItem('motySettings', JSON.stringify({
+		motyngth: gameState.motyngth,
+		darkMode: gameState.darkMode,
+		colorBlindMode: gameState.colorBlindMode,
+		animations: gameState.animations,
+		soundEnabled: gameState.soundEnabled,
+		infinityMode: gameState.infinityMode
+	}));
+}
+
+function loadSettings() {
+	const saved = localStorage.getItem('motySettings');
+	if (saved) {
+		const s = JSON.parse(saved);
+		gameState.motyngth = s.motyngth || 5;
+		gameState.darkMode = s.darkMode || false;
+		gameState.colorBlindMode = s.colorBlindMode || false;
+		gameState.animations = s.animations !== undefined ? s.animations : true;
+		gameState.soundEnabled = s.soundEnabled !== undefined ? s.soundEnabled : true;
+		gameState.infinityMode = s.infinityMode || false;
+	}
+}
+
+function loadKeyboardSettings() {
+	const saved = localStorage.getItem('motyKeyboard');
+	if (saved) gameState.keyboardType = saved;
+}
+
+// ============================================================
+// TIMER
+// ============================================================
+function formatTimer(seconds) {
+	if (seconds <= 0) return '00:00';
+	const mins = Math.floor(seconds / 60);
+	const secs = seconds % 60;
+	return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+}
+
+function updateTimerDisplay(value) {
+	const d = document.getElementById('timerValueDesktop');
+	const m = document.getElementById('timerValueMobile');
+	if (d) d.textContent = value;
+	if (m) m.textContent = value;
+}
+
+function showTimerButtons(show) {
+	document.querySelectorAll('.timer-btn').forEach(btn => {
+		btn.style.display = show ? '' : 'none';
+	});
+}
+
+function startTimer() {
+	if (!timerEnabled || timerLimit === 0) {
+		updateTimerDisplay('∞');
+		showTimerButtons(false);
+		return;
+	}
+	showTimerButtons(true);
+	timeLeft = timerLimit;
+	updateTimerDisplay(formatTimer(timeLeft));
+
+	if (timerInterval) clearInterval(timerInterval);
+	timerInterval = setInterval(() => {
+		timeLeft--;
+		updateTimerDisplay(formatTimer(timeLeft));
+		const timerBtns = [document.getElementById('timerBtnDesktop'), document.getElementById('timerBtnMobile')].filter(b => b);
+		timerBtns.forEach(btn => {
+			btn.classList.remove('warning', 'danger');
+			if (timeLeft <= 30 && timeLeft > 0) btn.classList.add('warning');
+			if (timeLeft <= 15 && timeLeft > 0) btn.classList.add('danger');
+		});
+		if (timeLeft <= 0) {
+			clearInterval(timerInterval);
+			timerInterval = null;
+			showToaster("⏰ temps écoulé !", "warning", 3000);
+			playSound('score_bad');
+			gameState.gameFinished = true;
+			updateStats(false);
+			if (!gameState.infinityMode) {
+				showGameResult(false);
+			} else {
+				setTimeout(() => { startNewGame(); }, 2000);
+			}
+		}
+	}, 1000);
+}
+
+function stopTimer() {
+	if (timerInterval) {
+		clearInterval(timerInterval);
+		timerInterval = null;
+	}
+	document.querySelectorAll('.timer-btn').forEach(btn => btn.classList.remove('warning', 'danger'));
+}
+
+function resetTimer() {
+	stopTimer();
+	if (timerEnabled && timerLimit > 0) {
+		timeLeft = timerLimit;
+		updateTimerDisplay(formatTimer(timeLeft));
+		showTimerButtons(true);
+	} else {
+		updateTimerDisplay('∞');
+		showTimerButtons(false);
+	}
+}
+
+function loadTimerSettings() {
+	const saved = localStorage.getItem('motyTimerLimit');
+	timerLimit = saved !== null ? parseInt(saved, 10) : 0;
+	const slider = document.getElementById('timerLimitSlider');
+	const valueEl = document.getElementById('timerLimitValue');
+	if (slider) slider.value = timerLimit === 0 ? 6 : Math.round(timerLimit / 60);
+	if (valueEl) valueEl.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
+	resetTimer();
+}
+
+function sliderPosToTimerValue(pos) {
+	if (pos === 6) return 0;
+	return parseInt(pos) * 60;
+}
+
+// ============================================================
+// MENU / SOUS-MENUS
+// ============================================================
+function openSubmenu(id) {
+	closeAllSubmenus();
+	const el = document.getElementById(id);
+	if (el) {
+		el.classList.add('active');
+		document.body.classList.add('menu-open');
+	}
+}
+
+function closeAllSubmenus() {
+	document.querySelectorAll('.submenu').forEach(s => s.classList.remove('active'));
+	if (!document.getElementById('slideMenu').classList.contains('open')) {
+		document.body.classList.remove('menu-open');
+	}
+}
+
+function openMenu() {
+	document.getElementById('slideMenu').classList.add('open');
+	document.getElementById('menuOverlay').classList.add('open');
+	document.body.classList.add('menu-open');
+}
+
+function closeMenu() {
+	document.getElementById('slideMenu').classList.remove('open');
+	document.getElementById('menuOverlay').classList.remove('open');
+	document.body.classList.remove('menu-open');
+	closeAllSubmenus();
+}
+
+function toggleMenu() {
+	playSound('click');
+	if (document.getElementById('slideMenu').classList.contains('open')) {
+		closeMenu();
+	} else {
+		openMenu();
+	}
+}
+
+// ============================================================
+// NOTIONS (REPÈRES)
+// ============================================================
+function extraireNotions() {
+	const notions = [];
+	const nomsSet = new Set();
+	if (!window.reperes) return notions;
+	window.reperes.forEach(repere => {
+		if (!repere || !repere.parts) return;
+		repere.parts.forEach(part => {
+			if (part && part.name && !nomsSet.has(part.name)) {
+				nomsSet.add(part.name);
+				notions.push({
+					id: notions.length,
+					name: part.name,
+					source: repere.definition || ''
+				});
+			}
+		});
+	});
+	notions.sort((a, b) => a.name.localeCompare(b.name));
+	notions.forEach((n, idx) => n.id = idx);
+	return notions;
+}
+
+function loadSelectedNotions() {
+	const saved = localStorage.getItem('motySelectedNotions');
+	if (saved) {
+		try {
+			selectedNotionIndices = new Set(JSON.parse(saved));
+		} catch(e) {}
+	}
+	if (selectedNotionIndices.size === 0 && allNotions.length > 0) {
+		allNotions.forEach((_, idx) => selectedNotionIndices.add(idx));
+		saveSelectedNotions();
+	}
+}
+
+function saveSelectedNotions() {
+	localStorage.setItem('motySelectedNotions', JSON.stringify(Array.from(selectedNotionIndices)));
+}
+
+function updateNotionsDropdown() {
+	const dropdowns = [
+		document.getElementById('sequencesDropdown'),
+		document.getElementById('sequencesDropdownMobile')
+	];
+	dropdowns.forEach(dropdown => {
+		if (!dropdown) return;
+		const listContainer = dropdown.querySelector('#dropdownNotionsList') ||
+			dropdown.querySelector('#dropdownNotionsListMobile');
+		const countContainer = dropdown.querySelector('#dropdownNotionsCount') ||
+			dropdown.querySelector('#dropdownNotionsCountMobile');
+		if (!listContainer || !countContainer) return;
+
+		const total = allNotions.length;
+		const selected = selectedNotionIndices.size;
+
+		if (selected === 0) {
+			countContainer.textContent = '⚠️ 0 / ' + total + ' repères sélectionnés';
+			countContainer.style.color = 'var(--color-incorrect)';
+		} else {
+			countContainer.textContent = selected + ' / ' + total + ' repères sélectionnés';
+			countContainer.style.color = '';
+		}
+
+		if (total === 0) {
+			listContainer.innerHTML = '<div class="dropdown-empty" style="padding:12px;text-align:center;opacity:0.6;">Aucun repère disponible</div>';
+			return;
+		}
+
+		let html = '';
+		allNotions.forEach((notion, idx) => {
+			const isChecked = selectedNotionIndices.has(idx);
+			html += `
+				<div class="dropdown-notion-item" data-id="${idx}">
+					<input type="checkbox" class="notion-checkbox" ${isChecked ? 'checked' : ''}>
+					<label>${escapeHtmlAttr(notion.name)}</label>
+				</div>
+			`;
+		});
+		listContainer.innerHTML = html;
+
+		listContainer.querySelectorAll('.dropdown-notion-item').forEach(item => {
+			const idx = parseInt(item.dataset.id);
+			const checkbox = item.querySelector('.notion-checkbox');
+			checkbox.addEventListener('change', function(e) {
+				e.stopPropagation();
+				if (this.checked) selectedNotionIndices.add(idx);
+				else selectedNotionIndices.delete(idx);
+				saveSelectedNotions();
+				updateNotionsDropdown();
+				validWordsCache = null;
+				startNewGame();
+				playSound('click');
+			});
+			item.addEventListener('click', function(e) {
+				if (e.target !== checkbox && e.target.tagName !== 'LABEL') {
+					checkbox.checked = !checkbox.checked;
+					checkbox.dispatchEvent(new Event('change'));
+				}
+			});
+		});
+	});
+}
+
+function escapeHtmlAttr(text) {
+	if (!text) return '';
+	const div = document.createElement('div');
+	div.textContent = text;
+	return div.innerHTML;
+}
+
+function toggleSequencesDropdown(event) {
+	event.stopPropagation();
+	const dropdown = this.id === 'sequencesBtn' ?
+		document.getElementById('sequencesDropdown') :
+		document.getElementById('sequencesDropdownMobile');
+	if (dropdown) {
+		updateNotionsDropdown();
+		dropdown.classList.toggle('open');
+	}
+}
+
+function closeSequencesDropdown() {
+	document.querySelectorAll('.sequences-dropdown').forEach(d => d.classList.remove('open'));
+}
+
+function selectAllNotions() {
+	allNotions.forEach((_, idx) => selectedNotionIndices.add(idx));
+	saveSelectedNotions();
+	updateNotionsDropdown();
+	validWordsCache = null;
+	startNewGame();
+	showToaster('Tous les repères sélectionnés', 'info', 1500);
+	playSound('click');
+}
+
+function deselectAllNotions() {
+	selectedNotionIndices.clear();
+	saveSelectedNotions();
+	updateNotionsDropdown();
+	validWordsCache = null;
+	startNewGame();
+	showToaster('Tous les repères désélectionnés', 'info', 1500);
+	playSound('click');
+}
+
+// ============================================================
+// DICTIONNAIRE
+// ============================================================
+function getValidWords() {
+	if (validWordsCache) return validWordsCache;
+	validWordsCache = [];
+	const seen = new Set();
+
+	if (!window.reperes) return validWordsCache;
+
+	window.reperes.forEach(repere => {
+		if (repere && repere.parts) {
+			repere.parts.forEach(part => {
+				if (part && part.name) {
+					const notionIndex = allNotions.findIndex(n => n.name === part.name);
+					if (notionIndex !== -1 && !selectedNotionIndices.has(notionIndex)) {
+						return;
+					}
+					// Normalisation : accents supprimés + tous les espaces remplacés par un espace standard
+					const word = normaliserEspaces(
+						part.name.toUpperCase().trim()
+							.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+					);
+					if (word && /^[A-Z ]+$/.test(word) && word.length >= 3 && word.length <= 12 && !seen.has(word)) {
+						validWordsCache.push(word);
+						seen.add(word);
+					}
+				}
+			});
+		}
+	});
+	return validWordsCache;
+}
+
+// ============================================================
+// LOGIQUE DU JEU
+// ============================================================
+function startNewGame() {
+	const gc = document.getElementById('gameContainer');
+	gc.style.display = 'flex';
+	gc.innerHTML = `
+		<div class="user-entries" id="userEntries"></div>
+		<div class="keyboard">
+			<div class="keyboard-row" id="keyboardRow1"></div>
+			<div class="keyboard-row" id="keyboardRow2"></div>
+			<div class="keyboard-row" id="keyboardRow3"></div>
+			<div class="keyboard-row space-row" id="keyboardRowSpace"></div>
+		</div>
+	`;
+
+	sessionStartTime = Date.now();
+	sessionTimeSpent = 0;
+
+	const allValidWords = getValidWords();
+	let filteredWords = allValidWords;
+	if (isMobileDevice()) {
+		filteredWords = allValidWords.filter(w => w.length <= 6);
+		if (gameState.motyngth > 6) {
+			gameState.motyngth = 6;
+			saveSettings();
+		}
+	}
+	if (filteredWords.length === 0) {
+		showToaster("⚠️ Aucun mot disponible — vérifiez votre sélection de repères", "warning", 3000);
+		const userEntries = document.getElementById('userEntries');
+		if (userEntries) {
+			userEntries.innerHTML = '<div style="text-align:center;padding:20px;opacity:0.6;">sélectionnez au moins un repère</div>';
+		}
+		renderKeyboard();
+		return;
+	}
+
+	const exactLength = filteredWords.filter(w => w.length === gameState.motyngth);
+	const pool = exactLength.length > 0 ? exactLength : filteredWords;
+
+	const randomWord = pool[Math.floor(Math.random() * pool.length)];
+	gameState.targetWord = randomWord;
+	gameState.motyngth = randomWord.length;
+
+	console.log('Mot à trouver:', gameState.targetWord, 'Longueur:', gameState.motyngth);
+	resetGame();
+}
+
+function resetGame() {
+	gameState.userInput = '';
+	gameState.currentLine = 0;
+	gameState.gameFinished = false;
+	gameState.gameSuccess = false;
+	gameState.words = [];
+	gameState.keys = {};
+	confettiLaunched = false;
+
+	for (let i = 0; i < gameState.nbTries; i++) {
+		const line = [];
+		for (let j = 0; j < gameState.motyngth; j++) {
+			line.push(['', 0]);
+		}
+		gameState.words.push(line);
+	}
+
+	renderGameGrid();
+	renderKeyboard();
+	updateHelpmotyngth();
+	resetTimer();
+	startTimer();
+}
+
+function renderKeyboard() {
+	const row1 = document.getElementById('keyboardRow1');
+	const row2 = document.getElementById('keyboardRow2');
+	const row3 = document.getElementById('keyboardRow3');
+	const rowSpace = document.getElementById('keyboardRowSpace');
+	if (!row1 || !row2 || !row3 || !rowSpace) return;
+
+	const layout = gameState.keyboardLayouts[gameState.keyboardType];
+
+	const getAriaLabel = (key) => {
+		switch(key) {
+			case 'ENTER': return 'Valider le mot';
+			case 'BACKSPACE': return 'Effacer la dernière lettre';
+			case 'SPACE': return 'Insérer un espace';
+			default: return `Touche ${key}`;
+		}
+	};
+
+	const renderKey = (key, extraClass = '', contentOverride = null) => {
+		const isLetter = /^[A-ZÀÂÄÆÇÉÈÊËÎÏÔŒÙÛÜÝŸ]$/i.test(key);
+		let cls = 'keyboard-key';
+		if (!isLetter && key !== 'SPACE') cls += ' ' + getKeyClass(key);
+		else if (isLetter) cls += ' ' + getKeyClass(key);
+		cls += extraClass;
+		const content = contentOverride !== null ? contentOverride : key;
+		return `<button class="${cls}" aria-label="${getAriaLabel(key)}" data-key="${key}">${content}</button>`;
+	};
+
+	row1.innerHTML = layout[0].map(key => renderKey(key)).join('');
+	row2.innerHTML = layout[1].map(key => renderKey(key)).join('');
+	row3.innerHTML = layout[2].map(key => {
+		if (key === 'ENTER') return renderKey(key, ' wide enter-key', '↵');
+		if (key === 'BACKSPACE') return renderKey(key, ' wide', '⌫');
+		return renderKey(key);
+	}).join('');
+
+	// Barre d'espace sur toute la largeur, en bas du clavier
+	rowSpace.innerHTML = renderKey('SPACE', ' space-key', 'espace');
+
+	document.querySelectorAll('.keyboard-key').forEach(button => {
+		button.addEventListener('click', function() {
+			const key = this.dataset.key;
+			keyPressed(key);
+		});
+	});
+}
+
+function renderGameGrid() {
+	const userEntries = document.getElementById('userEntries');
+	if (!userEntries) return;
+	userEntries.innerHTML = '';
+
+	for (let i = 0; i < gameState.nbTries; i++) {
+		const entry = document.createElement('div');
+		entry.className = `entry ${i === gameState.currentLine ? 'current' : ''}`;
+		entry.setAttribute('aria-label', `Ligne ${i + 1}${i === gameState.currentLine ? ', ligne actuelle' : ''}`);
+
+		for (let j = 0; j < gameState.motyngth; j++) {
+			const letter = document.createElement('div');
+			const cell = gameState.words[i] ? gameState.words[i][j] : ['', 0];
+			const stateLabels = ['lettre absente', 'lettre mal placée', 'lettre correcte'];
+
+			// Détection de tout type d'espace (standard, insécable, etc.)
+			const isSpace = estUnEspace(cell[0]);
+			
+			letter.className = `letter v${cell[1]}${isSpace ? ' space-cell' : ''}`;
+			letter.textContent = isSpace ? '' : cell[0];  // ← rien pour un espace
+			letter.setAttribute('aria-label',
+				isSpace ? `espace, ${stateLabels[cell[1]]}`
+				: (cell[0] ? `${cell[0]}, ${stateLabels[cell[1]]}` : 'Case vide'));
+
+			entry.appendChild(letter);
+		}
+
+		userEntries.appendChild(entry);
+	}
+}
+
+function getKeyClass(key) {
+	if (key === 'ENTER' || key === 'BACKSPACE' || key === 'SPACE') {
+		return 'fn';
+	}
+	const color = gameState.keys[key] || 0;
+	return `k${color}`;
+}
+
+function keyPressed(key) {
+	if (gameState.gameFinished) return;
+
+	if (key === 'ENTER') { submitWord(); return; }
+	if (key === 'BACKSPACE') { erase(); return; }
+	if (key === 'SPACE') {
+		if (gameState.userInput.length < gameState.motyngth) {
+			gameState.userInput += ' ';
+			updateCurrentLine();
+			playSound('click');
+		}
+		return;
+	}
+
+	if (/^[A-ZÀÂÄÆÇÉÈÊËÎÏÔŒÙÛÜÝŸ]$/i.test(key)) {
+		if (gameState.userInput.length < gameState.motyngth) {
+			gameState.userInput += key;
+			updateCurrentLine();
+			playSound('click');
+		}
+	}
+}
+
+function updateCurrentLine() {
+	const currentLine = [];
+	for (let i = 0; i < gameState.motyngth; i++) {
+		if (i < gameState.userInput.length) {
+			currentLine.push([gameState.userInput[i], 0]);
+		} else {
+			currentLine.push(['', 0]);
+		}
+	}
+	gameState.words[gameState.currentLine] = currentLine;
+	renderGameGrid();
+}
+
+function submitWord() {
+	if (gameState.userInput.length !== gameState.motyngth) {
+		showToaster(`Veuillez saisir un mot de ${gameState.motyngth} caractères.`, "warning", 2500);
+		if (gameState.animations) {
+			const currentEntry = document.querySelectorAll('.entry')[gameState.currentLine];
+			if (currentEntry) {
+				currentEntry.querySelectorAll('.letter').forEach(letter => {
+					letter.classList.add('shake');
+					setTimeout(() => letter.classList.remove('shake'), 500);
+				});
+			}
+		}
+		playSound('incorrect');
+		return;
+	}
+
+	if (gameState.animations) {
+		const currentEntry = document.querySelectorAll('.entry')[gameState.currentLine];
+		if (currentEntry) {
+			currentEntry.querySelectorAll('.letter').forEach(letter => {
+				letter.classList.add('shake');
+				setTimeout(() => letter.classList.remove('shake'), 500);
+			});
+		}
+		setTimeout(processWordEvaluation, 500);
+	} else {
+		processWordEvaluation();
+	}
+}
+
+function processWordEvaluation() {
+	const evaluation = evaluateWord(gameState.userInput);
+	gameState.words[gameState.currentLine] = evaluation;
+	updateKeys();
+	renderGameGrid();
+	renderKeyboard();
+
+	const normalizeWord = (word) => normaliserEspaces(
+		word.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+	).toUpperCase();
+	const normalizedInput = normalizeWord(gameState.userInput);
+	const normalizedTarget = normalizeWord(gameState.targetWord);
+
+	if (normalizedInput === normalizedTarget) {
+		gameState.gameFinished = true;
+		gameState.gameSuccess = true;
+		stopTimer();
+		sessionTimeSpent = Math.round((Date.now() - sessionStartTime) / 1000);
+		updateStats(true);
+		playSound('score_good');
+		launchConfetti();
+		if (gameState.infinityMode) {
+			showToaster(`🎉 Bravo ! Le mot était <strong>${gameState.targetWord}</strong>. Nouvelle partie...`, "info", 2500);
+			setTimeout(() => startNewGame(), 2000);
+		} else {
+			showGameResult(true);
+		}
+	} else if (gameState.currentLine >= gameState.nbTries - 1) {
+		gameState.gameFinished = true;
+		stopTimer();
+		sessionTimeSpent = Math.round((Date.now() - sessionStartTime) / 1000);
+		updateStats(false);
+		playSound('score_bad');
+		if (gameState.infinityMode) {
+			showToaster(`😔 Dommage ! Le mot était <strong>${gameState.targetWord}</strong>. Nouvelle partie...`, "warning", 2500);
+			setTimeout(() => startNewGame(), 2000);
+		} else {
+			showGameResult(false);
+		}
+	} else {
+		gameState.currentLine++;
+		gameState.userInput = '';
+		updateCurrentLine();
+		playSound('correct');
+	}
+}
+
+function evaluateWord(attempt) {
+	const result = [];
+	const targetArr = gameState.targetWord.split('');
+	const attemptArr = attempt.toUpperCase().split('');
+
+	// Normalisation de chaque caractère : espace → ' ', sinon suppression des accents
+	const normalizeChar = (char) => {
+		if (estUnEspace(char)) return ' ';
+		return char.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+	};
+
+	const normalizedTargetArr = targetArr.map(normalizeChar);
+	const normalizedAttemptArr = attemptArr.map(normalizeChar);
+
+	for (let i = 0; i < gameState.motyngth; i++) {
+		if (normalizedAttemptArr[i] === normalizedTargetArr[i]) {
+			result.push([attemptArr[i], 2]);
+			targetArr[i] = '_';
+			attemptArr[i] = '_';
+			normalizedTargetArr[i] = '_';
+			normalizedAttemptArr[i] = '_';
+		} else {
+			result.push([attempt[i], 0]);
+		}
+	}
+
+	for (let i = 0; i < gameState.motyngth; i++) {
+		if (normalizedAttemptArr[i] !== '_') {
+			const foundIndex = normalizedTargetArr.indexOf(normalizedAttemptArr[i]);
+			if (foundIndex !== -1) {
+				result[i] = [attempt[i], 1];
+				targetArr[foundIndex] = '_';
+				normalizedTargetArr[foundIndex] = '_';
+			}
+		}
+	}
+
+	return result;
+}
+
+function updateKeys() {
+	for (let i = 0; i < gameState.userInput.length; i++) {
+		const letter = gameState.userInput[i].toUpperCase();
+		if (letter === ' ') continue;
+		const color = gameState.words[gameState.currentLine][i][1];
+		if (!gameState.keys[letter] || gameState.keys[letter] < color) {
+			gameState.keys[letter] = color;
+		}
+	}
+}
+
+function erase() {
+	if (gameState.userInput.length > 0) {
+		gameState.userInput = gameState.userInput.slice(0, -1);
+		updateCurrentLine();
+		playSound('click');
+	}
+}
+
+function updateHelpmotyngth() {
+	const el = document.getElementById('helpmotyngth');
+	if (el) el.textContent = gameState.motyngth;
+}
+
+// ============================================================
+// ÉCRAN DE FIN BENTO
+// ============================================================
+function showGameResult(success) {
+	if (gameState.infinityMode) return;
+
+	const gameContainer = document.getElementById('gameContainer');
+	gameContainer.style.display = 'block';
+
+	const s = gameState.stats;
+	const totalGames = s.games;
+	const victories = s.victories;
+	const percentage = totalGames > 0 ? Math.round((victories / totalGames) * 100) : 0;
+	const bestScore = s.bestStreak;
+
+	let totalTimeSpent = 0, totalGamesWithTime = 0;
+	try {
+		const times = JSON.parse(localStorage.getItem('motyGameTimes') || '[]');
+		totalGamesWithTime = times.length;
+		totalTimeSpent = times.reduce((sum, t) => sum + t, 0);
+	} catch (e) {}
+	if (sessionTimeSpent > 0) {
+		totalGamesWithTime++;
+		totalTimeSpent += sessionTimeSpent;
+		const times = JSON.parse(localStorage.getItem('motyGameTimes') || '[]');
+		times.push(sessionTimeSpent);
+		if (times.length > 100) times.splice(0, times.length - 100);
+		localStorage.setItem('motyGameTimes', JSON.stringify(times));
+	}
+	const avgTime = totalGamesWithTime > 0 ? Math.round(totalTimeSpent / totalGamesWithTime) : 0;
+	const avgTimeDisplay = avgTime > 0 ? Math.floor(avgTime / 60) + 'm ' + (avgTime % 60) + 's' : '--';
+
+	let message = '';
+	if (success) {
+		if (gameState.currentLine === 0) message = '🌟 incroyable ! du premier coup !';
+		else if (gameState.currentLine <= 2) message = '👏 excellent ! vous êtes très rapide';
+		else if (gameState.currentLine <= 4) message = '📚 bien joué ! continuez comme ça';
+		else message = '💪 ouf ! vous l\'avez trouvé de justesse';
+	} else {
+		message = `💪 n'hésitez pas à réessayer pour progresser`;
+	}
+
+	const titleHTML = success
+		? `<span style="color: var(--font-color);">trouvé en </span><span class="quiz-end__score">${gameState.currentLine + 1}</span> <span style="font-size:0.9rem; color: var(--font-color);">essai${gameState.currentLine + 1 > 1 ? 's' : ''}</span>`
+		: `<span style="color: var(--font-color);">le mot était </span><span class="quiz-end__score">${gameState.targetWord}</span>`;
+
+	let detailsHTML = '<h3>📋 détail des essais :</h3>';
+	for (let i = 0; i < gameState.nbTries; i++) {
+		const line = gameState.words[i];
+		if (!line || line.every(c => c[0] === '')) continue;
+		let cls = 'review-item';
+		if (success && i === gameState.currentLine) cls += ' correct-item';
+		else if (!success && i === gameState.nbTries - 1) cls += ' incorrect-item';
+
+		// Affichage du mot : les espaces sont remplacés par un vrai espace (pas de symbole)
+		const word = line.map(c => estUnEspace(c[0]) ? ' ' : (c[0] || '_')).join(' ');
+		const correctCount = line.filter(c => c[1] === 2).length;
+		const presentCount = line.filter(c => c[1] === 1).length;
+
+		detailsHTML += `<div class="${cls}">
+			<strong>Essai ${i + 1} :</strong> ${word}
+			<span style="font-size:0.75rem; opacity:0.8;"> — ${correctCount} bien placé${correctCount > 1 ? 's' : ''}, ${presentCount} mal placé${presentCount > 1 ? 's' : ''}</span>
+		</div>`;
+	}
+
+	gameContainer.innerHTML = `
+		<div class="container--quiz-end">
+			<div class="container--quiz-results">
+				<div class="bento-score">
+					<p>${titleHTML}</p>
+				</div>
+
+				<div class="bento-stats-global">
+					<div class="stat-item">
+						<span class="stat-value">${percentage}%</span>
+						<span class="stat-label">taux de victoire</span>
+					</div>
+					<div class="stat-item">
+						<span class="stat-value">${bestScore}</span>
+						<span class="stat-label">meilleure série</span>
+					</div>
+					<div class="stat-item">
+						<span class="stat-value">${victories}</span>
+						<span class="stat-label">victoire${victories > 1 ? 's' : ''}</span>
+					</div>
+				</div>
+
+				<div class="bento-stats-personal">
+					<div class="stat-item-mini">
+						<span class="stat-value">${avgTimeDisplay}</span>
+						<span class="stat-label-mini">temps moyen</span>
+					</div>
+					<div class="stat-item-mini">
+						<span class="stat-value">${totalGames}</span>
+						<span class="stat-label-mini">partie${totalGames > 1 ? 's' : ''} jouée${totalGames > 1 ? 's' : ''}</span>
+					</div>
+					<div class="stat-item-mini">
+						<span class="stat-value">${s.currentStreak}</span>
+						<span class="stat-label-mini">série actuelle</span>
+					</div>
+				</div>
+
+				<div class="bento-message">${message}</div>
+
+				<div class="bento-actions">
+					<button class="quiz-btn" id="bentoReviewBtn">réponses</button>
+					<button class="quiz-btn" id="bentoRetryBtn">réessayer</button>
+				</div>
+
+				<div class="bento-details hidden" id="detailedResults">
+					<div id="questionsReview">${detailsHTML}</div>
+				</div>
+			</div>
+		</div>
+	`;
+
+	document.getElementById('bentoReviewBtn')?.addEventListener('click', function() {
+		playSound('click');
+		const details = document.getElementById('detailedResults');
+		if (details) details.classList.toggle('hidden');
+	});
+
+	document.getElementById('bentoRetryBtn')?.addEventListener('click', function() {
+		playSound('click');
+		startNewGame();
+		showToaster('🔄 Nouvelle partie !', 'info', 1500);
+	});
+}
+
+// ============================================================
+// INDICE
+// ============================================================
+function showHint() {
+	if (gameState.gameFinished) {
+		showToaster("La partie est terminée !", "warning", 2000);
+		return;
+	}
+
+	playSound('click');
+	const targetWord = gameState.targetWord.toLowerCase();
+	let definition = "Aucune définition disponible";
+	let example = "";
+
+	if (window.reperes) {
+		for (const repere of window.reperes) {
+			for (const part of repere.parts) {
+				const normalizedWord = normaliserEspaces(
+					part.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+				);
+				if (normalizedWord === targetWord) {
+					definition = part.definition || "Définition non disponible";
+					example = part.examples && part.examples.length > 0 ? part.examples[0] : "";
+					break;
+				}
+			}
+		}
+	}
+
+	const modal = document.createElement('div');
+	modal.className = 'menu-overlay open';
+	modal.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:20000;display:flex;align-items:center;justify-content:center;padding:20px;';
+	modal.innerHTML = `
+		<div style="background:var(--bg);border-radius:20px;padding:25px;max-width:400px;width:100%;color:var(--font-color);box-shadow:0 10px 40px rgba(0,0,0,0.4);">
+			<h2 style="color:var(--primary-color);margin-bottom:15px;text-align:center;font-size:1.3rem;text-transform:lowercase;">💡 indice</h2>
+			<p style="margin-bottom:12px;"><strong>Définition :</strong> ${definition}</p>
+			${example ? `<p style="margin-bottom:12px;"><strong>Exemple :</strong> ${example}</p>` : ''}
+			<p style="margin-top:15px;font-style:italic;opacity:0.7;">Mot de ${gameState.motyngth} caractères</p>
+			<div style="display:flex;justify-content:center;margin-top:20px;">
+				<button id="hintClose" style="padding:12px 24px;border:none;border-radius:15px;background:var(--primary-color);color:white;font-weight:bold;cursor:pointer;font-size:15px;">fermer</button>
+			</div>
+		</div>
+	`;
+	document.body.appendChild(modal);
+
+	const close = () => { document.body.removeChild(modal); playSound('click'); };
+	document.getElementById('hintClose').addEventListener('click', close);
+	modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+}
+
+// ============================================================
+// CLAVIER PHYSIQUE
+// ============================================================
+function keyMonitor(event) {
+	if (event.altKey || event.ctrlKey || event.metaKey) return;
+	if (event.target && event.target.matches && event.target.matches('input, textarea, select')) return;
+
+	if (event.code === 'Space' || event.key === ' ') {
+		event.preventDefault();
+		keyPressed('SPACE');
+		return;
+	}
+
+	const key = event.key.toUpperCase();
+	if ((key >= 'A' && key <= 'Z') || /^[ÀÂÄÆÇÉÈÊËÎÏÔŒÙÛÜÝŸ]$/.test(key)) {
+		keyPressed(key);
+	} else if (key === 'ENTER') {
+		keyPressed('ENTER');
+	} else if (key === 'BACKSPACE') {
+		keyPressed('BACKSPACE');
+	}
+}
+
+// ============================================================
+// PLEIN ÉCRAN
+// ============================================================
+function toggleFullscreen() {
+	playSound('click');
+	if (!document.fullscreenElement) {
+		document.documentElement.requestFullscreen();
+	} else {
+		document.exitFullscreen();
+	}
+}
+
+document.addEventListener('fullscreenchange', () => {
+	const btns = document.querySelectorAll('.btn-fullscreen');
+	const fs = !!document.fullscreenElement;
+	btns.forEach(btn => {
+		if (fs) {
+			btn.classList.add('fullscreen-active');
+			btn.dataset.title = 'quitter plein écran (Alt+F)';
+			btn.innerHTML = `
+				<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
+					<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
+					<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
+					<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
+					<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
+				</svg>
+			`;
+		} else {
+			btn.classList.remove('fullscreen-active');
+			btn.dataset.title = 'plein écran (Alt+F)';
+			btn.innerHTML = `
+				<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+					<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+					<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+					<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+					<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+				</svg>
+			`;
+		}
+	});
+});
+
+// ============================================================
+// EVENT LISTENERS
+// ============================================================
+function setupEventListeners() {
+	document.querySelectorAll('[data-action="menu"]').forEach(b => b.addEventListener('click', toggleMenu));
+	document.getElementById('menuClose').addEventListener('click', () => { playSound('click'); closeMenu(); });
+	document.getElementById('menuOverlay').addEventListener('click', () => { playSound('click'); closeMenu(); });
+	document.querySelectorAll('.submenu-close').forEach(b => b.addEventListener('click', () => { playSound('click'); closeAllSubmenus(); }));
+
+	document.getElementById('openInstructionsSub').addEventListener('click', () => { playSound('click'); openSubmenu('submenuInstructions'); });
+	document.getElementById('openStatsSub').addEventListener('click', () => { playSound('click'); updateStatsDisplay(); openSubmenu('submenuStats'); });
+	document.getElementById('openSettingsSub').addEventListener('click', () => { playSound('click'); syncSettingsUI(); openSubmenu('submenuSettings'); });
+	document.getElementById('openShortcutsSub').addEventListener('click', () => { playSound('click'); openSubmenu('submenuShortcuts'); });
+	document.getElementById('openAboutSub').addEventListener('click', () => { playSound('click'); openSubmenu('submenuAbout'); });
+	document.getElementById('resetAppBtn').addEventListener('click', () => {
+		playSound('click');
+		if (confirm('Réinitialiser toute l\'application ?')) {
+			localStorage.clear();
+			showToaster('Application réinitialisée ! Redémarrage...', 'info', 2000);
+			setTimeout(() => location.reload(), 1500);
+		}
+	});
+
+	document.getElementById('hintButton').addEventListener('click', showHint);
+
+	document.querySelectorAll('[data-action="reload"]').forEach(btn => {
+		btn.addEventListener('click', () => {
+			playSound('click');
+			startNewGame();
+			showToaster('🔄 Nouvelle partie !', 'info', 1500);
+		});
+	});
+
+	document.querySelectorAll('[data-action="home"]').forEach(b => {
+		b.addEventListener('click', () => {
+			playSound('click');
+			window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+		});
+	});
+
+	document.querySelectorAll('[data-action="fullscreen"]').forEach(b => b.addEventListener('click', toggleFullscreen));
+
+	document.querySelectorAll('.timer-btn').forEach(btn => {
+		btn.addEventListener('click', function(e) {
+			e.stopPropagation();
+			playSound('click');
+			resetTimer();
+			startTimer();
+			showToaster('⏱️ Timer réinitialisé', 'info', 1500);
+		});
+	});
+
+	const seqBtn = document.getElementById('sequencesBtn');
+	const seqBtnMobile = document.getElementById('sequencesBtnMobile');
+	if (seqBtn) seqBtn.addEventListener('click', toggleSequencesDropdown);
+	if (seqBtnMobile) seqBtnMobile.addEventListener('click', toggleSequencesDropdown);
+
+	document.getElementById('selectAllNotions')?.addEventListener('click', selectAllNotions);
+	document.getElementById('deselectAllNotions')?.addEventListener('click', deselectAllNotions);
+	document.getElementById('selectAllNotionsMobile')?.addEventListener('click', selectAllNotions);
+	document.getElementById('deselectAllNotionsMobile')?.addEventListener('click', deselectAllNotions);
+
+	document.addEventListener('click', function(e) {
+		if (!e.target.closest('.btn-sequences') && !e.target.closest('.sequences-dropdown')) {
+			closeSequencesDropdown();
+		}
+	});
+
+	document.getElementById('darkModeToggle').addEventListener('change', function() {
+		gameState.darkMode = this.checked;
+		applyTheme(); saveSettings();
+		showSaveIndicator("paramètre sauvegardé");
+		playSound('click');
+	});
+	document.getElementById('colorBlindToggle').addEventListener('change', function() {
+		gameState.colorBlindMode = this.checked;
+		applyTheme(); saveSettings();
+		showSaveIndicator("paramètre sauvegardé");
+		playSound('click');
+	});
+	document.getElementById('animationsToggle').addEventListener('change', function() {
+		gameState.animations = this.checked;
+		applyTheme(); saveSettings();
+		showSaveIndicator("paramètre sauvegardé");
+		playSound('click');
+	});
+	document.getElementById('soundToggle').addEventListener('change', function() {
+		gameState.soundEnabled = this.checked;
+		if (this.checked) preloadSounds();
+		saveSettings();
+		showSaveIndicator("paramètre sauvegardé");
+		playSound('click');
+	});
+	document.getElementById('infinityToggle').addEventListener('change', function() {
+		gameState.infinityMode = this.checked;
+		saveSettings();
+		document.getElementById('infinityBadge').style.display = this.checked ? 'block' : 'none';
+		showSaveIndicator("paramètre sauvegardé");
+		if (this.checked) showToaster('♾️ Mode infini activé !', 'info', 2000);
+		else showToaster('Mode infini désactivé', 'info', 2000);
+		playSound('click');
+		startNewGame();
+	});
+
+	document.getElementById('lengthSlider').addEventListener('input', function() {
+		const val = parseInt(this.value);
+		document.getElementById('lengthValue').textContent = val;
+	});
+	document.getElementById('lengthSlider').addEventListener('change', function() {
+		const newLength = parseInt(this.value);
+		if (isMobileDevice() && newLength > 6) {
+			showToaster('Limité à 6 lettres maximum sur mobile', 'warning', 2500);
+			this.value = 6;
+			document.getElementById('lengthValue').textContent = 6;
+			return;
+		}
+		if (newLength !== gameState.motyngth) {
+			gameState.motyngth = newLength;
+			saveSettings();
+			startNewGame();
+			showToaster(`Longueur du mot définie à ${newLength} caractères`, 'info', 2000);
+			playSound('click');
+		}
+	});
+
+	document.getElementById('timerLimitSlider').addEventListener('input', function(e) {
+		const pos = parseInt(e.target.value, 10);
+		timerLimit = sliderPosToTimerValue(pos);
+		document.getElementById('timerLimitValue').textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
+		localStorage.setItem('motyTimerLimit', timerLimit);
+
+		if (timerLimit === 0) {
+			updateTimerDisplay('∞');
+			showTimerButtons(false);
+			stopTimer();
+		} else {
+			showTimerButtons(true);
+			resetTimer();
+			startTimer();
+		}
+		showSaveIndicator("minuteur sauvegardé");
+		playSound('click');
+	});
+
+	document.getElementById('resetStatsBtn').addEventListener('click', () => {
+		playSound('click');
+		if (confirm('Réinitialiser les statistiques ?')) {
+			gameState.stats = { games: 0, victories: 0, victoriesPc: 0, currentStreak: 0, bestStreak: 0, tries: [0,0,0,0,0,0] };
+			saveStats();
+			localStorage.removeItem('motyGameTimes');
+			updateStatsDisplay();
+			showToaster('Statistiques réinitialisées', 'info', 2500);
+		}
+	});
+
+	document.addEventListener('keydown', keyMonitor);
+
+	document.addEventListener('keydown', function(event) {
+		if (event.target.matches('input, textarea, select')) return;
+
+		if (event.key === 'Escape') {
+			if (document.querySelector('.submenu.active')) { closeAllSubmenus(); playSound('click'); }
+			else if (document.getElementById('slideMenu').classList.contains('open')) { closeMenu(); playSound('click'); }
+			else { closeSequencesDropdown(); }
+			event.preventDefault();
+			return false;
+		}
+
+		if (event.altKey && !event.ctrlKey && !event.metaKey) {
+			const key = event.key.toLowerCase();
+			switch (key) {
+				case 's':
+					event.preventDefault();
+					playSound('click');
+					const dropdown = document.getElementById('sequencesDropdown');
+					if (dropdown) {
+						updateNotionsDropdown();
+						dropdown.classList.toggle('open');
+					}
+					return false;
+				case 'h':
+					event.preventDefault();
+					playSound('click');
+					window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+					return false;
+				case 'i':
+					event.preventDefault();
+					showHint();
+					return false;
+				case 'r':
+					event.preventDefault();
+					startNewGame();
+					showToaster('🔄 Nouvelle partie !', 'info', 1500);
+					playSound('click');
+					return false;
+				case 't':
+					event.preventDefault();
+					playSound('click');
+					resetTimer();
+					startTimer();
+					showToaster('⏱️ Timer réinitialisé', 'info', 1500);
+					return false;
+				case 'f':
+					event.preventDefault();
+					toggleFullscreen();
+					return false;
+				case 'm':
+					event.preventDefault();
+					toggleMenu();
+					return false;
+			}
+		}
+	});
+
+	window.addEventListener('resize', function() {
+		if (!gameState.gameFinished) renderGameGrid();
+	});
+}
+
+function syncSettingsUI() {
+	document.getElementById('darkModeToggle').checked = gameState.darkMode;
+	document.getElementById('colorBlindToggle').checked = gameState.colorBlindMode;
+	document.getElementById('animationsToggle').checked = gameState.animations;
+	document.getElementById('soundToggle').checked = gameState.soundEnabled;
+	document.getElementById('infinityToggle').checked = gameState.infinityMode;
+	document.getElementById('lengthSlider').value = gameState.motyngth;
+	document.getElementById('lengthValue').textContent = gameState.motyngth;
+	document.getElementById('timerLimitSlider').value = timerLimit === 0 ? 6 : Math.round(timerLimit / 60);
+	document.getElementById('timerLimitValue').textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
+}
+
+window.addEventListener('beforeunload', function() {
+	if (toasterTimeout) clearTimeout(toasterTimeout);
+	if (timerInterval) clearInterval(timerInterval);
+});
+</script>
+</body>
+</html>
