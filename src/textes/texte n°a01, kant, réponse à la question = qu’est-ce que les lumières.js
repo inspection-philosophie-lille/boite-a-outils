@@ -520,3 +520,46 @@ const questions = [
         explanation: "Dans l'idéal des Lumières, une opinion publique éclairée et critique constitue un contre-pouvoir essentiel dans une démocratie, permettant de contrôler les gouvernants et de garantir les libertés. Cette conception suppose cependant que l'opinion soit informée, raisonnée et critique, et non manipulée ou superficielle. Kant développe cette idée dans d'autres textes sur la politique et l'histoire. Elle fonde l'idéal démocratique moderne d'une citoyenneté active et éclairée, capable de participer rationnellement à la vie publique."
     }
 ];
+
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Les Lumières selon Kant", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Définition
+        { key: 1, parent: 0, text: "Définition", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Sortie de la minorité", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 2, text: "Minorité = incapacité de se servir de son entendement sans la direction d'autrui", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 2, text: "Responsabilité individuelle", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Causes de la minorité
+        { key: 5, parent: 0, text: "Causes de la minorité", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Paresse", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Lâcheté", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 5, text: "Manque de décision et de courage", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 5, text: "Non un défaut de l'entendement", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : La devise
+        { key: 10, parent: 0, text: "Devise des Lumières", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 11, parent: 10, text: "Sapere aude !", color: "#64b5f6", fontSize: 14, italic: true },
+        { key: 12, parent: 10, text: "Aie le courage de te servir de ton propre entendement", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : Facilité de la minorité
+        { key: 13, parent: 0, text: "Facilité de rester mineur", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 14, parent: 13, text: "Livre = entendement", color: "#ffb74d", fontSize: 14 },
+        { key: 15, parent: 13, text: "Directeur = conscience", color: "#ffb74d", fontSize: 14 },
+        { key: 16, parent: 13, text: "Médecin = régime", color: "#ffb74d", fontSize: 14 },
+        { key: 17, parent: 13, text: "Payer pour ne pas penser", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Difficulté de sortir
+        { key: 18, parent: 0, text: "Difficulté de sortir", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 19, parent: 18, text: "Minorité devenue état naturel", color: "#ba68c8", fontSize: 14 },
+        { key: 20, parent: 18, text: "Difficile de sortir tout seul", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 21
+};
