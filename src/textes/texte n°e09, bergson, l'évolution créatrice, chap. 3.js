@@ -520,3 +520,46 @@ const questions = [
       explanation: "Ce texte de L'évolution créatrice est représentatif de la philosophie de Bergson à plusieurs égards. D'abord, il montre la distinction entre intelligence et intuition, qui est au cœur de la philosophie de Bergson. Ensuite, il montre la critique de l'intelligence, qui ne peut pas comprendre la vie, et l'éloge de l'intuition, qui est l'instinct devenu désintéressé. Enfin, il montre la conception de la durée comme hétérogène et créatrice, et la conception de la métaphysique comme expérience vécue de la durée. Ce texte condense ainsi les thèmes majeurs de la philosophie de Bergson : intelligence vs intuition, critique de l'intellectualisme, éloge de la durée, philosophie intuitive, élan vital."
     }
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Intelligence et intuition selon BERGSON", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Intelligence et instinct
+        { key: 1, parent: 0, text: "Intelligence et instinct", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Deux directions divergentes de l'évolution", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "L'intelligence est tournée vers la matière inerte", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "L'instinct est en affinité avec la vie", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Limites de l'intelligence
+        { key: 5, parent: 0, text: "Limites de l'intelligence", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Ne comprend pas la vie", color: "#81c784", fontSize: 14, bold: true },
+        { key: 7, parent: 5, text: "Applique à ce qui est mouvant des formes fixes", color: "#81c784", fontSize: 13 },
+        { key: 8, parent: 5, text: "Analyse le devenir mais ne saisit pas la durée réelle", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 5, text: "Découpe le temps en instants identiques", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : La durée
+        { key: 10, parent: 0, text: "La durée", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 11, parent: 10, text: "Hétérogène et créatrice", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 12, parent: 10, text: "Mouvement même de la réalité", color: "#64b5f6", fontSize: 13 },
+        { key: 13, parent: 10, text: "Ne peut être saisie que par l'intuition", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : L'intuition
+        { key: 14, parent: 0, text: "L'intuition", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 15, parent: 14, text: "L'instinct devenu désintéressé", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 16, parent: 14, text: "Permet de coïncider avec le mouvement de la réalité", color: "#ffb74d", fontSize: 13 },
+        { key: 17, parent: 14, text: "Est la méthode de la philosophie", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : La métaphysique
+        { key: 18, parent: 0, text: "La métaphysique", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 19, parent: 18, text: "Expérience vécue de la durée", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 20, parent: 18, text: "Comprendre la vie exige de se placer en elle", color: "#ba68c8", fontSize: 13 },
+        { key: 21, parent: 18, text: "Et non de l'observer du dehors", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 22
+};

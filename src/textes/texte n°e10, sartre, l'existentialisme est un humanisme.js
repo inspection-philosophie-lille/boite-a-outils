@@ -520,3 +520,46 @@ const questions = [
       explanation: "Ce texte de L'existentialisme est un humanisme est représentatif de la philosophie de Sartre à plusieurs égards. D'abord, il montre la conception de la liberté comme condamnation : l'homme n'a pas choisi d'être libre, il est condamné à l'être. Ensuite, il montre la responsabilité totale de l'homme : il est responsable de tout ce qu'il fait, et ses choix engagent l'humanité entière. Enfin, il montre la thèse centrale de l'existentialisme : l'existence précède l'essence, l'homme n'a pas de nature préétablie, il est ce qu'il se fait. Ce texte condense ainsi les thèmes majeurs de la philosophie de Sartre : liberté, responsabilité, angoisse, existence, essence, projet, engagement."
     }
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "L'existentialisme selon SARTRE", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Condamné à être libre
+        { key: 1, parent: 0, text: "Condamné à être libre", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "L'homme est condamné à être libre", color: "#e57373", fontSize: 14, bold: true },
+        { key: 3, parent: 1, text: "Condamné : il ne s'est pas créé lui-même", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "Libre : il est responsable de tout ce qu'il fait", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Existence précède essence
+        { key: 5, parent: 0, text: "Existence précède essence", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "L'homme existe d'abord", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Se rencontre, surgit dans le monde", color: "#81c784", fontSize: 13 },
+        { key: 8, parent: 5, text: "Et se définit après", color: "#81c784", fontSize: 14 },
+        { key: 9, parent: 5, text: "Il n'y a pas de nature humaine préétablie", color: "#81c784", fontSize: 13, bold: true },
+        
+        // Branche 3 : L'homme est ce qu'il se fait
+        { key: 10, parent: 0, text: "L'homme est ce qu'il se fait", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 11, parent: 10, text: "L'homme est ce qu'il se fait", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 12, parent: 10, text: "Responsable de son existence", color: "#64b5f6", fontSize: 13 },
+        { key: 13, parent: 10, text: "Se définit par ses choix et ses actes", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : Responsabilité universelle
+        { key: 14, parent: 0, text: "Responsabilité universelle", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 15, parent: 14, text: "En se choisissant, il choisit tous les hommes", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 16, parent: 14, text: "La responsabilité engage l'humanité entière", color: "#ffb74d", fontSize: 13 },
+        { key: 17, parent: 14, text: "L'angoisse est le sentiment de cette responsabilité", color: "#ffb74d", fontSize: 14 },
+        
+        // Branche 5 : L'homme comme projet
+        { key: 18, parent: 0, text: "L'homme comme projet", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 19, parent: 18, text: "L'homme est un projet qui se vit subjectivement", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 20, parent: 18, text: "Il se projette vers l'avenir", color: "#ba68c8", fontSize: 13 },
+        { key: 21, parent: 18, text: "Il est un être de possibles", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 22
+};

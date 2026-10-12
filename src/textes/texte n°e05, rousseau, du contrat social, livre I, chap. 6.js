@@ -520,3 +520,45 @@ const questions = [
         explanation: "Ce texte du Contrat social est représentatif de la philosophie de Rousseau à plusieurs égards. D'abord, il montre la théorie du contrat social, qui fonde la société sur un pacte entre les individus. Ensuite, il montre la conception de la souveraineté populaire, qui fait du peuple le souverain inaliénable. Enfin, il montre la conception de la liberté comme obéissance à la loi qu'on s'est prescrite, qui sera reprise par Kant sous le nom d'autonomie. Ce texte condense ainsi les thèmes majeurs de la philosophie politique de Rousseau : contrat social, aliénation totale, volonté générale, souveraineté populaire, liberté civile, égalité des conditions."
     }
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Le contrat social selon ROUSSEAU", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Le problème fondamental
+        { key: 1, parent: 0, text: "Problème fondamental", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Trouver une forme d'association", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Qui défend et protège la personne et les biens", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "Par laquelle chacun, s'unissant à tous, n'obéisse qu'à lui-même", color: "#e57373", fontSize: 13 },
+        { key: 5, parent: 1, text: "Et reste aussi libre qu'auparavant", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : La clause unique
+        { key: 6, parent: 0, text: "Clause unique", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 7, parent: 6, text: "L'aliénation totale de chaque associé", color: "#81c784", fontSize: 14, bold: true },
+        { key: 8, parent: 6, text: "Avec tous ses droits à toute la communauté", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Conséquences de l'aliénation
+        { key: 9, parent: 0, text: "Conséquences de l'aliénation", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 10, parent: 9, text: "Chacun se donnant tout entier, la condition est égale pour tous", color: "#64b5f6", fontSize: 14 },
+        { key: 11, parent: 9, text: "Nul n'a intérêt à la rendre onéreuse aux autres", color: "#64b5f6", fontSize: 13 },
+        { key: 12, parent: 9, text: "L'aliénation sans réserve rend l'union parfaite", color: "#64b5f6", fontSize: 13 },
+        { key: 13, parent: 9, text: "Chacun se donnant à tous ne se donne à personne", color: "#64b5f6", fontSize: 14, bold: true },
+        
+        // Branche 4 : Le gain
+        { key: 14, parent: 0, text: "Le gain", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 15, parent: 14, text: "On acquiert le même droit qu'on cède sur soi", color: "#ffb74d", fontSize: 14 },
+        { key: 16, parent: 14, text: "On gagne l'équivalent de tout ce qu'on perd", color: "#ffb74d", fontSize: 14, bold: true },
+        
+        // Branche 5 : Le résultat
+        { key: 17, parent: 0, text: "Le résultat", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 18, parent: 17, text: "Un corps moral et collectif", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 19, parent: 17, text: "La République ou le corps politique", color: "#ba68c8", fontSize: 14 },
+        { key: 20, parent: 17, text: "Le peuple est souverain", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 21
+};

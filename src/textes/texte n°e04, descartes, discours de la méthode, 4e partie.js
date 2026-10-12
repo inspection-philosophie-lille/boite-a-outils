@@ -520,3 +520,45 @@ const questions = [
         explanation: "Ce texte du Discours de la méthode est représentatif de la philosophie de Descartes à plusieurs égards. D'abord, il montre la méthode du doute hyperbolique, qui consiste à douter de tout pour trouver une vérité indubitable. Ensuite, il montre le cogito, première vérité indubitable qui fonde la philosophie. Enfin, il montre le dualisme de l'âme et du corps, qui est l'une des thèses les plus célèbres de Descartes. Ce texte condense ainsi les thèmes majeurs de la philosophie cartésienne : le doute méthodique, le cogito, le dualisme, la substance pensante, la distinction de l'âme et du corps."
     }
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Le cogito selon DESCARTES", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Le doute
+        { key: 1, parent: 0, text: "Le doute", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Penser que tout était faux", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Il fallait nécessairement que moi, qui le pensais, fusse quelque chose", color: "#e57373", fontSize: 13, bold: true },
+        
+        // Branche 2 : Le cogito
+        { key: 4, parent: 0, text: "Le cogito", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 5, parent: 4, text: "« Je pense, donc je suis »", color: "#81c784", fontSize: 14, bold: true, italic: true },
+        { key: 6, parent: 4, text: "Vérité si ferme et si assurée", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 4, text: "Premier principe de la philosophie", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 4, text: "Résiste au doute hyperbolique", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Le moi comme substance pensante
+        { key: 9, parent: 0, text: "Le moi comme substance pensante", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 10, parent: 9, text: "Je pouvais feindre que je n'avais aucun corps", color: "#64b5f6", fontSize: 14 },
+        { key: 11, parent: 9, text: "Qu'il n'y avait aucun monde ni aucun lieu", color: "#64b5f6", fontSize: 13 },
+        { key: 12, parent: 9, text: "Mais je ne pouvais pas feindre que je n'étais point", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 13, parent: 9, text: "Je suis une substance dont l'essence est de penser", color: "#64b5f6", fontSize: 14, bold: true },
+        
+        // Branche 4 : La pensée comme essence
+        { key: 14, parent: 0, text: "La pensée comme essence", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 15, parent: 14, text: "Si j'eusse cessé de penser, je n'avais aucune raison de croire que j'eusse été", color: "#ffb74d", fontSize: 13 },
+        { key: 16, parent: 14, text: "La pensée est l'attribut essentiel du moi", color: "#ffb74d", fontSize: 14 },
+        
+        // Branche 5 : Distinction âme/corps
+        { key: 17, parent: 0, text: "Distinction âme/corps", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 18, parent: 17, text: "Le moi (l'âme) est entièrement distinct du corps", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 19, parent: 17, text: "Dualisme cartésien", color: "#ba68c8", fontSize: 13 },
+        { key: 20, parent: 17, text: "L'âme peut exister sans le corps", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 21
+};

@@ -520,3 +520,48 @@ const questions = [
         explanation: "Ce texte de La Raison dans l'Histoire est représentatif de la philosophie de l'histoire de Hegel à plusieurs égards. D'abord, il montre la ruse de la raison, qui utilise les passions humaines pour réaliser ses fins. Ensuite, il montre le rôle des grands hommes, qui sont les instruments inconscients de l'Esprit du monde. Enfin, il montre la conception de l'État comme réalisation de l'Idée éthique et la marche de Dieu dans le monde. Ce texte condense ainsi les thèmes majeurs de la philosophie de l'histoire de Hegel : ruse de la raison, Esprit du monde, progrès de la liberté, rôle des grands hommes, réalisation de l'Idée éthique dans l'État."
     }
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "La ruse de la raison selon HEGEL", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : La ruse de la raison
+        { key: 1, parent: 0, text: "La ruse de la raison", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Laisse agir les passions", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Les agents réalisent ses fins sans le savoir", color: "#e57373", fontSize: 14, bold: true },
+        { key: 4, parent: 1, text: "Derrière le théâtre apparent, la raison travaille", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Les individus et l'histoire
+        { key: 5, parent: 0, text: "Individus et histoire", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Les individus poursuivent leurs intérêts particuliers", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Mais quelque chose de plus se produit", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 5, text: "Exemple de César", color: "#81c784", fontSize: 14 },
+        { key: 9, parent: 8, text: "Poursuit son pouvoir personnel", color: "#81c784", fontSize: 13 },
+        { key: 10, parent: 8, text: "Abat la République romaine", color: "#81c784", fontSize: 13 },
+        { key: 11, parent: 8, text: "Accomplit une nécessité historique", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Les grands hommes
+        { key: 12, parent: 0, text: "Les grands hommes", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 13, parent: 12, text: "Instruments inconscients de l'Esprit du monde", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 14, parent: 12, text: "Paient le prix de leur grandeur", color: "#64b5f6", fontSize: 13 },
+        { key: 15, parent: 12, text: "Par le malheur et la solitude", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : L'histoire universelle
+        { key: 16, parent: 0, text: "L'histoire universelle", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 17, parent: 16, text: "Le progrès dans la conscience de la liberté", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 18, parent: 16, text: "Résultat de l'action des grands hommes", color: "#ffb74d", fontSize: 13 },
+        { key: 19, parent: 16, text: "Avancement de la conscience de la liberté", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : L'État
+        { key: 20, parent: 0, text: "L'État", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 21, parent: 20, text: "Réalisation de l'Idée éthique", color: "#ba68c8", fontSize: 14 },
+        { key: 22, parent: 20, text: "Marche de Dieu dans le monde", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 23, parent: 20, text: "Lieu où l'Esprit se réalise", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 24
+};

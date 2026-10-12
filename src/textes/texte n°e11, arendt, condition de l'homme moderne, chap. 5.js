@@ -520,3 +520,46 @@ const questions = [
       explanation: "Ce texte de Condition de l'homme moderne est représentatif de la philosophie d'Arendt à plusieurs égards. D'abord, il montre la distinction entre action, travail et fabrication, qui est au cœur de sa philosophie. Ensuite, il montre la conception du pouvoir comme action commune (capacité d'agir de concert), qui se distingue de la violence et de la domination. Enfin, il montre la conception de la liberté comme expérience politique, qui se vit dans l'espace public, avec les autres. Ce texte condense ainsi les thèmes majeurs de la philosophie d'Arendt : action, pluralité, espace public, pouvoir, liberté, promesse et pardon, natalité."
     }
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "L'action selon Hannah ARENDT", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Nature de l'action
+        { key: 1, parent: 0, text: "Nature de l'action", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Met directement en rapport les hommes", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Sans intermédiaire des choses ou de la matière", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "Correspond à la condition de la pluralité", color: "#e57373", fontSize: 14 },
+        
+        // Branche 2 : Caractéristiques déroutantes
+        { key: 5, parent: 0, text: "Caractéristiques déroutantes", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Irréversible", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Imprévisible", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 5, text: "Les hommes ont cherché à y échapper", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 5, text: "En substituant la fabrication", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Vertus rédemptrices
+        { key: 10, parent: 0, text: "Vertus rédemptrices", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 11, parent: 10, text: "La promesse pallie l'imprévisibilité", color: "#64b5f6", fontSize: 14 },
+        { key: 12, parent: 10, text: "Le pardon remédie à l'irréversibilité", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 10, text: "Sans être maîtrisable, l'action peut être sauvée de sa futilité", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : Le pouvoir
+        { key: 14, parent: 0, text: "Le pouvoir", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 15, parent: 14, text: "N'est pas la violence", color: "#ffb74d", fontSize: 14 },
+        { key: 16, parent: 14, text: "Mais la capacité d'agir de concert", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 17, parent: 14, text: "Naît de l'action commune", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Espace public et liberté
+        { key: 18, parent: 0, text: "Espace public et liberté", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 19, parent: 18, text: "Lieu où la parole et l'action révèlent qui nous sommes", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 20, parent: 18, text: "C'est dans l'action que l'homme fait l'expérience de la liberté", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 21, parent: 18, text: "La liberté est politique, elle se vit avec les autres", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 22
+};

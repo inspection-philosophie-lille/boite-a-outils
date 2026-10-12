@@ -520,3 +520,45 @@ const questions = [
         explanation: "Ce texte de l'Éthique à Nicomaque est représentatif de la philosophie d'Aristote à plusieurs égards. D'abord, il montre la méthode dialectique d'Aristote, qui part des opinions communes (endoxa) pour s'élever vers la vérité. Ensuite, il montre l'eudémonisme aristotélicien, qui fait du bonheur la fin ultime de toutes nos actions. Enfin, il montre l'importance de la fonction propre (ergon) et de la vertu (aretê) dans la définition du bien suprême. Ce texte condense ainsi les thèmes majeurs de l'éthique aristotélicienne : le bonheur comme fin en soi, la fonction propre de l'homme, la vertu comme excellence, la vie accomplie comme félicité."
     }
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Le bonheur selon ARISTOTE", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Le bien suprême
+        { key: 1, parent: 0, text: "Le bien suprême", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Le bonheur", color: "#e57373", fontSize: 14, bold: true },
+        { key: 3, parent: 1, text: "De l'avis général", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "Accord sur le nom, pas sur la définition", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Définitions concurrentes
+        { key: 5, parent: 0, text: "Définitions concurrentes", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Le plaisir", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Les honneurs", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 5, text: "Ces biens sont recherchés pour autre chose", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 5, text: "Le bonheur n'est jamais choisi en vue d'une autre fin", color: "#81c784", fontSize: 14, bold: true },
+        
+        // Branche 3 : La fonction propre de l'homme
+        { key: 10, parent: 0, text: "Fonction propre de l'homme", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 11, parent: 10, text: "Définir le bonheur par la fonction propre", color: "#64b5f6", fontSize: 14 },
+        { key: 12, parent: 10, text: "Tout être accomplit son bien en remplissant sa fonction", color: "#64b5f6", fontSize: 13 },
+        { key: 13, parent: 10, text: "La fonction de l'homme = activité de l'âme selon la raison", color: "#64b5f6", fontSize: 14, bold: true },
+        
+        // Branche 4 : Définition du souverain bien
+        { key: 14, parent: 0, text: "Définition du souverain bien", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 15, parent: 14, text: "Une activité de l'âme conforme à la vertu", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 16, parent: 14, text: "La vertu = excellence dans l'exercice de la fonction", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : La félicité
+        { key: 17, parent: 0, text: "La félicité", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 18, parent: 17, text: "Réside dans une vie accomplie", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 19, parent: 17, text: "Le bonheur est une activité, non un état passif", color: "#ba68c8", fontSize: 13 },
+        { key: 20, parent: 17, text: "Une hirondelle ne fait pas le printemps", color: "#ba68c8", fontSize: 13, italic: true },
+    ],
+    links: [],
+    nextKey: 21
+};
