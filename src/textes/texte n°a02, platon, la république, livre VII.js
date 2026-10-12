@@ -622,3 +622,49 @@ const questions = [
 			explanation: "L'obscurantisme désigne l'attitude qui consiste à maintenir délibérément les hommes dans l'ignorance ou à s'opposer à la diffusion des lumières de la raison. Ce terme s'applique parfaitement à la condition des prisonniers dans la caverne, maintenus dans l'obscurité par leurs chaînes et l'action des montreurs de marionnettes. Il s'oppose à l'idéal des Lumières prôné par Kant. Cette opposition structure le combat philosophique pour l'émancipation intellectuelle. Elle fonde la mission éducative de la philosophie."
 	}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Allégorie de la caverne", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : La caverne (monde sensible)
+        { key: 1, parent: 0, text: "La caverne (monde sensible)", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Prisonniers enchaînés depuis l'enfance", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Ne voient que des ombres", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "Prennent les ombres pour la réalité", color: "#e57373", fontSize: 13 },
+        { key: 5, parent: 1, text: "Le feu = puissance du soleil", color: "#e57373", fontSize: 13 },
+        { key: 6, parent: 1, text: "Les porteurs = montreurs de marionnettes", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : La libération
+        { key: 7, parent: 0, text: "Libération", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 8, parent: 7, text: "Détachement des chaînes", color: "#81c784", fontSize: 14 },
+        { key: 9, parent: 7, text: "Souffrance et éblouissement", color: "#81c784", fontSize: 14 },
+        { key: 10, parent: 7, text: "Progression graduelle", color: "#81c784", fontSize: 13 },
+        { key: 11, parent: 10, text: "Ombres → reflets → objets → astres → soleil", color: "#81c784", fontSize: 12 },
+        
+        // Branche 3 : Le monde intelligible
+        { key: 12, parent: 0, text: "Monde intelligible", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 13, parent: 12, text: "Ascension de l'âme", color: "#64b5f6", fontSize: 14 },
+        { key: 14, parent: 12, text: "Idée du Bien = soleil", color: "#64b5f6", fontSize: 14 },
+        { key: 15, parent: 14, text: "Cause de tout ce qui est droit et beau", color: "#64b5f6", fontSize: 13 },
+        { key: 16, parent: 14, text: "Source de la vérité et de l'intelligence", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : Le retour et le destin du philosophe
+        { key: 17, parent: 0, text: "Retour dans la caverne", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 18, parent: 17, text: "Le libéré veut retourner", color: "#ffb74d", fontSize: 14 },
+        { key: 19, parent: 17, text: "Risque d'être tué par les prisonniers", color: "#ffb74d", fontSize: 13 },
+        { key: 20, parent: 17, text: "Le philosophe doit gouverner", color: "#ffb74d", fontSize: 14 },
+        
+        // Branche 5 : Interprétation
+        { key: 21, parent: 0, text: "Interprétation", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 22, parent: 21, text: "Allégorie = image à appliquer", color: "#ba68c8", fontSize: 14 },
+        { key: 23, parent: 21, text: "Éducation = conversion de l'âme", color: "#ba68c8", fontSize: 13 },
+        { key: 24, parent: 21, text: "Le philosophe doit redescendre", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 25
+};

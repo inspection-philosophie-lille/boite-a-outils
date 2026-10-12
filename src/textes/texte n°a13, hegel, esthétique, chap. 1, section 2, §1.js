@@ -622,20 +622,48 @@ const questions = [
 ];
 
 // ============================================
-// NOTES IMPORTANTES POUR LA COMPATIBILITÉ
+// CARTE MENTALE
 // ============================================
 
-/*
-IMPORTANT : Ce fichier est compatible avec le HTML fourni qui contient :
-
-1. Une fonction formatPhilosophyText() qui convertit les retours chariot en paragraphes
-2. Une fonction formatSource() qui met en italique seulement la partie après la première virgule
-3. Un système de quiz qui pioche aléatoirement 10 questions parmi les 50 disponibles
-
-Le texte philosophique utilise des retours chariot (\n) qui seront automatiquement 
-convertis en paragraphes distincts dans l'affichage.
-
-Chaque question a exactement 3 réponses (comme attendu par le code HTML).
-Les indices corrects commencent maintenant à 1 (première réponse = 1, deuxième = 2, troisième = 3).
-Les explications contiennent désormais 3-4 phrases détaillant la réponse.
-*/
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Critique de l'imitation selon HEGEL", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Rivaliser avec la nature
+        { key: 1, parent: 0, text: "Rivaliser avec la nature", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Artifice sans valeur", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Adresse inutile et dépourvue de signification", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Exemples de tromperie
+        { key: 4, parent: 0, text: "Exemples de tromperie", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 5, parent: 4, text: "Zeuxis : raisins trompant les pigeons", color: "#81c784", fontSize: 14 },
+        { key: 6, parent: 4, text: "Praxeas : rideau trompant le peintre lui-même", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 4, text: "Histoires d'illusions créées par l'art", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Infériorité de l'imitation
+        { key: 8, parent: 0, text: "Infériorité de l'imitation", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 9, parent: 8, text: "L'art restera toujours au-dessous de la nature", color: "#64b5f6", fontSize: 14 },
+        { key: 10, parent: 8, text: "Comparé à un ver voulant égaler un éléphant", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : Le chant du rossignol
+        { key: 11, parent: 0, text: "Le chant du rossignol", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 12, parent: 11, text: "Imitation par l'homme = insipide", color: "#ffb74d", fontSize: 14 },
+        { key: 13, parent: 11, text: "Simple artifice", color: "#ffb74d", fontSize: 13 },
+        { key: 14, parent: 11, text: "Non une libre production de la nature", color: "#ffb74d", fontSize: 13 },
+        { key: 15, parent: 11, text: "Non une œuvre d'art", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : L'imitation de l'humain par la nature
+        { key: 16, parent: 0, text: "Imitation de l'humain par la nature", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 17, parent: 16, text: "Le chant du rossignol nous réjouit", color: "#ba68c8", fontSize: 14 },
+        { key: 18, parent: 16, text: "Animal inconscient émettant des sons ressemblant à des sentiments humains", color: "#ba68c8", fontSize: 13 },
+        { key: 19, parent: 16, text: "Ce qui nous réjouit = l'imitation de l'humain par la nature", color: "#ba68c8", fontSize: 14, bold: true },
+        
+        // Branche 6 : Vraie vocation de l'art
+        { key: 20, parent: 0, text: "Vraie vocation de l'art", color: "#4db6ac", dir: "left", bold: true, fontSize: 16 },
+        { key: 21, parent: 20, text: "Ne pas imiter la nature", color: "#4db6ac", fontSize: 14 },
+        { key: 22, parent: 20, text: "Exprimer l'Esprit et la liberté", color: "#4db6ac", fontSize: 14 },
+        { key: 23, parent: 20, text: "Manifester l'Idée sous forme sensible", color: "#4db6ac", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 24
+};

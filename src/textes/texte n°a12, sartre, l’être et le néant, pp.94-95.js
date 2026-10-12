@@ -622,20 +622,48 @@ const questions = [
 ];
 
 // ============================================
-// NOTES IMPORTANTES POUR LA COMPATIBILITÉ
+// CARTE MENTALE
 // ============================================
 
-/*
-IMPORTANT : Ce fichier est compatible avec le HTML fourni qui contient :
-
-1. Une fonction formatPhilosophyText() qui convertit les retours chariot en paragraphes
-2. Une fonction formatSource() qui met en italique seulement la partie après la première virgule
-3. Un système de quiz qui pioche aléatoirement 10 questions parmi les 50 disponibles
-
-Le texte philosophique utilise des retours chariot (\n) qui seront automatiquement 
-convertis en paragraphes distincts dans l'affichage.
-
-Chaque question a exactement 3 réponses (comme attendu par le code HTML).
-Les indices corrects commencent maintenant à 1 (première réponse = 1, deuxième = 2, troisième = 3).
-Les explications contiennent désormais 3-4 phrases détaillant la réponse.
-*/
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "La mauvaise foi selon SARTRE", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : La situation
+        { key: 1, parent: 0, text: "La situation", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Une femme à un premier rendez-vous", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Elle sait les intentions de l'homme", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "Elle sait qu'elle devra prendre une décision", color: "#e57373", fontSize: 13 },
+        { key: 5, parent: 1, text: "Elle n'en veut pas sentir l'urgence", color: "#e57373", fontSize: 14 },
+        
+        // Branche 2 : Stratégies de mauvaise foi
+        { key: 6, parent: 0, text: "Stratégies de mauvaise foi", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 7, parent: 6, text: "S'attacher au respectueux et discret", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 6, text: "Borner le comportement au présent", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 6, text: "Désarmer les phrases de leur arrière-fond sexuel", color: "#81c784", fontSize: 13 },
+        { key: 10, parent: 6, text: "Traiter les attitudes comme qualités objectives", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : La main prise
+        { key: 11, parent: 0, text: "La main prise", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 12, parent: 11, text: "Appel à une décision immédiate", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 11, text: "Abandonner = consentir au flirt", color: "#64b5f6", fontSize: 13 },
+        { key: 14, parent: 11, text: "Retirer = rompre l'harmonie", color: "#64b5f6", fontSize: 13 },
+        { key: 15, parent: 11, text: "Reculer l'instant de la décision", color: "#64b5f6", fontSize: 14 },
+        
+        // Branche 4 : Le divorce du corps et de l'âme
+        { key: 16, parent: 0, text: "Divorce du corps et de l'âme", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 17, parent: 16, text: "Elle abandonne sa main sans s'en apercevoir", color: "#ffb74d", fontSize: 14 },
+        { key: 18, parent: 16, text: "Elle est, à ce moment, tout esprit", color: "#ffb74d", fontSize: 14 },
+        { key: 19, parent: 16, text: "La main repose inerte, une chose", color: "#ffb74d", fontSize: 13 },
+        { key: 20, parent: 16, text: "Ni consentante ni résistante", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Caractéristiques de la mauvaise foi
+        { key: 21, parent: 0, text: "Caractéristiques de la mauvaise foi", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 22, parent: 21, text: "Mensonge à soi-même", color: "#ba68c8", fontSize: 14 },
+        { key: 23, parent: 21, text: "Fuite devant la liberté", color: "#ba68c8", fontSize: 14 },
+        { key: 24, parent: 21, text: "Refus d'assumer la responsabilité", color: "#ba68c8", fontSize: 13 },
+        { key: 25, parent: 21, text: "Dissociation entre l'action et la conscience", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 26
+};

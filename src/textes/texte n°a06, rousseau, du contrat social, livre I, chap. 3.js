@@ -620,3 +620,46 @@ const questions = [
         explanation: "Ce texte pose la question fondamentale de la philosophie politique : qu'est-ce qui rend un pouvoir légitime et non simplement fort ? En démontrant avec rigueur que la force ne peut fonder un droit, Rousseau établit un critère exigeant pour évaluer toute forme de pouvoir, critère qui continue d'inspirer les réflexions sur la démocratie et la justice politique aujourd'hui."
     }
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Force et droit selon Rousseau", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Le plus fort et le droit
+        { key: 1, parent: 0, text: "Le plus fort et le droit", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Le plus fort n'est jamais assez fort pour être toujours le maître", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "S'il ne transforme sa force en droit", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "Et l'obéissance en devoir", color: "#e57373", fontSize: 14 },
+        
+        // Branche 2 : Nature de la force
+        { key: 5, parent: 0, text: "Nature de la force", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Puissance physique", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Aucune moralité ne peut résulter de ses effets", color: "#81c784", fontSize: 13 },
+        { key: 8, parent: 5, text: "Céder à la force = acte de nécessité, non de volonté", color: "#81c784", fontSize: 14 },
+        { key: 9, parent: 5, text: "Tout au plus un acte de prudence", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Critique du droit du plus fort
+        { key: 10, parent: 0, text: "Critique du droit du plus fort", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 11, parent: 10, text: "Galimatias inexplicable", color: "#64b5f6", fontSize: 14 },
+        { key: 12, parent: 10, text: "L'effet change avec la cause", color: "#64b5f6", fontSize: 13 },
+        { key: 13, parent: 10, text: "Toute force qui surmonte la première succède à son droit", color: "#64b5f6", fontSize: 13 },
+        { key: 14, parent: 10, text: "Un droit qui périt quand la force cesse n'est pas un droit", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : Obéissance et devoir
+        { key: 15, parent: 0, text: "Obéissance et devoir", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 16, parent: 15, text: "Obéir par force ≠ obéir par devoir", color: "#ffb74d", fontSize: 14 },
+        { key: 17, parent: 15, text: "Si l'on n'est plus forcé d'obéir, on n'y est plus obligé", color: "#ffb74d", fontSize: 13 },
+        { key: 18, parent: 15, text: "Le mot droit n'ajoute rien à la force", color: "#ffb74d", fontSize: 14 },
+        
+        // Branche 5 : Conclusion
+        { key: 19, parent: 0, text: "Conclusion", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 20, parent: 19, text: "Force ne fait pas droit", color: "#ba68c8", fontSize: 16, bold: true },
+        { key: 21, parent: 19, text: "On n'est obligé d'obéir qu'aux puissances légitimes", color: "#ba68c8", fontSize: 14 },
+    ],
+    links: [],
+    nextKey: 22
+};

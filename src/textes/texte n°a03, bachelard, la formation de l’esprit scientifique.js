@@ -620,3 +620,50 @@ const questions = [
 				explanation: "L'épistémologie de Bachelard a profondément influencé et structuré l'épistémologie historique française du XXe siècle, notamment à travers des penseurs comme Georges Canguilhem, Michel Foucault, Louis Althusser et les chercheurs du Centre d'Histoire des Sciences et des Techniques. Ses concepts de rupture épistémologique, d'obstacle épistémologique, de nouvel esprit scientifique et de construction des objets scientifiques continuent d'être discutés, développés et actualisés dans la réflexion contemporaine sur les sciences. Son œuvre reste une référence majeure pour qui s'intéresse à l'histoire et à la philosophie des sciences."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Science et opinion selon Bachelard", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Opposition science/opinion
+        { key: 1, parent: 0, text: "Opposition science / opinion", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "La science s'oppose absolument à l'opinion", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "L'opinion a, en droit, toujours tort", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "Même quand elle dit vrai, c'est pour de mauvaises raisons", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Caractéristiques de l'opinion
+        { key: 5, parent: 0, text: "L'opinion", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Pense mal, ne pense pas", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Traduit des besoins en connaissances", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 5, text: "Désigne les objets par leur utilité", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 5, text: "S'interdit de les connaître", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Nécessité de détruire l'opinion
+        { key: 10, parent: 0, text: "Détruire l'opinion", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 11, parent: 10, text: "On ne peut rien fonder sur l'opinion", color: "#64b5f6", fontSize: 14 },
+        { key: 12, parent: 10, text: "Premier obstacle à surmonter", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 10, text: "Pas de rectification partielle", color: "#64b5f6", fontSize: 13 },
+        { key: 14, parent: 13, text: "Pas de morale provisoire de la connaissance", color: "#64b5f6", fontSize: 12 },
+        
+        // Branche 4 : L'esprit scientifique
+        { key: 15, parent: 0, text: "Esprit scientifique", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 16, parent: 15, text: "Interdit d'avoir une opinion sur ce qu'on ne comprend pas", color: "#ffb74d", fontSize: 14 },
+        { key: 17, parent: 15, text: "Exige de savoir poser des problèmes", color: "#ffb74d", fontSize: 14 },
+        { key: 18, parent: 15, text: "Les problèmes ne se posent pas d'eux-mêmes", color: "#ffb74d", fontSize: 13 },
+        { key: 19, parent: 15, text: "Le sens du problème = marque du véritable esprit scientifique", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Connaissance scientifique
+        { key: 20, parent: 0, text: "Connaissance scientifique", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 21, parent: 20, text: "Toute connaissance est une réponse à une question", color: "#ba68c8", fontSize: 14 },
+        { key: 22, parent: 20, text: "S'il n'y a pas eu de question, pas de connaissance scientifique", color: "#ba68c8", fontSize: 13 },
+        { key: 23, parent: 20, text: "Rien ne va de soi", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 24, parent: 20, text: "Rien n'est donné", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 25, parent: 20, text: "Tout est construit", color: "#ba68c8", fontSize: 14, bold: true },
+    ],
+    links: [],
+    nextKey: 26
+};

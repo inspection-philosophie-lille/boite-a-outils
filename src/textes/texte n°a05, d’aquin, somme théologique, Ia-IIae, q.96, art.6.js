@@ -620,3 +620,46 @@ const questions = [
 			explanation: "La conception thomiste de la loi a profondément influencé le développement du droit naturel moderne et les déclarations des droits de l'homme. L'idée que la loi doit servir le bien commun, respecter la dignité humaine et être conforme à la raison a inspiré des penseurs comme Suarez, Grotius et les rédacteurs des déclarations des droits du XVIIIe siècle. Son héritage demeure vivant dans la réflexion contemporaine sur la justice et les limites du pouvoir."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "La loi et le bien commun selon D'AQUIN", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Finalité de la loi
+        { key: 1, parent: 0, text: "Finalité de la loi", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Vise l'intérêt commun des hommes", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Source de sa force et de sa valeur", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "Si elle ne réalise pas ce but, elle perd sa force d'obligation", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Limites du législateur
+        { key: 5, parent: 0, text: "Limites du législateur", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Ne peut envisager tous les cas particuliers", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Rédige la loi en fonction de ce qui se présente le plus souvent", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 5, text: "Porte son attention sur l'utilité commune", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Le cas exceptionnel
+        { key: 9, parent: 0, text: "Le cas exceptionnel", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 10, parent: 9, text: "Une loi utile en général peut devenir nuisible en certains cas", color: "#64b5f6", fontSize: 14 },
+        { key: 11, parent: 9, text: "Si l'observation de la loi est préjudiciable au bien commun", color: "#64b5f6", fontSize: 13 },
+        { key: 12, parent: 9, text: "Alors la loi ne doit plus être observée", color: "#64b5f6", fontSize: 14, bold: true },
+        
+        // Branche 4 : L'exemple de la ville assiégée
+        { key: 13, parent: 0, text: "Exemple de la ville assiégée", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 14, parent: 13, text: "Loi : les portes doivent rester closes", color: "#ffb74d", fontSize: 14 },
+        { key: 15, parent: 13, text: "Utile au bien public en règle générale", color: "#ffb74d", fontSize: 13 },
+        { key: 16, parent: 13, text: "Mais si des citoyens importants sont poursuivis", color: "#ffb74d", fontSize: 13 },
+        { key: 17, parent: 13, text: "Il faudrait ouvrir les portes, malgré la loi", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Principe d'équité
+        { key: 18, parent: 0, text: "Principe d'équité", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 19, parent: 18, text: "Sauvegarder l'intérêt général visé par le législateur", color: "#ba68c8", fontSize: 14 },
+        { key: 20, parent: 18, text: "Dérogation justifiée par le bien commun", color: "#ba68c8", fontSize: 13 },
+        { key: 21, parent: 18, text: "L'esprit de la loi prime sur la lettre", color: "#ba68c8", fontSize: 14 },
+    ],
+    links: [],
+    nextKey: 22
+};

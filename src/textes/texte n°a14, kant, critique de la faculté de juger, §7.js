@@ -622,20 +622,51 @@ const questions = [
 ];
 
 // ============================================
-// NOTES IMPORTANTES POUR LA COMPATIBILITÉ
+// CARTE MENTALE
 // ============================================
 
-/*
-IMPORTANT : Ce fichier est compatible avec le HTML fourni qui contient :
-
-1. Une fonction formatPhilosophyText() qui convertit les retours chariot en paragraphes
-2. Une fonction formatSource() qui met en italique seulement la partie après la première virgule
-3. Un système de quiz qui pioche aléatoirement 10 questions parmi les 50 disponibles
-
-Le texte philosophique utilise des retours chariot (\n) qui seront automatiquement 
-convertis en paragraphes distincts dans l'affichage.
-
-Chaque question a exactement 3 réponses (comme attendu par le code HTML).
-Les indices corrects commencent maintenant à 1 (première réponse = 1, deuxième = 2, troisième = 3).
-Les explications contiennent désormais 3-4 phrases détaillant la réponse.
-*/
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Agréable et beau selon KANT", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : L'agréable
+        { key: 1, parent: 0, text: "L'agréable", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Jugement fondé sur un sentiment personnel", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Restreint à sa seule personne", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "Exemple : le vin des Canaries", color: "#e57373", fontSize: 13 },
+        { key: 5, parent: 1, text: "« Cela m'est agréable »", color: "#e57373", fontSize: 13 },
+        { key: 6, parent: 1, text: "Couleur violette, instruments à vent/cordes", color: "#e57373", fontSize: 12 },
+        
+        // Branche 2 : À chacun son goût
+        { key: 7, parent: 0, text: "« À chacun son goût »", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 8, parent: 7, text: "Valable pour ce qui est agréable", color: "#81c784", fontSize: 14 },
+        { key: 9, parent: 7, text: "Ce serait folie de discuter à ce propos", color: "#81c784", fontSize: 13 },
+        { key: 10, parent: 7, text: "Les jugements ne sont pas logiquement opposés", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Le beau
+        { key: 11, parent: 0, text: "Le beau", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 12, parent: 11, text: "Il en va tout autrement", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 11, text: "Ridicule de dire « beau pour moi »", color: "#64b5f6", fontSize: 14 },
+        { key: 14, parent: 11, text: "Il ne doit pas appeler beau ce qui ne plaît qu'à lui", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : Prétention à l'universalité
+        { key: 15, parent: 0, text: "Prétention à l'universalité", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 16, parent: 15, text: "Attribue aux autres la même satisfaction", color: "#ffb74d", fontSize: 14 },
+        { key: 17, parent: 15, text: "Ne juge pas seulement pour lui, mais pour autrui", color: "#ffb74d", fontSize: 13 },
+        { key: 18, parent: 15, text: "Parle de la beauté comme propriété des choses", color: "#ffb74d", fontSize: 13 },
+        { key: 19, parent: 15, text: "Exige l'adhésion des autres", color: "#ffb74d", fontSize: 14 },
+        
+        // Branche 5 : Réactions au désaccord
+        { key: 20, parent: 0, text: "Réactions au désaccord", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 21, parent: 20, text: "Blâme ceux qui jugent autrement", color: "#ba68c8", fontSize: 14 },
+        { key: 22, parent: 20, text: "Leur dénie un goût", color: "#ba68c8", fontSize: 13 },
+        { key: 23, parent: 20, text: "On ne peut dire « À chacun son goût » pour le beau", color: "#ba68c8", fontSize: 14, bold: true },
+        
+        // Branche 6 : Conclusion
+        { key: 24, parent: 0, text: "Conclusion", color: "#4db6ac", dir: "left", bold: true, fontSize: 16 },
+        { key: 25, parent: 24, text: "Sinon : le goût n'existe pas", color: "#4db6ac", fontSize: 14 },
+        { key: 26, parent: 24, text: "Pas de jugement esthétique prétendant à l'assentiment de tous", color: "#4db6ac", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 27
+};

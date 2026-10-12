@@ -622,20 +622,49 @@ const questions = [
 ];
 
 // ============================================
-// NOTES IMPORTANTES POUR LA COMPATIBILITÉ
+// CARTE MENTALE
 // ============================================
 
-/*
-IMPORTANT : Ce fichier est compatible avec le HTML fourni qui contient :
-
-1. Une fonction formatPhilosophyText() qui convertit les retours chariot en paragraphes
-2. Une fonction formatSource() qui met en italique seulement la partie après la première virgule
-3. Un système de quiz qui pioche aléatoirement 10 questions parmi les 50 disponibles
-
-Le texte philosophique utilise des retours chariot (\n) qui seront automatiquement 
-convertis en paragraphes distincts dans l'affichage.
-
-Chaque question a exactement 3 réponses (comme attendu par le code HTML).
-Les indices corrects commencent maintenant à 1 (première réponse = 1, deuxième = 2, troisième = 3).
-Les explications contiennent désormais 3-4 phrases détaillant la réponse.
-*/
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Le prince et les vertus selon MACHIAVEL", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Crédulité des hommes
+        { key: 1, parent: 0, text: "Crédulité des hommes", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Les hommes ont tant de crédulité", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Ils se plient servilement aux nécessités du moment", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "Le trompeur trouve toujours quelqu'un qui se laisse tromper", color: "#e57373", fontSize: 14 },
+        
+        // Branche 2 : Paraître vs être
+        { key: 5, parent: 0, text: "Paraître vs être", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Pas nécessaire de posséder toutes les vertus", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Ce qu'il faut, c'est qu'il paraisse les avoir", color: "#81c784", fontSize: 14, bold: true },
+        { key: 8, parent: 5, text: "Si les avait et les appliquait toujours, préjudice", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 5, text: "Si simples apparences, profit", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Vertus apparentes
+        { key: 10, parent: 0, text: "Vertus apparentes", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 11, parent: 10, text: "Pitoyable", color: "#64b5f6", fontSize: 14 },
+        { key: 12, parent: 10, text: "Fidèle", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 10, text: "Humain", color: "#64b5f6", fontSize: 14 },
+        { key: 14, parent: 10, text: "Intègre", color: "#64b5f6", fontSize: 14 },
+        { key: 15, parent: 10, text: "Religieux", color: "#64b5f6", fontSize: 14 },
+        
+        // Branche 4 : Entraîner son cœur
+        { key: 16, parent: 0, text: "Entraîner son cœur", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 17, parent: 16, text: "Être exactement l'opposé de ces vertus", color: "#ffb74d", fontSize: 14 },
+        { key: 18, parent: 16, text: "Si les circonstances l'exigent", color: "#ffb74d", fontSize: 14 },
+        { key: 19, parent: 16, text: "Préparer son esprit à changer selon les vents", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Nécessités du pouvoir
+        { key: 20, parent: 0, text: "Nécessités du pouvoir", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 21, parent: 20, text: "Spécialement pour un prince nouveau", color: "#ba68c8", fontSize: 14 },
+        { key: 22, parent: 20, text: "Souvent agir contre la foi", color: "#ba68c8", fontSize: 13 },
+        { key: 23, parent: 20, text: "Contre la charité", color: "#ba68c8", fontSize: 13 },
+        { key: 24, parent: 20, text: "Contre l'humanité", color: "#ba68c8", fontSize: 13 },
+        { key: 25, parent: 20, text: "Contre la religion", color: "#ba68c8", fontSize: 13 },
+        { key: 26, parent: 20, text: "Pour garder le pouvoir", color: "#ba68c8", fontSize: 14, bold: true },
+    ],
+    links: [],
+    nextKey: 27
+};

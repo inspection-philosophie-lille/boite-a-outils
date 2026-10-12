@@ -15,7 +15,6 @@ const philosophyData = {
 	source: "Friedrich NIETZSCHE, <em>Humain, trop humain</em>, 1ère partie, §54"
 };
 
-
 // ============================================
 // QUESTIONS DU QUIZ
 // ============================================
@@ -623,20 +622,47 @@ const questions = [
 ];
 
 // ============================================
-// NOTES IMPORTANTES POUR LA COMPATIBILITÉ
+// CARTE MENTALE
 // ============================================
 
-/*
-IMPORTANT : Ce fichier est compatible avec le HTML fourni qui contient :
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "L'action selon Nietzsche", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
 
-1. Une fonction formatPhilosophyText() qui convertit les retours chariot en paragraphes
-2. Une fonction formatSource() qui met en italique seulement la partie après la première virgule
-3. Un système de quiz qui pioche aléatoirement 10 questions parmi les 50 disponibles
+        // Branche 1 : Problématique
+        { key: 1, parent: 0, text: "Problématique", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "En quoi l'action, bien qu'irréversible et imprévisible, est-elle le lieu où l'homme fait l'expérience de la liberté ou se perd dans la fabrication ?", color: "#e57373", fontSize: 13 },
 
-Le texte philosophique utilise des retours chariot (\n) qui seront automatiquement 
-convertis en paragraphes distincts dans l'affichage.
+        // Branche 2 : Nature de l'action
+        { key: 3, parent: 0, text: "Nature de l'action", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 4, parent: 3, text: "Seule activité qui mette directement en rapport les hommes", color: "#81c784", fontSize: 14 },
+        { key: 5, parent: 3, text: "Sans intermédiaire des choses ou de la matière", color: "#81c784", fontSize: 13 },
+        { key: 6, parent: 3, text: "Correspond à la condition humaine de la pluralité", color: "#81c784", fontSize: 13 },
 
-Chaque question a exactement 3 réponses (comme attendu par le code HTML).
-Les indices corrects commencent maintenant à 1 (première réponse = 1, deuxième = 2, troisième = 3).
-Les explications contiennent désormais 3-4 phrases détaillant la réponse.
-*/
+        // Branche 3 : Caractéristiques déroutantes
+        { key: 7, parent: 0, text: "Caractéristiques déroutantes", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 8, parent: 7, text: "Irréversible", color: "#64b5f6", fontSize: 14 },
+        { key: 9, parent: 7, text: "Imprévisible", color: "#64b5f6", fontSize: 14 },
+        { key: 10, parent: 7, text: "Les hommes ont cherché à y échapper depuis l'Antiquité", color: "#64b5f6", fontSize: 13 },
+        { key: 11, parent: 7, text: "En substituant la fabrication, qui maîtrise son matériau", color: "#64b5f6", fontSize: 13 },
+
+        // Branche 4 : Vertus rédemptrices
+        { key: 12, parent: 0, text: "Vertus rédemptrices", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 13, parent: 12, text: "La promesse pallie l'imprévisibilité", color: "#ffb74d", fontSize: 14 },
+        { key: 14, parent: 12, text: "Le pardon remédie à l'irréversibilité", color: "#ffb74d", fontSize: 14 },
+        { key: 15, parent: 12, text: "Sans être maîtrisable, l'action peut être sauvée de sa futilité", color: "#ffb74d", fontSize: 13 },
+
+        // Branche 5 : Pouvoir et espace public
+        { key: 16, parent: 0, text: "Pouvoir et espace public", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 17, parent: 16, text: "Le pouvoir n'est pas la violence", color: "#ba68c8", fontSize: 14 },
+        { key: 18, parent: 16, text: "Le pouvoir est la capacité d'agir de concert", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 19, parent: 16, text: "L'espace public est le lieu où la parole et l'action révèlent qui nous sommes", color: "#ba68c8", fontSize: 13 },
+
+        // Branche 6 : Synthèse
+        { key: 20, parent: 0, text: "Synthèse", color: "#4db6ac", dir: "left", bold: true, fontSize: 16 },
+        { key: 21, parent: 20, text: "C'est dans l'action que l'homme fait l'expérience de la liberté", color: "#4db6ac", fontSize: 14, bold: true },
+        { key: 22, parent: 20, text: "L'action fonde le pouvoir et révèle l'identité", color: "#4db6ac", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 23
+};

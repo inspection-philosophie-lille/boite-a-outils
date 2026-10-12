@@ -523,3 +523,47 @@ const questions = [
 				explanation: "Cette lettre de 1661 montre la continuité et la cohérence de la pensée de Spinoza. On y trouve déjà les thèses fondamentales qui structureront l'Éthique : le refus du libre arbitre, le déterminisme universel, la critique des abstractions substantialisées. Cette unité témoigne de la maturation précoce de son système philosophique. Elle confirme que Spinoza a développé très tôt les principes de sa métaphysique et les a appliqués de façon conséquente à tous les domaines, y compris la psychologie et la théorie de la connaissance."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Critique de la liberté de la volonté selon SPINOZA", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : La cause unique de l'erreur
+        { key: 1, parent: 0, text: "Cause unique de l'erreur", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Selon Bacon et Descartes", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "La volonté de l'homme est libre et plus ample que l'entendement", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "Cause faussement assignée", color: "#e57373", fontSize: 14, bold: true },
+        
+        // Branche 2 : Analogie volonté/volition
+        { key: 5, parent: 0, text: "Analogie volonté / volition", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Rapport entre blancheur et tel ou tel blanc", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Rapport entre humanité et tel ou tel homme", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 5, text: "La volonté n'est qu'un être de raison", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 5, text: "Ne peut être la cause d'une volition déterminée", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Nature des volitions
+        { key: 10, parent: 0, text: "Nature des volitions", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 11, parent: 10, text: "Les volitions particulières ont besoin d'une cause pour exister", color: "#64b5f6", fontSize: 14 },
+        { key: 12, parent: 10, text: "Ne peuvent être appelées libres", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 10, text: "Sont nécessairement déterminées par des causes", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : Les erreurs
+        { key: 14, parent: 0, text: "Les erreurs", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 15, parent: 14, text: "Suivant Descartes, les erreurs sont des volitions particulières", color: "#ffb74d", fontSize: 14 },
+        { key: 16, parent: 14, text: "Donc elles ne sont point libres", color: "#ffb74d", fontSize: 14 },
+        { key: 17, parent: 14, text: "Déterminées par des causes extérieures", color: "#ffb74d", fontSize: 13 },
+        { key: 18, parent: 14, text: "Non du tout par la volonté", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Conclusion
+        { key: 19, parent: 0, text: "Conclusion", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 20, parent: 19, text: "La volonté n'est pas la cause des erreurs", color: "#ba68c8", fontSize: 14 },
+        { key: 21, parent: 19, text: "Les erreurs sont nécessaires et déterminées", color: "#ba68c8", fontSize: 14 },
+        { key: 22, parent: 19, text: "Déterminisme psychologique", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 23
+};

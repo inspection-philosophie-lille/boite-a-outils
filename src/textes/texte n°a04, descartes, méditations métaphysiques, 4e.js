@@ -620,3 +620,50 @@ const questions = [
 				explanation: "La conception cartésienne de la liberté comme détermination rationnelle a profondément influencé le développement de la philosophie moderne. Leibniz reprendra et développera l'idée que la liberté culmine dans la détermination par la raison. Kant transformera cette intuition en sa célèbre théorie de l'autonomie comme obéissance à la loi rationnelle qu'on s'est prescrite soi-même. Cette filiation intellectuelle montre l'importance durable de l'innovation cartésienne dans la pensée de la liberté, qui rompt avec l'indifférentisme médiéval pour fonder la liberté sur la rationalité."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Liberté et volonté selon Descartes", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Facultés limitées
+        { key: 1, parent: 0, text: "Facultés limitées en l'homme", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Entendement (concevoir)", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 2, text: "Fort petite étendue, grandement limitée", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "Mémoire", color: "#e57373", fontSize: 14 },
+        { key: 5, parent: 4, text: "Très petite et bornée", color: "#e57373", fontSize: 13 },
+        { key: 6, parent: 1, text: "Imagination", color: "#e57373", fontSize: 14 },
+        { key: 7, parent: 6, text: "Très petite et bornée", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : La volonté
+        { key: 8, parent: 0, text: "La volonté", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 9, parent: 8, text: "Expérimentée comme très grande", color: "#81c784", fontSize: 14 },
+        { key: 10, parent: 8, text: "Ne conçoit pas d'idée plus ample et plus étendue", color: "#81c784", fontSize: 13 },
+        { key: 11, parent: 8, text: "Fait connaître que l'homme porte l'image de Dieu", color: "#81c784", fontSize: 14 },
+        
+        // Branche 3 : La volonté en Dieu
+        { key: 12, parent: 0, text: "Volonté en Dieu", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 13, parent: 12, text: "Incomparablement plus grande", color: "#64b5f6", fontSize: 14 },
+        { key: 14, parent: 12, text: "Plus ferme et plus efficace", color: "#64b5f6", fontSize: 14 },
+        { key: 15, parent: 12, text: "S'étend infiniment à plus de choses", color: "#64b5f6", fontSize: 13 },
+        { key: 16, parent: 12, text: "Formellement, pas plus grande en elle-même", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : Nature de la volonté
+        { key: 17, parent: 0, text: "Nature de la volonté", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 18, parent: 17, text: "Faire une chose ou ne pas la faire", color: "#ffb74d", fontSize: 14 },
+        { key: 19, parent: 17, text: "Affirmer ou nier, poursuivre ou fuir", color: "#ffb74d", fontSize: 13 },
+        { key: 20, parent: 17, text: "Sans contrainte extérieure", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Liberté et indifférence
+        { key: 21, parent: 0, text: "Liberté et indifférence", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 22, parent: 21, text: "Indifférence = plus bas degré de liberté", color: "#ba68c8", fontSize: 14 },
+        { key: 23, parent: 21, text: "Défaut dans la connaissance", color: "#ba68c8", fontSize: 13 },
+        { key: 24, parent: 21, text: "Connaissance claire = liberté entière sans indifférence", color: "#ba68c8", fontSize: 13 },
+        { key: 25, parent: 21, text: "Grâce divine et connaissance naturelle augmentent la liberté", color: "#ba68c8", fontSize: 14 },
+    ],
+    links: [],
+    nextKey: 26
+};
