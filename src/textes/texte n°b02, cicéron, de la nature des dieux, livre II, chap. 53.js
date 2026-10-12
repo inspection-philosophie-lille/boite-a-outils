@@ -621,3 +621,47 @@ const questions = [
 			explanation: "Ce passage du De la nature des dieux est un texte majeur qui a influencé la théologie chrétienne et l'humanisme. La conception d'une providence divine rationnelle et bienveillante, l'idée d'une hiérarchie des êtres fondée sur la rationalité, la place éminente de l'homme dans le cosmos : toutes ces thèses seront reprises et développées par les Pères de l'Église et les théologiens médiévaux. Cicéron a joué un rôle crucial dans la transmission de la philosophie grecque à l'Occident latin et dans la formation de la pensée chrétienne."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Finalité du monde selon CICÉRON", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Conclusion initiale
+        { key: 1, parent: 0, text: "Conclusion initiale", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Une intelligence et un calcul divins", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Ont présidé à l'arrangement merveilleux du monde", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "Pour la conservation et le salut de tous ses habitants", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Question des destinataires
+        { key: 5, parent: 0, text: "Question des destinataires", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Pour quels êtres tant de dispositions ?", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Question sur la finalité de l'univers", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Hypothèse des végétaux
+        { key: 8, parent: 0, text: "Hypothèse des végétaux", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 9, parent: 8, text: "Arbres et végétaux", color: "#64b5f6", fontSize: 14 },
+        { key: 10, parent: 8, text: "Dépourvus de sentiment", color: "#64b5f6", fontSize: 13 },
+        { key: 11, parent: 8, text: "Activité interne de maintien en vie", color: "#64b5f6", fontSize: 13 },
+        { key: 12, parent: 8, text: "Rejetée : absurde", color: "#64b5f6", fontSize: 14, bold: true },
+        
+        // Branche 4 : Hypothèse des bêtes
+        { key: 13, parent: 0, text: "Hypothèse des bêtes", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 14, parent: 13, text: "Êtres muets et sans connaissance", color: "#ffb74d", fontSize: 14 },
+        { key: 15, parent: 13, text: "Pas plus probable que pour les végétaux", color: "#ffb74d", fontSize: 13 },
+        { key: 16, parent: 13, text: "Rejetée : les dieux n'ont pas pris tant de peine", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Réponse finale
+        { key: 17, parent: 0, text: "Réponse finale", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 18, parent: 17, text: "Pour les êtres animés qui ont la raison en partage", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 19, parent: 17, text: "Les dieux et les hommes", color: "#ba68c8", fontSize: 14 },
+        { key: 20, parent: 17, text: "Au-dessus desquels il n'y a rien", color: "#ba68c8", fontSize: 13 },
+        { key: 21, parent: 17, text: "La raison est de toutes choses celle qui vaut le plus", color: "#ba68c8", fontSize: 13 },
+        { key: 22, parent: 17, text: "Le monde a été fait pour les dieux et pour les hommes", color: "#ba68c8", fontSize: 14, bold: true },
+    ],
+    links: [],
+    nextKey: 23
+};

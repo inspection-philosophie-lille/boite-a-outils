@@ -620,3 +620,48 @@ const questions = [
 		explanation: "Ce texte du Discours de la méthode est majeur car il fonde la distinction radicale entre l'homme et l'animal. Descartes y établit que l'homme se distingue absolument de l'animal par la raison et le langage. Les animaux n'ont pas moins de raison que les hommes : ils n'en ont point du tout. Cette thèse, appelée « animal-machine », a profondément marqué la philosophie moderne et a suscité de nombreux débats. Elle a influencé la conception moderne de l'animal et de la spécificité humaine. Ce texte est l'un des textes classiques sur la différence entre l'homme et l'animal."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Différence homme / animal selon DESCARTES", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Le langage chez l'homme
+        { key: 1, parent: 0, text: "Langage chez l'homme", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Tous les hommes sont capables de composer un discours", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Même les plus hébétés et les insensés", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "Faire entendre leurs pensées", color: "#e57373", fontSize: 14, bold: true },
+        { key: 5, parent: 1, text: "Même les sourds-muets inventent des signes", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Absence de langage chez l'animal
+        { key: 6, parent: 0, text: "Absence de langage chez l'animal", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 7, parent: 6, text: "Aucun animal ne peut composer un discours", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 6, text: "Même le plus parfait", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 6, text: "Les pies et perroquets peuvent proférer des paroles", color: "#81c784", fontSize: 14 },
+        { key: 10, parent: 6, text: "Mais ne peuvent parler en témoignant qu'ils pensent", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : L'argument des organes
+        { key: 11, parent: 0, text: "Argument des organes", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 12, parent: 11, text: "Ce n'est pas un défaut d'organes", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 11, text: "Les pies et perroquets ont les organes", color: "#64b5f6", fontSize: 13 },
+        { key: 14, parent: 11, text: "Les sourds-muets sont privés des organes", color: "#64b5f6", fontSize: 13 },
+        { key: 15, parent: 11, text: "Pourtant ils inventent des signes", color: "#64b5f6", fontSize: 14 },
+        
+        // Branche 4 : Conclusion sur la raison
+        { key: 16, parent: 0, text: "Conclusion sur la raison", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 17, parent: 16, text: "Les bêtes n'ont pas moins de raison", color: "#ffb74d", fontSize: 14 },
+        { key: 18, parent: 16, text: "Elles n'en ont point du tout", color: "#ffb74d", fontSize: 16, bold: true },
+        { key: 19, parent: 16, text: "Différence de nature, non de degré", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Conséquences
+        { key: 20, parent: 0, text: "Conséquences", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 21, parent: 20, text: "L'homme est le seul être doué de raison", color: "#ba68c8", fontSize: 14 },
+        { key: 22, parent: 20, text: "L'animal est une machine", color: "#ba68c8", fontSize: 14 },
+        { key: 23, parent: 20, text: "Le langage est le propre de l'homme", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 24
+};

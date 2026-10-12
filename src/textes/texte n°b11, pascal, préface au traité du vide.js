@@ -620,3 +620,51 @@ const questions = [
 		explanation: "Ce texte de la Préface au Traité du vide est majeur car il fonde la distinction entre l'instinct animal et la perfectibilité humaine. Pascal y oppose la fixité de l'instinct animal à la perfectibilité de la raison humaine. L'animal est enfermé dans un ordre de perfection bornée ; l'homme est produit pour l'infinité et capable de progrès indéfini. Cette conception de la perfectibilité humaine, fondée sur la mémoire et la transmission du savoir, a profondément influencé la philosophie moderne et la conception progressiste de l'histoire. Elle est au cœur de la pensée de Pascal et de la modernité."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Animal et homme selon PASCAL", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : L'animal et l'instinct
+        { key: 1, parent: 0, text: "L'animal et l'instinct", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Les ruches des abeilles sont toujours identiques", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "La nature les instruit à mesure que la nécessité les presse", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "Science fragile qui se perd avec les besoins", color: "#e57373", fontSize: 14 },
+        { key: 5, parent: 1, text: "Ils la reçoivent sans étude", color: "#e57373", fontSize: 13 },
+        { key: 6, parent: 1, text: "Ne peuvent pas la conserver", color: "#e57373", fontSize: 13 },
+        { key: 7, parent: 1, text: "Toujours nouvelle, toujours égale", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Limites de l'animal
+        { key: 8, parent: 0, text: "Limites de l'animal", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 9, parent: 8, text: "La nature veut les maintenir dans un ordre de perfection bornée", color: "#81c784", fontSize: 13 },
+        { key: 10, parent: 8, text: "Leur inspire une science nécessaire", color: "#81c784", fontSize: 13 },
+        { key: 11, parent: 8, text: "De peur qu'ils ne tombent dans le dépérissement", color: "#81c784", fontSize: 13 },
+        { key: 12, parent: 8, text: "Ne permet pas qu'ils y ajoutent", color: "#81c784", fontSize: 13 },
+        { key: 13, parent: 8, text: "De peur qu'ils ne passent les limites", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : L'homme et l'infinité
+        { key: 14, parent: 0, text: "L'homme et l'infinité", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 15, parent: 14, text: "L'homme n'est produit que pour l'infinité", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 16, parent: 14, text: "Il est dans l'ignorance au premier âge", color: "#64b5f6", fontSize: 13 },
+        { key: 17, parent: 14, text: "Mais il s'instruit sans cesse dans son progrès", color: "#64b5f6", fontSize: 14 },
+        
+        // Branche 4 : Le progrès humain
+        { key: 18, parent: 0, text: "Le progrès humain", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 19, parent: 18, text: "Tire avantage de sa propre expérience", color: "#ffb74d", fontSize: 14 },
+        { key: 20, parent: 18, text: "Et de celle de ses prédécesseurs", color: "#ffb74d", fontSize: 14 },
+        { key: 21, parent: 18, text: "Garde dans sa mémoire les connaissances acquises", color: "#ffb74d", fontSize: 13 },
+        { key: 22, parent: 18, text: "Les livres transmettent le savoir des anciens", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Synthèse
+        { key: 23, parent: 0, text: "Synthèse", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 24, parent: 23, text: "Animal = perfection bornée, fixe", color: "#ba68c8", fontSize: 14 },
+        { key: 25, parent: 23, text: "Homme = perfectibilité, progrès infini", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 26, parent: 23, text: "Mémoire et transmission = condition du progrès", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 27
+};

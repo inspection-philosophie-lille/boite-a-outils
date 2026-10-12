@@ -620,3 +620,44 @@ const questions = [
 		explanation: "Ce texte de L'Esprit des lois est majeur car il définit la liberté comme droit de faire ce que les lois permettent. Cette définition a profondément influencé la pensée politique libérale et la Déclaration des droits de l'homme et du citoyen de 1789, qui affirme que la liberté consiste à pouvoir faire tout ce qui ne nuit pas à autrui. Montesquieu y distingue radicalement la liberté de l'indépendance et fait de la loi la condition de la liberté. Ce texte est l'un des fondements de la conception moderne de la liberté politique et de l'Etat de droit."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "La liberté politique selon MONTESQUIEU", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Apparence dans les démocraties
+        { key: 1, parent: 0, text: "Apparence dans les démocraties", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Le peuple paraît faire ce qu'il veut", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Mais la liberté politique ne consiste point à faire ce que l'on veut", color: "#e57373", fontSize: 14, bold: true },
+        
+        // Branche 2 : Définition de la liberté
+        { key: 4, parent: 0, text: "Définition de la liberté", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 5, parent: 4, text: "Dans un Etat, société où il y a des lois", color: "#81c784", fontSize: 14 },
+        { key: 6, parent: 4, text: "Vouloir faire ce que l'on doit vouloir", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 4, text: "N'être pas contraint de faire ce que l'on ne doit pas vouloir", color: "#81c784", fontSize: 14 },
+        
+        // Branche 3 : Indépendance vs liberté
+        { key: 8, parent: 0, text: "Indépendance vs liberté", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 9, parent: 8, text: "Distinction fondamentale", color: "#64b5f6", fontSize: 14 },
+        { key: 10, parent: 8, text: "Indépendance = faire ce que l'on veut", color: "#64b5f6", fontSize: 13 },
+        { key: 11, parent: 8, text: "Liberté = droit de faire tout ce que les lois permettent", color: "#64b5f6", fontSize: 14, bold: true },
+        
+        // Branche 4 : Conséquence de la transgression
+        { key: 12, parent: 0, text: "Conséquence de la transgression", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 13, parent: 12, text: "Si un citoyen pouvait faire ce que les lois défendent", color: "#ffb74d", fontSize: 14 },
+        { key: 14, parent: 12, text: "Il n'aurait plus de liberté", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 15, parent: 12, text: "Parce que les autres auraient tout de même ce pouvoir", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : La loi comme condition de la liberté
+        { key: 16, parent: 0, text: "La loi comme condition de la liberté", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 17, parent: 16, text: "La loi garantit la liberté", color: "#ba68c8", fontSize: 14 },
+        { key: 18, parent: 16, text: "La liberté s'exerce dans le cadre de la loi", color: "#ba68c8", fontSize: 13 },
+        { key: 19, parent: 16, text: "La loi protège contre l'arbitraire des autres", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 20
+};

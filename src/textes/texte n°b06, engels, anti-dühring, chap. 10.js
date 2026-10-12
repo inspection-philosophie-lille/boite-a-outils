@@ -620,3 +620,45 @@ const questions = [
 		explanation: "Ce texte de l'Anti-Dühring est majeur car il propose une conception matérialiste et dialectique de la liberté. Engels y synthétise la position marxiste sur la liberté : la liberté n'est pas l'indépendance à l'égard des lois naturelles mais la connaissance et la maîtrise de ces lois. Cette conception s'inscrit dans la tradition spinoziste et hégélienne tout en la radicalisant par le matérialisme et l'historicisme. Elle a influencé de nombreux penseurs marxistes et au-delà. Ce texte est l'un des textes classiques sur la liberté dans la tradition marxiste."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "La liberté selon ENGELS", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Fausse conception
+        { key: 1, parent: 0, text: "Fausse conception", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Indépendance rêvée à l'égard des lois de la nature", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "N'est pas la liberté", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "Illusion", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Vraie conception
+        { key: 5, parent: 0, text: "Vraie conception", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Connaissance des lois de la nature", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Possibilité de les mettre en œuvre méthodiquement", color: "#81c784", fontSize: 13 },
+        { key: 8, parent: 5, text: "Pour des fins déterminées", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Liberté de la volonté
+        { key: 9, parent: 0, text: "Liberté de la volonté", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 10, parent: 9, text: "Faculté de décider en connaissance de cause", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 11, parent: 9, text: "Plus le jugement est libre, plus la nécessité le détermine", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : Incertitude et non-liberté
+        { key: 12, parent: 0, text: "Incertitude et non-liberté", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 13, parent: 12, text: "Repose sur l'ignorance", color: "#ffb74d", fontSize: 14 },
+        { key: 14, parent: 12, text: "Choix en apparence arbitraire", color: "#ffb74d", fontSize: 13 },
+        { key: 15, parent: 12, text: "Manifeste la non-liberté", color: "#ffb74d", fontSize: 13 },
+        { key: 16, parent: 12, text: "Soumission à l'objet", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Conclusion
+        { key: 17, parent: 0, text: "Conclusion", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 18, parent: 17, text: "Empire sur nous-mêmes et sur la nature", color: "#ba68c8", fontSize: 14 },
+        { key: 19, parent: 17, text: "Fondé sur la connaissance des nécessités naturelles", color: "#ba68c8", fontSize: 13 },
+        { key: 20, parent: 17, text: "Produit du développement historique", color: "#ba68c8", fontSize: 14, bold: true },
+    ],
+    links: [],
+    nextKey: 21
+};

@@ -620,3 +620,48 @@ const questions = [
 		explanation: "Ce texte de L'énergie spirituelle est majeur car il définit la conscience comme temporalité vivante, unité de mémoire et d'anticipation. Bergson y synthétise sa conception de la conscience : elle est mémoire (conservation du passé) et anticipation (projection vers l'avenir), un trait d'union entre ce qui a été et ce qui sera. Cette conception de la conscience comme durée est au cœur de la philosophie bergsonienne et a profondément influencé la philosophie du XXe siècle, notamment la phénoménologie et l'existentialisme. Ce texte est l'un des textes classiques sur la conscience et la temporalité."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "La conscience selon BERGSON", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Conscience et mémoire
+        { key: 1, parent: 0, text: "Conscience et mémoire", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Conscience signifie d'abord mémoire", color: "#e57373", fontSize: 14, bold: true },
+        { key: 3, parent: 1, text: "Conservation et accumulation du passé", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "Sans mémoire, pas de continuité ni d'identité", color: "#e57373", fontSize: 13 },
+        { key: 5, parent: 1, text: "Une conscience sans mémoire = inconscience", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Anticipation de l'avenir
+        { key: 6, parent: 0, text: "Anticipation de l'avenir", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 7, parent: 6, text: "Toute conscience est anticipation de l'avenir", color: "#81c784", fontSize: 14, bold: true },
+        { key: 8, parent: 6, text: "L'esprit s'occupe de ce qui est en vue de ce qui va être", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 6, text: "L'avenir nous appelle, nous tire à lui", color: "#81c784", fontSize: 14 },
+        { key: 10, parent: 6, text: "Traction ininterrompue", color: "#81c784", fontSize: 13 },
+        { key: 11, parent: 6, text: "Cause de notre action continuelle", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Action et avenir
+        { key: 12, parent: 0, text: "Action et avenir", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 13, parent: 12, text: "Toute action est un empiétement sur l'avenir", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 14, parent: 12, text: "L'action réalise dans le présent ce qui était anticipé", color: "#64b5f6", fontSize: 13 },
+        { key: 15, parent: 12, text: "La conscience est tendue vers l'action", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : La conscience comme lien
+        { key: 16, parent: 0, text: "La conscience comme lien", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 17, parent: 16, text: "Trait d'union entre ce qui a été et ce qui sera", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 18, parent: 16, text: "Pont jeté entre le passé et l'avenir", color: "#ffb74d", fontSize: 14, italic: true },
+        { key: 19, parent: 16, text: "Mémoire + anticipation = durée vivante", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Synthèse
+        { key: 20, parent: 0, text: "Synthèse", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 21, parent: 20, text: "La conscience est mémoire", color: "#ba68c8", fontSize: 14 },
+        { key: 22, parent: 20, text: "La conscience est anticipation", color: "#ba68c8", fontSize: 14 },
+        { key: 23, parent: 20, text: "La conscience est un pont entre passé et avenir", color: "#ba68c8", fontSize: 14, bold: true },
+    ],
+    links: [],
+    nextKey: 24
+};

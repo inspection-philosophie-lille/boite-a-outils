@@ -620,3 +620,45 @@ const questions = [
 			explanation: "Ce texte est majeur car il inaugure une nouvelle conception de la condition humaine. Pascal y rompt avec l'anthropocentrisme traditionnel : l'homme n'est plus au centre du cosmos mais perdu entre deux infinis. Cette conception annonce la sensibilité moderne et contemporaine : l'angoisse existentielle, le sentiment d'absurde, la conscience de la finitude. Ce texte a influencé de nombreux philosophes et écrivains, de Kierkegaard à Sartre, de Baudelaire à Malraux. Il est l'un des textes fondateurs de la modernité philosophique."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "L'homme entre deux infinis selon PASCAL", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : L'infiniment grand
+        { key: 1, parent: 0, text: "L'infiniment grand", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Contempler la nature entière", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "La terre comme un point", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "Le tour du soleil comme une pointe délicate", color: "#e57373", fontSize: 13 },
+        { key: 5, parent: 1, text: "Le monde visible : trait imperceptible", color: "#e57373", fontSize: 13 },
+        { key: 6, parent: 1, text: "Qu'est-ce qu'un homme dans l'infini ?", color: "#e57373", fontSize: 14, italic: true },
+        
+        // Branche 2 : L'infiniment petit
+        { key: 7, parent: 0, text: "L'infiniment petit", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 8, parent: 7, text: "Une infinité d'univers", color: "#81c784", fontSize: 14 },
+        { key: 9, parent: 7, text: "Des cirons dans lesquels on retrouve tout", color: "#81c784", fontSize: 13 },
+        { key: 10, parent: 7, text: "Sans fin et sans repos", color: "#81c784", fontSize: 13 },
+        { key: 11, parent: 7, text: "Notre corps devient un colosse, un monde, un tout", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : La condition humaine
+        { key: 12, parent: 0, text: "Condition humaine", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 13, parent: 12, text: "Qu'est-ce que l'homme dans la nature ?", color: "#64b5f6", fontSize: 14, italic: true },
+        { key: 14, parent: 12, text: "Un néant à l'égard de l'infini", color: "#64b5f6", fontSize: 14 },
+        { key: 15, parent: 12, text: "Un tout à l'égard du néant", color: "#64b5f6", fontSize: 14 },
+        { key: 16, parent: 12, text: "Un milieu entre rien et tout", color: "#64b5f6", fontSize: 14, bold: true },
+        
+        // Branche 4 : Incapacité de connaître
+        { key: 17, parent: 0, text: "Incapacité de connaître", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 18, parent: 17, text: "Infiniment éloigné de comprendre les extrêmes", color: "#ffb74d", fontSize: 14 },
+        { key: 19, parent: 17, text: "La fin des choses et leur principe cachés", color: "#ffb74d", fontSize: 13 },
+        { key: 20, parent: 17, text: "Secret impénétrable", color: "#ffb74d", fontSize: 13 },
+        { key: 21, parent: 17, text: "Incapable de voir le néant d'où il est tiré", color: "#ffb74d", fontSize: 13 },
+        { key: 22, parent: 17, text: "Et l'infini où il est englouti", color: "#ffb74d", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 23
+};

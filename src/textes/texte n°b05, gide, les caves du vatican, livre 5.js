@@ -620,3 +620,48 @@ const questions = [
 		explanation: "Ce passage des Caves du Vatican est un passage majeur qui illustre la notion d'acte gratuit. Il est l'un des textes les plus célèbres de Gide et de la littérature française du XXe siècle. La scène du crime de Lafcadio est devenue emblématique de l'acte gratuit, concept qui a influencé de nombreux écrivains et philosophes, notamment les existentialistes. Ce passage pose des questions fondamentales sur la liberté, la morale, la responsabilité. Il marque une étape importante dans l'histoire du roman moderne, qui explore les profondeurs de la psyché et les limites de la liberté humaine."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "L'acte gratuit selon GIDE", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Le crime immotivé
+        { key: 1, parent: 0, text: "Le crime immotivé", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Quel embarras pour la police !", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Crime sans motif", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "Acte gratuit", color: "#e57373", fontSize: 14, bold: true },
+        
+        // Branche 2 : Curiosité de soi
+        { key: 5, parent: 0, text: "Curiosité de soi", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Ce n'est pas tant des événements que j'ai curiosité", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Que de moi-même", color: "#81c784", fontSize: 14, bold: true },
+        { key: 8, parent: 5, text: "Tel se croit capable de tout, qui recule", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 5, text: "Qu'il y a loin entre l'imagination et le fait !", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Le jeu et le risque
+        { key: 10, parent: 0, text: "Le jeu et le risque", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 11, parent: 10, text: "Pas plus le droit de reprendre son coup qu'aux échecs", color: "#64b5f6", fontSize: 13 },
+        { key: 12, parent: 10, text: "Qui prévoirait tous les risques, le jeu perdrait tout intérêt", color: "#64b5f6", fontSize: 13 },
+        { key: 13, parent: 10, text: "Le risque donne de l'intérêt à l'action", color: "#64b5f6", fontSize: 14 },
+        
+        // Branche 4 : Le compte à rebours
+        { key: 14, parent: 0, text: "Le compte à rebours", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 15, parent: 14, text: "Si je puis compter jusqu'à douze", color: "#ffb74d", fontSize: 14 },
+        { key: 16, parent: 14, text: "Avant de voir dans la campagne quelque feu", color: "#ffb74d", fontSize: 13 },
+        { key: 17, parent: 14, text: "Le tapir est sauvé", color: "#ffb74d", fontSize: 14 },
+        { key: 18, parent: 14, text: "Je commence : Une, deux, trois...", color: "#ffb74d", fontSize: 13 },
+        { key: 19, parent: 14, text: "Dix, un feu...", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Le crime
+        { key: 20, parent: 0, text: "Le crime", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 21, parent: 20, text: "Fleurissoire se penche pour rectifier sa cravate", color: "#ba68c8", fontSize: 13 },
+        { key: 22, parent: 20, text: "La double fermeture joue aisément", color: "#ba68c8", fontSize: 13 },
+        { key: 23, parent: 20, text: "Fleurissoire ne poussa pas un cri", color: "#ba68c8", fontSize: 14, bold: true },
+    ],
+    links: [],
+    nextKey: 24
+};

@@ -620,3 +620,51 @@ const questions = [
 			explanation: "Le Lachès est un dialogue de jeunesse de Platon qui explore la définition du courage et illustre la méthode socratique. Comme d'autres dialogues aporetiques (Euthyphron, Charmide), il se termine sans conclusion définitive, laissant le lecteur face à sa propre ignorance. Son importance réside dans la démonstration de la méthode elenctique et dans la préparation de la théorie platonicienne des vertus et des Formes."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Qu'est-ce que le courage ? (Lachès)", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Question de Socrate
+        { key: 1, parent: 0, text: "Question de Socrate", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Qu'est-ce que le courage ?", color: "#e57373", fontSize: 14, bold: true },
+        { key: 3, parent: 1, text: "Recherche de l'essence universelle", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "Non des exemples particuliers", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Définition de Lachès
+        { key: 5, parent: 0, text: "Définition de Lachès", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Ce n'est pas difficile à dire", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Faire tête à l'ennemi en gardant son rang", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 5, text: "Sans prendre la fuite", color: "#81c784", fontSize: 14 },
+        { key: 9, parent: 5, text: "Conception militaire et statique", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Objection de Socrate
+        { key: 10, parent: 0, text: "Objection de Socrate", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 11, parent: 10, text: "Que dire de celui qui combat en fuyant ?", color: "#64b5f6", fontSize: 14 },
+        { key: 12, parent: 10, text: "Exemple des Scythes", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 12, text: "Combatent aussi bien en fuyant qu'en chargeant", color: "#64b5f6", fontSize: 13 },
+        { key: 14, parent: 10, text: "Réaction de Lachès : Comment, en fuyant ?", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : Distinction de Lachès
+        { key: 15, parent: 0, text: "Distinction de Lachès", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 16, parent: 15, text: "Cavalerie scythe vs infanterie grecque", color: "#ffb74d", fontSize: 14 },
+        { key: 17, parent: 15, text: "La cavalerie peut combattre en fuyant", color: "#ffb74d", fontSize: 13 },
+        { key: 18, parent: 15, text: "Mais la grosse infanterie des Grecs, non", color: "#ffb74d", fontSize: 13 },
+        { key: 19, parent: 15, text: "Tentative de sauver sa définition", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Contre-exemple des Lacédémoniens
+        { key: 20, parent: 0, text: "Contre-exemple des Lacédémoniens", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 21, parent: 20, text: "À Platées, devant les gerrophores", color: "#ba68c8", fontSize: 14 },
+        { key: 22, parent: 20, text: "Ne combattirent pas de pied ferme", color: "#ba68c8", fontSize: 13 },
+        { key: 23, parent: 20, text: "Prirent la fuite", color: "#ba68c8", fontSize: 13 },
+        { key: 24, parent: 20, text: "Puis firent volte-face", color: "#ba68c8", fontSize: 13 },
+        { key: 25, parent: 20, text: "Manœuvre imitée de la cavalerie", color: "#ba68c8", fontSize: 13 },
+        { key: 26, parent: 20, text: "Gagnèrent la bataille", color: "#ba68c8", fontSize: 14, bold: true },
+    ],
+    links: [],
+    nextKey: 27
+};

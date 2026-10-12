@@ -620,3 +620,50 @@ const questions = [
 		explanation: "Ce texte de Pascal est majeur car il fonde une épistémologie du cœur et critique le rationalisme exclusif. Pascal y affirme que la connaissance ne se réduit pas à la raison : le cœur a sa propre manière de connaître, irréductible à la démonstration rationnelle. Les premiers principes sont connus par le cœur, et la raison doit s'appuyer sur eux. Cette conception a profondément influencé la philosophie moderne et contemporaine, notamment la phénoménologie et l'herméneutique. Elle a aussi contribué à la critique du rationalisme cartésien et à la reconnaissance d'autres modes de connaissance. Ce texte est l'un des fondements de l'épistémologie pascalienne."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Cœur et raison selon PASCAL", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Deux voies de connaissance
+        { key: 1, parent: 0, text: "Deux voies de connaissance", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Par la raison", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Par le cœur", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "Les premiers principes connus par le cœur", color: "#e57373", fontSize: 13 },
+        { key: 5, parent: 1, text: "Le raisonnement ne peut les combattre", color: "#e57373", fontSize: 13 },
+        
+        // Branche 2 : Critique des pyrrhoniens
+        { key: 6, parent: 0, text: "Critique des pyrrhoniens", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 7, parent: 6, text: "Travaillent inutilement", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 6, text: "Nous savons que nous ne rêvons point", color: "#81c784", fontSize: 14 },
+        { key: 9, parent: 6, text: "Impuissance de le prouver par raison", color: "#81c784", fontSize: 13 },
+        { key: 10, parent: 6, text: "Faiblesse de la raison ≠ incertitude de la connaissance", color: "#81c784", fontSize: 14, bold: true },
+        
+        // Branche 3 : Certitude des premiers principes
+        { key: 11, parent: 0, text: "Certitude des premiers principes", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 12, parent: 11, text: "Espace, temps, mouvement, nombres", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 11, text: "Aussi ferme qu'aucune de nos connaissances", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 14, parent: 11, text: "La raison s'appuie sur le cœur", color: "#64b5f6", fontSize: 13 },
+        
+        // Branche 4 : Sentir et conclure
+        { key: 15, parent: 0, text: "Sentir et conclure", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 16, parent: 15, text: "Le cœur sent qu'il y a trois dimensions", color: "#ffb74d", fontSize: 14 },
+        { key: 17, parent: 15, text: "Que les nombres sont infinis", color: "#ffb74d", fontSize: 13 },
+        { key: 18, parent: 15, text: "La raison démontre ensuite", color: "#ffb74d", fontSize: 13 },
+        { key: 19, parent: 15, text: "Les principes se sentent", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 20, parent: 15, text: "Les propositions se concluent", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 21, parent: 15, text: "Le tout avec certitude, par différentes voies", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Complémentarité
+        { key: 22, parent: 0, text: "Complémentarité", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 23, parent: 22, text: "Ridicule de demander au cœur des preuves", color: "#ba68c8", fontSize: 14 },
+        { key: 24, parent: 22, text: "Ridicule de demander à la raison un sentiment", color: "#ba68c8", fontSize: 14 },
+        { key: 25, parent: 22, text: "Chaque faculté a sa voie propre", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 26
+};

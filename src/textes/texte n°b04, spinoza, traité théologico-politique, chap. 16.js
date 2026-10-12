@@ -620,3 +620,49 @@ const questions = [
 			explanation: "Ce texte du Traité théologico-politique est majeur car il fonde une conception rationnelle de la liberté politique. Spinoza y articule liberté individuelle et liberté politique en montrant que la loi rationnelle est le moyen de la liberté. Cette conception a influencé la philosophie politique moderne, notamment les théories du contrat social et de l'Etat de droit. Elle a aussi contribué à la défense de la liberté de penser et d'expression. Ce texte est l'un des fondements de la tradition libérale et républicaine en philosophie politique."
 		}
 ];
+
+// ============================================
+// CARTE MENTALE
+// ============================================
+
+const carte = {
+    nodes: [
+        { key: 0, parent: null, text: "Liberté et esclavage selon SPINOZA", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        
+        // Branche 1 : Opinion commune
+        { key: 1, parent: 0, text: "Opinion commune", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "Esclave = celui qui agit par commandement", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "Homme libre = celui qui agit selon son bon plaisir", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "Cela n'est pas absolument vrai", color: "#e57373", fontSize: 13, bold: true },
+        
+        // Branche 2 : Le pire esclavage
+        { key: 5, parent: 0, text: "Le pire esclavage", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 6, parent: 5, text: "Être captif de son plaisir", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "Incapable de voir et faire ce qui est vraiment utile", color: "#81c784", fontSize: 13 },
+        { key: 8, parent: 5, text: "La liberté n'est qu'à celui qui vit sous la conduite de la Raison", color: "#81c784", fontSize: 14 },
+        { key: 9, parent: 8, text: "De son entier consentement", color: "#81c784", fontSize: 13 },
+        
+        // Branche 3 : Obéissance
+        { key: 10, parent: 0, text: "Obéissance", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 11, parent: 10, text: "Action par commandement", color: "#64b5f6", fontSize: 14 },
+        { key: 12, parent: 10, text: "Ôte en quelque manière la liberté", color: "#64b5f6", fontSize: 13 },
+        { key: 13, parent: 10, text: "Ne fait pas sur-le-champ un esclavage", color: "#64b5f6", fontSize: 13 },
+        { key: 14, parent: 10, text: "C'est la raison déterminante de l'action qui le fait", color: "#64b5f6", fontSize: 14, bold: true },
+        
+        // Branche 4 : Esclave vs sujet
+        { key: 15, parent: 0, text: "Esclave vs sujet", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 16, parent: 15, text: "Esclave : fin de l'action = utilité du maître", color: "#ffb74d", fontSize: 14 },
+        { key: 17, parent: 16, text: "Inutile à lui-même", color: "#ffb74d", fontSize: 13 },
+        { key: 18, parent: 15, text: "Sujet : fin de l'action = salut de tout le peuple", color: "#ffb74d", fontSize: 14 },
+        { key: 19, parent: 18, text: "Non de celui qui commande", color: "#ffb74d", fontSize: 13 },
+        { key: 20, parent: 18, text: "Utile à lui-même par le bien commun", color: "#ffb74d", fontSize: 13 },
+        
+        // Branche 5 : Etat le plus libre
+        { key: 21, parent: 0, text: "Etat le plus libre", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 22, parent: 21, text: "Lois fondées en droite Raison", color: "#ba68c8", fontSize: 14 },
+        { key: 23, parent: 21, text: "Chacun, dès qu'il le veut, peut être libre", color: "#ba68c8", fontSize: 14 },
+        { key: 24, parent: 21, text: "Vivre de son entier consentement sous la conduite de la Raison", color: "#ba68c8", fontSize: 13 },
+    ],
+    links: [],
+    nextKey: 25
+};
