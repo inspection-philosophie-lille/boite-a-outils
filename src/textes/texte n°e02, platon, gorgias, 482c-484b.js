@@ -529,36 +529,31 @@ const carte = {
     nodes: [
         { key: 0, parent: null, text: "Plaisir, vertu et justice selon PLATON", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
-        // Branche 1 : La vie bonne
         { key: 1, parent: 0, text: "La vie bonne", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Pas uniquement la conservation de soi", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "Mais une existence meilleure", color: "#e57373", fontSize: 14 },
-        { key: 4, parent: 1, text: "Réfléchir à ce qui est véritablement utile", color: "#e57373", fontSize: 14 },
+        { key: 2, parent: 1, text: "[2] Pas uniquement la conservation de soi", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "[2] Mais une existence meilleure", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "[2] Réfléchir à ce qui est véritablement utile", color: "#e57373", fontSize: 14 },
         
-        // Branche 2 : Plaisir et bien
         { key: 5, parent: 0, text: "Plaisir et bien", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 6, parent: 5, text: "Ce n'est pas n'importe quel plaisir qui est un bien", color: "#81c784", fontSize: 14 },
-        { key: 7, parent: 5, text: "La plupart des plaisirs sont mauvais", color: "#81c784", fontSize: 14 },
-        { key: 8, parent: 5, text: "L'homme tempérant qui fuit les plaisirs mauvais est heureux", color: "#81c784", fontSize: 13 },
-        { key: 9, parent: 5, text: "L'intempérant est malheureux", color: "#81c784", fontSize: 13 },
+        { key: 6, parent: 5, text: "[3] Ce n'est pas n'importe quel plaisir qui est un bien", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "[4] La plupart des plaisirs sont mauvais", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 5, text: "[5] L'homme tempérant qui fuit les plaisirs mauvais est heureux", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 5, text: "[5] L'intempérant est malheureux", color: "#81c784", fontSize: 13 },
         
-        // Branche 3 : La vertu
         { key: 10, parent: 0, text: "La vertu", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 11, parent: 10, text: "Ne consiste pas à assouvir ses désirs", color: "#64b5f6", fontSize: 14 },
-        { key: 12, parent: 10, text: "Mais à les maîtriser par la raison", color: "#64b5f6", fontSize: 14, bold: true },
-        { key: 13, parent: 10, text: "La raison doit gouverner les désirs", color: "#64b5f6", fontSize: 13 },
+        { key: 11, parent: 10, text: "[6] Ne consiste pas à assouvir ses désirs", color: "#64b5f6", fontSize: 14 },
+        { key: 12, parent: 10, text: "[6] Mais à les maîtriser par la raison", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 13, parent: 10, text: "[6] La raison doit gouverner les désirs", color: "#64b5f6", fontSize: 13 },
         
-        // Branche 4 : Justice et loi
         { key: 14, parent: 0, text: "Justice et loi", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 15, parent: 14, text: "Ce que tu appelles justice naturelle n'est qu'une loi du plus fort", color: "#ffb74d", fontSize: 13 },
-        { key: 16, parent: 14, text: "La loi véritable vise l'avantage commun", color: "#ffb74d", fontSize: 14, bold: true },
-        { key: 17, parent: 14, text: "Et non l'intérêt particulier", color: "#ffb74d", fontSize: 13 },
+        { key: 15, parent: 14, text: "[7] Ce que tu appelles justice naturelle n'est qu'une loi du plus fort", color: "#ffb74d", fontSize: 13 },
+        { key: 16, parent: 14, text: "[8] La loi véritable vise l'avantage commun", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 17, parent: 14, text: "[8] Et non l'intérêt particulier", color: "#ffb74d", fontSize: 13 },
         
-        // Branche 5 : Le tyran
         { key: 18, parent: 0, text: "Le tyran", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 19, parent: 18, text: "Le plus malheureux des hommes", color: "#ba68c8", fontSize: 14, bold: true },
-        { key: 20, parent: 18, text: "Parce que son âme est en désordre", color: "#ba68c8", fontSize: 14 },
-        { key: 21, parent: 18, text: "Esclave de ses désirs", color: "#ba68c8", fontSize: 13 },
+        { key: 19, parent: 18, text: "[9] Le plus malheureux des hommes", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 20, parent: 18, text: "[9] Parce que son âme est en désordre", color: "#ba68c8", fontSize: 14 },
+        { key: 21, parent: 18, text: "[9] Esclave de ses désirs", color: "#ba68c8", fontSize: 13 },
     ],
     links: [],
     nextKey: 22

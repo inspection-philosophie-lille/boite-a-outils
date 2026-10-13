@@ -531,37 +531,37 @@ const carte = {
         
         // Branche 1 : Morale des maîtres
         { key: 1, parent: 0, text: "Morale des maîtres", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Les forts appellent « bon » leur propre mode d'existence", color: "#e57373", fontSize: 14 },
+        { key: 2, parent: 1, text: "[2] Les forts appellent « bon » leur propre mode d'existence", color: "#e57373", fontSize: 14 },
         { key: 3, parent: 1, text: "Affirmation de soi", color: "#e57373", fontSize: 14 },
-        { key: 4, parent: 1, text: "Affirme joyeusement la vie", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "[10] Affirme joyeusement la vie", color: "#e57373", fontSize: 13 },
         { key: 5, parent: 1, text: "Active, noble, aristocratique", color: "#e57373", fontSize: 13 },
         
         // Branche 2 : Morale des esclaves
         { key: 6, parent: 0, text: "Morale des esclaves", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 7, parent: 6, text: "Les faibles qualifient de « mauvais » tout ce qui est fort", color: "#81c784", fontSize: 14 },
-        { key: 8, parent: 6, text: "Négation de l'autre", color: "#81c784", fontSize: 14 },
-        { key: 9, parent: 6, text: "A besoin de poser un monde extérieur hostile", color: "#81c784", fontSize: 13 },
+        { key: 7, parent: 6, text: "[3] Les faibles qualifient de « mauvais » tout ce qui est fort", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 6, text: "[4] Négation de l'autre", color: "#81c784", fontSize: 14 },
+        { key: 9, parent: 6, text: "[5] A besoin de poser un monde extérieur hostile", color: "#81c784", fontSize: 13 },
         { key: 10, parent: 6, text: "Réactive, servile, négative", color: "#81c784", fontSize: 13 },
         
         // Branche 3 : Le ressentiment
         { key: 11, parent: 0, text: "Le ressentiment", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 12, parent: 11, text: "Impuissance à agir directement", color: "#64b5f6", fontSize: 14 },
-        { key: 13, parent: 11, text: "Vengeance imaginaire", color: "#64b5f6", fontSize: 14 },
-        { key: 14, parent: 11, text: "Invente le « sujet libre » et le « méchant »", color: "#64b5f6", fontSize: 13 },
-        { key: 15, parent: 11, text: "Crée des valeurs réactives", color: "#64b5f6", fontSize: 13 },
-        { key: 16, parent: 15, text: "Altruisme, pitié", color: "#64b5f6", fontSize: 13 },
+        { key: 12, parent: 11, text: "[8] Impuissance à agir directement", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 11, text: "[7] Vengeance imaginaire", color: "#64b5f6", fontSize: 14 },
+        { key: 14, parent: 11, text: "[6] Invente le « sujet libre » et le « méchant »", color: "#64b5f6", fontSize: 13 },
+        { key: 15, parent: 11, text: "[9] Crée des valeurs réactives", color: "#64b5f6", fontSize: 13 },
+        { key: 16, parent: 15, text: "[9] Altruisme, pitié", color: "#64b5f6", fontSize: 13 },
         
         // Branche 4 : Opposition fondamentale
         { key: 17, parent: 0, text: "Opposition fondamentale", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 18, parent: 17, text: "Morale des maîtres vs morale des esclaves", color: "#ffb74d", fontSize: 14 },
-        { key: 19, parent: 17, text: "S'opposent radicalement", color: "#ffb74d", fontSize: 14, bold: true },
-        { key: 20, parent: 17, text: "Affirmation de soi vs négation de l'autre", color: "#ffb74d", fontSize: 13 },
-        { key: 21, parent: 17, text: "Affirmation de la vie vs négation de la vie", color: "#ffb74d", fontSize: 13 },
+        { key: 18, parent: 17, text: "Morale des maîtres et morale des esclaves", color: "#ffb74d", fontSize: 14 },
+        { key: 19, parent: 17, text: "[1] S'opposent radicalement", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 20, parent: 17, text: "[4] Affirmation de soi vs négation de l'autre", color: "#ffb74d", fontSize: 13 },
+        { key: 21, parent: 17, text: "[10] Affirmation de la vie vs négation de la vie", color: "#ffb74d", fontSize: 13 },
         
         // Branche 5 : Dépassement
         { key: 22, parent: 0, text: "Dépassement", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 23, parent: 22, text: "Il faut dépasser la morale", color: "#ba68c8", fontSize: 14 },
-        { key: 24, parent: 22, text: "Pour une évaluation qui dise « oui » à la vie", color: "#ba68c8", fontSize: 14 },
+        { key: 23, parent: 22, text: "[11] Il faut dépasser la morale", color: "#ba68c8", fontSize: 14 },
+        { key: 24, parent: 22, text: "[11] Pour une évaluation qui dise « oui » à la vie", color: "#ba68c8", fontSize: 14 },
         { key: 25, parent: 22, text: "Création de nouvelles valeurs", color: "#ba68c8", fontSize: 13 },
     ],
     links: [],

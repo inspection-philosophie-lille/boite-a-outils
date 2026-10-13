@@ -531,35 +531,35 @@ const carte = {
         
         // Branche 1 : L'impératif catégorique
         { key: 1, parent: 0, text: "L'impératif catégorique", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Unique", color: "#e57373", fontSize: 14, bold: true },
-        { key: 3, parent: 1, text: "Agis uniquement d'après la maxime...", color: "#e57373", fontSize: 14 },
-        { key: 4, parent: 1, text: "...grâce à laquelle tu peux vouloir qu'elle devienne une loi universelle", color: "#e57373", fontSize: 13 },
-        { key: 5, parent: 1, text: "Tous les impératifs du devoir en dérivent", color: "#e57373", fontSize: 13 },
+        { key: 2, parent: 1, text: "[1] Unique", color: "#e57373", fontSize: 14, bold: true },
+        { key: 3, parent: 1, text: "[1] Définition", color: "#e57373", fontSize: 13 },
+        { key: 5, parent: 1, text: "[2] Tous les impératifs du devoir en dérivent", color: "#e57373", fontSize: 13 },
+        { key: 6, parent: 1, text: "[3] Il reste problématique de savoir si un tel impératif existe absolument", color: "#e57373", fontSize: 13 },
         
         // Branche 2 : La volonté rationnelle
-        { key: 6, parent: 0, text: "La volonté rationnelle", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 7, parent: 6, text: "L'impératif s'impose à toute volonté rationnelle", color: "#81c784", fontSize: 14 },
-        { key: 8, parent: 6, text: "L'être raisonnable se conçoit comme législateur universel", color: "#81c784", fontSize: 14, bold: true },
-        { key: 9, parent: 6, text: "Autonomie de la volonté", color: "#81c784", fontSize: 13 },
+        { key: 7, parent: 0, text: "La volonté rationnelle", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 8, parent: 7, text: "[4] L'impératif s'impose à toute volonté rationnelle", color: "#81c784", fontSize: 14 },
+        { key: 9, parent: 7, text: "[5] L'être raisonnable se conçoit comme législateur universel", color: "#81c784", fontSize: 14, bold: true },
+        { key: 10, parent: 7, text: "[5] Autonomie de la volonté", color: "#81c784", fontSize: 13 },
         
         // Branche 3 : La valeur des maximes
-        { key: 10, parent: 0, text: "La valeur des maximes", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 11, parent: 10, text: "Ne réside pas dans les effets attendus", color: "#64b5f6", fontSize: 14 },
-        { key: 12, parent: 10, text: "Mais dans le principe du vouloir", color: "#64b5f6", fontSize: 14, bold: true },
-        { key: 13, parent: 10, text: "La moralité dépend de l'intention", color: "#64b5f6", fontSize: 13 },
+        { key: 11, parent: 0, text: "La valeur des maximes", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 12, parent: 11, text: "[6] Ne réside pas dans les effets attendus", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 11, text: "[6] Mais dans le principe du vouloir", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 14, parent: 11, text: "[7] La moralité dépend de l'intention", color: "#64b5f6", fontSize: 13 },
         
         // Branche 4 : La bonne volonté
-        { key: 14, parent: 0, text: "La bonne volonté", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 15, parent: 14, text: "Bonne non pas par ce qu'elle effectue", color: "#ffb74d", fontSize: 14 },
-        { key: 16, parent: 14, text: "Mais par son seul vouloir", color: "#ffb74d", fontSize: 14, bold: true },
-        { key: 17, parent: 14, text: "La moralité réside dans l'intention", color: "#ffb74d", fontSize: 13 },
+        { key: 15, parent: 0, text: "La bonne volonté", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 16, parent: 15, text: "[8] Bonne non pas par ce qu'elle effectue", color: "#ffb74d", fontSize: 14 },
+        { key: 17, parent: 15, text: "[8] Mais par son seul vouloir", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 18, parent: 15, text: "[8] La moralité réside dans l'intention", color: "#ffb74d", fontSize: 13 },
         
         // Branche 5 : Synthèse
-        { key: 18, parent: 0, text: "Synthèse", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 19, parent: 18, text: "Impératif catégorique = loi universelle", color: "#ba68c8", fontSize: 14 },
-        { key: 20, parent: 18, text: "Autonomie de la volonté", color: "#ba68c8", fontSize: 14 },
-        { key: 21, parent: 18, text: "Moralité = intention, non résultat", color: "#ba68c8", fontSize: 13 },
+        { key: 19, parent: 0, text: "[Synthèse] Éthique déontologique", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 20, parent: 19, text: "Impératif catégorique = loi universelle", color: "#ba68c8", fontSize: 14 },
+        { key: 21, parent: 19, text: "Autonomie de la volonté", color: "#ba68c8", fontSize: 14 },
+        { key: 22, parent: 19, text: "Moralité = intention, non résultat", color: "#ba68c8", fontSize: 13 },
     ],
     links: [],
-    nextKey: 22
+    nextKey: 23
 };

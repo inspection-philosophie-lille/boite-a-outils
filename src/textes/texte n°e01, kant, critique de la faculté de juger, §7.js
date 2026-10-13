@@ -413,7 +413,7 @@ const questions = [
             "ils sont strictement équivalents"
         ], 
         correct: 1,
-        explanation: "Pour Kant, le beau naturel (une fleur, un paysage) a une certaine supériorité sur le beau artistique (un tableau, une symphonie) en ce qu'il est plus purement désintéressé. Devant une fleur, nous ne pouvons même pas soupçonner qu'elle ait été faite pour nous plaire ; sa beauté semble donc plus « gratuite », plus indépendante de toute intention humaine. En revanche, une œuvre d'art a été produite par un être humain avec l'intention (au moins implicite) de plaire. Cette intention pourrait corrompre le désintéressement de notre plaisir. Cependant, Kant reconnaît aussi que l'art a sa propre dignité : il exprime l'esprit humain, la liberté créatrice, les idées esthétiques. Une œuvre d'art réussie est même « plus belle » que la nature en un sens, car elle montre comment l'esprit humain peut créer des formes qui semblent naturelles tout en étant des produits de la liberté. Finalement, Kant établit une complémentarité : la nature nous offre des modèles de beauté pure, désintéressée ; l'art nous montre comment l'esprit humain peut, à partir de sa liberté, produire à son tour de la beauté. Les deux formes de beauté nous révèlent différentes dimensions de notre relation au monde : la réceptivité désintéressée et la créativité libre."
+        explanation: "Pour Kant, le beau naturel (une fleur, un paysage) a une certaine supériorité sur le beau artistique (un tableau, une symphonie) en ce qu'il est plus purement désintéressé. Devant une fleur, nous ne pouvons même pas soupçonner qu'elle ait été faite pour nous plaire ; sa beauté semble donc plus « gratuite », plus indépendante de toute intention humaine. En revanche, une œuvre d'art a été produite par un être humain avec l'intention (au moins implicite) de plaire. Cette intention pourrait corrompre le désintéressement de notre plaisir. Cependant, Kant reconnaît aussi que l'art a sa propre dignité : il exprime l'esprit humain, la liberté créatrice, les idées esthétiques. Une œuvre d'art réussie est même « plus belle » que la nature en un sens, car elle montre comment l'esprit humain peut, à partir de sa liberté, produire à son tour de la beauté. Finalement, Kant établit une complémentarité : la nature nous offre des modèles de beauté pure, désintéressée ; l'art nous montre comment l'esprit humain peut, à partir de sa liberté, produire à son tour de la beauté. Les deux formes de beauté nous révèlent différentes dimensions de notre relation au monde : la réceptivité désintéressée et la créativité libre."
     },
 
     // Question n°34
@@ -629,43 +629,37 @@ const carte = {
     nodes: [
         { key: 0, parent: null, text: "Agréable et beau selon KANT", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
-        // Branche 1 : L'agréable
         { key: 1, parent: 0, text: "L'agréable", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Jugement fondé sur un sentiment personnel", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "Restreint à sa seule personne", color: "#e57373", fontSize: 14 },
-        { key: 4, parent: 1, text: "Exemple : le vin des Canaries", color: "#e57373", fontSize: 13 },
-        { key: 5, parent: 1, text: "« Cela m'est agréable »", color: "#e57373", fontSize: 13 },
-        { key: 6, parent: 1, text: "Couleur violette, instruments à vent/cordes", color: "#e57373", fontSize: 12 },
+        { key: 2, parent: 1, text: "[1] Jugement fondé sur un sentiment personnel", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "[1] Restreint à sa seule personne", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "[2] Exemple : le vin des Canaries", color: "#e57373", fontSize: 13 },
+        { key: 5, parent: 1, text: "[2] « Cela m'est agréable »", color: "#e57373", fontSize: 13 },
+        { key: 6, parent: 1, text: "[4-5] Couleur violette, instruments à vent/cordes", color: "#e57373", fontSize: 12 },
         
-        // Branche 2 : À chacun son goût
-        { key: 7, parent: 0, text: "« À chacun son goût »", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 8, parent: 7, text: "Valable pour ce qui est agréable", color: "#81c784", fontSize: 14 },
-        { key: 9, parent: 7, text: "Ce serait folie de discuter à ce propos", color: "#81c784", fontSize: 13 },
-        { key: 10, parent: 7, text: "Les jugements ne sont pas logiquement opposés", color: "#81c784", fontSize: 13 },
+        { key: 7, parent: 0, text: "Chacun ses goûts", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 8, parent: 7, text: "[6] Valable pour ce qui est agréable", color: "#81c784", fontSize: 14 },
+        { key: 9, parent: 7, text: "[6] Ce serait folie de discuter à ce propos", color: "#81c784", fontSize: 13 },
+        { key: 10, parent: 7, text: "[6] Les jugements ne sont pas logiquement opposés", color: "#81c784", fontSize: 13 },
         
-        // Branche 3 : Le beau
         { key: 11, parent: 0, text: "Le beau", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 12, parent: 11, text: "Il en va tout autrement", color: "#64b5f6", fontSize: 14 },
-        { key: 13, parent: 11, text: "Ridicule de dire « beau pour moi »", color: "#64b5f6", fontSize: 14 },
-        { key: 14, parent: 11, text: "Il ne doit pas appeler beau ce qui ne plaît qu'à lui", color: "#64b5f6", fontSize: 13 },
+        { key: 12, parent: 11, text: "[7] Il en va tout autrement", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 11, text: "[8] Ridicule de dire « beau pour moi »", color: "#64b5f6", fontSize: 14 },
+        { key: 14, parent: 11, text: "[9] Il ne doit pas appeler beau ce qui ne plaît qu'à lui", color: "#64b5f6", fontSize: 13 },
         
-        // Branche 4 : Prétention à l'universalité
         { key: 15, parent: 0, text: "Prétention à l'universalité", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 16, parent: 15, text: "Attribue aux autres la même satisfaction", color: "#ffb74d", fontSize: 14 },
-        { key: 17, parent: 15, text: "Ne juge pas seulement pour lui, mais pour autrui", color: "#ffb74d", fontSize: 13 },
-        { key: 18, parent: 15, text: "Parle de la beauté comme propriété des choses", color: "#ffb74d", fontSize: 13 },
-        { key: 19, parent: 15, text: "Exige l'adhésion des autres", color: "#ffb74d", fontSize: 14 },
+        { key: 16, parent: 15, text: "[10] Attribue aux autres la même satisfaction", color: "#ffb74d", fontSize: 14 },
+        { key: 17, parent: 15, text: "[10] Ne juge pas seulement pour lui, mais pour autrui", color: "#ffb74d", fontSize: 13 },
+        { key: 18, parent: 15, text: "[10] Parle de la beauté comme propriété des choses", color: "#ffb74d", fontSize: 13 },
+        { key: 19, parent: 15, text: "[11] Exige l'adhésion des autres", color: "#ffb74d", fontSize: 14 },
         
-        // Branche 5 : Réactions au désaccord
         { key: 20, parent: 0, text: "Réactions au désaccord", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 21, parent: 20, text: "Blâme ceux qui jugent autrement", color: "#ba68c8", fontSize: 14 },
-        { key: 22, parent: 20, text: "Leur dénie un goût", color: "#ba68c8", fontSize: 13 },
-        { key: 23, parent: 20, text: "On ne peut dire « À chacun son goût » pour le beau", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 21, parent: 20, text: "[12] Blâme ceux qui jugent autrement", color: "#ba68c8", fontSize: 14 },
+        { key: 22, parent: 20, text: "[12] Leur dénie un goût", color: "#ba68c8", fontSize: 13 },
+        { key: 23, parent: 20, text: "[12] On ne peut dire « À chacun son goût » pour le beau", color: "#ba68c8", fontSize: 14, bold: true },
         
-        // Branche 6 : Conclusion
         { key: 24, parent: 0, text: "Conclusion", color: "#4db6ac", dir: "left", bold: true, fontSize: 16 },
-        { key: 25, parent: 24, text: "Sinon : le goût n'existe pas", color: "#4db6ac", fontSize: 14 },
-        { key: 26, parent: 24, text: "Pas de jugement esthétique prétendant à l'assentiment de tous", color: "#4db6ac", fontSize: 13 },
+        { key: 25, parent: 24, text: "[13] Sinon : le goût n'existe pas", color: "#4db6ac", fontSize: 14 },
+        { key: 26, parent: 24, text: "[13] Pas de jugement esthétique prétendant à l'assentiment de tous", color: "#4db6ac", fontSize: 13 },
     ],
     links: [],
     nextKey: 27

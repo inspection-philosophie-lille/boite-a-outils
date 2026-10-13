@@ -531,34 +531,35 @@ const carte = {
         
         // Branche 1 : Le problème fondamental
         { key: 1, parent: 0, text: "Problème fondamental", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Trouver une forme d'association", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "Qui défend et protège la personne et les biens", color: "#e57373", fontSize: 13 },
-        { key: 4, parent: 1, text: "Par laquelle chacun, s'unissant à tous, n'obéisse qu'à lui-même", color: "#e57373", fontSize: 13 },
-        { key: 5, parent: 1, text: "Et reste aussi libre qu'auparavant", color: "#e57373", fontSize: 13 },
+        { key: 2, parent: 1, text: "[1] Trouver une forme d'association", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "[1] Qui défend et protège la personne et les biens", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "[1] Par laquelle chacun, s'unissant à tous, n'obéisse qu'à lui-même", color: "#e57373", fontSize: 13 },
+        { key: 5, parent: 1, text: "[1] Et reste aussi libre qu'auparavant", color: "#e57373", fontSize: 13 },
+        { key: 6, parent: 1, text: "[2] Tel est le problème dont le contrat social donne la solution", color: "#e57373", fontSize: 14, bold: true },
         
         // Branche 2 : La clause unique
-        { key: 6, parent: 0, text: "Clause unique", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 7, parent: 6, text: "L'aliénation totale de chaque associé", color: "#81c784", fontSize: 14, bold: true },
-        { key: 8, parent: 6, text: "Avec tous ses droits à toute la communauté", color: "#81c784", fontSize: 13 },
+        { key: 7, parent: 0, text: "Clause unique", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 8, parent: 7, text: "[3] L'aliénation totale de chaque associé", color: "#81c784", fontSize: 14, bold: true },
+        { key: 9, parent: 7, text: "[3] Avec tous ses droits à toute la communauté", color: "#81c784", fontSize: 13 },
         
         // Branche 3 : Conséquences de l'aliénation
-        { key: 9, parent: 0, text: "Conséquences de l'aliénation", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 10, parent: 9, text: "Chacun se donnant tout entier, la condition est égale pour tous", color: "#64b5f6", fontSize: 14 },
-        { key: 11, parent: 9, text: "Nul n'a intérêt à la rendre onéreuse aux autres", color: "#64b5f6", fontSize: 13 },
-        { key: 12, parent: 9, text: "L'aliénation sans réserve rend l'union parfaite", color: "#64b5f6", fontSize: 13 },
-        { key: 13, parent: 9, text: "Chacun se donnant à tous ne se donne à personne", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 10, parent: 0, text: "Conséquences de l'aliénation", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 11, parent: 10, text: "[4] Chacun se donnant tout entier, la condition est égale pour tous", color: "#64b5f6", fontSize: 14 },
+        { key: 12, parent: 10, text: "[5] Nul n'a intérêt à la rendre onéreuse aux autres", color: "#64b5f6", fontSize: 13 },
+        { key: 13, parent: 10, text: "[6] L'aliénation sans réserve rend l'union parfaite", color: "#64b5f6", fontSize: 13 },
+        { key: 14, parent: 10, text: "[7] Chacun se donnant à tous ne se donne à personne", color: "#64b5f6", fontSize: 14, bold: true },
         
         // Branche 4 : Le gain
-        { key: 14, parent: 0, text: "Le gain", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 15, parent: 14, text: "On acquiert le même droit qu'on cède sur soi", color: "#ffb74d", fontSize: 14 },
-        { key: 16, parent: 14, text: "On gagne l'équivalent de tout ce qu'on perd", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 15, parent: 0, text: "Le gain", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 16, parent: 15, text: "[8] On acquiert le même droit qu'on cède sur soi", color: "#ffb74d", fontSize: 14 },
+        { key: 17, parent: 15, text: "[8] On gagne l'équivalent de tout ce qu'on perd", color: "#ffb74d", fontSize: 14, bold: true },
         
         // Branche 5 : Le résultat
-        { key: 17, parent: 0, text: "Le résultat", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 18, parent: 17, text: "Un corps moral et collectif", color: "#ba68c8", fontSize: 14, bold: true },
-        { key: 19, parent: 17, text: "La République ou le corps politique", color: "#ba68c8", fontSize: 14 },
-        { key: 20, parent: 17, text: "Le peuple est souverain", color: "#ba68c8", fontSize: 13 },
+        { key: 18, parent: 0, text: "Le résultat", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 19, parent: 18, text: "[9] Un corps moral et collectif", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 20, parent: 18, text: "[9] La République ou le corps politique", color: "#ba68c8", fontSize: 14 },
+        { key: 21, parent: 18, text: "[9] Le peuple est souverain", color: "#ba68c8", fontSize: 13 },
     ],
     links: [],
-    nextKey: 21
+    nextKey: 22
 };

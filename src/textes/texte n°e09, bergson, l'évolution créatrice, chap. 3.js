@@ -200,324 +200,324 @@ const questions = [
         explanation: "Pour Bergson, le temps est hétérogène et créateur. Cette conception du temps est au cœur de la philosophie de Bergson : le temps n'est pas une succession d'instants identiques (temps spatialisé), mais une réalité hétérogène et créatrice (durée). La durée est hétérogène : les moments ne sont pas identiques mais qualitativement différents. Elle est créatrice : chaque moment apporte du nouveau, de l'imprévisible. Cette conception de la durée distingue Bergson des philosophes qui spatialisent le temps (Kant, Descartes). Pour Bergson, la durée est la réalité même de la vie intérieure et de la vie en général."
     },
     { 
-      question: "Question n°19 : Quel est le rapport entre l'intuition et l'instinct chez Bergson ?",
-      answers: [
-        "l'intuition est l'instinct devenu désintéressé", 
-        "l'intuition s'oppose à l'instinct", 
-        "l'intuition est identique à l'instinct"
-      ], 
-      correct: 1,
-      explanation: "Chez Bergson, l'intuition est l'instinct devenu désintéressé. Cette conception de l'intuition est au cœur de la philosophie de Bergson : l'intuition n'est pas une faculté mystérieuse, mais l'instinct qui s'est détaché de l'action utilitaire pour devenir une connaissance désintéressée. L'instinct est une faculté adaptée à la vie, mais il est intéressé (il vise l'action utile). L'intuition est l'instinct qui s'est élevé au niveau de la connaissance pure. Cette conception de l'intuition distingue Bergson des philosophes qui font de l'intuition une faculté inférieure (Descartes). Pour Bergson, l'intuition est la faculté de connaître la durée, la vie, la réalité mouvante."
+        question: "Question n°19 : Quel est le rapport entre l'intuition et l'instinct chez Bergson ?",
+        answers: [
+            "l'intuition est l'instinct devenu désintéressé", 
+            "l'intuition s'oppose à l'instinct", 
+            "l'intuition est identique à l'instinct"
+        ], 
+        correct: 1,
+        explanation: "Chez Bergson, l'intuition est l'instinct devenu désintéressé. Cette conception de l'intuition est au cœur de la philosophie de Bergson : l'intuition n'est pas une faculté mystérieuse, mais l'instinct qui s'est détaché de l'action utilitaire pour devenir une connaissance désintéressée. L'instinct est une faculté adaptée à la vie, mais il est intéressé (il vise l'action utile). L'intuition est l'instinct qui s'est élevé au niveau de la connaissance pure. Cette conception de l'intuition distingue Bergson des philosophes qui font de l'intuition une faculté inférieure (Descartes). Pour Bergson, l'intuition est la faculté de connaître la durée, la vie, la réalité mouvante."
     },
     { 
-      question: "Question n°20 : Quelle est la conception de la métaphysique chez Bergson ?",
-      answers: [
-        "une construction conceptuelle", 
-        "une expérience vécue de la durée", 
-        "une science exacte"
-      ], 
-      correct: 2,
-      explanation: "Pour Bergson, la métaphysique est une expérience vécue de la durée. Cette conception de la métaphysique est au cœur de la philosophie de Bergson : la métaphysique n'est pas une construction conceptuelle (comme chez Descartes, Kant), mais une expérience vécue de la durée. Elle consiste à coïncider avec le mouvement même de la réalité, à saisir la durée dans son mouvement créateur. Cette conception de la métaphysique comme expérience vécue distingue Bergson des philosophes intellectualistes. Pour Bergson, la métaphysique est une sympathie avec la vie, non une connaissance conceptuelle. Elle est la méthode de la philosophie intuitive."
+        question: "Question n°20 : Quelle est la conception de la métaphysique chez Bergson ?",
+        answers: [
+            "une construction conceptuelle", 
+            "une expérience vécue de la durée", 
+            "une science exacte"
+        ], 
+        correct: 2,
+        explanation: "Pour Bergson, la métaphysique est une expérience vécue de la durée. Cette conception de la métaphysique est au cœur de la philosophie de Bergson : la métaphysique n'est pas une construction conceptuelle (comme chez Descartes, Kant), mais une expérience vécue de la durée. Elle consiste à coïncider avec le mouvement même de la réalité, à saisir la durée dans son mouvement créateur. Cette conception de la métaphysique comme expérience vécue distingue Bergson des philosophes intellectualistes. Pour Bergson, la métaphysique est une sympathie avec la vie, non une connaissance conceptuelle. Elle est la méthode de la philosophie intuitive."
     },
     { 
-      question: "Question n°21 : Quel est le rapport entre l'intelligence et la matière chez Bergson ?",
-      answers: [
-        "l'intelligence est adaptée à la matière", 
-        "l'intelligence s'oppose à la matière", 
-        "l'intelligence est indépendante de la matière"
-      ], 
-      correct: 1,
-      explanation: "Chez Bergson, l'intelligence est adaptée à la matière. Cette conception de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence est tournée vers la matière inerte, elle est faite pour agir sur elle, pour la découper en parties manipulables. Elle applique à ce qui est mouvant des formes fixes ; elle analyse le devenir mais ne le saisit pas dans sa durée réelle. Cette conception pragmatique de l'intelligence distingue Bergson des philosophes qui font de l'intelligence la faculté de connaître la vérité (Descartes, Kant). Pour Bergson, l'intelligence est adaptée à la matière, non à la vie."
+        question: "Question n°21 : Quel est le rapport entre l'intelligence et la matière chez Bergson ?",
+        answers: [
+            "l'intelligence est adaptée à la matière", 
+            "l'intelligence s'oppose à la matière", 
+            "l'intelligence est indépendante de la matière"
+        ], 
+        correct: 1,
+        explanation: "Chez Bergson, l'intelligence est adaptée à la matière. Cette conception de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence est tournée vers la matière inerte, elle est faite pour agir sur elle, pour la découper en parties manipulables. Elle applique à ce qui est mouvant des formes fixes ; elle analyse le devenir mais ne le saisit pas dans sa durée réelle. Cette conception pragmatique de l'intelligence distingue Bergson des philosophes qui font de l'intelligence la faculté de connaître la vérité (Descartes, Kant). Pour Bergson, l'intelligence est adaptée à la matière, non à la vie."
     },
     { 
-      question: "Question n°22 : Quelle est la conception de l'instinct chez Bergson ?",
-      answers: [
-        "l'instinct est une faculté inférieure", 
-        "l'instinct est en affinité avec la vie", 
-        "l'instinct est une illusion"
-      ], 
-      correct: 2,
-      explanation: "Pour Bergson, l'instinct est en affinité avec la vie. Cette conception de l'instinct est au cœur de la philosophie de Bergson : l'instinct est une faculté adaptée à la vie, non à la matière inerte. Il est une sorte de sympathie qui permet à l'être vivant de coïncider avec le mouvement de la vie. Cette conception de l'instinct distingue Bergson des philosophes qui font de l'instinct une faculté inférieure (Descartes). Pour Bergson, l'instinct est une forme de connaissance, mais une connaissance immédiate et non intellectuelle. C'est cette affinité avec la vie que Bergson retrouvera dans l'intuition."
+        question: "Question n°22 : Quelle est la conception de l'instinct chez Bergson ?",
+        answers: [
+            "l'instinct est une faculté inférieure", 
+            "l'instinct est en affinité avec la vie", 
+            "l'instinct est une illusion"
+        ], 
+        correct: 2,
+        explanation: "Pour Bergson, l'instinct est en affinité avec la vie. Cette conception de l'instinct est au cœur de la philosophie de Bergson : l'instinct est une faculté adaptée à la vie, non à la matière inerte. Il est une sorte de sympathie qui permet à l'être vivant de coïncider avec le mouvement de la vie. Cette conception de l'instinct distingue Bergson des philosophes qui font de l'instinct une faculté inférieure (Descartes). Pour Bergson, l'instinct est une forme de connaissance, mais une connaissance immédiate et non intellectuelle. C'est cette affinité avec la vie que Bergson retrouvera dans l'intuition."
     },
     { 
-      question: "Question n°23 : Quel est le rapport entre l'intelligence et l'action chez Bergson ?",
-      answers: [
-        "l'intelligence est tournée vers l'action", 
-        "l'intelligence est tournée vers la contemplation", 
-        "l'intelligence est indépendante de l'action"
-      ], 
-      correct: 1,
-      explanation: "Chez Bergson, l'intelligence est tournée vers l'action. Cette conception pragmatique de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence n'est pas une faculté de contemplation désintéressée, mais une faculté pratique, adaptée à l'action sur la matière inerte. Elle est faite pour fabriquer des outils, pour agir sur les choses, pour les découper en parties manipulables. Cette conception de l'intelligence comme faculté pratique distingue Bergson des philosophes qui font de l'intelligence la faculté de connaître la vérité (Descartes, Kant). Pour Bergson, l'intelligence est adaptée à l'action, non à la connaissance pure."
+        question: "Question n°23 : Quel est le rapport entre l'intelligence et l'action chez Bergson ?",
+        answers: [
+            "l'intelligence est tournée vers l'action", 
+            "l'intelligence est tournée vers la contemplation", 
+            "l'intelligence est indépendante de l'action"
+        ], 
+        correct: 1,
+        explanation: "Chez Bergson, l'intelligence est tournée vers l'action. Cette conception pragmatique de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence n'est pas une faculté de contemplation désintéressée, mais une faculté pratique, adaptée à l'action sur la matière inerte. Elle est faite pour fabriquer des outils, pour agir sur les choses, pour les découper en parties manipulables. Cette conception de l'intelligence comme faculté pratique distingue Bergson des philosophes qui font de l'intelligence la faculté de connaître la vérité (Descartes, Kant). Pour Bergson, l'intelligence est adaptée à l'action, non à la connaissance pure."
     },
     { 
-      question: "Question n°24 : Quelle est la conception de la connaissance chez Bergson ?",
-      answers: [
-        "la connaissance est conceptuelle", 
-        "il y a deux formes de connaissance : intellectuelle et intuitive", 
-        "la connaissance est une illusion"
-      ], 
-      correct: 2,
-      explanation: "Pour Bergson, il y a deux formes de connaissance : intellectuelle et intuitive. Cette conception dualiste de la connaissance est au cœur de la philosophie de Bergson : la connaissance intellectuelle est le mode de connaissance de l'intelligence, adaptée à la matière inerte ; la connaissance intuitive est le mode de connaissance de l'intuition, adaptée à la vie et à la durée. Ces deux formes de connaissance ne s'opposent pas mais se complètent : l'intelligence est nécessaire pour l'action, l'intuition pour la philosophie. Cette conception distingue Bergson des philosophes intellectualistes (Descartes, Kant), pour qui la connaissance intellectuelle est la seule forme de connaissance valable."
+        question: "Question n°24 : Quelle est la conception de la connaissance chez Bergson ?",
+        answers: [
+            "la connaissance est conceptuelle", 
+            "il y a deux formes de connaissance : intellectuelle et intuitive", 
+            "la connaissance est une illusion"
+        ], 
+        correct: 2,
+        explanation: "Pour Bergson, il y a deux formes de connaissance : intellectuelle et intuitive. Cette conception dualiste de la connaissance est au cœur de la philosophie de Bergson : la connaissance intellectuelle est le mode de connaissance de l'intelligence, adaptée à la matière inerte ; la connaissance intuitive est le mode de connaissance de l'intuition, adaptée à la vie et à la durée. Ces deux formes de connaissance ne s'opposent pas mais se complètent : l'intelligence est nécessaire pour l'action, l'intuition pour la philosophie. Cette conception distingue Bergson des philosophes intellectualistes (Descartes, Kant), pour qui la connaissance intellectuelle est la seule forme de connaissance valable."
     },
     { 
-      question: "Question n°25 : Quel est le rapport entre la durée et la création chez Bergson ?",
-      answers: [
-        "la durée est création continue", 
-        "la durée est répétition", 
-        "la durée est une illusion"
-      ], 
-      correct: 1,
-      explanation: "Chez Bergson, la durée est création continue. Cette conception de la durée est au cœur de la philosophie de Bergson : la durée n'est pas une succession d'instants identiques (temps spatialisé), mais une création continue, une nouveauté perpétuelle. Chaque moment de la durée apporte du nouveau, de l'imprévisible. Cette conception créatrice de la durée distingue Bergson des philosophes qui spatialisent le temps (Kant, Descartes). Pour Bergson, la durée est la réalité même de la vie intérieure et de la vie en général. Elle est création, non répétition."
+        question: "Question n°25 : Quel est le rapport entre la durée et la création chez Bergson ?",
+        answers: [
+            "la durée est création continue", 
+            "la durée est répétition", 
+            "la durée est une illusion"
+        ], 
+        correct: 1,
+        explanation: "Chez Bergson, la durée est création continue. Cette conception de la durée est au cœur de la philosophie de Bergson : la durée n'est pas une succession d'instants identiques (temps spatialisé), mais une création continue, une nouveauté perpétuelle. Chaque moment de la durée apporte du nouveau, de l'imprévisible. Cette conception créatrice de la durée distingue Bergson des philosophes qui spatialisent le temps (Kant, Descartes). Pour Bergson, la durée est la réalité même de la vie intérieure et de la vie en général. Elle est création, non répétition."
     },
     { 
-      question: "Question n°26 : Quelle est la conception de la philosophie chez Bergson ?",
-      answers: [
-        "une construction conceptuelle", 
-        "une expérience vécue de la durée", 
-        "une science exacte"
-      ], 
-      correct: 2,
-      explanation: "Pour Bergson, la philosophie est une expérience vécue de la durée. Cette conception de la philosophie est au cœur de la philosophie de Bergson : la philosophie n'est pas une construction conceptuelle (comme chez Descartes, Kant), mais une expérience vécue de la durée. Elle consiste à coïncider avec le mouvement même de la réalité, à saisir la durée dans son mouvement créateur. Cette conception de la philosophie comme expérience vécue distingue Bergson des philosophes intellectualistes. Pour Bergson, la philosophie est une sympathie avec la vie, non une connaissance conceptuelle. Elle est la méthode de la philosophie intuitive."
+        question: "Question n°26 : Quelle est la conception de la philosophie chez Bergson ?",
+        answers: [
+            "une construction conceptuelle", 
+            "une expérience vécue de la durée", 
+            "une science exacte"
+        ], 
+        correct: 2,
+        explanation: "Pour Bergson, la philosophie est une expérience vécue de la durée. Cette conception de la philosophie est au cœur de la philosophie de Bergson : la philosophie n'est pas une construction conceptuelle (comme chez Descartes, Kant), mais une expérience vécue de la durée. Elle consiste à coïncider avec le mouvement même de la réalité, à saisir la durée dans son mouvement créateur. Cette conception de la philosophie comme expérience vécue distingue Bergson des philosophes intellectualistes. Pour Bergson, la philosophie est une sympathie avec la vie, non une connaissance conceptuelle. Elle est la méthode de la philosophie intuitive."
     },
     { 
-      question: "Question n°27 : Quel est le rapport entre l'intelligence et les concepts chez Bergson ?",
-      answers: [
-        "l'intelligence crée des concepts", 
-        "l'intelligence refuse les concepts", 
-        "l'intelligence est indépendante des concepts"
-      ], 
-      correct: 1,
-      explanation: "Chez Bergson, l'intelligence crée des concepts. Cette conception de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence, étant tournée vers la matière inerte, applique à ce qui est mouvant des formes fixes, c'est-à-dire des concepts. Elle découpe le réel en parties stables, elle l'analyse en éléments immuables. Cette conception critique de l'intelligence distingue Bergson des philosophes intellectualistes, pour qui les concepts sont les instruments de la connaissance vraie. Pour Bergson, les concepts sont adaptés à la matière, non à la vie. C'est pourquoi ils ne peuvent pas saisir la durée, qui est mouvante et créatrice."
+        question: "Question n°27 : Quel est le rapport entre l'intelligence et les concepts chez Bergson ?",
+        answers: [
+            "l'intelligence crée des concepts", 
+            "l'intelligence refuse les concepts", 
+            "l'intelligence est indépendante des concepts"
+        ], 
+        correct: 1,
+        explanation: "Chez Bergson, l'intelligence crée des concepts. Cette conception de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence, étant tournée vers la matière inerte, applique à ce qui est mouvant des formes fixes, c'est-à-dire des concepts. Elle découpe le réel en parties stables, elle l'analyse en éléments immuables. Cette conception critique de l'intelligence distingue Bergson des philosophes intellectualistes, pour qui les concepts sont les instruments de la connaissance vraie. Pour Bergson, les concepts sont adaptés à la matière, non à la vie. C'est pourquoi ils ne peuvent pas saisir la durée, qui est mouvante et créatrice."
     },
     { 
-      question: "Question n°28 : Quelle est la conception de la réalité chez Bergson ?",
-      answers: [
-        "la réalité est statique", 
-        "la réalité est mouvante et créatrice", 
-        "la réalité est une illusion"
-      ], 
-      correct: 2,
-      explanation: "Pour Bergson, la réalité est mouvante et créatrice. Cette conception de la réalité est au cœur de la philosophie de Bergson : la réalité n'est pas un ensemble de choses stables (conception statique), mais un mouvement continu, une durée créatrice. La réalité est changement, devenir, création. Cette conception dynamique de la réalité distingue Bergson des philosophes statiques (Platon, Descartes). Pour Bergson, la réalité ne peut être saisie que par l'intuition, qui coïncide avec son mouvement, non par l'intelligence, qui applique à ce qui est mouvant des formes fixes."
+        question: "Question n°28 : Quelle est la conception de la réalité chez Bergson ?",
+        answers: [
+            "la réalité est statique", 
+            "la réalité est mouvante et créatrice", 
+            "la réalité est une illusion"
+        ], 
+        correct: 2,
+        explanation: "Pour Bergson, la réalité est mouvante et créatrice. Cette conception de la réalité est au cœur de la philosophie de Bergson : la réalité n'est pas un ensemble de choses stables (conception statique), mais un mouvement continu, une durée créatrice. La réalité est changement, devenir, création. Cette conception dynamique de la réalité distingue Bergson des philosophes statiques (Platon, Descartes). Pour Bergson, la réalité ne peut être saisie que par l'intuition, qui coïncide avec son mouvement, non par l'intelligence, qui applique à ce qui est mouvant des formes fixes."
     },
     { 
-      question: "Question n°29 : Quel est le rapport entre l'intelligence et la science chez Bergson ?",
-      answers: [
-        "la science est fondée sur l'intelligence", 
-        "la science est fondée sur l'intuition", 
-        "la science est une illusion"
-      ], 
-      correct: 1,
-      explanation: "Chez Bergson, la science est fondée sur l'intelligence. Cette conception de la science est au cœur de la philosophie de Bergson : la science est le mode de connaissance de l'intelligence, adaptée à la matière inerte. Elle découpe le réel en parties stables, elle l'analyse en éléments immuables. Cette conception pragmatique de la science distingue Bergson des philosophes qui font de la science la connaissance vraie du réel (positivisme). Pour Bergson, la science est adaptée à la matière, non à la vie. C'est pourquoi une philosophie intuitive est nécessaire pour comprendre la vie et la durée. La science et la philosophie sont deux modes de connaissance complémentaires."
+        question: "Question n°29 : Quel est le rapport entre l'intelligence et la science chez Bergson ?",
+        answers: [
+            "la science est fondée sur l'intelligence", 
+            "la science est fondée sur l'intuition", 
+            "la science est une illusion"
+        ], 
+        correct: 1,
+        explanation: "Chez Bergson, la science est fondée sur l'intelligence. Cette conception de la science est au cœur de la philosophie de Bergson : la science est le mode de connaissance de l'intelligence, adaptée à la matière inerte. Elle découpe le réel en parties stables, elle l'analyse en éléments immuables. Cette conception pragmatique de la science distingue Bergson des philosophes qui font de la science la connaissance vraie du réel (positivisme). Pour Bergson, la science est adaptée à la matière, non à la vie. C'est pourquoi une philosophie intuitive est nécessaire pour comprendre la vie et la durée. La science et la philosophie sont deux modes de connaissance complémentaires."
     },
     { 
-      question: "Question n°30 : Quelle est la conception de l'évolution chez Bergson ?",
-      answers: [
-        "l'évolution est mécanique", 
-        "l'évolution est créatrice", 
-        "l'évolution est une illusion"
-      ], 
-      correct: 2,
-      explanation: "Pour Bergson, l'évolution est créatrice. Cette conception de l'évolution est au cœur de la philosophie de Bergson : l'évolution n'est pas un mécanisme (comme le pensent les darwiniens), ni une finalité préétablie (comme le pensent les finalistes), mais une création continue, un élan vital qui se diversifie et se crée en se diversifiant. Cette conception créatrice de l'évolution distingue Bergson des philosophies mécanistes et finalistes. Pour Bergson, l'évolution est imprévisible, créatrice, elle apporte du nouveau à chaque instant. C'est pourquoi elle ne peut être comprise que par l'intuition, non par l'intelligence."
+        question: "Question n°30 : Quelle est la conception de l'évolution chez Bergson ?",
+        answers: [
+            "l'évolution est mécanique", 
+            "l'évolution est créatrice", 
+            "l'évolution est une illusion"
+        ], 
+        correct: 2,
+        explanation: "Pour Bergson, l'évolution est créatrice. Cette conception de l'évolution est au cœur de la philosophie de Bergson : l'évolution n'est pas un mécanisme (comme le pensent les darwiniens), ni une finalité préétablie (comme le pensent les finalistes), mais une création continue, un élan vital qui se diversifie et se crée en se diversifiant. Cette conception créatrice de l'évolution distingue Bergson des philosophies mécanistes et finalistes. Pour Bergson, l'évolution est imprévisible, créatrice, elle apporte du nouveau à chaque instant. C'est pourquoi elle ne peut être comprise que par l'intuition, non par l'intelligence."
     },
     { 
-      question: "Question n°31 : Quel est le rapport entre l'intuition et la durée chez Bergson ?",
-      answers: [
-        "l'intuition saisit la durée", 
-        "l'intuition ne saisit pas la durée", 
-        "l'intuition est indépendante de la durée"
-      ], 
-      correct: 1,
-      explanation: "Chez Bergson, l'intuition saisit la durée. Cette conception de l'intuition est au cœur de la philosophie de Bergson : l'intuition est la faculté de connaître la durée, la vie, la réalité mouvante. Elle coïncide avec le mouvement même de la réalité, elle sympathise avec la vie. Cette conception de l'intuition distingue Bergson des philosophes intellectualistes, pour qui l'intelligence est la faculté de connaître la vérité (Descartes, Kant). Pour Bergson, l'intuition est la méthode de la philosophie, la seule qui puisse saisir la durée dans son mouvement créateur."
+        question: "Question n°31 : Quel est le rapport entre l'intuition et la durée chez Bergson ?",
+        answers: [
+            "l'intuition saisit la durée", 
+            "l'intuition ne saisit pas la durée", 
+            "l'intuition est indépendante de la durée"
+        ], 
+        correct: 1,
+        explanation: "Chez Bergson, l'intuition saisit la durée. Cette conception de l'intuition est au cœur de la philosophie de Bergson : l'intuition est la faculté de connaître la durée, la vie, la réalité mouvante. Elle coïncide avec le mouvement même de la réalité, elle sympathise avec la vie. Cette conception de l'intuition distingue Bergson des philosophes intellectualistes, pour qui l'intelligence est la faculté de connaître la vérité (Descartes, Kant). Pour Bergson, l'intuition est la méthode de la philosophie, la seule qui puisse saisir la durée dans son mouvement créateur."
     },
     { 
-      question: "Question n°32 : Quelle est la conception de l'élan vital chez Bergson ?",
-      answers: [
-        "une force créatrice qui traverse la matière", 
-        "une force mécanique", 
-        "une illusion"
-      ], 
-      correct: 1,
-      explanation: "Pour Bergson, l'élan vital est une force créatrice qui traverse la matière. Cette conception de l'élan vital est au cœur de la philosophie de Bergson : l'élan vital est la force qui anime l'évolution, qui pousse la vie à se diversifier et à se créer. Il n'est pas une force mécanique (comme les forces physiques), mais une force créatrice, qui apporte du nouveau à chaque instant. Cette conception de l'élan vital distingue Bergson des philosophies mécanistes et finalistes. Pour Bergson, la vie est création, non répétition. C'est pourquoi elle ne peut être comprise que par l'intuition, non par l'intelligence."
+        question: "Question n°32 : Quelle est la conception de l'élan vital chez Bergson ?",
+        answers: [
+            "une force créatrice qui traverse la matière", 
+            "une force mécanique", 
+            "une illusion"
+        ], 
+        correct: 1,
+        explanation: "Pour Bergson, l'élan vital est une force créatrice qui traverse la matière. Cette conception de l'élan vital est au cœur de la philosophie de Bergson : l'élan vital est la force qui anime l'évolution, qui pousse la vie à se diversifier et à se créer. Il n'est pas une force mécanique (comme les forces physiques), mais une force créatrice, qui apporte du nouveau à chaque instant. Cette conception de l'élan vital distingue Bergson des philosophies mécanistes et finalistes. Pour Bergson, la vie est création, non répétition. C'est pourquoi elle ne peut être comprise que par l'intuition, non par l'intelligence."
     },
     { 
-      question: "Question n°33 : Quel est le rapport entre l'intelligence et la vie chez Bergson ?",
-      answers: [
-        "l'intelligence comprend la vie", 
-        "l'intelligence ne comprend pas la vie", 
-        "l'intelligence est indifférente à la vie"
-      ], 
-      correct: 2,
-      explanation: "Chez Bergson, l'intelligence ne comprend pas la vie. Cette conception critique de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence, étant tournée vers la matière inerte, est incapable de comprendre la vie. Elle applique à ce qui est mouvant des formes fixes ; elle analyse le devenir mais ne le saisit pas dans sa durée réelle. C'est pourquoi une philosophie intuitive est nécessaire. Cette conception distingue Bergson des philosophes intellectualistes, pour qui l'intelligence est la faculté de connaître la vérité (Descartes, Kant). Pour Bergson, l'intelligence est adaptée à la matière, non à la vie."
+        question: "Question n°33 : Quel est le rapport entre l'intelligence et la vie chez Bergson ?",
+        answers: [
+            "l'intelligence comprend la vie", 
+            "l'intelligence ne comprend pas la vie", 
+            "l'intelligence est indifférente à la vie"
+        ], 
+        correct: 2,
+        explanation: "Chez Bergson, l'intelligence ne comprend pas la vie. Cette conception critique de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence, étant tournée vers la matière inerte, est incapable de comprendre la vie. Elle applique à ce qui est mouvant des formes fixes ; elle analyse le devenir mais ne le saisit pas dans sa durée réelle. C'est pourquoi une philosophie intuitive est nécessaire. Cette conception distingue Bergson des philosophes intellectualistes, pour qui l'intelligence est la faculté de connaître la vérité (Descartes, Kant). Pour Bergson, l'intelligence est adaptée à la matière, non à la vie."
     },
     { 
-      question: "Question n°34 : Quelle est la conception de la conscience chez Bergson ?",
-      answers: [
-        "la conscience est une chose", 
-        "la conscience est durée et mémoire", 
-        "la conscience est une illusion"
-      ], 
-      correct: 2,
-      explanation: "Pour Bergson, la conscience est durée et mémoire. Cette conception de la conscience est au cœur de la philosophie de Bergson : la conscience n'est pas une chose (comme chez Descartes), mais une durée, c'est-à-dire un flux continu de vécus, et une mémoire, c'est-à-dire la conservation du passé dans le présent. Cette conception de la conscience comme durée et mémoire distingue Bergson des philosophes substantialistes (Descartes) et des philosophes associationnistes (Hume). Pour Bergson, la conscience est la réalité même de la vie intérieure, qui ne peut être saisie que par l'intuition, non par l'intelligence."
+        question: "Question n°34 : Quelle est la conception de la conscience chez Bergson ?",
+        answers: [
+            "la conscience est une chose", 
+            "la conscience est durée et mémoire", 
+            "la conscience est une illusion"
+        ], 
+        correct: 2,
+        explanation: "Pour Bergson, la conscience est durée et mémoire. Cette conception de la conscience est au cœur de la philosophie de Bergson : la conscience n'est pas une chose (comme chez Descartes), mais une durée, c'est-à-dire un flux continu de vécus, et une mémoire, c'est-à-dire la conservation du passé dans le présent. Cette conception de la conscience comme durée et mémoire distingue Bergson des philosophes substantialistes (Descartes) et des philosophes associationnistes (Hume). Pour Bergson, la conscience est la réalité même de la vie intérieure, qui ne peut être saisie que par l'intuition, non par l'intelligence."
     },
     { 
-      question: "Question n°35 : Quel est le rapport entre l'intelligence et la matière chez Bergson ?",
-      answers: [
-        "l'intelligence est tournée vers la matière", 
-        "l'intelligence est tournée vers l'esprit", 
-        "l'intelligence est indifférente à la matière"
-      ], 
-      correct: 1,
-      explanation: "Chez Bergson, l'intelligence est tournée vers la matière. Cette conception de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence est tournée vers la matière inerte, elle est faite pour agir sur elle, pour la découper en parties manipulables. Elle applique à ce qui est mouvant des formes fixes ; elle analyse le devenir mais ne le saisit pas dans sa durée réelle. Cette conception pragmatique de l'intelligence distingue Bergson des philosophes qui font de l'intelligence la faculté de connaître la vérité (Descartes, Kant). Pour Bergson, l'intelligence est adaptée à la matière, non à la vie."
+        question: "Question n°35 : Quel est le rapport entre l'intelligence et la matière chez Bergson ?",
+        answers: [
+            "l'intelligence est tournée vers la matière", 
+            "l'intelligence est tournée vers l'esprit", 
+            "l'intelligence est indifférente à la matière"
+        ], 
+        correct: 1,
+        explanation: "Chez Bergson, l'intelligence est tournée vers la matière. Cette conception de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence est tournée vers la matière inerte, elle est faite pour agir sur elle, pour la découper en parties manipulables. Elle applique à ce qui est mouvant des formes fixes ; elle analyse le devenir mais ne le saisit pas dans sa durée réelle. Cette conception pragmatique de l'intelligence distingue Bergson des philosophes qui font de l'intelligence la faculté de connaître la vérité (Descartes, Kant). Pour Bergson, l'intelligence est adaptée à la matière, non à la vie."
     },
     { 
-      question: "Question n°36 : Quelle est la conception de la philosophie intuitive chez Bergson ?",
-      answers: [
-        "une méthode de connaissance qui coïncide avec la réalité", 
-        "une méthode de connaissance qui analyse la réalité", 
-        "une méthode de connaissance qui conceptualise la réalité"
-      ], 
-      correct: 1,
-      explanation: "Pour Bergson, la philosophie intuitive est une méthode de connaissance qui coïncide avec la réalité. Cette conception de la philosophie intuitive est au cœur de la philosophie de Bergson : la philosophie intuitive ne consiste pas à analyser la réalité (méthode de l'intelligence), ni à la conceptualiser (méthode des philosophes intellectualistes), mais à coïncider avec elle, à se placer en elle, à sympathiser avec son mouvement. Cette méthode est celle de l'intuition, qui est l'instinct devenu désintéressé. Cette conception distingue Bergson des philosophes intellectualistes (Descartes, Kant), pour qui la philosophie est une affaire de concepts et de raisonnements. Pour Bergson, la philosophie est une expérience vécue."
+        question: "Question n°36 : Quelle est la conception de la philosophie intuitive chez Bergson ?",
+        answers: [
+            "une méthode de connaissance qui coïncide avec la réalité", 
+            "une méthode de connaissance qui analyse la réalité", 
+            "une méthode de connaissance qui conceptualise la réalité"
+        ], 
+        correct: 1,
+        explanation: "Pour Bergson, la philosophie intuitive est une méthode de connaissance qui coïncide avec la réalité. Cette conception de la philosophie intuitive est au cœur de la philosophie de Bergson : la philosophie intuitive ne consiste pas à analyser la réalité (méthode de l'intelligence), ni à la conceptualiser (méthode des philosophes intellectualistes), mais à coïncider avec elle, à se placer en elle, à sympathiser avec son mouvement. Cette méthode est celle de l'intuition, qui est l'instinct devenu désintéressé. Cette conception distingue Bergson des philosophes intellectualistes (Descartes, Kant), pour qui la philosophie est une affaire de concepts et de raisonnements. Pour Bergson, la philosophie est une expérience vécue."
     },
     { 
-      question: "Question n°37 : Quel est le rapport entre la durée et la vie chez Bergson ?",
-      answers: [
-        "la durée est la réalité de la vie", 
-        "la durée est indépendante de la vie", 
-        "la durée s'oppose à la vie"
-      ], 
-      correct: 1,
-      explanation: "Chez Bergson, la durée est la réalité de la vie. Cette conception de la durée est au cœur de la philosophie de Bergson : la durée n'est pas seulement une réalité psychologique (la vie intérieure), mais la réalité même de la vie en général. La vie est durée, c'est-à-dire création continue, nouveauté perpétuelle. Cette conception de la durée comme réalité de la vie distingue Bergson des philosophes qui réduisent la durée à la conscience (Kant) ou qui la nient (positivisme). Pour Bergson, la durée est la trame de la réalité, qui ne peut être saisie que par l'intuition."
+        question: "Question n°37 : Quel est le rapport entre la durée et la vie chez Bergson ?",
+        answers: [
+            "la durée est la réalité de la vie", 
+            "la durée est indépendante de la vie", 
+            "la durée s'oppose à la vie"
+        ], 
+        correct: 1,
+        explanation: "Chez Bergson, la durée est la réalité de la vie. Cette conception de la durée est au cœur de la philosophie de Bergson : la durée n'est pas seulement une réalité psychologique (la vie intérieure), mais la réalité même de la vie en général. La vie est durée, c'est-à-dire création continue, nouveauté perpétuelle. Cette conception de la durée comme réalité de la vie distingue Bergson des philosophes qui réduisent la durée à la conscience (Kant) ou qui la nient (positivisme). Pour Bergson, la durée est la trame de la réalité, qui ne peut être saisie que par l'intuition."
     },
     { 
-      question: "Question n°38 : Quelle est la conception de l'instinct chez Bergson par rapport à l'intelligence ?",
-      answers: [
-        "l'instinct est supérieur à l'intelligence", 
-        "l'instinct est inférieur à l'intelligence", 
-        "l'instinct est complémentaire de l'intelligence"
-      ], 
-      correct: 3,
-      explanation: "Pour Bergson, l'instinct est complémentaire de l'intelligence. Cette conception de l'instinct est au cœur de la philosophie de Bergson : l'instinct et l'intelligence sont deux directions divergentes de l'évolution, mais ils sont complémentaires. L'intelligence est adaptée à la matière inerte ; l'instinct est en affinité avec la vie. L'intelligence est nécessaire pour l'action ; l'instinct est nécessaire pour la compréhension de la vie. Cette conception de la complémentarité de l'instinct et de l'intelligence distingue Bergson des philosophes qui hiérarchisent les facultés (Descartes). Pour Bergson, l'intuition est l'instinct devenu désintéressé, qui permet de connaître la vie."
+        question: "Question n°38 : Quelle est la conception de l'instinct chez Bergson par rapport à l'intelligence ?",
+        answers: [
+            "l'instinct est supérieur à l'intelligence", 
+            "l'instinct est inférieur à l'intelligence", 
+            "l'instinct est complémentaire de l'intelligence"
+        ], 
+        correct: 3,
+        explanation: "Pour Bergson, l'instinct est complémentaire de l'intelligence. Cette conception de l'instinct est au cœur de la philosophie de Bergson : l'instinct et l'intelligence sont deux directions divergentes de l'évolution, mais ils sont complémentaires. L'intelligence est adaptée à la matière inerte ; l'instinct est en affinité avec la vie. L'intelligence est nécessaire pour l'action ; l'instinct est nécessaire pour la compréhension de la vie. Cette conception de la complémentarité de l'instinct et de l'intelligence distingue Bergson des philosophes qui hiérarchisent les facultés (Descartes). Pour Bergson, l'intuition est l'instinct devenu désintéressé, qui permet de connaître la vie."
     },
     { 
-      question: "Question n°39 : Quel est le rapport entre l'intelligence et la vérité chez Bergson ?",
-      answers: [
-        "l'intelligence saisit la vérité", 
-        "l'intelligence ne saisit pas la vérité de la vie", 
-        "l'intelligence est indifférente à la vérité"
-      ], 
-      correct: 2,
-      explanation: "Chez Bergson, l'intelligence ne saisit pas la vérité de la vie. Cette conception critique de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence, étant tournée vers la matière inerte, est incapable de saisir la vérité de la vie. Elle applique à ce qui est mouvant des formes fixes ; elle analyse le devenir mais ne le saisit pas dans sa durée réelle. C'est pourquoi une philosophie intuitive est nécessaire. Cette conception distingue Bergson des philosophes intellectualistes, pour qui l'intelligence est la faculté de connaître la vérité (Descartes, Kant). Pour Bergson, l'intelligence est adaptée à la matière, non à la vie."
+        question: "Question n°39 : Quel est le rapport entre l'intelligence et la vérité chez Bergson ?",
+        answers: [
+            "l'intelligence saisit la vérité", 
+            "l'intelligence ne saisit pas la vérité de la vie", 
+            "l'intelligence est indifférente à la vérité"
+        ], 
+        correct: 2,
+        explanation: "Chez Bergson, l'intelligence ne saisit pas la vérité de la vie. Cette conception critique de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence, étant tournée vers la matière inerte, est incapable de saisir la vérité de la vie. Elle applique à ce qui est mouvant des formes fixes ; elle analyse le devenir mais ne le saisit pas dans sa durée réelle. C'est pourquoi une philosophie intuitive est nécessaire. Cette conception distingue Bergson des philosophes intellectualistes, pour qui l'intelligence est la faculté de connaître la vérité (Descartes, Kant). Pour Bergson, l'intelligence est adaptée à la matière, non à la vie."
     },
     { 
-      question: "Question n°40 : Quelle est la conception de la réalité chez Bergson par rapport à la durée ?",
-      answers: [
-        "la réalité est durée", 
-        "la réalité est statique", 
-        "la réalité est une illusion"
-      ], 
-      correct: 1,
-      explanation: "Pour Bergson, la réalité est durée. Cette conception de la réalité est au cœur de la philosophie de Bergson : la réalité n'est pas un ensemble de choses stables (conception statique), mais un mouvement continu, une durée créatrice. La réalité est changement, devenir, création. Cette conception dynamique de la réalité distingue Bergson des philosophes statiques (Platon, Descartes). Pour Bergson, la réalité ne peut être saisie que par l'intuition, qui coïncide avec son mouvement, non par l'intelligence, qui applique à ce qui est mouvant des formes fixes. Cette conception de la réalité comme durée est la thèse centrale de la philosophie de Bergson."
+        question: "Question n°40 : Quelle est la conception de la réalité chez Bergson par rapport à la durée ?",
+        answers: [
+            "la réalité est durée", 
+            "la réalité est statique", 
+            "la réalité est une illusion"
+        ], 
+        correct: 1,
+        explanation: "Pour Bergson, la réalité est durée. Cette conception de la réalité est au cœur de la philosophie de Bergson : la réalité n'est pas un ensemble de choses stables (conception statique), mais un mouvement continu, une durée créatrice. La réalité est changement, devenir, création. Cette conception dynamique de la réalité distingue Bergson des philosophes statiques (Platon, Descartes). Pour Bergson, la réalité ne peut être saisie que par l'intuition, qui coïncide avec son mouvement, non par l'intelligence, qui applique à ce qui est mouvant des formes fixes. Cette conception de la réalité comme durée est la thèse centrale de la philosophie de Bergson."
     },
     { 
-      question: "Question n°41 : Quel est le rapport entre l'intelligence et la connaissance chez Bergson ?",
-      answers: [
-        "l'intelligence est la seule forme de connaissance", 
-        "l'intelligence est une forme de connaissance parmi d'autres", 
-        "l'intelligence n'est pas une forme de connaissance"
-      ], 
-      correct: 2,
-      explanation: "Chez Bergson, l'intelligence est une forme de connaissance parmi d'autres. Cette conception pluraliste de la connaissance est au cœur de la philosophie de Bergson : la connaissance intellectuelle est le mode de connaissance de l'intelligence, adaptée à la matière inerte ; la connaissance intuitive est le mode de connaissance de l'intuition, adaptée à la vie et à la durée. Ces deux formes de connaissance ne s'opposent pas mais se complètent : l'intelligence est nécessaire pour l'action, l'intuition pour la philosophie. Cette conception distingue Bergson des philosophes intellectualistes (Descartes, Kant), pour qui la connaissance intellectuelle est la seule forme de connaissance valable."
+        question: "Question n°41 : Quel est le rapport entre l'intelligence et la connaissance chez Bergson ?",
+        answers: [
+            "l'intelligence est la seule forme de connaissance", 
+            "l'intelligence est une forme de connaissance parmi d'autres", 
+            "l'intelligence n'est pas une forme de connaissance"
+        ], 
+        correct: 2,
+        explanation: "Chez Bergson, l'intelligence est une forme de connaissance parmi d'autres. Cette conception pluraliste de la connaissance est au cœur de la philosophie de Bergson : la connaissance intellectuelle est le mode de connaissance de l'intelligence, adaptée à la matière inerte ; la connaissance intuitive est le mode de connaissance de l'intuition, adaptée à la vie et à la durée. Ces deux formes de connaissance ne s'opposent pas mais se complètent : l'intelligence est nécessaire pour l'action, l'intuition pour la philosophie. Cette conception distingue Bergson des philosophes intellectualistes (Descartes, Kant), pour qui la connaissance intellectuelle est la seule forme de connaissance valable."
     },
     { 
-      question: "Question n°42 : Quelle est la conception de la métaphysique chez Bergson par rapport à la science ?",
-      answers: [
-        "la métaphysique est supérieure à la science", 
-        "la métaphysique est complémentaire de la science", 
-        "la métaphysique s'oppose à la science"
-      ], 
-      correct: 2,
-      explanation: "Pour Bergson, la métaphysique est complémentaire de la science. Cette conception de la métaphysique est au cœur de la philosophie de Bergson : la métaphysique n'est pas une science supérieure, ni une science concurrente, mais une forme de connaissance complémentaire. La science est le mode de connaissance de l'intelligence, adaptée à la matière inerte ; la métaphysique est le mode de connaissance de l'intuition, adaptée à la vie et à la durée. Ces deux formes de connaissance ne s'opposent pas mais se complètent : la science est nécessaire pour l'action, la métaphysique pour la compréhension de la vie. Cette conception distingue Bergson des philosophes positivistes, pour qui la science est la seule forme de connaissance valable."
+        question: "Question n°42 : Quelle est la conception de la métaphysique chez Bergson par rapport à la science ?",
+        answers: [
+            "la métaphysique est supérieure à la science", 
+            "la métaphysique est complémentaire de la science", 
+            "la métaphysique s'oppose à la science"
+        ], 
+        correct: 2,
+        explanation: "Pour Bergson, la métaphysique est complémentaire de la science. Cette conception de la métaphysique est au cœur de la philosophie de Bergson : la métaphysique n'est pas une science supérieure, ni une science concurrente, mais une forme de connaissance complémentaire. La science est le mode de connaissance de l'intelligence, adaptée à la matière inerte ; la métaphysique est le mode de connaissance de l'intuition, adaptée à la vie et à la durée. Ces deux formes de connaissance ne s'opposent pas mais se complètent : la science est nécessaire pour l'action, la métaphysique pour la compréhension de la vie. Cette conception distingue Bergson des philosophes positivistes, pour qui la science est la seule forme de connaissance valable."
     },
     { 
-      question: "Question n°43 : Quel est le rapport entre l'intuition et la sympathie chez Bergson ?",
-      answers: [
-        "l'intuition est une sympathie", 
-        "l'intuition s'oppose à la sympathie", 
-        "l'intuition est indépendante de la sympathie"
-      ], 
-      correct: 1,
-      explanation: "Chez Bergson, l'intuition est une sympathie. Cette conception de l'intuition est au cœur de la philosophie de Bergson : l'intuition est une sympathie par laquelle on se place à l'intérieur d'un objet pour coïncider avec ce qu'il a d'unique et d'inexprimable. Elle n'est pas une connaissance conceptuelle, mais une expérience vécue, une communion avec la réalité. Cette conception de l'intuition comme sympathie distingue Bergson des philosophes intellectualistes, pour qui la connaissance est une observation du dehors. Pour Bergson, la connaissance de la vie est une sympathie, une intuition."
+        question: "Question n°43 : Quel est le rapport entre l'intuition et la sympathie chez Bergson ?",
+        answers: [
+            "l'intuition est une sympathie", 
+            "l'intuition s'oppose à la sympathie", 
+            "l'intuition est indépendante de la sympathie"
+        ], 
+        correct: 1,
+        explanation: "Chez Bergson, l'intuition est une sympathie. Cette conception de l'intuition est au cœur de la philosophie de Bergson : l'intuition est une sympathie par laquelle on se place à l'intérieur d'un objet pour coïncider avec ce qu'il a d'unique et d'inexprimable. Elle n'est pas une connaissance conceptuelle, mais une expérience vécue, une communion avec la réalité. Cette conception de l'intuition comme sympathie distingue Bergson des philosophes intellectualistes, pour qui la connaissance est une observation du dehors. Pour Bergson, la connaissance de la vie est une sympathie, une intuition."
     },
     { 
-      question: "Question n°44 : Quelle est la conception de la vie chez Bergson par rapport à la matière ?",
-      answers: [
-        "la vie est indépendante de la matière", 
-        "la vie est un élan qui traverse la matière", 
-        "la vie s'oppose à la matière"
-      ], 
-      correct: 2,
-      explanation: "Pour Bergson, la vie est un élan qui traverse la matière. Cette conception de la vie est au cœur de la philosophie de Bergson : la vie n'est pas indépendante de la matière (comme chez Platon), ni opposée à la matière (comme chez les dualistes), mais un élan vital qui traverse la matière et la façonne. La vie est une force créatrice qui utilise la matière pour se diversifier et se créer. Cette conception de la vie comme élan vital distingue Bergson des philosophies mécanistes et finalistes. Pour Bergson, la vie est création, non répétition. C'est pourquoi elle ne peut être comprise que par l'intuition, non par l'intelligence."
+        question: "Question n°44 : Quelle est la conception de la vie chez Bergson par rapport à la matière ?",
+        answers: [
+            "la vie est indépendante de la matière", 
+            "la vie est un élan qui traverse la matière", 
+            "la vie s'oppose à la matière"
+        ], 
+        correct: 2,
+        explanation: "Pour Bergson, la vie est un élan qui traverse la matière. Cette conception de la vie est au cœur de la philosophie de Bergson : la vie n'est pas indépendante de la matière (comme chez Platon), ni opposée à la matière (comme chez les dualistes), mais un élan vital qui traverse la matière et la façonne. La vie est une force créatrice qui utilise la matière pour se diversifier et se créer. Cette conception de la vie comme élan vital distingue Bergson des philosophies mécanistes et finalistes. Pour Bergson, la vie est création, non répétition. C'est pourquoi elle ne peut être comprise que par l'intuition, non par l'intelligence."
     },
     { 
-      question: "Question n°45 : Quel est le rapport entre l'intelligence et la pratique chez Bergson ?",
-      answers: [
-        "l'intelligence est tournée vers la pratique", 
-        "l'intelligence est tournée vers la théorie", 
-        "l'intelligence est indépendante de la pratique"
-      ], 
-      correct: 1,
-      explanation: "Chez Bergson, l'intelligence est tournée vers la pratique. Cette conception pragmatique de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence n'est pas une faculté de contemplation désintéressée, mais une faculté pratique, adaptée à l'action sur la matière inerte. Elle est faite pour fabriquer des outils, pour agir sur les choses, pour les découper en parties manipulables. Cette conception de l'intelligence comme faculté pratique distingue Bergson des philosophes qui font de l'intelligence la faculté de connaître la vérité (Descartes, Kant). Pour Bergson, l'intelligence est adaptée à l'action, non à la connaissance pure."
+        question: "Question n°45 : Quel est le rapport entre l'intelligence et la pratique chez Bergson ?",
+        answers: [
+            "l'intelligence est tournée vers la pratique", 
+            "l'intelligence est tournée vers la théorie", 
+            "l'intelligence est indépendante de la pratique"
+        ], 
+        correct: 1,
+        explanation: "Chez Bergson, l'intelligence est tournée vers la pratique. Cette conception pragmatique de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence n'est pas une faculté de contemplation désintéressée, mais une faculté pratique, adaptée à l'action sur la matière inerte. Elle est faite pour fabriquer des outils, pour agir sur les choses, pour les découper en parties manipulables. Cette conception de l'intelligence comme faculté pratique distingue Bergson des philosophes qui font de l'intelligence la faculté de connaître la vérité (Descartes, Kant). Pour Bergson, l'intelligence est adaptée à l'action, non à la connaissance pure."
     },
     { 
-      question: "Question n°46 : Quelle est la conception de l'intuition chez Bergson par rapport à la vie ?",
-      answers: [
-        "l'intuition est en affinité avec la vie", 
-        "l'intuition s'oppose à la vie", 
-        "l'intuition est indifférente à la vie"
-      ], 
-      correct: 1,
-      explanation: "Pour Bergson, l'intuition est en affinité avec la vie. Cette conception de l'intuition est au cœur de la philosophie de Bergson : l'intuition est l'instinct devenu désintéressé, c'est-à-dire une faculté qui est en affinité avec la vie. Elle permet de coïncider avec le mouvement de la vie, de sympathiser avec elle, de la comprendre de l'intérieur. Cette conception de l'intuition distingue Bergson des philosophes intellectualistes, pour qui la connaissance est une observation du dehors (Descartes, Kant). Pour Bergson, la connaissance de la vie est une intuition, une sympathie."
+        question: "Question n°46 : Quelle est la conception de l'intuition chez Bergson par rapport à la vie ?",
+        answers: [
+            "l'intuition est en affinité avec la vie", 
+            "l'intuition s'oppose à la vie", 
+            "l'intuition est indifférente à la vie"
+        ], 
+        correct: 1,
+        explanation: "Pour Bergson, l'intuition est en affinité avec la vie. Cette conception de l'intuition est au cœur de la philosophie de Bergson : l'intuition est l'instinct devenu désintéressé, c'est-à-dire une faculté qui est en affinité avec la vie. Elle permet de coïncider avec le mouvement de la vie, de sympathiser avec elle, de la comprendre de l'intérieur. Cette conception de l'intuition distingue Bergson des philosophes intellectualistes, pour qui la connaissance est une observation du dehors (Descartes, Kant). Pour Bergson, la connaissance de la vie est une intuition, une sympathie."
     },
     { 
-      question: "Question n°47 : Quel est le rapport entre l'intelligence et la durée chez Bergson ?",
-      answers: [
-        "l'intelligence saisit la durée", 
-        "l'intelligence ne saisit pas la durée", 
-        "l'intelligence est indépendante de la durée"
-      ], 
-      correct: 2,
-      explanation: "Chez Bergson, l'intelligence ne saisit pas la durée. Cette conception critique de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence, étant tournée vers la matière inerte, applique à ce qui est mouvant des formes fixes. Elle analyse le devenir mais ne le saisit pas dans sa durée réelle. Elle découpe le temps en instants identiques, tandis que la durée est hétérogène et créatrice. C'est pourquoi une philosophie intuitive est nécessaire. Cette conception distingue Bergson des philosophes intellectualistes, pour qui l'intelligence est la faculté de connaître la vérité. Pour Bergson, l'intelligence est adaptée à la matière, non à la durée."
+        question: "Question n°47 : Quel est le rapport entre l'intelligence et la durée chez Bergson ?",
+        answers: [
+            "l'intelligence saisit la durée", 
+            "l'intelligence ne saisit pas la durée", 
+            "l'intelligence est indépendante de la durée"
+        ], 
+        correct: 2,
+        explanation: "Chez Bergson, l'intelligence ne saisit pas la durée. Cette conception critique de l'intelligence est au cœur de la philosophie de Bergson : l'intelligence, étant tournée vers la matière inerte, applique à ce qui est mouvant des formes fixes. Elle analyse le devenir mais ne le saisit pas dans sa durée réelle. Elle découpe le temps en instants identiques, tandis que la durée est hétérogène et créatrice. C'est pourquoi une philosophie intuitive est nécessaire. Cette conception distingue Bergson des philosophes intellectualistes, pour qui l'intelligence est la faculté de connaître la vérité. Pour Bergson, l'intelligence est adaptée à la matière, non à la durée."
     },
     { 
-      question: "Question n°48 : Quelle est la conception de la philosophie chez Bergson par rapport à la science ?",
-      answers: [
-        "la philosophie est complémentaire de la science", 
-        "la philosophie s'oppose à la science", 
-        "la philosophie est inférieure à la science"
-      ], 
-      correct: 1,
-      explanation: "Pour Bergson, la philosophie est complémentaire de la science. Cette conception de la philosophie est au cœur de la philosophie de Bergson : la philosophie n'est pas une science supérieure, ni une science concurrente, mais une forme de connaissance complémentaire. La science est le mode de connaissance de l'intelligence, adaptée à la matière inerte ; la philosophie est le mode de connaissance de l'intuition, adaptée à la vie et à la durée. Ces deux formes de connaissance ne s'opposent pas mais se complètent : la science est nécessaire pour l'action, la philosophie pour la compréhension de la vie. Cette conception distingue Bergson des philosophes positivistes, pour qui la science est la seule forme de connaissance valable."
+        question: "Question n°48 : Quelle est la conception de la philosophie chez Bergson par rapport à la science ?",
+        answers: [
+            "la philosophie est complémentaire de la science", 
+            "la philosophie s'oppose à la science", 
+            "la philosophie est inférieure à la science"
+        ], 
+        correct: 1,
+        explanation: "Pour Bergson, la philosophie est complémentaire de la science. Cette conception de la philosophie est au cœur de la philosophie de Bergson : la philosophie n'est pas une science supérieure, ni une science concurrente, mais une forme de connaissance complémentaire. La science est le mode de connaissance de l'intelligence, adaptée à la matière inerte ; la philosophie est le mode de connaissance de l'intuition, adaptée à la vie et à la durée. Ces deux formes de connaissance ne s'opposent pas mais se complètent : la science est nécessaire pour l'action, la philosophie pour la compréhension de la vie. Cette conception distingue Bergson des philosophes positivistes, pour qui la science est la seule forme de connaissance valable."
     },
     { 
-      question: "Question n°49 : Quel est le rapport entre l'intuition et la réalité chez Bergson ?",
-      answers: [
-        "l'intuition coïncide avec la réalité", 
-        "l'intuition s'oppose à la réalité", 
-        "l'intuition est indépendante de la réalité"
-      ], 
-      correct: 1,
-      explanation: "Chez Bergson, l'intuition coïncide avec la réalité. Cette conception de l'intuition est au cœur de la philosophie de Bergson : l'intuition est une sympathie par laquelle on se place à l'intérieur d'un objet pour coïncider avec ce qu'il a d'unique et d'inexprimable. Elle n'est pas une connaissance conceptuelle, mais une expérience vécue, une communion avec la réalité. Cette conception de l'intuition comme coïncidence avec la réalité distingue Bergson des philosophes intellectualistes, pour qui la connaissance est une observation du dehors (Descartes, Kant). Pour Bergson, la connaissance de la vie est une intuition, une sympathie."
+        question: "Question n°49 : Quel est le rapport entre l'intuition et la réalité chez Bergson ?",
+        answers: [
+            "l'intuition coïncide avec la réalité", 
+            "l'intuition s'oppose à la réalité", 
+            "l'intuition est indépendante de la réalité"
+        ], 
+        correct: 1,
+        explanation: "Chez Bergson, l'intuition coïncide avec la réalité. Cette conception de l'intuition est au cœur de la philosophie de Bergson : l'intuition est une sympathie par laquelle on se place à l'intérieur d'un objet pour coïncider avec ce qu'il a d'unique et d'inexprimable. Elle n'est pas une connaissance conceptuelle, mais une expérience vécue, une communion avec la réalité. Cette conception de l'intuition comme coïncidence avec la réalité distingue Bergson des philosophes intellectualistes, pour qui la connaissance est une observation du dehors (Descartes, Kant). Pour Bergson, la connaissance de la vie est une intuition, une sympathie."
     },
     { 
-      question: "Question n°50 : En quoi ce texte de Bergson est-il représentatif de sa philosophie ?",
-      answers: [
-        "il montre la distinction entre intelligence et intuition", 
-        "il montre la critique de l'intelligence et l'éloge de l'intuition", 
-        "les deux réponses sont correctes"
-      ], 
-      correct: 3,
-      explanation: "Ce texte de L'évolution créatrice est représentatif de la philosophie de Bergson à plusieurs égards. D'abord, il montre la distinction entre intelligence et intuition, qui est au cœur de la philosophie de Bergson. Ensuite, il montre la critique de l'intelligence, qui ne peut pas comprendre la vie, et l'éloge de l'intuition, qui est l'instinct devenu désintéressé. Enfin, il montre la conception de la durée comme hétérogène et créatrice, et la conception de la métaphysique comme expérience vécue de la durée. Ce texte condense ainsi les thèmes majeurs de la philosophie de Bergson : intelligence vs intuition, critique de l'intellectualisme, éloge de la durée, philosophie intuitive, élan vital."
+        question: "Question n°50 : En quoi ce texte de Bergson est-il représentatif de sa philosophie ?",
+        answers: [
+            "il montre la distinction entre intelligence et intuition", 
+            "il montre la critique de l'intelligence et l'éloge de l'intuition", 
+            "les deux réponses sont correctes"
+        ], 
+        correct: 3,
+        explanation: "Ce texte de L'évolution créatrice est représentatif de la philosophie de Bergson à plusieurs égards. D'abord, il montre la distinction entre intelligence et intuition, qui est au cœur de la philosophie de Bergson. Ensuite, il montre la critique de l'intelligence, qui ne peut pas comprendre la vie, et l'éloge de l'intuition, qui est l'instinct devenu désintéressé. Enfin, il montre la conception de la durée comme hétérogène et créatrice, et la conception de la métaphysique comme expérience vécue de la durée. Ce texte condense ainsi les thèmes majeurs de la philosophie de Bergson : intelligence vs intuition, critique de l'intellectualisme, éloge de la durée, philosophie intuitive, élan vital."
     }
 ];
 
@@ -531,34 +531,34 @@ const carte = {
         
         // Branche 1 : Intelligence et instinct
         { key: 1, parent: 0, text: "Intelligence et instinct", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Deux directions divergentes de l'évolution", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "L'intelligence est tournée vers la matière inerte", color: "#e57373", fontSize: 13 },
-        { key: 4, parent: 1, text: "L'instinct est en affinité avec la vie", color: "#e57373", fontSize: 13 },
+        { key: 2, parent: 1, text: "[1] Deux directions divergentes de l'évolution", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "[2] L'intelligence est tournée vers la matière inerte", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "[2] L'instinct est en affinité avec la vie", color: "#e57373", fontSize: 13 },
         
         // Branche 2 : Limites de l'intelligence
         { key: 5, parent: 0, text: "Limites de l'intelligence", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 6, parent: 5, text: "Ne comprend pas la vie", color: "#81c784", fontSize: 14, bold: true },
-        { key: 7, parent: 5, text: "Applique à ce qui est mouvant des formes fixes", color: "#81c784", fontSize: 13 },
-        { key: 8, parent: 5, text: "Analyse le devenir mais ne saisit pas la durée réelle", color: "#81c784", fontSize: 13 },
-        { key: 9, parent: 5, text: "Découpe le temps en instants identiques", color: "#81c784", fontSize: 13 },
+        { key: 6, parent: 5, text: "[3] Ne comprend pas la vie", color: "#81c784", fontSize: 14, bold: true },
+        { key: 7, parent: 5, text: "[4] Applique à ce qui est mouvant des formes fixes", color: "#81c784", fontSize: 13 },
+        { key: 8, parent: 5, text: "[5] Analyse le devenir mais ne saisit pas la durée réelle", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 5, text: "[6] Découpe le temps en instants identiques", color: "#81c784", fontSize: 13 },
         
         // Branche 3 : La durée
         { key: 10, parent: 0, text: "La durée", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 11, parent: 10, text: "Hétérogène et créatrice", color: "#64b5f6", fontSize: 14, bold: true },
-        { key: 12, parent: 10, text: "Mouvement même de la réalité", color: "#64b5f6", fontSize: 13 },
-        { key: 13, parent: 10, text: "Ne peut être saisie que par l'intuition", color: "#64b5f6", fontSize: 13 },
+        { key: 11, parent: 10, text: "[6] Hétérogène et créatrice", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 12, parent: 10, text: "[8] Mouvement même de la réalité", color: "#64b5f6", fontSize: 13 },
+        { key: 13, parent: 10, text: "[9] Ne peut être saisie que par l'intuition", color: "#64b5f6", fontSize: 13 },
         
         // Branche 4 : L'intuition
         { key: 14, parent: 0, text: "L'intuition", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 15, parent: 14, text: "L'instinct devenu désintéressé", color: "#ffb74d", fontSize: 14, bold: true },
-        { key: 16, parent: 14, text: "Permet de coïncider avec le mouvement de la réalité", color: "#ffb74d", fontSize: 13 },
-        { key: 17, parent: 14, text: "Est la méthode de la philosophie", color: "#ffb74d", fontSize: 13 },
+        { key: 15, parent: 14, text: "[9] L'instinct devenu désintéressé", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 16, parent: 14, text: "[8] Permet de coïncider avec le mouvement de la réalité", color: "#ffb74d", fontSize: 13 },
+        { key: 17, parent: 14, text: "[7] Est la méthode de la philosophie", color: "#ffb74d", fontSize: 13 },
         
         // Branche 5 : La métaphysique
         { key: 18, parent: 0, text: "La métaphysique", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 19, parent: 18, text: "Expérience vécue de la durée", color: "#ba68c8", fontSize: 14, bold: true },
-        { key: 20, parent: 18, text: "Comprendre la vie exige de se placer en elle", color: "#ba68c8", fontSize: 13 },
-        { key: 21, parent: 18, text: "Et non de l'observer du dehors", color: "#ba68c8", fontSize: 13 },
+        { key: 19, parent: 18, text: "[10] Expérience vécue de la durée", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 20, parent: 18, text: "[11] Comprendre la vie exige de se placer en elle", color: "#ba68c8", fontSize: 13 },
+        { key: 21, parent: 18, text: "[11] Et non de l'observer du dehors", color: "#ba68c8", fontSize: 13 },
     ],
     links: [],
     nextKey: 22
