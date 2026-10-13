@@ -629,37 +629,32 @@ const carte = {
     nodes: [
         { key: 0, parent: null, text: "L'équité selon D'AQUIN", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
-        // Branche 1 : Le problème
         { key: 1, parent: 0, text: "Le problème", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Les actes humains portent sur des situations singulières", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "Ces situations peuvent varier à l'infini", color: "#e57373", fontSize: 14 },
-        { key: 4, parent: 1, text: "Impossible d'instituer une loi qui ne serait jamais en défaut", color: "#e57373", fontSize: 13 },
+        { key: 2, parent: 1, text: "[1] Les actes humains portent sur des situations singulières", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "[1] Ces situations peuvent varier à l'infini", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "[2] Impossible d'instituer une loi qui ne serait jamais en défaut", color: "#e57373", fontSize: 13 },
         
-        // Branche 2 : La loi générale
         { key: 5, parent: 0, text: "La loi générale", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 6, parent: 5, text: "Les législateurs considèrent les conditions générales", color: "#81c784", fontSize: 14 },
-        { key: 7, parent: 5, text: "L'observance peut être contraire à la justice et au bien commun", color: "#81c784", fontSize: 13 },
-        { key: 8, parent: 5, text: "Dans certaines situations particulières", color: "#81c784", fontSize: 13 },
+        { key: 6, parent: 5, text: "[3] Les législateurs considèrent les conditions générales", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "[3] L'observance peut être contraire à la justice et au bien commun", color: "#81c784", fontSize: 13 },
+        { key: 8, parent: 5, text: "[3] Dans certaines situations particulières", color: "#81c784", fontSize: 13 },
         
-        // Branche 3 : Exemples
         { key: 9, parent: 0, text: "Exemples", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 10, parent: 9, text: "Rendre un dépôt", color: "#64b5f6", fontSize: 14 },
-        { key: 11, parent: 10, text: "Juste dans la généralité des cas", color: "#64b5f6", fontSize: 13 },
-        { key: 12, parent: 9, text: "Le fou qui réclame son épée", color: "#64b5f6", fontSize: 14 },
-        { key: 13, parent: 9, text: "L'individu qui demande son dépôt pour trahir sa patrie", color: "#64b5f6", fontSize: 13 },
+        { key: 10, parent: 9, text: "[4] Rendre un dépôt", color: "#64b5f6", fontSize: 14 },
+        { key: 11, parent: 10, text: "[4] Juste dans la généralité des cas", color: "#64b5f6", fontSize: 13 },
+        { key: 12, parent: 9, text: "[4] Le fou qui réclame son épée", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 9, text: "[4] L'individu qui demande son dépôt pour trahir sa patrie", color: "#64b5f6", fontSize: 13 },
         
-        // Branche 4 : La solution
         { key: 14, parent: 0, text: "La solution", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 15, parent: 14, text: "Il serait mal d'obéir à la loi", color: "#ffb74d", fontSize: 14 },
-        { key: 16, parent: 14, text: "Le bien consiste à transgresser la lettre de la loi", color: "#ffb74d", fontSize: 14 },
-        { key: 17, parent: 14, text: "Pour rester fidèle à l'esprit de justice", color: "#ffb74d", fontSize: 13 },
-        { key: 18, parent: 14, text: "Et à l'exigence du bien commun", color: "#ffb74d", fontSize: 13 },
+        { key: 15, parent: 14, text: "[5] Il serait mal d'obéir à la loi", color: "#ffb74d", fontSize: 14 },
+        { key: 16, parent: 14, text: "[5] Le bien consiste à transgresser la lettre de la loi", color: "#ffb74d", fontSize: 14 },
+        { key: 17, parent: 14, text: "[5] Pour rester fidèle à l'esprit de justice", color: "#ffb74d", fontSize: 13 },
+        { key: 18, parent: 14, text: "[5] Et à l'exigence du bien commun", color: "#ffb74d", fontSize: 13 },
         
-        // Branche 5 : L'équité
         { key: 19, parent: 0, text: "L'équité (épikie)", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 20, parent: 19, text: "Vertu qui corrige la loi générale", color: "#ba68c8", fontSize: 14 },
-        { key: 21, parent: 19, text: "Dans des cas particuliers", color: "#ba68c8", fontSize: 13 },
-        { key: 22, parent: 19, text: "Pour réaliser la justice et le bien commun", color: "#ba68c8", fontSize: 13 },
+        { key: 20, parent: 19, text: "[1] Vertu qui corrige la loi générale", color: "#ba68c8", fontSize: 14 },
+        { key: 21, parent: 19, text: "[2] Dans des cas particuliers", color: "#ba68c8", fontSize: 13 },
+        { key: 22, parent: 19, text: "[5] Pour réaliser la justice et le bien commun", color: "#ba68c8", fontSize: 13 },
     ],
     links: [],
     nextKey: 23

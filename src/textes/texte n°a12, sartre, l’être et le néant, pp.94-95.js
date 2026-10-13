@@ -624,46 +624,43 @@ const questions = [
 // ============================================
 // CARTE MENTALE
 // ============================================
-
 const carte = {
     nodes: [
         { key: 0, parent: null, text: "La mauvaise foi selon SARTRE", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
-        // Branche 1 : La situation
         { key: 1, parent: 0, text: "La situation", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Une femme à un premier rendez-vous", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "Elle sait les intentions de l'homme", color: "#e57373", fontSize: 13 },
-        { key: 4, parent: 1, text: "Elle sait qu'elle devra prendre une décision", color: "#e57373", fontSize: 13 },
-        { key: 5, parent: 1, text: "Elle n'en veut pas sentir l'urgence", color: "#e57373", fontSize: 14 },
+        { key: 2, parent: 1, text: "[1] Une femme à un premier rendez-vous", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "[2] Elle sait les intentions de l'homme", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "[3] Elle sait qu'elle devra prendre une décision", color: "#e57373", fontSize: 13 },
+        { key: 5, parent: 1, text: "[4] Elle n'en veut pas sentir l'urgence", color: "#e57373", fontSize: 14 },
         
-        // Branche 2 : Stratégies de mauvaise foi
         { key: 6, parent: 0, text: "Stratégies de mauvaise foi", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 7, parent: 6, text: "S'attacher au respectueux et discret", color: "#81c784", fontSize: 14 },
-        { key: 8, parent: 6, text: "Borner le comportement au présent", color: "#81c784", fontSize: 13 },
-        { key: 9, parent: 6, text: "Désarmer les phrases de leur arrière-fond sexuel", color: "#81c784", fontSize: 13 },
-        { key: 10, parent: 6, text: "Traiter les attitudes comme qualités objectives", color: "#81c784", fontSize: 13 },
+        { key: 7, parent: 6, text: "[4] S'attacher au respectueux et discret", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 6, text: "[5] Borner le comportement au présent", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 6, text: "[5] Désarmer les phrases de leur arrière-fond sexuel", color: "#81c784", fontSize: 13 },
+        { key: 10, parent: 6, text: "[6] Traiter les attitudes comme qualités objectives", color: "#81c784", fontSize: 13 },
         
-        // Branche 3 : La main prise
-        { key: 11, parent: 0, text: "La main prise", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 12, parent: 11, text: "Appel à une décision immédiate", color: "#64b5f6", fontSize: 14 },
-        { key: 13, parent: 11, text: "Abandonner = consentir au flirt", color: "#64b5f6", fontSize: 13 },
-        { key: 14, parent: 11, text: "Retirer = rompre l'harmonie", color: "#64b5f6", fontSize: 13 },
-        { key: 15, parent: 11, text: "Reculer l'instant de la décision", color: "#64b5f6", fontSize: 14 },
+        { key: 11, parent: 0, text: "Le désir de reconnaissance", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 12, parent: 11, text: "[7] Elle ne trouverait aucun charme à un respect qui serait uniquement du respect", color: "#64b5f6", fontSize: 13 },
+        { key: 13, parent: 11, text: "[8] Un sentiment qui s'adresse à sa liberté plénière", color: "#64b5f6", fontSize: 14 },
         
-        // Branche 4 : Le divorce du corps et de l'âme
-        { key: 16, parent: 0, text: "Divorce du corps et de l'âme", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 17, parent: 16, text: "Elle abandonne sa main sans s'en apercevoir", color: "#ffb74d", fontSize: 14 },
-        { key: 18, parent: 16, text: "Elle est, à ce moment, tout esprit", color: "#ffb74d", fontSize: 14 },
-        { key: 19, parent: 16, text: "La main repose inerte, une chose", color: "#ffb74d", fontSize: 13 },
-        { key: 20, parent: 16, text: "Ni consentante ni résistante", color: "#ffb74d", fontSize: 13 },
+        { key: 15, parent: 0, text: "La main prise", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 16, parent: 15, text: "[9] On lui prend la main", color: "#ffb74d", fontSize: 14 },
+        { key: 17, parent: 15, text: "[10] Appel à une décision immédiate", color: "#ffb74d", fontSize: 13 },
+        { key: 18, parent: 15, text: "[10] Abandonner = consentir au flirt", color: "#ffb74d", fontSize: 13 },
+        { key: 19, parent: 15, text: "[11] Retirer = rompre l'harmonie", color: "#ffb74d", fontSize: 13 },
+        { key: 20, parent: 15, text: "[12] Reculer l'instant de la décision", color: "#ffb74d", fontSize: 14 },
         
-        // Branche 5 : Caractéristiques de la mauvaise foi
-        { key: 21, parent: 0, text: "Caractéristiques de la mauvaise foi", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 22, parent: 21, text: "Mensonge à soi-même", color: "#ba68c8", fontSize: 14 },
-        { key: 23, parent: 21, text: "Fuite devant la liberté", color: "#ba68c8", fontSize: 14 },
-        { key: 24, parent: 21, text: "Refus d'assumer la responsabilité", color: "#ba68c8", fontSize: 13 },
-        { key: 25, parent: 21, text: "Dissociation entre l'action et la conscience", color: "#ba68c8", fontSize: 13 },
+        { key: 21, parent: 0, text: "Divorce du corps et de l'âme", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 22, parent: 21, text: "[13] Elle abandonne sa main sans s'en apercevoir", color: "#ba68c8", fontSize: 14 },
+        { key: 23, parent: 21, text: "[14] Elle est, à ce moment, tout esprit", color: "#ba68c8", fontSize: 14 },
+        { key: 24, parent: 21, text: "[15] La main repose inerte, une chose", color: "#ba68c8", fontSize: 13 },
+        { key: 25, parent: 21, text: "[15] Ni consentante ni résistante", color: "#ba68c8", fontSize: 13 },
+        
+        { key: 26, parent: 0, text: "Conclusion", color: "#4db6ac", dir: "left", bold: true, fontSize: 16 },
+        { key: 27, parent: 26, text: "[16] Cette femme est de mauvaise foi", color: "#4db6ac", fontSize: 14, bold: true },
+        { key: 28, parent: 26, text: "[16] Mensonge à soi-même", color: "#4db6ac", fontSize: 13 },
     ],
     links: [],
-    nextKey: 26
+    nextKey: 29
 };

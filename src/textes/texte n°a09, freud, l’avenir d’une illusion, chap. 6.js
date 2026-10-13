@@ -625,48 +625,37 @@ const questions = [
 // ============================================
 // CARTE MENTALE
 // ============================================
-
 const carte = {
     nodes: [
         { key: 0, parent: null, text: "La religion comme illusion selon FREUD", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
-        // Branche 1 : Nature des idées religieuses
         { key: 1, parent: 0, text: "Nature des idées religieuses", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Ne sont pas le résidu de l'expérience", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "Ni le résultat final de la réflexion", color: "#e57373", fontSize: 14 },
-        { key: 4, parent: 1, text: "Sont des illusions", color: "#e57373", fontSize: 14, bold: true },
-        { key: 5, parent: 1, text: "Réalisation des désirs les plus anciens, forts, pressants", color: "#e57373", fontSize: 13 },
+        { key: 2, parent: 1, text: "[1] Ne sont pas le résidu de l'expérience", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "[1] Ni le résultat final de la réflexion", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "[1] Sont des illusions", color: "#e57373", fontSize: 14, bold: true },
+        { key: 5, parent: 1, text: "[1] Réalisation des désirs les plus anciens, forts, pressants", color: "#e57373", fontSize: 13 },
         
-        // Branche 2 : Origine psychologique
         { key: 6, parent: 0, text: "Origine psychologique", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 7, parent: 6, text: "Détresse infantile", color: "#81c784", fontSize: 14 },
-        { key: 8, parent: 7, text: "Besoin d'être protégé et aimé", color: "#81c784", fontSize: 13 },
-        { key: 9, parent: 6, text: "Le père comme première figure protectrice", color: "#81c784", fontSize: 14 },
-        { key: 10, parent: 6, text: "La détresse dure toute la vie", color: "#81c784", fontSize: 13 },
-        { key: 11, parent: 6, text: "Cramponnement à un père plus puissant", color: "#81c784", fontSize: 13 },
+        { key: 7, parent: 6, text: "[2] Détresse infantile : besoin d'être protégé et aimé", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 6, text: "[2] Le père comme première figure protectrice", color: "#81c784", fontSize: 14 },
+        { key: 10, parent: 6, text: "[2] La détresse dure toute la vie", color: "#81c784", fontSize: 13 },
+        { key: 11, parent: 6, text: "[2] Cramponnement à un père plus puissant", color: "#81c784", fontSize: 13 },
         
-        // Branche 3 : Fonctions de la religion
         { key: 12, parent: 0, text: "Fonctions de la religion", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 13, parent: 12, text: "Apaisement de l'angoisse", color: "#64b5f6", fontSize: 14 },
-        { key: 14, parent: 13, text: "Providence divine bienveillante", color: "#64b5f6", fontSize: 13 },
-        { key: 15, parent: 12, text: "Ordre moral de l'univers", color: "#64b5f6", fontSize: 14 },
-        { key: 16, parent: 15, text: "Réalisation des exigences de justice", color: "#64b5f6", fontSize: 13 },
-        { key: 17, parent: 12, text: "Prolongation de l'existence terrestre", color: "#64b5f6", fontSize: 14 },
-        { key: 18, parent: 17, text: "Cadres du temps et lieu de réalisation des désirs", color: "#64b5f6", fontSize: 13 },
+        { key: 13, parent: 12, text: "[3] Apaisement de l'angoisse : providence divine bienveillante", color: "#64b5f6", fontSize: 13 },
+        { key: 15, parent: 12, text: "[3] Ordre moral de l'univers : réalisation des exigences de justice", color: "#64b5f6", fontSize: 13 },
+        { key: 17, parent: 12, text: "[3] Prolongation de l'existence terrestre : cadres du temps et lieu de réalisation des désirs", color: "#64b5f6", fontSize: 13 },
         
-        // Branche 4 : Définition de l'illusion
-        { key: 19, parent: 0, text: "Définition de l'illusion", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 20, parent: 19, text: "Croyance dérivée des désirs humains", color: "#ffb74d", fontSize: 14 },
-        { key: 21, parent: 19, text: "Se rapproche de l'idée délirante", color: "#ffb74d", fontSize: 14 },
-        { key: 22, parent: 19, text: "La réalisation d'un désir est prévalente dans sa motivation", color: "#ffb74d", fontSize: 13 },
-        { key: 23, parent: 19, text: "Ne tient pas compte des rapports à la réalité", color: "#ffb74d", fontSize: 13 },
-        { key: 24, parent: 19, text: "Renonce à être confirmée par le réel", color: "#ffb74d", fontSize: 13 },
+        { key: 19, parent: 0, text: "Réponses aux énigmes", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 20, parent: 19, text: "[4] Genèse de l'univers, rapport corps/esprit", color: "#ffb74d", fontSize: 14 },
+        { key: 21, parent: 19, text: "[5] Allégement pour l'âme individuelle : conflits de l'enfance reçoivent une solution acceptée de tous", color: "#ffb74d", fontSize: 13 },
         
-        // Branche 5 : Conclusion
-        { key: 25, parent: 0, text: "Conclusion", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 26, parent: 25, text: "La religion est une illusion collective", color: "#ba68c8", fontSize: 14 },
-        { key: 27, parent: 25, text: "Sa force vient de la force des désirs", color: "#ba68c8", fontSize: 14 },
-        { key: 28, parent: 25, text: "Allégement pour l'âme individuelle", color: "#ba68c8", fontSize: 13 },
+        { key: 23, parent: 0, text: "Définition de l'illusion", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 24, parent: 23, text: "[6] Croyance dérivée des désirs humains", color: "#ba68c8", fontSize: 14 },
+        { key: 25, parent: 23, text: "[6] Se rapproche de l'idée délirante", color: "#ba68c8", fontSize: 13 },
+        { key: 26, parent: 23, text: "[7] La réalisation d'un désir est prévalente dans sa motivation", color: "#ba68c8", fontSize: 13 },
+        { key: 27, parent: 23, text: "[7] Ne tient pas compte des rapports à la réalité", color: "#ba68c8", fontSize: 13 },
+        { key: 28, parent: 23, text: "[7] Renonce à être confirmée par le réel", color: "#ba68c8", fontSize: 13 },
     ],
     links: [],
     nextKey: 29
