@@ -59,7 +59,7 @@ const questions = [
 		// Question n°4
 {
 	question: "Question n°4 : Qui sont les adversaires que Pascal critique dans ce texte ?",
-	answers: [
+		answers: [
 			"Les stoïciens",
 			"Les pyrrhoniens",
 			"Les épicuriens"
@@ -71,7 +71,7 @@ const questions = [
 		// Question n°5
 {
 	question: "Question n°5 : Que font les pyrrhoniens selon Pascal ?",
-	answers: [
+		answers: [
 			"Ils découvrent la vérité",
 			"Ils travaillent inutilement",
 			"Ils fondent la science"
@@ -83,7 +83,7 @@ const questions = [
 		// Question n°6
 {
 	question: "Question n°6 : Que savons-nous selon Pascal, même si nous ne pouvons le prouver par raison ?",
-	answers: [
+		answers: [
 			"Que nous ne rêvons point",
 			"Que Dieu existe",
 			"Que l'âme est immortelle"
@@ -95,7 +95,7 @@ const questions = [
 		// Question n°7
 {
 	question: "Question n°7 : Que conclut l'impuissance de prouver que nous ne rêvons point ?",
-	answers: [
+		answers: [
 			"L'incertitude de toutes nos connaissances",
 			"La faiblesse de notre raison, mais non l'incertitude de nos connaissances",
 			"L'impossibilité de la connaissance"
@@ -107,7 +107,7 @@ const questions = [
 		// Question n°8
 {
 	question: "Question n°8 : Quelle est la certitude des premiers principes selon Pascal ?",
-	answers: [
+		answers: [
 			"Faible",
 			"Moindre que celle des raisonnements",
 			"Aussi ferme qu'aucune de celles que nos raisonnements nous donnent"
@@ -119,7 +119,7 @@ const questions = [
 		// Question n°9
 {
 	question: "Question n°9 : Quels exemples de premiers principes Pascal donne-t-il ?",
-	answers: [
+		answers: [
 			"L'espace, le temps, le mouvement, les nombres",
 			"Dieu, l'âme, l'infini",
 			"La vertu, le bien, la justice"
@@ -131,7 +131,7 @@ const questions = [
 		// Question n°10
 {
 	question: "Question n°10 : Sur quoi la raison doit-elle s'appuyer selon Pascal ?",
-	answers: [
+		answers: [
 			"Sur elle-même",
 			"Sur les connaissances du cœur et de l'instinct",
 			"Sur l'expérience sensible"
@@ -143,7 +143,7 @@ const questions = [
 		// Question n°11
 {
 	question: "Question n°11 : Que sent le cœur selon Pascal ?",
-	answers: [
+		answers: [
 			"Qu'il y a trois dimensions dans l'espace et que les nombres sont infinis",
 			"Que Dieu existe",
 			"Que l'âme est immortelle"
@@ -155,7 +155,7 @@ const questions = [
 		// Question n°12
 {
 	question: "Question n°12 : Que démontre la raison ensuite selon Pascal ?",
-	answers: [
+		answers: [
 			"Qu'il n'y a point deux nombres carrés dont l'un soit le double de l'autre",
 			"Que Dieu existe",
 			"Que l'espace a trois dimensions"
@@ -167,7 +167,7 @@ const questions = [
 		// Question n°13
 {
 	question: "Question n°13 : Comment Pascal résume-t-il la différence entre principes et propositions ?",
-	answers: [
+		answers: [
 			"Les principes se sentent, les propositions se concluent",
 			"Les principes se démontrent, les propositions se sentent",
 			"Principes et propositions sont identiques"
@@ -179,7 +179,7 @@ const questions = [
 		// Question n°14
 {
 	question: "Question n°14 : Avec quelle certitude connaissons-nous principes et propositions selon Pascal ?",
-	answers: [
+		answers: [
 			"Avec une certitude inégale",
 			"Avec une certitude égale, quoique par différentes voies",
 			"Avec une certitude incertaine"
@@ -191,7 +191,7 @@ const questions = [
 		// Question n°15
 {
 	question: "Question n°15 : Que serait-il ridicule de demander au cœur selon Pascal ?",
-	answers: [
+		answers: [
 			"Des sentiments",
 			"Des preuves de ses premiers principes",
 			"Des démonstrations mathématiques"
@@ -203,7 +203,7 @@ const questions = [
 		// Question n°16
 {
 	question: "Question n°16 : À quoi Pascal compare-t-il l'attitude de la raison demandant des preuves au cœur ?",
-	answers: [
+		answers: [
 			"À un procès",
 			"Au cœur demandant à la raison un sentiment de toutes les propositions qu'elle démontre",
 			"À un voyage"
@@ -215,7 +215,7 @@ const questions = [
 		// Question n°17
 {
 	question: "Question n°17 : Quelle est la thèse centrale de ce texte ?",
-	answers: [
+		answers: [
 			"La raison est toute-puissante",
 			"Le cœur a ses raisons que la raison ne connaît point",
 			"Seul le cœur connaît la vérité"
@@ -227,7 +227,7 @@ const questions = [
 		// Question n°18
 {
 	question: "Question n°18 : Comment Pascal conçoit-il la relation entre cœur et raison ?",
-	answers: [
+		answers: [
 			"Ils sont opposés",
 			"Ils sont complémentaires : le cœur fournit les principes, la raison démontre les propositions",
 			"La raison est supérieure au cœur"
@@ -239,7 +239,7 @@ const questions = [
 		// Question n°19
 {
 	question: "Question n°19 : Pourquoi les pyrrhoniens sont-ils critiqués par Pascal ?",
-	answers: [
+		answers: [
 			"Parce qu'ils doutent de tout et prétendent que rien n'est certain",
 			"Parce qu'ils croient tout savoir",
 			"Parce qu'ils nient l'existence de Dieu"
@@ -251,7 +251,7 @@ const questions = [
 		// Question n°20
 {
 	question: "Question n°20 : Quel exemple Pascal utilise-t-il pour illustrer la connaissance par le cœur ?",
-	answers: [
+		answers: [
 			"L'amour",
 			"Le fait que nous ne rêvons point",
 			"La foi en Dieu"
@@ -263,7 +263,7 @@ const questions = [
 		// Question n°21
 {
 	question: "Question n°21 : Quel est le rôle de la raison dans la connaissance selon Pascal ?",
-	answers: [
+		answers: [
 			"La raison fonde les premiers principes",
 			"La raison démontre les propositions à partir des principes fournis par le cœur",
 			"La raison est inutile"
@@ -275,7 +275,7 @@ const questions = [
 		// Question n°22
 {
 	question: "Question n°22 : Qu'est-ce que le « cœur » chez Pascal ?",
-	answers: [
+		answers: [
 			"L'organe physique",
 			"Une faculté de connaissance intuitive et immédiate",
 			"Le siège des émotions"
@@ -287,7 +287,7 @@ const questions = [
 		// Question n°23
 {
 	question: "Question n°23 : Comment Pascal définit-il les premiers principes ?",
-	answers: [
+		answers: [
 			"Comme des vérités démontrables",
 			"Comme des évidences premières connues par le cœur",
 			"Comme des hypothèses"
@@ -299,7 +299,7 @@ const questions = [
 		// Question n°24
 {
 	question: "Question n°24 : Pourquoi est-il ridicule de demander au cœur des preuves de ses principes ?",
-	answers: [
+		answers: [
 			"Parce que le cœur ne peut pas parler",
 			"Parce que les principes sont évidents et ne se démontrent pas",
 			"Parce que la raison est supérieure"
@@ -311,7 +311,7 @@ const questions = [
 		// Question n°25
 {
 	question: "Question n°25 : Quelle est la différence entre sentir et conclure selon Pascal ?",
-	answers: [
+		answers: [
 			"Sentir est inférieur à conclure",
 			"Sentir est le mode de connaissance du cœur, conclure est celui de la raison",
 			"Sentir et conclure sont identiques"
@@ -323,7 +323,7 @@ const questions = [
 		// Question n°26
 {
 	question: "Question n°26 : Comment Pascal réfute-t-il le scepticisme des pyrrhoniens ?",
-	answers: [
+		answers: [
 			"Par la démonstration rationnelle",
 			"En montrant que la faiblesse de la raison ne conduit pas à l'incertitude de la connaissance",
 			"Par la foi"
@@ -335,7 +335,7 @@ const questions = [
 		// Question n°27
 {
 	question: "Question n°27 : Quel est le rapport entre cœur et instinct chez Pascal ?",
-	answers: [
+		answers: [
 			"Ils sont opposés",
 			"Ils désignent tous deux la faculté de connaissance intuitive",
 			"L'instinct est supérieur au cœur"
@@ -347,7 +347,7 @@ const questions = [
 		// Question n°28
 {
 	question: "Question n°28 : Que démontre la raison selon l'exemple mathématique de Pascal ?",
-	answers: [
+		answers: [
 			"Que les nombres sont infinis",
 			"Qu'il n'y a point deux nombres carrés dont l'un soit le double de l'autre",
 			"Que l'espace a trois dimensions"
@@ -359,7 +359,7 @@ const questions = [
 		// Question n°29
 {
 	question: "Question n°29 : Pourquoi la raison doit-elle s'appuyer sur le cœur selon Pascal ?",
-	answers: [
+		answers: [
 			"Parce que le cœur est supérieur",
 			"Parce que la raison ne peut pas fonder ses propres principes",
 			"Parce que la raison est inutile"
@@ -371,7 +371,7 @@ const questions = [
 		// Question n°30
 {
 	question: "Question n°30 : Comment Pascal caractérise-t-il la connaissance des premiers principes ?",
-	answers: [
+		answers: [
 			"Comme incertaine",
 			"Comme aussi ferme que les conclusions de la raison",
 			"Comme provisoire"
@@ -383,7 +383,7 @@ const questions = [
 		// Question n°31
 {
 	question: "Question n°31 : Quel est le rôle du cœur dans la connaissance scientifique selon Pascal ?",
-	answers: [
+		answers: [
 			"Le cœur est inutile à la science",
 			"Le cœur fournit les principes premiers sur lesquels la science se fonde",
 			"Le cœur remplace la raison"
@@ -395,7 +395,7 @@ const questions = [
 		// Question n°32
 {
 	question: "Question n°32 : Que signifie l'expression « la raison s'appuie sur le cœur » ?",
-	answers: [
+		answers: [
 			"La raison dépend du cœur pour ses principes",
 			"La raison est émotionnelle",
 			"La raison est supérieure au cœur"
@@ -407,7 +407,7 @@ const questions = [
 		// Question n°33
 {
 	question: "Question n°33 : Comment Pascal distingue-t-il les principes des propositions ?",
-	answers: [
+		answers: [
 			"Par leur degré de certitude",
 			"Par leur mode de connaissance : les principes se sentent, les propositions se concluent",
 			"Par leur objet"
@@ -419,7 +419,7 @@ const questions = [
 		// Question n°34
 {
 	question: "Question n°34 : Pourquoi Pascal affirme-t-il que les pyrrhoniens travaillent inutilement ?",
-	answers: [
+		answers: [
 			"Parce qu'ils sont paresseux",
 			"Parce qu'ils essayent de combattre des certitudes inébranlables",
 			"Parce qu'ils n'ont pas de méthode"
@@ -431,7 +431,7 @@ const questions = [
 		// Question n°35
 {
 	question: "Question n°35 : Quelle est la conséquence de la faiblesse de la raison selon Pascal ?",
-	answers: [
+		answers: [
 			"L'incertitude de toutes nos connaissances",
 			"La nécessité de s'appuyer sur le cœur pour les premiers principes",
 			"L'impossibilité de connaître"
@@ -443,7 +443,7 @@ const questions = [
 		// Question n°36
 {
 	question: "Question n°36 : Comment Pascal conçoit-il la certitude dans la connaissance ?",
-	answers: [
+		answers: [
 			"La certitude vient uniquement de la raison",
 			"La certitude vient du cœur pour les principes et de la raison pour les propositions",
 			"La certitude est impossible"
@@ -455,7 +455,7 @@ const questions = [
 		// Question n°37
 {
 	question: "Question n°37 : Quel est le rapport entre la connaissance par le cœur et la connaissance par la raison ?",
-	answers: [
+		answers: [
 			"Ils sont opposés",
 			"Ils sont complémentaires et également certains",
 			"L'un est supérieur à l'autre"
@@ -467,7 +467,7 @@ const questions = [
 		// Question n°38
 {
 	question: "Question n°38 : Pourquoi Pascal critique-t-il la prétention de la raison à tout prouver ?",
-	answers: [
+		answers: [
 			"Parce que la raison est inutile",
 			"Parce que la raison ne peut pas fonder ses propres principes",
 			"Parce que la raison est mauvaise"
@@ -479,7 +479,7 @@ const questions = [
 		// Question n°39
 {
 	question: "Question n°39 : Comment Pascal définit-il le cœur comme faculté de connaissance ?",
-	answers: [
+		answers: [
 			"Comme une faculté inférieure à la raison",
 			"Comme une faculté de saisie intuitive et immédiate des premiers principes",
 			"Comme une faculté émotionnelle"
@@ -491,7 +491,7 @@ const questions = [
 		// Question n°40
 {
 	question: "Question n°40 : Que signifie l'expression « les principes se sentent » ?",
-	answers: [
+		answers: [
 			"Les principes sont émotionnels",
 			"Les principes sont saisis intuitivement par le cœur",
 			"Les principes sont irrationnels"
@@ -503,7 +503,7 @@ const questions = [
 		// Question n°41
 {
 	question: "Question n°41 : Pourquoi la raison et le cœur ne peuvent-ils pas se demander mutuellement des preuves ?",
-	answers: [
+		answers: [
 			"Parce qu'ils sont ennemis",
 			"Parce que chacun a son mode de connaissance propre et irréductible",
 			"Parce qu'ils sont identiques"
@@ -515,7 +515,7 @@ const questions = [
 		// Question n°42
 {
 	question: "Question n°42 : Comment Pascal articule-t-il connaissance rationnelle et connaissance intuitive ?",
-	answers: [
+		answers: [
 			"En les opposant",
 			"En montrant que la connaissance rationnelle présuppose la connaissance intuitive",
 			"En les identifiant"
@@ -527,7 +527,7 @@ const questions = [
 		// Question n°43
 {
 	question: "Question n°43 : Quel est le rôle de l'évidence dans la connaissance selon Pascal ?",
-	answers: [
+		answers: [
 			"L'évidence est trompeuse",
 			"L'évidence est le mode de saisie des premiers principes par le cœur",
 			"L'évidence n'existe pas"
@@ -539,7 +539,7 @@ const questions = [
 		// Question n°44
 {
 	question: "Question n°44 : Pourquoi Pascal affirme-t-il que la connaissance des premiers principes est aussi ferme que celle des raisonnements ?",
-	answers: [
+		answers: [
 			"Parce que les principes sont démontrables",
 			"Parce que le cœur saisit les principes avec une certitude immédiate et inébranlable",
 			"Parce que les raisonnements sont incertains"
@@ -551,7 +551,7 @@ const questions = [
 		// Question n°45
 {
 	question: "Question n°45 : Comment Pascal conçoit-il le fondement de la connaissance ?",
-	answers: [
+		answers: [
 			"Le fondement est la raison",
 			"Le fondement est le cœur, qui fournit les premiers principes",
 			"Le fondement est l'expérience"
@@ -563,7 +563,7 @@ const questions = [
 		// Question n°46
 {
 	question: "Question n°46 : Pourquoi Pascal affirme-t-il que les pyrrhoniens n'ont « que cela pour objet » ?",
-	answers: [
+		answers: [
 			"Parce qu'ils ne s'intéressent qu'à la connaissance",
 			"Parce que leur seul but est de combattre les premiers principes",
 			"Parce qu'ils sont ignorants"
@@ -575,7 +575,7 @@ const questions = [
 		// Question n°47
 {
 	question: "Question n°47 : Comment Pascal caractérise-t-il la demande de preuves adressée au cœur ?",
-	answers: [
+		answers: [
 			"Comme légitime",
 			"Comme ridicule et inutile",
 			"Comme nécessaire"
@@ -587,7 +587,7 @@ const questions = [
 		// Question n°48
 {
 	question: "Question n°48 : Quel est le rapport entre les principes et les propositions dans la connaissance ?",
-	answers: [
+		answers: [
 			"Les principes sont dérivés des propositions",
 			"Les propositions sont dérivées des principes",
 			"Principes et propositions sont indépendants"
@@ -599,7 +599,7 @@ const questions = [
 		// Question n°49
 {
 	question: "Question n°49 : Pourquoi Pascal affirme-t-il que la raison ne peut pas tout prouver ?",
-	answers: [
+		answers: [
 			"Parce que la raison est paresseuse",
 			"Parce qu'elle doit s'appuyer sur des principes indémontrables",
 			"Parce que la vérité n'existe pas"
@@ -611,7 +611,7 @@ const questions = [
 		// Question n°50
 {
 	question: "Question n°50 : Quelle est l'importance de ce texte dans l'histoire de la philosophie ?",
-	answers: [
+		answers: [
 			"C'est un texte mineur",
 			"C'est un texte majeur qui fonde une épistémologie du cœur et critique le rationalisme exclusif",
 			"C'est un texte purement religieux"
@@ -629,40 +629,35 @@ const carte = {
     nodes: [
         { key: 0, parent: null, text: "Cœur et raison selon PASCAL", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
-        // Branche 1 : Deux voies de connaissance
         { key: 1, parent: 0, text: "Deux voies de connaissance", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Par la raison", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "Par le cœur", color: "#e57373", fontSize: 14 },
-        { key: 4, parent: 1, text: "Les premiers principes connus par le cœur", color: "#e57373", fontSize: 13 },
-        { key: 5, parent: 1, text: "Le raisonnement ne peut les combattre", color: "#e57373", fontSize: 13 },
+        { key: 2, parent: 1, text: "[1] Par la raison", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "[1] Par le cœur", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "[1] Les premiers principes connus par le cœur", color: "#e57373", fontSize: 13 },
+        { key: 5, parent: 1, text: "[1] Le raisonnement ne peut les combattre", color: "#e57373", fontSize: 13 },
         
-        // Branche 2 : Critique des pyrrhoniens
         { key: 6, parent: 0, text: "Critique des pyrrhoniens", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 7, parent: 6, text: "Travaillent inutilement", color: "#81c784", fontSize: 14 },
-        { key: 8, parent: 6, text: "Nous savons que nous ne rêvons point", color: "#81c784", fontSize: 14 },
-        { key: 9, parent: 6, text: "Impuissance de le prouver par raison", color: "#81c784", fontSize: 13 },
-        { key: 10, parent: 6, text: "Faiblesse de la raison ≠ incertitude de la connaissance", color: "#81c784", fontSize: 14, bold: true },
+        { key: 7, parent: 6, text: "[2] Travaillent inutilement", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 6, text: "[3] Nous savons que nous ne rêvons point", color: "#81c784", fontSize: 14 },
+        { key: 9, parent: 6, text: "[3] Impuissance de le prouver par raison", color: "#81c784", fontSize: 13 },
+        { key: 10, parent: 6, text: "[3] Faiblesse de la raison ≠ incertitude de la connaissance", color: "#81c784", fontSize: 14, bold: true },
         
-        // Branche 3 : Certitude des premiers principes
         { key: 11, parent: 0, text: "Certitude des premiers principes", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 12, parent: 11, text: "Espace, temps, mouvement, nombres", color: "#64b5f6", fontSize: 14 },
-        { key: 13, parent: 11, text: "Aussi ferme qu'aucune de nos connaissances", color: "#64b5f6", fontSize: 14, bold: true },
-        { key: 14, parent: 11, text: "La raison s'appuie sur le cœur", color: "#64b5f6", fontSize: 13 },
+        { key: 12, parent: 11, text: "[4] Espace, temps, mouvement, nombres", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 11, text: "[4] Aussi ferme qu'aucune de nos connaissances", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 14, parent: 11, text: "[5] La raison s'appuie sur le cœur", color: "#64b5f6", fontSize: 13 },
         
-        // Branche 4 : Sentir et conclure
         { key: 15, parent: 0, text: "Sentir et conclure", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 16, parent: 15, text: "Le cœur sent qu'il y a trois dimensions", color: "#ffb74d", fontSize: 14 },
-        { key: 17, parent: 15, text: "Que les nombres sont infinis", color: "#ffb74d", fontSize: 13 },
-        { key: 18, parent: 15, text: "La raison démontre ensuite", color: "#ffb74d", fontSize: 13 },
-        { key: 19, parent: 15, text: "Les principes se sentent", color: "#ffb74d", fontSize: 14, bold: true },
-        { key: 20, parent: 15, text: "Les propositions se concluent", color: "#ffb74d", fontSize: 14, bold: true },
-        { key: 21, parent: 15, text: "Le tout avec certitude, par différentes voies", color: "#ffb74d", fontSize: 13 },
+        { key: 16, parent: 15, text: "[6] Le cœur sent qu'il y a trois dimensions", color: "#ffb74d", fontSize: 14 },
+        { key: 17, parent: 15, text: "[6] Que les nombres sont infinis", color: "#ffb74d", fontSize: 13 },
+        { key: 18, parent: 15, text: "[6] La raison démontre ensuite", color: "#ffb74d", fontSize: 13 },
+        { key: 19, parent: 15, text: "[7] Les principes se sentent", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 20, parent: 15, text: "[7] Les propositions se concluent", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 21, parent: 15, text: "[7] Le tout avec certitude, par différentes voies", color: "#ffb74d", fontSize: 13 },
         
-        // Branche 5 : Complémentarité
         { key: 22, parent: 0, text: "Complémentarité", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 23, parent: 22, text: "Ridicule de demander au cœur des preuves", color: "#ba68c8", fontSize: 14 },
-        { key: 24, parent: 22, text: "Ridicule de demander à la raison un sentiment", color: "#ba68c8", fontSize: 14 },
-        { key: 25, parent: 22, text: "Chaque faculté a sa voie propre", color: "#ba68c8", fontSize: 13 },
+        { key: 23, parent: 22, text: "[8] Ridicule de demander au cœur des preuves", color: "#ba68c8", fontSize: 14 },
+        { key: 24, parent: 22, text: "[8] Ridicule de demander à la raison un sentiment", color: "#ba68c8", fontSize: 14 },
+        { key: 25, parent: 22, text: "[8] Chaque faculté a sa voie propre", color: "#ba68c8", fontSize: 13 },
     ],
     links: [],
     nextKey: 26

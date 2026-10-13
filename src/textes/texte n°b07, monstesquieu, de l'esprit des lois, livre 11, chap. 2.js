@@ -215,7 +215,7 @@ const questions = [
 		// Question n°17
 {
 	question: "Question n°17 : Que signifie l'expression « droit de faire tout ce que les lois permettent » ?",
-	answers: [
+		answers: [
 			"Le droit de tout faire",
 			"Le droit d'agir dans le cadre défini par la loi",
 			"Le droit de transgresser la loi"
@@ -227,7 +227,7 @@ const questions = [
 		// Question n°18
 {
 	question: "Question n°18 : Pourquoi la liberté de chacun est-elle limitée par la liberté des autres ?",
-	answers: [
+		answers: [
 			"Parce que les autres sont plus forts",
 			"Parce que si chacun pouvait tout faire, personne ne serait libre",
 			"Parce que la loi est arbitraire"
@@ -239,7 +239,7 @@ const questions = [
 		// Question n°19
 {
 	question: "Question n°19 : Comment Montesquieu définit-il l'indépendance ?",
-	answers: [
+		answers: [
 			"Comme le droit de faire tout ce que les lois permettent",
 			"Comme l'absence de contrainte, le pouvoir de faire ce que l'on veut",
 			"Comme la soumission aux lois"
@@ -251,7 +251,7 @@ const questions = [
 		// Question n°20
 {
 	question: "Question n°20 : Quel est le thème principal de ce texte ?",
-	answers: [
+		answers: [
 			"La séparation des pouvoirs",
 			"La distinction entre liberté et indépendance",
 			"La souveraineté du peuple"
@@ -263,7 +263,7 @@ const questions = [
 		// Question n°21
 {
 	question: "Question n°21 : Pourquoi Montesquieu affirme-t-il que la liberté politique ne consiste point à faire ce que l'on veut ?",
-	answers: [
+		answers: [
 			"Parce que cela est impossible",
 			"Parce que cela conduirait à la tyrannie et à la destruction de la liberté",
 			"Parce que cela est immoral"
@@ -275,7 +275,7 @@ const questions = [
 		// Question n°22
 {
 	question: "Question n°22 : Que signifie l'expression « dans une société où il y a des lois » ?",
-	answers: [
+		answers: [
 			"Dans un état de nature",
 			"Dans une société organisée par le droit",
 			"Dans une société sans règles"
@@ -287,7 +287,7 @@ const questions = [
 		// Question n°23
 {
 	question: "Question n°23 : Comment Montesquieu conçoit-il le rapport entre liberté et contrainte ?",
-	answers: [
+		answers: [
 			"La liberté est l'absence de toute contrainte",
 			"La liberté implique de n'être pas contraint de faire ce que l'on ne doit pas vouloir",
 			"La liberté est la soumission à toutes les contraintes"
@@ -299,7 +299,7 @@ const questions = [
 		// Question n°24
 {
 	question: "Question n°24 : Pourquoi la liberté est-elle un droit et non un pouvoir selon Montesquieu ?",
-	answers: [
+		answers: [
 			"Parce qu'elle est garantie par la loi et protégée par l'Etat",
 			"Parce qu'elle est naturelle",
 			"Parce qu'elle est illimitée"
@@ -311,7 +311,7 @@ const questions = [
 		// Question n°25
 {
 	question: "Question n°25 : Quel est le rapport entre liberté et justice selon Montesquieu ?",
-	answers: [
+		answers: [
 			"La liberté est indépendante de la justice",
 			"La liberté véritable est conforme à la justice et à la loi",
 			"La liberté s'oppose à la justice"
@@ -323,7 +323,7 @@ const questions = [
 		// Question n°26
 {
 	question: "Question n°26 : Comment Montesquieu justifie-t-il la nécessité des lois pour la liberté ?",
-	answers: [
+		answers: [
 			"Par la nature humaine corrompue",
 			"Par la nécessité de protéger la liberté de chacun contre les empiètements des autres",
 			"Par la volonté divine"
@@ -335,7 +335,7 @@ const questions = [
 		// Question n°27
 {
 	question: "Question n°27 : Que signifie l'expression « faire tout ce que les lois permettent » ?",
-	answers: [
+		answers: [
 			"Agir dans le cadre légal",
 			"Agir contre la loi",
 			"Agir sans règle"
@@ -347,7 +347,7 @@ const questions = [
 		// Question n°28
 {
 	question: "Question n°28 : Pourquoi Montesquieu affirme-t-il que si un citoyen transgressait les lois, il n'aurait plus de liberté ?",
-	answers: [
+		answers: [
 			"Parce qu'il serait puni",
 			"Parce que les autres auraient le même pouvoir de transgresser, détruisant ainsi la liberté de tous",
 			"Parce qu'il serait exclu de la société"
@@ -359,7 +359,7 @@ const questions = [
 		// Question n°29
 {
 	question: "Question n°29 : Comment Montesquieu définit-il la liberté politique ?",
-	answers: [
+		answers: [
 			"Comme l'absence de contrainte",
 			"Comme le droit de faire tout ce que les lois permettent",
 			"Comme le pouvoir de tout faire"
@@ -371,7 +371,7 @@ const questions = [
 		// Question n°30
 {
 	question: "Question n°30 : Quel est le rôle de la loi dans la conception de la liberté selon Montesquieu ?",
-	answers: [
+		answers: [
 			"La loi limite la liberté",
 			"La loi garantit et protège la liberté",
 			"La loi supprime la liberté"
@@ -383,7 +383,7 @@ const questions = [
 		// Question n°31
 {
 	question: "Question n°31 : Pourquoi Montesquieu distingue-t-il indépendance et liberté ?",
-	answers: [
+		answers: [
 			"Pour clarifier la notion de liberté politique et éviter les confusions",
 			"Pour critiquer la démocratie",
 			"Pour défendre la monarchie"
@@ -395,7 +395,7 @@ const questions = [
 		// Question n°32
 {
 	question: "Question n°32 : Que signifie l'expression « la liberté ne peut consister qu'à... » ?",
-	answers: [
+		answers: [
 			"La liberté consiste nécessairement à...",
 			"La liberté peut consister en autre chose",
 			"La liberté n'existe pas"
@@ -407,7 +407,7 @@ const questions = [
 		// Question n°33
 {
 	question: "Question n°33 : Comment Montesquieu conçoit-il la relation entre liberté et volonté ?",
-	answers: [
+		answers: [
 			"La liberté est la satisfaction de toutes les volontés",
 			"La liberté est de vouloir ce que l'on doit vouloir",
 			"La liberté est l'absence de volonté"
@@ -419,7 +419,7 @@ const questions = [
 		// Question n°34
 {
 	question: "Question n°34 : Pourquoi la liberté politique est-elle impossible dans une société sans lois ?",
-	answers: [
+		answers: [
 			"Parce que sans lois, il n'y a que la force et l'arbitraire",
 			"Parce que les hommes sont naturellement bons",
 			"Parce que la société n'existerait pas"
@@ -431,7 +431,7 @@ const questions = [
 		// Question n°35
 {
 	question: "Question n°35 : Quel est le rapport entre liberté et droit selon Montesquieu ?",
-	answers: [
+		answers: [
 			"La liberté est indépendante du droit",
 			"La liberté est un droit garanti par la loi",
 			"La liberté s'oppose au droit"
@@ -443,7 +443,7 @@ const questions = [
 		// Question n°36
 {
 	question: "Question n°36 : Pourquoi Montesquieu affirme-t-il que la liberté ne consiste point à faire ce que l'on veut ?",
-	answers: [
+		answers: [
 			"Parce que cela est immoral",
 			"Parce que cela conduirait à la destruction de la liberté de tous",
 			"Parce que cela est impossible"
@@ -455,7 +455,7 @@ const questions = [
 		// Question n°37
 {
 	question: "Question n°37 : Comment Montesquieu conçoit-il la liberté dans une démocratie ?",
-	answers: [
+		answers: [
 			"Comme une liberté parfaite",
 			"Comme une liberté qui n'est pas nécessairement plus grande que dans d'autres régimes",
 			"Comme une illusion"
@@ -467,7 +467,7 @@ const questions = [
 		// Question n°38
 {
 	question: "Question n°38 : Que signifie l'expression « il n'aurait plus de liberté » ?",
-	answers: [
+		answers: [
 			"Il serait plus libre",
 			"Il perdrait la protection de la loi et serait exposé à l'arbitraire des autres",
 			"Il serait libéré des contraintes"
@@ -479,7 +479,7 @@ const questions = [
 		// Question n°39
 {
 	question: "Question n°39 : Pourquoi la liberté est-elle un droit réciproque selon Montesquieu ?",
-	answers: [
+		answers: [
 			"Parce que ma liberté dépend du respect de la loi par tous",
 			"Parce que la liberté est individuelle",
 			"Parce que la liberté est illimitée"
@@ -491,7 +491,7 @@ const questions = [
 		// Question n°40
 {
 	question: "Question n°40 : Quel est le sens de la distinction entre indépendance et liberté dans la pensée politique de Montesquieu ?",
-	answers: [
+		answers: [
 			"C'est une distinction secondaire",
 			"C'est une distinction fondamentale qui permet de définir la liberté politique",
 			"C'est une distinction sans conséquence"
@@ -503,7 +503,7 @@ const questions = [
 		// Question n°41
 {
 	question: "Question n°41 : Comment Montesquieu conçoit-il la relation entre liberté et obéissance ?",
-	answers: [
+		answers: [
 			"La liberté s'oppose à l'obéissance",
 			"La liberté véritable implique l'obéissance à la loi juste",
 			"L'obéissance détruit la liberté"
@@ -515,7 +515,7 @@ const questions = [
 		// Question n°42
 {
 	question: "Question n°42 : Pourquoi Montesquieu affirme-t-il que la liberté ne peut consister qu'à vouloir ce que l'on doit vouloir ?",
-	answers: [
+		answers: [
 			"Parce que la liberté est une illusion",
 			"Parce que la liberté véritable est conforme à la loi et à la raison",
 			"Parce que les désirs sont mauvais"
@@ -527,7 +527,7 @@ const questions = [
 		// Question n°43
 {
 	question: "Question n°43 : Quel est le rapport entre liberté et citoyenneté selon Montesquieu ?",
-	answers: [
+		answers: [
 			"Le citoyen est libre s'il fait ce qu'il veut",
 			"Le citoyen est libre s'il fait ce que les lois permettent et s'il n'est pas contraint de faire ce qu'elles défendent",
 			"Le citoyen n'est jamais libre"
@@ -539,7 +539,7 @@ const questions = [
 		// Question n°44
 {
 	question: "Question n°44 : Comment Montesquieu conçoit-il la liberté dans un Etat de droit ?",
-	answers: [
+		answers: [
 			"Comme l'absence de lois",
 			"Comme le droit de faire tout ce que les lois permettent",
 			"Comme le pouvoir de tout faire"
@@ -551,7 +551,7 @@ const questions = [
 		// Question n°45
 {
 	question: "Question n°45 : Pourquoi Montesquieu affirme-t-il que la liberté politique ne consiste point à faire ce que l'on veut ?",
-	answers: [
+		answers: [
 			"Parce que cela est immoral",
 			"Parce que cela conduirait à la destruction de la liberté de tous",
 			"Parce que cela est impossible"
@@ -563,7 +563,7 @@ const questions = [
 		// Question n°46
 {
 	question: "Question n°46 : Comment Montesquieu définit-il la liberté par rapport à la loi ?",
-	answers: [
+		answers: [
 			"La liberté est l'absence de loi",
 			"La liberté est le droit de faire tout ce que les lois permettent",
 			"La liberté est la transgression de la loi"
@@ -575,7 +575,7 @@ const questions = [
 		// Question n°47
 {
 	question: "Question n°47 : Quel est le rôle de la raison dans la conception de la liberté selon Montesquieu ?",
-	answers: [
+		answers: [
 			"La raison est un obstacle à la liberté",
 			"La raison permet de vouloir ce que l'on doit vouloir",
 			"La raison est indifférente à la liberté"
@@ -587,7 +587,7 @@ const questions = [
 		// Question n°48
 {
 	question: "Question n°48 : Comment Montesquieu conçoit-il la relation entre liberté et société ?",
-	answers: [
+		answers: [
 			"La liberté est possible hors de la société",
 			"La liberté politique n'existe que dans une société organisée par des lois",
 			"La société détruit la liberté"
@@ -599,7 +599,7 @@ const questions = [
 		// Question n°49
 {
 	question: "Question n°49 : Que signifie l'expression « la liberté est le droit de faire tout ce que les lois permettent » ?",
-	answers: [
+		answers: [
 			"La liberté est illimitée",
 			"La liberté est un droit défini et garanti par la loi",
 			"La liberté est l'absence de règle"
@@ -611,7 +611,7 @@ const questions = [
 		// Question n°50
 {
 	question: "Question n°50 : Quelle est l'importance de ce texte dans l'histoire de la philosophie politique ?",
-	answers: [
+		answers: [
 			"C'est un texte mineur",
 			"C'est un texte majeur qui définit la liberté comme droit de faire ce que les lois permettent",
 			"C'est un texte religieux"
@@ -629,35 +629,25 @@ const carte = {
     nodes: [
         { key: 0, parent: null, text: "La liberté politique selon MONTESQUIEU", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
-        // Branche 1 : Apparence dans les démocraties
         { key: 1, parent: 0, text: "Apparence dans les démocraties", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Le peuple paraît faire ce qu'il veut", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "Mais la liberté politique ne consiste point à faire ce que l'on veut", color: "#e57373", fontSize: 14, bold: true },
+        { key: 2, parent: 1, text: "[1] Le peuple paraît faire ce qu'il veut", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "[1] Mais la liberté politique ne consiste point à faire ce que l'on veut", color: "#e57373", fontSize: 14, bold: true },
         
-        // Branche 2 : Définition de la liberté
         { key: 4, parent: 0, text: "Définition de la liberté", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 5, parent: 4, text: "Dans un Etat, société où il y a des lois", color: "#81c784", fontSize: 14 },
-        { key: 6, parent: 4, text: "Vouloir faire ce que l'on doit vouloir", color: "#81c784", fontSize: 14 },
-        { key: 7, parent: 4, text: "N'être pas contraint de faire ce que l'on ne doit pas vouloir", color: "#81c784", fontSize: 14 },
+        { key: 5, parent: 4, text: "[2] Dans un Etat, société où il y a des lois", color: "#81c784", fontSize: 14 },
+        { key: 6, parent: 4, text: "[2] Vouloir faire ce que l'on doit vouloir", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 4, text: "[2] N'être pas contraint de faire ce que l'on ne doit pas vouloir", color: "#81c784", fontSize: 14 },
         
-        // Branche 3 : Indépendance vs liberté
-        { key: 8, parent: 0, text: "Indépendance vs liberté", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 9, parent: 8, text: "Distinction fondamentale", color: "#64b5f6", fontSize: 14 },
-        { key: 10, parent: 8, text: "Indépendance = faire ce que l'on veut", color: "#64b5f6", fontSize: 13 },
-        { key: 11, parent: 8, text: "Liberté = droit de faire tout ce que les lois permettent", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 8, parent: 0, text: "Indépendance ou liberté", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 9, parent: 8, text: "[3] Distinction fondamentale", color: "#64b5f6", fontSize: 14 },
+        { key: 10, parent: 8, text: "[3] Indépendance = faire ce que l'on veut", color: "#64b5f6", fontSize: 13 },
+        { key: 11, parent: 8, text: "[4] Liberté = droit de faire tout ce que les lois permettent", color: "#64b5f6", fontSize: 14, bold: true },
         
-        // Branche 4 : Conséquence de la transgression
         { key: 12, parent: 0, text: "Conséquence de la transgression", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 13, parent: 12, text: "Si un citoyen pouvait faire ce que les lois défendent", color: "#ffb74d", fontSize: 14 },
-        { key: 14, parent: 12, text: "Il n'aurait plus de liberté", color: "#ffb74d", fontSize: 14, bold: true },
-        { key: 15, parent: 12, text: "Parce que les autres auraient tout de même ce pouvoir", color: "#ffb74d", fontSize: 13 },
-        
-        // Branche 5 : La loi comme condition de la liberté
-        { key: 16, parent: 0, text: "La loi comme condition de la liberté", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 17, parent: 16, text: "La loi garantit la liberté", color: "#ba68c8", fontSize: 14 },
-        { key: 18, parent: 16, text: "La liberté s'exerce dans le cadre de la loi", color: "#ba68c8", fontSize: 13 },
-        { key: 19, parent: 16, text: "La loi protège contre l'arbitraire des autres", color: "#ba68c8", fontSize: 13 },
+        { key: 13, parent: 12, text: "[4] Si un citoyen pouvait faire ce que les lois défendent", color: "#ffb74d", fontSize: 14 },
+        { key: 14, parent: 12, text: "[4] Il n'aurait plus de liberté", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 15, parent: 12, text: "[4] Parce que les autres auraient tout de même ce pouvoir", color: "#ffb74d", fontSize: 13 },
     ],
     links: [],
-    nextKey: 20
+    nextKey: 16
 };

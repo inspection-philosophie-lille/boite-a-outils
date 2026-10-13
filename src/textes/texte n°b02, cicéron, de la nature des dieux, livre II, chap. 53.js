@@ -265,11 +265,11 @@ const questions = [
 		question: "Question n°21 : Que signifie l'expression « au-dessus desquels il n'y a rien » ?",
 		answers: [
 			"Que les dieux et les hommes sont au sommet de la hiérarchie des êtres",
-			"Qu'ils sont dans le ciel",
-			"Qu'ils sont invisibles"
+				"Qu'ils sont dans le ciel",
+				"Qu'ils sont invisibles"
 			],
-			correct: 1,
-			explanation: "L'expression « au-dessus desquels il n'y a rien » signifie que les dieux et les hommes sont au sommet de la hiérarchie des êtres. Il n'existe rien de supérieur à eux dans l'ordre de la création. Cette affirmation souligne la dignité éminente des êtres rationnels et fonde leur droit à être la finalité de l'univers. Elle implique aussi une certaine égalité de nature entre dieux et hommes, tous deux définis par la raison."
+		correct: 1,
+		explanation: "L'expression « au-dessus desquels il n'y a rien » signifie que les dieux et les hommes sont au sommet de la hiérarchie des êtres. Il n'existe rien de supérieur à eux dans l'ordre de la création. Cette affirmation souligne la dignité éminente des êtres rationnels et fonde leur droit à être la finalité de l'univers. Elle implique aussi une certaine égalité de nature entre dieux et hommes, tous deux définis par la raison."
 		},
 
 		// Question n°22
@@ -280,8 +280,8 @@ const questions = [
 			"Parce qu'ils sont dépourvus de sentiment et de connaissance",
 			"Parce qu'ils sont comestibles"
 			],
-			correct: 2,
-			explanation: "Les végétaux ne peuvent pas être la finalité du monde parce qu'ils sont dépourvus de sentiment et de connaissance. Cicéron juge « absurde » l'idée que les dieux aient pris tant de peine pour des êtres incapables de percevoir et d'apprécier l'ordre cosmique. Seuls des êtres conscients et rationnels peuvent être les bénéficiaires légitimes d'une providence aussi élaborée. Cette exigence de rationalité comme critère de valeur est fondamentale dans l'argumentation."
+		correct: 2,
+		explanation: "Les végétaux ne peuvent pas être la finalité du monde parce qu'ils sont dépourvus de sentiment et de connaissance. Cicéron juge « absurde » l'idée que les dieux aient pris tant de peine pour des êtres incapables de percevoir et d'apprécier l'ordre cosmique. Seuls des êtres conscients et rationnels peuvent être les bénéficiaires légitimes d'une providence aussi élaborée. Cette exigence de rationalité comme critère de valeur est fondamentale dans l'argumentation."
 		},
 
 		// Question n°23
@@ -292,8 +292,8 @@ const questions = [
 			"Le sentiment est la sensibilité, la connaissance est la rationalité",
 			"Le sentiment est supérieur à la connaissance"
 			],
-			correct: 2,
-			explanation: "Dans le texte, le « sentiment » désigne la sensibilité, c'est-à-dire la capacité de percevoir et d'éprouver des sensations. La « connaissance » désigne la rationalité, c'est-à-dire la capacité de comprendre, de raisonner et de saisir des vérités universelles. Les bêtes ont le sentiment mais non la connaissance ; les végétaux n'ont ni l'un ni l'autre ; seuls les dieux et les hommes ont les deux. Cette distinction fonde la hiérarchie des êtres."
+		correct: 2,
+		explanation: "Dans le texte, le « sentiment » désigne la sensibilité, c'est-à-dire la capacité de percevoir et d'éprouver des sensations. La « connaissance » désigne la rationalité, c'est-à-dire la capacité de comprendre, de raisonner et de saisir des vérités universelles. Les bêtes ont le sentiment mais non la connaissance ; les végétaux n'ont ni l'un ni l'autre ; seuls les dieux et les hommes ont les deux. Cette distinction fonde la hiérarchie des êtres."
 		},
 
 		// Question n°24
@@ -304,8 +304,8 @@ const questions = [
 			"Comme muettes et sans connaissance",
 			"Comme divines"
 			],
-			correct: 2,
-			explanation: "Cicéron qualifie les bêtes de « muettes et sans connaissance ». « Muettes » signifie qu'elles sont dépourvues de langage articulé, capacité proprement humaine qui permet l'expression de la pensée rationnelle. « Sans connaissance » signifie qu'elles n'ont pas accès à la connaissance intellectuelle des vérités universelles. Ces deux caractéristiques les excluent de la catégorie des êtres rationnels et les rendent indignes d'être la finalité de l'univers."
+		correct: 2,
+		explanation: "Cicéron qualifie les bêtes de « muettes et sans connaissance ». « Muettes » signifie qu'elles sont dépourvues de langage articulé, capacité proprement humaine qui permet l'expression de la pensée rationnelle. « Sans connaissance » signifie qu'elles n'ont pas accès à la connaissance intellectuelle des vérités universelles. Ces deux caractéristiques les excluent de la catégorie des êtres rationnels et les rendent indignes d'être la finalité de l'univers."
 		},
 
 		// Question n°25
@@ -316,8 +316,8 @@ const questions = [
 			"Le monde a été fait par une intelligence divine pour les êtres rationnels",
 			"Le monde est une illusion"
 			],
-			correct: 2,
-			explanation: "La thèse centrale de ce passage est que le monde a été fait par une intelligence divine pour les êtres rationnels, c'est-à-dire les dieux et les hommes. Cette thèse combine trois éléments : le finalisme (le monde a une fin), le providentialisme (cette fin est voulue par une intelligence divine) et l'humanisme (les hommes, en tant qu'êtres rationnels, sont les bénéficiaires de cette providence). C'est une synthèse de la théologie stoïcienne et de l'humanisme antique."
+		correct: 2,
+		explanation: "La thèse centrale de ce passage est que le monde a été fait par une intelligence divine pour les êtres rationnels, c'est-à-dire les dieux et les hommes. Cette thèse combine trois éléments : le finalisme (le monde a une fin), le providentialisme (cette fin est voulue par une intelligence divine) et l'humanisme (les hommes, en tant qu'êtres rationnels, sont les bénéficiaires de cette providence). C'est une synthèse de la théologie stoïcienne et de l'humanisme antique."
 		},
 
 		// Question n°26
@@ -328,8 +328,8 @@ const questions = [
 			"Comme une communauté fondée sur la raison partagée",
 			"Comme une relation d'indifférence"
 			],
-			correct: 2,
-			explanation: "Cicéron conçoit la relation entre les dieux et les hommes comme une communauté fondée sur la raison partagée. Les deux sont « au-dessus desquels il n'y a rien » et ont « la raison en partage ». Cette communauté rationnelle unit les dieux et les hommes dans une même dignité et une même finalité. Elle implique une certaine proximité entre le divin et l'humain, l'homme étant capable de connaître et d'imiter les dieux par l'exercice de sa raison."
+		correct: 2,
+		explanation: "Cicéron conçoit la relation entre les dieux et les hommes comme une communauté fondée sur la raison partagée. Les deux sont « au-dessus desquels il n'y a rien » et ont « la raison en partage ». Cette communauté rationnelle unit les dieux et les hommes dans une même dignité et une même finalité. Elle implique une certaine proximité entre le divin et l'humain, l'homme étant capable de connaître et d'imiter les dieux par l'exercice de sa raison."
 		},
 
 		// Question n°27
@@ -340,8 +340,8 @@ const questions = [
 			"Marquer le doute",
 			"Critiquer la création"
 			],
-			correct: 1,
-			explanation: "L'adjectif « merveilleux » exprime l'émerveillement devant l'ordre cosmique. Il souligne la perfection et la beauté de l'arrangement du monde, qui témoignent de l'intelligence et de la bonté du créateur. Cet émerveillement est une attitude philosophique fondamentale dans l'Antiquité : il est le point de départ de la réflexion sur l'origine et la finalité du cosmos. Pour Cicéron, l'admiration devant l'ordre du monde conduit naturellement à reconnaître l'existence d'une providence divine."
+		correct: 1,
+		explanation: "L'adjectif « merveilleux » exprime l'émerveillement devant l'ordre cosmique. Il souligne la perfection et la beauté de l'arrangement du monde, qui témoignent de l'intelligence et de la bonté du créateur. Cet émerveillement est une attitude philosophique fondamentale dans l'Antiquité : il est le point de départ de la réflexion sur l'origine et la finalité du cosmos. Pour Cicéron, l'admiration devant l'ordre du monde conduit naturellement à reconnaître l'existence d'une providence divine."
 		},
 
 		// Question n°28
@@ -352,8 +352,8 @@ const questions = [
 			"Parce qu'elle contredit la raison et le bon sens",
 			"Parce qu'elle est immorale"
 			],
-			correct: 2,
-			explanation: "Cicéron qualifie l'hypothèse végétale d'« absurde » parce qu'elle contredit la raison et le bon sens. Il serait irrationnel de penser que les dieux aient déployé tant de soins pour des êtres incapables de percevoir et d'apprécier l'ordre cosmique. L'absurdité réside dans l'inadéquation entre l'importance des moyens (l'arrangement merveilleux du monde) et l'insignifiance des destinataires (des êtres dépourvus de sentiment). C'est un argument de convenance rationnelle."
+		correct: 2,
+		explanation: "Cicéron qualifie l'hypothèse végétale d'« absurde » parce qu'elle contredit la raison et le bon sens. Il serait irrationnel de penser que les dieux aient déployé tant de soins pour des êtres incapables de percevoir et d'apprécier l'ordre cosmique. L'absurdité réside dans l'inadéquation entre l'importance des moyens (l'arrangement merveilleux du monde) et l'insignifiance des destinataires (des êtres dépourvus de sentiment). C'est un argument de convenance rationnelle."
 		},
 
 		// Question n°29
@@ -364,8 +364,8 @@ const questions = [
 			"Elle est intermédiaire entre la vie végétative et la vie rationnelle",
 			"Elle est inférieure à la vie végétative"
 			],
-			correct: 2,
-			explanation: "Dans la hiérarchie des êtres selon Cicéron, la sensibilité occupe une position intermédiaire entre la vie végétative et la vie rationnelle. Les végétaux ont seulement la vie végétative (activité interne de croissance et de reproduction). Les bêtes ont en plus la sensibilité (capacité de percevoir et de ressentir). Les dieux et les hommes ont en plus la rationalité (capacité de connaître et de raisonner). Cette gradation reflète la conception antique des trois niveaux de l'âme : végétative, sensitive et rationnelle."
+		correct: 2,
+		explanation: "Dans la hiérarchie des êtres selon Cicéron, la sensibilité occupe une position intermédiaire entre la vie végétative et la vie rationnelle. Les végétaux ont seulement la vie végétative (activité interne de croissance et de reproduction). Les bêtes ont en plus la sensibilité (capacité de percevoir et de ressentir). Les dieux et les hommes ont en plus la rationalité (capacité de connaître et de raisonner). Cette gradation reflète la conception antique des trois niveaux de l'âme : végétative, sensitive et rationnelle."
 		},
 
 		// Question n°30
@@ -376,8 +376,8 @@ const questions = [
 			"Comme ce qui vaut le plus de toutes choses",
 			"Comme une illusion"
 			],
-			correct: 2,
-			explanation: "Cicéron définit la raison comme « de toutes choses celle qui vaut le plus ». Cette définition axiologique fait de la raison la valeur suprême, le critère ultime de dignité et de perfection. Cette conception est caractéristique du rationalisme antique : la raison est ce qui distingue l'homme de l'animal et le rapproche du divin. Elle fonde la supériorité des êtres rationnels et justifie leur place éminente dans l'univers."
+		correct: 2,
+		explanation: "Cicéron définit la raison comme « de toutes choses celle qui vaut le plus ». Cette définition axiologique fait de la raison la valeur suprême, le critère ultime de dignité et de perfection. Cette conception est caractéristique du rationalisme antique : la raison est ce qui distingue l'homme de l'animal et le rapproche du divin. Elle fonde la supériorité des êtres rationnels et justifie leur place éminente dans l'univers."
 		},
 
 		// Question n°31
@@ -388,8 +388,8 @@ const questions = [
 			"La raison est ce qui unit les dieux et les hommes",
 			"La raison est réservée aux dieux"
 			],
-			correct: 2,
-			explanation: "Dans ce texte, la raison est ce qui unit les dieux et les hommes. Les deux sont définis comme « les êtres animés qui ont la raison en partage ». Cette communauté rationnelle établit une parenté entre le divin et l'humain : l'homme participe à la raison divine et peut ainsi connaître l'ordre du monde et s'y conformer. Cette conception de la raison comme lien entre dieux et hommes est centrale dans le stoïcisme et dans l'humanisme antique."
+		correct: 2,
+		explanation: "Dans ce texte, la raison est ce qui unit les dieux et les hommes. Les deux sont définis comme « les êtres animés qui ont la raison en partage ». Cette communauté rationnelle établit une parenté entre le divin et l'humain : l'homme participe à la raison divine et peut ainsi connaître l'ordre du monde et s'y conformer. Cette conception de la raison comme lien entre dieux et hommes est centrale dans le stoïcisme et dans l'humanisme antique."
 		},
 
 		// Question n°32
@@ -400,8 +400,8 @@ const questions = [
 			"Parce qu'elles sont dépourvues de raison",
 			"Parce qu'elles sont mortelles"
 			],
-			correct: 2,
-			explanation: "Cicéron exclut les bêtes de la finalité du monde parce qu'elles sont dépourvues de raison. Bien qu'elles possèdent la sensibilité, elles sont « muettes et sans connaissance », c'est-à-dire incapables de langage articulé et de connaissance intellectuelle. Or, seule la raison « vaut le plus » et peut légitimer une providence aussi élaborée. Les bêtes, ne pouvant ni comprendre ni apprécier l'ordre cosmique, ne peuvent en être les bénéficiaires ultimes."
+		correct: 2,
+		explanation: "Cicéron exclut les bêtes de la finalité du monde parce qu'elles sont dépourvues de raison. Bien qu'elles possèdent la sensibilité, elles sont « muettes et sans connaissance », c'est-à-dire incapables de langage articulé et de connaissance intellectuelle. Or, seule la raison « vaut le plus » et peut légitimer une providence aussi élaborée. Les bêtes, ne pouvant ni comprendre ni apprécier l'ordre cosmique, ne peuvent en être les bénéficiaires ultimes."
 		},
 
 		// Question n°33
@@ -412,8 +412,8 @@ const questions = [
 			"Le monde a un sens et une finalité centrés sur les êtres rationnels",
 			"Le monde est une prison"
 			],
-			correct: 2,
-			explanation: "La conclusion de Cicéron a une signification philosophique profonde : le monde a un sens et une finalité centrés sur les êtres rationnels. Cette vision téléologique donne à l'existence humaine une dignité et une responsabilité exceptionnelles. L'homme n'est pas un être perdu dans un cosmos indifférent ; il est la raison d'être de l'univers, avec les dieux. Cette conception optimiste et humaniste s'oppose aux visions matérialistes et nihilistes."
+		correct: 2,
+		explanation: "La conclusion de Cicéron a une signification philosophique profonde : le monde a un sens et une finalité centrés sur les êtres rationnels. Cette vision téléologique donne à l'existence humaine une dignité et une responsabilité exceptionnelles. L'homme n'est pas un être perdu dans un cosmos indifférent ; il est la raison d'être de l'univers, avec les dieux. Cette conception optimiste et humaniste s'oppose aux visions matérialistes et nihilistes."
 		},
 
 		// Question n°34
@@ -424,8 +424,8 @@ const questions = [
 			"Comme intelligente, calculatrice et bienveillante",
 			"Comme capricieuse"
 			],
-			correct: 2,
-			explanation: "Cicéron conçoit la providence divine comme intelligente, calculatrice et bienveillante. Elle est « une intelligence et un calcul divins » qui a présidé à l'arrangement du monde « pour la conservation et le salut de tous ses habitants ». Cette providence n'est pas aveugle ou capricieuse : elle est rationnelle et orientée vers le bien. Elle témoigne de la sagesse et de la bonté du créateur, qui a tout ordonné pour le meilleur."
+		correct: 2,
+		explanation: "Cicéron conçoit la providence divine comme intelligente, calculatrice et bienveillante. Elle est « une intelligence et un calcul divins » qui a présidé à l'arrangement du monde « pour la conservation et le salut de tous ses habitants ». Cette providence n'est pas aveugle ou capricieuse : elle est rationnelle et orientée vers le bien. Elle témoigne de la sagesse et de la bonté du créateur, qui a tout ordonné pour le meilleur."
 		},
 
 		// Question n°35
@@ -436,8 +436,8 @@ const questions = [
 			"L'homme est le bénéficiaire et le contemplateur de l'ordre cosmique",
 			"L'homme est un accident"
 			],
-			correct: 2,
-			explanation: "Selon Cicéron, l'homme est à la fois le bénéficiaire et le contemplateur de l'ordre cosmique. En tant qu'être rationnel, il est destinataire de la providence divine : le monde a été fait pour lui et pour les dieux. Mais il est aussi celui qui peut comprendre et admirer cet ordre, par l'exercice de sa raison. Cette double position fait de l'homme un être privilégié, capable de connaître sa place dans l'univers et de s'y conformer volontairement."
+		correct: 2,
+		explanation: "Selon Cicéron, l'homme est à la fois le bénéficiaire et le contemplateur de l'ordre cosmique. En tant qu'être rationnel, il est destinataire de la providence divine : le monde a été fait pour lui et pour les dieux. Mais il est aussi celui qui peut comprendre et admirer cet ordre, par l'exercice de sa raison. Cette double position fait de l'homme un être privilégié, capable de connaître sa place dans l'univers et de s'y conformer volontairement."
 		},
 
 		// Question n°36
@@ -448,8 +448,8 @@ const questions = [
 			"Cicéron croit à la providence, les épicuriens non",
 			"Ils sont d'accord sur tout"
 			],
-			correct: 2,
-			explanation: "La différence fondamentale entre Cicéron et les épicuriens porte sur la providence. Cicéron, s'exprimant ici dans une perspective stoïcienne, croit à une providence divine intelligente et bienveillante qui a ordonné le monde pour le bien des êtres rationnels. Les épicuriens, au contraire, nient toute providence : pour eux, les dieux, s'ils existent, sont indifférents aux affaires humaines, et le monde est le produit du hasard et des atomes. Cette opposition est au cœur du De la nature des dieux."
+		correct: 2,
+		explanation: "La différence fondamentale entre Cicéron et les épicuriens porte sur la providence. Cicéron, s'exprimant ici dans une perspective stoïcienne, croit à une providence divine intelligente et bienveillante qui a ordonné le monde pour le bien des êtres rationnels. Les épicuriens, au contraire, nient toute providence : pour eux, les dieux, s'ils existent, sont indifférents aux affaires humaines, et le monde est le produit du hasard et des atomes. Cette opposition est au cœur du De la nature des dieux."
 		},
 
 		// Question n°37
@@ -460,8 +460,8 @@ const questions = [
 			"Parce qu'ils possèdent la raison, qui est la valeur suprême",
 			"Parce qu'ils sont immortels"
 			],
-			correct: 2,
-			explanation: "Cicéron affirme que les dieux et les hommes sont au-dessus de tout parce qu'ils possèdent la raison, qui est la valeur suprême. La raison est « de toutes choses celle qui vaut le plus », ce qui confère à ceux qui la détiennent une dignité exceptionnelle. Cette supériorité n'est pas fondée sur la force ou l'immortalité, mais sur la rationalité. C'est une hiérarchie de valeurs intellectuelles et morales, non de puissance physique."
+		correct: 2,
+		explanation: "Cicéron affirme que les dieux et les hommes sont au-dessus de tout parce qu'ils possèdent la raison, qui est la valeur suprême. La raison est « de toutes choses celle qui vaut le plus », ce qui confère à ceux qui la détiennent une dignité exceptionnelle. Cette supériorité n'est pas fondée sur la force ou l'immortalité, mais sur la rationalité. C'est une hiérarchie de valeurs intellectuelles et morales, non de puissance physique."
 		},
 
 		// Question n°38
@@ -472,8 +472,8 @@ const questions = [
 			"La raison est la valeur suprême, supérieure à toutes les autres",
 			"La raison est rare"
 			],
-			correct: 2,
-			explanation: "L'expression « la raison est de toutes choses celle qui vaut le plus » signifie que la raison est la valeur suprême, supérieure à toutes les autres. Elle établit une hiérarchie objective des valeurs où la rationalité occupe le premier rang. Cette affirmation fonde la supériorité des êtres rationnels (dieux et hommes) sur les êtres non rationnels (bêtes et végétaux). Elle implique aussi que la finalité de l'univers doit être cherchée du côté de ce qui a le plus de valeur, c'est-à-dire la rationalité."
+		correct: 2,
+		explanation: "L'expression « la raison est de toutes choses celle qui vaut le plus » signifie que la raison est la valeur suprême, supérieure à toutes les autres. Elle établit une hiérarchie objective des valeurs où la rationalité occupe le premier rang. Cette affirmation fonde la supériorité des êtres rationnels (dieux et hommes) sur les êtres non rationnels (bêtes et végétaux). Elle implique aussi que la finalité de l'univers doit être cherchée du côté de ce qui a le plus de valeur, c'est-à-dire la rationalité."
 		},
 
 		// Question n°39
@@ -484,8 +484,8 @@ const questions = [
 			"Par l'observation de l'ordre et de la beauté du monde",
 			"Par la tradition"
 			],
-			correct: 2,
-			explanation: "Cicéron justifie le finalisme cosmique par l'observation de l'ordre et de la beauté du monde. L'« arrangement merveilleux » du cosmos témoigne selon lui de l'existence d'une intelligence et d'un calcul divins. C'est un argument téléologique classique : la perfection de l'univers ne peut s'expliquer par le hasard ; elle requiert une cause intelligente et bienveillante. Cet argument, développé par Socrate et Platon, sera repris par les stoïciens et plus tard par les théologiens chrétiens."
+		correct: 2,
+		explanation: "Cicéron justifie le finalisme cosmique par l'observation de l'ordre et de la beauté du monde. L'« arrangement merveilleux » du cosmos témoigne selon lui de l'existence d'une intelligence et d'un calcul divins. C'est un argument téléologique classique : la perfection de l'univers ne peut s'expliquer par le hasard ; elle requiert une cause intelligente et bienveillante. Cet argument, développé par Socrate et Platon, sera repris par les stoïciens et plus tard par les théologiens chrétiens."
 		},
 
 		// Question n°40
@@ -496,8 +496,8 @@ const questions = [
 			"Ils servent d'hypothèse absurde à écarter",
 			"Ils sont les créateurs du monde"
 			],
-			correct: 2,
-			explanation: "Dans l'argumentation de Cicéron, les végétaux servent d'hypothèse absurde à écarter. En envisageant l'hypothèse que le monde aurait été fait pour les végétaux, Cicéron montre l'absurdité d'une telle proposition et renforce par contraste la thèse finale. C'est une figure argumentative classique : réfuter une position extrême pour mieux établir la position médiane. Les végétaux, dépourvus de sentiment, ne peuvent évidemment pas être la finalité d'un cosmos aussi parfaitement ordonné."
+		correct: 2,
+		explanation: "Dans l'argumentation de Cicéron, les végétaux servent d'hypothèse absurde à écarter. En envisageant l'hypothèse que le monde aurait été fait pour les végétaux, Cicéron montre l'absurdité d'une telle proposition et renforce par contraste la thèse finale. C'est une figure argumentative classique : réfuter une position extrême pour mieux établir la position médiane. Les végétaux, dépourvus de sentiment, ne peuvent évidemment pas être la finalité d'un cosmos aussi parfaitement ordonné."
 		},
 
 		// Question n°41
@@ -509,8 +509,8 @@ const questions = [
 			"L'homme est inférieur aux dieux mais supérieur aux bêtes",
 			"L'homme est un être purement matériel"
 			],
-			correct: 3,
-			explanation: "Cicéron définit la place de l'homme dans la nature comme celle d'un être intermédiaire entre les bêtes et les dieux. Inférieur aux dieux par sa mortalité et ses imperfections, il est supérieur aux bêtes par sa rationalité. Cette position médiane fait de l'homme un être de transition, capable de s'élever vers le divin par l'exercice de sa raison ou de retomber vers l'animalité en la négligeant. Cette conception hiérarchique et dynamique de la nature humaine est caractéristique de l'humanisme antique."
+		correct: 3,
+		explanation: "Cicéron définit la place de l'homme dans la nature comme celle d'un être intermédiaire entre les bêtes et les dieux. Inférieur aux dieux par sa mortalité et ses imperfections, il est supérieur aux bêtes par sa rationalité. Cette position médiane fait de l'homme un être de transition, capable de s'élever vers le divin par l'exercice de sa raison ou de retomber vers l'animalité en la négligeant. Cette conception hiérarchique et dynamique de la nature humaine est caractéristique de l'humanisme antique."
 		},
 
 		// Question n°42
@@ -521,8 +521,8 @@ const questions = [
 			"Ils sont complémentaires pour désigner l'action divine",
 			"Ils sont identiques"
 			],
-			correct: 2,
-			explanation: "Dans le texte, l'intelligence et le calcul sont complémentaires pour désigner l'action divine. L'« intelligence » évoque la connaissance et la sagesse ; le « calcul » évoque la prévision et l'organisation rationnelle des moyens en vue d'une fin. Ensemble, ils caractérisent l'action providentielle de Dieu, qui connaît la fin (le bien des êtres rationnels) et dispose les moyens appropriés pour l'atteindre (l'arrangement du monde). Cette complémentarité souligne le caractère à la fois sage et efficace de la providence divine."
+		correct: 2,
+		explanation: "Dans le texte, l'intelligence et le calcul sont complémentaires pour désigner l'action divine. L'« intelligence » évoque la connaissance et la sagesse ; le « calcul » évoque la prévision et l'organisation rationnelle des moyens en vue d'une fin. Ensemble, ils caractérisent l'action providentielle de Dieu, qui connaît la fin (le bien des êtres rationnels) et dispose les moyens appropriés pour l'atteindre (l'arrangement du monde). Cette complémentarité souligne le caractère à la fois sage et efficace de la providence divine."
 		},
 
 		// Question n°43
@@ -533,8 +533,8 @@ const questions = [
 			"Parce qu'elles sont dépourvues de raison et de langage",
 			"Parce qu'elles sont trop nombreuses"
 			],
-			correct: 2,
-			explanation: "Cicéron rejette l'idée que le monde soit fait pour les bêtes parce qu'elles sont dépourvues de raison et de langage. Il les qualifie de « muettes et sans connaissance ». Sans la rationalité, les bêtes ne peuvent ni comprendre ni apprécier l'ordre cosmique ; elles ne peuvent donc être les bénéficiaires ultimes d'une providence aussi élaborée. Seuls des êtres capables de connaissance et de reconnaissance peuvent être la finalité d'un univers ordonné par une intelligence divine."
+		correct: 2,
+		explanation: "Cicéron rejette l'idée que le monde soit fait pour les bêtes parce qu'elles sont dépourvues de raison et de langage. Il les qualifie de « muettes et sans connaissance ». Sans la rationalité, les bêtes ne peuvent ni comprendre ni apprécier l'ordre cosmique ; elles ne peuvent donc être les bénéficiaires ultimes d'une providence aussi élaborée. Seuls des êtres capables de connaissance et de reconnaissance peuvent être la finalité d'un univers ordonné par une intelligence divine."
 		},
 
 		// Question n°44
@@ -545,8 +545,8 @@ const questions = [
 			"Examiner successivement les hypothèses possibles",
 			"Créer du rythme"
 			],
-			correct: 2,
-			explanation: "L'énumération dans ce passage a pour fonction d'examiner successivement les hypothèses possibles concernant les destinataires de la providence. Cicéron passe en revue les végétaux, puis les bêtes, puis les êtres rationnels. Cette énumération exhaustive donne à l'argumentation une apparence de rigueur et de complétude. Elle permet d'écarter méthodiquement les hypothèses insuffisantes pour ne retenir que la plus plausible."
+		correct: 2,
+		explanation: "L'énumération dans ce passage a pour fonction d'examiner successivement les hypothèses possibles concernant les destinataires de la providence. Cicéron passe en revue les végétaux, puis les bêtes, puis les êtres rationnels. Cette énumération exhaustive donne à l'argumentation une apparence de rigueur et de complétude. Elle permet d'écarter méthodiquement les hypothèses insuffisantes pour ne retenir que la plus plausible."
 		},
 
 		// Question n°45
@@ -557,8 +557,8 @@ const questions = [
 			"Une divinité providencieuse et rationnelle",
 			"Une divinité capricieuse"
 			],
-			correct: 2,
-			explanation: "La conception de la divinité qui se dégage de ce texte est celle d'une divinité providencieuse et rationnelle. Les dieux sont dotés de « la raison en partage » et ont présidé par « une intelligence et un calcul divins » à l'arrangement du monde. Ils se soucient du bien des créatures rationnelles et ont tout ordonné pour leur conservation et leur salut. Cette divinité n'est ni indifférente ni capricieuse : elle est sage, bienveillante et rationnelle."
+		correct: 2,
+		explanation: "La conception de la divinité qui se dégage de ce texte est celle d'une divinité providencieuse et rationnelle. Les dieux sont dotés de « la raison en partage » et ont présidé par « une intelligence et un calcul divins » à l'arrangement du monde. Ils se soucient du bien des créatures rationnelles et ont tout ordonné pour leur conservation et leur salut. Cette divinité n'est ni indifférente ni capricieuse : elle est sage, bienveillante et rationnelle."
 		},
 
 		// Question n°46
@@ -569,8 +569,8 @@ const questions = [
 			"L'homme est la finalité de la nature et son contemplateur",
 			"L'homme est étranger à la nature"
 			],
-			correct: 2,
-			explanation: "Cicéron conçoit la relation entre l'homme et la nature comme une relation de finalité et de contemplation. La nature (le monde) a été faite pour l'homme, en tant qu'être rationnel. Mais l'homme est aussi celui qui peut contempler et comprendre la nature, par l'exercice de sa raison. Cette double relation fait de l'homme à la fois le bénéficiaire et le spectateur privilégié de l'ordre cosmique. Cette conception est au cœur de l'humanisme antique."
+		correct: 2,
+		explanation: "Cicéron conçoit la relation entre l'homme et la nature comme une relation de finalité et de contemplation. La nature (le monde) a été faite pour l'homme, en tant qu'être rationnel. Mais l'homme est aussi celui qui peut contempler et comprendre la nature, par l'exercice de sa raison. Cette double relation fait de l'homme à la fois le bénéficiaire et le spectateur privilégié de l'ordre cosmique. Cette conception est au cœur de l'humanisme antique."
 		},
 
 		// Question n°47
@@ -581,8 +581,8 @@ const questions = [
 			"Le monde est ordonné au bien-être de ses habitants",
 			"Le monde est indifférent"
 			],
-			correct: 2,
-			explanation: "L'expression « pour la conservation et le salut de tous ses habitants » signifie que le monde est ordonné au bien-être de ses habitants. La providence divine ne vise pas seulement la survie mais le « salut », c'est-à-dire le bien-être complet et l'épanouissement. Cette finalité bienveillante de l'ordre cosmique est caractéristique de la théologie stoïcienne. Elle implique que le monde n'est pas un lieu hostile ou indifférent, mais un environnement favorable au développement des êtres rationnels."
+		correct: 2,
+		explanation: "L'expression « pour la conservation et le salut de tous ses habitants » signifie que le monde est ordonné au bien-être de ses habitants. La providence divine ne vise pas seulement la survie mais le « salut », c'est-à-dire le bien-être complet et l'épanouissement. Cette finalité bienveillante de l'ordre cosmique est caractéristique de la théologie stoïcienne. Elle implique que le monde n'est pas un lieu hostile ou indifférent, mais un environnement favorable au développement des êtres rationnels."
 		},
 
 		// Question n°48
@@ -593,8 +593,8 @@ const questions = [
 			"Parce qu'ils sont les seuls êtres rationnels",
 			"Parce qu'ils sont les plus forts"
 			],
-			correct: 2,
-			explanation: "Cicéron affirme que le monde a été fait pour les dieux et les hommes parce qu'ils sont les seuls êtres rationnels. La rationalité est le critère décisif : « la raison est de toutes choses celle qui vaut le plus ». Seuls les êtres capables de raison peuvent comprendre et apprécier l'ordre cosmique, et donc être la finalité d'un univers ordonné par une intelligence divine. Cette thèse fonde la dignité exceptionnelle des êtres rationnels et leur place centrale dans le cosmos."
+		correct: 2,
+		explanation: "Cicéron affirme que le monde a été fait pour les dieux et les hommes parce qu'ils sont les seuls êtres rationnels. La rationalité est le critère décisif : « la raison est de toutes choses celle qui vaut le plus ». Seuls les êtres capables de raison peuvent comprendre et apprécier l'ordre cosmique, et donc être la finalité d'un univers ordonné par une intelligence divine. Cette thèse fonde la dignité exceptionnelle des êtres rationnels et leur place centrale dans le cosmos."
 		},
 
 		// Question n°49
@@ -605,8 +605,8 @@ const questions = [
 			"Par l'examen critique des hypothèses et le raisonnement par élimination",
 			"Par la citation d'autorités"
 			],
-			correct: 2,
-			explanation: "Ce texte illustre la méthode philosophique de Cicéron par l'examen critique des hypothèses et le raisonnement par élimination. Cicéron ne se contente pas d'affirmer dogmatiquement sa thèse ; il examine successivement les hypothèses concurrentes (végétaux, bêtes) et montre leur insuffisance avant d'établir sa conclusion. Cette méthode dialectique, héritée de Socrate et de Platon, donne à l'argumentation une rigueur et une crédibilité supérieures. Elle reflète aussi l'éclectisme de Cicéron, qui combine différentes traditions philosophiques."
+		correct: 2,
+		explanation: "Ce texte illustre la méthode philosophique de Cicéron par l'examen critique des hypothèses et le raisonnement par élimination. Cicéron ne se contente pas d'affirmer dogmatiquement sa thèse ; il examine successivement les hypothèses concurrentes (végétaux, bêtes) et montre leur insuffisance avant d'établir sa conclusion. Cette méthode dialectique, héritée de Socrate et de Platon, donne à l'argumentation une rigueur et une crédibilité supérieures. Elle reflète aussi l'éclectisme de Cicéron, qui combine différentes traditions philosophiques."
 		},
 
 		// Question n°50
@@ -617,8 +617,8 @@ const questions = [
 			"C'est un texte majeur qui a influencé la théologie chrétienne et l'humanisme",
 			"C'est un texte purement littéraire"
 			],
-			correct: 2,
-			explanation: "Ce passage du De la nature des dieux est un texte majeur qui a influencé la théologie chrétienne et l'humanisme. La conception d'une providence divine rationnelle et bienveillante, l'idée d'une hiérarchie des êtres fondée sur la rationalité, la place éminente de l'homme dans le cosmos : toutes ces thèses seront reprises et développées par les Pères de l'Église et les théologiens médiévaux. Cicéron a joué un rôle crucial dans la transmission de la philosophie grecque à l'Occident latin et dans la formation de la pensée chrétienne."
+		correct: 2,
+		explanation: "Ce passage du De la nature des dieux est un texte majeur qui a influencé la théologie chrétienne et l'humanisme. La conception d'une providence divine rationnelle et bienveillante, l'idée d'une hiérarchie des êtres fondée sur la rationalité, la place éminente de l'homme dans le cosmos : toutes ces thèses seront reprises et développées par les Pères de l'Église et les théologiens médiévaux. Cicéron a joué un rôle crucial dans la transmission de la philosophie grecque à l'Occident latin et dans la formation de la pensée chrétienne."
 		}
 ];
 
@@ -630,38 +630,29 @@ const carte = {
     nodes: [
         { key: 0, parent: null, text: "Finalité du monde selon CICÉRON", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
-        // Branche 1 : Conclusion initiale
         { key: 1, parent: 0, text: "Conclusion initiale", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Une intelligence et un calcul divins", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "Ont présidé à l'arrangement merveilleux du monde", color: "#e57373", fontSize: 13 },
-        { key: 4, parent: 1, text: "Pour la conservation et le salut de tous ses habitants", color: "#e57373", fontSize: 13 },
+        { key: 2, parent: 1, text: "[1] Une intelligence et un calcul divins", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "[1] Ont présidé à l'arrangement merveilleux du monde", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "[1] Pour la conservation et le salut de tous ses habitants", color: "#e57373", fontSize: 13 },
         
-        // Branche 2 : Question des destinataires
         { key: 5, parent: 0, text: "Question des destinataires", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 6, parent: 5, text: "Pour quels êtres tant de dispositions ?", color: "#81c784", fontSize: 14 },
-        { key: 7, parent: 5, text: "Question sur la finalité de l'univers", color: "#81c784", fontSize: 13 },
+        { key: 6, parent: 5, text: "[2] Pour quels êtres tant de dispositions ?", color: "#81c784", fontSize: 14 },
         
-        // Branche 3 : Hypothèse des végétaux
-        { key: 8, parent: 0, text: "Hypothèse des végétaux", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 9, parent: 8, text: "Arbres et végétaux", color: "#64b5f6", fontSize: 14 },
-        { key: 10, parent: 8, text: "Dépourvus de sentiment", color: "#64b5f6", fontSize: 13 },
-        { key: 11, parent: 8, text: "Activité interne de maintien en vie", color: "#64b5f6", fontSize: 13 },
-        { key: 12, parent: 8, text: "Rejetée : absurde", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 7, parent: 0, text: "Hypothèse des végétaux", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 8, parent: 7, text: "[3] Ils sont dépourvus de sentiment", color: "#64b5f6", fontSize: 13 },
+        { key: 10, parent: 7, text: "[4] Rejetée : absurde", color: "#64b5f6", fontSize: 14, bold: true },
         
-        // Branche 4 : Hypothèse des bêtes
-        { key: 13, parent: 0, text: "Hypothèse des bêtes", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 14, parent: 13, text: "Êtres muets et sans connaissance", color: "#ffb74d", fontSize: 14 },
-        { key: 15, parent: 13, text: "Pas plus probable que pour les végétaux", color: "#ffb74d", fontSize: 13 },
-        { key: 16, parent: 13, text: "Rejetée : les dieux n'ont pas pris tant de peine", color: "#ffb74d", fontSize: 13 },
+        { key: 11, parent: 0, text: "Hypothèse des bêtes", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 12, parent: 11, text: "[6] Ils sont muets et sans connaissance", color: "#ffb74d", fontSize: 14 },
+        { key: 13, parent: 11, text: "[6] Rejetée : les dieux n'ont pas pris tant de peine", color: "#ffb74d", fontSize: 13 },
         
-        // Branche 5 : Réponse finale
-        { key: 17, parent: 0, text: "Réponse finale", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 18, parent: 17, text: "Pour les êtres animés qui ont la raison en partage", color: "#ba68c8", fontSize: 14, bold: true },
-        { key: 19, parent: 17, text: "Les dieux et les hommes", color: "#ba68c8", fontSize: 14 },
-        { key: 20, parent: 17, text: "Au-dessus desquels il n'y a rien", color: "#ba68c8", fontSize: 13 },
-        { key: 21, parent: 17, text: "La raison est de toutes choses celle qui vaut le plus", color: "#ba68c8", fontSize: 13 },
-        { key: 22, parent: 17, text: "Le monde a été fait pour les dieux et pour les hommes", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 14, parent: 0, text: "Réponse finale", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 15, parent: 14, text: "[7] Pour les êtres animés qui ont la raison en partage", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 16, parent: 14, text: "[8] Les dieux et les hommes", color: "#ba68c8", fontSize: 14 },
+        { key: 17, parent: 14, text: "[8] Au-dessus desquels il n'y a rien", color: "#ba68c8", fontSize: 13 },
+        { key: 18, parent: 14, text: "[8] La raison est de toutes choses celle qui vaut le plus", color: "#ba68c8", fontSize: 13 },
+        { key: 19, parent: 14, text: "[9] Le monde a été fait pour les dieux et pour les hommes", color: "#ba68c8", fontSize: 14, bold: true },
     ],
     links: [],
-    nextKey: 23
+    nextKey: 20
 };

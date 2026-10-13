@@ -95,7 +95,7 @@ const questions = [
 		// Question n°7
 {
 	question: "Question n°7 : Que se passe-t-il chaque fois que la science est donnée aux animaux ?",
-	answers: [
+		answers: [
 			"Elle est identique",
 			"Elle leur est nouvelle",
 			"Elle est meilleure"
@@ -107,7 +107,7 @@ const questions = [
 		// Question n°8
 {
 	question: "Question n°8 : Quel est l'objet de la nature selon Pascal ?",
-	answers: [
+		answers: [
 			"Maintenir les animaux dans un ordre de perfection bornée",
 			"Rendre les animaux parfaits",
 			"Donner la raison aux animaux"
@@ -155,7 +155,7 @@ const questions = [
 		// Question n°12
 {
 	question: "Question n°12 : Dans quel état l'homme est-il au premier âge de sa vie ?",
-	answers: [
+		answers: [
 			"Dans la science",
 			"Dans l'ignorance",
 			"Dans la sagesse"
@@ -167,7 +167,7 @@ const questions = [
 		// Question n°13
 {
 	question: "Question n°13 : Que fait l'homme dans son progrès selon Pascal ?",
-	answers: [
+		answers: [
 			"Il régresse",
 			"Il s'instruit sans cesse",
 			"Il reste ignorant"
@@ -179,7 +179,7 @@ const questions = [
 		// Question n°14
 {
 	question: "Question n°14 : De quoi l'homme tire-t-il avantage selon Pascal ?",
-	answers: [
+		answers: [
 			"De sa propre expérience seulement",
 			"De sa propre expérience et de celle de ses prédécesseurs",
 			"De l'expérience des animaux"
@@ -191,7 +191,7 @@ const questions = [
 		// Question n°15
 {
 	question: "Question n°15 : Que garde toujours l'homme dans sa mémoire selon Pascal ?",
-	answers: [
+		answers: [
 			"Les connaissances qu'il s'est une fois acquises",
 			"Les erreurs",
 			"Les besoins"
@@ -203,7 +203,7 @@ const questions = [
 		// Question n°16
 {
 	question: "Question n°16 : Où sont présentes les connaissances des anciens selon Pascal ?",
-	answers: [
+		answers: [
 			"Dans les livres qu'ils ont laissés",
 			"Dans la nature",
 			"Dans les ruches"
@@ -215,7 +215,7 @@ const questions = [
 		// Question n°17
 {
 	question: "Question n°17 : Quelle est la thèse principale de ce texte ?",
-	answers: [
+		answers: [
 			"L'homme et l'animal sont identiques",
 			"L'homme est perfectible, l'animal ne l'est pas",
 			"L'animal est supérieur à l'homme"
@@ -227,7 +227,7 @@ const questions = [
 		// Question n°18
 {
 	question: "Question n°18 : Comment Pascal caractérise-t-il la science des animaux ?",
-	answers: [
+		answers: [
 			"Comme parfaite et croissante",
 			"Comme fragile et non conservée",
 			"Comme rationnelle"
@@ -239,7 +239,7 @@ const questions = [
 		// Question n°19
 {
 	question: "Question n°19 : Comment Pascal caractérise-t-il la science humaine ?",
-	answers: [
+		answers: [
 			"Comme fragile",
 			"Comme accumulée et transmissible",
 			"Comme fixe"
@@ -251,7 +251,7 @@ const questions = [
 		// Question n°20
 {
 	question: "Question n°20 : Quel est le rapport entre l'homme et le temps selon Pascal ?",
-	answers: [
+		answers: [
 			"L'homme est immobile dans le temps",
 			"L'homme progresse dans le temps par accumulation du savoir",
 			"L'homme régresse dans le temps"
@@ -263,7 +263,7 @@ const questions = [
 		// Question n°21
 {
 	question: "Question n°21 : Pourquoi les animaux ne peuvent-ils pas progresser selon Pascal ?",
-	answers: [
+		answers: [
 			"Parce qu'ils n'ont pas de mémoire pour conserver leurs connaissances",
 			"Parce qu'ils sont paresseux",
 			"Parce qu'ils sont méchants"
@@ -275,7 +275,7 @@ const questions = [
 		// Question n°22
 {
 	question: "Question n°22 : Qu'est-ce qui rend l'homme perfectible selon Pascal ?",
-	answers: [
+		answers: [
 			"Sa force physique",
 			"Sa mémoire et la transmission du savoir",
 			"Son instinct"
@@ -287,7 +287,7 @@ const questions = [
 		// Question n°23
 {
 	question: "Question n°23 : Comment Pascal conçoit-il la nature de l'animal ?",
-	answers: [
+		answers: [
 			"Comme perfectible",
 			"Comme bornée et fixe",
 			"Comme infinie"
@@ -299,7 +299,7 @@ const questions = [
 		// Question n°24
 {
 	question: "Question n°24 : Comment Pascal conçoit-il la nature de l'homme ?",
-	answers: [
+		answers: [
 			"Comme bornée",
 			"Comme perfectible et ouverte à l'infini",
 			"Comme fixe"
@@ -311,7 +311,7 @@ const questions = [
 		// Question n°25
 {
 	question: "Question n°25 : Quel est le rôle de la mémoire dans la perfectibilité humaine selon Pascal ?",
-	answers: [
+		answers: [
 			"La mémoire est inutile",
 			"La mémoire est la condition de l'accumulation du savoir",
 			"La mémoire empêche le progrès"
@@ -323,7 +323,7 @@ const questions = [
 		// Question n°26
 {
 	question: "Question n°26 : Quel est le rôle des livres dans la perfectibilité humaine selon Pascal ?",
-	answers: [
+		answers: [
 			"Les livres sont inutiles",
 			"Les livres transmettent le savoir des anciens aux nouvelles générations",
 			"Les livres empêchent le progrès"
@@ -335,7 +335,7 @@ const questions = [
 		// Question n°27
 {
 	question: "Question n°27 : Comment Pascal définit-il l'instinct animal ?",
-	answers: [
+		answers: [
 			"Comme une science infuse et bornée",
 			"Comme une raison imparfaite",
 			"Comme une mémoire"
@@ -347,7 +347,7 @@ const questions = [
 		// Question n°28
 {
 	question: "Question n°28 : Pourquoi la science des animaux est-elle dite « fragile » par Pascal ?",
-	answers: [
+		answers: [
 			"Parce qu'elle est imparfaite",
 			"Parce qu'elle se perd avec les besoins",
 			"Parce qu'elle est inutile"
@@ -359,7 +359,7 @@ const questions = [
 		// Question n°29
 {
 	question: "Question n°29 : Comment Pascal conçoit-il le rapport entre nature et animal ?",
-	answers: [
+		answers: [
 			"La nature est indifférente à l'animal",
 			"La nature instruit l'animal et le maintient dans un ordre borné",
 			"La nature donne la raison à l'animal"
@@ -371,7 +371,7 @@ const questions = [
 		// Question n°30
 {
 	question: "Question n°30 : Comment Pascal conçoit-il le rapport entre nature et homme ?",
-	answers: [
+		answers: [
 			"La nature limite l'homme",
 			"La nature a produit l'homme pour l'infinité, sans le limiter",
 			"La nature ignore l'homme"
@@ -383,7 +383,7 @@ const questions = [
 		// Question n°31
 {
 	question: "Question n°31 : Pourquoi l'homme est-il dans l'ignorance au premier âge de sa vie ?",
-	answers: [
+		answers: [
 			"Parce qu'il est inférieur à l'animal",
 			"Parce qu'il doit tout apprendre par lui-même et par les autres",
 			"Parce qu'il est paresseux"
@@ -395,7 +395,7 @@ const questions = [
 		// Question n°32
 {
 	question: "Question n°32 : Comment Pascal caractérise-t-il le progrès humain ?",
-	answers: [
+		answers: [
 			"Comme cyclique",
 			"Comme continu et cumulatif",
 			"Comme régressif"
@@ -407,7 +407,7 @@ const questions = [
 		// Question n°33
 {
 	question: "Question n°33 : Quel est le rôle de l'expérience dans la perfectibilité humaine selon Pascal ?",
-	answers: [
+		answers: [
 			"L'expérience est inutile",
 			"L'expérience est une source de connaissance qui s'ajoute à celle des autres",
 			"L'expérience empêche le progrès"
@@ -419,7 +419,7 @@ const questions = [
 		// Question n°34
 {
 	question: "Question n°34 : Pourquoi l'homme peut-il profiter de l'expérience de ses prédécesseurs ?",
-	answers: [
+		answers: [
 			"Parce qu'il a une mémoire et des livres",
 			"Parce qu'il est plus fort",
 			"Parce qu'il est chanceux"
@@ -431,7 +431,7 @@ const questions = [
 		// Question n°35
 {
 	question: "Question n°35 : Comment Pascal oppose-t-il l'homme et l'animal dans ce texte ?",
-	answers: [
+		answers: [
 			"Par leur force physique",
 			"Par la fixité de l'un et la perfectibilité de l'autre",
 			"Par leur taille"
@@ -443,7 +443,7 @@ const questions = [
 		// Question n°36
 {
 	question: "Question n°36 : Quel est le rapport entre l'homme et l'infini selon Pascal ?",
-	answers: [
+		answers: [
 			"L'homme est limité",
 				"L'homme est produit pour l'infinité, c'est-à-dire pour un progrès sans limite",
 			"L'homme est indifférent à l'infini"
@@ -455,7 +455,7 @@ const questions = [
 		// Question n°37
 {
 	question: "Question n°37 : Comment Pascal conçoit-il la différence entre la science animale et la science humaine ?",
-	answers: [
+		answers: [
 			"Elles sont identiques",
 			"La science animale est fixe et se perd, la science humaine s'accumule et se transmet",
 			"La science animale est supérieure"
@@ -467,7 +467,7 @@ const questions = [
 		// Question n°38
 {
 	question: "Question n°38 : Pourquoi la nature a-t-elle fixé des limites à la perfection animale selon Pascal ?",
-	answers: [
+		answers: [
 			"Parce qu'elle est méchante",
 			"De peur que les animaux ne passent les limites qu'elle leur a prescrites",
 			"Parce qu'elle est indifférente"
@@ -479,7 +479,7 @@ const questions = [
 		// Question n°39
 {
 	question: "Question n°39 : Comment Pascal définit-il la perfectibilité humaine ?",
-	answers: [
+		answers: [
 			"Comme la capacité de se perfectionner sans cesse par accumulation du savoir",
 			"Comme la capacité de rester identique",
 			"Comme la capacité de régresser"
@@ -491,7 +491,7 @@ const questions = [
 		// Question n°40
 {
 	question: "Question n°40 : Quel est le rôle de l'écriture dans la perfectibilité humaine selon Pascal ?",
-	answers: [
+		answers: [
 			"L'écriture est inutile",
 			"L'écriture permet la transmission du savoir à travers les générations",
 			"L'écriture empêche le progrès"
@@ -503,7 +503,7 @@ const questions = [
 		// Question n°41
 {
 	question: "Question n°41 : Pourquoi l'animal ne peut-il pas ajouter à sa science selon Pascal ?",
-	answers: [
+		answers: [
 			"Parce qu'il est paresseux",
 			"Parce que la nature ne le permet pas",
 			"Parce qu'il est méchant"
@@ -515,7 +515,7 @@ const questions = [
 		// Question n°42
 {
 	question: "Question n°42 : Comment Pascal conçoit-il l'histoire de l'humanité ?",
-	answers: [
+		answers: [
 			"Comme cyclique",
 			"Comme un progrès continu par accumulation du savoir",
 			"Comme une décadence"
@@ -527,7 +527,7 @@ const questions = [
 		// Question n°43
 {
 	question: "Question n°43 : Quel est le rapport entre mémoire et progrès selon Pascal ?",
-	answers: [
+		answers: [
 			"La mémoire empêche le progrès",
 			"La mémoire est la condition du progrès",
 			"La mémoire est indifférente au progrès"
@@ -539,7 +539,7 @@ const questions = [
 		// Question n°44
 {
 	question: "Question n°44 : Comment Pascal définit-il l'ignorance initiale de l'homme ?",
-	answers: [
+		answers: [
 			"Comme un défaut",
 			"Comme la condition de la perfectibilité",
 			"Comme une malédiction"
@@ -551,7 +551,7 @@ const questions = [
 		// Question n°45
 {
 	question: "Question n°45 : Quel est le sens de l'expression « la nature n'ayant pour objet que de maintenir les animaux dans un ordre de perfection bornée » ?",
-	answers: [
+		answers: [
 			"La nature veut perfectionner les animaux",
 			"La nature maintient les animaux dans un état de perfection limité et fixe",
 			"La nature ignore les animaux"
@@ -563,7 +563,7 @@ const questions = [
 		// Question n°46
 {
 	question: "Question n°46 : Pourquoi l'homme est-il supérieur à l'animal selon Pascal ?",
-	answers: [
+		answers: [
 			"Parce qu'il est plus fort",
 			"Parce qu'il est perfectible et ouvert à l'infini",
 			"Parce qu'il est plus grand"
@@ -575,7 +575,7 @@ const questions = [
 		// Question n°47
 {
 	question: "Question n°47 : Comment Pascal conçoit-il le temps humain ?",
-	answers: [
+		answers: [
 			"Comme cyclique",
 			"Comme linéaire et progressif",
 			"Comme immobile"
@@ -587,7 +587,7 @@ const questions = [
 		// Question n°48
 {
 	question: "Question n°48 : Quel est le rôle de la transmission dans la perfectibilité humaine selon Pascal ?",
-	answers: [
+		answers: [
 			"La transmission est inutile",
 			"La transmission permet à chaque génération de partir des acquis des précédentes",
 			"La transmission empêche le progrès"
@@ -599,7 +599,7 @@ const questions = [
 		// Question n°49
 {
 	question: "Question n°49 : Comment Pascal caractérise-t-il la condition humaine ?",
-	answers: [
+		answers: [
 			"Comme bornée et fixe",
 			"Comme ouverte à l'infini et perfectible",
 			"Comme identique à celle de l'animal"
@@ -611,7 +611,7 @@ const questions = [
 		// Question n°50
 {
 	question: "Question n°50 : Quelle est l'importance de ce texte dans l'histoire de la philosophie ?",
-	answers: [
+		answers: [
 			"C'est un texte mineur",
 			"C'est un texte majeur qui fonde la distinction entre l'instinct animal et la perfectibilité humaine",
 			"C'est un texte purement littéraire"
@@ -629,42 +629,32 @@ const carte = {
     nodes: [
         { key: 0, parent: null, text: "Animal et homme selon PASCAL", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
-        // Branche 1 : L'animal et l'instinct
         { key: 1, parent: 0, text: "L'animal et l'instinct", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Les ruches des abeilles sont toujours identiques", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "La nature les instruit à mesure que la nécessité les presse", color: "#e57373", fontSize: 13 },
-        { key: 4, parent: 1, text: "Science fragile qui se perd avec les besoins", color: "#e57373", fontSize: 14 },
-        { key: 5, parent: 1, text: "Ils la reçoivent sans étude", color: "#e57373", fontSize: 13 },
-        { key: 6, parent: 1, text: "Ne peuvent pas la conserver", color: "#e57373", fontSize: 13 },
-        { key: 7, parent: 1, text: "Toujours nouvelle, toujours égale", color: "#e57373", fontSize: 13 },
+        { key: 2, parent: 1, text: "[1] Les ruches des abeilles sont toujours identiques", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "[3] La nature les instruit à mesure que la nécessité les presse", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "[3] Science fragile qui se perd avec les besoins", color: "#e57373", fontSize: 14 },
+        { key: 5, parent: 1, text: "[3] Ils la reçoivent sans étude", color: "#e57373", fontSize: 13 },
+        { key: 6, parent: 1, text: "[3] Ils ne peuvent pas la conserver", color: "#e57373", fontSize: 13 },
+        { key: 7, parent: 1, text: "[3] Toujours nouvelle, toujours égale", color: "#e57373", fontSize: 13 },
         
-        // Branche 2 : Limites de l'animal
         { key: 8, parent: 0, text: "Limites de l'animal", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 9, parent: 8, text: "La nature veut les maintenir dans un ordre de perfection bornée", color: "#81c784", fontSize: 13 },
-        { key: 10, parent: 8, text: "Leur inspire une science nécessaire", color: "#81c784", fontSize: 13 },
-        { key: 11, parent: 8, text: "De peur qu'ils ne tombent dans le dépérissement", color: "#81c784", fontSize: 13 },
-        { key: 12, parent: 8, text: "Ne permet pas qu'ils y ajoutent", color: "#81c784", fontSize: 13 },
-        { key: 13, parent: 8, text: "De peur qu'ils ne passent les limites", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 8, text: "[3] La nature veut les maintenir dans un ordre de perfection bornée", color: "#81c784", fontSize: 13 },
+        { key: 10, parent: 8, text: "[3] Leur inspire une science nécessaire", color: "#81c784", fontSize: 13 },
+        { key: 11, parent: 8, text: "[3] De peur qu'ils ne tombent dans le dépérissement", color: "#81c784", fontSize: 13 },
+        { key: 12, parent: 8, text: "[3] Ne permet pas qu'ils y ajoutent", color: "#81c784", fontSize: 13 },
+        { key: 13, parent: 8, text: "[3] De peur qu'ils ne passent les limites", color: "#81c784", fontSize: 13 },
         
-        // Branche 3 : L'homme et l'infinité
         { key: 14, parent: 0, text: "L'homme et l'infinité", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 15, parent: 14, text: "L'homme n'est produit que pour l'infinité", color: "#64b5f6", fontSize: 14, bold: true },
-        { key: 16, parent: 14, text: "Il est dans l'ignorance au premier âge", color: "#64b5f6", fontSize: 13 },
-        { key: 17, parent: 14, text: "Mais il s'instruit sans cesse dans son progrès", color: "#64b5f6", fontSize: 14 },
+        { key: 15, parent: 14, text: "[4] L'homme n'est produit que pour l'infinité", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 16, parent: 14, text: "[5] Il est dans l'ignorance au premier âge", color: "#64b5f6", fontSize: 13 },
+        { key: 17, parent: 14, text: "[5] Mais il s'instruit sans cesse dans son progrès", color: "#64b5f6", fontSize: 14 },
         
-        // Branche 4 : Le progrès humain
         { key: 18, parent: 0, text: "Le progrès humain", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 19, parent: 18, text: "Tire avantage de sa propre expérience", color: "#ffb74d", fontSize: 14 },
-        { key: 20, parent: 18, text: "Et de celle de ses prédécesseurs", color: "#ffb74d", fontSize: 14 },
-        { key: 21, parent: 18, text: "Garde dans sa mémoire les connaissances acquises", color: "#ffb74d", fontSize: 13 },
-        { key: 22, parent: 18, text: "Les livres transmettent le savoir des anciens", color: "#ffb74d", fontSize: 13 },
-        
-        // Branche 5 : Synthèse
-        { key: 23, parent: 0, text: "Synthèse", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 24, parent: 23, text: "Animal = perfection bornée, fixe", color: "#ba68c8", fontSize: 14 },
-        { key: 25, parent: 23, text: "Homme = perfectibilité, progrès infini", color: "#ba68c8", fontSize: 14, bold: true },
-        { key: 26, parent: 23, text: "Mémoire et transmission = condition du progrès", color: "#ba68c8", fontSize: 13 },
+        { key: 19, parent: 18, text: "[5] Tire avantage de sa propre expérience", color: "#ffb74d", fontSize: 14 },
+        { key: 20, parent: 18, text: "[5] Et de celle de ses prédécesseurs", color: "#ffb74d", fontSize: 14 },
+        { key: 21, parent: 18, text: "[5] Garde dans sa mémoire les connaissances acquises", color: "#ffb74d", fontSize: 13 },
+        { key: 22, parent: 18, text: "[5] Les livres transmettent le savoir des anciens", color: "#ffb74d", fontSize: 13 },
     ],
     links: [],
-    nextKey: 27
+    nextKey: 23
 };

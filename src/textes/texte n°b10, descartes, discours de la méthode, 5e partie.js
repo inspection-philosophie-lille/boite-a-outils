@@ -155,7 +155,7 @@ const questions = [
 		// Question n°12
 {
 	question: "Question n°12 : Que conclut Descartes de la comparaison entre les animaux et les sourds-muets ?",
-	answers: [
+		answers: [
 			"Les animaux sont supérieurs aux sourds-muets",
 			"Les animaux n'ont point de raison du tout",
 			"Les sourds-muets sont comme des animaux"
@@ -167,7 +167,7 @@ const questions = [
 		// Question n°13
 {
 	question: "Question n°13 : Les bêtes ont-elles moins de raison que les hommes selon Descartes ?",
-	answers: [
+		answers: [
 			"Oui, elles ont moins de raison",
 			"Non, elles n'ont point de raison du tout",
 			"Elles ont autant de raison"
@@ -179,7 +179,7 @@ const questions = [
 		// Question n°14
 {
 	question: "Question n°14 : Quelle est la thèse de Descartes sur les animaux ?",
-	answers: [
+		answers: [
 			"Les animaux ont une âme",
 			"Les animaux sont des machines, dépourvues de raison",
 			"Les animaux sont supérieurs aux hommes"
@@ -203,7 +203,7 @@ const questions = [
 		// Question n°16
 {
 	question: "Question n°16 : Comment Descartes définit-il le langage véritable ?",
-	answers: [
+		answers: [
 			"Comme la capacité de proférer des sons",
 			"Comme l'expression de la pensée par des signes",
 			"Comme l'imitation des sons"
@@ -215,7 +215,7 @@ const questions = [
 		// Question n°17
 {
 	question: "Question n°17 : Quel est le rôle de la raison dans le langage selon Descartes ?",
-	answers: [
+		answers: [
 			"La raison est indépendante du langage",
 			"La raison est la source du langage : c'est parce qu'on pense qu'on parle",
 			"La raison empêche de parler"
@@ -227,7 +227,7 @@ const questions = [
 		// Question n°18
 {
 	question: "Question n°18 : Que prouve l'exemple des sourds-muets selon Descartes ?",
-	answers: [
+		answers: [
 			"Que les sourds-muets sont inférieurs aux animaux",
 			"Que le langage procède de la raison, non des organes",
 			"Que les animaux peuvent apprendre à parler"
@@ -239,7 +239,7 @@ const questions = [
 		// Question n°19
 {
 	question: "Question n°19 : Comment Descartes caractérise-t-il les animaux ?",
-	answers: [
+		answers: [
 			"Comme des êtres raisonnables",
 			"Comme des machines dépourvues de raison",
 			"Comme des êtres supérieurs"
@@ -251,7 +251,7 @@ const questions = [
 		// Question n°20
 {
 	question: "Question n°20 : Quelle est la différence entre proférer des paroles et parler véritablement ?",
-	answers: [
+		answers: [
 			"Proférer est plus difficile que parler",
 			"Proférer est produire des sons, parler est exprimer une pensée",
 			"Il n'y a pas de différence"
@@ -263,7 +263,7 @@ const questions = [
 		// Question n°21
 {
 	question: "Question n°21 : Quel est le critère décisif de la différence entre l'homme et l'animal selon Descartes ?",
-	answers: [
+		answers: [
 			"La taille du cerveau",
 			"La capacité de langage et de raison",
 			"La force physique"
@@ -275,7 +275,7 @@ const questions = [
 		// Question n°22
 {
 	question: "Question n°22 : Pourquoi les animaux ne peuvent-ils pas inventer des signes comme les sourds-muets ?",
-	answers: [
+		answers: [
 			"Parce qu'ils n'ont pas de raison",
 			"Parce qu'ils n'ont pas d'organes",
 			"Parce qu'ils sont sauvages"
@@ -287,7 +287,7 @@ const questions = [
 		// Question n°23
 {
 	question: "Question n°23 : Comment Descartes conçoit-il la relation entre langage et pensée ?",
-	answers: [
+		answers: [
 			"Le langage est indépendant de la pensée",
 			"Le langage est l'expression de la pensée",
 			"La pensée est indépendante du langage"
@@ -299,7 +299,7 @@ const questions = [
 		// Question n°24
 {
 	question: "Question n°24 : Que signifie l'expression « témoigner qu'on pense ce qu'on dit » ?",
-	answers: [
+		answers: [
 			"Parler sans réfléchir",
 			"Exprimer par le langage une pensée réelle et consciente",
 			"Répéter des mots"
@@ -311,7 +311,7 @@ const questions = [
 		// Question n°25
 {
 	question: "Question n°25 : Quel exemple animal Descartes utilise-t-il pour illustrer son argument ?",
-	answers: [
+		answers: [
 			"Les chiens",
 			"Les pies et les perroquets",
 			"Les singes"
@@ -323,7 +323,7 @@ const questions = [
 		// Question n°26
 {
 	question: "Question n°26 : Pourquoi Descartes affirme-t-il que les bêtes n'ont point de raison du tout ?",
-	answers: [
+		answers: [
 			"Parce qu'elles ne peuvent pas parler véritablement",
 			"Parce qu'elles sont méchantes",
 			"Parce qu'elles sont petites"
@@ -335,7 +335,7 @@ const questions = [
 		// Question n°27
 {
 	question: "Question n°27 : Comment Descartes conçoit-il la différence entre l'homme et l'animal ?",
-	answers: [
+		answers: [
 			"Comme une différence de degré",
 			"Comme une différence de nature",
 			"Comme une différence insignifiante"
@@ -347,7 +347,7 @@ const questions = [
 		// Question n°28
 {
 	question: "Question n°28 : Que signifie l'expression « les bêtes n'ont point de raison du tout » ?",
-	answers: [
+		answers: [
 			"Les bêtes ont une raison limitée",
 			"Les bêtes sont totalement dépourvues de raison",
 			"Les bêtes ont une raison supérieure"
@@ -359,7 +359,7 @@ const questions = [
 		// Question n°29
 {
 	question: "Question n°29 : Quel est le rôle des organes dans la capacité de parler selon Descartes ?",
-	answers: [
+		answers: [
 			"Les organes sont la cause du langage",
 			"Les organes sont nécessaires mais pas suffisants : le langage procède de la raison",
 			"Les organes sont inutiles"
@@ -371,7 +371,7 @@ const questions = [
 		// Question n°30
 {
 	question: "Question n°30 : Comment Descartes définit-il l'homme par rapport à l'animal ?",
-	answers: [
+		answers: [
 			"L'homme est un animal supérieur",
 			"L'homme est le seul être doué de raison et de langage véritable",
 			"L'homme est identique à l'animal"
@@ -383,7 +383,7 @@ const questions = [
 		// Question n°31
 {
 	question: "Question n°31 : Pourquoi Descartes affirme-t-il que même les insensés peuvent parler ?",
-	answers: [
+		answers: [
 			"Pour montrer que la folie n'affecte pas la raison",
 			"Pour montrer que la capacité de langage est universelle chez les hommes",
 			"Pour critiquer la folie"
@@ -395,7 +395,7 @@ const questions = [
 		// Question n°32
 {
 	question: "Question n°32 : Que signifie l'expression « tant parfait et tant heureusement né qu'il puisse être » ?",
-	answers: [
+		answers: [
 			"Un animal très beau",
 			"Un animal doté des meilleures capacités naturelles possibles",
 			"Un animal chanceux"
@@ -407,7 +407,7 @@ const questions = [
 		// Question n°33
 {
 	question: "Question n°33 : Comment Descartes conçoit-il la communication chez les animaux ?",
-	answers: [
+		answers: [
 			"Comme un langage véritable",
 			"Comme une simple production de sons ou de signes naturels",
 			"Comme une communication rationnelle"
@@ -419,7 +419,7 @@ const questions = [
 		// Question n°34
 {
 	question: "Question n°34 : Pourquoi les sourds-muets sont-ils un exemple décisif pour Descartes ?",
-	answers: [
+		answers: [
 			"Parce qu'ils prouvent que le langage procède de la raison, non des organes",
 			"Parce qu'ils sont comme des animaux",
 			"Parce qu'ils ne peuvent pas communiquer"
@@ -431,7 +431,7 @@ const questions = [
 		// Question n°35
 {
 	question: "Question n°35 : Quelle est la conséquence de la thèse cartésienne sur les animaux ?",
-	answers: [
+		answers: [
 			"Les animaux ont des droits",
 			"Les animaux sont des machines sans conscience ni raison",
 			"Les animaux sont supérieurs aux hommes"
@@ -443,7 +443,7 @@ const questions = [
 		// Question n°36
 {
 	question: "Question n°36 : Comment Descartes distingue-t-il le langage humain du langage animal ?",
-	answers: [
+		answers: [
 			"Par le nombre de mots",
 			"Par la capacité d'exprimer des pensées",
 			"Par la qualité des sons"
@@ -455,7 +455,7 @@ const questions = [
 		// Question n°37
 {
 	question: "Question n°37 : Quel est le rapport entre raison et langage selon Descartes ?",
-	answers: [
+		answers: [
 			"Le langage est indépendant de la raison",
 			"Le langage est l'expression de la raison",
 			"La raison est indépendante du langage"
@@ -467,7 +467,7 @@ const questions = [
 		// Question n°38
 {
 	question: "Question n°38 : Pourquoi Descartes affirme-t-il que les bêtes n'ont point de raison du tout ?",
-	answers: [
+		answers: [
 			"Parce qu'elles ne peuvent pas parler véritablement",
 			"Parce qu'elles sont méchantes",
 			"Parce qu'elles sont petites"
@@ -479,7 +479,7 @@ const questions = [
 		// Question n°39
 {
 	question: "Question n°39 : Comment Descartes conçoit-il l'âme des animaux ?",
-	answers: [
+		answers: [
 			"Les animaux ont une âme raisonnable",
 			"Les animaux n'ont pas d'âme",
 			"Les animaux ont une âme végétative"
@@ -491,7 +491,7 @@ const questions = [
 		// Question n°40
 {
 	question: "Question n°40 : Quel est le rôle de la raison dans la distinction entre l'homme et l'animal ?",
-	answers: [
+		answers: [
 			"La raison est secondaire",
 			"La raison est le critère décisif : l'homme a une raison, l'animal n'en a pas",
 			"La raison est inutile"
@@ -503,7 +503,7 @@ const questions = [
 		// Question n°41
 {
 	question: "Question n°41 : Que signifie l'expression « sans en excepter même les insensés » ?",
-	answers: [
+		answers: [
 			"Même les fous sont capables de parler",
 			"Les fous sont exclus",
 			"Les fous sont des animaux"
@@ -515,7 +515,7 @@ const questions = [
 		// Question n°42
 {
 	question: "Question n°42 : Comment Descartes définit-il la différence entre l'homme et l'animal ?",
-	answers: [
+		answers: [
 			"Comme une différence quantitative",
 			"Comme une différence de nature fondée sur la raison et le langage",
 			"Comme une différence insignifiante"
@@ -527,7 +527,7 @@ const questions = [
 		// Question n°43
 {
 	question: "Question n°43 : Pourquoi les perroquets ne peuvent-ils pas parler comme les hommes ?",
-	answers: [
+		answers: [
 			"Parce qu'ils n'ont pas les organes",
 			"Parce qu'ils n'ont pas de raison",
 			"Parce qu'ils sont sauvages"
@@ -539,7 +539,7 @@ const questions = [
 		// Question n°44
 {
 	question: "Question n°44 : Quel est le rapport entre conscience et langage selon Descartes ?",
-	answers: [
+		answers: [
 			"Le langage est indépendant de la conscience",
 			"Le langage véritable implique la conscience de ce qu'on dit",
 			"La conscience est indépendante du langage"
@@ -551,7 +551,7 @@ const questions = [
 		// Question n°45
 {
 	question: "Question n°45 : Comment Descartes conçoit-il l'invention des signes par les sourds-muets ?",
-	answers: [
+		answers: [
 			"Comme un acte mécanique",
 			"Comme un acte de la raison",
 			"Comme un acte instinctif"
@@ -563,7 +563,7 @@ const questions = [
 		// Question n°46
 {
 	question: "Question n°46 : Pourquoi Descartes affirme-t-il que les bêtes n'ont point de raison du tout ?",
-	answers: [
+		answers: [
 			"Parce qu'elles ne peuvent pas parler véritablement",
 			"Parce qu'elles sont dangereuses",
 			"Parce qu'elles sont inférieures"
@@ -575,7 +575,7 @@ const questions = [
 		// Question n°47
 {
 	question: "Question n°47 : Comment Descartes conçoit-il la spécificité de l'être humain ?",
-	answers: [
+		answers: [
 			"L'homme est un animal comme les autres",
 			"L'homme est le seul être doué de raison et de langage véritable",
 			"L'homme est inférieur aux animaux"
@@ -587,7 +587,7 @@ const questions = [
 		// Question n°48
 {
 	question: "Question n°48 : Quel est le rôle de l'exemple des perroquets dans l'argumentation de Descartes ?",
-	answers: [
+		answers: [
 			"Décorer le texte",
 			"Montrer que l'incapacité des animaux à parler ne vient pas d'un défaut d'organes",
 			"Prouver que les perroquets sont intelligents"
@@ -599,7 +599,7 @@ const questions = [
 		// Question n°49
 {
 	question: "Question n°49 : Comment Descartes conçoit-il la relation entre l'âme et le langage ?",
-	answers: [
+		answers: [
 			"Le langage est une fonction du corps",
 			"Le langage est une fonction de l'âme raisonnable",
 			"Le langage est indépendant de l'âme"
@@ -611,7 +611,7 @@ const questions = [
 		// Question n°50
 {
 	question: "Question n°50 : Quelle est l'importance de ce texte dans l'histoire de la philosophie ?",
-	answers: [
+		answers: [
 			"C'est un texte mineur",
 			"C'est un texte majeur qui fonde la distinction radicale entre l'homme et l'animal",
 			"C'est un texte purement littéraire"
@@ -627,41 +627,31 @@ const questions = [
 
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "Différence homme / animal selon DESCARTES", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "Différence homme/animal selon DESCARTES", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
-        // Branche 1 : Le langage chez l'homme
-        { key: 1, parent: 0, text: "Langage chez l'homme", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Tous les hommes sont capables de composer un discours", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "Même les plus hébétés et les insensés", color: "#e57373", fontSize: 13 },
-        { key: 4, parent: 1, text: "Faire entendre leurs pensées", color: "#e57373", fontSize: 14, bold: true },
-        { key: 5, parent: 1, text: "Même les sourds-muets inventent des signes", color: "#e57373", fontSize: 13 },
+        { key: 1, parent: 0, text: "L'homme et le langage", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "[2a] Tous les hommes sont capables de composer un discours", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "[2a] Même les plus hébétés et les insensés", color: "#e57373", fontSize: 13 },
+        { key: 4, parent: 1, text: "[2a] Faire entendre leurs pensées", color: "#e57373", fontSize: 14, bold: true },
+        { key: 5, parent: 1, text: "[3b] Même les sourds-muets inventent des signes", color: "#e57373", fontSize: 13 },
         
-        // Branche 2 : Absence de langage chez l'animal
-        { key: 6, parent: 0, text: "Absence de langage chez l'animal", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 7, parent: 6, text: "Aucun animal ne peut composer un discours", color: "#81c784", fontSize: 14 },
-        { key: 8, parent: 6, text: "Même le plus parfait", color: "#81c784", fontSize: 13 },
-        { key: 9, parent: 6, text: "Les pies et perroquets peuvent proférer des paroles", color: "#81c784", fontSize: 14 },
-        { key: 10, parent: 6, text: "Mais ne peuvent parler en témoignant qu'ils pensent", color: "#81c784", fontSize: 13 },
+        { key: 6, parent: 0, text: "L'animal et le langage", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 7, parent: 6, text: "[2b] Aucun animal ne peut composer un discours", color: "#81c784", fontSize: 14 },
+        { key: 8, parent: 6, text: "[2b] Même le plus parfait", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 6, text: "[3a] Les pies et perroquets peuvent proférer des paroles", color: "#81c784", fontSize: 14 },
+        { key: 10, parent: 6, text: "[3a] Mais ne peuvent parler en témoignant qu'ils pensent", color: "#81c784", fontSize: 13 },
         
-        // Branche 3 : L'argument des organes
-        { key: 11, parent: 0, text: "Argument des organes", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 12, parent: 11, text: "Ce n'est pas un défaut d'organes", color: "#64b5f6", fontSize: 14 },
-        { key: 13, parent: 11, text: "Les pies et perroquets ont les organes", color: "#64b5f6", fontSize: 13 },
-        { key: 14, parent: 11, text: "Les sourds-muets sont privés des organes", color: "#64b5f6", fontSize: 13 },
-        { key: 15, parent: 11, text: "Pourtant ils inventent des signes", color: "#64b5f6", fontSize: 14 },
+        { key: 11, parent: 0, text: "L'argument organique", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 12, parent: 11, text: "[3a] Ce n'est pas un défaut d'organes", color: "#64b5f6", fontSize: 14 },
+        { key: 13, parent: 11, text: "[3a] Les pies et perroquets ont les organes", color: "#64b5f6", fontSize: 13 },
+        { key: 14, parent: 11, text: "[3b] Les sourds-muets sont privés des organes", color: "#64b5f6", fontSize: 13 },
+        { key: 15, parent: 11, text: "[3b] Pourtant ils inventent des signes", color: "#64b5f6", fontSize: 14 },
         
-        // Branche 4 : Conclusion sur la raison
         { key: 16, parent: 0, text: "Conclusion sur la raison", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 17, parent: 16, text: "Les bêtes n'ont pas moins de raison", color: "#ffb74d", fontSize: 14 },
-        { key: 18, parent: 16, text: "Elles n'en ont point du tout", color: "#ffb74d", fontSize: 16, bold: true },
-        { key: 19, parent: 16, text: "Différence de nature, non de degré", color: "#ffb74d", fontSize: 13 },
-        
-        // Branche 5 : Conséquences
-        { key: 20, parent: 0, text: "Conséquences", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 21, parent: 20, text: "L'homme est le seul être doué de raison", color: "#ba68c8", fontSize: 14 },
-        { key: 22, parent: 20, text: "L'animal est une machine", color: "#ba68c8", fontSize: 14 },
-        { key: 23, parent: 20, text: "Le langage est le propre de l'homme", color: "#ba68c8", fontSize: 13 },
+        { key: 17, parent: 16, text: "[4] Les bêtes n'ont pas moins de raison", color: "#ffb74d", fontSize: 14 },
+        { key: 18, parent: 16, text: "[4] Elles n'en ont point du tout", color: "#ffb74d", fontSize: 16, bold: true },
+        { key: 19, parent: 16, text: "[4] Différence de nature, non de degré", color: "#ffb74d", fontSize: 13 },
     ],
     links: [],
-    nextKey: 24
+    nextKey: 20
 };

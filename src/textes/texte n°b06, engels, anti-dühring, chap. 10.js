@@ -59,7 +59,7 @@ const questions = [
 		// Question n°4
 {
 	question: "Question n°4 : Pour quelles fins pouvons-nous mettre en œuvre les lois de la nature ?",
-	answers: [
+		answers: [
 			"Pour des fins déterminées",
 			"Pour des fins indéterminées",
 			"Pour aucune fin"
@@ -95,7 +95,7 @@ const questions = [
 		// Question n°7
 {
 	question: "Question n°7 : Que signifie la liberté de la volonté selon Engels ?",
-	answers: [
+		answers: [
 			"La faculté de choisir arbitrairement",
 			"La faculté de décider en connaissance de cause",
 			"L'absence de toute détermination"
@@ -107,7 +107,7 @@ const questions = [
 		// Question n°8
 {
 	question: "Question n°8 : Que signifie « décider en connaissance de cause » ?",
-	answers: [
+		answers: [
 			"Décider sans réfléchir",
 			"Décider en comprenant les raisons et les conséquences",
 			"Décider par habitude"
@@ -119,7 +119,7 @@ const questions = [
 		// Question n°9
 {
 	question: "Question n°9 : Quel est le rapport entre liberté et nécessité selon Engels ?",
-	answers: [
+		answers: [
 			"Elles sont opposées",
 			"La liberté naît de la connaissance de la nécessité",
 			"Elles sont identiques"
@@ -131,7 +131,7 @@ const questions = [
 		// Question n°10
 {
 	question: "Question n°10 : Que se passe-t-il quand le jugement d'un homme est libre selon Engels ?",
-	answers: [
+		answers: [
 			"Il n'y a plus de nécessité",
 			"Plus grande est la nécessité qui détermine la teneur de ce jugement",
 			"Le jugement devient arbitraire"
@@ -143,7 +143,7 @@ const questions = [
 		// Question n°11
 {
 	question: "Question n°11 : Qu'est-ce qui caractérise l'incertitude selon Engels ?",
-	answers: [
+		answers: [
 			"Elle repose sur l'ignorance",
 			"Elle repose sur la connaissance",
 			"Elle est la marque de la liberté"
@@ -155,7 +155,7 @@ const questions = [
 		// Question n°12
 {
 	question: "Question n°12 : Que fait l'ignorance en apparence selon Engels ?",
-	answers: [
+		answers: [
 			"Elle choisit arbitrairement entre de nombreuses possibilités",
 			"Elle détermine rationnellement la décision",
 			"Elle supprime le choix"
@@ -167,7 +167,7 @@ const questions = [
 		// Question n°13
 {
 	question: "Question n°13 : Que manifeste l'incertitude selon Engels ?",
-	answers: [
+		answers: [
 			"La liberté",
 			"La non-liberté et la soumission à l'objet",
 			"La puissance de l'homme"
@@ -179,7 +179,7 @@ const questions = [
 		// Question n°14
 {
 	question: "Question n°14 : Que devrait faire l'homme de l'objet selon Engels ?",
-	answers: [
+		answers: [
 			"Le contempler",
 			"Le soumettre",
 			"L'ignorer"
@@ -191,7 +191,7 @@ const questions = [
 		// Question n°15
 {
 	question: "Question n°15 : Où consiste la liberté selon la formule finale d'Engels ?",
-	answers: [
+		answers: [
 			"Dans l'indépendance absolue",
 			"Dans l'empire sur nous-mêmes et sur la nature extérieure",
 			"Dans la contemplation passive"
@@ -203,7 +203,7 @@ const questions = [
 		// Question n°16
 {
 	question: "Question n°16 : Sur quoi est fondé l'empire sur nous-mêmes et sur la nature ?",
-	answers: [
+		answers: [
 			"Sur la force brute",
 			"Sur la connaissance des nécessités naturelles",
 			"Sur l'ignorance"
@@ -215,7 +215,7 @@ const questions = [
 		// Question n°17
 {
 	question: "Question n°17 : Comment Engels caractérise-t-il la liberté à la fin du texte ?",
-	answers: [
+		answers: [
 			"Comme un produit du développement historique",
 			"Comme une donnée naturelle",
 			"Comme une illusion"
@@ -227,7 +227,7 @@ const questions = [
 		// Question n°18
 {
 	question: "Question n°18 : Quelle est la conception de la liberté défendue par Engels ?",
-	answers: [
+		answers: [
 			"Une conception idéaliste",
 			"Une conception matérialiste et dialectique",
 			"Une conception religieuse"
@@ -239,7 +239,7 @@ const questions = [
 		// Question n°19
 {
 	question: "Question n°19 : Que signifie l'expression « indépendance rêvée » ?",
-	answers: [
+		answers: [
 			"Une indépendance réelle",
 			"Une indépendance imaginaire et impossible",
 			"Une indépendance partielle"
@@ -251,7 +251,7 @@ const questions = [
 		// Question n°20
 {
 	question: "Question n°20 : Quel est le rapport entre liberté et connaissance chez Engels ?",
-	answers: [
+		answers: [
 			"Elles sont opposées",
 			"La liberté est proportionnelle à la connaissance",
 			"La connaissance limite la liberté"
@@ -263,7 +263,7 @@ const questions = [
 		// Question n°21
 {
 	question: "Question n°21 : Pourquoi Engels parle-t-il de « deux classes de lois » ?",
-	answers: [
+		answers: [
 			"Pour les séparer définitivement",
 			"Pour montrer qu'elles sont distinctes dans la pensée mais unies dans la réalité",
 			"Pour les opposer"
@@ -275,7 +275,7 @@ const questions = [
 		// Question n°22
 {
 	question: "Question n°22 : Que signifie l'expression « en connaissance de cause » ?",
-	answers: [
+		answers: [
 			"Sans savoir pourquoi",
 			"En comprenant les raisons et les effets de son action",
 			"Par habitude"
@@ -287,7 +287,7 @@ const questions = [
 		// Question n°23
 {
 	question: "Question n°23 : Comment Engels définit-il la liberté de la volonté ?",
-	answers: [
+		answers: [
 			"Comme la faculté de choisir arbitrairement",
 			"Comme la faculté de décider en connaissance de cause",
 			"Comme l'absence de détermination"
@@ -299,7 +299,7 @@ const questions = [
 		// Question n°24
 {
 	question: "Question n°24 : Quel est le paradoxe de la liberté selon Engels ?",
-	answers: [
+		answers: [
 			"La liberté est l'absence de nécessité",
 			"Plus le jugement est libre, plus la nécessité le détermine",
 			"La liberté est impossible"
@@ -311,7 +311,7 @@ const questions = [
 		// Question n°25
 {
 	question: "Question n°25 : Pourquoi l'incertitude est-elle une marque de non-liberté ?",
-	answers: [
+		answers: [
 			"Parce qu'elle est confortable",
 			"Parce qu'elle repose sur l'ignorance et soumet l'homme à l'objet",
 			"Parce qu'elle est rare"
@@ -323,7 +323,7 @@ const questions = [
 		// Question n°26
 {
 	question: "Question n°26 : Que signifie « soumission à l'objet » ?",
-	answers: [
+		answers: [
 			"La maîtrise de l'objet",
 			"Être dominé par l'objet au lieu de le dominer",
 			"L'indifférence à l'objet"
@@ -335,7 +335,7 @@ const questions = [
 		// Question n°27
 {
 	question: "Question n°27 : Quel est le rôle de la méthode dans la liberté selon Engels ?",
-	answers: [
+		answers: [
 			"La méthode est inutile",
 			"La méthode permet de mettre en œuvre les lois pour des fins déterminées",
 			"La méthode limite la liberté"
@@ -347,7 +347,7 @@ const questions = [
 		// Question n°28
 {
 	question: "Question n°28 : Comment Engels conçoit-il le rapport entre l'homme et la nature ?",
-	answers: [
+		answers: [
 			"L'homme est séparé de la nature",
 			"L'homme fait partie de la nature et peut la maîtriser par la connaissance",
 			"L'homme est soumis passivement à la nature"
@@ -359,7 +359,7 @@ const questions = [
 		// Question n°29
 {
 	question: "Question n°29 : Que signifie l'expression « empire sur nous-mêmes » ?",
-	answers: [
+		answers: [
 			"La domination des autres",
 			"La maîtrise de soi, de ses passions et de ses désirs",
 			"L'isolement"
@@ -371,7 +371,7 @@ const questions = [
 		// Question n°30
 {
 	question: "Question n°30 : Comment Engels définit-il la liberté dans la dernière phrase ?",
-	answers: [
+		answers: [
 			"Comme l'absence de contrainte",
 			"Comme l'empire sur nous-mêmes et sur la nature, fondé sur la connaissance",
 			"Comme la satisfaction des désirs"
@@ -383,7 +383,7 @@ const questions = [
 		// Question n°31
 {
 	question: "Question n°31 : Pourquoi la liberté est-elle un produit du développement historique ?",
-	answers: [
+		answers: [
 			"Parce qu'elle est innée",
 			"Parce qu'elle se conquiert progressivement par le développement de la connaissance et de la technique",
 			"Parce qu'elle est éternelle"
@@ -395,7 +395,7 @@ const questions = [
 		// Question n°32
 {
 	question: "Question n°32 : Quel est le rapport entre liberté et nécessité dans la pensée d'Engels ?",
-	answers: [
+		answers: [
 			"Elles s'excluent mutuellement",
 			"La liberté est la connaissance et la maîtrise de la nécessité",
 			"La nécessité détruit la liberté"
@@ -407,7 +407,7 @@ const questions = [
 		// Question n°33
 {
 	question: "Question n°33 : Que signifie l'expression « possibilité donnée par là même » ?",
-	answers: [
+		answers: [
 			"Une possibilité sans rapport avec la connaissance",
 			"Une possibilité qui découle de la connaissance des lois",
 			"Une possibilité impossible"
@@ -419,7 +419,7 @@ const questions = [
 		// Question n°34
 {
 	question: "Question n°34 : Comment Engels caractérise-t-il l'action libre ?",
-	answers: [
+		answers: [
 			"Comme une action arbitraire",
 			"Comme une action méthodique orientée vers des fins déterminées",
 			"Comme une action instinctive"
@@ -431,7 +431,7 @@ const questions = [
 		// Question n°35
 {
 	question: "Question n°35 : Quel est le rôle de la science dans la conception de la liberté selon Engels ?",
-	answers: [
+		answers: [
 			"La science est un obstacle à la liberté",
 			"La science est le moyen de la libération",
 			"La science est indifférente à la liberté"
@@ -443,7 +443,7 @@ const questions = [
 		// Question n°36
 {
 	question: "Question n°36 : Pourquoi Engels critique-t-il la conception d'une indépendance à l'égard des lois de la nature ?",
-	answers: [
+		answers: [
 			"Parce qu'elle est trop facile",
 			"Parce qu'elle est illusoire et conduit à la servitude",
 			"Parce qu'elle est dangereuse"
@@ -455,7 +455,7 @@ const questions = [
 		// Question n°37
 {
 	question: "Question n°37 : Comment Engels définit-il le rapport entre liberté et ignorance ?",
-	answers: [
+		answers: [
 			"L'ignorance est la liberté",
 			"L'ignorance est la servitude",
 			"L'ignorance est neutre"
@@ -467,7 +467,7 @@ const questions = [
 		// Question n°38
 {
 	question: "Question n°38 : Quel est le sens de l'expression « produit du développement historique » ?",
-	answers: [
+		answers: [
 			"Quelque chose d'inné",
 			"Quelque chose qui se conquiert progressivement au cours de l'histoire",
 			"Quelque chose d'immuable"
@@ -479,7 +479,7 @@ const questions = [
 		// Question n°39
 {
 	question: "Question n°39 : Comment Engels conçoit-il la relation entre l'homme et les lois naturelles ?",
-	answers: [
+		answers: [
 			"L'homme doit subir passivement les lois",
 			"L'homme peut connaître et utiliser les lois pour ses fins",
 			"L'homme peut ignorer les lois"
@@ -491,7 +491,7 @@ const questions = [
 		// Question n°40
 {
 	question: "Question n°40 : Que signifie l'expression « fins déterminées » ?",
-	answers: [
+		answers: [
 			"Buts choisis consciemment par l'homme",
 			"Buts imposés par la nature",
 			"Buts aléatoires"
@@ -503,7 +503,7 @@ const questions = [
 		// Question n°41
 {
 	question: "Question n°41 : Pourquoi Engels affirme-t-il que les deux classes de lois ne peuvent être séparées dans la réalité ?",
-	answers: [
+		answers: [
 			"Parce qu'elles sont identiques",
 			"Parce que l'homme fait partie de la nature",
 			"Parce qu'elles n'existent pas"
@@ -515,7 +515,7 @@ const questions = [
 		// Question n°42
 {
 	question: "Question n°42 : Quel est le rapport entre liberté et nécessité dans la tradition philosophique ?",
-	answers: [
+		answers: [
 			"Elles sont toujours opposées",
 			"Engels propose une conception dialectique où la liberté naît de la connaissance de la nécessité",
 			"Elles sont identiques"
@@ -527,7 +527,7 @@ const questions = [
 		// Question n°43
 {
 	question: "Question n°43 : Comment Engels définit-il la liberté par rapport à la nature extérieure ?",
-	answers: [
+		answers: [
 			"Comme une soumission passive",
 			"Comme un empire fondé sur la connaissance des lois",
 			"Comme une indépendance totale"
@@ -539,7 +539,7 @@ const questions = [
 		// Question n°44
 {
 	question: "Question n°44 : Que signifie l'expression « décider en connaissance de cause » pour la liberté de la volonté ?",
-	answers: [
+		answers: [
 			"La volonté est libre quand elle ignore les causes",
 			"La volonté est libre quand elle connaît les causes et les conséquences",
 			"La volonté est libre quand elle est indéterminée"
@@ -551,7 +551,7 @@ const questions = [
 		// Question n°45
 {
 	question: "Question n°45 : Pourquoi l'incertitude est-elle une illusion de liberté ?",
-	answers: [
+		answers: [
 			"Parce qu'elle donne l'impression de choisir librement alors qu'on est soumis à l'objet",
 			"Parce qu'elle est agréable",
 			"Parce qu'elle est rare"
@@ -563,7 +563,7 @@ const questions = [
 		// Question n°46
 {
 	question: "Question n°46 : Comment Engels conçoit-il le progrès de la liberté ?",
-	answers: [
+		answers: [
 			"Comme un progrès de la connaissance et de la maîtrise de la nature",
 			"Comme un progrès de l'ignorance",
 			"Comme un progrès de la soumission"
@@ -575,7 +575,7 @@ const questions = [
 		// Question n°47
 {
 	question: "Question n°47 : Quel est le rôle de la connaissance dans la libération selon Engels ?",
-	answers: [
+		answers: [
 			"La connaissance est inutile",
 			"La connaissance est le moyen de la libération",
 			"La connaissance est un obstacle"
@@ -587,7 +587,7 @@ const questions = [
 		// Question n°48
 {
 	question: "Question n°48 : Comment Engels définit-il la liberté dans sa dimension sociale ?",
-	answers: [
+		answers: [
 			"Comme une affaire individuelle",
 			"Comme un produit du développement historique et social",
 			"Comme une illusion"
@@ -599,7 +599,7 @@ const questions = [
 		// Question n°49
 {
 	question: "Question n°49 : Que signifie l'expression « la liberté est nécessairement un produit du développement historique » ?",
-	answers: [
+		answers: [
 			"La liberté est donnée dès la naissance",
 			"La liberté se conquiert progressivement au cours de l'histoire",
 			"La liberté est impossible"
@@ -611,7 +611,7 @@ const questions = [
 		// Question n°50
 {
 	question: "Question n°50 : Quelle est l'importance de ce texte dans l'histoire de la philosophie ?",
-	answers: [
+		answers: [
 			"C'est un texte mineur",
 			"C'est un texte majeur qui propose une conception matérialiste et dialectique de la liberté",
 			"C'est un texte religieux"
@@ -629,36 +629,33 @@ const carte = {
     nodes: [
         { key: 0, parent: null, text: "La liberté selon ENGELS", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
-        // Branche 1 : Fausse conception
-        { key: 1, parent: 0, text: "Fausse conception", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Indépendance rêvée à l'égard des lois de la nature", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "N'est pas la liberté", color: "#e57373", fontSize: 14 },
-        { key: 4, parent: 1, text: "Illusion", color: "#e57373", fontSize: 13 },
+        { key: 1, parent: 0, text: "[1a] Fausse conception", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
+        { key: 2, parent: 1, text: "[1a] Indépendance rêvée à l'égard des lois de la nature n'est pas la liberté", color: "#e57373", fontSize: 14 },
         
-        // Branche 2 : Vraie conception
-        { key: 5, parent: 0, text: "Vraie conception", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 6, parent: 5, text: "Connaissance des lois de la nature", color: "#81c784", fontSize: 14 },
-        { key: 7, parent: 5, text: "Possibilité de les mettre en œuvre méthodiquement", color: "#81c784", fontSize: 13 },
-        { key: 8, parent: 5, text: "Pour des fins déterminées", color: "#81c784", fontSize: 13 },
+        { key: 4, parent: 0, text: "Vraie conception", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
+        { key: 5, parent: 4, text: "[1b] Connaissance des lois de la nature", color: "#81c784", fontSize: 14 },
+        { key: 6, parent: 4, text: "[1b] Possibilité de les mettre en œuvre méthodiquement", color: "#81c784", fontSize: 13 },
+        { key: 7, parent: 4, text: "[1b] Pour des fins déterminées", color: "#81c784", fontSize: 13 },
         
-        // Branche 3 : Liberté de la volonté
-        { key: 9, parent: 0, text: "Liberté de la volonté", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 10, parent: 9, text: "Faculté de décider en connaissance de cause", color: "#64b5f6", fontSize: 14, bold: true },
-        { key: 11, parent: 9, text: "Plus le jugement est libre, plus la nécessité le détermine", color: "#64b5f6", fontSize: 13 },
+        { key: 8, parent: 0, text: "Lois naturelles et lois humaines :", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
+        { key: 9, parent: 8, text: "[2] Deux classes de lois", color: "#64b5f6", fontSize: 14 },
+        { key: 10, parent: 8, text: "[2] Elles sont séparables dans la représentation, non dans la réalité", color: "#64b5f6", fontSize: 13 },
         
-        // Branche 4 : Incertitude et non-liberté
-        { key: 12, parent: 0, text: "Incertitude et non-liberté", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 13, parent: 12, text: "Repose sur l'ignorance", color: "#ffb74d", fontSize: 14 },
-        { key: 14, parent: 12, text: "Choix en apparence arbitraire", color: "#ffb74d", fontSize: 13 },
-        { key: 15, parent: 12, text: "Manifeste la non-liberté", color: "#ffb74d", fontSize: 13 },
-        { key: 16, parent: 12, text: "Soumission à l'objet", color: "#ffb74d", fontSize: 13 },
+        { key: 11, parent: 0, text: "Liberté de la volonté", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 12, parent: 11, text: "[3] Faculté de décider en connaissance de cause", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 13, parent: 11, text: "[4] Plus le jugement est libre, plus la nécessité le détermine", color: "#ffb74d", fontSize: 13 },
         
-        // Branche 5 : Conclusion
-        { key: 17, parent: 0, text: "Conclusion", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 18, parent: 17, text: "Empire sur nous-mêmes et sur la nature", color: "#ba68c8", fontSize: 14 },
-        { key: 19, parent: 17, text: "Fondé sur la connaissance des nécessités naturelles", color: "#ba68c8", fontSize: 13 },
-        { key: 20, parent: 17, text: "Produit du développement historique", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 14, parent: 0, text: "Incertitude et non-liberté", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
+        { key: 15, parent: 14, text: "[4] Repose sur l'ignorance", color: "#ba68c8", fontSize: 14 },
+        { key: 16, parent: 14, text: "[4] Choix en apparence arbitraire", color: "#ba68c8", fontSize: 13 },
+        { key: 17, parent: 14, text: "[4] Manifeste la non-liberté", color: "#ba68c8", fontSize: 13 },
+        { key: 18, parent: 14, text: "[4] Soumission à l'objet", color: "#ba68c8", fontSize: 13 },
+        
+        { key: 19, parent: 0, text: "Conclusion", color: "#4db6ac", dir: "left", bold: true, fontSize: 16 },
+        { key: 20, parent: 19, text: "[5] Empire sur nous-mêmes et sur la nature", color: "#4db6ac", fontSize: 14 },
+        { key: 21, parent: 19, text: "[5] Fondé sur la connaissance des nécessités naturelles", color: "#4db6ac", fontSize: 13 },
+        { key: 22, parent: 19, text: "[5] Produit du développement historique", color: "#4db6ac", fontSize: 14, bold: true },
     ],
     links: [],
-    nextKey: 21
+    nextKey: 23
 };

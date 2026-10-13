@@ -40,8 +40,8 @@ const questions = [
 			"Elle périrait et renaîtrait à chaque instant",
 			"Elle serait plus claire"
 			],
-			correct: 2,
-			explanation: "Bergson décrit le cas d'« une conscience qui ne conserverait rien de son passé, qui s'oublierait sans cesse elle-même ». Une telle conscience « périrait et renaîtrait à chaque instant ». Cette description est une expérience de pensée visant à montrer que la mémoire est constitutive de la conscience. Sans mémoire, il n'y aurait pas de continuité du moi, pas d'identité personnelle. Chaque instant serait un commencement absolu, sans lien avec le précédent. Cette conscience sans mémoire serait en réalité une inconscience."
+		correct: 2,
+		explanation: "Bergson décrit le cas d'« une conscience qui ne conserverait rien de son passé, qui s'oublierait sans cesse elle-même ». Une telle conscience « périrait et renaîtrait à chaque instant ». Cette description est une expérience de pensée visant à montrer que la mémoire est constitutive de la conscience. Sans mémoire, il n'y aurait pas de continuité du moi, pas d'identité personnelle. Chaque instant serait un commencement absolu, sans lien avec le précédent. Cette conscience sans mémoire serait en réalité une inconscience."
 		},
 
 		// Question n°3
@@ -59,7 +59,7 @@ const questions = [
 		// Question n°4
 {
 	question: "Question n°4 : Que signifie l'expression « toute conscience est mémoire » ?",
-	answers: [
+		answers: [
 			"La conscience se réduit au souvenir",
 			"La conscience conserve et accumule le passé dans le présent",
 			"La conscience oublie tout"
@@ -71,7 +71,7 @@ const questions = [
 		// Question n°5
 {
 	question: "Question n°5 : Que fait la conscience du passé selon Bergson ?",
-	answers: [
+		answers: [
 			"Elle l'oublie",
 			"Elle le conserve et l'accumule dans le présent",
 			"Elle le rejette"
@@ -83,7 +83,7 @@ const questions = [
 		// Question n°6
 {
 	question: "Question n°6 : Que dit Bergson après avoir défini la conscience comme mémoire ?",
-	answers: [
+		answers: [
 			"Que la conscience est immuable",
 			"Que toute conscience est anticipation de l'avenir",
 			"Que la conscience est passive"
@@ -95,7 +95,7 @@ const questions = [
 		// Question n°7
 {
 	question: "Question n°7 : De quoi s'occupe notre esprit selon Bergson ?",
-	answers: [
+		answers: [
 			"Uniquement du présent",
 			"De ce qui est, mais en vue de ce qui va être",
 			"Uniquement du passé"
@@ -107,7 +107,7 @@ const questions = [
 		// Question n°8
 {
 	question: "Question n°8 : Comment Bergson décrit-il l'avenir ?",
-	answers: [
+		answers: [
 			"Comme une illusion",
 			"Comme ce qui nous appelle et nous tire à lui",
 			"Comme ce qui est derrière nous"
@@ -119,7 +119,7 @@ const questions = [
 		// Question n°9
 {
 	question: "Question n°9 : Que cause la traction de l'avenir selon Bergson ?",
-	answers: [
+		answers: [
 			"Notre passivité",
 			"Notre action continuelle",
 			"Notre sommeil"
@@ -131,7 +131,7 @@ const questions = [
 		// Question n°10
 {
 	question: "Question n°10 : Que signifie l'expression « toute action est un empiétement sur l'avenir » ?",
-	answers: [
+		answers: [
 			"L'action détruit l'avenir",
 			"L'action réalise dans le présent ce qui était anticipé pour l'avenir",
 			"L'action ignore l'avenir"
@@ -143,7 +143,7 @@ const questions = [
 		// Question n°11
 {
 	question: "Question n°11 : Comment Bergson définit-il la conscience à la fin du texte ?",
-	answers: [
+		answers: [
 			"Comme une substance immatérielle",
 			"Comme un trait d'union entre ce qui a été et ce qui sera",
 			"Comme une illusion"
@@ -155,7 +155,7 @@ const questions = [
 		// Question n°12
 {
 	question: "Question n°12 : Quelle est la première caractéristique de la conscience selon Bergson ?",
-	answers: [
+		answers: [
 			"L'anticipation",
 			"La mémoire",
 			"L'action"
@@ -167,7 +167,7 @@ const questions = [
 		// Question n°13
 {
 	question: "Question n°13 : Quelle est la seconde caractéristique de la conscience selon Bergson ?",
-	answers: [
+		answers: [
 			"La mémoire",
 			"L'anticipation de l'avenir",
 			"L'inconscience"
@@ -179,7 +179,7 @@ const questions = [
 		// Question n°14
 {
 	question: "Question n°14 : Quel est le rapport entre conscience et temps selon Bergson ?",
-	answers: [
+		answers: [
 			"La conscience est indépendante du temps",
 			"La conscience est essentiellement temporelle : elle unit passé et avenir dans le présent",
 			"La conscience est éternelle"
@@ -191,7 +191,7 @@ const questions = [
 		// Question n°15
 {
 	question: "Question n°15 : Que signifie l'expression « la conscience est un pont jeté entre le passé et l'avenir » ?",
-	answers: [
+		answers: [
 			"La conscience sépare le passé et l'avenir",
 			"La conscience relie le passé et l'avenir dans une continuité vivante",
 			"La conscience ignore le passé et l'avenir"
@@ -203,7 +203,7 @@ const questions = [
 		// Question n°16
 {
 	question: "Question n°16 : Pourquoi une conscience sans mémoire serait-elle une inconscience ?",
-	answers: [
+		answers: [
 			"Parce qu'elle n'aurait pas de continuité ni d'identité",
 			"Parce qu'elle serait vide",
 			"Parce qu'elle serait trop pleine"
@@ -215,7 +215,7 @@ const questions = [
 		// Question n°17
 {
 	question: "Question n°17 : Comment Bergson conçoit-il la mémoire ?",
-	answers: [
+		answers: [
 			"Comme un réservoir de souvenirs inertes",
 			"Comme conservation et accumulation vivante du passé dans le présent",
 			"Comme une faculté de rappel volontaire"
@@ -227,7 +227,7 @@ const questions = [
 		// Question n°18
 {
 	question: "Question n°18 : Quel est le rapport entre conscience et action selon Bergson ?",
-	answers: [
+		answers: [
 			"La conscience est passive",
 			"La conscience est tendue vers l'action par l'anticipation de l'avenir",
 			"La conscience est indifférente à l'action"
@@ -239,7 +239,7 @@ const questions = [
 		// Question n°19
 {
 	question: "Question n°19 : Que signifie l'expression « l'avenir nous tire à lui » ?",
-	answers: [
+		answers: [
 			"L'avenir est une force active qui nous mobilise",
 			"L'avenir est passif",
 			"L'avenir n'existe pas"
@@ -251,7 +251,7 @@ const questions = [
 		// Question n°20
 {
 	question: "Question n°20 : Quelle est la thèse principale de ce texte ?",
-	answers: [
+		answers: [
 			"La conscience est une substance immatérielle",
 			"La conscience est mémoire et anticipation, un trait d'union entre passé et avenir",
 			"La conscience est une illusion"
@@ -263,7 +263,7 @@ const questions = [
 		// Question n°21
 {
 	question: "Question n°21 : Comment Bergson caractérise-t-il la conscience dans sa dimension temporelle ?",
-	answers: [
+		answers: [
 			"Comme éternelle",
 			"Comme un mouvement continu entre passé et avenir",
 			"Comme immobile"
@@ -275,7 +275,7 @@ const questions = [
 		// Question n°22
 {
 	question: "Question n°22 : Que signifie l'expression « conservation et accumulation du passé dans le présent » ?",
-	answers: [
+		answers: [
 			"Le passé est conservé et s'accumule dans le présent de la conscience",
 			"Le passé est oublié",
 			"Le passé est nié"
@@ -287,7 +287,7 @@ const questions = [
 		// Question n°23
 {
 	question: "Question n°23 : Pourquoi Bergson affirme-t-il que toute action est un empiétement sur l'avenir ?",
-	answers: [
+		answers: [
 			"Parce que l'action réalise dans le présent ce qui était anticipé pour l'avenir",
 			"Parce que l'action détruit l'avenir",
 			"Parce que l'action ignore l'avenir"
@@ -299,7 +299,7 @@ const questions = [
 		// Question n°24
 {
 	question: "Question n°24 : Comment Bergson définit-il le rapport entre passé, présent et avenir dans la conscience ?",
-	answers: [
+		answers: [
 			"Comme une succession linéaire",
 			"Comme une interpénétration vivante où le passé et l'avenir se rejoignent dans le présent",
 			"Comme une séparation radicale"
@@ -311,7 +311,7 @@ const questions = [
 		// Question n°25
 {
 	question: "Question n°25 : Quel est le rôle de la mémoire dans la conscience selon Bergson ?",
-	answers: [
+		answers: [
 			"La mémoire est accessoire",
 			"La mémoire est constitutive de la conscience : sans elle, pas de continuité ni d'identité",
 			"La mémoire est nuisible"
@@ -323,7 +323,7 @@ const questions = [
 		// Question n°26
 {
 	question: "Question n°26 : Comment Bergson décrit-il la direction de notre esprit ?",
-	answers: [
+		answers: [
 			"Tournée vers le passé uniquement",
 			"Tournée vers ce qui est, mais en vue de ce qui va être",
 			"Tournée vers l'éternel"
@@ -335,7 +335,7 @@ const questions = [
 		// Question n°27
 {
 	question: "Question n°27 : Que signifie l'expression « la conscience est un trait d'union » ?",
-	answers: [
+		answers: [
 			"La conscience sépare",
 			"La conscience relie le passé et l'avenir",
 			"La conscience divise"
@@ -347,7 +347,7 @@ const questions = [
 		// Question n°28
 {
 	question: "Question n°28 : Pourquoi Bergson utilise-t-il la métaphore du pont ?",
-	answers: [
+		answers: [
 			"Pour décorer son discours",
 			"Pour exprimer la fonction médiatrice de la conscience entre passé et avenir",
 			"Pour parler de géographie"
@@ -359,7 +359,7 @@ const questions = [
 		// Question n°29
 {
 	question: "Question n°29 : Comment Bergson conçoit-il le présent de la conscience ?",
-	answers: [
+		answers: [
 			"Comme un instant isolé",
 			"Comme le lieu où passé et avenir s'unissent",
 			"Comme une illusion"
@@ -371,7 +371,7 @@ const questions = [
 		// Question n°30
 {
 	question: "Question n°30 : Quel est le rapport entre conscience et durée chez Bergson ?",
-	answers: [
+		answers: [
 			"La conscience est indépendante de la durée",
 			"La conscience est essentiellement durée : elle est conservation et création continue",
 			"La conscience est immobile"
@@ -383,7 +383,7 @@ const questions = [
 		// Question n°31
 {
 	question: "Question n°31 : Pourquoi la conscience est-elle essentiellement tournée vers l'avenir ?",
-	answers: [
+		answers: [
 			"Parce que le passé est oublié",
 			"Parce que l'avenir nous tire à lui et nous fait agir",
 			"Parce que l'avenir est plus important"
@@ -395,7 +395,7 @@ const questions = [
 		// Question n°32
 {
 	question: "Question n°32 : Comment Bergson définit-il l'action par rapport au temps ?",
-	answers: [
+		answers: [
 			"L'action est intemporelle",
 			"L'action est un empiétement sur l'avenir",
 			"L'action est tournée vers le passé"
@@ -407,7 +407,7 @@ const questions = [
 		// Question n°33
 {
 	question: "Question n°33 : Quel est le lien entre mémoire et anticipation chez Bergson ?",
-	answers: [
+		answers: [
 			"Ils sont opposés",
 			"Ils sont complémentaires : la mémoire nourrit l'anticipation",
 			"Ils sont identiques"
@@ -419,7 +419,7 @@ const questions = [
 		// Question n°34
 {
 	question: "Question n°34 : Pourquoi Bergson affirme-t-il que la conscience est un « trait d'union » ?",
-	answers: [
+		answers: [
 			"Parce qu'elle unit le passé et l'avenir",
 			"Parce qu'elle divise",
 			"Parce qu'elle est inutile"
@@ -431,7 +431,7 @@ const questions = [
 		// Question n°35
 {
 	question: "Question n°35 : Comment Bergson conçoit-il la conscience dans son rapport au temps ?",
-	answers: [
+		answers: [
 			"Comme extérieure au temps",
 			"Comme essentiellement temporelle, constituée par la mémoire et l'anticipation",
 			"Comme intemporelle"
@@ -443,7 +443,7 @@ const questions = [
 		// Question n°36
 {
 	question: "Question n°36 : Quel est le rôle de l'anticipation dans la conscience selon Bergson ?",
-	answers: [
+		answers: [
 			"L'anticipation est accessoire",
 			"L'anticipation est constitutive de la conscience : elle nous fait agir et nous projette vers l'avenir",
 			"L'anticipation est nuisible"
@@ -455,7 +455,7 @@ const questions = [
 		// Question n°37
 {
 	question: "Question n°37 : Pourquoi la conscience est-elle à la fois mémoire et anticipation ?",
-	answers: [
+		answers: [
 			"Parce qu'elle est temporelle : elle est le lien entre passé et avenir",
 			"Parce qu'elle est éternelle",
 			"Parce qu'elle est immobile"
@@ -467,7 +467,7 @@ const questions = [
 		// Question n°38
 {
 	question: "Question n°38 : Comment Bergson définit-il la conscience dans sa dimension active ?",
-	answers: [
+		answers: [
 			"Comme passive",
 			"Comme tendue vers l'action par l'anticipation de l'avenir",
 			"Comme contemplative"
@@ -479,7 +479,7 @@ const questions = [
 		// Question n°39
 {
 	question: "Question n°39 : Quel est le rapport entre conscience et identité personnelle selon Bergson ?",
-	answers: [
+		answers: [
 			"La conscience est indépendante de l'identité",
 			"La conscience est ce qui constitue l'identité personnelle par la mémoire",
 			"La conscience détruit l'identité"
@@ -491,7 +491,7 @@ const questions = [
 		// Question n°40
 {
 	question: "Question n°40 : Pourquoi Bergson affirme-t-il que la conscience est un pont jeté entre le passé et l'avenir ?",
-	answers: [
+		answers: [
 			"Parce que la conscience relie le passé et l'avenir dans une continuité vivante",
 			"Parce que la conscience sépare le passé et l'avenir",
 			"Parce que la conscience est un objet"
@@ -503,7 +503,7 @@ const questions = [
 		// Question n°41
 {
 	question: "Question n°41 : Comment Bergson conçoit-il la relation entre conscience et liberté ?",
-	answers: [
+		answers: [
 			"La conscience est déterminée",
 			"La conscience est libre dans son mouvement même de mémoire et d'anticipation",
 			"La conscience n'a pas de rapport avec la liberté"
@@ -515,7 +515,7 @@ const questions = [
 		// Question n°42
 {
 	question: "Question n°42 : Quel est le sens de l'expression « conservation et accumulation du passé » ?",
-	answers: [
+		answers: [
 			"Le passé est conservé et s'accumule dans le présent",
 			"Le passé est perdu",
 			"Le passé est inutile"
@@ -527,7 +527,7 @@ const questions = [
 		// Question n°43
 {
 	question: "Question n°43 : Comment Bergson caractérise-t-il le mouvement de la conscience ?",
-	answers: [
+		answers: [
 			"Comme un mouvement circulaire",
 			"Comme un mouvement ininterrompu entre passé et avenir",
 			"Comme un mouvement immobile"
@@ -539,7 +539,7 @@ const questions = [
 		// Question n°44
 {
 	question: "Question n°44 : Pourquoi la conscience est-elle essentiellement temporelle selon Bergson ?",
-	answers: [
+		answers: [
 			"Parce qu'elle est dans le temps",
 			"Parce qu'elle est constituée par la mémoire et l'anticipation, qui sont des modes temporels",
 			"Parce qu'elle est éternelle"
@@ -551,7 +551,7 @@ const questions = [
 		// Question n°45
 {
 	question: "Question n°45 : Comment Bergson définit-il le présent dans sa relation au passé et à l'avenir ?",
-	answers: [
+		answers: [
 			"Comme un instant isolé",
 			"Comme le lieu de jonction entre passé et avenir",
 			"Comme une illusion"
@@ -563,7 +563,7 @@ const questions = [
 		// Question n°46
 {
 	question: "Question n°46 : Quel est le rapport entre conscience et création selon Bergson ?",
-	answers: [
+		answers: [
 			"La conscience est créatrice",
 			"La conscience est répétitive",
 			"La conscience est passive"
@@ -575,7 +575,7 @@ const questions = [
 		// Question n°47
 {
 	question: "Question n°47 : Comment Bergson conçoit-il l'unité de la conscience ?",
-	answers: [
+		answers: [
 			"Comme une unité statique",
 			"Comme une unité dynamique fondée sur la mémoire et l'anticipation",
 			"Comme une unité impossible"
@@ -587,7 +587,7 @@ const questions = [
 		// Question n°48
 {
 	question: "Question n°48 : Pourquoi Bergson affirme-t-il que la conscience est un trait d'union entre ce qui a été et ce qui sera ?",
-	answers: [
+		answers: [
 			"Parce qu'elle unit le passé et l'avenir",
 			"Parce qu'elle sépare le passé et l'avenir",
 			"Parce qu'elle ignore le passé et l'avenir"
@@ -599,7 +599,7 @@ const questions = [
 		// Question n°49
 {
 	question: "Question n°49 : Comment Bergson définit-il la conscience dans sa dimension relationnelle ?",
-	answers: [
+		answers: [
 			"Comme isolée",
 			"Comme un pont, un trait d'union entre passé et avenir",
 			"Comme séparée"
@@ -611,7 +611,7 @@ const questions = [
 		// Question n°50
 {
 	question: "Question n°50 : Quelle est l'importance de ce texte dans l'histoire de la philosophie ?",
-	answers: [
+		answers: [
 			"C'est un texte mineur",
 			"C'est un texte majeur qui définit la conscience comme temporalité vivante, unité de mémoire et d'anticipation",
 			"C'est un texte purement littéraire"
@@ -629,39 +629,28 @@ const carte = {
     nodes: [
         { key: 0, parent: null, text: "La conscience selon BERGSON", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
-        // Branche 1 : Conscience et mémoire
         { key: 1, parent: 0, text: "Conscience et mémoire", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Conscience signifie d'abord mémoire", color: "#e57373", fontSize: 14, bold: true },
-        { key: 3, parent: 1, text: "Conservation et accumulation du passé", color: "#e57373", fontSize: 14 },
-        { key: 4, parent: 1, text: "Sans mémoire, pas de continuité ni d'identité", color: "#e57373", fontSize: 13 },
-        { key: 5, parent: 1, text: "Une conscience sans mémoire = inconscience", color: "#e57373", fontSize: 13 },
+        { key: 2, parent: 1, text: "[1] Conscience signifie d'abord mémoire", color: "#e57373", fontSize: 14, bold: true },
+        { key: 3, parent: 1, text: "[3] Conservation et accumulation du passé", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "[2] Sans mémoire, pas de continuité ni d'identité", color: "#e57373", fontSize: 13 },
+        { key: 5, parent: 1, text: "[2] Une conscience sans mémoire = inconscience", color: "#e57373", fontSize: 13 },
         
-        // Branche 2 : Anticipation de l'avenir
         { key: 6, parent: 0, text: "Anticipation de l'avenir", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 7, parent: 6, text: "Toute conscience est anticipation de l'avenir", color: "#81c784", fontSize: 14, bold: true },
-        { key: 8, parent: 6, text: "L'esprit s'occupe de ce qui est en vue de ce qui va être", color: "#81c784", fontSize: 13 },
-        { key: 9, parent: 6, text: "L'avenir nous appelle, nous tire à lui", color: "#81c784", fontSize: 14 },
-        { key: 10, parent: 6, text: "Traction ininterrompue", color: "#81c784", fontSize: 13 },
-        { key: 11, parent: 6, text: "Cause de notre action continuelle", color: "#81c784", fontSize: 13 },
+        { key: 7, parent: 6, text: "[4] Toute conscience est anticipation de l'avenir", color: "#81c784", fontSize: 14, bold: true },
+        { key: 8, parent: 6, text: "[5] L'esprit s'occupe de ce qui est en vue de ce qui va être", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 6, text: "[6] L'avenir nous appelle, nous tire à lui", color: "#81c784", fontSize: 14 },
+        { key: 10, parent: 6, text: "[6] Traction ininterrompue", color: "#81c784", fontSize: 13 },
+        { key: 11, parent: 6, text: "[6] Cause de notre action continuelle", color: "#81c784", fontSize: 13 },
         
-        // Branche 3 : Action et avenir
         { key: 12, parent: 0, text: "Action et avenir", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 13, parent: 12, text: "Toute action est un empiétement sur l'avenir", color: "#64b5f6", fontSize: 14, bold: true },
-        { key: 14, parent: 12, text: "L'action réalise dans le présent ce qui était anticipé", color: "#64b5f6", fontSize: 13 },
-        { key: 15, parent: 12, text: "La conscience est tendue vers l'action", color: "#64b5f6", fontSize: 13 },
+        { key: 13, parent: 12, text: "[6] Toute action est un empiétement sur l'avenir", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 14, parent: 12, text: "[6] L'action réalise dans le présent ce qui était anticipé", color: "#64b5f6", fontSize: 13 },
         
-        // Branche 4 : La conscience comme lien
-        { key: 16, parent: 0, text: "La conscience comme lien", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 17, parent: 16, text: "Trait d'union entre ce qui a été et ce qui sera", color: "#ffb74d", fontSize: 14, bold: true },
-        { key: 18, parent: 16, text: "Pont jeté entre le passé et l'avenir", color: "#ffb74d", fontSize: 14, italic: true },
-        { key: 19, parent: 16, text: "Mémoire + anticipation = durée vivante", color: "#ffb74d", fontSize: 13 },
-        
-        // Branche 5 : Synthèse
-        { key: 20, parent: 0, text: "Synthèse", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 21, parent: 20, text: "La conscience est mémoire", color: "#ba68c8", fontSize: 14 },
-        { key: 22, parent: 20, text: "La conscience est anticipation", color: "#ba68c8", fontSize: 14 },
-        { key: 23, parent: 20, text: "La conscience est un pont entre passé et avenir", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 15, parent: 0, text: "La conscience comme lien", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
+        { key: 16, parent: 15, text: "[7] Trait d'union entre ce qui a été et ce qui sera", color: "#ffb74d", fontSize: 14, bold: true },
+        { key: 17, parent: 15, text: "[7] Pont jeté entre le passé et l'avenir", color: "#ffb74d", fontSize: 14, italic: true },
+        { key: 18, parent: 15, text: "[1-4] Mémoire + anticipation = durée vivante", color: "#ffb74d", fontSize: 13 },
     ],
     links: [],
-    nextKey: 24
+    nextKey: 19
 };

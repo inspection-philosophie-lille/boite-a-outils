@@ -71,7 +71,7 @@ const questions = [
 		// Question n°5
 {
 	question: "Question n°5 : De quoi Lafcadio a-t-il curiosité selon ses propres mots ?",
-	answers: [
+		answers: [
 			"Des événements",
 			"De lui-même",
 			"Des autres"
@@ -83,7 +83,7 @@ const questions = [
 		// Question n°6
 {
 	question: "Question n°6 : Que signifie l'expression « Tel se croit capable de tout, qui, devant que d'agir, recule » ?",
-	answers: [
+		answers: [
 			"Beaucoup surestiment leurs capacités et reculent au moment d'agir",
 			"Personne n'est capable de tout",
 			"Tout le monde agit"
@@ -95,7 +95,7 @@ const questions = [
 		// Question n°7
 {
 	question: "Question n°7 : Quelle distance Lafcadio souligne-t-il entre l'imagination et le fait ?",
-	answers: [
+		answers: [
 			"Une distance infranchissable",
 			"Une grande distance",
 			"Une distance nulle"
@@ -107,7 +107,7 @@ const questions = [
 		// Question n°8
 {
 	question: "Question n°8 : À quoi Lafcadio compare-t-il l'irréversibilité de l'action ?",
-	answers: [
+		answers: [
 			"À la vie",
 			"À une partie d'échecs",
 			"À un voyage"
@@ -119,7 +119,7 @@ const questions = [
 		// Question n°9
 {
 	question: "Question n°9 : Que pense Lafcadio du risque dans le jeu de l'action ?",
-	answers: [
+		answers: [
 			"Il faut éviter tout risque",
 			"Le risque fait l'intérêt du jeu",
 			"Le risque est insignifiant"
@@ -131,7 +131,7 @@ const questions = [
 		// Question n°10
 {
 	question: "Question n°10 : Que remarque Lafcadio sur le paysage au moment du crime ?",
-	answers: [
+		answers: [
 			"Le talus cesse, ils sont sur un pont, une rivière",
 			"Le train entre dans un tunnel",
 			"Il commence à pleuvoir"
@@ -143,7 +143,7 @@ const questions = [
 		// Question n°11
 {
 	question: "Question n°11 : Que fait Fleurissoire pendant que Lafcadio médite ?",
-	answers: [
+		answers: [
 			"Il dort",
 			"Il se penche pour rectifier la position de sa cravate",
 			"Il lit un journal"
@@ -155,7 +155,7 @@ const questions = [
 		// Question n°12
 {
 	question: "Question n°12 : Comment Lafcadio qualifie-t-il la facilité de la double fermeture ?",
-	answers: [
+		answers: [
 			"Difficile à manœuvrer",
 			"Plus aisée qu'on eût cru",
 			"Impossible à ouvrir"
@@ -167,7 +167,7 @@ const questions = [
 		// Question n°13
 {
 	question: "Question n°13 : Quel stratagème Lafcadio imagine-t-il pour décider du sort de Fleurissoire ?",
-	answers: [
+		answers: [
 			"Tirer à pile ou face",
 			"Compter jusqu'à douze avant de voir un feu dans la campagne",
 			"Attendre le prochain arrêt"
@@ -179,7 +179,7 @@ const questions = [
 		// Question n°14
 {
 	question: "Question n°14 : Qui est désigné par le terme « tapir » dans le texte ?",
-	answers: [
+		answers: [
 			"Lafcadio lui-même",
 			"Fleurissoire",
 			"Un animal"
@@ -191,7 +191,7 @@ const questions = [
 		// Question n°15
 {
 	question: "Question n°15 : Comment Lafcadio compte-t-il ?",
-	answers: [
+		answers: [
 			"Rapidement",
 			"Lentement",
 			"Sans compter"
@@ -203,7 +203,7 @@ const questions = [
 		// Question n°16
 {
 	question: "Question n°16 : Que voit Lafcadio en comptant ?",
-	answers: [
+		answers: [
 			"Un feu dans la campagne",
 			"Une ville",
 			"Un autre train"
@@ -215,7 +215,7 @@ const questions = [
 		// Question n°17
 {
 	question: "Question n°17 : Que signifie l'expression « acte gratuit » dans le contexte du texte ?",
-	answers: [
+		answers: [
 			"Un acte charitable",
 			"Un acte sans motif, commis par pur exercice de la liberté",
 			"Un acte involontaire"
@@ -227,7 +227,7 @@ const questions = [
 		// Question n°18
 {
 	question: "Question n°18 : Quel est le rapport entre l'acte gratuit et la connaissance de soi ?",
-	answers: [
+		answers: [
 			"Ils sont indépendants",
 			"L'acte gratuit est un moyen de se connaître soi-même",
 			"L'acte gratuit empêche la connaissance de soi"
@@ -239,7 +239,7 @@ const questions = [
 		// Question n°19
 {
 	question: "Question n°19 : Pourquoi Lafcadio parle-t-il de « jeu » pour désigner son crime ?",
-	answers: [
+		answers: [
 			"Parce que c'est amusant",
 			"Parce qu'il introduit hasard et incertitude dans la décision",
 			"Parce que c'est sans conséquence"
@@ -251,7 +251,7 @@ const questions = [
 		// Question n°20
 {
 	question: "Question n°20 : Comment le texte crée-t-il un effet de suspense ?",
-	answers: [
+		answers: [
 			"Par la description du paysage",
 			"Par l'interruption de la phrase et le compte à rebours",
 			"Par le dialogue"
@@ -263,7 +263,7 @@ const questions = [
 		// Question n°21
 {
 	question: "Question n°21 : Que signifie l'expression « le tapir est sauvé » ?",
-	answers: [
+		answers: [
 			"Fleurissoire va survivre",
 			"Le compte à rebours a réussi et Lafcadio renonce au crime",
 			"L'animal s'est échappé"
@@ -275,7 +275,7 @@ const questions = [
 		// Question n°22
 {
 	question: "Question n°22 : Comment Lafcadio considère-t-il sa victime ?",
-	answers: [
+		answers: [
 			"Avec respect",
 			"Comme un être humain digne de compassion",
 			"Comme un animal, un « tapir »"
@@ -287,7 +287,7 @@ const questions = [
 		// Question n°23
 {
 	question: "Question n°23 : Quel est le rôle du hasard dans la décision de Lafcadio ?",
-	answers: [
+		answers: [
 			"Le hasard est absent",
 			"Le hasard décide du sort de Fleurissoire",
 			"Le hasard empêche le crime"
@@ -299,7 +299,7 @@ const questions = [
 		// Question n°24
 {
 	question: "Question n°24 : Que révèle le geste de Fleurissoire rectifiant sa cravate ?",
-	answers: [
+		answers: [
 			"Sa coquetterie",
 			"Sa naïveté et son innocence face au danger",
 			"Sa peur"
@@ -311,7 +311,7 @@ const questions = [
 		// Question n°25
 {
 	question: "Question n°25 : Quel est le thème principal de ce passage ?",
-	answers: [
+		answers: [
 			"L'amour",
 			"L'acte gratuit et la liberté",
 			"La guerre"
@@ -323,7 +323,7 @@ const questions = [
 		// Question n°26
 {
 	question: "Question n°26 : Comment Gide crée-t-il un contraste entre Lafcadio et Fleurissoire ?",
-	answers: [
+		answers: [
 			"Par leurs vêtements",
 			"Par l'opposition entre la méditation criminelle et l'occupation prosaïque",
 			"Par leur âge"
@@ -335,7 +335,7 @@ const questions = [
 		// Question n°27
 {
 	question: "Question n°27 : Que signifie l'interruption de la phrase « Entre l'imagination d'un fait et… » ?",
-	answers: [
+		answers: [
 			"Une erreur de l'auteur",
 			"Le passage à l'acte interrompt la réflexion",
 			"Un trou de mémoire"
@@ -347,7 +347,7 @@ const questions = [
 		// Question n°28
 {
 	question: "Question n°28 : Quel est le rôle des rideaux tirés dans le récit ?",
-	answers: [
+		answers: [
 			"Créer une atmosphère intimiste",
 			"Protéger Lafcadio des regards pendant le crime",
 			"Empêcher Fleurissoire de voir le paysage"
@@ -359,7 +359,7 @@ const questions = [
 		// Question n°29
 {
 	question: "Question n°29 : Que signifie l'expression « le jeu perdrait tout intérêt » ?",
-	answers: [
+		answers: [
 			"Le crime serait moins amusant",
 			"Le risque est ce qui donne de la valeur à l'action",
 			"Le crime serait impossible"
@@ -371,7 +371,7 @@ const questions = [
 		// Question n°30
 {
 	question: "Question n°30 : Comment Lafcadio justifie-t-il son crime ?",
-	answers: [
+		answers: [
 			"Par la vengeance",
 			"Par la curiosité de soi-même et le désir d'exercer sa liberté",
 			"Par la nécessité"
@@ -383,7 +383,7 @@ const questions = [
 		// Question n°31
 {
 	question: "Question n°31 : Quel est le rapport entre Lafcadio et la morale dans ce passage ?",
-	answers: [
+		answers: [
 			"Il respecte la morale",
 			"Il la transgresse par l'acte gratuit",
 			"Il l'ignore"
@@ -395,7 +395,7 @@ const questions = [
 		// Question n°32
 {
 	question: "Question n°32 : Comment le compte à rebours fonctionne-t-il comme procédé narratif ?",
-	answers: [
+		answers: [
 			"Il ralentit le récit",
 			"Il crée un suspense insoutenable",
 			"Il accélère le récit"
@@ -407,7 +407,7 @@ const questions = [
 		// Question n°33
 {
 	question: "Question n°33 : Quelle est la signification de l'expression « devant que d'agir, recule » ?",
-	answers: [
+		answers: [
 			"Beaucoup de gens reculent au moment d'agir",
 			"Personne n'agit",
 			"L'action est facile"
@@ -419,7 +419,7 @@ const questions = [
 		// Question n°34
 {
 	question: "Question n°34 : Quel est le rôle du paysage dans le récit ?",
-	answers: [
+		answers: [
 			"Décorer le texte",
 			"Accompagner et rythmer la progression vers le crime",
 			"Distraire le lecteur"
@@ -431,7 +431,7 @@ const questions = [
 		// Question n°35
 {
 	question: "Question n°35 : Comment Lafcadio considère-t-il la vie de Fleurissoire ?",
-	answers: [
+		answers: [
 			"Comme sacrée",
 			"Comme insignifiante et disponible pour son expérience",
 			"Comme précieuse"
@@ -443,7 +443,7 @@ const questions = [
 		// Question n°36
 {
 	question: "Question n°36 : Que signifie l'expression « crime immotivé » ?",
-	answers: [
+		answers: [
 			"Un crime sans mobile apparent",
 			"Un crime passionnel",
 			"Un crime politique"
@@ -455,7 +455,7 @@ const questions = [
 		// Question n°37
 {
 	question: "Question n°37 : Quel est le rapport entre l'acte gratuit et la liberté selon Gide ?",
-	answers: [
+		answers: [
 			"L'acte gratuit est une illusion de liberté",
 			"L'acte gratuit est l'exercice suprême de la liberté",
 			"L'acte gratuit limite la liberté"
@@ -467,7 +467,7 @@ const questions = [
 		// Question n°38
 {
 	question: "Question n°38 : Comment le texte illustre-t-il l'écart entre imagination et action ?",
-	answers: [
+		answers: [
 			"Par des discours",
 			"Par le passage de la méditation au crime effectif",
 			"Par des descriptions"
@@ -479,7 +479,7 @@ const questions = [
 		// Question n°39
 {
 	question: "Question n°39 : Quel est le rôle de la double fermeture dans le crime ?",
-	answers: [
+		answers: [
 			"Elle empêche le crime",
 			"Elle facilite l'ouverture de la portière",
 			"Elle retient Fleurissoire"
@@ -491,7 +491,7 @@ const questions = [
 		// Question n°40
 {
 	question: "Question n°40 : Comment Gide décrit-il le moment du crime ?",
-	answers: [
+		answers: [
 			"De manière explicite et violente",
 			"De manière elliptique et suggérée",
 			"De manière comique"
@@ -503,7 +503,7 @@ const questions = [
 		// Question n°41
 {
 	question: "Question n°41 : Quelle est la signification de l'expression « qu'il y a loin, entre l'imagination et le fait » ?",
-	answers: [
+		answers: [
 			"Il n'y a pas de différence",
 			"Il y a un abîme entre concevoir un acte et le commettre",
 			"L'imagination est supérieure à l'action"
@@ -515,7 +515,7 @@ const questions = [
 		// Question n°42
 {
 	question: "Question n°42 : Comment Lafcadio envisage-t-il les conséquences de son acte ?",
-	answers: [
+		answers: [
 			"Il les ignore totalement",
 			"Il les calcule mais accepte le risque",
 			"Il en est terrifié"
@@ -527,7 +527,7 @@ const questions = [
 		// Question n°43
 {
 	question: "Question n°43 : Quel est le rapport entre l'acte gratuit et l'immoralité ?",
-	answers: [
+		answers: [
 			"L'acte gratuit est moral",
 			"L'acte gratuit est immoral car il nie la valeur de la vie d'autrui",
 			"L'acte gratuit est indifférent à la morale"
@@ -539,7 +539,7 @@ const questions = [
 		// Question n°44
 {
 	question: "Question n°44 : Comment le texte illustre-t-il l'idée que « le jeu perdrait tout intérêt » sans risque ?",
-	answers: [
+		answers: [
 			"Par le compte à rebours",
 			"Par la description du crime",
 			"Par le dialogue"
@@ -551,7 +551,7 @@ const questions = [
 		// Question n°45
 {
 	question: "Question n°45 : Quelle est la place de la préméditation dans ce crime ?",
-	answers: [
+		answers: [
 			"Le crime est impulsif",
 			"Le crime est longuement prémédité",
 			"Le crime est accidentel"
@@ -563,7 +563,7 @@ const questions = [
 		// Question n°46
 {
 	question: "Question n°46 : Comment Lafcadio se justifie-t-il auprès de lui-même ?",
-	answers: [
+		answers: [
 			"Par la vengeance",
 			"Par la curiosité de soi et l'exercice de la liberté",
 			"Par la nécessité"
@@ -575,7 +575,7 @@ const questions = [
 		// Question n°47
 {
 	question: "Question n°47 : Quel est le rôle de l'observation « les rideaux du couloir sont tirés » ?",
-	answers: [
+		answers: [
 			"Créer une atmosphère",
 			"Montrer que Lafcadio prend des précautions",
 			"Décorer le texte"
@@ -587,7 +587,7 @@ const questions = [
 		// Question n°48
 {
 	question: "Question n°48 : Comment le texte met-il en scène le passage à l'acte ?",
-	answers: [
+		answers: [
 			"Par une description explicite",
 			"Par une ellipse et une phrase inachevée",
 			"Par un dialogue"
@@ -599,7 +599,7 @@ const questions = [
 		// Question n°49
 {
 	question: "Question n°49 : Quelle est la signification philosophique de l'acte gratuit ?",
-	answers: [
+		answers: [
 			"C'est un acte sans importance",
 			"C'est une expérience limite de la liberté humaine",
 			"C'est un acte moral"
@@ -611,7 +611,7 @@ const questions = [
 		// Question n°50
 {
 	question: "Question n°50 : Quelle est l'importance de ce passage dans l'histoire de la littérature ?",
-	answers: [
+		answers: [
 			"C'est un passage mineur",
 			"C'est un passage majeur qui illustre la notion d'acte gratuit",
 			"C'est un passage comique"
@@ -629,38 +629,33 @@ const carte = {
     nodes: [
         { key: 0, parent: null, text: "L'acte gratuit selon GIDE", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
-        // Branche 1 : Le crime immotivé
         { key: 1, parent: 0, text: "Le crime immotivé", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "Quel embarras pour la police !", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "Crime sans motif", color: "#e57373", fontSize: 14 },
-        { key: 4, parent: 1, text: "Acte gratuit", color: "#e57373", fontSize: 14, bold: true },
+        { key: 2, parent: 1, text: "[1] Quel embarras pour la police !", color: "#e57373", fontSize: 14 },
+        { key: 3, parent: 1, text: "[1] Crime sans motif", color: "#e57373", fontSize: 14 },
+        { key: 4, parent: 1, text: "[1] Acte gratuit", color: "#e57373", fontSize: 14, bold: true },
         
-        // Branche 2 : Curiosité de soi
         { key: 5, parent: 0, text: "Curiosité de soi", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 6, parent: 5, text: "Ce n'est pas tant des événements que j'ai curiosité", color: "#81c784", fontSize: 14 },
-        { key: 7, parent: 5, text: "Que de moi-même", color: "#81c784", fontSize: 14, bold: true },
-        { key: 8, parent: 5, text: "Tel se croit capable de tout, qui recule", color: "#81c784", fontSize: 13 },
-        { key: 9, parent: 5, text: "Qu'il y a loin entre l'imagination et le fait !", color: "#81c784", fontSize: 13 },
+        { key: 6, parent: 5, text: "[4] Ce n'est pas tant des événements que j'ai curiosité", color: "#81c784", fontSize: 14 },
+        { key: 7, parent: 5, text: "[4] Que de moi-même", color: "#81c784", fontSize: 14, bold: true },
+        { key: 8, parent: 5, text: "[5] Tel se croit capable de tout, qui recule", color: "#81c784", fontSize: 13 },
+        { key: 9, parent: 5, text: "[6] Qu'il y a loin entre l'imagination et le fait !", color: "#81c784", fontSize: 13 },
         
-        // Branche 3 : Le jeu et le risque
         { key: 10, parent: 0, text: "Le jeu et le risque", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 11, parent: 10, text: "Pas plus le droit de reprendre son coup qu'aux échecs", color: "#64b5f6", fontSize: 13 },
-        { key: 12, parent: 10, text: "Qui prévoirait tous les risques, le jeu perdrait tout intérêt", color: "#64b5f6", fontSize: 13 },
-        { key: 13, parent: 10, text: "Le risque donne de l'intérêt à l'action", color: "#64b5f6", fontSize: 14 },
+        { key: 11, parent: 10, text: "[7] Pas plus le droit de reprendre son coup qu'aux échecs", color: "#64b5f6", fontSize: 13 },
+        { key: 12, parent: 10, text: "[8] Qui prévoirait tous les risques, le jeu perdrait tout intérêt", color: "#64b5f6", fontSize: 13 },
+        { key: 13, parent: 10, text: "[8] Le risque donne de l'intérêt à l'action", color: "#64b5f6", fontSize: 14 },
         
-        // Branche 4 : Le compte à rebours
         { key: 14, parent: 0, text: "Le compte à rebours", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 15, parent: 14, text: "Si je puis compter jusqu'à douze", color: "#ffb74d", fontSize: 14 },
-        { key: 16, parent: 14, text: "Avant de voir dans la campagne quelque feu", color: "#ffb74d", fontSize: 13 },
-        { key: 17, parent: 14, text: "Le tapir est sauvé", color: "#ffb74d", fontSize: 14 },
-        { key: 18, parent: 14, text: "Je commence : Une, deux, trois...", color: "#ffb74d", fontSize: 13 },
-        { key: 19, parent: 14, text: "Dix, un feu...", color: "#ffb74d", fontSize: 13 },
+        { key: 15, parent: 14, text: "[14] Si je puis compter jusqu'à douze", color: "#ffb74d", fontSize: 14 },
+        { key: 16, parent: 14, text: "[14] Avant de voir dans la campagne quelque feu", color: "#ffb74d", fontSize: 13 },
+        { key: 17, parent: 14, text: "[14] Le tapir est sauvé", color: "#ffb74d", fontSize: 14 },
+        { key: 18, parent: 14, text: "[15] Je commence : Une, deux, trois...", color: "#ffb74d", fontSize: 13 },
+        { key: 19, parent: 14, text: "[15] Dix, un feu...", color: "#ffb74d", fontSize: 13 },
         
-        // Branche 5 : Le crime
         { key: 20, parent: 0, text: "Le crime", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 21, parent: 20, text: "Fleurissoire se penche pour rectifier sa cravate", color: "#ba68c8", fontSize: 13 },
-        { key: 22, parent: 20, text: "La double fermeture joue aisément", color: "#ba68c8", fontSize: 13 },
-        { key: 23, parent: 20, text: "Fleurissoire ne poussa pas un cri", color: "#ba68c8", fontSize: 14, bold: true },
+        { key: 21, parent: 20, text: "[12] Fleurissoire se penche pour rectifier sa cravate", color: "#ba68c8", fontSize: 13 },
+        { key: 22, parent: 20, text: "[13] La double fermeture joue aisément", color: "#ba68c8", fontSize: 13 },
+        { key: 23, parent: 20, text: "[16] Fleurissoire ne poussa pas un cri", color: "#ba68c8", fontSize: 14, bold: true },
     ],
     links: [],
     nextKey: 24
