@@ -626,7 +626,7 @@ const questions = [
 // ============================================
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "La loi et le bien commun selon D'AQUIN", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "La loi et le bien commun", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
         // Branche 1 : Finalité de la loi
         { key: 1, parent: 0, text: "Finalité de la loi", color: "#e57373", dir: "right", bold: true, fontSize: 16 },

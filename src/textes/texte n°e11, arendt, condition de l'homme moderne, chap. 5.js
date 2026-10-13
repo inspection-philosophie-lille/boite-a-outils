@@ -527,7 +527,7 @@ const questions = [
 
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "L'action selon Hannah ARENDT", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "L'action", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
         // Branche 1 : Nature de l'action
         { key: 1, parent: 0, text: "Nature de l'action", color: "#e57373", dir: "right", bold: true, fontSize: 16 },

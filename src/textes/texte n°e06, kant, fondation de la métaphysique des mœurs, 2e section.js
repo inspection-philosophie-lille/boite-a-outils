@@ -527,7 +527,7 @@ const questions = [
 
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "L'impératif catégorique selon KANT", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "L'impératif catégorique", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
         // Branche 1 : L'impératif catégorique
         { key: 1, parent: 0, text: "L'impératif catégorique", color: "#e57373", dir: "right", bold: true, fontSize: 16 },

@@ -627,7 +627,7 @@ const questions = [
 
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "L'acte gratuit selon GIDE", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "L'acte gratuit", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
         { key: 1, parent: 0, text: "Le crime immotivé", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
         { key: 2, parent: 1, text: "[1] Quel embarras pour la police !", color: "#e57373", fontSize: 14 },

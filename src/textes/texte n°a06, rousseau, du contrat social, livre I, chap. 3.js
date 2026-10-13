@@ -626,7 +626,7 @@ const questions = [
 // ============================================
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "Force et droit selon Rousseau", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "Force et droit", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
         { key: 1, parent: 0, text: "Le plus fort et le droit", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
         { key: 2, parent: 1, text: "[1] Le plus fort n'est jamais assez fort pour être toujours le maître", color: "#e57373", fontSize: 14 },

@@ -529,7 +529,7 @@ const questions = [
 // ============================================
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "Critique de la liberté de la volonté selon SPINOZA", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "Critique de la liberté de la volonté", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
         { key: 1, parent: 0, text: "Cause unique de l'erreur", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
         { key: 2, parent: 1, text: "[1] Selon Bacon et Descartes", color: "#e57373", fontSize: 14 },

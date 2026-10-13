@@ -627,7 +627,7 @@ const questions = [
 
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "Qu'est-ce que le courage ? (Lachès)", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "Le courage", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
         { key: 1, parent: 0, text: "Question de Socrate", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
         { key: 2, parent: 1, text: "[1] Qu'est-ce que le courage ?", color: "#e57373", fontSize: 14, bold: true },

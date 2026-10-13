@@ -527,7 +527,7 @@ const questions = [
 
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "Le contrat social selon ROUSSEAU", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "Le contrat social", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
         // Branche 1 : Le problème fondamental
         { key: 1, parent: 0, text: "Problème fondamental", color: "#e57373", dir: "right", bold: true, fontSize: 16 },

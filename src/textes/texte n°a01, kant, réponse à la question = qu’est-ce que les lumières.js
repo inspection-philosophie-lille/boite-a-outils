@@ -528,7 +528,7 @@ const questions = [
 
 const carte = {
 	nodes: [
-		{ key: 0, parent: null, text: "Les Lumières selon Kant", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+		{ key: 0, parent: null, text: "Les Lumières", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
 		
 		// Branche 1 : Définition
 		{ key: 1, parent: 0, text: "Définition", color: "#e57373", dir: "right", bold: true, fontSize: 16 },

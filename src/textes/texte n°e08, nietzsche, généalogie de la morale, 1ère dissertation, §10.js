@@ -527,7 +527,7 @@ const questions = [
 
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "Morale des maîtres et morale des esclaves selon NIETZSCHE", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "Morale des maîtres et morale des esclaves", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
         
         // Branche 1 : Morale des maîtres
         { key: 1, parent: 0, text: "Morale des maîtres", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
