@@ -2,12 +2,11 @@
 // DONNÉES GÉNÉRALES
 // ============================================
 
-// Titre et description du fichier
 const titre = "QUIZ";
 const sousTitre = "Tester ses connaissances sur un texte de Kant";
 
 // ============================================
-// DONNÉES DU TEXTE PHILOSOPHIQUE
+// TEXTE PHILOSOPHIQUE
 // ============================================
 
 const philosophyData = {
@@ -18,6 +17,7 @@ const philosophyData = {
 // ============================================
 // QUESTIONS DU QUIZ
 // ============================================
+
 const questions = [
 	{
 		question: "Question n°1 : Comment Kant définit-il les Lumières ?",
@@ -521,44 +521,44 @@ const questions = [
 	}
 ];
 
-
 // ============================================
 // CARTE MENTALE
+// Seuls key, parent, text et dir (optionnel) sont lus.
+// Les couleurs, tailles et styles sont calculés par l'application.
 // ============================================
 
 const carte = {
 	nodes: [
-		{ key: 0, parent: null, text: "Les Lumières", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
-		
-		// Branche 1 : Définition
-		{ key: 1, parent: 0, text: "Définition", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-		{ key: 2, parent: 1, text: "[2] Sortie de la minorité", color: "#e57373", fontSize: 14 },
-		{ key: 3, parent: 2, text: "[3] Minorité : incapacité de se servir de son entendement sans la direction d'autrui", color: "#e57373", fontSize: 13 },
-		{ key: 4, parent: 2, text: "[4] Minorité : responsabilité individuelle", color: "#e57373", fontSize: 13 },
-		
-		// Branche 2 : Causes de la minorité
-		{ key: 5, parent: 0, text: "Causes de la minorité", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-		{ key: 6, parent: 5, text: "[8] Paresse", color: "#81c784", fontSize: 14 },
-		{ key: 7, parent: 5, text: "[8] Lâcheté", color: "#81c784", fontSize: 14 },
-		{ key: 8, parent: 5, text: "[4] Manque de décision et de courage", color: "#81c784", fontSize: 13 },
-		{ key: 9, parent: 5, text: "[4] Pas un défaut de l'entendement", color: "#81c784", fontSize: 13 },
-		
-		// Branche 3 : La devise
-		{ key: 10, parent: 0, text: "Devise des Lumières", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-		{ key: 11, parent: 10, text: "[5-7] Sapere aude ! Aie le courage de te servir de ton propre entendement", color: "#64b5f6", fontSize: 14, italic: true },
-		
-		// Branche 4 : Facilité de la minorité
-		{ key: 12, parent: 0, text: "Facilité de rester mineur", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-		{ key: 13, parent: 13, text: "[10] Livre = entendement", color: "#ffb74d", fontSize: 14 },
-		{ key: 14, parent: 13, text: "[10] Directeur = conscience", color: "#ffb74d", fontSize: 14 },
-		{ key: 15, parent: 13, text: "[10] Médecin = régime", color: "#ffb74d", fontSize: 14 },
-		{ key: 16, parent: 13, text: "[11] Payer pour ne pas penser", color: "#ffb74d", fontSize: 13 },
-		
-		// Branche 5 : Difficulté de sortir
-		{ key: 17, parent: 0, text: "Difficulté de sortir", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-		{ key: 18, parent: 18, text: "[12] Minorité devenue état naturel", color: "#ba68c8", fontSize: 14 },
-		{ key: 19, parent: 18, text: "[12] Difficile de sortir tout seul", color: "#ba68c8", fontSize: 13 },
+		{ key: 0, parent: null, text: "Les Lumières" },
+
+		// Branche 1 : Définition (côté droit)
+		{ key: 1, parent: 0, text: "Définition" },
+		{ key: 2, parent: 1, text: "[2] Sortie de la minorité" },
+		{ key: 3, parent: 2, text: "[3] Minorité : incapacité de se servir de son entendement sans la direction d'autrui" },
+		{ key: 4, parent: 2, text: "[4] Minorité : responsabilité individuelle" },
+
+		// Branche 2 : Causes de la minorité (côté droit)
+		{ key: 5, parent: 0, text: "Causes de la minorité" },
+		{ key: 6, parent: 5, text: "[8] Paresse" },
+		{ key: 7, parent: 5, text: "[8] Lâcheté" },
+		{ key: 8, parent: 5, text: "[4] Manque de décision et de courage" },
+		{ key: 9, parent: 5, text: "[4] Pas un défaut de l'entendement" },
+
+		// Branche 3 : Devise des Lumières (côté gauche)
+		{ key: 10, parent: 0, text: "Devise des Lumières", dir: "left" },
+		{ key: 11, parent: 10, text: "[5-7] Sapere aude ! Aie le courage de te servir de ton propre entendement" },
+
+		// Branche 4 : Facilité de rester mineur (côté gauche)
+		{ key: 12, parent: 0, text: "Facilité de rester mineur", dir: "left" },
+		{ key: 13, parent: 12, text: "[10] Les prothèses intellectuelles" },
+		{ key: 14, parent: 13, text: "Livre : je ne pense plus, il pense pour moi" },
+		{ key: 15, parent: 13, text: "Directeur : je ne juge plus, il juge pour moi" },
+		{ key: 16, parent: 13, text: "Médecin : je ne décide plus, il décide pour moi" },
+		{ key: 17, parent: 12, text: "[11] Payer pour ne pas penser" },
+
+		// Branche 5 : Difficulté de sortir (côté gauche)
+		{ key: 18, parent: 0, text: "Difficulté de sortir", dir: "left" },
+		{ key: 19, parent: 18, text: "[12] Minorité devenue état naturel" },
+		{ key: 20, parent: 18, text: "[12] Difficile de sortir tout seul" }
 	],
-	links: [],
-	nextKey: 19
 };

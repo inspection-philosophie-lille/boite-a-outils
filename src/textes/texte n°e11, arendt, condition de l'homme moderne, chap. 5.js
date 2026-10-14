@@ -527,39 +527,37 @@ const questions = [
 
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "L'action", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "L'action" },
         
         // Branche 1 : Nature de l'action
-        { key: 1, parent: 0, text: "Nature de l'action", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "[1] Met directement en rapport les hommes", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "[1] Sans intermédiaire des choses ou de la matière", color: "#e57373", fontSize: 13 },
-        { key: 4, parent: 1, text: "[2] Correspond à la condition de la pluralité", color: "#e57373", fontSize: 14 },
+        { key: 1, parent: 0, text: "Nature de l'action" },
+        { key: 2, parent: 1, text: "[1] Met directement en rapport les hommes" },
+        { key: 3, parent: 1, text: "[1] Sans intermédiaire des choses ou de la matière" },
+        { key: 4, parent: 1, text: "[2] Correspond à la condition de la pluralité" },
         
         // Branche 2 : Caractéristiques déroutantes
-        { key: 5, parent: 0, text: "Caractéristiques déroutantes", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 6, parent: 5, text: "[3] Irréversible", color: "#81c784", fontSize: 14 },
-        { key: 7, parent: 5, text: "[3] Imprévisible", color: "#81c784", fontSize: 14 },
-        { key: 8, parent: 5, text: "[4] Les hommes ont cherché à y échapper", color: "#81c784", fontSize: 13 },
-        { key: 9, parent: 5, text: "[5] En substituant la fabrication", color: "#81c784", fontSize: 13 },
+        { key: 5, parent: 0, text: "Caractéristiques déroutantes" },
+        { key: 6, parent: 5, text: "[3] Irréversible" },
+        { key: 7, parent: 5, text: "[3] Imprévisible" },
+        { key: 8, parent: 5, text: "[4] Les hommes ont cherché à y échapper" },
+        { key: 9, parent: 5, text: "[5] En substituant la fabrication" },
         
         // Branche 3 : Vertus rédemptrices
-        { key: 10, parent: 0, text: "Vertus rédemptrices", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 11, parent: 10, text: "[6] La promesse pallie l'imprévisibilité", color: "#64b5f6", fontSize: 14 },
-        { key: 12, parent: 10, text: "[6] Le pardon remédie à l'irréversibilité", color: "#64b5f6", fontSize: 14 },
-        { key: 13, parent: 10, text: "[7] Sans être maîtrisable, l'action peut être sauvée de sa futilité", color: "#64b5f6", fontSize: 13 },
+        { key: 10, parent: 0, text: "Vertus rédemptrices", dir: "left" },
+        { key: 11, parent: 10, text: "[6] La promesse pallie l'imprévisibilité" },
+        { key: 12, parent: 10, text: "[6] Le pardon remédie à l'irréversibilité" },
+        { key: 13, parent: 10, text: "[7] Sans être maîtrisable, l'action peut être sauvée de sa futilité" },
         
         // Branche 4 : Le pouvoir
-        { key: 14, parent: 0, text: "Le pouvoir", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 15, parent: 14, text: "[8] N'est pas la violence", color: "#ffb74d", fontSize: 14 },
-        { key: 16, parent: 14, text: "[8] Mais la capacité d'agir de concert", color: "#ffb74d", fontSize: 14, bold: true },
-        { key: 17, parent: 14, text: "[8] Naît de l'action commune", color: "#ffb74d", fontSize: 13 },
+        { key: 14, parent: 0, text: "Le pouvoir", dir: "left" },
+        { key: 15, parent: 14, text: "[8] N'est pas la violence" },
+        { key: 16, parent: 14, text: "[8] Mais la capacité d'agir de concert" },
+        { key: 17, parent: 14, text: "[8] Naît de l'action commune" },
         
         // Branche 5 : Espace public et liberté
-        { key: 18, parent: 0, text: "Espace public et liberté", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 19, parent: 18, text: "[9] Lieu où la parole et l'action révèlent qui nous sommes", color: "#ba68c8", fontSize: 14, bold: true },
-        { key: 20, parent: 18, text: "[10] L'homme fait l'expérience de la liberté dans l'action", color: "#ba68c8", fontSize: 14, bold: true },
-        { key: 21, parent: 18, text: "[10] La liberté est politique, elle se vit avec les autres", color: "#ba68c8", fontSize: 13 },
+        { key: 18, parent: 0, text: "Espace public et liberté", dir: "left" },
+        { key: 19, parent: 18, text: "[9] Lieu où la parole et l'action révèlent qui nous sommes" },
+        { key: 20, parent: 18, text: "[10] L'homme fait l'expérience de la liberté dans l'action" },
+        { key: 21, parent: 18, text: "[10] La liberté est politique, elle se vit avec les autres" },
     ],
-    links: [],
-    nextKey: 22
 };

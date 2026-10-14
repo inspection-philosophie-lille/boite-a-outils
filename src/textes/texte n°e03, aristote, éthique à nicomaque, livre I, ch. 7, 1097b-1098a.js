@@ -527,32 +527,30 @@ const questions = [
 
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "Le bonheur", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "Le bonheur" },
         
-        { key: 1, parent: 0, text: "Le bien suprême", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "[1] Le bonheur", color: "#e57373", fontSize: 14, bold: true },
-        { key: 3, parent: 1, text: "[1] De l'avis général", color: "#e57373", fontSize: 13 },
-        { key: 4, parent: 1, text: "[2] Accord sur le nom, pas sur la définition", color: "#e57373", fontSize: 13 },
+        { key: 1, parent: 0, text: "Le bien suprême" },
+        { key: 2, parent: 1, text: "[1] Le bonheur" },
+        { key: 3, parent: 1, text: "[1] De l'avis général" },
+        { key: 4, parent: 1, text: "[2] Accord sur le nom, pas sur la définition" },
         
-        { key: 5, parent: 0, text: "Définitions concurrentes", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 6, parent: 5, text: "[3] Le plaisir", color: "#81c784", fontSize: 14 },
-        { key: 7, parent: 5, text: "[3] Les honneurs", color: "#81c784", fontSize: 14 },
-        { key: 8, parent: 5, text: "[4] Ces biens sont recherchés pour autre chose", color: "#81c784", fontSize: 13 },
-        { key: 9, parent: 5, text: "[5-6] Le bonheur n'est jamais choisi en vue d'une autre fin", color: "#81c784", fontSize: 14, bold: true },
+        { key: 5, parent: 0, text: "Définitions concurrentes" },
+        { key: 6, parent: 5, text: "[3] Le plaisir" },
+        { key: 7, parent: 5, text: "[3] Les honneurs" },
+        { key: 8, parent: 5, text: "[4] Ces biens sont recherchés pour autre chose" },
+        { key: 9, parent: 5, text: "[5-6] Le bonheur n'est jamais choisi en vue d'une autre fin" },
         
-        { key: 10, parent: 0, text: "Fonction propre de l'homme", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 11, parent: 10, text: "[7] Définir le bonheur par la fonction propre", color: "#64b5f6", fontSize: 14 },
-        { key: 12, parent: 10, text: "[8] Tout être accomplit son bien en remplissant sa fonction", color: "#64b5f6", fontSize: 13 },
-        { key: 13, parent: 10, text: "[9] La fonction de l'homme = activité de l'âme selon la raison", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 10, parent: 0, text: "Fonction propre de l'homme", dir: "left" },
+        { key: 11, parent: 10, text: "[7] Définir le bonheur par la fonction propre" },
+        { key: 12, parent: 10, text: "[8] Tout être accomplit son bien en remplissant sa fonction" },
+        { key: 13, parent: 10, text: "[9] La fonction de l'homme = activité de l'âme selon la raison" },
         
-        { key: 14, parent: 0, text: "Définition du souverain bien", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 15, parent: 14, text: "[10] Une activité de l'âme conforme à la vertu", color: "#ffb74d", fontSize: 14, bold: true },
-        { key: 16, parent: 14, text: "[10] La vertu = excellence dans l'exercice de la fonction", color: "#ffb74d", fontSize: 13 },
+        { key: 14, parent: 0, text: "Définition du souverain bien", dir: "left" },
+        { key: 15, parent: 14, text: "[10] Une activité de l'âme conforme à la vertu" },
+        { key: 16, parent: 14, text: "[10] La vertu = excellence dans l'exercice de la fonction" },
         
-        { key: 17, parent: 0, text: "La félicité", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 18, parent: 17, text: "[11] La félicité réside dans une vie accomplie", color: "#ba68c8", fontSize: 14, bold: true },
-        { key: 19, parent: 17, text: "[11] Le bonheur est une activité, non un état passif", color: "#ba68c8", fontSize: 13 },
+        { key: 17, parent: 0, text: "La félicité", dir: "left" },
+        { key: 18, parent: 17, text: "[11] La félicité réside dans une vie accomplie" },
+        { key: 19, parent: 17, text: "[11] Le bonheur est une activité, non un état passif" },
     ],
-    links: [],
-    nextKey: 20
 };

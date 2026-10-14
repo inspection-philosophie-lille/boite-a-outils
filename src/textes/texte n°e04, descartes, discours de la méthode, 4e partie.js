@@ -527,33 +527,31 @@ const questions = [
 
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "Le cogito", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "Le cogito" },
         
-        { key: 1, parent: 0, text: "Le doute", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "[1] Penser que tout était faux", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "[1] Il fallait nécessairement que moi, qui le pensais, fusse quelque chose", color: "#e57373", fontSize: 13, bold: true },
+        { key: 1, parent: 0, text: "Le doute" },
+        { key: 2, parent: 1, text: "[1] Penser que tout était faux" },
+        { key: 3, parent: 1, text: "[1] Il fallait nécessairement que moi, qui le pensais, fusse quelque chose" },
         
-        { key: 4, parent: 0, text: "Le cogito", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 5, parent: 4, text: "[2] « Je pense, donc je suis »", color: "#81c784", fontSize: 14, bold: true, italic: true },
-        { key: 6, parent: 4, text: "[2] Vérité si ferme et si assurée", color: "#81c784", fontSize: 14 },
-        { key: 7, parent: 4, text: "[2] Premier principe de la philosophie", color: "#81c784", fontSize: 14 },
-        { key: 8, parent: 4, text: "[2] Résiste au doute hyperbolique", color: "#81c784", fontSize: 13 },
+        { key: 4, parent: 0, text: "Le cogito" },
+        { key: 5, parent: 4, text: "[2] « Je pense, donc je suis »" },
+        { key: 6, parent: 4, text: "[2] Vérité si ferme et si assurée" },
+        { key: 7, parent: 4, text: "[2] Premier principe de la philosophie" },
+        { key: 8, parent: 4, text: "[2] Résiste au doute hyperbolique" },
         
-        { key: 9, parent: 0, text: "Le moi comme substance pensante", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 10, parent: 9, text: "[3] Je pouvais feindre que je n'avais aucun corps", color: "#64b5f6", fontSize: 14 },
-        { key: 11, parent: 9, text: "[3] Qu'il n'y avait aucun monde ni aucun lieu", color: "#64b5f6", fontSize: 13 },
-        { key: 12, parent: 9, text: "[3] Mais je ne pouvais pas feindre que je n'étais point", color: "#64b5f6", fontSize: 14, bold: true },
-        { key: 13, parent: 9, text: "[6] Je suis une substance dont l'essence est de penser", color: "#64b5f6", fontSize: 14, bold: true },
+        { key: 9, parent: 0, text: "Le moi comme substance pensante", dir: "left" },
+        { key: 10, parent: 9, text: "[3] Je pouvais feindre que je n'avais aucun corps" },
+        { key: 11, parent: 9, text: "[3] Qu'il n'y avait aucun monde ni aucun lieu" },
+        { key: 12, parent: 9, text: "[3] Mais je ne pouvais pas feindre que je n'étais point" },
+        { key: 13, parent: 9, text: "[6] Je suis une substance dont l'essence est de penser" },
         
-        { key: 14, parent: 0, text: "La pensée comme essence", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 15, parent: 14, text: "[5] Si j'eusse cessé de penser, je n'avais aucune raison de croire que j'eusse été", color: "#ffb74d", fontSize: 13 },
-        { key: 16, parent: 14, text: "[6] La pensée est l'attribut essentiel du moi", color: "#ffb74d", fontSize: 14 },
+        { key: 14, parent: 0, text: "La pensée comme essence", dir: "left" },
+        { key: 15, parent: 14, text: "[5] Si j'eusse cessé de penser, je n'avais aucune raison de croire que j'eusse été" },
+        { key: 16, parent: 14, text: "[6] La pensée est l'attribut essentiel du moi" },
         
-        { key: 17, parent: 0, text: "Distinction âme/corps", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 18, parent: 17, text: "[7] Le moi (l'âme) est entièrement distinct du corps", color: "#ba68c8", fontSize: 14, bold: true },
-        { key: 19, parent: 17, text: "[7] Dualisme cartésien", color: "#ba68c8", fontSize: 13 },
-        { key: 20, parent: 17, text: "[7] L'âme peut exister sans le corps", color: "#ba68c8", fontSize: 13 },
+        { key: 17, parent: 0, text: "Distinction âme/corps", dir: "left" },
+        { key: 18, parent: 17, text: "[7] Le moi (l'âme) est entièrement distinct du corps" },
+        { key: 19, parent: 17, text: "[7] Dualisme cartésien" },
+        { key: 20, parent: 17, text: "[7] L'âme peut exister sans le corps" },
     ],
-    links: [],
-    nextKey: 21
 };

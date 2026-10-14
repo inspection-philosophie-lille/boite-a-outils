@@ -527,39 +527,37 @@ const questions = [
 
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "L'existentialisme", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "L'existentialisme" },
         
         // Branche 1 : Condamné à être libre
-        { key: 1, parent: 0, text: "Condamnation à la liberté", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "[1] L'homme est condamné à être libre", color: "#e57373", fontSize: 14, bold: true },
-        { key: 3, parent: 1, text: "[2] Condamné : il ne s'est pas créé lui-même", color: "#e57373", fontSize: 13 },
-        { key: 4, parent: 1, text: "[2] Libre : il est responsable de tout ce qu'il fait", color: "#e57373", fontSize: 13 },
+        { key: 1, parent: 0, text: "Condamnation à la liberté" },
+        { key: 2, parent: 1, text: "[1] L'homme est condamné à être libre" },
+        { key: 3, parent: 1, text: "[2] Condamné : il ne s'est pas créé lui-même" },
+        { key: 4, parent: 1, text: "[2] Libre : il est responsable de tout ce qu'il fait" },
         
         // Branche 2 : Existence précède essence
-        { key: 5, parent: 0, text: "Existence précède essence", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 6, parent: 5, text: "[4] L'homme existe d'abord", color: "#81c784", fontSize: 14 },
-        { key: 7, parent: 5, text: "[4] Se rencontre, surgit dans le monde", color: "#81c784", fontSize: 13 },
-        { key: 8, parent: 5, text: "[4] Et se définit après", color: "#81c784", fontSize: 14 },
-        { key: 9, parent: 5, text: "[5] Il n'y a pas de nature humaine préétablie", color: "#81c784", fontSize: 13, bold: true },
+        { key: 5, parent: 0, text: "Existence précède essence" },
+        { key: 6, parent: 5, text: "[4] L'homme existe d'abord" },
+        { key: 7, parent: 5, text: "[4] Se rencontre, surgit dans le monde" },
+        { key: 8, parent: 5, text: "[4] Et se définit après" },
+        { key: 9, parent: 5, text: "[5] Il n'y a pas de nature humaine préétablie" },
         
         // Branche 3 : L'homme est ce qu'il se fait
-        { key: 10, parent: 0, text: "L'homme est ce qu'il se fait", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 11, parent: 10, text: "[6] L'homme est ce qu'il se fait", color: "#64b5f6", fontSize: 14, bold: true },
-        { key: 12, parent: 10, text: "[6] Responsable de son existence", color: "#64b5f6", fontSize: 13 },
-        { key: 13, parent: 10, text: "[7] Cela ne signifie pas qu'il est n'importe quoi", color: "#64b5f6", fontSize: 13 },
+        { key: 10, parent: 0, text: "L'homme est ce qu'il se fait", dir: "left" },
+        { key: 11, parent: 10, text: "[6] L'homme est ce qu'il se fait" },
+        { key: 12, parent: 10, text: "[6] Responsable de son existence" },
+        { key: 13, parent: 10, text: "[7] Cela ne signifie pas qu'il est n'importe quoi" },
         
         // Branche 4 : Responsabilité universelle
-        { key: 14, parent: 0, text: "Responsabilité universelle", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 15, parent: 14, text: "[8] En se choisissant, il choisit tous les hommes", color: "#ffb74d", fontSize: 14, bold: true },
-        { key: 16, parent: 14, text: "[9] La responsabilité engage l'humanité entière", color: "#ffb74d", fontSize: 13 },
-        { key: 17, parent: 14, text: "[10] L'angoisse est le sentiment de cette responsabilité", color: "#ffb74d", fontSize: 14 },
+        { key: 14, parent: 0, text: "Responsabilité universelle", dir: "left" },
+        { key: 15, parent: 14, text: "[8] En se choisissant, il choisit tous les hommes" },
+        { key: 16, parent: 14, text: "[9] La responsabilité engage l'humanité entière" },
+        { key: 17, parent: 14, text: "[10] L'angoisse est le sentiment de cette responsabilité" },
         
         // Branche 5 : L'homme comme projet
-        { key: 18, parent: 0, text: "L'homme comme projet", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 19, parent: 18, text: "[11] L'homme est un projet qui se vit subjectivement", color: "#ba68c8", fontSize: 14, bold: true },
-        { key: 20, parent: 18, text: "[11] Il se projette vers l'avenir", color: "#ba68c8", fontSize: 13 },
-        { key: 21, parent: 18, text: "[11] Il est un être de possibles", color: "#ba68c8", fontSize: 13 },
+        { key: 18, parent: 0, text: "L'homme comme projet", dir: "left" },
+        { key: 19, parent: 18, text: "[11] L'homme est un projet qui se vit subjectivement" },
+        { key: 20, parent: 18, text: "[11] Il se projette vers l'avenir" },
+        { key: 21, parent: 18, text: "[11] Il est un être de possibles" },
     ],
-    links: [],
-    nextKey: 22
 };

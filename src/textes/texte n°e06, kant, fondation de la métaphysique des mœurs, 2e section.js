@@ -527,39 +527,37 @@ const questions = [
 
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "L'impératif catégorique", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "L'impératif catégorique" },
         
         // Branche 1 : L'impératif catégorique
-        { key: 1, parent: 0, text: "L'impératif catégorique", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "[1] Unique", color: "#e57373", fontSize: 14, bold: true },
-        { key: 3, parent: 1, text: "[1] Définition", color: "#e57373", fontSize: 13 },
-        { key: 5, parent: 1, text: "[2] Tous les impératifs du devoir en dérivent", color: "#e57373", fontSize: 13 },
-        { key: 6, parent: 1, text: "[3] Il reste problématique de savoir si un tel impératif existe absolument", color: "#e57373", fontSize: 13 },
+        { key: 1, parent: 0, text: "L'impératif catégorique" },
+        { key: 2, parent: 1, text: "[1] Unique" },
+        { key: 3, parent: 1, text: "[1] Définition" },
+        { key: 5, parent: 1, text: "[2] Tous les impératifs du devoir en dérivent" },
+        { key: 6, parent: 1, text: "[3] Il reste problématique de savoir si un tel impératif existe absolument" },
         
         // Branche 2 : La volonté rationnelle
-        { key: 7, parent: 0, text: "La volonté rationnelle", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 8, parent: 7, text: "[4] L'impératif s'impose à toute volonté rationnelle", color: "#81c784", fontSize: 14 },
-        { key: 9, parent: 7, text: "[5] L'être raisonnable se conçoit comme législateur universel", color: "#81c784", fontSize: 14, bold: true },
-        { key: 10, parent: 7, text: "[5] Autonomie de la volonté", color: "#81c784", fontSize: 13 },
+        { key: 7, parent: 0, text: "La volonté rationnelle" },
+        { key: 8, parent: 7, text: "[4] L'impératif s'impose à toute volonté rationnelle" },
+        { key: 9, parent: 7, text: "[5] L'être raisonnable se conçoit comme législateur universel" },
+        { key: 10, parent: 7, text: "[5] Autonomie de la volonté" },
         
         // Branche 3 : La valeur des maximes
-        { key: 11, parent: 0, text: "La valeur des maximes", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 12, parent: 11, text: "[6] Ne réside pas dans les effets attendus", color: "#64b5f6", fontSize: 14 },
-        { key: 13, parent: 11, text: "[6] Mais dans le principe du vouloir", color: "#64b5f6", fontSize: 14, bold: true },
-        { key: 14, parent: 11, text: "[7] La moralité dépend de l'intention", color: "#64b5f6", fontSize: 13 },
+        { key: 11, parent: 0, text: "La valeur des maximes", dir: "left" },
+        { key: 12, parent: 11, text: "[6] Ne réside pas dans les effets attendus" },
+        { key: 13, parent: 11, text: "[6] Mais dans le principe du vouloir" },
+        { key: 14, parent: 11, text: "[7] La moralité dépend de l'intention" },
         
         // Branche 4 : La bonne volonté
-        { key: 15, parent: 0, text: "La bonne volonté", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 16, parent: 15, text: "[8] Bonne non pas par ce qu'elle effectue", color: "#ffb74d", fontSize: 14 },
-        { key: 17, parent: 15, text: "[8] Mais par son seul vouloir", color: "#ffb74d", fontSize: 14, bold: true },
-        { key: 18, parent: 15, text: "[8] La moralité réside dans l'intention", color: "#ffb74d", fontSize: 13 },
+        { key: 15, parent: 0, text: "La bonne volonté", dir: "left" },
+        { key: 16, parent: 15, text: "[8] Bonne non pas par ce qu'elle effectue" },
+        { key: 17, parent: 15, text: "[8] Mais par son seul vouloir" },
+        { key: 18, parent: 15, text: "[8] La moralité réside dans l'intention" },
         
         // Branche 5 : Synthèse
-        { key: 19, parent: 0, text: "[Synthèse] Éthique déontologique", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 20, parent: 19, text: "Impératif catégorique = loi universelle", color: "#ba68c8", fontSize: 14 },
-        { key: 21, parent: 19, text: "Autonomie de la volonté", color: "#ba68c8", fontSize: 14 },
-        { key: 22, parent: 19, text: "Moralité = intention, non résultat", color: "#ba68c8", fontSize: 13 },
+        { key: 19, parent: 0, text: "[Synthèse] Éthique déontologique", dir: "left" },
+        { key: 20, parent: 19, text: "Impératif catégorique = loi universelle" },
+        { key: 21, parent: 19, text: "Autonomie de la volonté" },
+        { key: 22, parent: 19, text: "Moralité = intention, non résultat" },
     ],
-    links: [],
-    nextKey: 23
 };

@@ -527,39 +527,37 @@ const questions = [
 
 const carte = {
     nodes: [
-        { key: 0, parent: null, text: "Intelligence et intuition", color: "#fff8b0", dir: "right", bold: true, fontSize: 18, x: 0, y: 0 },
+        { key: 0, parent: null, text: "Intelligence et intuition" },
         
         // Branche 1 : Intelligence et instinct
-        { key: 1, parent: 0, text: "Intelligence et instinct", color: "#e57373", dir: "right", bold: true, fontSize: 16 },
-        { key: 2, parent: 1, text: "[1] Deux directions divergentes de l'évolution", color: "#e57373", fontSize: 14 },
-        { key: 3, parent: 1, text: "[2] L'intelligence est tournée vers la matière inerte", color: "#e57373", fontSize: 13 },
-        { key: 4, parent: 1, text: "[2] L'instinct est en affinité avec la vie", color: "#e57373", fontSize: 13 },
+        { key: 1, parent: 0, text: "Intelligence et instinct" },
+        { key: 2, parent: 1, text: "[1] Deux directions divergentes de l'évolution" },
+        { key: 3, parent: 1, text: "[2] L'intelligence est tournée vers la matière inerte" },
+        { key: 4, parent: 1, text: "[2] L'instinct est en affinité avec la vie" },
         
         // Branche 2 : Limites de l'intelligence
-        { key: 5, parent: 0, text: "Limites de l'intelligence", color: "#81c784", dir: "right", bold: true, fontSize: 16 },
-        { key: 6, parent: 5, text: "[3] Ne comprend pas la vie", color: "#81c784", fontSize: 14, bold: true },
-        { key: 7, parent: 5, text: "[4] Applique à ce qui est mouvant des formes fixes", color: "#81c784", fontSize: 13 },
-        { key: 8, parent: 5, text: "[5] Analyse le devenir mais ne saisit pas la durée réelle", color: "#81c784", fontSize: 13 },
-        { key: 9, parent: 5, text: "[6] Découpe le temps en instants identiques", color: "#81c784", fontSize: 13 },
+        { key: 5, parent: 0, text: "Limites de l'intelligence" },
+        { key: 6, parent: 5, text: "[3] Ne comprend pas la vie" },
+        { key: 7, parent: 5, text: "[4] Applique à ce qui est mouvant des formes fixes" },
+        { key: 8, parent: 5, text: "[5] Analyse le devenir mais ne saisit pas la durée réelle" },
+        { key: 9, parent: 5, text: "[6] Découpe le temps en instants identiques" },
         
         // Branche 3 : La durée
-        { key: 10, parent: 0, text: "La durée", color: "#64b5f6", dir: "left", bold: true, fontSize: 16 },
-        { key: 11, parent: 10, text: "[6] Hétérogène et créatrice", color: "#64b5f6", fontSize: 14, bold: true },
-        { key: 12, parent: 10, text: "[8] Mouvement même de la réalité", color: "#64b5f6", fontSize: 13 },
-        { key: 13, parent: 10, text: "[9] Ne peut être saisie que par l'intuition", color: "#64b5f6", fontSize: 13 },
+        { key: 10, parent: 0, text: "La durée", dir: "left" },
+        { key: 11, parent: 10, text: "[6] Hétérogène et créatrice" },
+        { key: 12, parent: 10, text: "[8] Mouvement même de la réalité" },
+        { key: 13, parent: 10, text: "[9] Ne peut être saisie que par l'intuition" },
         
         // Branche 4 : L'intuition
-        { key: 14, parent: 0, text: "L'intuition", color: "#ffb74d", dir: "left", bold: true, fontSize: 16 },
-        { key: 15, parent: 14, text: "[9] L'instinct devenu désintéressé", color: "#ffb74d", fontSize: 14, bold: true },
-        { key: 16, parent: 14, text: "[8] Permet de coïncider avec le mouvement de la réalité", color: "#ffb74d", fontSize: 13 },
-        { key: 17, parent: 14, text: "[7] Est la méthode de la philosophie", color: "#ffb74d", fontSize: 13 },
+        { key: 14, parent: 0, text: "L'intuition", dir: "left" },
+        { key: 15, parent: 14, text: "[9] L'instinct devenu désintéressé" },
+        { key: 16, parent: 14, text: "[8] Permet de coïncider avec le mouvement de la réalité" },
+        { key: 17, parent: 14, text: "[7] Est la méthode de la philosophie" },
         
         // Branche 5 : La métaphysique
-        { key: 18, parent: 0, text: "La métaphysique", color: "#ba68c8", dir: "left", bold: true, fontSize: 16 },
-        { key: 19, parent: 18, text: "[10] Expérience vécue de la durée", color: "#ba68c8", fontSize: 14, bold: true },
-        { key: 20, parent: 18, text: "[11] Comprendre la vie exige de se placer en elle", color: "#ba68c8", fontSize: 13 },
-        { key: 21, parent: 18, text: "[11] Et non de l'observer du dehors", color: "#ba68c8", fontSize: 13 },
+        { key: 18, parent: 0, text: "La métaphysique", dir: "left" },
+        { key: 19, parent: 18, text: "[10] Expérience vécue de la durée" },
+        { key: 20, parent: 18, text: "[11] Comprendre la vie exige de se placer en elle" },
+        { key: 21, parent: 18, text: "[11] Et non de l'observer du dehors" },
     ],
-    links: [],
-    nextKey: 22
 };
