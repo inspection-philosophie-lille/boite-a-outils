@@ -37,34 +37,34 @@
 			--toast-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
 		}
 
-		body.dark-mode {
-			--bg: #121212;
-			--bg-light: #121212;
-			--text-light: #f5f5f5;
-			--btn: #3d3d3d;
-			--btn-bg: #3d3d3d;
-			--font-color: #ffffff;
-			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.05);
-			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
-			--tooltip-bg: #1a1a1a;
-			--tooltip-color: #ffffff;
-			--switch-bg: rgba(255, 255, 255, 0.15);
-			--switch-border: #4a4a4a;
-			--switch-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.6), 1px 1px 1px rgba(80, 80, 80, 0.4);
-			--switch-slider-bg: #000000;
-			--switch-slider-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
-			--switch-text-active: #ffffff;
-			--switch-text-inactive: #ffffff;
-			--progress-bg: rgba(255, 255, 255, 0.1);
-			--progress-fill: #ff0000;
-			--badge-bg: #ff6b6b;
-			--badge-color: #ffffff;
-			--toast-bg: #3d3d3d;
-			--toast-color: #e0e0e0;
-			--toast-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
-			background: #121212;
-			color: #ffffff;
-		}
+body.dark-mode {
+    --bg: #121212;
+    --bg-light: #121212;
+    --text-light: #f5f5f5;
+    --btn: #3d3d3d;
+    --btn-bg: #3d3d3d;
+    --font-color: #ffffff;
+    --shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.05);
+    --shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
+    --tooltip-bg: #1a1a1a;
+    --tooltip-color: #ffffff;
+    --switch-bg: rgba(255, 255, 255, 0.3);
+    --switch-border: #4a4a4a;
+    --switch-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.6), 1px 1px 1px rgba(80, 80, 80, 0.4);
+    --switch-slider-bg: #121212;
+    --switch-slider-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 1px 1px 5px rgba(0, 0, 0, 0.8);
+    --switch-text-active: #ffffff;
+    --switch-text-inactive: #ffffff;
+    --progress-bg: rgba(255, 255, 255, 0.1);
+    --progress-fill: #ff0000;
+    --badge-bg: #ff6b6b;
+    --badge-color: #ffffff;
+    --toast-bg: #3d3d3d;
+    --toast-color: #e0e0e0;
+    --toast-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+    background: #121212;
+    color: #ffffff;
+}
 
 		body.dark-mode .toolbar-subtitle,
 		body.dark-mode .mobile-subtitle {
@@ -876,6 +876,18 @@
 			color: var(--switch-text-inactive);
 		}
 
+		body.dark-mode .switch-button-checkbox:checked + .switch-button-label .label-essai,
+		body.dark-mode .switch-button-checkbox:not(:checked) + .switch-button-label .label-interpretation {
+			color: var(--switch-text-active);
+			font-weight: 700;
+		}
+
+		body.dark-mode .switch-button-checkbox:checked + .switch-button-label .label-interpretation,
+		body.dark-mode .switch-button-checkbox:not(:checked) + .switch-button-label .label-essai {
+			color: var(--switch-text-inactive);
+			font-weight: 400;
+		}
+
 		.progress-footer {
 			display: flex;
 			justify-content: center;
@@ -1610,6 +1622,33 @@
 		.about-text a:hover {
 			border-bottom: 2px solid var(--font-color);
 		}
+
+		/* ===== TOAST MOBILE : RECOUVRE LA VIGNETTE DU CARROUSEL ===== */
+		@media screen and (max-width: 767px) {
+			.toast {
+				height: 100%;
+				max-height: none;
+				padding: 1.4rem 1rem 0.85rem;
+				font-size: 0.78rem;
+				line-height: 1.4;
+				border-radius: 12px;
+				transform: translateY(20px);
+				opacity: 0;
+				transition: transform 0.35s ease, opacity 0.3s ease;
+			}
+			.toast.show {
+				transform: translateY(0);
+				opacity: 1;
+			}
+			.toast.hide {
+				transform: translateY(20px);
+				opacity: 0;
+			}
+			.toast li {
+				font-size: 0.73rem;
+				margin-bottom: 0.12rem;
+			}
+		}
 	</style>
 </head>
 
@@ -2088,7 +2127,6 @@
 							'Pertinence, cohérence, justification de la réponse apportée ;',
 							'Expression claire et correcte.'
 						]
-	
 					},
 					{
 						subtitle: 'Ce qui est valorisé',
@@ -2143,6 +2181,8 @@
 			});
 			toastContent.innerHTML = html;
 
+			positionToastOnMobile();
+
 			toast.classList.remove('show', 'hide');
 			void toast.offsetWidth;
 			toast.classList.add('show');
@@ -2181,6 +2221,65 @@
 				showToast(this.checked ? 'interpretation' : 'essai');
 			}
 		});
+
+		/* ===== POSITIONNEMENT DU TOAST SUR MOBILE (recouvre la vignette) ===== */
+		function positionToastOnMobile() {
+			const container = document.querySelector('.toast-container');
+			const toastEl = document.querySelector('.toast');
+			if (!container || !toastEl) return;
+
+			// Desktop : on réinitialise tout ce que le mobile a pu poser
+			if (window.innerWidth >= 768) {
+				container.style.top = '';
+				container.style.left = '';
+				container.style.right = '';
+				container.style.bottom = '';
+				container.style.width = '';
+				container.style.maxWidth = '';
+				container.style.transform = '';
+				toastEl.style.height = '';
+				toastEl.style.maxHeight = '';
+				return;
+			}
+
+			// Mobile : on cible la carte visible du carrousel actif
+			const activeOnglet = document.querySelector('.onglet.active');
+			const carousel = activeOnglet
+				? document.getElementById(activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2')
+				: null;
+			const card = carousel ? carousel.querySelector('.carousel-item .card') : null;
+
+			let top, left, right, bottom;
+
+			if (card) {
+				const rect = card.getBoundingClientRect();
+				top = rect.top;
+				left = rect.left;
+				right = window.innerWidth - rect.right;
+				bottom = window.innerHeight - rect.bottom;
+			} else {
+				// Fallback si la carte n'est pas trouvée
+				const toolbar = document.querySelector('.toolbar');
+				const header = document.querySelector('header');
+				const progressFooter = document.querySelector('.progress-footer');
+				top = (toolbar ? toolbar.offsetHeight : 160) + (header ? header.offsetHeight : 70) + 10;
+				left = 10;
+				right = 10;
+				bottom = (progressFooter ? progressFooter.offsetHeight : 20) + 30;
+			}
+
+			container.style.position = 'fixed';
+			container.style.top = top + 'px';
+			container.style.left = left + 'px';
+			container.style.right = right + 'px';
+			container.style.bottom = bottom + 'px';
+			container.style.width = 'auto';
+			container.style.maxWidth = 'none';
+			container.style.transform = 'none';
+
+			toastEl.style.height = '100%';
+			toastEl.style.maxHeight = 'none';
+		}
 
 		function adjustCardHeights() {
 			const carousels = ['carousel-1', 'carousel-2'];
@@ -2356,6 +2455,7 @@
 			darkModeToggle.addEventListener('change', function(e) {
 				body.classList.toggle('dark-mode', e.target.checked);
 				localStorage.setItem('darkMode', e.target.checked);
+				positionToastOnMobile();
 			});
 		}
 
@@ -2404,6 +2504,7 @@
 				}
 			});
 			setTimeout(adjustCardHeights, 100);
+			positionToastOnMobile();
 		});
 
 		if (reloadBtn) {
@@ -2426,6 +2527,7 @@
 			
 			rearrangeToolbarForScreen();
 			adjustCardHeights();
+			positionToastOnMobile();
 			
 			const activeOnglet = document.querySelector('.onglet.active');
 			if (activeOnglet) {
@@ -2448,6 +2550,7 @@
 		window.addEventListener('resize', () => {
 			rearrangeToolbarForScreen();
 			adjustCardHeights();
+			positionToastOnMobile();
 			updateButtonsVisibilityForActiveCarousel();
 			updateProgress();
 		});
@@ -2470,6 +2573,7 @@
 				updateButtonsVisibilityForActiveCarousel();
 				updateProgress();
 				adjustCardHeights();
+				positionToastOnMobile();
 				
 				const activeOnglet = document.querySelector('.onglet.active');
 				if (activeOnglet) {
