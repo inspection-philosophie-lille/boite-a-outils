@@ -37,34 +37,34 @@
 			--toast-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
 		}
 
-body.dark-mode {
-    --bg: #121212;
-    --bg-light: #121212;
-    --text-light: #f5f5f5;
-    --btn: #3d3d3d;
-    --btn-bg: #3d3d3d;
-    --font-color: #ffffff;
-    --shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.05);
-    --shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
-    --tooltip-bg: #1a1a1a;
-    --tooltip-color: #ffffff;
-    --switch-bg: rgba(255, 255, 255, 0.3);
-    --switch-border: #4a4a4a;
-    --switch-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.6), 1px 1px 1px rgba(80, 80, 80, 0.4);
-    --switch-slider-bg: #121212;
-    --switch-slider-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 1px 1px 5px rgba(0, 0, 0, 0.8);
-    --switch-text-active: #ffffff;
-    --switch-text-inactive: #ffffff;
-    --progress-bg: rgba(255, 255, 255, 0.1);
-    --progress-fill: #ff0000;
-    --badge-bg: #ff6b6b;
-    --badge-color: #ffffff;
-    --toast-bg: #3d3d3d;
-    --toast-color: #e0e0e0;
-    --toast-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
-    background: #121212;
-    color: #ffffff;
-}
+		body.dark-mode {
+			--bg: #121212;
+			--bg-light: #121212;
+			--text-light: #f5f5f5;
+			--btn: #3d3d3d;
+			--btn-bg: #3d3d3d;
+			--font-color: #ffffff;
+			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.05);
+			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
+			--tooltip-bg: #1a1a1a;
+			--tooltip-color: #ffffff;
+			--switch-bg: rgba(255, 255, 255, 0.3);
+			--switch-border: #4a4a4a;
+			--switch-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.6), 1px 1px 1px rgba(80, 80, 80, 0.4);
+			--switch-slider-bg: #121212;
+			--switch-slider-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 1px 1px 5px rgba(0, 0, 0, 0.8);
+			--switch-text-active: #ffffff;
+			--switch-text-inactive: #ffffff;
+			--progress-bg: rgba(255, 255, 255, 0.1);
+			--progress-fill: #ff0000;
+			--badge-bg: #ff6b6b;
+			--badge-color: #ffffff;
+			--toast-bg: #3d3d3d;
+			--toast-color: #e0e0e0;
+			--toast-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+			background: #121212;
+			color: #ffffff;
+		}
 
 		body.dark-mode .toolbar-subtitle,
 		body.dark-mode .mobile-subtitle {
@@ -74,6 +74,112 @@ body.dark-mode {
 		body.dark-mode .modal h2,
 		body.dark-mode .submenu-title {
 			color: #ff0000;
+		}
+
+		/* ===== MODE DALTONIEN ===== */
+		body.daltonien-mode {
+			--primary: #0077be !important;
+			--primary-color: #2c7be5 !important;
+			--progress-fill: #0077be !important;
+			--badge-bg: #2c7be5 !important;
+			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.15), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.8);
+			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.15), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.8);
+			--switch-border: #2a7fa8;
+			--switch-shadow: inset 1px 1px 2px rgba(0, 50, 80, 0.4), 1px 1px 1px rgba(180, 220, 255, 0.6);
+		}
+
+		body.daltonien-mode.dark-mode {
+			--primary: #5bb8f5 !important;
+			--primary-color: #4a90d9 !important;
+			--progress-fill: #5bb8f5 !important;
+			--badge-bg: #4a90d9 !important;
+			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.4), -0.3rem -0.3rem 0.6rem rgba(40, 60, 80, 0.5);
+			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.4), inset -0.2rem -0.2rem 0.4rem rgba(40, 60, 80, 0.5);
+			--switch-border: #4a8aaa;
+		}
+
+		body.daltonien-mode .submenu-title,
+		body.daltonien-mode .card-title,
+		body.daltonien-mode .toolbar h1 {
+			color: #0077be !important;
+		}
+
+		body.daltonien-mode.dark-mode .submenu-title,
+		body.daltonien-mode.dark-mode .card-title,
+		body.daltonien-mode.dark-mode .toolbar h1 {
+			color: #5bb8f5 !important;
+		}
+
+		body.daltonien-mode .toast .toast-title,
+		body.daltonien-mode .card-content strong {
+			color: #0077be !important;
+		}
+
+		body.daltonien-mode.dark-mode .toast .toast-title,
+		body.daltonien-mode.dark-mode .card-content strong {
+			color: #5bb8f5 !important;
+		}
+
+		body.daltonien-mode .toast {
+			border-left-color: #0077be;
+		}
+
+		body.daltonien-mode.dark-mode .toast {
+			border-left-color: #5bb8f5;
+		}
+
+		/* ===== MODE ANIMATION DÉSACTIVÉE ===== */
+		body.animation-off *,
+		body.animation-off *::before,
+		body.animation-off *::after {
+			animation-duration: 0s !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0s !important;
+			transition-delay: 0s !important;
+			scroll-behavior: auto !important;
+		}
+
+		body.animation-off .btn:hover,
+		body.animation-off .btn:active,
+		body.animation-off .info-btn:hover,
+		body.animation-off .info-btn:active,
+		body.animation-off .menu-item:hover,
+		body.animation-off .menu-close:hover,
+		body.animation-off .submenu-close:hover,
+		body.animation-off .modal-close:hover,
+		body.animation-off .carousel-nav-btn:hover {
+			transform: none !important;
+		}
+
+		body.animation-off .home-btn .icon-wrapper,
+		body.animation-off .home-btn:hover .icon-wrapper,
+		body.animation-off .menu-btn:hover .menu-icon,
+		body.animation-off .btn:hover svg,
+		body.animation-off .info-btn:hover svg,
+		body.animation-off .menu-item:hover svg,
+		body.animation-off .submenu .toggle-container:hover .toggle-icon,
+		body.animation-off .about-item:hover .about-icon,
+		body.animation-off .carousel-nav-btn:hover svg {
+			animation: none !important;
+			transform: none !important;
+		}
+
+		body.animation-off .theme-switch .slider,
+		body.animation-off .theme-switch .slider:before,
+		body.animation-off .switch-button-label:before {
+			transition: none !important;
+		}
+		body.animation-off .theme-switch input:checked + .slider:before {
+			transform: translateX(24px) !important;
+		}
+		body.animation-off .submenu .theme-switch input:checked + .slider:before {
+			transform: translateX(20px) !important;
+		}
+		body.animation-off .switch-button-checkbox:checked + .switch-button-label:before {
+			transform: translateX(100%) !important;
+		}
+		body.animation-off .switch-button-checkbox:not(:checked) + .switch-button-label:before {
+			transform: translateX(0) !important;
 		}
 
 		body,
@@ -524,19 +630,19 @@ body.dark-mode {
 			padding: 2rem 1.5rem;
 			overflow-y: auto;
 		}
-		
+
 		.submenu.active {
 			right: 0;
 			padding-left: 17px;
 			padding-right: 16px;
 		}
-		
+
 		.submenu .menu-header {
 			display: flex;
 			justify-content: flex-end;
 			margin-bottom: 0;
 		}
-		
+
 		@media (max-width: 768px) {
 			.submenu {
 				width: 85%;
@@ -550,7 +656,7 @@ body.dark-mode {
 				padding-right: 16px;
 			}
 		}
-		
+
 		.submenu-title {
 			font-size: 1.4rem;
 			font-weight: bold;
@@ -560,19 +666,19 @@ body.dark-mode {
 			text-transform: lowercase;
 			letter-spacing: 0.3px;
 		}
-		
+
 		.submenu table {
 			width: 100%;
 			color: var(--font-color);
 			margin-bottom: 1rem;
 			border-collapse: collapse;
 		}
-		
+
 		.submenu td {
 			padding: 6px 7px;
 			font-size: 12px;
 		}
-		
+
 		.submenu kbd {
 			display: inline-block;
 			padding: 4px 8px;
@@ -586,30 +692,30 @@ body.dark-mode {
 			min-width: 20px;
 			text-align: center;
 		}
-		
+
 		body.dark-mode .submenu kbd {
 			background-color: #1a1a1a;
 			color: #e2e8f0;
 			border: 1px solid #333;
 		}
-		
+
 		.submenu ul {
 			list-style: none;
 			padding: 0;
 		}
-		
+
 		.submenu li {
 			padding: 4px 0;
 			font-size: 12px;
 			display: block;
 		}
-		
+
 		.submenu p {
 			margin-bottom: 0.5rem;
 			padding-left: 8px;
 			color: var(--font-color);
 		}
-		
+
 		.settings-info {
 			margin-top: 20px;
 			margin-right: 10px;
@@ -617,18 +723,22 @@ body.dark-mode {
 			background: rgba(0,0,0,0.05);
 			border-radius: 10px;
 		}
-		
+
 		.settings-info p {
 			margin: 0 0 10px 0;
 			font-size: 0.9em;
 		}
-		
+
 		.settings-info p:last-child {
 			margin-bottom: 0;
 		}
-		
+
 		body.dark-mode .submenu {
 			background: #121212;
+		}
+
+		body.dark-mode .settings-info {
+			background: rgba(255, 255, 255, 0.05);
 		}
 
 		.submenu-shortcuts-table {
@@ -642,16 +752,10 @@ body.dark-mode {
 			padding: 6px 7px;
 			font-size: 12px;
 			border: none !important;
-			border-bottom: none !important;
-			border-top: none !important;
-			border-left: none !important;
-			border-right: none !important;
 		}
 
 		.submenu-shortcuts-table tr {
 			border: none !important;
-			border-bottom: none !important;
-			border-top: none !important;
 		}
 
 		.submenu-shortcuts-table td:first-child {
@@ -888,6 +992,19 @@ body.dark-mode {
 			font-weight: 400;
 		}
 
+		/* ===== GESTION DU MODE SOMBRE FORCÉ PAR LE SYSTÈME (Option A) ===== */
+		@media (prefers-color-scheme: dark) {
+			html:not(.force-light) .switch-button {
+				--switch-bg: rgba(255, 255, 255, 0.3);
+				--switch-border: #4a4a4a;
+				--switch-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.6), 1px 1px 1px rgba(80, 80, 80, 0.4);
+				--switch-slider-bg: #121212;
+				--switch-slider-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 1px 1px 5px rgba(0, 0, 0, 0.8);
+				--switch-text-active: #ffffff;
+				--switch-text-inactive: #ffffff;
+			}
+		}
+
 		.progress-footer {
 			display: flex;
 			justify-content: center;
@@ -1091,21 +1208,21 @@ body.dark-mode {
 			.toast li {
 				font-size: 0.75rem;
 			}
-			
+
 			.card-content {
 				font-size: 0.8rem !important;
 			}
-			
+
 			.card p {
 				font-size: 10px !important;
 				margin: 0 0 0.2rem;
 			}
-			
+
 			.card-title {
 				font-size: 40px !important;
 				margin: 0.1rem 0;
 			}
-			
+
 			.card h2 {
 				font-size: 13px !important;
 				margin: 0 0 0.2rem 0;
@@ -1116,16 +1233,16 @@ body.dark-mode {
 			.card-content {
 				padding: 0.3rem 0.4rem;
 			}
-			
+
 			.card p {
 				font-size: 13px !important;
 				margin: 0 0 0.2rem;
 			}
-			
+
 			.card-title {
 				font-size: 40px !important;
 			}
-			
+
 			.card h2 {
 				font-size: 15px !important;
 			}
@@ -1449,11 +1566,11 @@ body.dark-mode {
 				gap: 8px;
 				min-width: 180px;
 			}
-			
+
 			.toolbar-left {
 				justify-content: flex-start;
 			}
-			
+
 			.toolbar-right {
 				justify-content: flex-end;
 			}
@@ -1465,7 +1582,7 @@ body.dark-mode {
 				flex: 0 0 320px;
 			}
 		}
-		
+
 		.submenu .toggle-container {
 			background-color: transparent;
 			box-shadow: none;
@@ -1509,7 +1626,7 @@ body.dark-mode {
 			line-height: 1;
 			min-height: 24px;
 		}
-		
+
 		.submenu .theme-switch {
 			position: relative;
 			display: inline-block;
@@ -1556,23 +1673,23 @@ body.dark-mode {
 		body.dark-mode .submenu .theme-switch input:checked+.slider {
 			background: #4a80c0;
 		}
-		
+
 		.submenu-content {
 			margin-top: 1rem;
 			color: var(--font-color);
 		}
-		
+
 		.submenu-content p {
 			margin-bottom: 0.8rem;
 			line-height: 1.4;
 		}
-		
+
 		.submenu-content ul {
 			list-style-type: disc;
 			padding-left: 1.2rem;
 			margin-bottom: 1rem;
 		}
-		
+
 		.submenu-content li {
 			margin-bottom: 0.5rem;
 			font-size: 13px;
@@ -1673,6 +1790,13 @@ body.dark-mode {
 					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
 				</svg>
 			</button>
+			<button class="info-btn" id="info-btn" data-title="ce qui est attendu / valorisé (V)">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"/>
+					<line x1="12" y1="16" x2="12" y2="12"/>
+					<line x1="12" y1="8" x2="12.01" y2="8"/>
+				</svg>
+			</button>
 			<button class="btn fullscreen" id="fullscreen-btn" data-title="plein écran (F)">
 				<svg class="fullscreen-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 					stroke-linecap="butt">
@@ -1721,7 +1845,7 @@ body.dark-mode {
 				</svg>
 				présentation
 			</button>
-			<button class="menu-item" id="openSettingsSub">	
+			<button class="menu-item" id="openSettingsSub">
 				<svg class="settings-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 					<circle cx="12" cy="12" r="3"></circle>
 					<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -1739,7 +1863,7 @@ body.dark-mode {
 					<line x1="14" y1="16" x2="18" y2="16"></line>
 				</svg>
 				raccourcis clavier
-			</button>	
+			</button>
 			<button class="menu-item" id="openAboutSub">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 					<circle cx="12" cy="12" r="10"></circle>
@@ -1783,7 +1907,7 @@ body.dark-mode {
 			</button>
 		</div>
 		<div class="submenu-title">paramètres</div>
-		
+
 		<div class="toggle-container">
 			<svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 				<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -1794,9 +1918,37 @@ body.dark-mode {
 				<span class="slider"></span>
 			</label>
 		</div>
-		
+
+		<div class="toggle-container">
+			<svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="13.5" cy="6.5" r="0.5" fill="currentColor"/>
+				<circle cx="17.5" cy="10.5" r="0.5" fill="currentColor"/>
+				<circle cx="8.5" cy="7.5" r="0.5" fill="currentColor"/>
+				<circle cx="6.5" cy="12.5" r="0.5" fill="currentColor"/>
+				<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+			</svg>
+			<span class="toggle-label">mode daltonien</span>
+			<label class="theme-switch">
+				<input type="checkbox" id="daltonienModeToggle">
+				<span class="slider"></span>
+			</label>
+		</div>
+
+		<div class="toggle-container">
+			<svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<polygon points="5 3 19 12 5 21 5 3"></polygon>
+			</svg>
+			<span class="toggle-label">mode animation</span>
+			<label class="theme-switch">
+				<input type="checkbox" id="animationModeToggle" checked>
+				<span class="slider"></span>
+			</label>
+		</div>
+
 		<div class="settings-info">
-			<p>Le mode sombre inverse les couleurs de l'interface pour afficher du texte clair sur un fond sombre, réduisant ainsi la fatigue oculaire dans les environnements peu éclairés et économisant la batterie sur les écrans OLED.</p>
+			<p><strong>mode sombre :</strong> inverse les couleurs de l'interface pour afficher du texte clair sur un fond sombre, réduisant ainsi la fatigue oculaire dans les environnements peu éclairés et économisant la batterie sur les écrans OLED.</p>
+			<p><strong>mode daltonien :</strong> adapte les couleurs (notamment le rouge) pour les personnes atteintes de deutéranopie et de protanopie.</p>
+			<p><strong>mode animation :</strong> désactive toutes les animations (SVG, transitions, défilement) pour éviter les distractions et les mouvements brusques.</p>
 		</div>
 	</div>
 
@@ -1810,7 +1962,7 @@ body.dark-mode {
 			</button>
 		</div>
 		<div class="submenu-title">raccourcis clavier</div>
-		
+
 		<table class="submenu-shortcuts-table">
 			<tr>
 				<td><kbd>ESC</kbd></td>
@@ -1827,6 +1979,14 @@ body.dark-mode {
 			<tr>
 				<td><kbd>V</kbd></td>
 				<td>afficher « ce qui est attendu / valorisé »</td>
+			</tr>
+			<tr>
+				<td><kbd>A</kbd></td>
+				<td>mode animation</td>
+			</tr>
+			<tr>
+				<td><kbd>C</kbd></td>
+				<td>mode daltonien</td>
 			</tr>
 			<tr>
 				<td><kbd>?</kbd></td>
@@ -1858,7 +2018,7 @@ body.dark-mode {
 					</svg>
 					<span class="about-text">développé par Daniel Boulagnon</span>
 				</div>
-				
+
 				<div class="about-item">
 					<svg class="about-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -1866,7 +2026,7 @@ body.dark-mode {
 					</svg>
 					<span class="about-text"><a href="mailto:daniel.boulagnon@ac-lille.fr">daniel.boulagnon@ac-lille.fr</a></span>
 				</div>
-				
+
 				<div class="about-item">
 					<svg class="about-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<circle cx="12" cy="12" r="10" />
@@ -1895,7 +2055,7 @@ body.dark-mode {
 			</label>
 		</div>
 	</header>
-	
+
 	<main>
 		<div class="div_onglets">
 			<!-- Onglet ESSAI -->
@@ -2121,7 +2281,7 @@ body.dark-mode {
 				title: 'Essai',
 				sections: [
 					{
-						subtitle: 'Ce qui est attendu',					
+						subtitle: 'Ce qui est attendu',
 						items: [
 							'Attention portée à la question posée, à ce qui la justifie, en général mais toujours aussi au regard du texte étudié ;',
 							'Pertinence, cohérence, justification de la réponse apportée ;',
@@ -2228,7 +2388,6 @@ body.dark-mode {
 			const toastEl = document.querySelector('.toast');
 			if (!container || !toastEl) return;
 
-			// Desktop : on réinitialise tout ce que le mobile a pu poser
 			if (window.innerWidth >= 768) {
 				container.style.top = '';
 				container.style.left = '';
@@ -2242,7 +2401,6 @@ body.dark-mode {
 				return;
 			}
 
-			// Mobile : on cible la carte visible du carrousel actif
 			const activeOnglet = document.querySelector('.onglet.active');
 			const carousel = activeOnglet
 				? document.getElementById(activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2')
@@ -2258,7 +2416,6 @@ body.dark-mode {
 				right = window.innerWidth - rect.right;
 				bottom = window.innerHeight - rect.bottom;
 			} else {
-				// Fallback si la carte n'est pas trouvée
 				const toolbar = document.querySelector('.toolbar');
 				const header = document.querySelector('header');
 				const progressFooter = document.querySelector('.progress-footer');
@@ -2284,25 +2441,25 @@ body.dark-mode {
 		function adjustCardHeights() {
 			const carousels = ['carousel-1', 'carousel-2'];
 			const bottomSpacing = 40;
-			
+
 			carousels.forEach(carouselId => {
 				const carousel = document.getElementById(carouselId);
 				if (!carousel) return;
-				
+
 				const cards = carousel.querySelectorAll('.card');
 				if (cards.length === 0) return;
-				
+
 				const viewportHeight = window.innerHeight;
 				const toolbar = document.querySelector('.toolbar');
 				const header = document.querySelector('header');
 				const progressFooter = document.querySelector('.progress-footer');
-				
+
 				const toolbarHeight = toolbar ? toolbar.offsetHeight : 80;
 				const headerHeight = header ? header.offsetHeight : 70;
 				const progressHeight = progressFooter ? progressFooter.offsetHeight : 20;
 				const fixedElementsHeight = toolbarHeight + headerHeight + progressHeight + bottomSpacing;
 				const availableHeight = viewportHeight - fixedElementsHeight;
-				
+
 				cards.forEach(card => {
 					card.style.height = availableHeight + 'px';
 					card.style.maxHeight = availableHeight + 'px';
@@ -2310,6 +2467,7 @@ body.dark-mode {
 			});
 		}
 
+		/* ===== RÉORGANISATION DE LA TOOLBAR : déplace les boutons existants ===== */
 		function rearrangeToolbarForScreen() {
 			const toolbarLeft = document.querySelector('.toolbar-left');
 			const toolbarRight = document.querySelector('.toolbar-right');
@@ -2317,18 +2475,11 @@ body.dark-mode {
 			const menuBtn = document.getElementById('menuButton');
 			const homeBtn = document.getElementById('home-btn');
 			const reloadBtn = document.getElementById('reload-btn');
+			const infoBtn = document.getElementById('info-btn');
 
-			if (!toolbarLeft || !toolbarRight || !fullscreenBtn || !menuBtn || !homeBtn || !reloadBtn) return;
+			if (!toolbarLeft || !toolbarRight || !fullscreenBtn || !menuBtn || !homeBtn || !reloadBtn || !infoBtn) return;
 
 			const windowWidth = window.innerWidth;
-
-			let infoBtnElement = document.querySelector('.info-btn');
-			if (!infoBtnElement) {
-				infoBtnElement = document.createElement('button');
-				infoBtnElement.className = 'info-btn';
-				infoBtnElement.setAttribute('data-title', 'ce qui est attendu / valorisé (V)');
-				infoBtnElement.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`;
-			}
 
 			toolbarLeft.innerHTML = '';
 			toolbarRight.innerHTML = '';
@@ -2336,17 +2487,17 @@ body.dark-mode {
 			if (windowWidth < 992) {
 				toolbarLeft.appendChild(homeBtn);
 				toolbarLeft.appendChild(reloadBtn);
-				toolbarLeft.appendChild(infoBtnElement);
+				toolbarLeft.appendChild(infoBtn);
 				toolbarLeft.appendChild(fullscreenBtn);
 				toolbarLeft.appendChild(menuBtn);
 			} else {
 				toolbarLeft.appendChild(homeBtn);
 				toolbarLeft.appendChild(reloadBtn);
-				toolbarRight.appendChild(infoBtnElement);
+				toolbarRight.appendChild(infoBtn);
 				toolbarRight.appendChild(fullscreenBtn);
 				toolbarRight.appendChild(menuBtn);
 			}
-			
+
 			setTimeout(adjustCardHeights, 50);
 		}
 
@@ -2363,6 +2514,8 @@ body.dark-mode {
 		const submenus = [subPresentation, subSettings, subShortcuts, subAbout];
 
 		const darkModeToggle = document.getElementById('darkModeToggle');
+		const daltonienModeToggle = document.getElementById('daltonienModeToggle');
+		const animationModeToggle = document.getElementById('animationModeToggle');
 
 		const switchInput = document.getElementById('switch');
 		const homeBtn = document.getElementById('home-btn');
@@ -2400,9 +2553,30 @@ body.dark-mode {
 			updateBlurState();
 		}
 
+		/* ===== MODE SOMBRE / DALTONIEN / ANIMATION : préférence explicite vs système ===== */
+		if (localStorage.getItem('darkMode') === 'false') {
+			document.documentElement.classList.add('force-light');
+		}
+		if (localStorage.getItem('daltonienMode') === 'false') {
+			document.documentElement.classList.add('force-no-daltonien');
+		}
+		if (localStorage.getItem('animationMode') === 'true') {
+			document.documentElement.classList.add('force-animations');
+		}
+
 		if (localStorage.getItem('darkMode') === 'true') {
 			body.classList.add('dark-mode');
 			if (darkModeToggle) darkModeToggle.checked = true;
+		}
+		if (localStorage.getItem('daltonienMode') === 'true') {
+			body.classList.add('daltonien-mode');
+			if (daltonienModeToggle) daltonienModeToggle.checked = true;
+		}
+		if (localStorage.getItem('animationMode') !== 'false' && animationModeToggle) {
+			animationModeToggle.checked = true;
+		} else if (animationModeToggle) {
+			animationModeToggle.checked = false;
+			body.classList.add('animation-off');
 		}
 
 		if (menuButton) {
@@ -2455,7 +2629,36 @@ body.dark-mode {
 			darkModeToggle.addEventListener('change', function(e) {
 				body.classList.toggle('dark-mode', e.target.checked);
 				localStorage.setItem('darkMode', e.target.checked);
+				if (!e.target.checked) {
+					document.documentElement.classList.add('force-light');
+				} else {
+					document.documentElement.classList.remove('force-light');
+				}
 				positionToastOnMobile();
+			});
+		}
+
+		if (daltonienModeToggle) {
+			daltonienModeToggle.addEventListener('change', function(e) {
+				body.classList.toggle('daltonien-mode', e.target.checked);
+				localStorage.setItem('daltonienMode', e.target.checked);
+				if (!e.target.checked) {
+					document.documentElement.classList.add('force-no-daltonien');
+				} else {
+					document.documentElement.classList.remove('force-no-daltonien');
+				}
+			});
+		}
+
+		if (animationModeToggle) {
+			animationModeToggle.addEventListener('change', function(e) {
+				body.classList.toggle('animation-off', !e.target.checked);
+				localStorage.setItem('animationMode', e.target.checked);
+				if (e.target.checked) {
+					document.documentElement.classList.add('force-animations');
+				} else {
+					document.documentElement.classList.remove('force-animations');
+				}
 			});
 		}
 
@@ -2512,7 +2715,7 @@ body.dark-mode {
 				location.reload();
 			});
 		}
-		
+
 		if (homeBtn) {
 			homeBtn.addEventListener('click', () => {
 				window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
@@ -2524,11 +2727,11 @@ body.dark-mode {
 				progressBar.style.transition = 'none';
 				progressBar.style.width = '0%';
 			}
-			
+
 			rearrangeToolbarForScreen();
 			adjustCardHeights();
 			positionToastOnMobile();
-			
+
 			const activeOnglet = document.querySelector('.onglet.active');
 			if (activeOnglet) {
 				const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
@@ -2537,7 +2740,7 @@ body.dark-mode {
 					carousel.scrollLeft = 0;
 				}
 			}
-			
+
 			setTimeout(() => {
 				if (progressBar) {
 					progressBar.style.transition = 'width 0.3s ease';
@@ -2574,7 +2777,7 @@ body.dark-mode {
 				updateProgress();
 				adjustCardHeights();
 				positionToastOnMobile();
-				
+
 				const activeOnglet = document.querySelector('.onglet.active');
 				if (activeOnglet) {
 					const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
@@ -2618,10 +2821,10 @@ body.dark-mode {
 		function updateButtonsVisibilityForActiveCarousel() {
 			const carouselId = getActiveCarouselId();
 			if (!carouselId) return;
-			
+
 			const leftBtnId = carouselId === 'carousel-1' ? 'scroll-left-1' : 'scroll-left-2';
 			const rightBtnId = carouselId === 'carousel-1' ? 'scroll-right-1' : 'scroll-right-2';
-			
+
 			updateButtonsVisibility(carouselId, leftBtnId, rightBtnId);
 		}
 
@@ -2702,34 +2905,34 @@ body.dark-mode {
 
 		function getEffectiveScrollPosition(carousel) {
 			if (!carousel) return 0;
-			
+
 			const firstItem = carousel.querySelector('.carousel-item');
 			if (!firstItem) return 0;
-			
+
 			const itemRect = firstItem.getBoundingClientRect();
 			const containerRect = carousel.getBoundingClientRect();
-			
+
 			if (itemRect.left >= containerRect.left) {
 				return 0;
 			}
-			
+
 			return containerRect.left - itemRect.left;
 		}
 
 		function getEffectiveMaxScroll(carousel) {
 			if (!carousel) return 0;
-			
+
 			const items = carousel.querySelectorAll('.carousel-item');
 			if (items.length === 0) return 0;
-			
+
 			const lastItem = items[items.length - 1];
 			const containerRect = carousel.getBoundingClientRect();
 			const lastItemRect = lastItem.getBoundingClientRect();
-			
+
 			const firstItem = items[0];
 			const firstItemRect = firstItem.getBoundingClientRect();
-			
-			return (lastItemRect.right - containerRect.right) + 
+
+			return (lastItemRect.right - containerRect.right) +
 				 (containerRect.left - firstItemRect.left);
 		}
 
@@ -2743,16 +2946,16 @@ body.dark-mode {
 
 			const effectiveScroll = getEffectiveScrollPosition(carousel);
 			const effectiveMaxScroll = getEffectiveMaxScroll(carousel);
-			
+
 			let percentage = 0;
 			if (effectiveMaxScroll > 0) {
 				percentage = (effectiveScroll / effectiveMaxScroll) * 100;
 				percentage = Math.min(100, Math.max(0, percentage));
 			}
-			
+
 			progressBar.style.width = percentage + '%';
 		}
-		
+
 		function handleProgressBarClick(e) {
 			const activeOnglet = document.querySelector('.onglet.active');
 			if (!activeOnglet) return;
@@ -2765,31 +2968,31 @@ body.dark-mode {
 			const clickX = e.clientX - rect.left;
 			const containerWidth = rect.width;
 			const clickPercentage = Math.max(0, Math.min(1, clickX / containerWidth));
-			
+
 			const items = carousel.querySelectorAll('.carousel-item');
 			if (items.length === 0) return;
-			
+
 			const effectiveMaxScroll = getEffectiveMaxScroll(carousel);
-			
+
 			const targetScroll = clickPercentage * effectiveMaxScroll;
-			
+
 			const firstItem = items[0];
 			const itemWidth = firstItem.offsetWidth;
 			const gap = parseInt(window.getComputedStyle(carousel).gap) || 8;
-			
+
 			let closestIndex = 0;
 			let minDiff = Infinity;
-			
+
 			for (let i = 0; i < items.length; i++) {
 				const itemPosition = i * (itemWidth + gap);
 				const diff = Math.abs(itemPosition - targetScroll);
-				
+
 				if (diff < minDiff) {
 					minDiff = diff;
 					closestIndex = i;
 				}
 			}
-			
+
 			scrollToPalier(closestIndex);
 		}
 
@@ -2815,7 +3018,7 @@ body.dark-mode {
 
 			updateButtonsVisibility(carouselId, leftBtnId, rightBtnId);
 		}
-		
+
 		if (progressContainer) {
 			progressContainer.addEventListener('click', handleProgressBarClick);
 		}
@@ -2854,6 +3057,28 @@ body.dark-mode {
 				e.preventDefault();
 				const isInterpretation = switchInput.checked;
 				showToast(isInterpretation ? 'interpretation' : 'essai');
+			}
+			else if (key === 'a') {
+				e.preventDefault();
+				if (animationModeToggle) {
+					const newState = !animationModeToggle.checked;
+					animationModeToggle.checked = newState;
+					body.classList.toggle('animation-off', !newState);
+					localStorage.setItem('animationMode', newState);
+					if (newState) document.documentElement.classList.add('force-animations');
+					else document.documentElement.classList.remove('force-animations');
+				}
+			}
+			else if (key === 'c') {
+				e.preventDefault();
+				if (daltonienModeToggle) {
+					const newState = !daltonienModeToggle.checked;
+					daltonienModeToggle.checked = newState;
+					body.classList.toggle('daltonien-mode', newState);
+					localStorage.setItem('daltonienMode', newState);
+					if (!newState) document.documentElement.classList.add('force-no-daltonien');
+					else document.documentElement.classList.remove('force-no-daltonien');
+				}
 			}
 			else if (e.key === 'Escape') {
 				if (document.querySelector('.submenu.active')) {
