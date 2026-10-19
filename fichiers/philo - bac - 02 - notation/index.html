@@ -996,7 +996,7 @@ body.dark-mode {
 			text-align: center;
 			padding: 0;
 			display: flex;
-			justify-content: space-between;
+				justify-content: space-between;
 			flex-shrink: 0;
 			height: 40px;
 			width: 330px;
@@ -1095,6 +1095,22 @@ body.dark-mode {
 		.switch-button-checkbox:checked+.switch-button-label .label-explication,
 		.switch-button-checkbox:not(:checked)+.switch-button-label .label-dissertation {
 			color: var(--switch-text-inactive);
+		}
+
+		/* ===== GESTION DU MODE SOMBRE FORCÉ PAR LE SYSTÈME (MOBILE) ===== */
+		@media (prefers-color-scheme: dark) {
+			/* Si le système est en sombre et que l'utilisateur n'a pas explicitement
+			   choisi le mode clair (classe .force-light sur <html>), on applique
+			   les variables du switch en mode sombre, identiques à body.dark-mode. */
+			html:not(.force-light) .switch-button {
+				--switch-bg: rgba(255, 255, 255, 0.3);
+				--switch-border: #4a4a4a;
+				--switch-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.6), 1px 1px 1px rgba(80, 80, 80, 0.4);
+				--switch-slider-bg: #121212;
+				--switch-slider-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 1px 1px 5px rgba(0, 0, 0, 0.8);
+				--switch-text-active: #ffffff;
+				--switch-text-inactive: #ffffff;
+			}
 		}
 
 		.toast-container {
@@ -2664,6 +2680,12 @@ body.dark-mode {
 		const progressContainer = document.getElementById('progress-bar-container');
 		const mainContent = document.getElementById('mainContent');
 		
+		/* ===== GESTION DU MODE SOMBRE : préférence explicite vs système ===== */
+		// Si l'utilisateur a explicitement choisi le mode clair, on pose .force-light
+		// sur <html> pour contrer @media (prefers-color-scheme: dark) (cf. CSS du switch).
+		if (localStorage.getItem('darkMode') === 'false') {
+			document.documentElement.classList.add('force-light');
+		}
 		if (localStorage.getItem('darkMode') === 'true') { 
 			body.classList.add('dark-mode'); 
 			if (darkModeToggle) darkModeToggle.checked = true; 
@@ -2786,6 +2808,12 @@ body.dark-mode {
 		if (darkModeToggle) darkModeToggle.addEventListener('change', function(e) { 
 			body.classList.toggle('dark-mode', e.target.checked); 
 			localStorage.setItem('darkMode', e.target.checked); 
+			// NOUVEAU : mémoriser le choix explicite "clair" pour contrer le système
+			if (!e.target.checked) {
+				document.documentElement.classList.add('force-light');
+			} else {
+				document.documentElement.classList.remove('force-light');
+			}
 			setTimeout(adjustCardHeights, 50); 
 			positionToastOnMobile();
 		});
