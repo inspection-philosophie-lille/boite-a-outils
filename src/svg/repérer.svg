@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 571 300" width="571" height="300">
-  <rect width="571" height="300" fill="#f16b24" />
-  <g transform="translate(285.5, 150) scale(5) translate(-51, -51)"
-     fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="46" cy="46" r="16" />
-    <line x1="57.5" y1="57.5" x2="72" y2="72" />
-  </g>
-</svg>
