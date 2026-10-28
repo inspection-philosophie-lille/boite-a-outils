@@ -107,3 +107,22 @@ const carte = {
 		{ key: 27, parent: 25, text: "[16] Mensonge à soi-même" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "liberte",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La liberté",
+			these: "La femme du rendez-vous est de mauvaise foi : tout en sachant les intentions de l'homme et la décision qu'elle devra prendre, elle refuse d'en sentir l'urgence, réduit les paroles et les gestes à leur sens immédiat et se dissocie de son corps pour ne pas assumer le choix qui l'engage",
+			interet: "Ce texte montre que la liberté n'est pas un simple pouvoir de choisir mais une condition inéluctable que la conscience peut chercher à fuir : la mauvaise foi est précisément le mensonge à soi-même par lequel on se donne l'illusion de n'être pas libre, afin d'échapper à l'angoisse et à la responsabilité de la décision",
+			problematique: "Puis-je échapper à ma liberté en différant indéfiniment la décision et en me persuadant que je ne choisis pas, ou bien la mauvaise foi qui consiste à se mentir ainsi à soi-même est-elle encore une manière, pour la conscience, d'exercer - et donc d'assumer - sa liberté ?"
+		}
+	}
+];

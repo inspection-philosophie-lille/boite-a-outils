@@ -101,3 +101,22 @@ const carte = {
 		{ key: 21, parent: 18, text: "[5] Produit du développement historique" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "liberte",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La liberté",
+			these: "La liberté ne consiste pas dans une indépendance rêvée à l'égard des lois de la nature, mais dans leur connaissance et dans la possibilité de les mettre en œuvre méthodiquement pour des fins déterminées : la liberté de la volonté n'est que la faculté de décider en connaissance de cause, de sorte que la liberté est un empire sur nous-mêmes et sur la nature, fondé sur la connaissance des nécessités et produit du développement historique",
+			interet: "Ce texte renverse l'opposition traditionnelle entre liberté et nécessité : en faisant de la liberté la connaissance et la maîtrise des lois naturelles, Engels montre que l'ignorance et l'incertitude, loin d'être des formes de liberté, sont des formes de servitude, et que la liberté se conquiert historiquement par le développement du savoir et de la maîtrise technique du monde",
+			problematique: "La liberté consiste-t-elle dans l'indépendance à l'égard des lois de la nature et dans l'indétermination de la volonté, ou bien n'est-elle que la connaissance de ces lois et la faculté de décider en connaissance de cause, de sorte que la nécessité comprise, loin d'abolir la liberté, en soit la condition ?"
+		}
+	}
+];

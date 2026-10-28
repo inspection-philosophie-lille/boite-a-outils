@@ -561,3 +561,22 @@ const carte = {
         { key: 21, parent: 18, text: "[11] Il est un être de possibles" },
     ],
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "liberte",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La liberté",
+			these: "L'homme est condamné à être libre : il ne s'est pas créé lui-même, mais une fois jeté dans le monde il est responsable de tout ce qu'il fait, de sorte que l'existence précède l'essence, qu'il n'y a pas de nature humaine préétablie et que l'homme est ce qu'il se fait ; mais en se choisissant il choisit en même temps tous les hommes, ce qui rend sa responsabilité totale et fait de l'angoisse le sentiment même de cette responsabilité",
+			interet: "Ce texte montre que la liberté n'est pas un attribut donné mais une condition à assumer : en faisant de l'homme un être sans nature préétablie qui se définit par ses choix, Sartre lie indissolublement liberté et responsabilité, et montre que cette responsabilité, loin d'être seulement individuelle, engage l'humanité entière, ce qui donne à la liberté son poids et son angoisse",
+			problematique: "L'homme est-il déterminé par une nature humaine préétablie qui fixerait d'avance ce qu'il est, ou bien est-il condamné à être libre, de sorte que, n'ayant pas d'essence donnée, il se définisse par ses choix et porte la responsabilité totale de ce qu'il fait, jusque dans l'humanité entière qu'il engage par chacun de ses actes ?"
+		}
+	}
+];

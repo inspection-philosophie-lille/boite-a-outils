@@ -561,3 +561,22 @@ const carte = {
         { key: 21, parent: 18, text: "[11] Et non de l'observer du dehors" },
     ],
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "nature",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La nature",
+			these: "L'intelligence et l'instinct sont deux directions divergentes de l'évolution de la vie : l'intelligence, tournée vers la matière inerte, applique à ce qui est mouvant des formes fixes et ne saisit pas la durée réelle, tandis que l'instinct est en affinité avec la vie, de sorte qu'une philosophie intuitive est nécessaire, qui coïncide avec le mouvement même de la réalité et se place en elle plutôt que de l'observer du dehors",
+			interet: "Ce texte montre que la connaissance de la nature vivante exige une méthode autre que l'analyse intellectuelle : en opposant à l'intelligence, qui découpe et spatialise, une intuition qui coïncide avec le mouvement créateur de la vie, Bergson révèle les limites d'une raison purement mathématisante et ouvre une compréhension de la nature comme durée et création plutôt que comme mécanisme",
+			problematique: "La nature vivante peut-elle être comprise par l'intelligence, qui découpe la matière inerte en formes fixes et spatialise le temps, ou bien exige-t-elle une autre voie de connaissance, l'intuition, qui coïncide avec le mouvement même de la vie et saisit la durée dans son hétérogénéité créatrice ?"
+		}
+	}
+];

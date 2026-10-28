@@ -100,3 +100,22 @@ const carte = {
 		{ key: 20, parent: 18, text: "[10] Ce qui nous réjouit = l'imitation de l'humain par la nature" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "art",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "L'art",
+			these: "En voulant rivaliser avec la nature par l'imitation, l'art reste toujours au-dessous d'elle et se réduit à un artifice sans valeur : il n'est qu'un ver s'efforçant d'égaler un éléphant, car ce qui nous touche vraiment, c'est non l'imitation de la nature par l'art, mais l'imitation de l'humain par la nature",
+			interet: "Ce texte montre que la valeur de l'art ne réside pas dans la fidélité de la copie mais dans l'expression de l'esprit : en disqualifiant le trompe-l'œil et l'adresse technique vide de sens, Hegel déplace le critère du beau de la ressemblance vers la manifestation de l'Idée, et prépare une conception de l'art comme production libre de l'esprit plutôt que comme rivalité servile avec la nature",
+			problematique: "L'art doit-il chercher à imiter la nature au plus près, jusqu'à l'illusion, ou bien son essence est-elle ailleurs, dans l'expression de l'esprit humain, de sorte que l'imitation parfaite, loin d'être le sommet de l'art, en serait plutôt la négation ?"
+		}
+	}
+];

@@ -103,3 +103,22 @@ const carte = {
 		{ key: 23, parent: 20, text: "[5] Vivre de son entier consentement sous la conduite de la Raison" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "liberte",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La liberté",
+			these: "La liberté ne consiste pas à agir selon son bon plaisir, mais à vivre de son entier consentement sous la conduite de la Raison : être captif de ses plaisirs est le pire esclavage, et l'obéissance n'est servitude que si la fin de l'action est l'utilité de celui qui commande plutôt que celle de l'agent, de sorte que l'État le plus libre est celui dont les lois, fondées en droite Raison, visent le salut de tout le peuple",
+			interet: "Ce texte renverse l'opinion commune qui identifie la liberté à l'absence de contrainte et à la satisfaction des désirs : en montrant que la pire servitude est celle des passions et que l'obéissance à des lois rationnelles peut être libératrice, Spinoza fait de la liberté une conquête de la raison plutôt qu'un affranchissement extérieur",
+			problematique: "Être libre, est-ce faire tout ce que l'on désire et n'obéir à personne, ou bien la liberté consiste-t-elle à se soumettre volontairement à la Raison, de sorte que l'obéissance aux lois d'un État rationnel, loin d'être un esclavage, en soit la condition ?"
+		}
+	}
+];

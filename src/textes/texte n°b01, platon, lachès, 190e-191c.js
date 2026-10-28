@@ -102,3 +102,22 @@ const carte = {
 		{ key: 22, parent: 17, text: "[9] Ils ont gagné la bataille" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "verite",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La vérité",
+			these: "La définition du courage comme fait de tenir son rang sans fuir ne résiste pas à l'examen : les Scythes et les Lacédémoniens à Platées combattent en fuyant et sont pourtant courageux, ce qui montre que la recherche de la vérité exige de mettre à l'épreuve les opinions par des contre-exemples plutôt que de s'en tenir à une évidence première",
+			interet: "Ce texte montre que la vérité ne s'obtient pas par la simple affirmation d'une évidence familière : en opposant à la définition de Lachès des cas concrets qui la contredisent, Socrate fait apparaître que l'opinion droite doit être examinée et réfutée pour laisser place à une recherche plus exigeante de l'essence universelle du courage",
+			problematique: "Suffit-il, pour dire la vérité sur le courage, de s'en tenir à une définition évidente et tirée de l'expérience commune, ou bien la recherche de la vérité exige-t-elle de soumettre cette définition à l'épreuve des cas particuliers qui pourraient la contredire ?"
+		}
+	}
+];

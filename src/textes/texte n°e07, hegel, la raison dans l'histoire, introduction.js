@@ -562,3 +562,22 @@ const carte = {
         { key: 22, parent: 19, text: "[9] Lieu où l'Esprit se réalise" },
     ],
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "liberte",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La liberté",
+			these: "La ruse de la raison consiste à laisser agir les passions pour que les agents réalisent ses fins sans le savoir : derrière le théâtre apparent des conflits, la raison travaille, de sorte que les grands hommes, comme César, sont les instruments inconscients de l'Esprit du monde et que l'histoire universelle est le progrès dans la conscience de la liberté, l'État étant la réalisation de l'Idée éthique",
+			interet: "Ce texte montre que la liberté n'est pas un donné naturel ni une affaire purement individuelle, mais un accomplissement historique : en faisant de l'histoire le progrès de la conscience de la liberté et de l'État le lieu où cette liberté se réalise, Hegel substitue à la conception d'une liberté subjective et abstraite une conception concrète et rationnelle, où les passions individuelles elles-mêmes servent, sans le savoir, l'avènement de la liberté",
+			problematique: "L'histoire n'est-elle qu'un chaos de passions et de conflits où les individus poursuivent aveuglément leurs intérêts particuliers, ou bien la raison y gouverne-t-elle par ruse, de sorte que ces passions réalisent sans le savoir le progrès de la conscience de la liberté et que l'État en soit la réalisation effective ?"
+		}
+	}
+];

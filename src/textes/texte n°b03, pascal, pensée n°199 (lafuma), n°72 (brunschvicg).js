@@ -102,3 +102,22 @@ const carte = {
 		{ key: 22, parent: 17, text: "[9] Et l'infini où il est englouti" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "nature",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La nature",
+			these: "L'homme qui contemple la nature découvre qu'il est un milieu entre deux infinis, un néant à l'égard de l'infini et un tout à l'égard du néant : également incapable de comprendre les extrêmes, il ne peut voir ni le néant d'où il est tiré ni l'infini où il est englouti, et sa condition est celle d'un être perdu dans l'ample sein de la nature",
+			interet: "Ce texte montre que la nature n'est plus un cosmos ordonné et rassurant où l'homme occupe une place centrale, mais un espace infini où il est écrasé entre deux abîmes : en faisant éclater l'échelle humaine des grandeurs, Pascal ruine l'anthropocentrisme et révèle la condition paradoxale d'un être à la fois néant et tout, dont la grandeur même est de reconnaître sa misère",
+			problematique: "L'homme peut-il se situer et se connaître dans la nature, ou bien celle-ci, en l'écartelant entre l'infiniment grand et l'infiniment petit, lui révèle-t-elle qu'il n'est qu'un milieu inintelligible entre rien et tout, également incapable de saisir son origine et sa fin ?"
+		}
+	}
+];

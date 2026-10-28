@@ -662,3 +662,22 @@ const carte = {
         { key: 26, parent: 24, text: "[13] Pas de jugement esthétique prétendant à l'assentiment de tous" },
     ],
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "art",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "L'art",
+			these: "Le jugement sur l'agréable est purement subjectif et ne vaut que pour chacun, mais il en va tout autrement du beau : celui qui juge une chose belle lui attribue la même satisfaction qu'à lui-même et exige l'adhésion de tous, de sorte que dire « à chacun son goût » du beau reviendrait à nier l'existence même du goût et du jugement esthétique",
+			interet: "Ce texte montre que le jugement de goût n'est ni une simple préférence sensible ni un jugement de connaissance : subjectif quant à son fondement, il prétend néanmoins à une universalité qui l'oppose radicalement à l'agréable, et c'est cette prétention qui fonde l'autonomie de l'expérience esthétique et la possibilité de discuter du beau",
+			problematique: "Le jugement sur le beau n'est-il qu'une affaire de goût personnel, comme le jugement sur l'agréable, ou bien prétend-il légitimement à l'accord universel, de sorte que le principe « à chacun son goût » ne saurait s'y appliquer sans détruire l'idée même de jugement esthétique ?"
+		}
+	}
+];

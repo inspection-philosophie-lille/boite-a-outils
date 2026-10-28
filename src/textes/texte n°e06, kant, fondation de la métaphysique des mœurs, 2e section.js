@@ -561,3 +561,22 @@ const carte = {
         { key: 22, parent: 19, text: "Moralité = intention, non résultat" },
     ],
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "liberte",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La liberté",
+			these: "L'impératif catégorique, qui commande d'agir uniquement d'après la maxime dont on peut vouloir qu'elle devienne une loi universelle, s'impose à toute volonté rationnelle parce que l'être raisonnable se conçoit comme législateur universel : la valeur des maximes ne résidant pas dans les effets attendus mais dans le principe du vouloir, la moralité d'une action dépend uniquement du principe de la volonté, et la bonne volonté est bonne non par ce qu'elle effectue mais par son seul vouloir",
+			interet: "Ce texte montre que la liberté morale ne consiste pas à suivre ses inclinations ni à obéir à une autorité extérieure, mais dans l'autonomie d'une volonté qui se donne à elle-même la loi universelle qu'elle respecte : en faisant de l'être raisonnable un législateur universel, Kant unit liberté et moralité et fonde une éthique déontologique où la valeur de l'action réside dans l'intention, non dans les résultats",
+			problematique: "Une action n'a de valeur morale que si elle est conforme à ses effets ou à son utilité, ou bien la moralité réside-t-elle uniquement dans le principe de la volonté, de sorte que la bonne volonté est bonne par son seul vouloir et que la liberté véritable consiste à obéir à la loi universelle que la raison se prescrit à elle-même ?"
+		}
+	}
+];

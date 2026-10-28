@@ -103,3 +103,22 @@ const carte = {
 		{ key: 23, parent: 20, text: "[16] Fleurissoire ne poussa pas un cri" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "liberte",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La liberté",
+			these: "Lafcadio médite et accomplit un crime immotivé, sans autre motif que la curiosité de soi-même et le désir de franchir l'écart entre l'imagination et le fait : par cet acte gratuit, il veut éprouver sa liberté en échappant à toute raison déterminante, au risque de réduire autrui à un simple moyen de cette expérience",
+			interet: "Ce texte met en scène l'acte gratuit comme expérience limite de la liberté : en montrant un personnage qui veut agir sans motif et se découvrir lui-même dans le passage à l'acte, Gide interroge les pouvoirs et les dangers d'une liberté affranchie de toute détermination, qui peut basculer dans le nihilisme et la négation de la valeur d'autrui",
+			problematique: "Une liberté authentique consiste-t-elle à agir sans motif, par pur exercice de soi, ou bien l'acte gratuit, en réduisant autrui à un moyen et en déshumanisant sa victime, révèle-t-il les limites et l'ambiguïté morale d'une liberté qui se veut absolue ?"
+		}
+	}
+];

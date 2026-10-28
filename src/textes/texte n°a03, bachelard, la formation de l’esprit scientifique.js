@@ -105,3 +105,22 @@ const carte = {
 		{ key: 25, parent: 20, text: "[15] Tout est construit" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "vérité",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La vérité",
+			these: "La science s'oppose absolument à l'opinion, qu'il faut d'abord détruire comme premier obstacle, car toute connaissance scientifique est une réponse à une question posée : rien n'est donné, tout est construit",
+			interet: "Ce texte montre que la connaissance scientifique n'est pas une accumulation passive de données ni le prolongement du sens commun, mais une construction méthodique qui suppose la rupture avec l'opinion et le primat du questionnement",
+			problematique: "La science se construit-elle par simple prolongement et rectification de l'opinion commune, ou bien exige-t-elle d'abord la destruction de l'opinion et la construction active de problèmes et d'objets qui ne sont jamais donnés ?"
+		}
+	}
+];

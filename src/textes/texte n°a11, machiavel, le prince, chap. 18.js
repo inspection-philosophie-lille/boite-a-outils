@@ -105,3 +105,22 @@ const carte = {
 		{ key: 25, parent: 19, text: "[5] Pour garder le pouvoir" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "justice",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La justice",
+			these: "Il n'est pas nécessaire au prince de posséder réellement les vertus, mais seulement d'en donner l'apparence : s'il les appliquait toujours, elles lui porteraient préjudice, car la conservation du pouvoir exige souvent d'agir contre la foi, la charité, l'humanité et la religion",
+			interet: "Ce texte montre que la justice et les vertus morales ne sont pas des fins en soi pour le gouvernant mais des instruments au service du pouvoir : en séparant l'être du paraître et en subordonnant la morale aux nécessités politiques, Machiavel fonde une conception réaliste où l'apparence de justice suffit, indépendamment de la justice réelle des actes",
+			problematique: "Le prince doit-il réellement être juste et vertueux, ou bien suffit-il qu'il en donne l'apparence, la conservation du pouvoir exigeant parfois d'agir contre la justice, la foi, la charité et l'humanité ?"
+		}
+	}
+];

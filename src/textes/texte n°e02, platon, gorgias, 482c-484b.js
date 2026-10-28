@@ -556,3 +556,22 @@ const carte = {
         { key: 21, parent: 18, text: "[9] Esclave de ses désirs" },
     ],
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "justice",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La justice",
+			these: "La justice véritable ne consiste pas dans la loi du plus fort, qui n'est qu'une prétendue justice naturelle, mais dans la loi qui vise l'avantage commun et non l'intérêt particulier : la vertu n'est pas d'assouvir ses désirs mais de les maîtriser par la raison, de sorte que l'homme tempérant est heureux, tandis que le tyran, dont l'âme est en désordre, est le plus malheureux des hommes",
+			interet: "Ce texte montre que la justice n'est pas réductible au rapport de force : en démasquant la « justice naturelle » de Calliclès comme une simple loi du plus fort, Socrate oppose à la puissance la légitimité d'une loi orientée vers le bien commun, et lie ainsi la justice à l'ordre de l'âme et au bonheur, contre toute conception cynique ou hédoniste du droit",
+			problematique: "La justice n'est-elle que la loi du plus fort, c'est-à-dire l'expression de la puissance et de l'intérêt particulier, ou bien consiste-t-elle dans une loi véritable qui vise l'avantage commun, de sorte que le juste est aussi le tempérant et l'homme heureux, tandis que le tyran tout-puissant est en réalité le plus malheureux ?"
+		}
+	}
+];

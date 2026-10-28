@@ -102,3 +102,22 @@ const carte = {
 		{ key: 22, parent: 18, text: "[7] Grâce divine et connaissance naturelle augmentent la liberté" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "liberte",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La liberté",
+			these: "La volonté est la seule faculté qui, dans son essence formelle, égale celle de Dieu et fait de l'homme son image ; la liberté ne consiste pas dans l'indifférence, qui n'en est que le plus bas degré, mais dans la détermination éclairée par la connaissance du vrai et du bien",
+			interet: "Ce texte montre que la liberté n'est pas le pouvoir arbitraire de choisir sans raison, mais l'accord de la volonté avec l'évidence rationnelle : plus le choix est éclairé, plus il est libre, ce qui fait de la connaissance et de la grâce des auxiliaires et non des obstacles à la liberté",
+			problematique: "La liberté consiste-t-elle dans l'indifférence à choisir entre les contraires, ou bien culmine-t-elle dans la détermination de la volonté par la connaissance claire du vrai et du bien, qui l'affranchit de toute contrainte extérieure ?"
+		}
+	}
+];

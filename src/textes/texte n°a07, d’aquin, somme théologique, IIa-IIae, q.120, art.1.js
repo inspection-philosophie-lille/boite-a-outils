@@ -102,3 +102,22 @@ const carte = {
 		{ key: 22, parent: 19, text: "[5] Pour réaliser la justice et le bien commun" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "justice",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La justice",
+			these: "Les situations humaines variant à l'infini, aucune loi générale ne peut être sans défaut : lorsque l'observance littérale d'une loi juste en général contredirait la justice et le bien commun qu'elle veut sauvegarder, il faut transgresser la lettre pour rester fidèle à l'esprit de justice",
+			interet: "Ce texte montre que la justice ne se réduit pas à l'application mécanique de la loi : la loi n'est juste qu'en tant qu'elle sert le bien commun, de sorte que l'équité, loin d'être une exception arbitraire, accomplit plus fidèlement l'intention du législateur que l'obéissance littérale",
+			problematique: "Faut-il obéir à la lettre de la loi en toute circonstance, ou bien la justice exige-t-elle parfois de transgresser la loi générale pour rester fidèle à sa finalité, le bien commun, lorsque son application littérale produirait une injustice ?"
+		}
+	}
+];

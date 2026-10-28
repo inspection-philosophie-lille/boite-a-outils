@@ -565,3 +565,22 @@ const carte = {
         { key: 25, parent: 22, text: "Création de nouvelles valeurs" },
     ],
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "liberte",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La liberté",
+			these: "La morale des maîtres et la morale des esclaves s'opposent radicalement : les forts appellent « bon » leur propre mode d'existence et affirment ainsi la vie, tandis que les faibles, par ressentiment, qualifient de « mauvais » tout ce qui est fort et inventent le « sujet libre » et le « méchant » pour se venger imaginairement, créant des valeurs réactives comme l'altruisme et la pitié qui nient la vie, de sorte qu'il faut dépasser la morale pour une évaluation qui dise « oui » à la vie",
+			interet: "Ce texte montre que les valeurs morales ne sont pas des vérités éternelles mais des créations humaines qui expriment la force ou la faiblesse de celui qui les pose : en opposant la morale active des maîtres, qui affirme la vie, à la morale réactive des esclaves, qui la nie, Nietzsche invite à une libération de l'homme à l'égard des valeurs imposées par le ressentiment, et à la création de valeurs nouvelles au-delà du bien et du mal",
+			problematique: "La morale est-elle une et universelle, ou bien y a-t-il plusieurs morales qui s'opposent, selon qu'elles naissent de l'affirmation de soi des forts ou du ressentiment des faibles, de sorte que les valeurs dites universelles ne sont que des valeurs réactives, et que la véritable liberté consiste à dépasser la morale pour créer des valeurs qui disent « oui » à la vie ?"
+		}
+	}
+];

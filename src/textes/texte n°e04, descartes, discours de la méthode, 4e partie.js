@@ -555,3 +555,22 @@ const carte = {
         { key: 20, parent: 17, text: "[7] L'âme peut exister sans le corps" },
     ],
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "verite",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La vérité",
+			these: "Puisque, pendant que je veux penser que tout est faux, il faut nécessairement que moi qui le pense je sois quelque chose, la proposition « je pense, donc je suis » est si ferme et si assurée qu'elle peut être reçue comme le premier principe de la philosophie : je ne puis feindre que je n'aie point de corps ni qu'il n'y ait aucun monde, mais je ne puis feindre que je ne sois point, de sorte que je suis une substance dont toute l'essence n'est que de penser, entièrement distincte du corps",
+			interet: "Ce texte montre que la vérité ne se fonde pas sur les données des sens ni sur les opinions reçues, mais sur une évidence qui résiste au doute le plus radical : en découvrant dans l'acte même de douter une certitude indubitable, Descartes fonde la philosophie sur le sujet pensant et établit un modèle d'évidence qui vaudra pour toute connaissance certaine",
+			problematique: "Puisque le doute peut remettre en question toutes nos connaissances, y compris l'existence du corps et du monde, existe-t-il une vérité qui résiste absolument au doute, et si cette vérité est celle du sujet pensant, que nous apprend-elle sur la nature du moi et sur sa distinction d'avec le corps ?"
+		}
+	}
+];

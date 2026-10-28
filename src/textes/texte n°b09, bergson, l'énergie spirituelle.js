@@ -98,3 +98,22 @@ const carte = {
 		{ key: 18, parent: 15, text: "[1-4] Mémoire + anticipation = durée vivante" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "verite",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La vérité",
+			these: "Nous connaissons la vérité non seulement par la raison mais aussi par le cœur, qui saisit les premiers principes avec une certitude aussi ferme que celle des raisonnements : l'impuissance de la raison à tout prouver ne révèle que sa faiblesse et non l'incertitude de nos connaissances, de sorte que la raison doit s'appuyer sur le cœur, les principes se sentant et les propositions se concluant",
+			interet: "Ce texte montre que la vérité n'est pas le monopole de la raison démonstrative : en reconnaissant au cœur une faculté de connaissance intuitive et certaine, Pascal fonde une épistémologie qui limite les prétentions du rationalisme exclusif et réfute le scepticisme pyrrhonien, sans pour autant renoncer à la rationalité",
+			problematique: "La vérité est-elle connue uniquement par la raison démonstrative, ou bien le cœur en saisit-il les premiers principes avec une certitude irréductible, de sorte que l'incapacité de la raison à tout prouver, loin de conduire au scepticisme, révèle la complémentarité de deux voies également certaines ?"
+		}
+	}
+];

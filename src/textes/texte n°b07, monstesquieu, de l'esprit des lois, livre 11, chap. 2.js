@@ -95,3 +95,22 @@ const carte = {
 		{ key: 15, parent: 12, text: "[4] Parce que les autres auraient tout de même ce pouvoir" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "liberte",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La liberté",
+			these: "La liberté politique ne consiste pas à faire ce que l'on veut, mais, dans une société où il y a des lois, à vouloir faire ce que l'on doit vouloir et à n'être pas contraint de faire ce que l'on ne doit pas vouloir : elle est le droit de faire tout ce que les lois permettent, car si un citoyen pouvait faire ce qu'elles défendent, les autres auraient le même pouvoir et personne ne serait plus libre",
+			interet: "Ce texte distingue radicalement la liberté de l'indépendance : en montrant que la loi n'est pas l'ennemie mais la condition et la garantie de la liberté, Montesquieu fonde la conception libérale et juridique de la liberté comme droit défini et protégé par la loi, et montre que l'absence de règles détruirait la liberté de tous au lieu de la garantir",
+			problematique: "La liberté consiste-t-elle à faire tout ce que l'on veut, c'est-à-dire à être indépendant de toute loi, ou bien n'est-elle véritablement le droit de faire tout ce que les lois permettent, de sorte que la loi, loin de limiter la liberté, en soit la condition et la sauvegarde ?"
+		}
+	}
+];

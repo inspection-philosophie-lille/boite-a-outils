@@ -98,3 +98,22 @@ const carte = {
 		{ key: 18, parent: 13, text: "[9] Le monde a été fait pour les dieux et pour les hommes" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "nature",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La nature",
+			these: "Une intelligence et un calcul divins ont arrangé le monde pour la conservation et le salut de ses habitants : puisque ni les végétaux ni les bêtes ne peuvent être la fin d'un tel ordre, le monde a été fait pour les êtres animés qui ont la raison en partage, c'est-à-dire les dieux et les hommes, car la raison est de toutes choses celle qui vaut le plus",
+			interet: "Ce texte montre que la nature n'est pas un chaos ni un simple mécanisme, mais un ordre finalisé et providentiel : en établissant une hiérarchie des êtres fondée sur la raison, Cicéron fait de la nature un cosmos intelligible où l'homme occupe une place éminente, et fonde ainsi une conception finaliste et anthropocentrique du monde",
+			problematique: "La nature est-elle le produit du hasard ou d'une intelligence providentielle, et si elle est ordonnée à une fin, pour quels êtres l'est-elle : pour les végétaux, pour les bêtes, ou bien pour les seuls êtres doués de raison, dieux et hommes ?"
+		}
+	}
+];

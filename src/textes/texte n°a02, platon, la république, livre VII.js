@@ -118,3 +118,22 @@ const carte = {
 		{ key: 38, parent: 32, text: "[47-48] Idée du Bien = cause de tout" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "vérité",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La vérité",
+			these: "L'éducation est la conversion de l'âme tout entière, qui doit s'arracher aux illusions du monde sensible pour contempler, par degrés, la vérité dans le monde intelligible, dont le soleil est l'image et l'Idée du Bien le principe",
+			interet: "Ce texte montre que l'accès à la vérité n'est pas une accumulation de savoirs, mais une libération douloureuse et progressive des apparences, qui engage la responsabilité de l'individu et fonde la mission du philosophe dans la cité",
+			problematique: "La connaissance véritable est-elle une simple réception d'informations ou bien une conversion exigeante de l'âme, qui suppose de sortir des illusions du monde sensible et d'en payer le prix ?"
+		}
+	}
+];

@@ -109,3 +109,22 @@ const carte = {
 		{ key: 29, parent: 27, text: "[18] On n'est obligé d'obéir qu'aux puissances légitimes" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "justice",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La justice",
+			these: "La force ne fait pas droit : céder à la force n'est qu'un acte de nécessité ou de prudence, non un devoir, et l'on n'est obligé d'obéir qu'aux puissances légitimes, car un droit qui périt quand la force cesse n'est pas un droit",
+			interet: "Ce texte montre que la légitimité du pouvoir ne peut se réduire à son efficacité physique : en distinguant radicalement la contrainte et l'obligation morale, Rousseau sape le fondement de tout pouvoir qui ne se justifie que par la force et ouvre la voie à une conception contractuelle de l'autorité légitime",
+			problematique: "Faut-il obéir au plus fort parce qu'il est le plus fort, ou bien la force peut-elle fonder un droit véritable, c'est-à-dire une obligation morale distincte de la simple contrainte physique ?"
+		}
+	}
+];

@@ -102,3 +102,22 @@ const carte = {
 		{ key: 22, parent: 19, text: "[3] Déterminisme psychologique" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "liberte",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La liberté",
+			these: "La volonté n'est qu'un être de raison, une abstraction, et ne peut être la cause des volitions particulières ni des erreurs : celles-ci, n'étant pas libres, sont nécessairement déterminées par des causes extérieures, de sorte que le libre arbitre cartésien est une illusion",
+			interet: "Ce texte montre que la liberté conçue comme pouvoir d'indifférence de la volonté est une fiction : en ramenant la volonté à une pure abstraction et en soumettant les volitions au déterminisme causal, Spinoza dissout l'idée de libre arbitre et prépare une conception de la liberté comme connaissance et compréhension de la nécessité",
+			problematique: "La volonté est-elle une faculté libre et plus ample que l'entendement, capable d'être la cause de nos erreurs, ou bien n'est-elle qu'une abstraction dont les actes particuliers, comme toutes choses, sont nécessairement déterminés par des causes qui les précèdent ?"
+		}
+	}
+];

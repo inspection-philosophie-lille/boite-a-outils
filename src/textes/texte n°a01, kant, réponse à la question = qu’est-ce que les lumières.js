@@ -15,7 +15,7 @@ const philosophyData = {
 };
 
 // ============================================
-// QUESTIONS DU QUIZ
+// QUESTIONS DU QUIZ (inchangé)
 // ============================================
 
 const questions = [
@@ -522,43 +522,50 @@ const questions = [
 ];
 
 // ============================================
-// CARTE MENTALE
-// Seuls key, parent, text et dir (optionnel) sont lus.
-// Les couleurs, tailles et styles sont calculés par l'application.
+// CARTE MENTALE (inchangée)
 // ============================================
 
 const carte = {
 	nodes: [
 		{ key: 0, parent: null, text: "Les Lumières" },
-
-		// Branche 1 : Définition (côté droit)
 		{ key: 1, parent: 0, text: "Définition" },
 		{ key: 2, parent: 1, text: "[2] Sortie de la minorité" },
 		{ key: 3, parent: 2, text: "[3] Minorité : incapacité de se servir de son entendement sans la direction d'autrui" },
 		{ key: 4, parent: 2, text: "[4] Minorité : responsabilité individuelle" },
-
-		// Branche 2 : Causes de la minorité (côté droit)
 		{ key: 5, parent: 0, text: "Causes de la minorité" },
 		{ key: 6, parent: 5, text: "[8] Paresse" },
 		{ key: 7, parent: 5, text: "[8] Lâcheté" },
 		{ key: 8, parent: 5, text: "[4] Manque de décision et de courage" },
 		{ key: 9, parent: 5, text: "[4] Pas un défaut de l'entendement" },
-
-		// Branche 3 : Devise des Lumières (côté gauche)
 		{ key: 10, parent: 0, text: "Devise des Lumières", dir: "left" },
 		{ key: 11, parent: 10, text: "[5-7] Sapere aude ! Aie le courage de te servir de ton propre entendement" },
-
-		// Branche 4 : Facilité de rester mineur (côté gauche)
 		{ key: 12, parent: 0, text: "Facilité de rester mineur", dir: "left" },
 		{ key: 13, parent: 12, text: "[10] Les prothèses intellectuelles" },
 		{ key: 14, parent: 13, text: "Livre : je ne pense plus, il pense pour moi" },
 		{ key: 15, parent: 13, text: "Directeur : je ne juge plus, il juge pour moi" },
 		{ key: 16, parent: 13, text: "Médecin : je ne décide plus, il décide pour moi" },
 		{ key: 17, parent: 12, text: "[11] Payer pour ne pas penser" },
-
-		// Branche 5 : Difficulté de sortir (côté gauche)
 		{ key: 18, parent: 0, text: "Difficulté de sortir", dir: "left" },
 		{ key: 19, parent: 18, text: "[12] Minorité devenue état naturel" },
 		{ key: 20, parent: 18, text: "[12] Difficile de sortir tout seul" }
 	],
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "liberte",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La liberté",
+			these: "Les Lumières consistent à sortir de la minorité, dont l'homme est lui-même responsable, par un acte de courage et de décision",
+			interet: "Ce texte montre que l'émancipation intellectuelle est d'abord une décision morale individuelle et non un simple progrès collectif ou une accumulation de savoirs",
+			problematique: "La sortie de la minorité est-elle un processus collectif et historique ou bien une décision individuelle et courageuse qui relève de la responsabilité de chacun ?"
+		}
+	}
+];

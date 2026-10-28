@@ -99,3 +99,22 @@ const carte = {
 		{ key: 19, parent: 16, text: "[4] Différence de nature, non de degré" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "nature",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La nature",
+			these: "La différence entre les hommes et les bêtes se manifeste par le langage : tous les hommes, même les plus hébétés et les insensés, sont capables de composer un discours pour faire entendre leurs pensées, tandis qu'aucun animal ne le peut, et cela ne vient pas d'un défaut d'organes puisque les pies et les perroquets profèrent des paroles et que les sourds-muets inventent des signes : les bêtes n'ont donc point de raison du tout",
+			interet: "Ce texte montre que la différence entre l'homme et l'animal n'est pas une différence de degré mais de nature : en faisant du langage, c'est-à-dire de l'expression consciente de la pensée, le critère de la raison, Descartes établit que l'animal est une pure machine dépourvue de pensée, et fonde ainsi la spécificité radicale de l'être humain dans la nature",
+			problematique: "Les animaux sont-ils seulement des hommes imparfaits, doués d'une raison moindre et d'un langage rudimentaire, ou bien en sont-ils absolument distincts par nature, de sorte que l'absence de langage véritable, qui ne s'explique pas par un défaut d'organes, révèle qu'ils n'ont point de raison du tout ?"
+		}
+	}
+];

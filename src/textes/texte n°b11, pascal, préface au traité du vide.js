@@ -102,3 +102,22 @@ const carte = {
 		{ key: 22, parent: 18, text: "[5] Les livres transmettent le savoir des anciens" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "nature",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La nature",
+			these: "La nature maintient les animaux dans un ordre de perfection bornée : leur science, reçue sans étude, se perd avec le besoin et ne s'accumule jamais, de sorte que les abeilles font toujours le même hexagone ; l'homme au contraire n'est produit que pour l'infinité : ignorant au premier âge, il s'instruit sans cesse, conserve ses connaissances dans sa mémoire et profite de celles de ses prédécesseurs transmises par les livres",
+			interet: "Ce texte montre que la différence entre l'homme et l'animal n'est pas une différence de degré mais de nature : en opposant la fixité de l'instinct animal, enfermé dans un ordre borné, à la perfectibilité humaine, ouverte à l'infini par la mémoire et la transmission, Pascal fonde la spécificité de l'homme sur sa capacité de progresser historiquement, et non sur une supériorité naturelle donnée d'emblée",
+			problematique: "L'homme se distingue-t-il de l'animal par une supériorité naturelle immédiate, ou bien par sa seule capacité de conserver et de transmettre son savoir, de sorte que l'animal, parfait dans un ordre borné, reste fixe, tandis que l'homme, d'abord ignorant, est seul capable d'un progrès indéfini ?"
+		}
+	}
+];

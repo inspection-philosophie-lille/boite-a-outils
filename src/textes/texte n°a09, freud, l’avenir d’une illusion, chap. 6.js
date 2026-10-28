@@ -103,3 +103,22 @@ const carte = {
 		{ key: 23, parent: 18, text: "[7] Renonce à être confirmée par le réel" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "religion",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La religion",
+			these: "Les idées religieuses ne sont ni le résidu de l'expérience ni le résultat de la réflexion, mais des illusions issues des désirs les plus anciens et les plus pressants de l'humanité : elles tirent leur force de la force de ces désirs, non de leur rapport à la réalité, et se rapprochent par là de l'idée délirante",
+			interet: "Ce texte montre que la puissance de la religion ne se mesure pas à sa vérité mais à sa capacité à satisfaire des besoins psychiques profonds, hérités de la détresse infantile : en expliquant la croyance par le désir plutôt que par la raison, Freud naturalise et démystifie les dogmes religieux tout en expliquant leur persistance",
+			problematique: "Les croyances religieuses doivent-elles être jugées d'après leur vérité objective et leur rapport à la réalité, ou bien s'expliquent-elles par les désirs humains qui les motivent, de sorte qu'on ne peut les comprendre qu'en les rapportant à leur origine psychique plutôt qu'à leur contenu ?"
+		}
+	}
+];

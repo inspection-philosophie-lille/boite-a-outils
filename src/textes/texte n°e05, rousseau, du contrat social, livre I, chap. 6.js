@@ -561,3 +561,22 @@ const carte = {
         { key: 21, parent: 18, text: "[9] Le peuple est souverain" },
     ],
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "liberte",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La liberté",
+			these: "Le problème fondamental est de trouver une forme d'association qui protège la personne et les biens de chacun tout en faisant que chacun, s'unissant à tous, n'obéisse qu'à lui-même et reste aussi libre qu'auparavant : le contrat social y répond par l'aliénation totale de chaque associé à la communauté, car se donner à tous c'est ne se donner à personne, et l'on gagne l'équivalent de tout ce que l'on perd, ce qui produit un corps moral et collectif, la République",
+			interet: "Ce texte montre que la liberté n'est pas l'absence de lien social mais l'obéissance à une loi que l'on s'est soi-même prescrite : en faisant de l'aliénation totale la condition de l'égalité et de la liberté civile, Rousseau résout le paradoxe d'une association qui protège sans asservir, et fonde la souveraineté du peuple sur l'idée que l'individu ne perd rien en se donnant à tous puisqu'il ne se donne à personne en particulier",
+			problematique: "Comment l'individu peut-il s'unir à tous dans une société qui le protège sans pour autant aliéner sa liberté, et l'aliénation totale de chacun à la communauté, loin d'être une servitude, n'est-elle pas au contraire la condition d'une liberté et d'une égalité véritables ?"
+		}
+	}
+];

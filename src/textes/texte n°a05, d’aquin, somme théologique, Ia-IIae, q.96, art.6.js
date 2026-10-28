@@ -99,3 +99,22 @@ const carte = {
 		{ key: 19, parent: 18, text: "[7] L'esprit de la loi prime sur la lettre" }
 	]
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "justice",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La justice",
+			these: "La loi ne tire sa force obligatoire que de sa finalité, l'intérêt commun ; lorsque son application littérale, dans un cas particulier imprévu par le législateur, se retourne contre le bien commun, il faut la déroger au nom de l'équité, car l'esprit de la loi prime sur sa lettre",
+			interet: "Ce texte montre que l'obéissance à la loi n'est pas inconditionnelle : la justice d'une loi se mesure à sa capacité effective à servir le bien commun, ce qui fonde la possibilité légitime d'une exception, non par mépris du droit, mais pour accomplir plus fidèlement l'intention du législateur",
+			problematique: "Faut-il toujours obéir à la loi au nom de son caractère général et obligatoire, ou bien est-il juste de s'en écarter dans les cas particuliers où son application littérale contredirait le bien commun qu'elle a pour but de servir ?"
+		}
+	}
+];

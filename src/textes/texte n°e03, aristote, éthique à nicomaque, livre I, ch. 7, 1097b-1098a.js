@@ -554,3 +554,22 @@ const carte = {
         { key: 19, parent: 17, text: "[11] Le bonheur est une activité, non un état passif" },
     ],
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "verite",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La vérité",
+			these: "Tous les hommes s'accordent sur le nom du bien suprême, le bonheur, mais non sur sa définition : le plaisir et les honneurs étant recherchés pour autre chose qu'eux-mêmes, il faut définir le bonheur par la fonction propre de l'homme, l'activité de l'âme selon la raison, de sorte que le souverain bien est une activité de l'âme conforme à la vertu, accomplie dans une vie entière",
+			interet: "Ce texte montre que la vérité en matière éthique ne s'obtient pas par la seule constatation d'un accord verbal : derrière le consensus sur le nom du bonheur se cache un désaccord réel sur sa nature, qu'il faut trancher en examinant les opinions communes et en définissant le bien par la fonction propre de l'homme, ce qui fonde une définition rationnelle et universelle du souverain bien",
+			problematique: "Suffit-il de constater que tous les hommes nomment « bonheur » le bien suprême pour savoir ce qu'il est véritablement, ou bien la vérité sur le souverain bien exige-t-elle de dépasser le simple accord sur le nom pour en déterminer la définition, en montrant que le plaisir et les honneurs ne sont pas des fins en soi et que le bonheur réside dans l'activité de l'âme conforme à la vertu ?"
+		}
+	}
+];

@@ -561,3 +561,22 @@ const carte = {
         { key: 21, parent: 18, text: "[10] La liberté est politique, elle se vit avec les autres" },
     ],
 };
+
+// ============================================
+// DONNÉES POUR L'APPLICATION "EXPLICATION DE TEXTE"
+// ============================================
+
+const textes = [
+	{
+		notion: "liberte",
+		contenu: philosophyData.texte,
+		source: philosophyData.source,
+		reponses: {
+			origine: philosophyData.source,
+			theme: "La liberté",
+			these: "L'action est la seule activité qui mette directement en rapport les hommes sans intermédiaire des choses : bien qu'irréversible et imprévisible, elle est sauvée de sa futilité par la promesse et le pardon, fonde le pouvoir comme capacité d'agir de concert, et c'est en elle que l'homme fait l'expérience de la liberté dans l'espace public",
+			interet: "Ce texte montre que la liberté n'est pas une propriété intérieure de la volonté mais une expérience pratique qui se réalise dans l'action concertée et l'espace public : la fragilité même de l'action (imprévisibilité, irréversibilité) exige les remèdes que sont la promesse et le pardon, qui rendent possible une liberté partagée plutôt qu'illusoire",
+			problematique: "La liberté humaine réside-t-elle dans une maîtrise intérieure ou dans le pouvoir de fabrication qui domine la matière, ou bien ne se réalise-t-elle authentiquement que dans l'action, activité fragile, irréversible et imprévisible, sauvée par la promesse et le pardon et fondée sur la capacité d'agir de concert dans l'espace public ?"
+		}
+	}
+];
