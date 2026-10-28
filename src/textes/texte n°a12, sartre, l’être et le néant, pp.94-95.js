@@ -114,7 +114,6 @@ const carte = {
 
 const textes = [
 	{
-		notion: "liberte",
 		contenu: philosophyData.texte,
 		source: philosophyData.source,
 		reponses: {

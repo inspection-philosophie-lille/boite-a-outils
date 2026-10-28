@@ -106,7 +106,6 @@ const carte = {
 
 const textes = [
 	{
-		notion: "nature",
 		contenu: philosophyData.texte,
 		source: philosophyData.source,
 		reponses: {

@@ -669,7 +669,6 @@ const carte = {
 
 const textes = [
 	{
-		notion: "art",
 		contenu: philosophyData.texte,
 		source: philosophyData.source,
 		reponses: {

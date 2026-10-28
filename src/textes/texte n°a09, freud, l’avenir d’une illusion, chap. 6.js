@@ -110,7 +110,6 @@ const carte = {
 
 const textes = [
 	{
-		notion: "religion",
 		contenu: philosophyData.texte,
 		source: philosophyData.source,
 		reponses: {
