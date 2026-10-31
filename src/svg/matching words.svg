@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 571 300" width="571" height="300">
+  <rect width="571" height="300" fill="#d91b5c" />
+  <g transform="translate(285.5, 150) scale(1.0) translate(-150, -136)" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke-width="8">
+      <rect x="32" y="25"  width="56" height="42" rx="16" />
+      <rect x="32" y="85"  width="56" height="42" rx="16" />
+      <rect x="32" y="145" width="56" height="42" rx="16" />
+      <rect x="32" y="205" width="56" height="42" rx="16" />
+    </g>
+    <g stroke-width="8">
+      <rect x="212" y="25"  width="56" height="42" rx="16" />
+      <rect x="212" y="85"  width="56" height="42" rx="16" />
+      <rect x="212" y="145" width="56" height="42" rx="16" />
+      <rect x="212" y="205" width="56" height="42" rx="16" />
+    </g>
+    <g stroke-width="6">
+      <path d="M 110,46 C 128,46 162,165 190,226" />
+      <path d="M 110,106 C 135,106 165,46 190,46" />
+      <path d="M 110,166 C 135,146 165,176 190,166" />
+      <path d="M 110,226 C 135,226 165,126 190,106" />
+    </g>
+    <g fill="#ffffff" stroke="none">
+      <circle cx="110" cy="46"  r="9.5" />
+      <circle cx="110" cy="106" r="9.5" />
+      <circle cx="110" cy="166" r="9.5" />
+      <circle cx="110" cy="226" r="9.5" />
+      <circle cx="190" cy="46"  r="9.5" />
+      <circle cx="190" cy="106" r="9.5" />
+      <circle cx="190" cy="166" r="9.5" />
+      <circle cx="190" cy="226" r="9.5" />
+    </g>
+  </g>
+</svg>
