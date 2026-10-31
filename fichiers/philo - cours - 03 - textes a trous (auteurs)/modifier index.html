@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<!-- Daniel Boulagnon -->
+<!-- daniel.boulagnon@ac-lille.fr -->
+<!-- version 2026 -->
+<!-- Exploitation à titre strictement pédagogique et non lucratif -->
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="icon" href="../../src/favicon.ico">
+    <title>application « compléter » - avec préservation des commentaires</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --bg-color: #e0e5ec; --primary-light: #ffffff; --primary-dark: #a3b1c6; --text-color: #4a5568; --accent-color: #4f46e5; --accent-light: #6366f1; --accent-dark: #4338ca; --success-color: #10b981; --warning-color: #f59e0b; --danger-color: #ef4444; --shadow-light: rgba(255, 255, 255, 0.8); --shadow-dark: rgba(163, 177, 198, 0.6); --highlight-color: #bbf7d0; --highlight-border: #22c55e; --focus-ring: 0 0 0 3px rgba(79, 70, 229, 0.4); --step-completed: #10b981; --step-active: #4f46e5; --step-pending: #a3b1c6; --step-line: #cbd5e1; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.5; color: var(--text-color); background-color: var(--bg-color); padding: 12px; max-width: 1400px; margin: 0 auto; min-height: 100vh; }
+        header { text-align: center; margin-bottom: 6px; padding: 8px 12px; background: var(--bg-color); border-radius: 25px; box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); }
+        h1 { color: red; margin-bottom: 0px; font-size: 2rem; font-weight: 700; text-shadow: 1px 1px 1px var(--shadow-light); }
+        .stepper-container { margin: 12px 0 28px 0; }
+        .stepper { display: flex; justify-content: space-between; align-items: center; top: 10px; border-radius: 50px; padding: 0px; position: relative; }
+        .stepper::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 3px; background: var(--step-line); transform: translateY(-50%); z-index: 1; border-radius: 3px; margin-top: -10px; }
+        .step { flex: 1; text-align: center; position: relative; cursor: pointer; transition: all 0.3s ease; z-index: 2; background: transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .step-number { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--bg-color); color: var(--text-color); font-weight: bold; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light); position: relative; z-index: 3; margin: 0; }
+        .step.completed .step-number { background: var(--step-completed); color: white; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4); }
+        .step.active .step-number { background: var(--step-active); color: white; box-shadow: 0 2px 12px rgba(79, 70, 229, 0.5); transform: scale(1.1); }
+        .step-label { font-size: 0.75rem; font-weight: 600; color: var(--text-color); transition: all 0.3s ease; margin-top: 6px; }
+        .step-panel { display: none; animation: fadeIn 0.3s ease; }
+        .step-panel.active-panel { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .step-navigation { display: flex; justify-content: center; gap: 25px; margin-top: 12px; margin-bottom: 8px; }
+        .nav-btn { height: 40px; width: 40px; padding: 0; border-radius: 50%; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light); display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(145deg, var(--accent-light), var(--accent-color)); color: white; box-sizing: border-box; }
+        .nav-btn.prev-btn { background: linear-gradient(145deg, #6b7280, #4b5563); font-size: 1.6rem; font-weight: normal; padding-bottom: 4px; }
+        .nav-btn.next-btn { font-size: 1.6rem; font-weight: normal; padding-bottom: 4px; }
+        .nav-btn:hover:not(:disabled) { transform: translateY(-2px); }
+        .nav-btn:active:not(:disabled) { transform: translateY(1px); }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .nav-btn.hidden { display: none; }
+        @media (max-width: 768px) { body { padding: 8px; } h1 { font-size: 1.4rem; line-height: 1.3; } .subtitle { display: none; } .step-number { width: 34px; height: 34px; font-size: 0.85rem; } .step-label { font-size: 0.6rem; margin-top: 4px; } .panel { padding: 12px 12px 16px 12px; } .panel h2 { font-size: 1.2rem; margin-bottom: 12px; } .rich-editor { font-size: 0.8rem; line-height: 1.45; min-height: 120px; padding: 8px; } .source-line { font-size: 0.9rem; margin-top: 8px; padding-top: 5px; } .manques-list { font-size: 0.7rem; margin-top: 8px; padding: 6px 8px; } .manques-list .manque-badge { font-size: 0.7rem; padding: 2px 6px; gap: 4px; } .citation-title { font-size: 0.75rem; padding: 4px 10px; } .format-btn { height: 32px; padding: 0 8px; font-size: 0.7rem; } .format-btn svg { width: 14px; height: 14px; } .toolbar-container { gap: 6px; margin-bottom: 6px; flex-wrap: wrap; } .format-toolbar { gap: 4px; } .action-toolbar { gap: 4px; } .btn-add { padding: 8px 14px; font-size: 0.75rem; } .citation-container { margin-bottom: 16px; padding: 10px; } .citation-header { margin-bottom: 8px; } .export-stats { padding: 12px; margin-bottom: 12px; } .export-stats-grid { display: flex !important; flex-direction: row !important; gap: 12px !important; justify-content: center !important; align-items: stretch !important; flex-wrap: nowrap !important; } .export-stat-card { flex: 1 !important; padding: 2px 6px !important; min-width: 0 !important; margin: 0 !important; } .export-stat-value { font-size: 1.5rem !important; } .export-stat-label { font-size: 0.65rem !important; white-space: nowrap !important; } .export-filename-group { margin: 12px 0; } .export-filename-group label { font-size: 0.75rem; margin-bottom: 4px; } .export-filename-group input { padding: 8px 10px; font-size: 0.8rem; } .file-buttons-container { flex-direction: column; gap: 8px; } .file-btn-wrapper button, .file-input-label { height: 42px; font-size: 0.8rem; } .file-btn-wrapper button svg:not(.auto-save-svg), .file-input-label svg { width: 18px !important; height: 18px !important; } .file-btn-wrapper button svg.auto-save-svg { width: 22px !important; height: 22px !important; } .form-group { margin-bottom: 12px; } label { margin-bottom: 4px; font-size: 0.8rem; } .title-group-row { gap: 12px; } input[type="text"] { padding: 8px; font-size: 0.8rem; } .stepper-container { margin: 6px 0 28px 0; } .step-navigation { margin-top: 8px; gap: 20px; } .nav-btn { height: 36px; width: 36px; } .add-button-container { margin-top: 4px; } .alert { padding: 8px 12px; font-size: 0.75rem; } }
+        @media (min-width: 769px) { h1 br.mobile-break { display: none; } .export-stats-grid { display: flex; flex-direction: row; } }
+        .subtitle { color: var(--text-color); font-size: 0.9rem; margin-bottom: 0px; opacity: 0.8; }
+        .container { display: flex; flex-direction: column; gap: 12px; }
+        .panel { background: var(--bg-color); border-radius: 20px; padding: 16px 20px 20px 20px; box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); transition: all 0.3s ease; }
+        .panel:hover { box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light); }
+        .panel h2 { color: var(--accent-color); margin-bottom: 16px; font-size: 1.3rem; padding-bottom: 0px; border-bottom: 2px solid; border-image: linear-gradient(to right, var(--accent-color), transparent) 1; font-weight: 600; }
+        .title-group-row { display: flex; gap: 20px; flex-wrap: wrap; }
+        .title-group-row .form-group { flex: 1; min-width: 180px; margin-bottom: 0; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text-color); }
+        input[type="text"], .rich-editor { width: 100%; padding: 10px; background: var(--bg-color); border: none; border-radius: 15px; font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text-color); box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light); transition: all 0.3s ease; }
+        input[type="text"]:focus, .rich-editor:focus { outline: none; box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light), 0 0 0 3px rgba(79, 70, 229, 0.2); }
+        .rich-editor { min-height: auto; overflow-y: auto; line-height: 1.5; }
+        mark.hl-word { background-color: var(--highlight-color); border-bottom: 2px solid var(--highlight-border); border-radius: 4px; cursor: pointer; padding: 0 2px; color: inherit; }
+        mark.hl-word:focus-visible { outline: var(--focus-ring); }
+        mark.hl-word:hover { background-color: #a3e9b5; }
+        .citation-container { margin-bottom: 10px; padding: 18px; background: var(--bg-color); border-radius: 20px; box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); border-left: 5px solid var(--accent-color); transition: all 0.3s ease; }
+        .citation-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+        .citation-title { background: linear-gradient(145deg, var(--accent-light), var(--accent-color)); display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 40px; color: white; font-weight: 600; font-size: 0.85rem; box-shadow: 4px 4px 8px rgba(79, 70, 229, 0.3); }
+        .citation-title .counter { background: transparent; color: white; width: auto; height: auto; display: inline; margin-left: 4px; font-weight: bold; box-shadow: none; }
+        .source-line { text-align: right; margin-top: 10px; padding-top: 8px; font-style: italic; font-size: 0.9rem; color: #6b7280; }
+        .manques-list { margin-top: 10px; padding: 8px 12px; background: rgba(79, 70, 229, 0.08); border-radius: 12px; font-size: 0.8rem; border-left: 3px solid var(--accent-color); }
+        .manques-list strong { color: var(--accent-color); display: inline-flex; align-items: center; gap: 4px; }
+        .manques-list .manque-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--highlight-color); color: #166534; padding: 0px 1px 1px 7px; margin-bottom: 2px; border-radius: 20px; font-size: 0.75rem; border: 1px solid var(--highlight-border); cursor: pointer; transition: all 0.2s ease; }
+        .manques-list .manque-badge:hover { background: #fecaca; border-color: #dc2626; }
+        .manque-badge .remove-manque { cursor: pointer; font-weight: bold; font-size: 0.9rem; color: #dc2626; background: none; border: none; padding: 0 3px; border-radius: 50%; transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; }
+        .manque-badge .remove-manque:hover { background: #dc2626; color: white; transform: scale(1.1); }
+        .file-buttons-container { display: flex; gap: 12px; align-items: stretch; width: 100%; }
+        .file-btn-wrapper { flex: 1; min-width: 0; }
+        .file-btn-wrapper button, .file-input-label { width: 100%; margin: 0; display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; padding: 0 10px; font-size: 0.85rem; height: 46px; box-sizing: border-box; background: linear-gradient(145deg, #4f46e5, #4338ca); color: white; border: none; outline: none; border-radius: 15px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; box-shadow: 4px 4px 8px rgba(79, 70, 229, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.8); }
+        .file-btn-wrapper button svg:not(.auto-save-svg), .file-input-label svg { width: 22px; height: 22px; flex-shrink: 0; display: block; }
+        .file-btn-wrapper button svg.auto-save-svg { width: 17px; height: 17px; flex-shrink: 0; }
+        .file-btn-wrapper button:hover, .file-input-label:hover { transform: translateY(-2px); background: linear-gradient(145deg, #6366f1, #4f46e5); }
+        .file-input-label input { display: none; }
+        button { border: none; border-radius: 15px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; outline: none; }
+        .btn-add { color: white; background: linear-gradient(145deg, #8b5cf6, #7c3aed); margin-top: 8px; margin-bottom: 4px; padding: 10px 20px; height: auto; width: auto; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-add svg { width: 18px; height: 18px; stroke: white; stroke-width: 2; fill: none; }
+        .export-stats { border-radius: 18px; margin-bottom: 16px; padding-top: 5px 20px 0px 20px; }
+        .export-stats-grid { display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-around; }
+        .export-stat-card { text-align: center; padding: 12px 20px; background: var(--bg-color); border-radius: 15px; box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light); min-width: 100px; flex: 0 1 160px; }
+        .export-stat-value { font-size: 2rem; font-weight: bold; color: var(--accent-color); }
+        .export-stat-label { font-size: 0.8rem; color: var(--text-color); margin-top: 4px; }
+        .export-filename-group { margin: 18px 0; }
+        .export-filename-group input { width: 100%; padding: 10px 12px; font-size: 0.9rem; border: none; border-radius: 12px; background: var(--bg-color); box-shadow: inset 2px 2px 5px var(--shadow-dark), inset -2px -2px 5px var(--shadow-light); }
+        .toolbar-container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+        .format-toolbar { display: flex; gap: 6px; flex-wrap: wrap; }
+        .action-toolbar { display: flex; gap: 6px; flex-wrap: wrap; }
+        .format-btn { padding: 0 12px; font-size: 0.85rem; font-weight: 500; background: var(--bg-color); box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light); border-radius: 12px; cursor: pointer; transition: all 0.2s ease; min-width: 40px; text-align: center; height: 36px; color: var(--text-color); display: inline-flex; align-items: center; justify-content: center; gap: 4px; border: none; outline: none; line-height: 1; }
+        .format-btn svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.5; fill: none; }
+        .format-btn:hover { transform: translateY(-1px); background: var(--accent-light); color: white; }
+        .format-btn:hover svg { stroke: white; }
+        #alertContainer { min-height: 0; margin: 4px 0; display: flex; flex-direction: column; justify-content: center; position: fixed; top: 20px; right: 20px; z-index: 1000; }
+        .alert { padding: 10px 16px; border-radius: 18px; margin: 0; animation: fadeInAlert 0.2s ease; font-size: 0.85rem; font-weight: 500; text-align: center; backdrop-filter: blur(2px); }
+        @keyframes fadeInAlert { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+        .alert-success { background: #d1fae5; color: #065f46; border-left: 5px solid var(--success-color); }
+        .alert-error { background: #fee2e2; color: #7f1d1d; border-left: 5px solid var(--danger-color); }
+        .alert-info { background: #dbeafe; color: #1e40af; border-left: 5px solid var(--accent-color); }
+        [data-tooltip] { position: relative; cursor: help; }
+        [data-tooltip]:hover::after { content: attr(data-tooltip); position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 6px; background: white; color: #1e293b; font-size: 0.7rem; font-weight: 500; padding: 4px 8px; border-radius: 8px; white-space: nowrap; pointer-events: none; z-index: 10000; font-family: 'Inter', sans-serif; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); border: 1px solid #e2e8f0; }
+        @media (max-width: 800px) { .file-buttons-container { flex-direction: column; } .toolbar-container { flex-direction: column; align-items: stretch; } [data-tooltip]:hover::after { white-space: normal; max-width: 160px; } }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>application<br class="mobile-break"> « compléter »</h1>
+        <p class="subtitle">désigner les mots à trouver en les surlignant</p>
+    </header>
+
+    <div class="stepper-container">
+        <div class="stepper" id="stepper">
+            <div class="step" data-step="0" id="step0"><div class="step-number">1</div><div class="step-label">importer</div></div>
+            <div class="step" data-step="1" id="step1"><div class="step-number">2</div><div class="step-label">intituler</div></div>
+            <div class="step" data-step="2" id="step2"><div class="step-number">3</div><div class="step-label">éditer</div></div>
+            <div class="step" data-step="3" id="step3"><div class="step-number">4</div><div class="step-label">exporter</div></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="alertContainer"></div>
+
+        <div class="step-panel" data-panel="0">
+            <div class="panel">
+                <h2>1. gestion du fichier</h2>
+                <div class="file-buttons-container">
+                    <div class="file-btn-wrapper">
+                        <label class="file-input-label" data-tooltip="ouvrir un fichier .js existant">
+                            <input type="file" id="jsFileInput" class="file-input" accept=".js">
+                            <svg viewBox="0 0 16 16" width="100" height="100"><polyline points="3,6 3,2 8,2 10.5,4 10.5,6" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" /><line x1="10.5" y1="13.5" x2="3" y2="13.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" /><polyline points="10.5,6 10.5,13.5" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" /><line x1="1.75" y1="9.5" x2="6.75" y2="9.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" /><polyline points="5.5,8.25 6.75,9.5 5.5,10.75" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" /></svg>importer
+                        </label>
+                    </div>
+                    <div class="file-btn-wrapper">
+                        <button type="button" id="newFileBtn" data-tooltip="créer un nouveau fichier">
+                            <svg viewBox="0 0 16 16" width="100" height="100"><polyline points="3,13.5 3,2 8,2 10.5,4 10.5,6" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" /><line x1="6.0" y1="9.5" x2="9.0" y2="9.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" /><line x1="7.5" y1="8.0" x2="7.5" y2="11.0" stroke="currentColor" stroke-width="1" stroke-linecap="round" /><line x1="10.5" y1="13.5" x2="3" y2="13.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" /></svg>nouveau
+                        </button>
+                    </div>
+                    <div class="file-btn-wrapper">
+                        <button type="button" id="autoSaveBtn" data-tooltip="sauvegarde automatique">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" id="autoSaveIcon" class="auto-save-svg"><path d="M0 0h16v16H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M4.8 15.5v-3.2a1 1 0 0 1 1-1h4.4a1 1 0 0 1 1 1v3.2m3.2 0h-12.8a1 1 0 0 1-1-1v-12.8a1 1 0 0 1 1-1h9.1a1 1 0 0 1 .7.3l3.6 3.6a1 1 0 0 1 .3.7v9.2a1 1 0 0 1-1 1Z" /></svg>sauvegarde auto
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-panel" data-panel="1">
+            <div class="panel">
+                <h2>2. intituler les textes</h2>
+                <div class="title-group-row">
+                    <div class="form-group"><label>titre :</label><input type="text" id="appTitle" placeholder="ex: citations à compléter"></div>
+                    <div class="form-group"><label>sous-titre :</label><input type="text" id="appSubtitle" placeholder="ex: réviser le cours"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-panel" data-panel="2">
+            <div class="panel">
+                <h2>3. éditer les textes</h2>
+                <h3 style="font-size: 0.8rem; font-weight: normal; margin-top: -4px; opacity: 0.8;">les mots manquants sont surlignés</h3><br>
+                <div id="citationsContainer"></div>
+                <div class="add-button-container">
+                    <button type="button" class="btn-add" id="addCitation" data-tooltip="Ajouter un nouveau texte à compléter">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>ajouter un nouveau texte
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-panel" data-panel="3">
+            <div class="panel">
+                <h2>4. exporter le projet</h2>
+                <div class="export-stats">
+                    <div class="export-stats-grid">
+                        <div class="export-stat-card"><div class="export-stat-value" id="exportTextsCount">0</div><div class="export-stat-label">textes</div></div>
+                        <div class="export-stat-card"><div class="export-stat-value" id="exportTotalManques">0</div><div class="export-stat-label">lacunes</div></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exportFilename">nom du fichier exporté :</label>
+                    <input type="text" id="exportFilename" placeholder="fichier_ressource.js" value="fichier_ressource.js">
+                </div>
+            </div>
+        </div>
+
+        <div class="step-navigation">
+            <button class="nav-btn prev-btn" id="prevStep" disabled>&lt;</button>
+            <button class="nav-btn next-btn" id="nextStep">&gt;</button>
+        </div>
+    </div>
+
+    <script>
+        let citations = [];
+        let autoSaveEnabled = true;
+        let saveTimeout = null;
+        let historyStates = [];
+        let maxHistorySize = 50;
+        let isUndoRedoAction = false;
+        let currentStep = 0;
+        const totalSteps = 4;
+        
+        // Variables pour la préservation des commentaires
+        let originalFileLines = [];
+        let originalTitleLineIndex = -1;
+        let originalSubtitleLineIndex = -1;
+        let originalObjectLineIndices = [];
+
+        const appTitleInput = document.getElementById('appTitle');
+        const appSubtitleInput = document.getElementById('appSubtitle');
+        const citationsContainer = document.getElementById('citationsContainer');
+        const addCitationBtn = document.getElementById('addCitation');
+        const newFileBtn = document.getElementById('newFileBtn');
+        const autoSaveBtn = document.getElementById('autoSaveBtn');
+        const jsFileInput = document.getElementById('jsFileInput');
+        const alertContainer = document.getElementById('alertContainer');
+        const autoSaveIcon = document.getElementById('autoSaveIcon');
+        const prevBtn = document.getElementById('prevStep');
+        const nextBtn = document.getElementById('nextStep');
+        const steps = document.querySelectorAll('.step');
+        const exportFilename = document.getElementById('exportFilename');
+        const exportTextsCount = document.getElementById('exportTextsCount');
+        const exportTotalManques = document.getElementById('exportTotalManques');
+
+        function syncManqueAttributes(editor) {
+            if (!editor) return;
+            const hlWords = editor.querySelectorAll('.hl-word');
+            hlWords.forEach(hl => {
+                const currentText = hl.innerText;
+                const storedText = hl.getAttribute('data-manque-text');
+                if (currentText !== storedText) {
+                    hl.setAttribute('data-manque-text', currentText);
+                }
+            });
+        }
+
+        const undoIcon = `<svg viewBox="0 0 24 24" width="18" height="18"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6v5h5"/><path d="M6 11L9.5 7.5A3.6 3.6 0 1 1 15 13L9.5 20"/></g></svg>`;
+        const redoIcon = `<svg viewBox="0 0 24 24" width="18" height="18"><g transform="translate(24, 0) scale(-1, 1)" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6v5h5"/><path d="M6 11L9.5 7.5A3.6 3.6 0 1 1 15 13L9.5 20"/></g></svg>`;
+        const exportIcon = `<svg viewBox="0 0 16 16" width="100" height="100"><polyline points="3,13.5 3,2 8,2 10.5,4 10.5,6" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" /><line x1="6.5" y1="9.5" x2="11.5" y2="9.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" /><polyline points="10.25,8.25 11.5,9.5 10.25,10.75" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" /><line x1="10.5" y1="13.5" x2="3" y2="13.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" /></svg>`;
+        const deleteIcon = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+        const boldIcon = `<strong>G</strong>`;
+        const italicIcon = `<em>I</em>`;
+        const underlineIcon = `<u>S</u>`;
+        const nbspIcon = `␣`;
+        const highlightIcon = `<svg width="14" height="14" viewBox="0 0 32 32" fill="none"><rect x="4" y="25" width="24" height="5" fill="#eafc18" stroke="#eafc18" stroke-width="1"/><g transform="rotate(45 12 13)"><rect x="11.6" y="-4" width="8.8" height="23" rx="4" fill="none"/><path d="M11.6 16.9H20.4L18.9 19.7H13.1L11.6 16.9Z" fill="#A0A0A0"/><path d="M13.1 19.7H18.9L17.8 21.0L16.0 23.0H14.2L13.1 19.7Z" fill="#666"/></g></svg>`;
+        const searchIcon = `<svg width="18" height="18" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0m18 11l-6-6" /></svg>`;
+
+        function formatNumeroTroisChiffres(num) { return num < 0 ? '000' : (num < 10 ? `00${num}` : (num < 100 ? `0${num}` : `${num}`)); }
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;')); }
+        function cleanSourceCompletely(source) { if (!source) return ''; const div = document.createElement('div'); div.innerHTML = source; return (div.textContent || div.innerText || '').trim(); }
+        function generateUniqueId() { return Date.now() + '-' + Math.random().toString(36).substr(2, 9); }
+
+        function showAlert(msg, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `alert alert-${type}`;
+            div.innerHTML = msg;
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(div);
+            setTimeout(() => {
+                if (div.parentNode === alertContainer) {
+                    div.style.opacity = '0';
+                    div.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => {
+                        if (div.parentNode === alertContainer) alertContainer.removeChild(div);
+                    }, 300);
+                }
+            }, 3000);
+        }
+
+        function convertStorageToDisplay(storageText, existingIds = new Map()) { if (!storageText) return ''; let idx = 0; return storageText.replace(/\*\*([^*]+)\*\*/g, (match, content) => { const id = existingIds.has(idx) ? existingIds.get(idx) : generateUniqueId(); idx++; return `<mark class="hl-word" data-manque-id="${id}" data-manque-text="${escapeHtml(content)}" tabindex="0">${escapeHtml(content)}</mark>`; }); }
+        function convertDisplayToStorage(displayHtml) { if (!displayHtml) return ''; const div = document.createElement('div'); div.innerHTML = displayHtml; const sourceLine = div.querySelector('.source-line'); if (sourceLine) sourceLine.remove(); div.querySelectorAll('.hl-word').forEach(span => { const text = span.innerText; span.outerHTML = `**${text}**`; }); return div.innerHTML; }
+        function extractManquesWithIds(editor) { if (!editor) return []; return Array.from(editor.querySelectorAll('.hl-word')).map(span => ({ id: span.getAttribute('data-manque-id'), text: span.getAttribute('data-manque-text') || span.innerText })); }
+
+        function countTotalManques() { 
+            let total = 0; 
+            citations.forEach((cit, idx) => { 
+                const editor = document.getElementById(`editor_${idx}`); 
+                if (editor) total += editor.querySelectorAll('.hl-word').length; 
+            }); 
+            return total; 
+        }
+        
+        function updateExportStats() { 
+            exportTextsCount.textContent = citations.length; 
+            exportTotalManques.textContent = countTotalManques(); 
+        }
+
+        // NOUVELLE FONCTION : Applique un format en préservant les surlignages
+        function applyFormatToSelection(editor, tagName, formatName) {
+            if (!editor) return;
+            editor.focus();
+            const sel = window.getSelection();
+            if (sel.rangeCount === 0 || sel.getRangeAt(0).collapsed) {
+                if (!selectWordAtCursor(editor)) { 
+                    showAlert(`Placez le curseur dans un mot ou sélectionnez du texte pour appliquer/enlever le ${formatName}`, 'info'); 
+                    return; 
+                }
+            }
+            
+            const range = sel.getRangeAt(0);
+            if (!range.toString().trim()) { 
+                showAlert(`Sélectionnez du texte valide pour le ${formatName}`, 'info'); 
+                return; 
+            }
+            
+            // Vérifier si la sélection est déjà entièrement dans le format souhaité
+            let isAlreadyFormatted = false;
+            const commonAncestor = range.commonAncestorContainer;
+            let parent = commonAncestor.nodeType === Node.TEXT_NODE ? commonAncestor.parentElement : commonAncestor;
+            
+            while (parent && parent !== editor) {
+                if (parent.tagName && parent.tagName.toLowerCase() === tagName.toLowerCase()) {
+                    isAlreadyFormatted = true;
+                    break;
+                }
+                parent = parent.parentElement;
+            }
+            
+            if (isAlreadyFormatted) {
+                // Supprimer le format existant
+                let parentElement = commonAncestor.nodeType === Node.TEXT_NODE ? commonAncestor.parentElement : commonAncestor;
+                while (parentElement && parentElement !== editor) {
+                    if (parentElement.tagName && parentElement.tagName.toLowerCase() === tagName.toLowerCase()) break;
+                    parentElement = parentElement.parentElement;
+                }
+                if (parentElement && parentElement !== editor) {
+                    const fragment = document.createDocumentFragment();
+                    while (parentElement.firstChild) {
+                        fragment.appendChild(parentElement.firstChild);
+                    }
+                    parentElement.parentNode.replaceChild(fragment, parentElement);
+                    showAlert(`✅ ${formatName} enlevé`, 'success');
+                }
+            } else {
+                // Appliquer le format à la sélection
+                const contents = range.extractContents();
+                const wrapper = document.createElement(tagName);
+                wrapper.appendChild(contents);
+                range.insertNode(wrapper);
+                
+                // Restaurer la sélection dans le wrapper
+                sel.removeAllRanges();
+                const newRange = document.createRange();
+                newRange.selectNodeContents(wrapper);
+                sel.addRange(newRange);
+                showAlert(`✅ Texte mis en ${formatName}`, 'success');
+            }
+            
+            const citationIdx = citations.findIndex((_, idx) => { const ed = document.getElementById(`editor_${idx}`); return ed === editor; });
+            if (citationIdx !== -1) {
+                syncManqueAttributes(editor);
+                updateCitationFromEditor(editor, citationIdx);
+                updateManquesListDisplay(citationIdx);
+            }
+        }
+
+        function selectWordAtCursor(editor) {
+            const sel = window.getSelection();
+            if (!sel.rangeCount) return false;
+            const range = sel.getRangeAt(0);
+            if (!range.collapsed) return false;
+            let node = range.startContainer;
+            let offset = range.startOffset;
+            if (node.nodeType === Node.TEXT_NODE) {
+                const text = node.textContent;
+                if (text.length === 0) return false;
+                let start = offset, end = offset;
+                while (start > 0 && /[\w\u00C0-\u00FF\-']/.test(text[start - 1])) start--;
+                while (end < text.length && /[\w\u00C0-\u00FF\-']/.test(text[end])) end++;
+                if (start === end) return false;
+                const newRange = document.createRange();
+                newRange.setStart(node, start);
+                newRange.setEnd(node, end);
+                sel.removeAllRanges();
+                sel.addRange(newRange);
+                return true;
+            }
+            return false;
+        }
+
+        // MODIFIÉE : Fonction de surlignage qui préserve les formats existants
+        function performHighlightAction(editor, citationIdx) {
+            if (!editor) return;
+            editor.focus();
+            const sel = window.getSelection();
+            if (sel.rangeCount === 0 || sel.getRangeAt(0).collapsed) {
+                if (!selectWordAtCursor(editor)) {
+                    const spans = editor.querySelectorAll('.hl-word');
+                    if (!spans.length) { showAlert('Aucun mot surligné à supprimer', 'info'); return; }
+                    if (confirm(`Supprimer ${spans.length} surlignage(s) dans ce texte ?`)) {
+                        spans.forEach(s => {
+                            const parent = s.parentNode;
+                            const textNode = document.createTextNode(s.textContent);
+                            parent.replaceChild(textNode, s);
+                            parent.normalize();
+                        });
+                        syncManqueAttributes(editor);
+                        updateCitationFromEditor(editor, citationIdx);
+                        updateManquesListDisplay(citationIdx);
+                        showAlert(`✅ ${spans.length} surlignage(s) supprimé(s)`, 'success');
+                    }
+                    return;
+                }
+            }
+            
+            const range = sel.getRangeAt(0);
+            const text = range.toString();
+            if (!text.trim()) { showAlert('Sélectionnez du texte valide', 'info'); return; }
+            
+            // Vérifier si la sélection contient déjà un surlignage
+            let hasHighlight = false;
+            let node = range.commonAncestorContainer;
+            if (node.nodeType === Node.TEXT_NODE) node = node.parentElement;
+            let current = node;
+            while (current && current !== editor) { 
+                if (current.classList && current.classList.contains('hl-word')) { 
+                    hasHighlight = true; 
+                    break; 
+                } 
+                current = current.parentElement; 
+            }
+            
+            if (hasHighlight) {
+                // Supprimer le surlignage
+                let parentElement = node;
+                while (parentElement && parentElement !== editor) {
+                    if (parentElement.classList && parentElement.classList.contains('hl-word')) break;
+                    parentElement = parentElement.parentElement;
+                }
+                if (parentElement && parentElement !== editor) {
+                    const textNode = document.createTextNode(parentElement.textContent);
+                    parentElement.parentNode.replaceChild(textNode, parentElement);
+                    editor.normalize();
+                    syncManqueAttributes(editor);
+                    updateCitationFromEditor(editor, citationIdx);
+                    updateManquesListDisplay(citationIdx);
+                    showAlert(`✅ surlignage retiré`, 'success');
+                }
+            } else {
+                // Appliquer le surlignage
+                const id = generateUniqueId();
+                const span = document.createElement('mark');
+                span.className = 'hl-word';
+                span.setAttribute('data-manque-id', id);
+                span.setAttribute('data-manque-text', text);
+                
+                // Extraire le contenu formaté
+                const contents = range.extractContents();
+                span.appendChild(contents);
+                range.insertNode(span);
+                
+                // Restaurer la sélection
+                sel.removeAllRanges();
+                const newRange = document.createRange();
+                newRange.selectNodeContents(span);
+                sel.addRange(newRange);
+                
+                syncManqueAttributes(editor);
+                updateCitationFromEditor(editor, citationIdx);
+                updateManquesListDisplay(citationIdx);
+                showAlert('✅ texte surligné comme mot manquant', 'success');
+            }
+        }
+
+        function insertNonBreakingSpace(editor, citationIdx) {
+            if (!editor) return;
+            editor.focus();
+            const selection = window.getSelection();
+            if (selection.rangeCount === 0) return;
+            const range = selection.getRangeAt(0);
+            range.deleteContents();
+            const nbspNode = document.createTextNode('\u00A0');
+            range.insertNode(nbspNode);
+            range.setStartAfter(nbspNode);
+            range.setEndAfter(nbspNode);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            updateCitationFromEditor(editor, citationIdx);
+            showAlert('␣ espace insécable inséré', 'success');
+        }
+
+        function updateCitationFromEditor(editor, citationIdx) {
+            if (!editor || citationIdx >= citations.length) return;
+            const div = document.createElement('div');
+            div.innerHTML = editor.innerHTML;
+            const srcLine = div.querySelector('.source-line');
+            let src = '';
+            if (srcLine) { src = srcLine.innerHTML; srcLine.remove(); }
+            citations[citationIdx].texte = convertDisplayToStorage(div.innerHTML);
+            citations[citationIdx].source = src;
+            if (autoSaveEnabled) triggerAutoSave();
+            if (currentStep === 3) updateExportStats();
+        }
+
+        function triggerAutoSave() { if (saveTimeout) clearTimeout(saveTimeout); saveTimeout = setTimeout(() => saveToLocalStorage(), 1000); }
+        function saveToLocalStorage() { try { localStorage.setItem('appCompleter_backup', JSON.stringify({ title: appTitleInput.value, subtitle: appSubtitleInput.value, citations: citations.map(c => ({ texte: c.texte, source: c.source })), timestamp: Date.now() })); if (autoSaveEnabled && currentStep !== 3) showAlert('💾 sauvegarde automatique', 'success'); } catch(e) {} }
+        function loadFromLocalStorage() { try { const saved = localStorage.getItem('appCompleter_backup'); if (saved) { const data = JSON.parse(saved); if (data.title) appTitleInput.value = data.title; if (data.subtitle) appSubtitleInput.value = data.subtitle; if (data.citations?.length) { citations = data.citations.map(c => ({ texte: c.texte || '', source: cleanSourceCompletely(c.source || '') })); renderCitations(); showAlert('sauvegarde restaurée', 'success'); return true; } } } catch(e) {} return false; }
+
+        function updateAutoSaveButton() {
+            if (autoSaveEnabled) {
+                autoSaveIcon.innerHTML = `<path d="M0 0h16v16H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4.8 15.5v-3.2a1 1 0 0 1 1-1h4.4a1 1 0 0 1 1 1v3.2m3.2 0h-12.8a1 1 0 0 1-1-1v-12.8a1 1 0 0 1 1-1h9.1a1 1 0 0 1 .7.3l3.6 3.6a1 1 0 0 1 .3.7v9.2a1 1 0 0 1-1 1Z" />`;
+            } else {
+                autoSaveIcon.innerHTML = `<path d="M0 0h16v16H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4.8 15.5v-3.2a1 1 0 0 1 1-1h4.4a1 1 0 0 1 1 1v3.2m3.2 0h-12.8a1 1 0 0 1-1-1v-12.8a1 1 0 0 1 1-1h9.1a1 1 0 0 1 .7.3l3.6 3.6a1 1 0 0 1 .3.7v9.2a1 1 0 0 1-1 1Z" /><line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>`;
+            }
+        }
+        function toggleAutoSave() { autoSaveEnabled = !autoSaveEnabled; updateAutoSaveButton(); showAlert(`sauvegarde automatique ${autoSaveEnabled ? 'activée' : 'désactivée'}`, 'info'); if (autoSaveEnabled) triggerAutoSave(); }
+
+        function pushToHistory(citationIdx, content) { if (isUndoRedoAction) return; if (!historyStates[citationIdx]) historyStates[citationIdx] = { undoStack: [], redoStack: [] }; const hist = historyStates[citationIdx]; const last = hist.undoStack[hist.undoStack.length - 1]; if (last === content) return; hist.undoStack.push(content); while (hist.undoStack.length > maxHistorySize) hist.undoStack.shift(); hist.redoStack = []; }
+        function undoCitation(citationIdx) { const hist = historyStates[citationIdx]; if (!hist || hist.undoStack.length === 0) { showAlert('⚠️ Rien à annuler', 'info'); return false; } const editor = document.getElementById(`editor_${citationIdx}`); if (!editor) return false; const cur = editor.innerHTML; const prev = hist.undoStack.pop(); if (prev) { hist.redoStack.push(cur); isUndoRedoAction = true; editor.innerHTML = prev; isUndoRedoAction = false; updateCitationFromEditor(editor, citationIdx); updateManquesListDisplay(citationIdx); showAlert('↩️ Annulation', 'success'); return true; } return false; }
+        function redoCitation(citationIdx) { const hist = historyStates[citationIdx]; if (!hist || hist.redoStack.length === 0) { showAlert('⚠️ Rien à rétablir', 'info'); return false; } const editor = document.getElementById(`editor_${citationIdx}`); if (!editor) return false; const cur = editor.innerHTML; const next = hist.redoStack.pop(); if (next) { hist.undoStack.push(cur); isUndoRedoAction = true; editor.innerHTML = next; isUndoRedoAction = false; updateCitationFromEditor(editor, citationIdx); updateManquesListDisplay(citationIdx); showAlert('▶️ Rétablissement', 'success'); return true; } return false; }
+
+        function updateManquesListDisplay(idx) {
+            const editor = document.getElementById(`editor_${idx}`);
+            const div = document.getElementById(`manques_${idx}`);
+            if (!editor || !div) return;
+            const manques = extractManquesWithIds(editor);
+            const count = manques.length;
+            div.innerHTML = '';
+            const containerSpan = document.createElement('span');
+            const strongEl = document.createElement('strong');
+            strongEl.innerHTML = `<span class="search-icon">${searchIcon}</span> ${count === 0 ? 'aucun mot manquant' : (count === 1 ? '1 mot manquant :' : `${count} mots manquants :`)}`;
+            containerSpan.appendChild(strongEl);
+            if (manques.length > 0) {
+                const spaceAfterText = document.createTextNode(' ');
+                containerSpan.appendChild(spaceAfterText);
+                manques.forEach((m, index) => {
+                    const badge = document.createElement('span');
+                    badge.className = 'manque-badge';
+                    badge.setAttribute('data-manque-id', m.id);
+                    badge.innerHTML = `${escapeHtml(m.text)}<span class="remove-manque" data-manque-id="${m.id}" data-idx="${idx}" tabindex="0">×</span>`;
+                    containerSpan.appendChild(badge);
+                    if (index < manques.length - 1) { const badgeSpace = document.createTextNode(' '); containerSpan.appendChild(badgeSpace); }
+                });
+            }
+            div.appendChild(containerSpan);
+            div.querySelectorAll('.remove-manque').forEach(btn => btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const mid = btn.getAttribute('data-manque-id');
+                const i = parseInt(btn.getAttribute('data-idx'));
+                const ed = document.getElementById(`editor_${i}`);
+                if (ed && mid) {
+                    const span = ed.querySelector(`.hl-word[data-manque-id="${mid}"]`);
+                    if (span) {
+                        span.parentNode.replaceChild(document.createTextNode(span.textContent), span);
+                        ed.normalize();
+                        syncManqueAttributes(ed);
+                        updateCitationFromEditor(ed, i);
+                        updateManquesListDisplay(i);
+                        showAlert('Mot supprimé', 'success');
+                    }
+                }
+            }));
+            if (currentStep === 3) updateExportStats();
+        }
+
+        function createToolbar(editorId, idx) {
+            const container = document.createElement('div');
+            container.className = 'toolbar-container';
+            const left = document.createElement('div');
+            left.className = 'format-toolbar';
+            const btnWrapper = (html, tooltip, onClick) => { const btn = document.createElement('button'); btn.innerHTML = html; btn.className = 'format-btn'; btn.setAttribute('data-tooltip', tooltip); btn.onclick = onClick; return btn; };
+            left.appendChild(btnWrapper(highlightIcon, 'surligner (ctrl+H)', () => { const editor = document.getElementById(editorId); if (editor) performHighlightAction(editor, idx); }));
+            left.appendChild(btnWrapper(boldIcon, 'gras (ctrl+G)', () => { const editor = document.getElementById(editorId); if (editor) applyFormatToSelection(editor, 'strong', 'gras'); }));
+            left.appendChild(btnWrapper(italicIcon, 'italique (ctrl+I)', () => { const editor = document.getElementById(editorId); if (editor) applyFormatToSelection(editor, 'em', 'italique'); }));
+            left.appendChild(btnWrapper(underlineIcon, 'souligné (ctrl+S)', () => { const editor = document.getElementById(editorId); if (editor) applyFormatToSelection(editor, 'u', 'souligné'); }));
+            left.appendChild(btnWrapper(nbspIcon, 'espace insécable (ctrl+espace)', () => { const editor = document.getElementById(editorId); if (editor) insertNonBreakingSpace(editor, idx); }));
+            const right = document.createElement('div');
+            right.className = 'action-toolbar';
+            right.appendChild(btnWrapper(undoIcon, 'annuler (ctrl+Z)', () => undoCitation(idx)));
+            right.appendChild(btnWrapper(redoIcon, 'rétablir (ctrl+Y)', () => redoCitation(idx)));
+            right.appendChild(btnWrapper(exportIcon, 'exporter tous les textes', () => performExport()));
+            right.appendChild(btnWrapper(deleteIcon, 'supprimer ce texte', () => deleteCitation(idx)));
+            container.append(left, right);
+            return container;
+        }
+
+        function buildDisplayContent(cit, idx) {
+            const ids = new Map();
+            if (cit.texte) {
+                const tmp = document.createElement('div');
+                tmp.innerHTML = convertStorageToDisplay(cit.texte);
+                tmp.querySelectorAll('.hl-word').forEach((s, i) => ids.set(i, s.getAttribute('data-manque-id')));
+            }
+            let html = convertStorageToDisplay(cit.texte || '', ids);
+            if (cit.source?.trim()) {
+                let src = cit.source;
+                const dec = document.createElement('textarea');
+                dec.innerHTML = src;
+                src = dec.value.replace(/<[^>]*>/g, '').trim();
+                html += `<div class="source-line">${escapeHtml(src)}</div>`;
+            }
+            return html;
+        }
+
+        function renderCitations() {
+            citationsContainer.innerHTML = '';
+            if (!citations.length) { citationsContainer.innerHTML = '<p style="text-align:center;padding:20px;">⚠️ aucun texte — cliquer sur "+ ajouter"</p>'; updateExportStats(); return; }
+            citations.forEach((cit, i) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'citation-container';
+                const header = document.createElement('div');
+                header.className = 'citation-header';
+                const title = document.createElement('div');
+                title.className = 'citation-title';
+                title.appendChild(document.createTextNode('texte n°'));
+                const cnt = document.createElement('span');
+                cnt.className = 'counter';
+                cnt.textContent = formatNumeroTroisChiffres(i + 1);
+                title.appendChild(cnt);
+                header.appendChild(title);
+                wrapper.appendChild(header);
+                const group = document.createElement('div');
+                group.className = 'form-group';
+                const editor = document.createElement('div');
+                editor.className = 'rich-editor';
+                editor.setAttribute('contenteditable', 'true');
+                editor.id = `editor_${i}`;
+                editor.innerHTML = buildDisplayContent(cit, i);
+                if (!historyStates[i]) historyStates[i] = { undoStack: [], redoStack: [] };
+                if (!historyStates[i].undoStack.length) historyStates[i].undoStack.push(editor.innerHTML);
+                const manquesDiv = document.createElement('div');
+                manquesDiv.className = 'manques-list';
+                manquesDiv.id = `manques_${i}`;
+                const tb = createToolbar(`editor_${i}`, i);
+                let timeout;
+                editor.addEventListener('input', () => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        syncManqueAttributes(editor);
+                        pushToHistory(i, editor.innerHTML);
+                        updateCitationFromEditor(editor, i);
+                        updateManquesListDisplay(i);
+                    }, 200);
+                });
+                editor.addEventListener('keydown', (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'z') { e.preventDefault(); undoCitation(i); return; }
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'y') { e.preventDefault(); redoCitation(i); return; }
+                    if (e.ctrlKey && e.key === 'h') { e.preventDefault(); performHighlightAction(editor, i); }
+                    if (e.ctrlKey && e.key === 'g') { e.preventDefault(); applyFormatToSelection(editor, 'strong', 'gras'); }
+                    if (e.ctrlKey && e.key === 'i') { e.preventDefault(); applyFormatToSelection(editor, 'em', 'italique'); }
+                    if (e.ctrlKey && e.key === 's') { e.preventDefault(); applyFormatToSelection(editor, 'u', 'souligné'); }
+                    if (e.ctrlKey && e.key === ' ') { e.preventDefault(); insertNonBreakingSpace(editor, i); }
+                });
+                group.append(tb, editor);
+                wrapper.append(group, manquesDiv);
+                citationsContainer.appendChild(wrapper);
+                setTimeout(() => updateManquesListDisplay(i), 10);
+            });
+            updateExportStats();
+        }
+
+        function deleteCitation(i) { citations.splice(i, 1); historyStates.splice(i, 1); renderCitations(); if (autoSaveEnabled) triggerAutoSave(); showAlert('texte supprimé', 'info'); updateExportStats(); }
+        function addNewCitation() { citations.push({ texte: '', source: '' }); renderCitations(); showAlert('nouveau texte', 'success'); if (autoSaveEnabled) triggerAutoSave(); updateExportStats(); }
+        
+        function createNewFile() { 
+            if (confirm('le nouveau fichier effacera les modifications en cours ?')) { 
+                appTitleInput.value = 'textes à compléter'; 
+                appSubtitleInput.value = 'réviser le cours'; 
+                citations = []; 
+                historyStates = []; 
+                originalFileLines = [];
+                originalTitleLineIndex = -1;
+                originalSubtitleLineIndex = -1;
+                originalObjectLineIndices = [];
+                citations.push({ texte: 'Voici un **exemple** de texte avec un **mot** manquant.', source: 'Source' }); 
+                renderCitations(); 
+                if (autoSaveEnabled) triggerAutoSave(); 
+                localStorage.removeItem('appCompleter_backup'); 
+                showAlert('Nouveau fichier créé', 'success'); 
+                updateExportStats(); 
+            } 
+        }
+
+        async function parseJSFile(file) {
+            try {
+                const content = await file.text();
+                const lines = content.split('\n');
+                
+                // Sauvegarde complète
+                originalFileLines = [...lines];
+                originalTitleLineIndex = -1;
+                originalSubtitleLineIndex = -1;
+                originalObjectLineIndices = [];
+                
+                // Analyse des lignes
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    
+                    if (line.match(/const\s+title\s*=/)) {
+                        originalTitleLineIndex = i;
+                        const match = line.match(/["'](.+?)["']/);
+                        if (match) appTitleInput.value = match[1];
+                    }
+                    
+                    if (line.match(/const\s+subtitle\s*=/)) {
+                        originalSubtitleLineIndex = i;
+                        const match = line.match(/["'](.+?)["']/);
+                        if (match) appSubtitleInput.value = match[1];
+                    }
+                    
+                    if (line.match(/\{\s*texte:\s*["']/)) {
+                        originalObjectLineIndices.push(i);
+                    }
+                }
+                
+                // Extraction des citations pour l'édition
+                const arrMatch = content.match(/const\s+textesAvecTrous\s*=\s*(\[[\s\S]*?\])\s*;/);
+                if (!arrMatch) throw new Error('Tableau textesAvecTrous manquant');
+                
+                const arrayStr = arrMatch[1];
+                const results = [];
+                const regex = /\{\s*texte:\s*["']([\s\S]*?)["'],\s*source:\s*["']([\s\S]*?)["']\s*\}/g;
+                let match;
+                while ((match = regex.exec(arrayStr)) !== null) {
+                    let texte = match[1];
+                    let source = match[2];
+                    texte = texte.replace(/\\n/g, '\n').replace(/\\r/g, '\r').replace(/\\"/g, '"').replace(/\\'/g, "'");
+                    source = source.replace(/\\n/g, '\n').replace(/\\r/g, '\r').replace(/\\"/g, '"').replace(/\\'/g, "'");
+                    results.push({ texte: texte, source: source });
+                }
+                
+                if (results.length === 0) throw new Error('Aucun objet trouvé dans le tableau');
+                
+                citations = results;
+                historyStates = [];
+                renderCitations();
+                if (autoSaveEnabled) triggerAutoSave();
+                showAlert(`✅ chargé : ${citations.length} texte(s) - Les commentaires sont préservés !`, 'success');
+                updateExportStats();
+                if (currentStep !== 1) {
+                    currentStep = 1;
+                    updateStepper();
+                    showAlert('👣 Passage automatique à l\'étape "intituler"', 'info');
+                }
+            } catch (e) {
+                showAlert(`❌ erreur: ${e.message}`, 'error');
+                console.error(e);
+            }
+        }
+
+        function loadSelectedFile() { 
+            if (!jsFileInput.files.length) { 
+                showAlert('sélectionnez un fichier .js', 'info'); 
+                return; 
+            }
+            parseJSFile(jsFileInput.files[0]);
+        }
+        
+        function setupDragAndDrop() { 
+            const zone = document.querySelector('.step-panel[data-panel="0"] .panel'); 
+            if (!zone) return; 
+            zone.addEventListener('dragover', e => { 
+                e.preventDefault(); 
+                zone.style.opacity = '0.7'; 
+            }); 
+            zone.addEventListener('dragleave', () => zone.style.opacity = '1'); 
+            zone.addEventListener('drop', async e => { 
+                e.preventDefault(); 
+                zone.style.opacity = '1'; 
+                const file = e.dataTransfer.files[0]; 
+                if (file && file.name.endsWith('.js')) { 
+                    await parseJSFile(file);
+                } else showAlert('Déposez un .js', 'error'); 
+            }); 
+        }
+
+        function performExport() {
+            const title = appTitleInput.value || 'textes à compléter';
+            const subtitle = appSubtitleInput.value || '';
+            const validTexts = citations.filter(c => c.texte?.trim());
+            if (!validTexts.length) { 
+                showAlert('⚠️ Aucun texte à exporter', 'error'); 
+                return false; 
+            }
+            
+            let output = '';
+            
+            if (originalFileLines.length > 0) {
+                const newLines = [];
+                let objectIndex = 0;
+                const totalObjects = validTexts.length;
+                
+                for (let i = 0; i < originalFileLines.length; i++) {
+                    let line = originalFileLines[i];
+                    
+                    if (i === originalTitleLineIndex) {
+                        newLines.push(`const title = "${title.replace(/"/g, '\\"')}";`);
+                    }
+                    else if (i === originalSubtitleLineIndex) {
+                        newLines.push(`const subtitle = "${subtitle.replace(/"/g, '\\"')}";`);
+                    }
+                    else if (originalObjectLineIndices.includes(i) && objectIndex < validTexts.length) {
+                        const c = validTexts[objectIndex];
+                        const texteClean = (c.texte || '').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
+                        const sourceClean = (c.source || '').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
+                        
+                        let originalHasComma = false;
+                        if (objectIndex < totalObjects - 1) {
+                            const trimmedLine = line.trim();
+                            originalHasComma = trimmedLine.endsWith(',');
+                        }
+                        
+                        let newLine = `\t{ texte: "${texteClean}", source: "${sourceClean}" }`;
+                        if (objectIndex < totalObjects - 1 && originalHasComma) {
+                            newLine += ',';
+                        }
+                        newLines.push(newLine);
+                        objectIndex++;
+                    }
+                    else {
+                        if (!line.includes('Généré le')) {
+                            newLines.push(line);
+                        }
+                    }
+                }
+                
+                output = newLines.join('\n');
+                output = output.replace(/\/\/ Généré le .*/, `// Généré le ${new Date().toLocaleString()}`);
+            } else {
+                output = `// Généré le ${new Date().toLocaleString()}\n`;
+                output += `const title = "${title.replace(/"/g, '\\"')}";\n`;
+                output += `const subtitle = "${subtitle.replace(/"/g, '\\"')}";\n`;
+                output += `const textesAvecTrous = [\n`;
+                validTexts.forEach((c, idx) => {
+                    const texteClean = (c.texte || '').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
+                    const sourceClean = (c.source || '').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
+                    output += `\t{ texte: "${texteClean}", source: "${sourceClean}" }`;
+                    if (idx < validTexts.length - 1) output += ',';
+                    output += `\n`;
+                });
+                output += `];\n`;
+                output += `if (typeof module !== 'undefined') module.exports = { title, subtitle, textesAvecTrous };\n`;
+            }
+            
+            let filename = exportFilename.value.trim();
+            if (!filename) filename = 'fichier_ressource.js';
+            if (!filename.toLowerCase().endsWith('.js')) filename += '.js';
+            const blob = new Blob([output], { type: 'application/javascript' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(a.href);
+            showAlert(`✅ Fichier exporté : ${filename} (${validTexts.length} textes, ${countTotalManques()} mots manquants)`, 'success');
+            return true;
+        }
+
+        function goToStep(step) { 
+            if (step >= 0 && step < totalSteps) { 
+                if (step === 3) {
+                    const exportReussi = performExport();
+                    if (exportReussi) {
+                        currentStep = step;
+                        updateStepper();
+                    }
+                } else {
+                    currentStep = step;
+                    updateStepper();
+                }
+            } 
+        }
+        
+        function nextStep() { 
+            if (currentStep < totalSteps - 1) { 
+                if (currentStep + 1 === 3) {
+                    const exportReussi = performExport();
+                    if (exportReussi) {
+                        currentStep++; 
+                        updateStepper();
+                    }
+                } else {
+                    currentStep++; 
+                    updateStepper();
+                }
+            } 
+        }
+        
+        function prevStep() { 
+            if (currentStep > 0) { 
+                currentStep--; 
+                updateStepper(); 
+            } 
+        }
+
+        function updateStepper() {
+            steps.forEach((step, idx) => {
+                step.classList.remove('active', 'completed');
+                if (idx < currentStep) step.classList.add('completed');
+                else if (idx === currentStep) step.classList.add('active');
+            });
+            document.querySelectorAll('.step-panel').forEach((panel, idx) => {
+                if (idx === currentStep) panel.classList.add('active-panel');
+                else panel.classList.remove('active-panel');
+            });
+            prevBtn.disabled = currentStep === 0;
+            
+            if (currentStep === totalSteps - 1) {
+                nextBtn.classList.add('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                nextBtn.innerHTML = '&gt;';
+                nextBtn.style.fontSize = '1.6rem';
+                nextBtn.style.width = '40px';
+                
+                nextBtn.style.borderRadius = '50%';
+                nextBtn.onclick = () => { nextStep(); };
+                nextBtn.setAttribute('data-tooltip', 'étape suivante');
+            }
+        }
+        
+        steps.forEach((step, idx) => { 
+            step.addEventListener('click', () => goToStep(idx)); 
+        });
+        prevBtn.addEventListener('click', prevStep);
+
+        addCitationBtn.addEventListener('click', addNewCitation);
+        newFileBtn.addEventListener('click', createNewFile);
+        autoSaveBtn.addEventListener('click', toggleAutoSave);
+        jsFileInput.addEventListener('change', loadSelectedFile);
+        window.addEventListener('beforeunload', () => { if (autoSaveEnabled) saveToLocalStorage(); });
+        if (!loadFromLocalStorage()) createNewFile();
+        setupDragAndDrop();
+        updateAutoSaveButton();
+        updateStepper();
+
+        appTitleInput.addEventListener('input', () => { if (currentStep === 3) updateExportStats(); });
+        appSubtitleInput.addEventListener('input', () => { if (currentStep === 3) updateExportStats(); });
+        exportFilename.addEventListener('input', () => {});
+    </script>
+</body>
+
+</html>
