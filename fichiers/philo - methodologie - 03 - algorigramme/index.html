@@ -15,12 +15,25 @@
 		--shadow-in: inset 3px 3px 6px rgba(0,0,0,.1), inset -3px -3px 6px rgba(255,255,255,.9);
 		--primary-color: #0169D9;
 		--model-primary: #e74c3c;
+		--text-panel-height: 0px;
+		--canvas-offset: 50px;
 	}
 
 	* { box-sizing: border-box; }
 	html, body { height:100%; margin:0; font-family:var(--font); background:var(--bg); overflow-x:hidden; -webkit-tap-highlight-color: transparent; }
 	
-	#canvas { width:100vw; height:100vh; display:block; cursor:grab; touch-action:none; position:fixed; top:0; left:0; z-index:1; }
+	#canvas { 
+		width:100vw; 
+		height: calc(100vh - var(--canvas-offset));
+		display:block; 
+		cursor:grab; 
+		touch-action:none; 
+		position:fixed; 
+		top: var(--canvas-offset);
+		left:0; 
+		z-index:1; 
+	}
+	
 	#canvas.panning { cursor:grabbing; }
 	#canvas.edge-mode { cursor:crosshair; }
 
@@ -44,7 +57,7 @@
 	.btn-home .icon-wrapper { width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; }
 	.btn-home:hover .icon-wrapper { animation: spin360 2s infinite linear; }
 	@keyframes spin360 { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
-	.btn-reload:hover svg { animation: rotate 1s linear; }
+	.btn-new:hover svg { animation: rotate 1s linear; }
 	@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 	.menu-icon { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; transition: transform 0.3s ease; color: currentColor; }
 	.menu-icon svg { width: 24px; height: 24px; display: block; stroke: currentColor; fill: none; overflow: visible; }
@@ -95,8 +108,8 @@
 
 	.menu-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 998; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
 	.menu-overlay.open { opacity: 1; visibility: visible; }
-	body.menu-open > *:not(.slide-menu):not(.submenu):not(.menu-overlay):not(.toast-container):not(.tools-container):not(.toolbar-wrapper):not(.sequences-dropdown) { filter: blur(4px); pointer-events: none; transition: filter 0.3s ease; }
-	body.menu-open .slide-menu, body.menu-open .submenu, body.menu-open .menu-overlay, body.menu-open .sequences-dropdown { filter: none !important; pointer-events: auto !important; }
+	body.menu-open > *:not(.slide-menu):not(.submenu):not(.menu-overlay):not(.toast-container):not(.tools-container):not(.toolbar-wrapper):not(.sequences-dropdown):not(.text-panel-wrapper) { filter: blur(4px); pointer-events: none; transition: filter 0.3s ease; }
+	body.menu-open .slide-menu, body.menu-open .submenu, body.menu-open .menu-overlay, body.menu-open .sequences-dropdown, body.menu-open .text-panel-wrapper { filter: none !important; pointer-events: auto !important; }
 
 	.slide-menu { position: fixed; top: 0; right: -300px; width: 280px; height: 100vh; background-color: var(--bg); z-index: 999; padding: 20px; display: flex; flex-direction: column; border-radius: 20px 0 0 20px; box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1); transition: right 0.3s ease; overflow-y: auto; }
 	.slide-menu.open { right: 0; }
@@ -184,6 +197,94 @@
 	.menu-btn-sm.anim-connect:hover .connect-svg { animation: connectPulse 1s ease-in-out infinite; }
 	@keyframes connectPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } }
 
+	/* ===== PANNEAU DE TEXTE ===== */
+	.text-panel-wrapper {
+		position: fixed;
+		top: 76px;
+		left: 0;
+		right: 0;
+		z-index: 50;
+		pointer-events: none;
+		display: flex;
+		justify-content: center;
+		padding: 8px 12px 0;
+		transition: opacity 0.3s ease;
+	}
+	.text-panel-wrapper.hidden { display: none !important; }
+	.text-panel-wrapper > * { pointer-events: auto; }
+	.text-panel-container {
+		background: var(--panel);
+		border-radius: 12px;
+		box-shadow: var(--shadow-out);
+		width: 100%;
+		max-width: 800px;
+		display: flex;
+		flex-direction: column;
+		transition: box-shadow 0.3s ease;
+	}
+	.text-panel-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px 16px;
+		background: transparent;
+		flex-shrink: 0;
+	}
+	.text-panel-header h3 {
+		margin: 0;
+		font-size: 0.85rem;
+		font-weight: bold;
+		text-transform: uppercase;
+		color: var(--model-primary);
+		letter-spacing: 0.5px;
+	}
+	.text-toggle-btn {
+		padding: 4px;
+		color: var(--font-color);
+		background: none;
+		border: none;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		border-radius: 50%;
+		transition: background 0.2s ease;
+	}
+	.text-toggle-btn:hover { background: rgba(0,0,0,0.05); }
+	.text-toggle-btn svg { transition: transform 0.3s ease; }
+	.text-toggle-btn.collapsed svg { transform: rotate(180deg); }
+	.text-panel-content {
+		padding: 0 16px 12px;
+		overflow-y: auto;
+		transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+		max-height: 50vh;
+		opacity: 1;
+	}
+	.text-panel-content.collapsed {
+		max-height: 0;
+		padding: 0 16px;
+		opacity: 0;
+		overflow: hidden;
+	}
+	.text-panel-content blockquote {
+		margin: 0;
+		padding: 0;
+		font-size: 0.9rem;
+		line-height: 1.5;
+		text-align: justify;
+		color: var(--font-color);
+		white-space: pre-wrap;
+	}
+	.text-panel-source {
+		font-size: 0.8rem;
+		color: #666;
+		text-align: right;
+		margin-top: 8px;
+		padding-top: 8px;
+		font-style: italic;
+	}
+
 	@media (max-width: 768px) {
 		.toolbar { height: 64px; padding: 6px 12px; }
 		.btn, .btn-home .icon-wrapper, .btn-sequences { width: 46px; height: 46px; }
@@ -197,6 +298,7 @@
 		.menu-btn-sm > svg { width: 14px; height: 14px; }
 		.slide-menu, .submenu { width: 260px; right: -280px; padding: 14px 16px; }
 		.sequences-dropdown { top: 75px; left: 12px; }
+		.text-panel-wrapper { top: 64px; }
 	}
 	@media (max-width: 480px) {
 		.toolbar-title { font-size: 1.2rem; }
@@ -232,7 +334,14 @@
 				<svg class="plate-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g class="plate-group"><line x1="4" y1="19" x2="20" y2="19"/><line x1="4" y1="19" x2="4" y2="16"/><line x1="20" y1="19" x2="20" y2="16"/></g></svg>
 			</button>
 			<button class="btn btn-home" data-action="home" data-tip="accueil"><div class="icon-wrapper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg></div></button>
-			<button class="btn btn-reload" data-action="reload" data-tip="recharger la page"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
+			<button class="btn btn-new" data-action="new" data-tip="nouvel algorigramme">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+					<polyline points="14 2 14 8 20 8"/>
+					<line x1="12" y1="18" x2="12" y2="12"/>
+					<line x1="9" y1="15" x2="15" y2="15"/>
+				</svg>
+			</button>
 		</div>
 		<div class="toolbar-center">
 			<div class="toolbar-title">algorigramme</div>
@@ -247,6 +356,23 @@
 		</div>
 	</div>
 </div>
+
+<!-- ===== PANNEAU DE TEXTE DYNAMIQUE ===== -->
+<div class="text-panel-wrapper hidden" id="textPanelWrapper">
+	<div class="text-panel-container">
+		<div class="text-panel-header">
+			<h3 id="textPanelTitle">texte</h3>
+			<button id="toggleTextBtn" class="text-toggle-btn collapsed" data-tip="montrer le texte" aria-label="Montrer ou cacher le texte">
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+			</button>
+		</div>
+		<div class="text-panel-content collapsed">
+			<blockquote id="textPanelContent"></blockquote>
+			<div class="text-panel-source" id="textPanelSource"></div>
+		</div>
+	</div>
+</div>
+<!-- ======================================== -->
 
 <div class="menu-overlay" id="menuOverlay"></div>
 
@@ -314,7 +440,7 @@
 	<div class="menu-header"><button class="submenu-close" data-submenu="shortcuts" data-tip="fermer"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
 	<div class="submenu-title">raccourcis</div>
 	<div class="submenu-content">
-		<div class="settings-info"><table class="shortcuts-table"><tr><td class="key-combo"><kbd>Ctrl+Z</kbd></td><td>annuler</td></tr><tr><td class="key-combo"><kbd>Ctrl+Y</kbd></td><td>refaire</td></tr><tr><td class="key-combo"><kbd>Suppr</kbd></td><td>effacer sélection</td></tr><tr><td class="key-combo"><kbd>Molette</kbd></td><td>zoomer / dézoomer</td></tr><tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer menus</td></tr><tr><td class="key-combo"><kbd>F</kbd></td><td>plein écran</td></tr><tr><td class="key-combo"><kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr></table></div>
+		<div class="settings-info"><table class="shortcuts-table"><tr><td class="key-combo"><kbd>Ctrl+Z</kbd></td><td>annuler</td></tr><tr><td class="key-combo"><kbd>Ctrl+Y</kbd></td><td>refaire</td></tr><tr><td class="key-combo"><kbd>Suppr</kbd></td><td>effacer sélection</td></tr><tr><td class="key-combo"><kbd>Molette</kbd></td><td>zoomer / dézoomer</td></tr><tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer menus</td></tr><tr><td class="key-combo"><kbd>F</kbd></td><td>plein écran</td></tr><tr><td class="key-combo"><kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr><tr><td class="key-combo"><kbd>N</kbd></td><td>nouvel algorigramme</td></tr></table></div>
 	</div>
 </div>
 
@@ -390,7 +516,7 @@
 </svg>
 
 <script>
-const INITIAL_DATA = {
+const EMPTY_DATA = {
 	nodeDataArray: [
 	{key:"05694500-79ef-46f4-a61f-08a2221311b1", text:"intitulé du sujet", loc:"638.57 106.15", category:"rectangle", color:"#f6e58d", borderColor:"#AA9941", width:117, height:50},
 	{key:"ba3cc6c8-ca87-4394-9191-5c313f5a47e6", text:"problématisation :\nchoix entre les options", loc:"638.57 206.19", category:"diamond", color:"#74b9ff", borderColor:"#286DB3", width:260, height:82},
@@ -410,6 +536,9 @@ const INITIAL_DATA = {
 	{from:"e3a8ca39-1628-444c-8f5f-1c607837bfbc", to:"405c0c74-f9f2-44af-a907-3c048ceea747"}
 	]
 };
+
+// Définition de l'algorigramme par défaut à l'ouverture
+const algorigramme = EMPTY_DATA;
 
 const svg = document.getElementById("canvas");
 const viewport = document.getElementById("viewport");
@@ -491,6 +620,44 @@ function updateSequencesDropdown() {
 	document.getElementById('ddLoadBtnInner')?.addEventListener('click', function(e) { e.stopPropagation(); closeSequencesDropdown(); importfileLocal.click(); });
 }
 
+// ===== EXTRACTION DYNAMIQUE DU TEXTE ET DE LA SOURCE =====
+function extractTextData(src) {
+    let texte = "";
+    let source = "";
+    
+    const rePhil = /(?:const|let|var)\s+philosophyData\s*=\s*\{/g;
+    let m = rePhil.exec(src);
+    if (m && !isInsideComment(src, m.index)) {
+        const result = tryExtractAt(src, m);
+        if (result) {
+            try {
+                const philData = (0, eval)("(" + result.blocText + ")");
+                texte = philData.texte || "";
+                source = philData.source || "";
+            } catch(e) {
+                console.error("Erreur extraction philosophyData:", e);
+            }
+        }
+    }
+    
+    if (!texte) {
+        const reTexte = /(?:const|let|var)\s+texte\s*=\s*["'`]([\s\S]*?)["'`];/g;
+        let mTexte = reTexte.exec(src);
+        if (mTexte && !isInsideComment(src, mTexte.index)) {
+            texte = mTexte[1].replace(/\\n/g, '\n').replace(/\\"/g, '"').replace(/\\'/g, "'");
+        }
+    }
+    if (!source) {
+        const reSource = /(?:const|let|var)\s+source\s*=\s*["'`](.*?)["'`];/g;
+        let mSource = reSource.exec(src);
+        if (mSource && !isInsideComment(src, mSource.index)) {
+            source = mSource[1];
+        }
+    }
+    
+    return { texte, source };
+}
+
 async function loadFromGitHub(url, fileName) {
 	try {
 		showToast("Chargement depuis GitHub...", "info", 2000);
@@ -499,7 +666,12 @@ async function loadFromGitHub(url, fileName) {
 		const extracted = extractAlgorigrammeBlock(src); let data;
 		if (extracted) { algorigrammeHeader = extracted.header; data = (0, eval)("(" + extracted.blocText + ")"); }
 		else { data = JSON.parse(src); algorigrammeHeader = ""; }
-		currentFileName = fileName; loadData(data); showToast("Fichier chargé : " + fileName, "success"); updateSequencesDropdown();
+		
+		const textData = extractTextData(src);
+		currentFileName = fileName; 
+		loadData(data, textData.texte, textData.source); 
+		showToast("Fichier chargé : " + fileName, "success"); 
+		updateSequencesDropdown();
 	} catch (err) { console.error("Import error:", err); showToast("Erreur d'import : " + err.message, "error", 4000); }
 }
 
@@ -520,7 +692,12 @@ importfileLocal.addEventListener('change', function(evt) {
 			const extracted = extractAlgorigrammeBlock(src); let data;
 			if (extracted) { algorigrammeHeader = extracted.header; data = (0, eval)("(" + extracted.blocText + ")"); }
 			else { data = JSON.parse(src); algorigrammeHeader = ""; }
-			currentFileName = file.name; loadData(data); showToast("Fichier importé : " + file.name, "success"); updateSequencesDropdown();
+			
+			const textData = extractTextData(src);
+			currentFileName = file.name; 
+			loadData(data, textData.texte, textData.source); 
+			showToast("Fichier importé : " + file.name, "success"); 
+			updateSequencesDropdown();
 		} catch (err) { showToast("Erreur d'import : " + err.message, "error", 4000); }
 	};
 	reader.readAsText(file);
@@ -566,8 +743,7 @@ function restoreSnapshot(snap) {
 	const data = JSON.parse(snap);
 	nodes = data.nodes.map(n => ({ ...n, selected: false }));
 	edges = data.edges.map(e => ({ ...e, selected: false }));
-	const root = nodes.find(n => n.isRoot);
-	if (root) { root.w = 140; root.h = 60; root.manuallySized = true; }
+	// Le nœud racine n'est plus forcé à une taille fixe, il conserve sa taille personnalisée
 	selectedNodes = []; selectedNode = null; selectedEdge = null;
 	render(); isRestoring = false;
 }
@@ -848,7 +1024,8 @@ function renderNode(node) {
 			badgeTxt.textContent = hidden; badgeGroup.appendChild(badgeTxt); g.appendChild(badgeGroup);
 		}
 	}
-	if (node === selectedNode && !node.isRoot) {
+	// DÉVERROUILLAGE : La poignée de redimensionnement est maintenant affichée pour TOUS les nœuds sélectionnés, y compris la racine
+	if (node === selectedNode) {
 		const handle = document.createElementNS("http://www.w3.org/2000/svg", "rect");
 		handle.setAttribute("x", node.x + node.w/2 - 6); handle.setAttribute("y", node.y + node.h/2 - 6);
 		handle.setAttribute("width", 12); handle.setAttribute("height", 12); handle.setAttribute("rx", 2); handle.setAttribute("class", "resize-handle");
@@ -967,7 +1144,56 @@ function getFullContentBounds() {
 	return { x: x1, y: y1, w: x2 - x1, h: y2 - y1 };
 }
 
-function loadData(data) {
+// ===== GESTION DE LA HAUTEUR DU PANNEAU DE TEXTE =====
+function updateTextPanelHeight() {
+    // Le décalage du canvas est maintenant fixe (géré en CSS via --canvas-offset).
+    // Le panneau de texte s'ouvre/se ferme indépendamment.
+}
+
+// ===== MISE À JOUR DU PANNEAU DE TEXTE =====
+function updateTextPanel(texte, source, fileName) {
+    const wrapper = document.getElementById('textPanelWrapper');
+    const titleEl = document.getElementById('textPanelTitle');
+    const contentEl = document.getElementById('textPanelContent');
+    const sourceEl = document.getElementById('textPanelSource');
+    const btn = document.getElementById('toggleTextBtn');
+    const contentDiv = document.querySelector('.text-panel-content');
+    
+    if (!texte || texte.trim() === "") {
+        wrapper.classList.add('hidden');
+        updateTextPanelHeight();
+        return;
+    }
+    
+    wrapper.classList.remove('hidden');
+    
+    let title = "texte";
+    if (fileName) {
+        title = fileName.replace('.js', '').replace(/_/g, ' ');
+    }
+    if (source) {
+        const authorMatch = source.match(/^([^,]+)/);
+        if (authorMatch) {
+            title = "texte de " + authorMatch[1].trim().toUpperCase();
+        }
+    }
+    titleEl.textContent = title;
+    
+    let formattedText = texte.replace(/\[(\d+)\]/g, '<span style="color:var(--primary-color);font-weight:bold;">[$1]</span>');
+	formattedText = formattedText.replace(/\*\*/g, '');
+    contentEl.innerHTML = formattedText;
+    sourceEl.innerHTML = source || "";
+    
+    if (btn && contentDiv) {
+        btn.classList.add('collapsed');
+        contentDiv.classList.add('collapsed');
+        btn.dataset.tip = 'montrer le texte';
+    }
+    
+    updateTextPanelHeight();
+}
+
+function loadData(data, texte = "", source = "") {
 	nodes = data.nodeDataArray.map(nd => {
 		const parts = String(nd.loc || "0 0").split(" ");
 		return {
@@ -994,14 +1220,15 @@ function loadData(data) {
 	const rootNode = nodes.find(n => !edges.some(e => e.to === n.id));
 	if (rootNode) {
 		rootNode.isRoot = true;
-		rootNode.w = 140;
-		rootNode.h = 60;
-		rootNode.manuallySized = true;
+		// DÉVERROUILLAGE : On ne force plus la taille et le redimensionnement manuel du nœud racine
 	}
 
 	nodes.forEach(n => n.revealed = false);
 	selectedNodes = []; selectedNode = null; selectedEdge = null;
 	history = []; historyIndex = -1;
+	
+	updateTextPanel(texte, source, currentFileName);
+	
 	pushHistory(); 
 	render(); 
 	fitView();
@@ -1100,7 +1327,7 @@ function fitView() {
 	view.scale = s;
 	
 	view.x = W / 2;
-	view.y = visibleH / 2;
+	view.y = canvasTop + visibleH / 2;
 	applyView();
 }
 
@@ -1231,7 +1458,7 @@ function openEditor(node) {
 }
 
 function autoResizeNode(node) {
-	if (node.isRoot) return;
+	// DÉVERROUILLAGE : Le redimensionnement automatique s'applique désormais aussi au nœud racine
 	const baseFontSize = 14, PAD_X = 24, PAD_Y = 20;
 	const paragraphs = node.text.split("\n"); let naturalW = 0;
 	for (const p of paragraphs) { const w = measureText(p || " ", baseFontSize); if (w > naturalW) naturalW = w; }
@@ -1291,7 +1518,7 @@ function createNodeAt(text, shape = "rectangle") {
 
 function changeShape(shape) {
 	if (!selectedNode) { addNode(); return; }
-	if (selectedNode.isRoot) { showToast("Le nœud racine a une forme et une taille fixes", "info"); return; }
+	// DÉVERROUILLAGE : La modification de forme est désormais autorisée pour le nœud racine
 	selectedNode.shape = shape; selectedNode.manuallySized = false; autoResizeNode(selectedNode); pushHistory(); render(); closeToolMenu();
 }
 
@@ -1302,6 +1529,20 @@ function setColor(color) {
 
 function startAddEdge() { if (!nodes.length) { showToast("Ajoutez d'abord des nœuds", "error"); return; } edgeMode = true; edgeSourceId = null; svg.classList.add("edge-mode"); showToast("Cliquez sur le nœud source, puis sur le nœud cible", "info", 3200); }
 function flashNode(id, color) { const n = nodeById(id); if (!n) return; const old = n.borderColor; n.borderColor = color; render(); setTimeout(() => { n.borderColor = old; render(); }, 500); }
+
+function newAlgorigramme() {
+    const wrapper = document.getElementById('textPanelWrapper');
+    if (wrapper) wrapper.classList.add('hidden');
+    
+    currentFileName = "algorigramme.js";
+    algorigrammeHeader = "";
+    clipboard = null;
+    
+    loadData(EMPTY_DATA, "", "");
+    updateTextPanelHeight();
+    
+    showToast("Nouvel algorigramme créé", "success", 1500);
+}
 
 window.addEventListener("keydown", e => {
 	const tag = document.activeElement.tagName; if (tag === "TEXTAREA" || tag === "INPUT") return;
@@ -1320,13 +1561,33 @@ window.addEventListener("keydown", e => {
 	if (e.key === "Escape") { if (edgeMode) { edgeMode = false; edgeSourceId = null; svg.classList.remove("edge-mode"); showToast("Mode connexion annulé", "info", 1600); } else { closeMenu(); closeToolMenu(); closeSequencesDropdown(); } }
 	if (e.key.toLowerCase() === "f" && !e.ctrlKey && !e.metaKey) { e.preventDefault(); toggleFullscreen(); }
 	if (e.key.toLowerCase() === "m" && !e.ctrlKey && !e.metaKey) { e.preventDefault(); toggleMenu(); }
+	if (e.key.toLowerCase() === "n" && !e.ctrlKey && !e.metaKey) { e.preventDefault(); newAlgorigramme(); }
 });
 
 window.addEventListener("load", () => {
-	const initial = (typeof algorigramme !== "undefined") ? algorigramme : INITIAL_DATA;
+	const initial = (typeof algorigramme !== "undefined") ? algorigramme : EMPTY_DATA;
 	loadData(initial); updateProgressiveButton();
-	window.addEventListener("resize", () => applyView());
+	window.addEventListener("resize", () => { applyView(); updateTextPanelHeight(); });
 	fetchGitHubFiles();
+
+	document.getElementById('toggleTextBtn')?.addEventListener('click', () => {
+		const btn = document.getElementById('toggleTextBtn');
+		const content = document.querySelector('.text-panel-content');
+		if (btn && content) {
+			btn.classList.toggle('collapsed');
+			content.classList.toggle('collapsed');
+			btn.dataset.tip = content.classList.contains('collapsed') ? 'montrer le texte' : 'cacher le texte';
+			
+			setTimeout(updateTextPanelHeight, 350);
+		}
+	});
+	
+	document.querySelectorAll('[data-action="new"]').forEach(btn => {
+		btn.addEventListener('click', (e) => {
+			e.preventDefault();
+			newAlgorigramme();
+		});
+	});
 });
 </script>
 </body>
