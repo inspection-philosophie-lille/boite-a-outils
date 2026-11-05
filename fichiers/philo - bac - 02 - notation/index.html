@@ -870,6 +870,7 @@ font-size: 0.8em;
 overflow: hidden;
 position: relative;
 text-align: center;
+margin: 0px auto 30px auto;
 padding: 0;
 display: flex;
 justify-content: space-between;
@@ -877,7 +878,6 @@ flex-shrink: 0;
 height: 40px;
 width: 330px;
 z-index: 1;
-margin: 0px auto 30px auto;
 }
 @media screen and (max-width: 767px) {
 .switch-button {
@@ -962,11 +962,7 @@ color: var(--switch-text-active);
 .switch-button-checkbox:not(:checked)+.switch-button-label .label-dissertation {
 color: var(--switch-text-inactive);
 }
-/* ===== GESTION DU MODE SOMBRE FORCÉ PAR LE SYSTÈME (MOBILE) ===== */
 @media (prefers-color-scheme: dark) {
-/* Si le système est en sombre et que l'utilisateur n'a pas explicitement
-choisi le mode clair (classe .force-light sur <html>), on applique
-les variables du switch en mode sombre, identiques à body.dark-mode. */
 html:not(.force-light) .switch-button {
 --switch-bg: rgba(255, 255, 255, 0.15);
 --switch-border: #4a4a4a;
@@ -1087,9 +1083,6 @@ font-size: 35px;
 .toolbar h2 {
 font-size: 16px;
 margin-top: 2px;
-}
-.switch-button {
-margin: 20px auto 10px auto;
 }
 }
 @media screen and (max-width: 991px) {
@@ -1251,7 +1244,6 @@ color: #8895a7;
 margin: 0 0 0.3rem;
 font-size: 13px !important;
 }
-/* ===== MODIFICATION POUR LES ÉCRANS DE PORTABLE ===== */
 @media screen and (max-width: 991px) {
 .card {
 padding-top: 0.8rem !important;
@@ -1600,7 +1592,7 @@ display: flex;
 .carousel-container {
 flex: 1;
 display: flex;
-align-items: center;
+align-items: stretch;
 }
 .carousel-items {
 display: flex;
@@ -1701,7 +1693,6 @@ body.dark-mode .main-content.blur {
 filter: blur(5px);
 opacity: 0.6;
 }
-/* ===== TOAST MOBILE : COUVRE LA VIGNETTE DU CARROUSEL ===== */
 @media screen and (max-width: 767px) {
 .toast {
 height: 100%;
@@ -1789,7 +1780,6 @@ stroke-linecap="butt">
 </header>
 <main>
 <div class="div_onglets">
-<!-- Onglet Dissertation -->
 <div id="onglet_1" class="onglet active">
 <section class="carousel">
 <div class="carousel-container">
@@ -1892,7 +1882,6 @@ stroke-linecap="butt">
 </div>
 </section>
 </div>
-<!-- Onglet Explication de texte -->
 <div id="onglet_2" class="onglet">
 <section class="carousel">
 <div class="carousel-container">
@@ -2274,12 +2263,10 @@ if (toast.classList.contains('show')) {
 showToast(this.checked ? 'explication' : 'dissertation');
 }
 });
-/* ===== POSITIONNEMENT DU TOAST SUR MOBILE ===== */
 function positionToastOnMobile() {
 const container = document.querySelector('.toast-container');
 const toast = document.querySelector('.toast');
 if (!container || !toast) return;
-// Desktop : on réinitialise tout ce que le mobile a pu poser
 if (window.innerWidth >= 768) {
 container.style.top = '';
 container.style.bottom = '';
@@ -2292,16 +2279,13 @@ toast.style.height = '';
 toast.style.maxHeight = '';
 return;
 }
-// Mobile : on calcule la zone occupée par la carte du carrousel
 const toolbar = document.querySelector('.toolbar');
 const header = document.querySelector('header');
 const progressFooter = document.querySelector('.progress-footer');
 const toolbarH = toolbar ? toolbar.offsetHeight : 160;
 const headerH = header ? header.offsetHeight : 70;
 const progressH = progressFooter ? progressFooter.offsetHeight : 20;
-// La carte commence sous la toolbar + header, avec une marge plus généreuse
 const top = toolbarH + headerH + 28;
-// La carte s'arrête au-dessus de la progress bar + une marge
 const bottom = progressH + 45;
 container.style.top = top + 'px';
 container.style.bottom = bottom + 'px';
@@ -2310,7 +2294,6 @@ container.style.right = '10px';
 container.style.width = 'auto';
 container.style.maxWidth = 'none';
 container.style.transform = 'none';
-// Le toast remplit toute la zone
 toast.style.height = '100%';
 toast.style.maxHeight = 'none';
 }
@@ -2392,9 +2375,6 @@ const fullscreenBtn = document.getElementById('fullscreen-btn');
 const progressBar = document.getElementById('progress-bar');
 const progressContainer = document.getElementById('progress-bar-container');
 const mainContent = document.getElementById('mainContent');
-/* ===== GESTION DU MODE SOMBRE : préférence explicite vs système ===== */
-// Si l'utilisateur a explicitement choisi le mode clair, on pose .force-light
-// sur <html> pour contrer @media (prefers-color-scheme: dark) (cf. CSS du switch).
 if (localStorage.getItem('darkMode') === 'false') {
 document.documentElement.classList.add('force-light');
 }
@@ -2504,7 +2484,6 @@ submenus.forEach(s => { if (s) s.addEventListener('click', (e) => e.stopPropagat
 if (darkModeToggle) darkModeToggle.addEventListener('change', function(e) {
 body.classList.toggle('dark-mode', e.target.checked);
 localStorage.setItem('darkMode', e.target.checked);
-// NOUVEAU : mémoriser le choix explicite "clair" pour contrer le système
 if (!e.target.checked) {
 document.documentElement.classList.add('force-light');
 } else {
