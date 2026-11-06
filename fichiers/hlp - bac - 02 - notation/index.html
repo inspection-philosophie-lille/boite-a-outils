@@ -48,11 +48,11 @@
 			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
 			--tooltip-bg: #1a1a1a;
 			--tooltip-color: #ffffff;
-			--switch-bg: rgba(255, 255, 255, 0.3);
+			--switch-bg: rgba(255, 255, 255, 0.15);
 			--switch-border: #4a4a4a;
 			--switch-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.6), 1px 1px 1px rgba(80, 80, 80, 0.4);
-			--switch-slider-bg: #121212;
-			--switch-slider-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 1px 1px 5px rgba(0, 0, 0, 0.8);
+			--switch-slider-bg: #000000;
+			--switch-slider-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
 			--switch-text-active: #ffffff;
 			--switch-text-inactive: #ffffff;
 			--progress-bg: rgba(255, 255, 255, 0.1);
@@ -99,11 +99,14 @@
 		}
 
 		body.daltonien-mode .submenu-title,
+		body.daltonien-mode.dark-mode .submenu-title,
 		body.daltonien-mode .card-title,
-		body.daltonien-mode .toolbar h1 {
+		body.daltonien-mode.dark-mode .card-title,
+		body.daltonien-mode .toolbar h1,
+		body.daltonien-mode.dark-mode .toolbar h1 {
 			color: #0077be !important;
 		}
-
+		
 		body.daltonien-mode.dark-mode .submenu-title,
 		body.daltonien-mode.dark-mode .card-title,
 		body.daltonien-mode.dark-mode .toolbar h1 {
@@ -894,6 +897,7 @@
 			transform: scale(0.7);
 		}
 
+		/* ===== ESTHÉTIQUE DU SWITCH DU MODÈLE ===== */
 		.switch-button {
 			background: var(--switch-bg);
 			border-radius: 30px;
@@ -904,7 +908,7 @@
 			overflow: hidden;
 			position: relative;
 			text-align: center;
-			margin: 0 auto;
+			margin: 0px auto 30px auto;
 			padding: 0;
 			display: flex;
 			justify-content: space-between;
@@ -992,14 +996,14 @@
 			font-weight: 400;
 		}
 
-		/* ===== GESTION DU MODE SOMBRE FORCÉ PAR LE SYSTÈME (Option A) ===== */
+		/* ===== GESTION DU MODE SOMBRE FORCÉ PAR LE SYSTÈME ===== */
 		@media (prefers-color-scheme: dark) {
 			html:not(.force-light) .switch-button {
-				--switch-bg: rgba(255, 255, 255, 0.3);
+				--switch-bg: rgba(255, 255, 255, 0.15);
 				--switch-border: #4a4a4a;
 				--switch-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.6), 1px 1px 1px rgba(80, 80, 80, 0.4);
-				--switch-slider-bg: #121212;
-				--switch-slider-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 1px 1px 5px rgba(0, 0, 0, 0.8);
+				--switch-slider-bg: #000000;
+				--switch-slider-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
 				--switch-text-active: #ffffff;
 				--switch-text-inactive: #ffffff;
 			}
@@ -1192,6 +1196,7 @@
 			opacity: 1;
 		}
 
+		/* ===== ZONE DE SCROLL ÉTENDUE JUSQU'EN BAS SUR MOBILE ===== */
 		@media screen and (max-width: 767px) {
 			.switch-button-label span {
 				font-size: 1rem;
@@ -1227,9 +1232,32 @@
 				font-size: 13px !important;
 				margin: 0 0 0.2rem 0;
 			}
+            
+            .card {
+                height: 100% !important;
+                min-height: 0 !important;
+                max-height: 100% !important;
+                margin: 0 !important;
+            }
+            
+            .carousel-items {
+                align-items: stretch !important;
+                overflow-y: hidden !important;
+            }
+            
+            .carousel-container {
+                align-items: stretch !important;
+            }
+            
+            .carousel-item {
+                height: 100% !important;
+            }
 		}
 
 		@media screen and (max-height: 600px) {
+            .switch-button {
+                margin: 7px auto 23px auto;
+            }
 			.card-content {
 				padding: 0.3rem 0.4rem;
 			}
@@ -1480,6 +1508,8 @@
 				gap: 0.5rem;
 				padding: 0.1rem 10px 0 10px;
 				scroll-snap-type: x mandatory;
+                align-items: stretch !important;
+                overflow-y: hidden !important;
 			}
 
 			.carousel-item {
@@ -1487,6 +1517,7 @@
 				flex: 0 0 calc(100% - 20px);
 				min-width: 280px;
 				scroll-snap-align: center;
+                height: 100% !important;
 			}
 		}
 
@@ -1536,6 +1567,10 @@
 			header {
 				margin: 8px auto 8px auto;
 			}
+            
+            .switch-button {
+                margin: 20px auto 10px auto;
+            }
 		}
 
 		@media screen and (max-width: 991px) {
@@ -2438,6 +2473,7 @@
 			toastEl.style.maxHeight = 'none';
 		}
 
+		/* ===== AJUSTEMENT DES HAUTEURS : APPLIQUÉ À TOUS LES ÉCRANS (y compris mobile) ===== */
 		function adjustCardHeights() {
 			const carousels = ['carousel-1', 'carousel-2'];
 			const bottomSpacing = 40;
@@ -2461,8 +2497,8 @@
 				const availableHeight = viewportHeight - fixedElementsHeight;
 
 				cards.forEach(card => {
-					card.style.height = availableHeight + 'px';
-					card.style.maxHeight = availableHeight + 'px';
+					card.style.height = Math.max(200, availableHeight) + 'px';
+					card.style.maxHeight = Math.max(200, availableHeight) + 'px';
 				});
 			});
 		}
@@ -2553,8 +2589,8 @@
 			updateBlurState();
 		}
 
-		/* ===== MODE SOMBRE / DALTONIEN / ANIMATION : préférence explicite vs système ===== */
-		if (localStorage.getItem('darkMode') === 'false') {
+		/* ===== CORRECTION DU BUG : .force-light ajouté par défaut si mode sombre non activé ===== */
+		if (localStorage.getItem('darkMode') !== 'true') {
 			document.documentElement.classList.add('force-light');
 		}
 		if (localStorage.getItem('daltonienMode') === 'false') {
