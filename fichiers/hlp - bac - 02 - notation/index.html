@@ -2,14 +2,14 @@
 <html lang="fr">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 	<link rel="icon" href="../../src/favicon.ico">
 	<title>paliers de notation hlp</title>
 	<style>
 		:root {
 			--bg: #f0f0f0;
-			--bg-light: #f5f5f5;
-			--text-light: #000000;
+			--bg-light: #ffffff;
+			--text-light: #000;
 			--btn: #e0e0e0;
 			--btn-bg: #e0e0e0;
 			--font-color: #000000;
@@ -30,11 +30,11 @@
 			--progress-bg: rgba(0, 0, 0, 0.1);
 			--progress-fill: #ff0000;
 			--bottom-spacing: 40px;
-			--badge-bg: red;
-			--badge-color: #ffffff;
 			--toast-bg: #e0e0e0;
 			--toast-color: #333333;
 			--toast-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+			--badge-bg: red;
+			--badge-color: #ffffff;
 		}
 
 		body.dark-mode {
@@ -66,17 +66,6 @@
 			color: #ffffff;
 		}
 
-		body.dark-mode .toolbar-subtitle,
-		body.dark-mode .mobile-subtitle {
-			color: #8895a7;
-		}
-
-		body.dark-mode .modal h2,
-		body.dark-mode .submenu-title {
-			color: #ff0000;
-		}
-
-		/* ===== MODE DALTONIEN ===== */
 		body.daltonien-mode {
 			--primary: #0077be !important;
 			--primary-color: #2c7be5 !important;
@@ -98,40 +87,6 @@
 			--switch-border: #4a8aaa;
 		}
 
-		body.daltonien-mode .submenu-title,
-		body.daltonien-mode.dark-mode .submenu-title,
-		body.daltonien-mode .card-title,
-		body.daltonien-mode.dark-mode .card-title,
-		body.daltonien-mode .toolbar h1,
-		body.daltonien-mode.dark-mode .toolbar h1 {
-			color: #0077be !important;
-		}
-		
-		body.daltonien-mode.dark-mode .submenu-title,
-		body.daltonien-mode.dark-mode .card-title,
-		body.daltonien-mode.dark-mode .toolbar h1 {
-			color: #5bb8f5 !important;
-		}
-
-		body.daltonien-mode .toast .toast-title,
-		body.daltonien-mode .card-content strong {
-			color: #0077be !important;
-		}
-
-		body.daltonien-mode.dark-mode .toast .toast-title,
-		body.daltonien-mode.dark-mode .card-content strong {
-			color: #5bb8f5 !important;
-		}
-
-		body.daltonien-mode .toast {
-			border-left-color: #0077be;
-		}
-
-		body.daltonien-mode.dark-mode .toast {
-			border-left-color: #5bb8f5;
-		}
-
-		/* ===== MODE ANIMATION DÉSACTIVÉE ===== */
 		body.animation-off *,
 		body.animation-off *::before,
 		body.animation-off *::after {
@@ -139,59 +94,93 @@
 			animation-iteration-count: 1 !important;
 			transition-duration: 0s !important;
 			transition-delay: 0s !important;
+			transform: none !important;
 			scroll-behavior: auto !important;
 		}
 
-		body.animation-off .btn:hover,
-		body.animation-off .btn:active,
-		body.animation-off .info-btn:hover,
-		body.animation-off .info-btn:active,
-		body.animation-off .menu-item:hover,
-		body.animation-off .menu-close:hover,
-		body.animation-off .submenu-close:hover,
-		body.animation-off .modal-close:hover,
-		body.animation-off .carousel-nav-btn:hover {
+		body.animation-off .home-btn .icon-wrapper,
+		body.animation-off .home-btn:hover .icon-wrapper {
+			animation: none !important;
+		}
+
+		body.animation-off .menu-btn:hover .menu-icon {
 			transform: none !important;
 		}
 
-		body.animation-off .home-btn .icon-wrapper,
-		body.animation-off .home-btn:hover .icon-wrapper,
-		body.animation-off .menu-btn:hover .menu-icon,
 		body.animation-off .btn:hover svg,
 		body.animation-off .info-btn:hover svg,
-		body.animation-off .menu-item:hover svg,
-		body.animation-off .submenu .toggle-container:hover .toggle-icon,
-		body.animation-off .about-item:hover .about-icon,
-		body.animation-off .carousel-nav-btn:hover svg {
+		body.animation-off .menu-item:hover svg {
 			animation: none !important;
+		}
+
+		body.animation-off .btn:hover {
+			transform: none !important;
+			box-shadow: var(--shadow-out) !important;
+		}
+
+		body.animation-off .btn:active {
 			transform: none !important;
 		}
 
-		body.animation-off .theme-switch .slider,
-		body.animation-off .theme-switch .slider:before,
-		body.animation-off .switch-button-label:before {
-			transition: none !important;
-		}
-		body.animation-off .theme-switch input:checked + .slider:before {
-			transform: translateX(24px) !important;
-		}
-		body.animation-off .submenu .theme-switch input:checked + .slider:before {
-			transform: translateX(20px) !important;
-		}
-		body.animation-off .switch-button-checkbox:checked + .switch-button-label:before {
-			transform: translateX(100%) !important;
-		}
-		body.animation-off .switch-button-checkbox:not(:checked) + .switch-button-label:before {
-			transform: translateX(0) !important;
+		body.animation-off .carousel-nav-btn:hover {
+			transform: translateY(-50%) !important;
 		}
 
-		body,
-		html {
+		body.animation-off .carousel-nav-btn:hover svg {
+			transform: none !important;
+		}
+
+		body.animation-off .modal-content {
+			transition: none !important;
+		}
+
+		body.animation-off .toast {
+			transition: none !important;
+		}
+
+		body.animation-off .toast.show {
+			opacity: 1 !important;
+			transform: none !important;
+		}
+
+		body.animation-off .toast.hide {
+			opacity: 0 !important;
+			transform: none !important;
+		}
+
+		body.daltonien-mode .modal h2,
+		body.daltonien-mode .submenu-title,
+		body.daltonien-mode .card-title,
+		body.daltonien-mode .toolbar h1 {
+			color: #0077be !important;
+		}
+
+		body.daltonien-mode.dark-mode .modal h2,
+		body.daltonien-mode.dark-mode .submenu-title,
+		body.daltonien-mode.dark-mode .card-title,
+		body.daltonien-mode.dark-mode .toolbar h1 {
+			color: #5bb8f5 !important;
+		}
+
+		.menu .menu-item {
+			color: #000000 !important;
+		}
+		.menu .menu-item svg {
+			stroke: #000000 !important;
+		}
+		body.dark-mode .menu .menu-item {
+			color: #ffffff !important;
+		}
+		body.dark-mode .menu .menu-item svg {
+			stroke: #ffffff !important;
+		}
+
+		body, html {
 			margin: 0;
 			padding: 0;
 			font-family: Arial, sans-serif;
 			background-color: var(--bg);
-			color: var(--text-light);
+			color: var(--font-color);
 			transition: var(--transition);
 			height: 100vh;
 			width: 100vw;
@@ -217,6 +206,16 @@
 			100% { transform: scale(1); }
 		}
 
+		@keyframes rotate {
+			from { transform: rotate(0deg); }
+			to { transform: rotate(360deg); }
+		}
+
+		@keyframes tourne360 {
+			0% { transform: rotateY(0deg); }
+			100% { transform: rotateY(360deg); }
+		}
+
 		.keyboard-highlight {
 			outline: 3px solid var(--primary);
 			outline-offset: 3px;
@@ -224,18 +223,25 @@
 			animation: pulse 0.5s ease;
 		}
 
-		body.blur-active > .toolbar,
-		body.blur-active > header,
-		body.blur-active > main {
-			filter: blur(5px);
-			transition: filter 0.3s ease;
-			pointer-events: none;
+		.main-content {
+			transition: filter 0.4s ease, opacity 0.4s ease;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			min-height: 0;
+			overflow: hidden;
 		}
 
-		.menu,
-		.submenu,
-		.menu-overlay {
-			filter: none !important;
+		.main-content.blur {
+			filter: blur(5px);
+			opacity: 0.7;
+			pointer-events: none;
+			user-select: none;
+		}
+
+		body.dark-mode .main-content.blur {
+			filter: blur(5px);
+			opacity: 0.6;
 		}
 
 		.toolbar {
@@ -258,8 +264,7 @@
 			background: #121212;
 		}
 
-		.toolbar-left,
-		.toolbar-right {
+		.toolbar-left, .toolbar-right {
 			display: flex;
 			align-items: center;
 			gap: 8px;
@@ -276,7 +281,7 @@
 			min-width: 180px;
 		}
 
-		.toolbar-title {
+		.toolbar-center {
 			flex: 1;
 			display: flex;
 			justify-content: center;
@@ -334,10 +339,7 @@
 			transform: scale(0.95);
 		}
 
-		.btn > svg,
-		.btn .icon-wrapper > svg,
-		.btn .menu-icon,
-		.info-btn > svg {
+		.btn > svg, .btn .icon-wrapper > svg, .btn .menu-icon, .info-btn > svg {
 			width: 24px;
 			height: 24px;
 			fill: none;
@@ -352,23 +354,17 @@
 			transition: transform 0.3s ease;
 		}
 
-		.btn.reload:hover svg,
-		.menu-close:hover svg,
-		.submenu-close:hover svg,
-		.modal-close:hover svg {
+		.btn.reload:hover svg, .menu-close:hover svg, .submenu-close:hover svg, .modal-close:hover svg {
 			animation: rotate 1s linear;
 		}
 
-		.info-btn:hover svg {
+		.btn:hover .settings-gear,
+		.menu-item:hover .settings-gear,
+		.toggle-container:hover .settings-gear {
 			animation: rotate 1s linear;
 		}
 
-		@keyframes rotate {
-			from { transform: rotate(0deg); }
-			to { transform: rotate(360deg); }
-		}
-
-		.btn::after {
+		.btn::after, .info-btn::after {
 			content: attr(data-title);
 			position: absolute;
 			top: 100%;
@@ -388,8 +384,41 @@
 			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 		}
 
-		.btn:hover::after {
+		.btn:hover::after, .info-btn:hover::after {
 			opacity: 1;
+		}
+
+		.home-btn {
+			background: var(--btn) !important;
+			box-shadow: var(--shadow-out) !important;
+			width: 52px !important;
+			height: 52px !important;
+			perspective: 1200px;
+			padding: 0;
+			border: none !important;
+		}
+
+		.home-btn .icon-wrapper {
+			width: 52px;
+			height: 52px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			transform-style: preserve-3d;
+			flex-shrink: 0;
+		}
+
+		.home-btn:hover .icon-wrapper {
+			animation: tourne360 2s infinite linear;
+		}
+
+		.home-btn svg {
+			width: 24px;
+			height: 24px;
+			stroke: currentColor;
+			stroke-width: 2;
+			fill: none;
 		}
 
 		.info-btn {
@@ -420,58 +449,12 @@
 			transform: scale(0.95);
 		}
 
-		.info-btn::after {
-			content: attr(data-title);
-			position: absolute;
-			top: 100%;
-			left: 50%;
-			transform: translateX(-50%);
-			margin-top: 0.5rem;
-			background-color: var(--tooltip-bg);
-			color: var(--tooltip-color);
-			padding: 0.3rem 0.6rem;
-			border-radius: 5px;
-			font-size: 0.8rem;
-			white-space: nowrap;
-			opacity: 0;
-			pointer-events: none;
-			transition: opacity 0.2s;
-			z-index: 10;
-			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		.info-btn > svg {
+			transition: transform 0.3s ease;
 		}
 
-		.info-btn:hover::after {
-			opacity: 1;
-		}
-
-		.home-btn {
-			background: var(--btn) !important;
-			box-shadow: var(--shadow-out) !important;
-			width: 52px !important;
-			height: 52px !important;
-			perspective: 1200px;
-			padding: 0;
-			border: none !important;
-		}
-
-		.home-btn .icon-wrapper {
-			width: 52px;
-			height: 52px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			position: relative;
-			transform-style: preserve-3d;
-			flex-shrink: 0;
-		}
-
-		.home-btn:hover .icon-wrapper {
-			animation: tourne360 2s infinite linear;
-		}
-
-		@keyframes tourne360 {
-			0% { transform: rotateY(0deg); }
-			100% { transform: rotateY(360deg); }
+		.info-btn:hover svg {
+			animation: rotate 1s linear;
 		}
 
 		.menu-btn {
@@ -526,12 +509,6 @@
 		.menu-header {
 			display: flex;
 			justify-content: flex-end;
-			margin-bottom: 0;
-		}
-
-		.menu-content {
-			display: flex;
-			flex-direction: column;
 		}
 
 		.menu-close, .submenu-close, .modal-close {
@@ -560,9 +537,7 @@
 			fill: none;
 		}
 
-		.menu-close:hover,
-		.submenu-close:hover,
-		.modal-close:hover {
+		.menu-close:hover, .submenu-close:hover, .modal-close:hover {
 			box-shadow: var(--shadow-in);
 			transform: translateY(-2px);
 		}
@@ -583,14 +558,10 @@
 			position: relative;
 			z-index: 10001;
 			width: 100%;
-			margin-bottom: 14px;
+			margin-bottom: 17px;
 			font-size: 14px;
 			min-height: 42px;
 			-webkit-tap-highlight-color: transparent;
-		}
-
-		.menu-item:last-child {
-			margin-bottom: 0;
 		}
 
 		.menu-item:hover {
@@ -612,6 +583,14 @@
 			fill: none;
 			flex-shrink: 0;
 			margin-right: 16px;
+		}
+
+		.menu-item .item-label {
+			flex: 1;
+			text-align: left;
+			display: flex;
+			align-items: center;
+			height: 100%;
 		}
 
 		.menu-item:hover svg {
@@ -638,12 +617,6 @@
 			right: 0;
 			padding-left: 17px;
 			padding-right: 16px;
-		}
-
-		.submenu .menu-header {
-			display: flex;
-			justify-content: flex-end;
-			margin-bottom: 0;
 		}
 
 		@media (max-width: 768px) {
@@ -702,29 +675,38 @@
 			border: 1px solid #333;
 		}
 
-		.submenu ul {
-			list-style: none;
-			padding: 0;
+		.submenu-shortcuts-table td:first-child {
+			text-align: left !important;
+			padding: 2px 10px 2px 0 !important;
+			width: 60px !important;
+			white-space: nowrap;
 		}
 
-		.submenu li {
-			padding: 4px 0;
-			font-size: 12px;
-			display: block;
+		.submenu-shortcuts-table td:last-child {
+			text-align: left !important;
+			padding: 2px 5px 2px 0 !important;
 		}
 
-		.submenu p {
-			margin-bottom: 0.5rem;
-			padding-left: 8px;
-			color: var(--font-color);
+		.submenu-shortcuts-table kbd {
+			font-size: 1.1em !important;
+			padding: 3px 8px !important;
+			min-width: 30px;
+			display: inline-block;
+			text-align: center;
 		}
 
 		.settings-info {
 			margin-top: 20px;
 			margin-right: 10px;
 			padding: 15px;
-			background: rgba(0,0,0,0.05);
+			background: rgba(0, 0, 0, 0.05);
 			border-radius: 10px;
+			text-align: left;
+			margin-bottom: 15px;
+		}
+
+		body.dark-mode .settings-info {
+			background: rgba(255, 255, 255, 0.05);
 		}
 
 		.settings-info p {
@@ -738,884 +720,6 @@
 
 		body.dark-mode .submenu {
 			background: #121212;
-		}
-
-		body.dark-mode .settings-info {
-			background: rgba(255, 255, 255, 0.05);
-		}
-
-		.submenu-shortcuts-table {
-			width: 100%;
-			color: var(--font-color);
-			margin-bottom: 1rem;
-			border-collapse: collapse;
-		}
-
-		.submenu-shortcuts-table td {
-			padding: 6px 7px;
-			font-size: 12px;
-			border: none !important;
-		}
-
-		.submenu-shortcuts-table tr {
-			border: none !important;
-		}
-
-		.submenu-shortcuts-table td:first-child {
-			text-align: left;
-			white-space: nowrap;
-			width: 90px;
-			padding-right: 12px;
-		}
-
-		.submenu-shortcuts-table td:last-child {
-			text-align: left;
-		}
-
-		.modal {
-			position: fixed;
-			inset: 0;
-			background-color: rgba(0, 0, 0, 0.5);
-			z-index: 10002;
-			opacity: 0;
-			pointer-events: none;
-			transition: var(--transition);
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-
-		.modal.active {
-			opacity: 1;
-			pointer-events: all;
-		}
-
-		.modal-content {
-			position: relative;
-			width: 90%;
-			max-width: 500px;
-			background: var(--btn);
-			padding: 2rem;
-			border-radius: 20px;
-			box-shadow: var(--shadow-out);
-			color: var(--font-color);
-			transform: translateY(-20px);
-			transition: transform 0.3s ease;
-			z-index: 10003;
-		}
-
-		.modal.active .modal-content {
-			transform: translateY(0);
-		}
-
-		.modal h2 {
-			color: var(--primary-color);
-			margin-bottom: 1rem;
-		}
-
-		.modal ul {
-			list-style-type: none;
-			padding: 0;
-		}
-
-		.modal li {
-			margin-bottom: 10px;
-		}
-
-		.modal kbd {
-			background: var(--primary);
-			color: white;
-			padding: 2px 6px;
-			border-radius: 4px;
-			font-family: monospace;
-			font-size: 12px;
-			margin: 0 2px;
-		}
-
-		.theme-switch {
-			position: relative;
-			display: inline-block;
-			width: 44px;
-			height: 20px;
-		}
-
-		.theme-switch input {
-			opacity: 0;
-			width: 0;
-			height: 0;
-		}
-
-		.theme-switch .slider {
-			position: absolute;
-			cursor: pointer;
-			inset: 0;
-			background: #b0b8c4;
-			border-radius: 20px;
-			transition: .3s;
-		}
-
-		.theme-switch .slider:before {
-			content: "";
-			position: absolute;
-			width: 16px;
-			height: 16px;
-			left: 2px;
-			top: 2px;
-			background: #fff;
-			border-radius: 50%;
-			transition: .3s;
-			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-		}
-
-		.theme-switch input:checked+.slider {
-			background: #3a7bb5;
-		}
-
-		.theme-switch input:checked+.slider:before {
-			transform: translateX(24px);
-		}
-
-		body.dark-mode .theme-switch .slider {
-			background: #3d3d3d;
-		}
-
-		body.dark-mode .theme-switch input:checked+.slider {
-			background: #4a80c0;
-		}
-
-		.fullscreen-icon,
-		.fullscreen-exit-icon {
-			transform-origin: center;
-			transition: transform 0.3s ease;
-		}
-
-		.btn.fullscreen:not(.fullscreen-active):hover svg:not(.fullscreen-exit-icon) {
-			transform: scale(1.3);
-		}
-
-		.btn.fullscreen.fullscreen-active:hover .fullscreen-exit-icon {
-			transform: scale(0.7);
-		}
-
-		/* ===== ESTHÉTIQUE DU SWITCH DU MODÈLE ===== */
-		.switch-button {
-			background: var(--switch-bg);
-			border-radius: 30px;
-			border: 1px solid var(--switch-border);
-			box-shadow: var(--switch-shadow);
-			color: #000;
-			font-size: 0.8em;
-			overflow: hidden;
-			position: relative;
-			text-align: center;
-			margin: 0px auto 30px auto;
-			padding: 0;
-			display: flex;
-			justify-content: space-between;
-			flex-shrink: 0;
-			height: 40px;
-			width: 330px;
-			z-index: 1;
-		}
-
-		.switch-button-checkbox {
-			cursor: pointer;
-			height: 100%;
-			width: 100%;
-			opacity: 0;
-			position: absolute;
-			top: 0;
-			left: 0;
-			z-index: 2;
-		}
-
-		.switch-button-label {
-			display: flex;
-			width: 100%;
-			position: relative;
-			pointer-events: none;
-			user-select: none;
-			height: 100%;
-			align-items: center;
-		}
-
-		.switch-button-label:before {
-			background: var(--switch-slider-bg);
-			border-radius: 30px;
-			box-shadow: var(--switch-slider-shadow);
-			content: "";
-			height: 100%;
-			left: 0;
-			position: absolute;
-			top: 0;
-			transform: translateX(0);
-			transition: transform .3s;
-			width: 50%;
-			z-index: 1;
-		}
-
-		.switch-button-checkbox:checked+.switch-button-label:before {
-			transform: translateX(100%);
-		}
-
-		.switch-button-label span {
-			flex: 1;
-			text-align: center;
-			z-index: 3;
-			transition: color .3s;
-			font-size: 1.0rem;
-			color: var(--switch-text-inactive);
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			height: 100%;
-		}
-
-		.switch-button-checkbox:checked+.switch-button-label .label-essai {
-			color: var(--switch-text-active);
-		}
-
-		.switch-button-checkbox:not(:checked)+.switch-button-label .label-interpretation {
-			color: var(--switch-text-active);
-		}
-
-		.switch-button-checkbox:checked+.switch-button-label .label-interpretation,
-		.switch-button-checkbox:not(:checked)+.switch-button-label .label-essai {
-			color: var(--switch-text-inactive);
-		}
-
-		body.dark-mode .switch-button-checkbox:checked + .switch-button-label .label-essai,
-		body.dark-mode .switch-button-checkbox:not(:checked) + .switch-button-label .label-interpretation {
-			color: var(--switch-text-active);
-			font-weight: 700;
-		}
-
-		body.dark-mode .switch-button-checkbox:checked + .switch-button-label .label-interpretation,
-		body.dark-mode .switch-button-checkbox:not(:checked) + .switch-button-label .label-essai {
-			color: var(--switch-text-inactive);
-			font-weight: 400;
-		}
-
-		/* ===== GESTION DU MODE SOMBRE FORCÉ PAR LE SYSTÈME ===== */
-		@media (prefers-color-scheme: dark) {
-			html:not(.force-light) .switch-button {
-				--switch-bg: rgba(255, 255, 255, 0.15);
-				--switch-border: #4a4a4a;
-				--switch-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.6), 1px 1px 1px rgba(80, 80, 80, 0.4);
-				--switch-slider-bg: #000000;
-				--switch-slider-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
-				--switch-text-active: #ffffff;
-				--switch-text-inactive: #ffffff;
-			}
-		}
-
-		.progress-footer {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 20px;
-			padding: 0 1rem;
-			margin: 0;
-			width: 100%;
-			background: transparent;
-			flex-shrink: 0;
-			box-sizing: border-box;
-			position: absolute;
-			bottom: 5px;
-			left: 0;
-			z-index: 10;
-		}
-
-		.progress-bar-container {
-			width: 30vw;
-			max-width: 500px;
-			height: 8px;
-			background: var(--progress-bg);
-			border-radius: 20px;
-			overflow: hidden;
-			box-shadow: var(--shadow-in);
-		}
-
-		.progress-bar-fill {
-			height: 100%;
-			background: var(--progress-fill);
-			width: 0%;
-			transition: width 0.3s ease;
-			border-radius: 20px;
-			box-shadow: 0 0 10px var(--progress-fill);
-			pointer-events: none;
-		}
-
-		.card {
-			border: 0 solid #000;
-			border-radius: 12px;
-			box-shadow: rgba(50, 50, 93, .25) 0 50px 100px -20px, rgba(0, 0, 0, .3) 0 30px 60px -30px, rgba(10, 37, 64, .35) 0 -2px 6px 0 inset;
-			padding: 0.6rem 0.8rem;
-			text-align: center;
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
-			height: auto;
-			min-height: 150px;
-			max-height: none;
-			width: 100%;
-			background-color: var(--bg);
-			color: var(--text-light);
-			overflow-y: auto;
-			margin-bottom: 0;
-			box-sizing: border-box;
-		}
-
-		body.dark-mode .card {
-			background: #1a1a1a;
-		}
-
-		.card-content {
-			flex-grow: 1;
-			display: flex;
-			flex-direction: column;
-			justify-content: flex-start;
-			padding: 0.6rem 0.6rem 0.4rem 0.6rem;
-			font-size: 0.9rem !important;
-			line-height: 1.3;
-			overflow-y: auto;
-		}
-
-		.card-title {
-			font-size: 40px !important;
-			margin: 0.2rem 0 0.1rem 0;
-			line-height: 1.1;
-			color: var(--primary-color);
-		}
-
-		.card h2 {
-			font-size: 15px !important;
-			margin: 0 0 0.4rem 0;
-			line-height: 1.2;
-			color: #555;
-		}
-
-		body.dark-mode .card h2 {
-			color: #8895a7;
-		}
-
-		.card p {
-			margin: 0 0 0.3rem;
-			font-size: 13px !important;
-		}
-
-		.toast-container {
-			position: fixed;
-			top: 80px;
-			right: 20px;
-			max-width: 420px;
-			width: 90%;
-			z-index: 99999;
-			pointer-events: none;
-		}
-
-		.toast {
-			background: var(--toast-bg);
-			color: var(--toast-color);
-			padding: 1.2rem 1.5rem;
-			border-radius: 16px;
-			box-shadow: var(--toast-shadow);
-			border-left: 5px solid var(--primary);
-			transform: translateX(120%);
-			opacity: 0;
-			transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-			pointer-events: auto;
-			font-size: 0.9rem;
-			line-height: 1.5;
-			position: relative;
-			max-height: 90vh;
-			overflow-y: auto;
-		}
-
-		.toast.show {
-			transform: translateX(0);
-			opacity: 1;
-		}
-
-		.toast.hide {
-			transform: translateX(120%);
-			opacity: 0;
-		}
-
-		.toast .toast-title {
-			font-weight: 700;
-			color: var(--primary-color);
-			margin-bottom: 0.4rem;
-			font-size: 1rem;
-		}
-
-		.toast .toast-section {
-			margin-top: 0.8rem;
-		}
-
-		.toast .toast-section:first-of-type {
-			margin-top: 0.2rem;
-		}
-
-		.toast .toast-subtitle {
-			font-weight: 700;
-			color: var(--font-color);
-			font-size: 0.9rem;
-			margin-bottom: 0.2rem;
-		}
-
-		.toast ul {
-			margin: 0.3rem 0 0 1.2rem;
-			padding: 0;
-		}
-
-		.toast li {
-			display: list-item;
-			font-size: 0.85rem;
-			margin-bottom: 0.15rem;
-			color: var(--toast-color);
-		}
-
-		.toast-close {
-			position: absolute;
-			top: 8px;
-			right: 12px;
-			background: none;
-			border: none;
-			color: var(--toast-color);
-			font-size: 1.2rem;
-			cursor: pointer;
-			opacity: 0.6;
-			transition: opacity 0.2s;
-			pointer-events: auto;
-			padding: 0;
-			line-height: 1;
-		}
-
-		.toast-close:hover {
-			opacity: 1;
-		}
-
-		/* ===== ZONE DE SCROLL ÉTENDUE JUSQU'EN BAS SUR MOBILE ===== */
-		@media screen and (max-width: 767px) {
-			.switch-button-label span {
-				font-size: 1rem;
-			}
-			.toast-container {
-				top: 70px;
-				right: 10px;
-				max-width: calc(100% - 20px);
-			}
-			.toast {
-				font-size: 0.8rem;
-				padding: 1rem 1.2rem;
-			}
-			.toast li {
-				font-size: 0.75rem;
-			}
-
-			.card-content {
-				font-size: 0.8rem !important;
-			}
-
-			.card p {
-				font-size: 10px !important;
-				margin: 0 0 0.2rem;
-			}
-
-			.card-title {
-				font-size: 40px !important;
-				margin: 0.1rem 0;
-			}
-
-			.card h2 {
-				font-size: 13px !important;
-				margin: 0 0 0.2rem 0;
-			}
-            
-            .card {
-                height: 100% !important;
-                min-height: 0 !important;
-                max-height: 100% !important;
-                margin: 0 !important;
-            }
-            
-            .carousel-items {
-                align-items: stretch !important;
-                overflow-y: hidden !important;
-            }
-            
-            .carousel-container {
-                align-items: stretch !important;
-            }
-            
-            .carousel-item {
-                height: 100% !important;
-            }
-		}
-
-		@media screen and (max-height: 600px) {
-            .switch-button {
-                margin: 7px auto 23px auto;
-            }
-			.card-content {
-				padding: 0.3rem 0.4rem;
-			}
-
-			.card p {
-				font-size: 13px !important;
-				margin: 0 0 0.2rem;
-			}
-
-			.card-title {
-				font-size: 40px !important;
-			}
-
-			.card h2 {
-				font-size: 15px !important;
-			}
-		}
-
-		main {
-			margin: 0;
-			padding: 0;
-			width: 100vw;
-			flex: 1;
-			display: flex;
-			flex-direction: column;
-			min-height: 0;
-			overflow: hidden;
-			position: relative;
-			z-index: 1;
-		}
-
-		* {
-			box-sizing: border-box;
-		}
-
-		h1 {
-			color: var(--primary-color);
-			font-size: 40px;
-			margin-top: 0;
-			text-align: center;
-		}
-
-		h2 {
-			color: #555;
-			font-size: 1.1rem;
-			margin-top: 0;
-			text-align: center;
-		}
-
-		body.dark-mode h2 {
-			color: #8895a7;
-		}
-
-		ul {
-			margin: 0;
-			padding: 0;
-		}
-
-		li {
-			display: inline-block;
-		}
-
-		p {
-			text-align: left;
-			margin: 0 0 0.3rem;
-		}
-
-		header {
-			padding: 0;
-			text-align: center;
-			flex-shrink: 0;
-			width: 100%;
-			position: relative;
-			z-index: 1;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin: 10px auto 10px auto;
-		}
-
-		.div_onglets {
-			height: 100%;
-			width: 100%;
-			display: flex;
-			flex-direction: column;
-			flex: 1;
-			min-height: 0;
-			position: relative;
-			z-index: 1;
-		}
-
-		.onglet {
-			border: 0 solid #000;
-			display: none;
-			min-height: 0;
-			height: 100%;
-			width: 100%;
-			padding: 0;
-			margin: 0;
-			flex: 1;
-			position: relative;
-			z-index: 1;
-		}
-
-		.onglet.active {
-			display: block;
-		}
-
-		section.carousel {
-			height: 100%;
-			width: 100%;
-			display: flex;
-			flex-direction: column;
-			position: relative;
-			z-index: 1;
-		}
-
-		.carousel-container {
-			position: relative;
-			width: 100%;
-			height: 100%;
-			display: flex;
-			align-items: center;
-			gap: 0;
-			padding: 0;
-			margin: 0;
-			flex: 1;
-			min-height: 0;
-			z-index: 1;
-		}
-
-		.carousel-items {
-			display: flex;
-			overflow-x: auto;
-			position: relative;
-			width: 100%;
-			height: 100%;
-			z-index: 1;
-			scroll-snap-type: x proximity;
-			gap: 0.5rem;
-			align-items: stretch;
-			scroll-behavior: smooth;
-			-webkit-overflow-scrolling: touch;
-			min-height: 0;
-			margin: 0;
-			padding: 0.1rem 40px 0 40px;
-			flex: 1;
-			scrollbar-width: none;
-			-ms-overflow-style: none;
-		}
-
-		.carousel-items::-webkit-scrollbar {
-			height: 3px;
-		}
-
-		.carousel-items::-webkit-scrollbar-track {
-			background: #c1c1c1;
-			border-radius: 10px;
-		}
-
-		.carousel-items::-webkit-scrollbar-thumb {
-			background: var(--primary);
-			border-radius: 10px;
-		}
-
-		.carousel-item {
-			width: 320px;
-			flex: 0 0 320px;
-			scroll-snap-align: start;
-			display: flex;
-			flex-direction: column;
-			height: 100%;
-			margin: 0;
-		}
-
-		.carousel-nav-btn {
-			position: absolute;
-			top: 50%;
-			transform: translateY(-50%);
-			width: 55px;
-			height: 55px;
-			background: var(--btn);
-			border: none;
-			border-radius: 50%;
-			box-shadow: var(--shadow-out);
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			z-index: 10;
-			transition: all 0.3s ease;
-			opacity: 0.8;
-			flex-shrink: 0;
-			color: var(--font-color);
-		}
-
-		#scroll-left-1,
-		#scroll-left-2 {
-			left: 10px;
-		}
-
-		#scroll-right-1,
-		#scroll-right-2 {
-			right: 10px;
-		}
-
-		.carousel-nav-btn:hover {
-			opacity: 1;
-			transform: translateY(-50%) scale(1.1);
-			box-shadow: var(--shadow-out), 0 0 15px rgba(0, 0, 0, 0.2);
-		}
-
-		.carousel-nav-btn.hidden {
-			opacity: 0;
-			pointer-events: none;
-		}
-
-		.carousel-nav-btn svg {
-			width: 39px;
-			height: 39px;
-			transition: transform 0.2s ease;
-			fill: currentColor;
-		}
-
-		.carousel-nav-btn:hover svg {
-			transform: scale(1.1);
-		}
-
-		@media screen and (max-width: 400px) {
-			.carousel-nav-btn {
-				top: 54vh;
-				width: 48px;
-				height: 48px;
-			}
-
-			.carousel-nav-btn svg {
-				width: 34px;
-				height: 34px;
-			}
-
-			.carousel-items {
-				padding: 0.1rem 35px 0 35px;
-			}
-		}
-
-		@media screen and (max-width: 575px) {
-			.carousel-items {
-				gap: 0.5rem;
-				padding: 0.1rem 10px 0 10px;
-				scroll-snap-type: x mandatory;
-                align-items: stretch !important;
-                overflow-y: hidden !important;
-			}
-
-			.carousel-item {
-				width: calc(100% - 20px);
-				flex: 0 0 calc(100% - 20px);
-				min-width: 280px;
-				scroll-snap-align: center;
-                height: 100% !important;
-			}
-		}
-
-		@media screen and (max-width: 991px) {
-			.toolbar {
-				flex-direction: column;
-				gap: 0.2rem;
-				padding: 0.3rem 0.5rem;
-				height: auto;
-			}
-
-			.toolbar-left {
-				display: flex;
-				justify-content: center;
-				gap: 6px;
-				width: 100%;
-				order: -1;
-				margin-top: 20px;
-				flex-wrap: wrap;
-				min-width: unset;
-			}
-
-			.toolbar-right {
-				display: none;
-			}
-
-			.toolbar-title {
-				order: 1;
-				width: 100%;
-				margin-bottom: -15px;
-				margin-top: 5px;
-			}
-
-			.toolbar h1 {
-				font-size: 40px;
-			}
-
-			.toolbar h2 {
-				font-size: 16px;
-			}
-
-			.progress-footer {
-				height: 20px;
-				bottom: 5px;
-			}
-
-			header {
-				margin: 8px auto 8px auto;
-			}
-            
-            .switch-button {
-                margin: 20px auto 10px auto;
-            }
-		}
-
-		@media screen and (max-width: 991px) {
-			.btn,
-			.home-btn,
-			.info-btn {
-				width: 44px !important;
-				height: 44px !important;
-			}
-			.home-btn .icon-wrapper {
-				width: 44px !important;
-				height: 44px !important;
-			}
-			.btn > svg,
-			.btn .icon-wrapper > svg,
-			.btn .menu-icon,
-			.info-btn > svg {
-				width: 20px !important;
-				height: 20px !important;
-			}
-		}
-
-		@media screen and (min-width: 992px) {
-			.toolbar-left,
-			.toolbar-right {
-				display: flex;
-				align-items: center;
-				gap: 8px;
-				min-width: 180px;
-			}
-
-			.toolbar-left {
-				justify-content: flex-start;
-			}
-
-			.toolbar-right {
-				justify-content: flex-end;
-			}
-		}
-
-		@media screen and (min-width: 992px) {
-			.carousel-item {
-				width: 320px;
-				flex: 0 0 320px;
-			}
 		}
 
 		.submenu .toggle-container {
@@ -1709,28 +813,6 @@
 			background: #4a80c0;
 		}
 
-		.submenu-content {
-			margin-top: 1rem;
-			color: var(--font-color);
-		}
-
-		.submenu-content p {
-			margin-bottom: 0.8rem;
-			line-height: 1.4;
-		}
-
-		.submenu-content ul {
-			list-style-type: disc;
-			padding-left: 1.2rem;
-			margin-bottom: 1rem;
-		}
-
-		.submenu-content li {
-			margin-bottom: 0.5rem;
-			font-size: 13px;
-			display: list-item;
-		}
-
 		.about-item {
 			display: flex;
 			align-items: center;
@@ -1775,93 +857,871 @@
 			border-bottom: 2px solid var(--font-color);
 		}
 
-		/* ===== TOAST MOBILE : RECOUVRE LA VIGNETTE DU CARROUSEL ===== */
+		.modal {
+			position: fixed;
+			inset: 0;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 10002;
+			opacity: 0;
+			pointer-events: none;
+			transition: var(--transition);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.modal.active {
+			opacity: 1;
+			pointer-events: all;
+		}
+
+		.modal-content {
+			position: relative;
+			width: 90%;
+			max-width: 500px;
+			background: var(--btn);
+			padding: 2rem;
+			border-radius: 20px;
+			box-shadow: var(--shadow-out);
+			color: var(--font-color);
+			transform: translateY(-20px);
+			transition: transform 0.3s ease;
+			z-index: 10003;
+		}
+
+		.modal.active .modal-content {
+			transform: translateY(0);
+		}
+
+		.modal h2 {
+			color: var(--primary-color);
+			margin-bottom: 1rem;
+		}
+
+		.theme-switch {
+			position: relative;
+			display: inline-block;
+			width: 44px;
+			height: 20px;
+		}
+
+		.theme-switch input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
+
+		.theme-switch .slider {
+			position: absolute;
+			cursor: pointer;
+			inset: 0;
+			background: #b0b8c4;
+			border-radius: 20px;
+			transition: .3s;
+		}
+
+		.theme-switch .slider:before {
+			content: "";
+			position: absolute;
+			width: 16px;
+			height: 16px;
+			left: 2px;
+			top: 2px;
+			background: #fff;
+			border-radius: 50%;
+			transition: .3s;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		}
+
+		.theme-switch input:checked+.slider {
+			background: #3a7bb5;
+		}
+
+		.theme-switch input:checked+.slider:before {
+			transform: translateX(24px);
+		}
+
+		.fullscreen-icon, .fullscreen-exit-icon {
+			transform-origin: center;
+			transition: transform 0.3s ease;
+		}
+
+		.btn.fullscreen:not(.fullscreen-active):hover svg:not(.fullscreen-exit-icon) {
+			transform: scale(1.3);
+		}
+
+		.btn.fullscreen.fullscreen-active:hover .fullscreen-exit-icon {
+			transform: scale(0.7);
+		}
+
+		.switch-button {
+			background: var(--switch-bg);
+			border-radius: 30px;
+			border: 1px solid var(--switch-border);
+			box-shadow: var(--switch-shadow);
+			color: #000;
+			font-size: 0.8em;
+			overflow: hidden;
+			position: relative;
+			text-align: center;
+			margin: 0px auto 30px auto;
+			padding: 0;
+			display: flex;
+			justify-content: space-between;
+			flex-shrink: 0;
+			height: 40px;
+			width: 330px;
+			z-index: 1;
+		}
+
+		.switch-button-checkbox {
+			cursor: pointer;
+			height: 100%;
+			width: 100%;
+			opacity: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 2;
+		}
+
+		.switch-button-label {
+			display: flex;
+			width: 100%;
+			position: relative;
+			pointer-events: none;
+			user-select: none;
+			height: 100%;
+			align-items: center;
+		}
+
+		.switch-button-label:before {
+			background: var(--switch-slider-bg);
+			border-radius: 30px;
+			box-shadow: var(--switch-slider-shadow);
+			content: "";
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			transform: translateX(0);
+			transition: transform .3s;
+			width: 50%;
+			z-index: 1;
+		}
+
+		.switch-button-checkbox:checked+.switch-button-label:before {
+			transform: translateX(100%);
+		}
+
+		.switch-button-label span {
+			flex: 1;
+			text-align: center;
+			z-index: 3;
+			transition: color .3s;
+			font-size: 1.0rem;
+			color: var(--switch-text-inactive);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+		}
+
+		.switch-button-checkbox:checked+.switch-button-label .label-dissertation {
+			color: var(--switch-text-active);
+		}
+
+		.switch-button-checkbox:not(:checked)+.switch-button-label .label-explication {
+			color: var(--switch-text-active);
+		}
+
+		.switch-button-checkbox:checked+.switch-button-label .label-explication,
+		.switch-button-checkbox:not(:checked)+.switch-button-label .label-dissertation {
+			color: var(--switch-text-inactive);
+		}
+
+		.toast-container {
+			position: fixed;
+			top: 80px;
+			right: 20px;
+			max-width: 380px;
+			width: 90%;
+			z-index: 99999;
+			pointer-events: none;
+		}
+
+		.toast {
+			background: var(--toast-bg);
+			color: var(--toast-color);
+			padding: 1.2rem 1.5rem;
+			border-radius: 16px;
+			box-shadow: var(--toast-shadow);
+			border-left: 5px solid var(--primary);
+			transform: translateX(120%);
+			opacity: 0;
+			transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+			pointer-events: auto;
+			font-size: 0.9rem;
+			line-height: 1.5;
+		}
+
+		.toast.show {
+			transform: translateX(0);
+			opacity: 1;
+		}
+
+		.toast.hide {
+			transform: translateX(120%);
+			opacity: 0;
+		}
+
+		.toast .toast-title {
+			font-weight: 700;
+			color: var(--primary-color);
+			margin-bottom: 0.4rem;
+			font-size: 1rem;
+		}
+
+		.toast ul {
+			margin: 0.3rem 0 0 1.2rem;
+			padding: 0;
+		}
+
+		.toast li {
+			display: list-item;
+			font-size: 0.85rem;
+			margin-bottom: 0.15rem;
+			color: var(--toast-color);
+		}
+
+		.toast-subtitle {
+			font-weight: 700;
+			color: var(--primary-color);
+			margin-top: 0.8rem;
+			margin-bottom: 0.3rem;
+			list-style-type: none;
+			margin-left: -1.2rem;
+		}
+
+		.toast-close {
+			position: absolute;
+			top: 8px;
+			right: 12px;
+			background: none;
+			border: none;
+			color: var(--toast-color);
+			font-size: 1.2rem;
+			cursor: pointer;
+			opacity: 0.6;
+			transition: opacity 0.2s;
+			pointer-events: auto;
+		}
+
+		.toast-close:hover {
+			opacity: 1;
+		}
+
+		.progress-footer {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 30px;
+			padding: 0 1rem;
+			margin: 0;
+			width: 100%;
+			background: transparent;
+			flex-shrink: 0;
+			box-sizing: border-box;
+			position: absolute;
+			bottom: 0;
+			left: auto;
+			z-index: 10;
+		}
+
+		.progress-bar-container {
+			width: 30vw;
+			max-width: 500px;
+			height: 8px;
+			background: var(--progress-bg);
+			border-radius: 20px;
+			overflow: hidden;
+			box-shadow: var(--shadow-in);
+		}
+
+		.progress-bar-fill {
+			height: 100%;
+			background: var(--progress-fill);
+			width: 0%;
+			transition: width 0.3s ease;
+			border-radius: 20px;
+			box-shadow: 0 0 10px var(--progress-fill);
+			pointer-events: none;
+		}
+
+		.card {
+			border: 0 solid #000;
+			border-radius: 12px;
+			box-shadow: rgba(50, 50, 93, .25) 0 50px 100px -20px, rgba(0, 0, 0, .3) 0 30px 60px -30px, rgba(10, 37, 64, .35) 0 -2px 6px 0 inset;
+			padding: 0.6rem 0.8rem;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			height: auto;
+			min-height: 150px;
+			max-height: none;
+			width: 100%;
+			background-color: var(--bg-light);
+			color: var(--font-color);
+			overflow-y: auto;
+			margin-bottom: 0;
+			box-sizing: border-box;
+		}
+
+		body.dark-mode .card {
+			background: #1a1a1a;
+		}
+
+		.card-content {
+			flex-grow: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			padding: 0.6rem 0.6rem 0.4rem 0.6rem;
+			font-size: 0.9rem !important;
+			line-height: 1.3;
+			overflow-y: auto;
+			text-align: left;
+		}
+
+		.card-title {
+			font-size: 40px !important;
+			margin: 0.2rem 0 0.1rem 0;
+			line-height: 1.1;
+			color: var(--primary-color);
+		}
+
+		.card h2 {
+			font-size: 15px !important;
+			margin: 0 0 0.4rem 0;
+			line-height: 1.2;
+			color: #555;
+		}
+
+		body.dark-mode .card h2 {
+			color: #8895a7;
+		}
+
+		.card p {
+			margin: 0 0 0.3rem;
+			font-size: 13px !important;
+		}
+
+		main {
+			margin: 0;
+			padding: 0;
+			width: 100vw;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			min-height: 0;
+			overflow: hidden;
+			position: relative;
+			z-index: 1;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		header {
+			padding: 0 0 0 0;
+			text-align: center;
+			flex-shrink: 0;
+			width: 100%;
+			position: relative;
+			z-index: 1;
+			margin-bottom: 12px;
+			margin-top: 12px;
+		}
+
+		.div_onglets {
+			height: 100%;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			min-height: 0;
+			position: relative;
+			z-index: 1;
+		}
+
+		.onglet {
+			border: 0 solid #000;
+			display: none;
+			min-height: 0;
+			height: 100%;
+			width: 100%;
+			padding: 0;
+			margin: 0;
+			flex: 1;
+			position: relative;
+			z-index: 1;
+		}
+
+		.onglet.active {
+			display: flex;
+			flex-direction: column;
+		}
+
+		section.carousel {
+			height: 100%;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			position: relative;
+			z-index: 1;
+			flex: 1;
+		}
+
+		.carousel-container {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			gap: 0;
+			padding: 0;
+			margin: 0;
+			flex: 1;
+			min-height: 0;
+			z-index: 1;
+		}
+
+		.carousel-items {
+			display: flex;
+			overflow-x: auto;
+			position: relative;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+			scroll-snap-type: x mandatory;
+			gap: 1rem;
+			align-items: center;
+			scroll-behavior: smooth;
+			-webkit-overflow-scrolling: touch;
+			min-height: 0;
+			margin: 0;
+			padding: 0.1rem 1rem 0 1rem;
+			flex: 1;
+			scrollbar-width: none;
+			-ms-overflow-style: none;
+		}
+
+		.carousel-items::-webkit-scrollbar {
+			height: 3px;
+		}
+
+		.carousel-items::-webkit-scrollbar-track {
+			background: #c1c1c1;
+			border-radius: 10px;
+		}
+
+		.carousel-items::-webkit-scrollbar-thumb {
+			background: var(--primary);
+			border-radius: 10px;
+		}
+
+		.carousel-item {
+			scroll-snap-align: center;
+			display: flex;
+			flex-direction: column;
+			height: auto;
+			margin: 0;
+		}
+
+		@media screen and (min-width: 768px) {
+			.carousel-item {
+				width: 320px;
+				flex: 0 0 320px;
+			}
+			.carousel-items {
+				align-items: stretch;
+			}
+		}
+
 		@media screen and (max-width: 767px) {
-			.toast {
+			.carousel-items {
+				padding: 0.1rem 0.5rem 0 0.5rem;
+				gap: 0;
+				scroll-snap-type: x mandatory;
+				align-items: stretch;
+				overflow-y: hidden;
+			}
+			.carousel-item {
+				width: calc(100% - 1rem);
+				flex: 0 0 calc(100% - 1rem);
+				margin: 0 0.5rem;
+				scroll-snap-align: center;
 				height: 100%;
-				max-height: none;
-				padding: 1.4rem 1rem 0.85rem;
-				font-size: 0.78rem;
-				line-height: 1.4;
-				border-radius: 12px;
-				transform: translateY(20px);
-				opacity: 0;
-				transition: transform 0.35s ease, opacity 0.3s ease;
 			}
-			.toast.show {
-				transform: translateY(0);
-				opacity: 1;
+			.carousel-nav-btn {
+				top: 50%;
+				width: 44px;
+				height: 44px;
 			}
-			.toast.hide {
-				transform: translateY(20px);
-				opacity: 0;
+			.carousel-nav-btn svg {
+				width: 32px;
+				height: 32px;
+			}
+			.toolbar-left {
+				padding-top: 1rem;
+			}
+			.carousel-container {
+				display: flex;
+				align-items: stretch;
+			}
+			.card {
+				height: 100% !important;
+				min-height: 0 !important;
+				max-height: 100% !important;
+				margin: 0 !important;
+				padding: 1rem 0.8rem;
+			}
+			.card-content {
+				font-size: 0.9rem !important;
+				padding: 0.8rem 0.6rem;
+			}
+			.card p {
+				font-size: 14px !important;
+				margin: 0 0 0.3rem;
+			}
+			.card-title {
+				font-size: 44px !important;
+				margin: 0.3rem 0;
+			}
+			.card h2 {
+				font-size: 16px !important;
+				margin: 0 0 0.3rem 0;
+			}
+		}
+
+		.carousel-nav-btn {
+			position: absolute;
+			transform: translateY(-50%);
+			width: 55px;
+			height: 55px;
+			background: var(--btn);
+			border: none;
+			border-radius: 50%;
+			box-shadow: var(--shadow-out);
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 10;
+			transition: all 0.3s ease;
+			opacity: 0.8;
+			flex-shrink: 0;
+			color: var(--font-color);
+		}
+
+		#scroll-left-1, #scroll-left-2 {
+			left: 5px;
+			top: 238.5px;
+		}
+
+		#scroll-right-1, #scroll-right-2 {
+			right: 5px;
+			top: 238.5px;
+		}
+
+		.carousel-nav-btn:hover {
+			opacity: 1;
+			transform: translateY(-50%) scale(1.1);
+			box-shadow: var(--shadow-out), 0 0 15px rgba(0, 0, 0, 0.2);
+		}
+
+		.carousel-nav-btn.hidden {
+			opacity: 0;
+			pointer-events: none;
+		}
+
+		.carousel-nav-btn svg {
+			width: 39px;
+			height: 39px;
+			transition: transform 0.2s ease;
+			fill: currentColor;
+		}
+
+		.carousel-nav-btn:hover svg {
+			transform: scale(1.1);
+		}
+
+		@media screen and (max-width: 991px) {
+			.toolbar {
+				flex-direction: column;
+				gap: 0.2rem;
+				padding: 0.3rem 0.5rem;
+				height: auto;
+			}
+			.toolbar-left {
+				display: flex;
+				justify-content: center;
+				gap: 6px;
+				width: 100%;
+				order: -1;
+				flex-wrap: wrap;
+				min-width: unset;
+			}
+			.toolbar-right {
+				display: none;
+			}
+			.toolbar-center {
+				order: 1;
+				width: 100%;
+				margin-bottom: -20px;
+			}
+			.toolbar h1 {
+				font-size: 35px;
+			}
+			.toolbar h2 {
+				font-size: 16px;
+				margin-top: 2px;
+			}
+			.switch-button {
+				margin: 20px auto 10px auto;
+			}
+			.btn, .home-btn, .info-btn {
+				width: 44px !important;
+				height: 44px !important;
+			}
+			.home-btn .icon-wrapper {
+				width: 44px !important;
+				height: 44px !important;
+			}
+			.btn > svg, .btn .icon-wrapper > svg, .btn .menu-icon, .info-btn > svg {
+				width: 20px !important;
+				height: 20px !important;
+			}
+		}
+
+		@media screen and (min-width: 992px) {
+			.toolbar-left, .toolbar-right {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				min-width: 180px;
+			}
+			.toolbar-left {
+				justify-content: flex-start;
+			}
+			.toolbar-right {
+				justify-content: flex-end;
+			}
+			.toolbar h2 {
+				margin-top: 4px;
+			}
+		}
+
+		@media screen and (max-width: 400px) {
+			.carousel-nav-btn {
+				width: 42px;
+				height: 42px;
+			}
+			.carousel-nav-btn svg {
+				width: 30px;
+				height: 30px;
+			}
+			.progress-bar-container {
+				background: transparent !important;
+				box-shadow: none !important;
+			}
+		}
+
+		@media screen and (max-width: 767px) {
+			html, body {
+				height: 100dvh;
+				position: relative;
+				overflow: hidden;
+			}
+			main {
+				display: flex;
+				flex-direction: column;
+				height: 100%;
+			}
+			.div_onglets {
+				flex: 1;
+				display: flex;
+			}
+			.carousel {
+				flex: 1;
+				display: flex;
+			}
+			.carousel-container {
+				flex: 1;
+				display: flex;
+				align-items: stretch;
+			}
+			.carousel-items {
+				display: flex;
+				align-items: stretch;
+				height: 100%;
+			}
+			.carousel-item {
+				display: flex;
+				align-items: stretch;
+				justify-content: center;
+				height: 100%;
+			}
+			.card {
+				margin: 0;
+			}
+			.progress-footer {
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 30px;
+				z-index: 1000;
+				background: transparent;
+			}
+			main {
+				padding-bottom: 35px;
+			}
+			header {
+				margin-top: 6px;
+				margin-bottom: 6px;
+			}
+			.toast-container {
+				top: 70px;
+				right: 10px;
+				max-width: calc(100% - 20px);
+			}
+			.toast {
+				font-size: 0.8rem;
+				padding: 1rem 1.2rem;
 			}
 			.toast li {
-				font-size: 0.73rem;
-				margin-bottom: 0.12rem;
+				font-size: 0.75rem;
 			}
 		}
 	</style>
 </head>
 
 <body>
-	<div class="toolbar">
-		<div class="toolbar-left">
-			<button class="btn home-btn" id="home-btn" data-title="accueil (H)">
-				<div class="icon-wrapper">
-					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-						<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-						<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2"
-							stroke-linejoin="round" stroke-linecap="round" />
+	<div class="main-content" id="mainContent">
+		<div class="toolbar">
+			<div class="toolbar-left" id="toolbarLeft">
+				<button class="btn home-btn" id="home-btn" data-title="accueil (H)">
+					<div class="icon-wrapper">
+						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+							<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+							<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+						</svg>
+					</div>
+				</button>
+				<button class="btn reload" id="reload-btn" data-title="recharger (R)">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="23 4 23 10 17 10"></polyline>
+						<polyline points="1 20 1 14 7 14"></polyline>
+						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
 					</svg>
+				</button>
+			</div>
+			<div class="toolbar-center">
+				<h1>notation en hlp</h1>
+			</div>
+			<div class="toolbar-right" id="toolbarRight">
+				<button class="btn fullscreen" id="fullscreen-btn" data-title="plein écran (F)">
+					<svg class="fullscreen-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+						<line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" />
+						<line x1="5" y1="6" x2="5" y2="10" stroke="currentColor" />
+						<line x1="14" y1="5" x2="20" y2="5" stroke="currentColor" />
+						<line x1="19" y1="6" x2="19" y2="10" stroke="currentColor" />
+						<line x1="5" y1="14" x2="5" y2="20" stroke="currentColor" />
+						<line x1="6" y1="19" x2="10" y2="19" stroke="currentColor" />
+						<line x1="14" y1="19" x2="20" y2="19" stroke="currentColor" />
+						<line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" />
+					</svg>
+				</button>
+				<button class="btn menu-btn" id="menuButton" data-title="menu (M)">
+					<svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+						<line x1="3" y1="6" x2="21" y2="6"/>
+						<line x1="3" y1="12" x2="21" y2="12"/>
+						<line x1="3" y1="18" x2="21" y2="18"/>
+					</svg>
+				</button>
+			</div>
+		</div>
+
+		<header>
+			<div class="switch-button">
+				<input id="switch" class="switch-button-checkbox" type="checkbox">
+				<label class="switch-button-label" for="switch">
+					<span class="label-dissertation">essai</span>
+					<span class="label-explication">interprétation</span>
+				</label>
+			</div>
+		</header>
+		
+		<main>
+			<div class="div_onglets">
+				<div id="onglet_1" class="onglet active">
+					<section class="carousel">
+						<div class="carousel-container">
+							<button class="carousel-nav-btn hidden" id="scroll-left-1" aria-label="Précédent">
+								<svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" /></svg>
+							</button>
+							<ul class="carousel-items" id="carousel-1" tabindex="0" role="listbox">
+								<li class="carousel-item"><div class="card"><h1 class="card-title">00-01</h1><h2>Copie manifestement indigente</h2><div class="card-content"><p>• Copie inintelligible en raison d'une expression française lourdement fautive et particulièrement confuse.</p><p>• Copie non structurée.</p><p>• Copie excessivement brève.</p><p>• Copie marquant un refus manifeste de faire l'exercice.</p></div></div></li>
+								<li class="carousel-item"><div class="card"><h1 class="card-title">02-04</h1><h2>Copie intelligible mais qui ne répond aucunement aux critères attestés de l'épreuve</h2><div class="card-content"><p>• Propos excessivement vague sans rapport avec la question posée.</p><p>• Juxtaposition d'exemples sommaires ou anecdotiques.</p><p>• Accumulation désordonnée d'énoncés sans pertinence.</p><p>• Récitation désordonnée de fragments de cours sans rapport avec le texte comme avec la question.</p><p>• Argumentation lacunaire, voire obscure.</p><p>• Expression mal maîtrisée aussi bien dans son lexique que dans sa syntaxe : rédaction respectant trop peu les normes syntaxiques et orthographiques pour permettre une lecture fluide ; langue parfois incorrecte et/ou témoignant d'une expression française insuffisamment maîtrisée.</p><p>• Propos qui aurait pu être rédigé au début de l'année, sans aucun cours de spécialité humanités, littérature, philosophie, ou connaissances acquises.</p></div></div></li>
+								<li class="carousel-item"><div class="card"><h1 class="card-title">05</h1><h2>Copie répondant aux principaux attendus</h2><div class="card-content"><p>• Prise en compte de la question qui permet de construire le propos.</p><p>• Effort d'interrogation de la question.</p><p>• Effort d'appui sur le texte.</p><p>• Mobilisation (même un peu allusive) de références philosophiques ou littéraires qui éclairent la question.</p><p>• Formulation d'une réponse possible.</p><p>• La réponse est globalement construite et argumentée ; l'expression correcte permet la compréhension du propos et du raisonnement développés.</p></div></div></li>
+								<li class="carousel-item"><div class="card"><h1 class="card-title">06</h1><h2>Si, en plus</h2><div class="card-content"><p>• Compréhension du sens de la question et interrogation engagée sur ce qui la justifie.</p><p>• Présence d'arguments et de références littéraires et/ou philosophiques pertinents pour justifier la réponse.</p><p>• Appui sur des éléments déterminants du texte pour étayer le propos.</p><p>• Mobilisation à bon escient de connaissances complémentaires littéraires et/ou philosophiques permettant d'étayer et de développer le propos.</p><p>• La réponse est précise, ordonnée et argumentée ; l'expression est assez bien maîtrisée, aussi bien d'un point de vue lexical que syntaxique.</p></div></div></li>
+								<li class="carousel-item"><div class="card"><h1 class="card-title">07</h1><h2>Si, en plus</h2><div class="card-content"><p>• Effort de questionnement de la question.</p><p>• Effort pour structurer une réponse développée et cohérente.</p><p>• Réponse suffisamment développée pour entrer, d'une manière ou d'une autre, en dialogue avec elle-même.</p><p>• Recours de manière développée à des éléments précis de connaissances littéraires et/ou philosophiques acquises en cours d'année.</p><p>• Expression bien maîtrisée, nuancée et précise, aussi bien d'un point de vue lexical que syntaxique.</p></div></div></li>
+								<li class="carousel-item"><div class="card"><h1 class="card-title">08-10</h1><h2>Si, en plus</h2><div class="card-content"><p>• Questionnement continu et progressif cherchant à approfondir sa réponse.</p><p>• Élaboration précise des arguments.</p><p>• Élaboration d'une position en la situant par rapport à la position initiale du texte.</p><p>• Utilisation judicieuse et précision des connaissances acquises littéraires et/ou philosophiques.</p><p>• Langue riche et soignée : vocabulaire varié, style adapté au propos développé, formulation convaincante des idées.</p><p>• La réponse témoigne de la maîtrise de concepts utiles pour le sujet, d'une démarche de recherche comprenant le souci des enjeux de la question et d'une culture précise et pertinemment utilisée.</p></div></div></li>
+							</ul>
+							<button class="carousel-nav-btn" id="scroll-right-1" aria-label="Suivant">
+								<svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" /></svg>
+							</button>
+						</div>
+					</section>
 				</div>
-			</button>
-			<button class="btn reload" id="reload-btn" data-title="recharger (R)">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-					stroke-linecap="round" stroke-linejoin="round">
-					<polyline points="23 4 23 10 17 10"></polyline>
-					<polyline points="1 20 1 14 7 14"></polyline>
-					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-				</svg>
-			</button>
-			<button class="info-btn" id="info-btn" data-title="ce qui est attendu / valorisé (V)">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-					<circle cx="12" cy="12" r="10"/>
-					<line x1="12" y1="16" x2="12" y2="12"/>
-					<line x1="12" y1="8" x2="12.01" y2="8"/>
-				</svg>
-			</button>
-			<button class="btn fullscreen" id="fullscreen-btn" data-title="plein écran (F)">
-				<svg class="fullscreen-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-					stroke-linecap="butt">
-					<line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" />
-					<line x1="5" y1="6" x2="5" y2="10" stroke="currentColor" />
-					<line x1="14" y1="5" x2="20" y2="5" stroke="currentColor" />
-					<line x1="19" y1="6" x2="19" y2="10" stroke="currentColor" />
-					<line x1="5" y1="14" x2="5" y2="20" stroke="currentColor" />
-					<line x1="6" y1="19" x2="10" y2="19" stroke="currentColor" />
-					<line x1="14" y1="19" x2="20" y2="19" stroke="currentColor" />
-					<line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" />
-				</svg>
-			</button>
-		</div>
-		<div class="toolbar-title">
-			<h1>notation en hlp</h1>
-		</div>
-		<div class="toolbar-right">
-			<button class="btn menu-btn" id="menuButton" data-title="menu (M)">
-				<svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-					<line x1="3" y1="6" x2="21" y2="6"/>
-					<line x1="3" y1="12" x2="21" y2="12"/>
-					<line x1="3" y1="18" x2="21" y2="18"/>
-				</svg>
-			</button>
-		</div>
+				<div id="onglet_2" class="onglet">
+					<section class="carousel">
+						<div class="carousel-container">
+							<button class="carousel-nav-btn hidden" id="scroll-left-2" aria-label="Précédent">
+								<svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" /></svg>
+							</button>
+							<ul class="carousel-items" id="carousel-2" tabindex="0" role="listbox">
+								<li class="carousel-item"><div class="card"><h1 class="card-title">00-01</h1><h2>Copie manifestement indigente</h2><div class="card-content"><p>• Copie inintelligible en raison d'une expression française lourdement fautive et particulièrement confuse.</p><p>• Copie non structurée.</p><p>• Copie excessivement brève.</p><p>• Copie marquant un refus manifeste de faire l'exercice.</p></div></div></li>
+								<li class="carousel-item"><div class="card"><h1 class="card-title">02-04</h1><h2>Copie intelligible mais qui ne répond aucunement aux critères attestés de l'épreuve</h2><div class="card-content"><p>• Propos excessivement vague ou restant sans rapport avec le texte.</p><p>• Simple répétition, citation fragmentaire et sans ordre.</p><p>• Lecture superficielle du texte, non attentive à la langue, à son lexique, aux arguments.</p><p>• Incohérence et désordre du propos : argumentation lacunaire, voire obscure.</p><p>• Expression mal maîtrisée aussi bien dans son lexique que dans sa syntaxe ; rédaction respectant trop peu les normes syntaxiques et orthographiques pour permettre une lecture fluide ; langue parfois incorrecte et/ou témoignant d'une expression française insuffisamment maîtrisée.</p><p>• Propos qui aurait pu être rédigé au début de l'année, sans aucun cours de spécialité humanités, littérature, philosophie, ou connaissances acquises.</p></div></div></li>
+								<li class="carousel-item"><div class="card"><h1 class="card-title">05</h1><h2>Copie répondant aux principaux attendus</h2><div class="card-content"><p>• Prise en compte de la question qui permet de construire le propos.</p><p>• Effort pour se référer et analyser les éléments les plus décisifs du texte (eu égard à la question posée).</p><p>• Explication commençante de ce que soutient ou de ce qu'exprime le texte.</p><p>• Pas de contresens majeur sur le propos du texte et la démarche de l'auteur.</p><p>• La réponse est globalement construite et argumentée ; l'expression correcte permet la compréhension du propos et du raisonnement développés.</p></div></div></li>
+								<li class="carousel-item"><div class="card"><h1 class="card-title">06</h1><h2>Si, en plus</h2><div class="card-content"><p>• Interrogation du texte avec un effort d'attention au détail du propos, de son écriture, de sa langue.</p><p>• Interprétation identifiant ou explicitant les éléments les plus décisifs du texte.</p><p>• Présence d'arguments pertinents pour étayer l'interprétation.</p><p>• Connaissances utilisées de manière pertinente pour développer le propos.</p><p>• La réponse est précise, ordonnée et argumentée ; l'expression est assez bien maîtrisée, aussi bien d'un point de vue lexical que syntaxique.</p></div></div></li>
+								<li class="carousel-item"><div class="card"><h1 class="card-title">07</h1><h2>Si, en plus</h2><div class="card-content"><p>• Effort d'interprétation témoignant d'un questionnement attentif aussi bien à la lettre qu'à l'esprit du texte.</p><p>• Élucidation effective, même si elle reste partielle, de la question sur laquelle porte le texte.</p><p>• Questionnement continu des idées, des arguments ou des choix d'écriture du texte.</p><p>• Mise au jour de nuances possibles d'interprétation.</p><p>• Expression bien maîtrisée, nuancée et précise, aussi bien d'un point de vue lexical que syntaxique.</p></div></div></li>
+								<li class="carousel-item"><div class="card"><h1 class="card-title">08-10</h1><h2>Si, en plus</h2><div class="card-content"><p>• Attention soutenue aux élaborations conceptuelles et argumentatives du texte.</p><p>• Effort de mettre au jour les implicites et les difficultés éventuelles du texte ou ses enjeux esthétiques.</p><p>• Situation de la position du texte relativement à la question travaillée et à ses enjeux ou par rapport à d'autres textes permettant de poser la même question.</p><p>• Utilisation judicieuse et précision des connaissances acquises.</p><p>• Langue riche et soignée : vocabulaire varié, style adapté au propos développé, formulation convaincante des idées.</p><p>• La réponse est développée avec amplitude et justesse : l'ensemble du texte est examiné et bien situé dans un questionnement suivi et problématisé, associé à une culture précise et pertinemment utilisée.</p></div></div></li>
+							</ul>
+							<button class="carousel-nav-btn" id="scroll-right-2" aria-label="Suivant">
+								<svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" /></svg>
+							</button>
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<div class="progress-footer">
+				<div class="progress-bar-container" id="progress-bar-container">
+					<div class="progress-bar-fill" id="progress-bar" style="width: 0%"></div>
+				</div>
+			</div>
+		</main>
 	</div>
 
+	<!-- OVERLAY MENU -->
 	<div class="menu-overlay" id="menuOverlay"></div>
 
+	<!-- MENU PRINCIPAL COULISSANT -->
 	<div class="menu" id="slideMenu">
 		<div class="menu-header">
 			<button class="menu-close" id="menuClose">
@@ -1878,14 +1738,14 @@
 					<line x1="12" y1="16" x2="12" y2="12"></line>
 					<line x1="12" y1="8" x2="12.01" y2="8"></line>
 				</svg>
-				présentation
+				<span class="item-label">présentation</span>
 			</button>
-			<button class="menu-item" id="openSettingsSub">
+			<button class="menu-item" id="openSettingsSub">	
 				<svg class="settings-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 					<circle cx="12" cy="12" r="3"></circle>
 					<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
 				</svg>
-				paramètres
+				<span class="item-label">paramètres</span>
 			</button>
 			<button class="menu-item" id="openShortcutsSub">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1897,19 +1757,20 @@
 					<line x1="6" y1="16" x2="10" y2="16"></line>
 					<line x1="14" y1="16" x2="18" y2="16"></line>
 				</svg>
-				raccourcis clavier
-			</button>
+				<span class="item-label">raccourcis clavier</span>
+			</button>	 
 			<button class="menu-item" id="openAboutSub">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 					<circle cx="12" cy="12" r="10"></circle>
 					<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
 					<line x1="12" y1="17" x2="12.01" y2="17"></line>
 				</svg>
-				à propos
+				<span class="item-label">à propos</span>
 			</button>
 		</div>
 	</div>
 
+	<!-- SOUS-MENU Présentation -->
 	<div class="submenu" id="submenuPresentation">
 		<div class="menu-header">
 			<button class="submenu-close" data-submenu="presentation">
@@ -1925,13 +1786,14 @@
 			<div class="settings-info">
 				<p><strong>Objectif principal :</strong> visualiser et comparer les critères d'évaluation pour les deux types d'exercices en HLP :</p>
 				<ul>
-					<li>L'essai</li>
-					<li>L'interprétation de texte</li>
+					<li>l'essai</li>
+					<li>l'interprétation de texte</li>
 				</ul>
 			</div>
 		</div>
 	</div>
 
+	<!-- SOUS-MENU Paramètres -->
 	<div class="submenu" id="submenuSettings">
 		<div class="menu-header">
 			<button class="submenu-close" data-submenu="settings">
@@ -1942,7 +1804,7 @@
 			</button>
 		</div>
 		<div class="submenu-title">paramètres</div>
-
+		
 		<div class="toggle-container">
 			<svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 				<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -1953,7 +1815,7 @@
 				<span class="slider"></span>
 			</label>
 		</div>
-
+		
 		<div class="toggle-container">
 			<svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 				<circle cx="13.5" cy="6.5" r="0.5" fill="currentColor"/>
@@ -1968,7 +1830,7 @@
 				<span class="slider"></span>
 			</label>
 		</div>
-
+		
 		<div class="toggle-container">
 			<svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 				<polygon points="5 3 19 12 5 21 5 3"></polygon>
@@ -1979,14 +1841,15 @@
 				<span class="slider"></span>
 			</label>
 		</div>
-
+		
 		<div class="settings-info">
-			<p><strong>mode sombre :</strong> inverse les couleurs de l'interface pour afficher du texte clair sur un fond sombre, réduisant ainsi la fatigue oculaire dans les environnements peu éclairés et économisant la batterie sur les écrans OLED.</p>
-			<p><strong>mode daltonien :</strong> adapte les couleurs (notamment le rouge) pour les personnes atteintes de deutéranopie et de protanopie.</p>
-			<p><strong>mode animation :</strong> désactive toutes les animations (SVG, transitions, défilement) pour éviter les distractions et les mouvements brusques.</p>
+			<p><strong>mode sombre :</strong> inverse les couleurs pour réduire la fatigue oculaire</p>
+			<p><strong>mode daltonien :</strong> adapte les couleurs pour les personnes atteintes de deutéranopie et protanopie</p>
+			<p><strong>mode animation :</strong> désactive toutes les animations (SVG, transitions, défilement) pour éviter les distractions et les mouvements brusques</p>
 		</div>
 	</div>
 
+	<!-- SOUS-MENU Raccourcis clavier -->
 	<div class="submenu" id="submenuShortcuts">
 		<div class="menu-header">
 			<button class="submenu-close" data-submenu="shortcuts">
@@ -1997,43 +1860,25 @@
 			</button>
 		</div>
 		<div class="submenu-title">raccourcis clavier</div>
-
-		<table class="submenu-shortcuts-table">
-			<tr>
-				<td><kbd>ESC</kbd></td>
-				<td>fermer les menus</td>
-			</tr>
-			<tr>
-				<td><kbd>0</kbd> à <kbd>5</kbd></td>
-				<td>accéder à un palier de notation (0 → palier 1, 5 → palier 6)</td>
-			</tr>
-			<tr>
-				<td><kbd>E</kbd> / <kbd>I</kbd></td>
-				<td>mode essai / interprétation</td>
-			</tr>
-			<tr>
-				<td><kbd>V</kbd></td>
-				<td>afficher « ce qui est attendu / valorisé »</td>
-			</tr>
-			<tr>
-				<td><kbd>A</kbd></td>
-				<td>mode animation</td>
-			</tr>
-			<tr>
-				<td><kbd>C</kbd></td>
-				<td>mode daltonien</td>
-			</tr>
-			<tr>
-				<td><kbd>?</kbd></td>
-				<td>afficher cette aide</td>
-			</tr>
-			<tr>
-				<td><kbd>←</kbd> <kbd>→</kbd></td>
-				<td>faire défiler les paliers</td>
-			</tr>
-		</table>
+		<div class="settings-info">
+			<table class="submenu-shortcuts-table" style="width:100%; margin-bottom:1rem;">
+				<tr><td><kbd>H</kbd></td><td>site académique</td></tr>
+				<tr><td><kbd>R</kbd></td><td>recharger la page</td></tr>
+				<tr><td><kbd>F</kbd></td><td>plein écran</td></tr>
+				<tr><td><kbd>ESC</kbd></td><td>sortir du plein écran</td></tr>
+				<tr><td><kbd>I</kbd></td><td>critères valorisés</td></tr>
+				<tr><td><kbd>M</kbd></td><td>menu</td></tr>
+				<tr><td><kbd>D</kbd></td><td>mode dissertation</td></tr>
+				<tr><td><kbd>E</kbd></td><td>mode explication</td></tr>
+				<tr><td><kbd>A</kbd></td><td>mode animation</td></tr>
+				<tr><td><kbd>C</kbd></td><td>mode daltonien</td></tr>
+				<tr><td><kbd>0</kbd>-<kbd>9</kbd></td><td>palier de notation (0 : palier 00, 1 : palier 01-05...)</td></tr>
+				<tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>défiler les paliers</td></tr>
+			</table>
+		</div>	
 	</div>
 
+	<!-- SOUS-MENU À propos -->
 	<div class="submenu" id="submenuAbout">
 		<div class="menu-header">
 			<button class="submenu-close" data-submenu="about">
@@ -2053,7 +1898,6 @@
 					</svg>
 					<span class="about-text">développé par Daniel Boulagnon</span>
 				</div>
-
 				<div class="about-item">
 					<svg class="about-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -2061,7 +1905,6 @@
 					</svg>
 					<span class="about-text"><a href="mailto:daniel.boulagnon@ac-lille.fr">daniel.boulagnon@ac-lille.fr</a></span>
 				</div>
-
 				<div class="about-item">
 					<svg class="about-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<circle cx="12" cy="12" r="10" />
@@ -2069,288 +1912,69 @@
 					</svg>
 					<span class="about-text">exploitation à but pédagogique et non commercial</span>
 				</div>
-
 				<div class="about-item">
 					<svg class="about-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
 						<line x1="7" y1="7" x2="7.01" y2="7"/>
 					</svg>
-					<span class="about-text">2026 – version 2.1.9</span>
+					<span class="about-text">2026 – version 2.3.4</span>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<header>
-		<div class="switch-button">
-			<input id="switch" class="switch-button-checkbox" type="checkbox">
-			<label class="switch-button-label" for="switch">
-				<span class="label-essai">essai</span>
-				<span class="label-interpretation">interprétation</span>
-			</label>
-		</div>
-	</header>
-
-	<main>
-		<div class="div_onglets">
-			<!-- Onglet ESSAI -->
-			<div id="onglet_1" class="onglet active">
-				<section class="carousel">
-					<div class="carousel-container">
-						<button class="carousel-nav-btn hidden" id="scroll-left-1" aria-label="Précédent">
-							<svg viewBox="0 0 24 24">
-								<path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
-							</svg>
-						</button>
-						<ul class="carousel-items" id="carousel-1" tabindex="0" role="listbox">
-							<li class="carousel-item">
-								<div class="card">
-									<h1 class="card-title">00-01</h1>
-									<h2>Copie manifestement indigente</h2>
-									<div class="card-content">
-										<p>• Copie inintelligible en raison d'une expression française lourdement fautive et particulièrement confuse.</p>
-										<p>• Copie non structurée.</p>
-										<p>• Copie excessivement brève.</p>
-										<p>• Copie marquant un refus manifeste de faire l'exercice.</p>
-									</div>
-								</div>
-							</li>
-							<li class="carousel-item">
-								<div class="card">
-									<h1 class="card-title">02-04</h1>
-									<h2>Copie intelligible mais qui ne répond aucunement aux critères attestés de l'épreuve</h2>
-									<div class="card-content">
-										<p>• Propos excessivement vague sans rapport avec la question posée.</p>
-										<p>• Juxtaposition d'exemples sommaires ou anecdotiques.</p>
-										<p>• Accumulation désordonnée d'énoncés sans pertinence.</p>
-										<p>• Récitation désordonnée de fragments de cours sans rapport avec le texte comme avec la question.</p>
-										<p>• Argumentation lacunaire, voire obscure.</p>
-										<p>• Expression mal maîtrisée aussi bien dans son lexique que dans sa syntaxe : rédaction respectant trop peu les normes syntaxiques et orthographiques pour permettre une lecture fluide ; langue parfois incorrecte et/ou témoignant d'une expression française insuffisamment maîtrisée.</p>
-										<p>• Propos qui aurait pu être rédigé au début de l'année, sans aucun cours de spécialité humanités, littérature, philosophie, ou connaissances acquises.</p>
-									</div>
-								</div>
-							</li>
-							<li class="carousel-item">
-								<div class="card">
-									<h1 class="card-title">05</h1>
-									<h2>Copie répondant aux principaux attendus</h2>
-									<div class="card-content">
-										<p>• Prise en compte de la question qui permet de construire le propos.</p>
-										<p>• Effort d'interrogation de la question.</p>
-										<p>• Effort d'appui sur le texte.</p>
-										<p>• Mobilisation (même un peu allusive) de références philosophiques ou littéraires qui éclairent la question.</p>
-										<p>• Formulation d'une réponse possible.</p>
-										<p>• La réponse est globalement construite et argumentée ; l'expression correcte permet la compréhension du propos et du raisonnement développés.</p>
-									</div>
-								</div>
-							</li>
-							<li class="carousel-item">
-								<div class="card">
-									<h1 class="card-title">06</h1>
-									<h2>Si, en plus</h2>
-									<div class="card-content">
-										<p>• Compréhension du sens de la question et interrogation engagée sur ce qui la justifie.</p>
-										<p>• Présence d'arguments et de références littéraires et/ou philosophiques pertinents pour justifier la réponse.</p>
-										<p>• Appui sur des éléments déterminants du texte pour étayer le propos.</p>
-										<p>• Mobilisation à bon escient de connaissances complémentaires littéraires et/ou philosophiques permettant d'étayer et de développer le propos.</p>
-										<p>• La réponse est précise, ordonnée et argumentée ; l'expression est assez bien maîtrisée, aussi bien d'un point de vue lexical que syntaxique.</p>
-									</div>
-								</div>
-							</li>
-							<li class="carousel-item">
-								<div class="card">
-									<h1 class="card-title">07</h1>
-									<h2>Si, en plus</h2>
-									<div class="card-content">
-										<p>• Effort de questionnement de la question.</p>
-										<p>• Effort pour structurer une réponse développée et cohérente.</p>
-										<p>• Réponse suffisamment développée pour entrer, d'une manière ou d'une autre, en dialogue avec elle-même.</p>
-										<p>• Recours de manière développée à des éléments précis de connaissances littéraires et/ou philosophiques acquises en cours d'année.</p>
-										<p>• Expression bien maîtrisée, nuancée et précise, aussi bien d'un point de vue lexical que syntaxique.</p>
-									</div>
-								</div>
-							</li>
-							<li class="carousel-item">
-								<div class="card">
-									<h1 class="card-title">08-10</h1>
-									<h2>Si, en plus</h2>
-									<div class="card-content">
-										<p>• Questionnement continu et progressif cherchant à approfondir sa réponse.</p>
-										<p>• Élaboration précise des arguments.</p>
-										<p>• Élaboration d'une position en la situant par rapport à la position initiale du texte.</p>
-										<p>• Utilisation judicieuse et précision des connaissances acquises littéraires et/ou philosophiques.</p>
-										<p>• Langue riche et soignée : vocabulaire varié, style adapté au propos développé, formulation convaincante des idées.</p>
-										<p>• La réponse témoigne de la maîtrise de concepts utiles pour le sujet, d'une démarche de recherche comprenant le souci des enjeux de la question et d'une culture précise et pertinemment utilisée.</p>
-									</div>
-								</div>
-							</li>
-						</ul>
-						<button class="carousel-nav-btn" id="scroll-right-1" aria-label="Suivant">
-							<svg viewBox="0 0 24 24">
-								<path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
-							</svg>
-						</button>
-					</div>
-				</section>
-			</div>
-			<!-- Onglet INTERPRÉTATION -->
-			<div id="onglet_2" class="onglet">
-				<section class="carousel">
-					<div class="carousel-container">
-						<button class="carousel-nav-btn hidden" id="scroll-left-2" aria-label="Précédent">
-							<svg viewBox="0 0 24 24">
-								<path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
-							</svg>
-						</button>
-						<ul class="carousel-items" id="carousel-2" tabindex="0" role="listbox">
-							<li class="carousel-item">
-								<div class="card">
-									<h1 class="card-title">00-01</h1>
-									<h2>Copie manifestement indigente</h2>
-									<div class="card-content">
-										<p>• Copie inintelligible en raison d'une expression française lourdement fautive et particulièrement confuse.</p>
-										<p>• Copie non structurée.</p>
-										<p>• Copie excessivement brève.</p>
-										<p>• Copie marquant un refus manifeste de faire l'exercice.</p>
-									</div>
-								</div>
-							</li>
-							<li class="carousel-item">
-								<div class="card">
-									<h1 class="card-title">02-04</h1>
-									<h2>Copie intelligible mais qui ne répond aucunement aux critères attestés de l'épreuve</h2>
-									<div class="card-content">
-										<p>• Propos excessivement vague ou restant sans rapport avec le texte.</p>
-										<p>• Simple répétition, citation fragmentaire et sans ordre.</p>
-										<p>• Lecture superficielle du texte, non attentive à la langue, à son lexique, aux arguments.</p>
-										<p>• Incohérence et désordre du propos : argumentation lacunaire, voire obscure.</p>
-										<p>• Expression mal maîtrisée aussi bien dans son lexique que dans sa syntaxe ; rédaction respectant trop peu les normes syntaxiques et orthographiques pour permettre une lecture fluide ; langue parfois incorrecte et/ou témoignant d'une expression française insuffisamment maîtrisée.</p>
-										<p>• Propos qui aurait pu être rédigé au début de l'année, sans aucun cours de spécialité humanités, littérature, philosophie, ou connaissances acquises.</p>
-									</div>
-								</div>
-							</li>
-							<li class="carousel-item">
-								<div class="card">
-									<h1 class="card-title">05</h1>
-									<h2>Copie répondant aux principaux attendus</h2>
-									<div class="card-content">
-										<p>• Prise en compte de la question qui permet de construire le propos.</p>
-										<p>• Effort pour se référer et analyser les éléments les plus décisifs du texte (eu égard à la question posée).</p>
-										<p>• Explication commençante de ce que soutient ou de ce qu'exprime le texte.</p>
-										<p>• Pas de contresens majeur sur le propos du texte et la démarche de l'auteur.</p>
-										<p>• La réponse est globalement construite et argumentée ; l'expression correcte permet la compréhension du propos et du raisonnement développés.</p>
-									</div>
-								</div>
-							</li>
-							<li class="carousel-item">
-								<div class="card">
-									<h1 class="card-title">06</h1>
-									<h2>Si, en plus</h2>
-									<div class="card-content">
-										<p>• Interrogation du texte avec un effort d'attention au détail du propos, de son écriture, de sa langue.</p>
-										<p>• Interprétation identifiant ou explicitant les éléments les plus décisifs du texte.</p>
-										<p>• Présence d'arguments pertinents pour étayer l'interprétation.</p>
-										<p>• Connaissances utilisées de manière pertinente pour développer le propos.</p>
-										<p>• La réponse est précise, ordonnée et argumentée ; l'expression est assez bien maîtrisée, aussi bien d'un point de vue lexical que syntaxique.</p>
-									</div>
-								</div>
-							</li>
-							<li class="carousel-item">
-								<div class="card">
-									<h1 class="card-title">07</h1>
-									<h2>Si, en plus</h2>
-									<div class="card-content">
-										<p>• Effort d'interprétation témoignant d'un questionnement attentif aussi bien à la lettre qu'à l'esprit du texte.</p>
-										<p>• Élucidation effective, même si elle reste partielle, de la question sur laquelle porte le texte.</p>
-										<p>• Questionnement continu des idées, des arguments ou des choix d'écriture du texte.</p>
-										<p>• Mise au jour de nuances possibles d'interprétation.</p>
-										<p>• Expression bien maîtrisée, nuancée et précise, aussi bien d'un point de vue lexical que syntaxique.</p>
-									</div>
-								</div>
-							</li>
-							<li class="carousel-item">
-								<div class="card">
-									<h1 class="card-title">08-10</h1>
-									<h2>Si, en plus</h2>
-									<div class="card-content">
-										<p>• Attention soutenue aux élaborations conceptuelles et argumentatives du texte.</p>
-										<p>• Effort de mettre au jour les implicites et les difficultés éventuelles du texte ou ses enjeux esthétiques.</p>
-										<p>• Situation de la position du texte relativement à la question travaillée et à ses enjeux ou par rapport à d'autres textes permettant de poser la même question.</p>
-										<p>• Utilisation judicieuse et précision des connaissances acquises.</p>
-										<p>• Langue riche et soignée : vocabulaire varié, style adapté au propos développé, formulation convaincante des idées.</p>
-										<p>• La réponse est développée avec amplitude et justesse : l'ensemble du texte est examiné et bien situé dans un questionnement suivi et problématisé, associé à une culture précise et pertinemment utilisée.</p>
-									</div>
-								</div>
-							</li>
-						</ul>
-						<button class="carousel-nav-btn" id="scroll-right-2" aria-label="Suivant">
-							<svg viewBox="0 0 24 24">
-								<path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
-							</svg>
-						</button>
-					</div>
-				</section>
-			</div>
-		</div>
-
-		<div class="progress-footer">
-			<div class="progress-bar-container" id="progress-bar-container">
-				<div class="progress-bar-fill" id="progress-bar" style="width: 0%"></div>
-			</div>
-		</div>
-	</main>
-
+	<!-- TOAST NOTIFICATION -->
 	<div class="toast-container" id="toastContainer">
 		<div class="toast" id="toast">
 			<button class="toast-close" id="toastClose">&times;</button>
-			<div class="toast-title" id="toastTitle">ce qui est attendu / valorisé</div>
-			<div class="toast-content" id="toastContent">
-				...
-			</div>
+			<div class="toast-title" id="toastTitle">ce qui est valorisé</div>
+			<ul id="toastList">
+				<li>...</li>
+			</ul>
 		</div>
 	</div>
 
 	<script>
 		const toastData = {
 			essai: {
-				title: 'Essai',
+				title: 'essai :',
 				sections: [
 					{
-						subtitle: 'Ce qui est attendu',
+						subtitle: 'ce qui est attendu',
 						items: [
-							'Attention portée à la question posée, à ce qui la justifie, en général mais toujours aussi au regard du texte étudié ;',
-							'Pertinence, cohérence, justification de la réponse apportée ;',
-							'Expression claire et correcte.'
+							'attention portée à la question posée, à ce qui la justifie, en général mais toujours aussi au regard du texte étudié ;',
+							'pertinence, cohérence, justification de la réponse apportée ;',
+							'expression claire et correcte.'
 						]
 					},
 					{
-						subtitle: 'Ce qui est valorisé',
+						subtitle: 'ce qui est valorisé',
 						items: [
-							'Attention portée à la question posée et à son élucidation ;',
-							'Organisation d’une réponse précise, ordonnée, argumentée ;',
-							'Élucidation des éléments les plus déterminants du texte et mobilisation (à bon escient) des connaissances acquises dans l’enseignement de spécialité ;',
-							'Langue riche et soignée : vocabulaire varié, style adapté au propos développé, formulation convaincante des idées.'
+							'attention portée à la question posée et à son élucidation ;',
+							'organisation d’une réponse précise, ordonnée, argumentée ;',
+							'élucidation des éléments les plus déterminants du texte et mobilisation (à bon escient) des connaissances acquises dans l’enseignement de spécialité ;',
+							'langue riche et soignée : vocabulaire varié, style adapté au propos développé, formulation convaincante des idées.'
 						]
 					}
 				]
 			},
 			interpretation: {
-				title: 'Interprétation',
+				title: 'interprétation :',
 				sections: [
 					{
-						subtitle: 'Ce qui est attendu',
+						subtitle: 'ce qui est attendu',
 						items: [
-							'Compréhension et élucidation du sens du texte proposé, étudié et éclairé, non pas dans son intégralité, mais dans certains de ses éléments les plus significatifs ;',
-							'Expression claire et correcte.'
+							'compréhension et élucidation du sens du texte proposé, étudié et éclairé, non pas dans son intégralité, mais dans certains de ses éléments les plus significatifs ;',
+							'expression claire et correcte.'
 						]
 					},
 					{
-						subtitle: 'Ce qui est valorisé',
+						subtitle: 'ce qui est valorisé',
 						items: [
-							'Précision de la lecture ; attention portée aux choix d\'écriture, à la langue, à son lexique, aux arguments ;',
-							'Choix et présentation des éléments de sens du texte les plus décisifs ;',
-							'Organisation d\'une explication argumentée, en prise sur la lettre et sur l\'esprit du texte et pouvant mobiliser des éléments culturels pour les éclairer.',
-							'Langue riche et soignée : vocabulaire varié, style adapté au propos développé, formulation convaincante des idées.'
+							'précision de la lecture ; attention portée aux choix d\'écriture, à la langue, à son lexique, aux arguments ;',
+							'choix et présentation des éléments de sens du texte les plus décisifs ;',
+							'organisation d\'une explication argumentée, en prise sur la lettre et sur l\'esprit du texte et pouvant mobiliser des éléments culturels pour les éclairer.',
+							'langue riche et soignée : vocabulaire varié, style adapté au propos développé, formulation convaincante des idées.'
 						]
 					}
 				]
@@ -2360,32 +1984,35 @@
 		let toastTimeout = null;
 		const toast = document.getElementById('toast');
 		const toastTitle = document.getElementById('toastTitle');
-		const toastContent = document.getElementById('toastContent');
+		const toastList = document.getElementById('toastList');
 		const toastClose = document.getElementById('toastClose');
+		const mainContent = document.getElementById('mainContent');
 
 		function showToast(type) {
 			const data = toastData[type] || toastData.essai;
 			toastTitle.textContent = data.title;
-
+			
 			let html = '';
-			data.sections.forEach(section => {
-				html += `<div class="toast-section">`;
-				html += `<div class="toast-subtitle">${section.subtitle}</div>`;
-				html += `<ul>` + section.items.map(item => `<li>${item}</li>`).join('') + `</ul>`;
-				html += `</div>`;
-			});
-			toastContent.innerHTML = html;
-
+			if (data.sections) {
+				data.sections.forEach(section => {
+					html += `<li class="toast-subtitle">${section.subtitle}</li>`;
+					section.items.forEach(item => {
+						html += `<li>${item}</li>`;
+					});
+				});
+			} else {
+				html = data.items.map(item => `<li>${item}</li>`).join('');
+			}
+			
+			toastList.innerHTML = html;
 			positionToastOnMobile();
-
 			toast.classList.remove('show', 'hide');
 			void toast.offsetWidth;
 			toast.classList.add('show');
-
 			clearTimeout(toastTimeout);
 			toastTimeout = setTimeout(() => {
 				hideToast();
-			}, 15000);
+			}, 6000);
 		}
 
 		function hideToast() {
@@ -2394,40 +2021,15 @@
 			clearTimeout(toastTimeout);
 		}
 
-		document.addEventListener('click', function(e) {
-			const target = e.target.closest('.info-btn');
-			if (target) {
-				e.stopPropagation();
-				const isInterpretation = document.getElementById('switch').checked;
-				showToast(isInterpretation ? 'interpretation' : 'essai');
-			}
-		});
-
-		toastClose.addEventListener('click', hideToast);
-
-		document.addEventListener('click', function(e) {
-			if (!e.target.closest('.toast') && !e.target.closest('.info-btn')) {
-				hideToast();
-			}
-		});
-
-		document.getElementById('switch').addEventListener('change', function() {
-			if (toast.classList.contains('show')) {
-				showToast(this.checked ? 'interpretation' : 'essai');
-			}
-		});
-
-		/* ===== POSITIONNEMENT DU TOAST SUR MOBILE (recouvre la vignette) ===== */
 		function positionToastOnMobile() {
 			const container = document.querySelector('.toast-container');
 			const toastEl = document.querySelector('.toast');
 			if (!container || !toastEl) return;
-
 			if (window.innerWidth >= 768) {
 				container.style.top = '';
+				container.style.bottom = '';
 				container.style.left = '';
 				container.style.right = '';
-				container.style.bottom = '';
 				container.style.width = '';
 				container.style.maxWidth = '';
 				container.style.transform = '';
@@ -2435,67 +2037,55 @@
 				toastEl.style.maxHeight = '';
 				return;
 			}
-
-			const activeOnglet = document.querySelector('.onglet.active');
-			const carousel = activeOnglet
-				? document.getElementById(activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2')
-				: null;
-			const card = carousel ? carousel.querySelector('.carousel-item .card') : null;
-
-			let top, left, right, bottom;
-
-			if (card) {
-				const rect = card.getBoundingClientRect();
-				top = rect.top;
-				left = rect.left;
-				right = window.innerWidth - rect.right;
-				bottom = window.innerHeight - rect.bottom;
-			} else {
-				const toolbar = document.querySelector('.toolbar');
-				const header = document.querySelector('header');
-				const progressFooter = document.querySelector('.progress-footer');
-				top = (toolbar ? toolbar.offsetHeight : 160) + (header ? header.offsetHeight : 70) + 10;
-				left = 10;
-				right = 10;
-				bottom = (progressFooter ? progressFooter.offsetHeight : 20) + 30;
-			}
-
-			container.style.position = 'fixed';
+			const toolbar = document.querySelector('.toolbar');
+			const header = document.querySelector('header');
+			const progressFooter = document.querySelector('.progress-footer');
+			const toolbarH = toolbar ? toolbar.offsetHeight : 160;
+			const headerH = header ? header.offsetHeight : 70;
+			const progressH = progressFooter ? progressFooter.offsetHeight : 20;
+			const top = toolbarH + headerH + 28;
+			const bottom = progressH + 45;
 			container.style.top = top + 'px';
-			container.style.left = left + 'px';
-			container.style.right = right + 'px';
 			container.style.bottom = bottom + 'px';
+			container.style.left = '10px';
+			container.style.right = '10px';
 			container.style.width = 'auto';
 			container.style.maxWidth = 'none';
 			container.style.transform = 'none';
-
 			toastEl.style.height = '100%';
 			toastEl.style.maxHeight = 'none';
 		}
 
-		/* ===== AJUSTEMENT DES HAUTEURS : APPLIQUÉ À TOUS LES ÉCRANS (y compris mobile) ===== */
+		function toggleBlur(shouldBlur) {
+			if (shouldBlur) {
+				mainContent.classList.add('blur');
+			} else {
+				mainContent.classList.remove('blur');
+			}
+		}
+
 		function adjustCardHeights() {
 			const carousels = ['carousel-1', 'carousel-2'];
 			const bottomSpacing = 40;
-
+			
 			carousels.forEach(carouselId => {
 				const carousel = document.getElementById(carouselId);
 				if (!carousel) return;
-
+				
 				const cards = carousel.querySelectorAll('.card');
 				if (cards.length === 0) return;
-
+				
 				const viewportHeight = window.innerHeight;
 				const toolbar = document.querySelector('.toolbar');
 				const header = document.querySelector('header');
 				const progressFooter = document.querySelector('.progress-footer');
-
+				
 				const toolbarHeight = toolbar ? toolbar.offsetHeight : 80;
 				const headerHeight = header ? header.offsetHeight : 70;
 				const progressHeight = progressFooter ? progressFooter.offsetHeight : 20;
 				const fixedElementsHeight = toolbarHeight + headerHeight + progressHeight + bottomSpacing;
 				const availableHeight = viewportHeight - fixedElementsHeight;
-
+				
 				cards.forEach(card => {
 					card.style.height = Math.max(200, availableHeight) + 'px';
 					card.style.maxHeight = Math.max(200, availableHeight) + 'px';
@@ -2503,19 +2093,25 @@
 			});
 		}
 
-		/* ===== RÉORGANISATION DE LA TOOLBAR : déplace les boutons existants ===== */
 		function rearrangeToolbarForScreen() {
-			const toolbarLeft = document.querySelector('.toolbar-left');
-			const toolbarRight = document.querySelector('.toolbar-right');
+			const toolbarLeft = document.getElementById('toolbarLeft');
+			const toolbarRight = document.getElementById('toolbarRight');
 			const fullscreenBtn = document.getElementById('fullscreen-btn');
 			const menuBtn = document.getElementById('menuButton');
 			const homeBtn = document.getElementById('home-btn');
 			const reloadBtn = document.getElementById('reload-btn');
-			const infoBtn = document.getElementById('info-btn');
 
-			if (!toolbarLeft || !toolbarRight || !fullscreenBtn || !menuBtn || !homeBtn || !reloadBtn || !infoBtn) return;
+			if (!toolbarLeft || !toolbarRight) return;
 
 			const windowWidth = window.innerWidth;
+
+			let infoBtnElement = document.querySelector('.info-btn');
+			if (!infoBtnElement) {
+				infoBtnElement = document.createElement('button');
+				infoBtnElement.className = 'info-btn';
+				infoBtnElement.setAttribute('data-title', 'ce qui est valorisé (I)');
+				infoBtnElement.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`;
+			}
 
 			toolbarLeft.innerHTML = '';
 			toolbarRight.innerHTML = '';
@@ -2523,17 +2119,17 @@
 			if (windowWidth < 992) {
 				toolbarLeft.appendChild(homeBtn);
 				toolbarLeft.appendChild(reloadBtn);
-				toolbarLeft.appendChild(infoBtn);
+				toolbarLeft.appendChild(infoBtnElement);
 				toolbarLeft.appendChild(fullscreenBtn);
 				toolbarLeft.appendChild(menuBtn);
 			} else {
 				toolbarLeft.appendChild(homeBtn);
 				toolbarLeft.appendChild(reloadBtn);
-				toolbarRight.appendChild(infoBtn);
+				toolbarRight.appendChild(infoBtnElement);
 				toolbarRight.appendChild(fullscreenBtn);
 				toolbarRight.appendChild(menuBtn);
 			}
-
+			
 			setTimeout(adjustCardHeights, 50);
 		}
 
@@ -2552,7 +2148,7 @@
 		const darkModeToggle = document.getElementById('darkModeToggle');
 		const daltonienModeToggle = document.getElementById('daltonienModeToggle');
 		const animationModeToggle = document.getElementById('animationModeToggle');
-
+		
 		const switchInput = document.getElementById('switch');
 		const homeBtn = document.getElementById('home-btn');
 		const reloadBtn = document.getElementById('reload-btn');
@@ -2560,46 +2156,10 @@
 		const progressBar = document.getElementById('progress-bar');
 		const progressContainer = document.getElementById('progress-bar-container');
 
-		function updateBlurState() {
-			const isMenuOpen = slideMenu.classList.contains('active');
-			const isSubmenuOpen = submenus.some(s => s && s.classList.contains('active'));
-			body.classList.toggle('blur-active', isMenuOpen || isSubmenuOpen);
-		}
-
-		function toggleMainMenu(force) {
-			const willOpen = (force !== undefined) ? force : !slideMenu.classList.contains('active');
-			slideMenu.classList.toggle('active', willOpen);
-			menuOverlay.classList.toggle('active', willOpen);
-			if (!willOpen) {
-				closeAllSubmenus();
-			}
-			updateBlurState();
-		}
-
-		function closeAllSubmenus() {
-			submenus.forEach(s => {
-				if (s) s.classList.remove('active');
-			});
-			updateBlurState();
-		}
-
-		function openSubmenu(submenu) {
-			closeAllSubmenus();
-			if (submenu) submenu.classList.add('active');
-			updateBlurState();
-		}
-
 		/* ===== CORRECTION DU BUG : .force-light ajouté par défaut si mode sombre non activé ===== */
 		if (localStorage.getItem('darkMode') !== 'true') {
 			document.documentElement.classList.add('force-light');
 		}
-		if (localStorage.getItem('daltonienMode') === 'false') {
-			document.documentElement.classList.add('force-no-daltonien');
-		}
-		if (localStorage.getItem('animationMode') === 'true') {
-			document.documentElement.classList.add('force-animations');
-		}
-
 		if (localStorage.getItem('darkMode') === 'true') {
 			body.classList.add('dark-mode');
 			if (darkModeToggle) darkModeToggle.checked = true;
@@ -2608,11 +2168,50 @@
 			body.classList.add('daltonien-mode');
 			if (daltonienModeToggle) daltonienModeToggle.checked = true;
 		}
-		if (localStorage.getItem('animationMode') !== 'false' && animationModeToggle) {
-			animationModeToggle.checked = true;
-		} else if (animationModeToggle) {
-			animationModeToggle.checked = false;
+		const animationDefault = localStorage.getItem('animationMode') !== 'false';
+		if (!animationDefault) {
 			body.classList.add('animation-off');
+			if (animationModeToggle) animationModeToggle.checked = false;
+		} else {
+			if (animationModeToggle) animationModeToggle.checked = true;
+		}
+
+		function toggleMainMenu(force) {
+			const willOpen = (force !== undefined) ? force : !slideMenu.classList.contains('active');
+			slideMenu.classList.toggle('active', willOpen);
+			menuOverlay.classList.toggle('active', willOpen);
+			if (!willOpen) {
+				closeAllSubmenus();
+				toggleBlur(false);
+			} else {
+				toggleBlur(true);
+			}
+		}
+
+		function closeAllSubmenus() {
+			let anyOpen = false;
+			submenus.forEach(s => {
+				if (s && s.classList.contains('active')) {
+					anyOpen = true;
+					s.classList.remove('active');
+				}
+			});
+			if (!anyOpen && !slideMenu.classList.contains('active')) {
+				toggleBlur(false);
+			}
+		}
+
+		function openSubmenu(submenu) {
+			if (!slideMenu.classList.contains('active')) {
+				slideMenu.classList.add('active');
+				menuOverlay.classList.add('active');
+				toggleBlur(true);
+			}
+			closeAllSubmenus();
+			if (submenu) {
+				submenu.classList.add('active');
+				toggleBlur(true);
+			}
 		}
 
 		if (menuButton) {
@@ -2623,11 +2222,17 @@
 		}
 
 		if (menuClose) {
-			menuClose.addEventListener('click', () => toggleMainMenu(false));
+			menuClose.addEventListener('click', () => {
+				toggleMainMenu(false);
+				toggleBlur(false);
+			});
 		}
 
 		if (menuOverlay) {
-			menuOverlay.addEventListener('click', () => toggleMainMenu(false));
+			menuOverlay.addEventListener('click', () => {
+				toggleMainMenu(false);
+				toggleBlur(false);
+			});
 		}
 
 		document.getElementById('openPresentationSub').addEventListener('click', (e) => {
@@ -2650,7 +2255,17 @@
 		document.querySelectorAll('.submenu-close').forEach(btn => {
 			btn.addEventListener('click', (e) => {
 				e.stopPropagation();
-				closeAllSubmenus();
+				const submenu = btn.closest('.submenu');
+				if (submenu) {
+					submenu.classList.remove('active');
+					let anySubOpen = false;
+					submenus.forEach(s => {
+						if (s && s.classList.contains('active')) anySubOpen = true;
+					});
+					if (!anySubOpen && !slideMenu.classList.contains('active')) {
+						toggleBlur(false);
+					}
+				}
 			});
 		});
 
@@ -2670,6 +2285,7 @@
 				} else {
 					document.documentElement.classList.remove('force-light');
 				}
+				setTimeout(adjustCardHeights, 50);
 				positionToastOnMobile();
 			});
 		}
@@ -2678,11 +2294,7 @@
 			daltonienModeToggle.addEventListener('change', function(e) {
 				body.classList.toggle('daltonien-mode', e.target.checked);
 				localStorage.setItem('daltonienMode', e.target.checked);
-				if (!e.target.checked) {
-					document.documentElement.classList.add('force-no-daltonien');
-				} else {
-					document.documentElement.classList.remove('force-no-daltonien');
-				}
+				setTimeout(adjustCardHeights, 50);
 			});
 		}
 
@@ -2690,19 +2302,71 @@
 			animationModeToggle.addEventListener('change', function(e) {
 				body.classList.toggle('animation-off', !e.target.checked);
 				localStorage.setItem('animationMode', e.target.checked);
-				if (e.target.checked) {
-					document.documentElement.classList.add('force-animations');
-				} else {
-					document.documentElement.classList.remove('force-animations');
+				setTimeout(adjustCardHeights, 50);
+			});
+		}
+
+		document.addEventListener('click', function(e) {
+			const target = e.target.closest('.info-btn');
+			if (target) {
+				e.stopPropagation();
+				const isInterpretation = document.getElementById('switch').checked;
+				showToast(isInterpretation ? 'interpretation' : 'essai');
+			}
+		});
+
+		if (toastClose) {
+			toastClose.addEventListener('click', hideToast);
+		}
+
+		document.addEventListener('click', function(e) {
+			if (!e.target.closest('.toast') && !e.target.closest('.info-btn')) {
+				hideToast();
+			}
+		});
+
+		if (switchInput) {
+			switchInput.addEventListener('change', function() {
+				if (toast && toast.classList.contains('show')) {
+					showToast(this.checked ? 'interpretation' : 'essai');
 				}
 			});
 		}
 
 		function toggleFullscreen() {
+			const btns = document.querySelectorAll('.fullscreen');
 			if (!document.fullscreenElement) {
 				document.documentElement.requestFullscreen();
+				btns.forEach(btn => {
+					btn.classList.add('fullscreen-active');
+					btn.setAttribute('data-title', 'quitter plein écran (F)');
+					btn.innerHTML = `
+					<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
+						<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
+						<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
+						<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
+						<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
+					</svg>
+					`;
+				});
 			} else {
 				document.exitFullscreen();
+				btns.forEach(btn => {
+					btn.classList.remove('fullscreen-active');
+					btn.setAttribute('data-title', 'plein écran (F)');
+					btn.innerHTML = `
+					<svg class="fullscreen-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+						<line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" />
+						<line x1="5" y1="6" x2="5" y2="10" stroke="currentColor" />
+						<line x1="14" y1="5" x2="20" y2="5" stroke="currentColor" />
+						<line x1="19" y1="6" x2="19" y2="10" stroke="currentColor" />
+						<line x1="5" y1="14" x2="5" y2="20" stroke="currentColor" />
+						<line x1="6" y1="19" x2="10" y2="19" stroke="currentColor" />
+						<line x1="14" y1="19" x2="20" y2="19" stroke="currentColor" />
+						<line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" />
+					</svg>
+					`;
+				});
 			}
 		}
 
@@ -2711,34 +2375,34 @@
 		}
 
 		document.addEventListener('fullscreenchange', () => {
-			const isFullscreen = !!document.fullscreenElement;
 			const btns = document.querySelectorAll('.fullscreen');
+			const fs = !!document.fullscreenElement;
 			btns.forEach(btn => {
-				if (isFullscreen) {
+				if (fs) {
 					btn.classList.add('fullscreen-active');
 					btn.setAttribute('data-title', 'quitter plein écran (F)');
 					btn.innerHTML = `
-						<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
-							<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
-							<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
-							<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
-							<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
-						</svg>
+					<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
+						<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
+						<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
+						<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
+						<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
+					</svg>
 					`;
 				} else {
 					btn.classList.remove('fullscreen-active');
 					btn.setAttribute('data-title', 'plein écran (F)');
 					btn.innerHTML = `
-						<svg class="fullscreen-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
-							<line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" />
-							<line x1="5" y1="6" x2="5" y2="10" stroke="currentColor" />
-							<line x1="14" y1="5" x2="20" y2="5" stroke="currentColor" />
-							<line x1="19" y1="6" x2="19" y2="10" stroke="currentColor" />
-							<line x1="5" y1="14" x2="5" y2="20" stroke="currentColor" />
-							<line x1="6" y1="19" x2="10" y2="19" stroke="currentColor" />
-							<line x1="14" y1="19" x2="20" y2="19" stroke="currentColor" />
-							<line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" />
-						</svg>
+					<svg class="fullscreen-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+						<line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" />
+						<line x1="5" y1="6" x2="5" y2="10" stroke="currentColor" />
+						<line x1="14" y1="5" x2="20" y2="5" stroke="currentColor" />
+						<line x1="19" y1="6" x2="19" y2="10" stroke="currentColor" />
+						<line x1="5" y1="14" x2="5" y2="20" stroke="currentColor" />
+						<line x1="6" y1="19" x2="10" y2="19" stroke="currentColor" />
+						<line x1="14" y1="19" x2="20" y2="19" stroke="currentColor" />
+						<line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" />
+					</svg>
 					`;
 				}
 			});
@@ -2747,27 +2411,23 @@
 		});
 
 		if (reloadBtn) {
-			reloadBtn.addEventListener('click', () => {
-				location.reload();
-			});
+			reloadBtn.addEventListener('click', () => location.reload());
 		}
-
+		
 		if (homeBtn) {
-			homeBtn.addEventListener('click', () => {
-				window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
-			});
+			homeBtn.addEventListener('click', () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'));
 		}
 
 		window.addEventListener('load', () => {
-			if (progressBar) {
-				progressBar.style.transition = 'none';
-				progressBar.style.width = '0%';
+			if (progressBar) { 
+				progressBar.style.transition = 'none'; 
+				progressBar.style.width = '0%'; 
 			}
-
+			
 			rearrangeToolbarForScreen();
 			adjustCardHeights();
 			positionToastOnMobile();
-
+			
 			const activeOnglet = document.querySelector('.onglet.active');
 			if (activeOnglet) {
 				const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
@@ -2776,7 +2436,7 @@
 					carousel.scrollLeft = 0;
 				}
 			}
-
+			
 			setTimeout(() => {
 				if (progressBar) {
 					progressBar.style.transition = 'width 0.3s ease';
@@ -2801,11 +2461,17 @@
 			});
 
 			if (showInterp) {
-				document.getElementById('onglet_2').classList.add('active');
-				document.getElementById('onglet_2').style.display = 'block';
+				const el = document.getElementById('onglet_2');
+				el.classList.add('active');
+				el.style.display = 'flex';
 			} else {
-				document.getElementById('onglet_1').classList.add('active');
-				document.getElementById('onglet_1').style.display = 'block';
+				const el = document.getElementById('onglet_1');
+				el.classList.add('active');
+				el.style.display = 'flex';
+			}
+
+			if (switchInput) {
+				switchInput.checked = showInterp;
 			}
 
 			setTimeout(() => {
@@ -2813,7 +2479,6 @@
 				updateProgress();
 				adjustCardHeights();
 				positionToastOnMobile();
-
 				const activeOnglet = document.querySelector('.onglet.active');
 				if (activeOnglet) {
 					const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
@@ -2828,8 +2493,8 @@
 		switchOnglet(false);
 
 		if (switchInput) {
-			switchInput.addEventListener('change', function () {
-				switchOnglet(this.checked);
+			switchInput.addEventListener('change', function () { 
+				switchOnglet(this.checked); 
 			});
 		}
 
@@ -2848,128 +2513,79 @@
 			}
 		});
 
-		function getActiveCarouselId() {
-			const activeOnglet = document.querySelector('.onglet.active');
-			if (!activeOnglet) return null;
-			return activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
+		function getActiveCarouselId() { 
+			const activeOnglet = document.querySelector('.onglet.active'); 
+			return activeOnglet ? (activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2') : null; 
 		}
 
-		function updateButtonsVisibilityForActiveCarousel() {
-			const carouselId = getActiveCarouselId();
-			if (!carouselId) return;
-
-			const leftBtnId = carouselId === 'carousel-1' ? 'scroll-left-1' : 'scroll-left-2';
-			const rightBtnId = carouselId === 'carousel-1' ? 'scroll-right-1' : 'scroll-right-2';
-
-			updateButtonsVisibility(carouselId, leftBtnId, rightBtnId);
+		function updateButtonsVisibilityForActiveCarousel() { 
+			const carouselId = getActiveCarouselId(); 
+			if (!carouselId) return; 
+			const leftBtnId = carouselId === 'carousel-1' ? 'scroll-left-1' : 'scroll-left-2'; 
+			const rightBtnId = carouselId === 'carousel-1' ? 'scroll-right-1' : 'scroll-right-2'; 
+			updateButtonsVisibility(carouselId, leftBtnId, rightBtnId); 
 		}
 
-		function updateButtonsVisibility(carouselId, leftBtnId, rightBtnId) {
-			const carousel = document.getElementById(carouselId);
-			const leftBtn = document.getElementById(leftBtnId);
-			const rightBtn = document.getElementById(rightBtnId);
-
-			if (!carousel || !leftBtn || !rightBtn) return;
-
-			const scrollLeft = carousel.scrollLeft;
-			const scrollWidth = carousel.scrollWidth;
-			const clientWidth = carousel.clientWidth;
-			const paddingLeft = parseInt(window.getComputedStyle(carousel).paddingLeft) || 0;
-			const threshold = 1;
-
-			leftBtn.classList.toggle('hidden', scrollLeft <= paddingLeft + threshold);
-			rightBtn.classList.toggle('hidden', scrollLeft + clientWidth >= scrollWidth - threshold);
+		function updateButtonsVisibility(carouselId, leftBtnId, rightBtnId) { 
+			const carousel = document.getElementById(carouselId); 
+			const leftBtn = document.getElementById(leftBtnId); 
+			const rightBtn = document.getElementById(rightBtnId); 
+			if (!carousel || !leftBtn || !rightBtn) return; 
+			const scrollLeft = carousel.scrollLeft; 
+			const scrollWidth = carousel.scrollWidth; 
+			const clientWidth = carousel.clientWidth; 
+			const paddingLeft = parseInt(window.getComputedStyle(carousel).paddingLeft) || 0; 
+			const threshold = 1; 
+			leftBtn.classList.toggle('hidden', scrollLeft <= paddingLeft + threshold); 
+			rightBtn.classList.toggle('hidden', scrollLeft + clientWidth >= scrollWidth - threshold); 
 		}
 
-		function scrollCarousel(carouselId, direction) {
-			const carousel = document.getElementById(carouselId);
-			if (!carousel) return;
-
-			const items = carousel.querySelectorAll('.carousel-item');
-			if (items.length === 0) return;
-
-			const itemWidth = items[0].offsetWidth;
-			const gap = parseInt(window.getComputedStyle(carousel).gap) || 8;
-			const scrollAmount = (itemWidth + gap) * (direction === 'left' ? -1 : 1);
-
+		function scrollCarousel(carouselId, direction) { 
+			const carousel = document.getElementById(carouselId); 
+			if (!carousel) return; 
+			const items = carousel.querySelectorAll('.carousel-item'); 
+			if (items.length === 0) return; 
+			const itemWidth = items[0].offsetWidth; 
+			const gap = parseFloat(getComputedStyle(carousel).gap) || (window.innerWidth < 768 ? 0 : 8); 
+			const scrollAmount = (itemWidth + gap) * (direction === 'left' ? -1 : 1); 
 			carousel.scrollBy({
 				left: scrollAmount,
 				behavior: 'smooth'
-			});
-
-			setTimeout(() => {
-				const leftBtnId = carouselId === 'carousel-1' ? 'scroll-left-1' : 'scroll-left-2';
-				const rightBtnId = carouselId === 'carousel-1' ? 'scroll-right-1' : 'scroll-right-2';
-				updateButtonsVisibility(carouselId, leftBtnId, rightBtnId);
-				updateProgress();
-			}, 10);
+			}); 
+			setTimeout(() => { 
+				const leftBtnId = carouselId === 'carousel-1' ? 'scroll-left-1' : 'scroll-left-2'; 
+				const rightBtnId = carouselId === 'carousel-1' ? 'scroll-right-1' : 'scroll-right-2'; 
+				updateButtonsVisibility(carouselId, leftBtnId, rightBtnId); 
+				updateProgress(); 
+			}, 10); 
 		}
 
-		function scrollToPalier(palierIndex) {
-			const activeOnglet = document.querySelector('.onglet.active');
-			if (!activeOnglet) return;
-
-			const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
-			const carousel = document.getElementById(carouselId);
-			if (!carousel) return;
-
-			const items = carousel.querySelectorAll('.carousel-item');
-			if (palierIndex < 0 || palierIndex >= items.length) return;
-
-			const itemWidth = items[0].offsetWidth;
-			const gap = parseInt(window.getComputedStyle(carousel).gap) || 8;
-			const scrollPosition = (itemWidth + gap) * palierIndex;
-
+		function scrollToPalier(palierIndex) { 
+			const activeOnglet = document.querySelector('.onglet.active'); 
+			if (!activeOnglet) return; 
+			const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2'; 
+			const carousel = document.getElementById(carouselId); 
+			if (!carousel) return; 
+			const items = carousel.querySelectorAll('.carousel-item'); 
+			if (palierIndex < 0 || palierIndex >= items.length) return; 
+			const itemWidth = items[0].offsetWidth; 
+			const gap = parseFloat(getComputedStyle(carousel).gap) || (window.innerWidth < 768 ? 0 : 8); 
+			const scrollPosition = (itemWidth + gap) * palierIndex; 
 			carousel.scrollTo({
 				left: scrollPosition,
 				behavior: 'smooth'
-			});
-
-			const card = items[palierIndex].querySelector('.card');
-			if (card) {
-				card.classList.add('keyboard-highlight');
-				setTimeout(() => card.classList.remove('keyboard-highlight'), 1000);
-			}
-
-			setTimeout(() => {
-				const leftBtnId = carouselId === 'carousel-1' ? 'scroll-left-1' : 'scroll-left-2';
-				const rightBtnId = carouselId === 'carousel-1' ? 'scroll-right-1' : 'scroll-right-2';
-				updateButtonsVisibility(carouselId, leftBtnId, rightBtnId);
-				updateProgress();
-			}, 10);
-		}
-
-		function getEffectiveScrollPosition(carousel) {
-			if (!carousel) return 0;
-
-			const firstItem = carousel.querySelector('.carousel-item');
-			if (!firstItem) return 0;
-
-			const itemRect = firstItem.getBoundingClientRect();
-			const containerRect = carousel.getBoundingClientRect();
-
-			if (itemRect.left >= containerRect.left) {
-				return 0;
-			}
-
-			return containerRect.left - itemRect.left;
-		}
-
-		function getEffectiveMaxScroll(carousel) {
-			if (!carousel) return 0;
-
-			const items = carousel.querySelectorAll('.carousel-item');
-			if (items.length === 0) return 0;
-
-			const lastItem = items[items.length - 1];
-			const containerRect = carousel.getBoundingClientRect();
-			const lastItemRect = lastItem.getBoundingClientRect();
-
-			const firstItem = items[0];
-			const firstItemRect = firstItem.getBoundingClientRect();
-
-			return (lastItemRect.right - containerRect.right) +
-				 (containerRect.left - firstItemRect.left);
+			}); 
+			const card = items[palierIndex].querySelector('.card'); 
+			if (card) { 
+				card.classList.add('keyboard-highlight'); 
+				setTimeout(() => card.classList.remove('keyboard-highlight'), 1000); 
+			} 
+			setTimeout(() => { 
+				const leftBtnId = carouselId === 'carousel-1' ? 'scroll-left-1' : 'scroll-left-2'; 
+				const rightBtnId = carouselId === 'carousel-1' ? 'scroll-right-1' : 'scroll-right-2'; 
+				updateButtonsVisibility(carouselId, leftBtnId, rightBtnId); 
+				updateProgress(); 
+			}, 10); 
 		}
 
 		function updateProgress() {
@@ -2980,18 +2596,17 @@
 			const carousel = document.getElementById(carouselId);
 			if (!carousel) return;
 
-			const effectiveScroll = getEffectiveScrollPosition(carousel);
-			const effectiveMaxScroll = getEffectiveMaxScroll(carousel);
-
+			const scrollLeft = carousel.scrollLeft;
+			const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
 			let percentage = 0;
-			if (effectiveMaxScroll > 0) {
-				percentage = (effectiveScroll / effectiveMaxScroll) * 100;
+			if (maxScrollLeft > 0) {
+				percentage = (scrollLeft / maxScrollLeft) * 100;
 				percentage = Math.min(100, Math.max(0, percentage));
 			}
-
+			
 			progressBar.style.width = percentage + '%';
 		}
-
+		
 		function handleProgressBarClick(e) {
 			const activeOnglet = document.querySelector('.onglet.active');
 			if (!activeOnglet) return;
@@ -3004,32 +2619,14 @@
 			const clickX = e.clientX - rect.left;
 			const containerWidth = rect.width;
 			const clickPercentage = Math.max(0, Math.min(1, clickX / containerWidth));
-
-			const items = carousel.querySelectorAll('.carousel-item');
-			if (items.length === 0) return;
-
-			const effectiveMaxScroll = getEffectiveMaxScroll(carousel);
-
-			const targetScroll = clickPercentage * effectiveMaxScroll;
-
-			const firstItem = items[0];
-			const itemWidth = firstItem.offsetWidth;
-			const gap = parseInt(window.getComputedStyle(carousel).gap) || 8;
-
-			let closestIndex = 0;
-			let minDiff = Infinity;
-
-			for (let i = 0; i < items.length; i++) {
-				const itemPosition = i * (itemWidth + gap);
-				const diff = Math.abs(itemPosition - targetScroll);
-
-				if (diff < minDiff) {
-					minDiff = diff;
-					closestIndex = i;
-				}
-			}
-
-			scrollToPalier(closestIndex);
+			
+			const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+			const targetScroll = clickPercentage * maxScrollLeft;
+			
+			carousel.scrollTo({
+				left: targetScroll,
+				behavior: 'smooth'
+			});
 		}
 
 		function setupCarouselNavigation(carouselId, leftBtnId, rightBtnId) {
@@ -3054,7 +2651,7 @@
 
 			updateButtonsVisibility(carouselId, leftBtnId, rightBtnId);
 		}
-
+		
 		if (progressContainer) {
 			progressContainer.addEventListener('click', handleProgressBarClick);
 		}
@@ -3063,68 +2660,77 @@
 		setupCarouselNavigation('carousel-2', 'scroll-left-2', 'scroll-right-2');
 
 		document.addEventListener('keydown', function (e) {
-			if (e.target.matches('input, textarea, select, [contenteditable]')) {
-				return;
-			}
-
+			if (e.target.matches('input, textarea, select, [contenteditable]')) return;
+			
 			const key = e.key.toLowerCase();
 
-			if (key === 'm') {
-				e.preventDefault();
-				toggleMainMenu();
+			if (key === 'm') { 
+				e.preventDefault(); 
+				toggleMainMenu(); 
 			}
-			else if (key === 'f') {
-				e.preventDefault();
-				toggleFullscreen();
+			else if (key === 'f') { 
+				e.preventDefault(); 
+				toggleFullscreen(); 
 			}
-			else if (key === 'r') {
-				e.preventDefault();
-				location.reload();
+			else if (key === 'r') { 
+				e.preventDefault(); 
+				location.reload(); 
 			}
-			else if (key === 'h') {
-				e.preventDefault();
-				window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+			else if (key === 'h') { 
+				e.preventDefault(); 
+				window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); 
 			}
-			else if (key === '?') {
-				e.preventDefault();
-				openSubmenu(subShortcuts);
+			else if (key === '?') { 
+				e.preventDefault(); 
+				openSubmenu(subShortcuts); 
 			}
-			else if (key === 'v') {
-				e.preventDefault();
-				const isInterpretation = switchInput.checked;
-				showToast(isInterpretation ? 'interpretation' : 'essai');
+			else if (key === 'i') { 
+				e.preventDefault(); 
+				const isInterpretation = switchInput.checked; 
+				showToast(isInterpretation ? 'interpretation' : 'essai'); 
 			}
-			else if (key === 'a') {
-				e.preventDefault();
-				if (animationModeToggle) {
-					const newState = !animationModeToggle.checked;
-					animationModeToggle.checked = newState;
-					body.classList.toggle('animation-off', !newState);
-					localStorage.setItem('animationMode', newState);
-					if (newState) document.documentElement.classList.add('force-animations');
-					else document.documentElement.classList.remove('force-animations');
-				}
+			else if (key === 'd') { 
+				e.preventDefault(); 
+				if (switchInput && switchInput.checked) switchOnglet(false); 
 			}
-			else if (key === 'c') {
-				e.preventDefault();
-				if (daltonienModeToggle) {
-					const newState = !daltonienModeToggle.checked;
-					daltonienModeToggle.checked = newState;
-					body.classList.toggle('daltonien-mode', newState);
-					localStorage.setItem('daltonienMode', newState);
-					if (!newState) document.documentElement.classList.add('force-no-daltonien');
-					else document.documentElement.classList.remove('force-no-daltonien');
-				}
+			else if (key === 'e') { 
+				e.preventDefault(); 
+				if (switchInput && !switchInput.checked) switchOnglet(true); 
+			}
+			else if (key === 'a') { 
+				e.preventDefault(); 
+				if (animationModeToggle) { 
+					const newState = !animationModeToggle.checked; 
+					animationModeToggle.checked = newState; 
+					body.classList.toggle('animation-off', !newState); 
+					localStorage.setItem('animationMode', newState); 
+				} 
+			}
+			else if (key === 'c') { 
+				e.preventDefault(); 
+				if (daltonienModeToggle) { 
+					const newState = !daltonienModeToggle.checked; 
+					daltonienModeToggle.checked = newState; 
+					body.classList.toggle('daltonien-mode', newState); 
+					localStorage.setItem('daltonienMode', newState); 
+				} 
 			}
 			else if (e.key === 'Escape') {
 				if (document.querySelector('.submenu.active')) {
 					closeAllSubmenus();
-				} else if (slideMenu.classList.contains('active')) {
+					if (!slideMenu.classList.contains('active')) {
+						toggleBlur(false);
+					}
+				}
+				else if (slideMenu.classList.contains('active')) {
 					toggleMainMenu(false);
-				} else if (document.fullscreenElement) {
-					document.exitFullscreen();
-				} else if (toast.classList.contains('show')) {
-					hideToast();
+					toggleBlur(false);
+				}
+				else if (document.fullscreenElement) { 
+					document.exitFullscreen(); 
+				}
+				else if (toast && toast.classList.contains('show')) { 
+					hideToast(); 
 				}
 				return;
 			}
@@ -3134,31 +2740,17 @@
 
 			const carouselId = activeOnglet.id === 'onglet_1' ? 'carousel-1' : 'carousel-2';
 
-			if (key === 'e') {
-				e.preventDefault();
-				switchInput.checked = false;
-				switchOnglet(false);
+			if (e.key === 'ArrowLeft') { 
+				e.preventDefault(); 
+				scrollCarousel(carouselId, 'left'); 
 			}
-			else if (key === 'i') {
-				e.preventDefault();
-				switchInput.checked = true;
-				switchOnglet(true);
+			else if (e.key === 'ArrowRight') { 
+				e.preventDefault(); 
+				scrollCarousel(carouselId, 'right'); 
 			}
-			else if (e.key === 'ArrowLeft') {
+			else if (!isNaN(parseInt(e.key)) && parseInt(e.key) >= 0 && parseInt(e.key) <= 9) {
 				e.preventDefault();
-				scrollCarousel(carouselId, 'left');
-			}
-			else if (e.key === 'ArrowRight') {
-				e.preventDefault();
-				scrollCarousel(carouselId, 'right');
-			}
-			else if (!isNaN(parseInt(e.key)) && parseInt(e.key) >= 0 && parseInt(e.key) <= 5) {
-				e.preventDefault();
-				const palierIndex = parseInt(e.key);
-				const carousel = document.getElementById(carouselId);
-				if (carousel && palierIndex < carousel.children.length) {
-					scrollToPalier(palierIndex);
-				}
+				scrollToPalier(parseInt(e.key));
 			}
 		});
 	</script>
