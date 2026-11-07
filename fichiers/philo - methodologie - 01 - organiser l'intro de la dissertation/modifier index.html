@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<!-- Daniel Boulagnon -->
+<!-- daniel.boulagnon@ac-lille.fr -->
+<!-- version 2026 -->
+<!-- Exploitation à but strictement pédagogique et non lucratif -->
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+	<link rel="icon" href="../../src/favicon.ico" />
+	<title>gestionnaire de sujets</title>
+	<style>
+		* { box-sizing: border-box; margin: 0; padding: 0; }
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background: #f5f5f5;
+			padding: 20px;
+			line-height: 1.6;
+		}
+		.container { max-width: 1400px; margin: 0 auto; }
+		h1 {
+			color: #2c3e50;
+			margin-bottom: 20px;
+			padding-bottom: 10px;
+			border-bottom: 3px solid #3498db;
+		}
+		.toolbar {
+			background: white;
+			padding: 15px;
+			border-radius: 8px;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+			margin-bottom: 20px;
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+		.btn {
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 14px;
+			font-weight: 600;
+			transition: all 0.3s;
+		}
+		.btn-primary { background: #3498db; color: white; }
+		.btn-primary:hover { background: #2980b9; }
+		.btn-success { background: #27ae60; color: white; }
+		.btn-success:hover { background: #219a52; }
+		.btn-danger { background: #e74c3c; color: white; }
+		.btn-danger:hover { background: #c0392b; }
+		.btn-warning { background: #f39c12; color: white; }
+		.btn-warning:hover { background: #d68910; }
+		.texts-container {
+			background: white;
+			border-radius: 8px;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+			padding: 20px;
+			margin-top: 20px;
+		}
+		.text-card {
+			border: 1px solid #e0e0e0;
+			border-radius: 8px;
+			margin-bottom: 20px;
+			padding: 20px;
+			background: #fafafa;
+		}
+		.text-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 15px;
+			padding-bottom: 10px;
+			border-bottom: 2px solid #3498db;
+		}
+		.text-header h3 {
+			color: #2c3e50;
+			font-size: 1.1em;
+			font-weight: 500;
+		}
+		.text-actions { display: flex; gap: 10px; }
+		.text-content {
+			background: white;
+			padding: 15px;
+			border-radius: 5px;
+			margin-bottom: 15px;
+			font-family: 'Georgia', serif;
+			white-space: pre-wrap;
+			border-left: 3px solid #3498db;
+		}
+		.text-meta {
+			background: #f8f9fa;
+			padding: 15px;
+			border-radius: 5px;
+		}
+		.meta-paragraph { margin-bottom: 8px; }
+		.meta-paragraph:last-child { margin-bottom: 0; }
+		.meta-label { font-weight: 600; color: #2c3e50; }
+		.modal {
+			display: none;
+			position: fixed;
+			top: 0; left: 0;
+			width: 100%; height: 100%;
+			background: rgba(0,0,0,0.5);
+			z-index: 1000;
+			overflow-y: auto;
+		}
+		.modal-content {
+			background: white;
+			width: 90%;
+			max-width: 800px;
+			margin: 50px auto;
+			padding: 25px;
+			border-radius: 10px;
+			position: relative;
+		}
+		.modal-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 20px;
+			padding-bottom: 10px;
+			border-bottom: 2px solid #3498db;
+		}
+		.close {
+			font-size: 28px;
+			font-weight: bold;
+			cursor: pointer;
+			color: #7f8c8d;
+		}
+		.close:hover { color: #2c3e50; }
+		.form-group { margin-bottom: 20px; }
+		.form-group label {
+			display: block;
+			margin-bottom: 5px;
+			font-weight: 600;
+			color: #2c3e50;
+		}
+		.form-group input,
+		.form-group textarea,
+		.form-group select {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			font-family: inherit;
+		}
+		.form-group textarea { min-height: 100px; resize: vertical; }
+		.phrase-num { color: #3498db; font-weight: 600; margin-right: 5px; }
+		.export-area {
+			background: #2c3e50;
+			color: #ecf0f1;
+			padding: 20px;
+			border-radius: 8px;
+			font-family: 'Courier New', monospace;
+			white-space: pre-wrap;
+			margin-top: 20px;
+			max-height: 500px;
+			overflow-y: auto;
+		}
+		.search-box {
+			flex: 1;
+			padding: 10px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			font-size: 14px;
+		}
+		.filter-badge {
+			display: inline-block;
+			padding: 5px 12px;
+			background: #e9ecef;
+			border-radius: 20px;
+			font-size: 13px;
+			margin: 0 5px 5px 0;
+			cursor: pointer;
+			transition: all 0.2s;
+		}
+		.filter-badge:hover { background: #dee2e6; }
+		.filter-badge.active { background: #3498db; color: white; }
+		.notion-section { margin-bottom: 30px; }
+		.notion-title {
+			background: #34495e;
+			color: white;
+			padding: 10px 15px;
+			border-radius: 5px;
+			margin-bottom: 15px;
+			font-size: 1.2em;
+			font-weight: 500;
+			text-transform: capitalize;
+		}
+		.stats {
+			display: flex;
+			gap: 20px;
+			margin-bottom: 15px;
+			color: #2c3e50;
+		}
+		.stat-item {
+			background: #f0f0f0;
+			padding: 10px 15px;
+			border-radius: 5px;
+		}
+		.file-input { display: none; }
+		.file-label {
+			background: #f39c12;
+			color: white;
+			padding: 10px 20px;
+			border-radius: 5px;
+			cursor: pointer;
+			display: inline-block;
+			font-weight: 600;
+		}
+		.file-label:hover { background: #d68910; }
+		.success {
+			background: #dff0d8;
+			border: 1px solid #d6e9c6;
+			color: #3c763d;
+			padding: 15px;
+			border-radius: 5px;
+			margin-bottom: 20px;
+		}
+		.helper-text {
+			font-size: 0.85em;
+			color: #7f8c8d;
+			margin-top: 5px;
+		}
+		.text-id {
+			color: #7f8c8d;
+			font-size: 0.9em;
+			font-weight: normal;
+		}
+		.btn-small { padding: 5px 10px; font-size: 12px; }
+		.empty-state {
+			text-align: center;
+			padding: 60px 20px;
+			color: #7f8c8d;
+		}
+		.empty-state p { margin-top: 10px; font-size: 1.1em; }
+		.empty-state-icon { font-size: 4em; opacity: 0.3; }
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>📚 gestionnaire de sujets</h1>
+
+		<div class="toolbar">
+			<input type="text" class="search-box" id="searchInput" placeholder="Rechercher..." autofocus>
+			<button class="btn btn-primary" onclick="showAddModal()">➕ Nouveau sujet</button>
+			<button class="btn btn-success" onclick="showExport()">📤 Exporter sujets.js</button>
+			<label for="fileImport" class="btn btn-warning">📥 Importer sujets.js</label>
+			<input type="file" id="fileImport" class="file-input" accept=".js" onchange="importFromFile(event)">
+		</div>
+
+		<div id="notionsFilter" class="toolbar"></div>
+		<div id="stats" class="stats"></div>
+		<div id="messageArea"></div>
+		<div id="textsContainer" class="texts-container"></div>
+	</div>
+
+	<!-- Modal pour ajouter/modifier un sujet -->
+	<div id="textModal" class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 id="modalTitle">Ajouter un sujet</h2>
+				<span class="close" onclick="closeModal()">&times;</span>
+			</div>
+			<form id="textForm">
+				<div class="form-group">
+					<label for="notion">Notion</label>
+					<input type="text" id="notion" required placeholder="Ex: art, liberté, travail...">
+				</div>
+				<div class="form-group">
+					<label for="sujet">Sujet (question posée)</label>
+					<input type="text" id="sujet" required placeholder="Ex: L'œuvre d'art nous apprend-elle quelque chose ?">
+				</div>
+				<div class="form-group">
+					<label for="these">Thèse</label>
+					<textarea id="these" required placeholder="La thèse principale..."></textarea>
+				</div>
+				<div class="form-group">
+					<label for="justification_these">Justification de la thèse</label>
+					<textarea id="justification_these" required placeholder="De prime abord..."></textarea>
+				</div>
+				<div class="form-group">
+					<label for="charniere">Charnière</label>
+					<input type="text" id="charniere" required placeholder="Ex: Néanmoins, Toutefois, Or...">
+				</div>
+				<div class="form-group">
+					<label for="antithese">Antithèse</label>
+					<textarea id="antithese" required placeholder="L'objection principale..."></textarea>
+				</div>
+				<div class="form-group">
+					<label for="justification_antithese">Justification de l'antithèse</label>
+					<textarea id="justification_antithese" required placeholder="En effet..."></textarea>
+				</div>
+				<div class="form-group">
+					<label for="problematique">Problématique</label>
+					<textarea id="problematique" required placeholder="La question qui synthétise le débat..."></textarea>
+				</div>
+				<input type="hidden" id="textId" value="">
+				<div style="display: flex; gap: 10px; justify-content: flex-end;">
+					<button type="button" class="btn btn-danger" onclick="closeModal()">Annuler</button>
+					<button type="submit" class="btn btn-success">Enregistrer</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Modal pour l'export -->
+	<div id="exportModal" class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2>Exporter sujets.js</h2>
+				<span class="close" onclick="closeExportModal()">&times;</span>
+			</div>
+			<pre id="exportContent" class="export-area"></pre>
+			<div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
+				<button class="btn btn-primary" onclick="copyToClipboard()">📋 Copier</button>
+				<button class="btn btn-success" onclick="downloadTextes()">💾 Télécharger</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// Structure interne : tableau d'objets au format notions (identique à sujets.js)
+		// { id, notion, sujet, reponses: { these, justification_these, charniere, antithese, justification_antithese, problematique } }
+		let notions = [];
+		let currentFilter = null;
+
+		document.addEventListener('DOMContentLoaded', function() {
+			loadNotions();
+			updateUI();
+		});
+
+		function loadNotions() {
+			const saved = localStorage.getItem('philosophicalNotions');
+			if (saved) {
+				try {
+					notions = JSON.parse(saved);
+				} catch (e) {
+					console.error('Erreur de parsing des données sauvegardées', e);
+					notions = [];
+				}
+			}
+		}
+
+		function saveNotions() {
+			localStorage.setItem('philosophicalNotions', JSON.stringify(notions));
+			showMessage('✓ Données sauvegardées', 'success');
+		}
+
+		function showMessage(msg, type) {
+			const area = document.getElementById('messageArea');
+			area.innerHTML = `<div class="${type}">${msg}</div>`;
+			setTimeout(() => { area.innerHTML = ''; }, 3000);
+		}
+
+		function getUniqueNotions() {
+			const set = new Set();
+			notions.forEach(n => set.add(n.notion));
+			return Array.from(set).sort((a, b) => a.localeCompare(b, 'fr', { sensitivity: 'base' }));
+		}
+
+		function updateStats() {
+			const statsDiv = document.getElementById('stats');
+			const total = notions.length;
+			const totalNotions = getUniqueNotions().length;
+			statsDiv.innerHTML = total > 0 ? `
+				<div class="stat-item">📚 ${total} sujet${total > 1 ? 's' : ''}</div>
+				<div class="stat-item">🏷️ ${totalNotions} notion${totalNotions > 1 ? 's' : ''}</div>
+			` : '';
+		}
+
+		function updateUI() {
+			updateNotionsFilter();
+			displayNotions();
+			updateStats();
+		}
+
+		function updateNotionsFilter() {
+			const notionsList = getUniqueNotions();
+			const filterDiv = document.getElementById('notionsFilter');
+			let html = '<span style="font-weight:600; margin-right:10px;">Filtres:</span>';
+			html += '<span class="filter-badge ' + (currentFilter === null ? 'active' : '') + '" onclick="setFilter(null)">Tous</span>';
+			notionsList.forEach(notion => {
+				html += `<span class="filter-badge ${currentFilter === notion ? 'active' : ''}" onclick="setFilter('${notion.replace(/'/g, "\\'")}')">${notion}</span>`;
+			});
+			filterDiv.innerHTML = html;
+		}
+
+		function setFilter(notion) {
+			currentFilter = notion;
+			updateNotionsFilter();
+			displayNotions();
+		}
+
+		function displayNotions() {
+			const container = document.getElementById('textsContainer');
+			let filtered = notions;
+
+			if (filtered.length === 0) {
+				container.innerHTML = `
+					<div class="empty-state">
+						<div class="empty-state-icon">📖</div>
+						<p>Aucun sujet pour le moment</p>
+						<p style="font-size: 0.9em;">Cliquez sur "Nouveau sujet" ou importez un fichier sujets.js</p>
+					</div>
+				`;
+				return;
+			}
+
+			if (currentFilter) {
+				filtered = filtered.filter(n => n.notion === currentFilter);
+			}
+
+			const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+			if (searchTerm) {
+				filtered = filtered.filter(n =>
+					(n.notion || '').toLowerCase().includes(searchTerm) ||
+					(n.sujet || '').toLowerCase().includes(searchTerm) ||
+					(n.reponses.these || '').toLowerCase().includes(searchTerm) ||
+					(n.reponses.justification_these || '').toLowerCase().includes(searchTerm) ||
+					(n.reponses.antithese || '').toLowerCase().includes(searchTerm) ||
+					(n.reponses.justification_antithese || '').toLowerCase().includes(searchTerm) ||
+					(n.reponses.problematique || '').toLowerCase().includes(searchTerm)
+				);
+			}
+
+			if (filtered.length === 0) {
+				container.innerHTML = `
+					<div class="empty-state">
+						<div class="empty-state-icon">🔍</div>
+						<p>Aucun sujet trouvé</p>
+					</div>
+				`;
+				return;
+			}
+
+			// Grouper par notion
+			const byNotion = {};
+			filtered.forEach(n => {
+				const key = n.notion || 'sans notion';
+				if (!byNotion[key]) byNotion[key] = [];
+				byNotion[key].push(n);
+			});
+
+			let html = '';
+			Object.keys(byNotion).sort((a, b) => a.localeCompare(b, 'fr', { sensitivity: 'base' })).forEach(notionKey => {
+				html += `<div class="notion-section">`;
+				html += `<div class="notion-title">${notionKey} (${byNotion[notionKey].length})</div>`;
+				byNotion[notionKey].forEach(n => {
+					html += `
+						<div class="text-card">
+							<div class="text-header">
+								<h3><span class="text-id">Sujet n°${String(n.id).padStart(3, '0')}</span> : ${n.sujet}</h3>
+								<div class="text-actions">
+									<button class="btn btn-warning btn-small" onclick="editText(${n.id})">✏️</button>
+									<button class="btn btn-danger btn-small" onclick="deleteText(${n.id})">🗑️</button>
+								</div>
+							</div>
+							<div class="text-meta">
+								<div class="meta-paragraph"><span class="meta-label">Thèse :</span> ${n.reponses.these}</div>
+								<div class="meta-paragraph"><span class="meta-label">Justification :</span> ${n.reponses.justification_these}</div>
+								<div class="meta-paragraph"><span class="meta-label">Charnière :</span> ${n.reponses.charniere}</div>
+								<div class="meta-paragraph"><span class="meta-label">Antithèse :</span> ${n.reponses.antithese}</div>
+								<div class="meta-paragraph"><span class="meta-label">Justification :</span> ${n.reponses.justification_antithese}</div>
+								<div class="meta-paragraph"><span class="meta-label">Problématique :</span> ${n.reponses.problematique}</div>
+							</div>
+						</div>
+					`;
+				});
+				html += `</div>`;
+			});
+			container.innerHTML = html;
+		}
+
+		function showAddModal() {
+			document.getElementById('modalTitle').textContent = 'Ajouter un sujet';
+			document.getElementById('textForm').reset();
+			document.getElementById('textId').value = '';
+			document.getElementById('textModal').style.display = 'block';
+			document.getElementById('notion').focus();
+		}
+
+		function closeModal() {
+			document.getElementById('textModal').style.display = 'none';
+		}
+
+		function editText(id) {
+			const n = notions.find(t => t.id === id);
+			if (!n) return;
+			document.getElementById('modalTitle').textContent = 'Modifier le sujet';
+			document.getElementById('textId').value = id;
+			document.getElementById('notion').value = n.notion;
+			document.getElementById('sujet').value = n.sujet;
+			document.getElementById('these').value = n.reponses.these;
+			document.getElementById('justification_these').value = n.reponses.justification_these;
+			document.getElementById('charniere').value = n.reponses.charniere;
+			document.getElementById('antithese').value = n.reponses.antithese;
+			document.getElementById('justification_antithese').value = n.reponses.justification_antithese;
+			document.getElementById('problematique').value = n.reponses.problematique;
+			document.getElementById('textModal').style.display = 'block';
+			document.getElementById('notion').focus();
+		}
+
+		function deleteText(id) {
+			if (confirm('Supprimer ce sujet ?')) {
+				notions = notions.filter(t => t.id !== id);
+				saveNotions();
+				updateUI();
+			}
+		}
+
+		document.getElementById('textForm').addEventListener('submit', function(e) {
+			e.preventDefault();
+
+			const id = document.getElementById('textId').value;
+			const notion = document.getElementById('notion').value.trim();
+			const sujet = document.getElementById('sujet').value.trim();
+			const these = document.getElementById('these').value.trim();
+			const justification_these = document.getElementById('justification_these').value.trim();
+			const charniere = document.getElementById('charniere').value.trim();
+			const antithese = document.getElementById('antithese').value.trim();
+			const justification_antithese = document.getElementById('justification_antithese').value.trim();
+			const problematique = document.getElementById('problematique').value.trim();
+
+			if (!notion || !sujet || !these || !justification_these || !charniere || !antithese || !justification_antithese || !problematique) {
+				alert('Tous les champs sont obligatoires');
+				return;
+			}
+
+			const data = {
+				id: id ? parseInt(id) : Math.max(0, ...notions.map(t => t.id)) + 1,
+				notion: notion.toLowerCase(),
+				sujet: sujet,
+				reponses: {
+					these: these,
+					justification_these: justification_these,
+					charniere: charniere,
+					antithese: antithese,
+					justification_antithese: justification_antithese,
+					problematique: problematique
+				}
+			};
+
+			if (id) {
+				const index = notions.findIndex(t => t.id === parseInt(id));
+				if (index !== -1) notions[index] = data;
+			} else {
+				notions.push(data);
+			}
+
+			saveNotions();
+			updateUI();
+			closeModal();
+		});
+
+		document.getElementById('searchInput').addEventListener('input', function() {
+			displayNotions();
+		});
+
+		function showExport() {
+			document.getElementById('exportContent').textContent = generateSujetsJS();
+			document.getElementById('exportModal').style.display = 'block';
+		}
+
+		function closeExportModal() {
+			document.getElementById('exportModal').style.display = 'none';
+		}
+
+		function escapeJS(str) {
+			return String(str)
+				.replace(/\\/g, '\\\\')
+				.replace(/"/g, '\\"')
+				.replace(/\n/g, '\\n')
+				.replace(/\r/g, '\\r');
+		}
+
+		function generateSujetsJS() {
+			let output = 'const notions = [\n';
+
+			// Trier par notion puis par id
+			const sorted = [...notions].sort((a, b) => {
+				const c = a.notion.localeCompare(b.notion, 'fr', { sensitivity: 'base' });
+				return c !== 0 ? c : a.id - b.id;
+			});
+
+			let currentNotion = null;
+			sorted.forEach((n, idx) => {
+				if (n.notion !== currentNotion) {
+					output += '\t// ===== ' + n.notion.toUpperCase() + ' =====\n';
+					currentNotion = n.notion;
+				}
+				output += '\t{\n';
+				output += `\tid: ${n.id},\n`;
+				output += `\tnotion: "${escapeJS(n.notion)}",\n`;
+				output += `\tsujet: "${escapeJS(n.sujet)}",\n`;
+				output += `\treponses: {\n`;
+				output += `\t\tthese: "${escapeJS(n.reponses.these)}",\n`;
+				output += `\t\tjustification_these: "${escapeJS(n.reponses.justification_these)}",\n`;
+				output += `\t\tcharniere: "${escapeJS(n.reponses.charniere)}",\n`;
+				output += `\t\tantithese: "${escapeJS(n.reponses.antithese)}",\n`;
+				output += `\t\tjustification_antithese: "${escapeJS(n.reponses.justification_antithese)}",\n`;
+				output += `\t\tproblematique: "${escapeJS(n.reponses.problematique)}"\n`;
+				output += `\t}\n`;
+				output += `\t},\n`;
+			});
+
+			output += '];';
+			return output;
+		}
+
+		function copyToClipboard() {
+			const content = document.getElementById('exportContent').textContent;
+			navigator.clipboard.writeText(content).then(() => {
+				alert('✓ Copié !');
+			});
+		}
+
+		function downloadTextes() {
+			const content = generateSujetsJS();
+			const blob = new Blob([content], { type: 'text/javascript' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = 'sujets.js';
+			a.click();
+			URL.revokeObjectURL(url);
+		}
+
+		// Import : lit le fichier sujets.js (format notions) et remplace les données
+		function importFromFile(event) {
+			const file = event.target.files[0];
+			if (!file) return;
+
+			const reader = new FileReader();
+
+			reader.onload = function(e) {
+				try {
+					const content = e.target.result;
+
+					// Évalue le contenu pour récupérer la variable notions
+					const extractNotions = new Function(`
+						${content}
+						return notions;
+					`);
+
+					const imported = extractNotions();
+
+					if (!Array.isArray(imported)) {
+						throw new Error('La variable "notions" n\'est pas un tableau');
+					}
+
+					// Validation et normalisation
+					const valides = [];
+					const invalides = [];
+
+					imported.forEach((item, index) => {
+						if (item &&
+							typeof item.id === 'number' &&
+							typeof item.notion === 'string' &&
+							typeof item.sujet === 'string' &&
+							item.reponses &&
+							typeof item.reponses.these === 'string' &&
+							typeof item.reponses.justification_these === 'string' &&
+							typeof item.reponses.charniere === 'string' &&
+							typeof item.reponses.antithese === 'string' &&
+							typeof item.reponses.justification_antithese === 'string' &&
+							typeof item.reponses.problematique === 'string') {
+							valides.push(item);
+						} else {
+							invalides.push(index + 1);
+						}
+					});
+
+					if (valides.length === 0) {
+						throw new Error('Aucun élément valide trouvé');
+					}
+
+					if (invalides.length > 0) {
+						if (!confirm(`${invalides.length} élément(s) invalide(s) (n° ${invalides.join(', ')}). Importer seulement les ${valides.length} valides ?`)) {
+							document.getElementById('fileImport').value = '';
+							return;
+						}
+					}
+
+					// Remplace les données
+					notions = valides;
+					saveNotions();
+					updateUI();
+					showMessage(`✓ ${notions.length} sujet(s) importé(s)`, 'success');
+
+				} catch (error) {
+					console.error('Erreur:', error);
+					alert('Erreur lors de l\'import : ' + error.message);
+				}
+
+				document.getElementById('fileImport').value = '';
+			};
+
+			reader.readAsText(file);
+		}
+	</script>
+</body>
+</html>
