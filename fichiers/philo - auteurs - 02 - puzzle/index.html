@@ -6,97 +6,51 @@
     <link rel="icon" href="../../src/favicon.ico">
 	<title>puzzle</title>
     <style type="text/css">
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html, body {
-            height: 100%;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; }
         :root {
-            --bg: #f0f0f0;
-            --btn: #e0e0e0;
-            --font-color: #000000;
+            --bg: #f0f0f0; --btn: #e0e0e0; --font-color: #000000;
             --shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.9);
             --shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.9);
-            --tooltip-bg: #ffffff;
-            --tooltip-color: #333333;
-            --letter-color: #e74c3c;
-            --color-correct: #28a745;
-            --color-incorrect: #dc3545;
-            --border-correct: #28a745;
-            --border-incorrect: #dc3545;
-            --selected-bg: #ffeb3b;
-            --selected-color: #000000;
-            --dropzone-hover: #e0e0e0;
-            --toast-bg: #e0e0e0;
-            --toast-text: #333333;
-            --primary-color: red;
-            --badge-bg: red;
-            --badge-color: #ffffff;
-            --card-content-bg: #ffffff;
+            --tooltip-bg: #ffffff; --tooltip-color: #333333; --letter-color: #e74c3c;
+            --color-correct: #28a745; --color-incorrect: #dc3545;
+            --border-correct: #28a745; --border-incorrect: #dc3545;
+            --selected-bg: #ffeb3b; --selected-color: #000000;
+            --dropzone-hover: #e0e0e0; --toast-bg: #e0e0e0; --toast-text: #333333;
+            --primary-color: red; --badge-bg: red; --badge-color: #ffffff; --card-content-bg: #ffffff;
         }
         body.dark-theme {
-            --bg: #121212;
-            --btn: #3d3d3d;
-            --font-color: #ffffff;
+            --bg: #121212; --btn: #3d3d3d; --font-color: #ffffff;
             --shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.05);
             --shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
-            --color-correct: #2ecc71;
-            --color-incorrect: #e74c3c;
-            --tooltip-bg: #1a1a1a;
-            --tooltip-color: #ffffff;
-            --letter-color: #ff6b6b;
-            --selected-bg: #ff9800;
-            --selected-color: #000000;
-            --dropzone-hover: #555555;
-            --toast-bg: #3d3d3d;
-            --toast-text: #e0e0e0;
-            --primary-color: #ff6b6b;
-            --badge-bg: #ff6b6b;
-            --badge-color: #ffffff;
-            --card-content-bg: #3d3d3d;
-            background-color: #121212;
-            color: #ffffff;
+            --color-correct: #2ecc71; --color-incorrect: #e74c3c;
+            --tooltip-bg: #1a1a1a; --tooltip-color: #ffffff; --letter-color: #ff6b6b;
+            --selected-bg: #ff9800; --selected-color: #000000;
+            --dropzone-hover: #555555; --toast-bg: #3d3d3d; --toast-text: #e0e0e0;
+            --primary-color: #ff6b6b; --badge-bg: #ff6b6b; --badge-color: #ffffff; --card-content-bg: #3d3d3d;
+            background-color: #121212; color: #ffffff;
         }
         body.colorblind-mode {
-            --color-correct: #2c7be5;
-            --color-incorrect: #1a3a5c;
-            --border-correct: #2c7be5;
-            --border-incorrect: #1a3a5c;
-            --letter-color: #2c7be5;
-            --result-color: #2c7be5;
-            --primary-color: #2c7be5;
-            --badge-bg: #2c7be5;
-            --badge-color: #ffffff;
+            --color-correct: #2c7be5; --color-incorrect: #1a3a5c;
+            --border-correct: #2c7be5; --border-incorrect: #1a3a5c;
+            --letter-color: #2c7be5; --result-color: #2c7be5;
+            --primary-color: #2c7be5; --badge-bg: #2c7be5; --badge-color: #ffffff;
         }
         body.dark-theme.colorblind-mode {
-            --color-correct: #4a90d9;
-            --color-incorrect: #3a5a7a;
-            --border-correct: #4a90d9;
-            --border-incorrect: #3a5a7a;
-            --letter-color: #4a90d9;
-            --result-color: #4a90d9;
-            --primary-color: #4a90d9;
-            --badge-bg: #4a90d9;
-            --badge-color: #ffffff;
+            --color-correct: #4a90d9; --color-incorrect: #3a5a7a;
+            --border-correct: #4a90d9; --border-incorrect: #3a5a7a;
+            --letter-color: #4a90d9; --result-color: #4a90d9;
+            --primary-color: #4a90d9; --badge-bg: #4a90d9; --badge-color: #ffffff;
         }
         body {
-            font-family: Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--font-color);
-            padding: 12px 12px 24px 12px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            transition: background-color 0.4s, color 0.4s;
+            font-family: Arial, sans-serif; background-color: var(--bg); color: var(--font-color);
+            padding: 12px 12px 24px 12px; min-height: 100vh;
+            display: flex; flex-direction: column; transition: background-color 0.4s, color 0.4s;
         }
         .no-animations *:not(.confetti-container):not(.confetti-piece):not(.confetti-container *):not(.confetti-piece *),
         .no-animations *::before:not(.confetti-container *):not(.confetti-piece *),
         .no-animations *::after:not(.confetti-container *):not(.confetti-piece *) {
-            animation: none !important;
-            transition: none !important;
+            animation: none !important; transition: none !important;
         }
         .toaster {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
@@ -108,14 +62,7 @@
         .toaster.show { transform: translateX(-50%) translateY(0); opacity: 1; }
         .toaster.correct, .toaster.info, .toaster.warning { background: var(--toast-bg); color: var(--toast-text); border: none; }
         .hidden { display: none !important; }
-        
-        .toolbar-wrapper { 
-            position: relative; 
-            z-index: 10000; 
-            flex-shrink: 0; 
-            margin-bottom: 12px; 
-            transition: filter 0.3s ease, opacity 0.3s ease; 
-        }
+        .toolbar-wrapper { position: relative; z-index: 10000; flex-shrink: 0; margin-bottom: 12px; transition: filter 0.3s ease, opacity 0.3s ease; }
         .toolbar { display: flex; justify-content: space-between; align-items: center; padding: 8px 15px; background: transparent; height: 76px; border-radius: 12px 12px 0 0; gap: 10px; position: relative; }
         .toolbar-left, .toolbar-right { display: flex; align-items: center; gap: 8px; flex: 1; }
         .toolbar-left { justify-content: flex-start; }
@@ -168,7 +115,6 @@
         .fullscreen .hover-trigger { position: fixed; top: 0; left: 0; right: 0; height: 40px; z-index: 9; pointer-events: none; }
         .fullscreen .hover-trigger.active { pointer-events: auto; }
         .fullscreen .hover-trigger.active ~ .toolbar-wrapper, .fullscreen .toolbar-wrapper:hover { transform: translateY(0); opacity: 1; pointer-events: auto; }
-        
         .menu-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
         .menu-overlay.open { opacity: 1; visibility: visible; }
         .slide-menu { position: fixed; top: 0; right: -300px; width: 280px; height: 100vh; background-color: var(--bg); z-index: 1001; padding: 20px; display: flex; flex-direction: column; border-radius: 20px 0 0 20px; box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1); transition: right 0.3s ease; overflow-y: auto; }
@@ -181,7 +127,6 @@
         body.dark-theme .menu-item:hover { background: rgba(255, 255, 255, 0.08); }
         .menu-item svg { width: 24px; height: 24px; margin-right: 16px; stroke: currentColor; stroke-width: 2; fill: none; flex-shrink: 0; }
         .menu-item .item-label { flex: 1; text-align: left; display: flex; align-items: center; height: 100%; }
-        
         .submenu { position: fixed; top: 0; right: -340px; width: 280px; height: 100%; background: var(--bg); z-index: 10010; box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2); border-radius: 20px 0 0 20px; padding: 2rem 1.5rem; overflow-y: auto; transition: right 0.5s ease; }
         .submenu.active { right: 0; }
         .submenu-title { font-size: 1.4rem; font-weight: bold; color: var(--primary-color); margin: 0.5rem 0 1.5rem 0; text-align: center; text-transform: lowercase; letter-spacing: 0.3px; }
@@ -190,7 +135,6 @@
         body.dark-theme .settings-info { background: rgba(255, 255, 255, 0.05); }
         .settings-info p { margin: 0 0 8px 0; }
         .settings-info p:last-child { margin-bottom: 0; }
-        
         .toggle-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; min-height: 24px; gap: 10px; }
         .toggle-label { color: var(--font-color); font-size: 0.9rem; text-align: left; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; flex: 1; line-height: 1; min-height: 24px; }
         .toggle-label svg { width: 24px; min-width: 24px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem; text-align: center; line-height: 1; stroke: currentColor; fill: none; stroke-width: 2; }
@@ -202,132 +146,28 @@
         .theme-switch input:checked + .slider:before { transform: translateX(20px); }
         body.dark-theme .theme-switch .slider { background: #3d3d3d; }
         body.dark-theme .theme-switch input:checked + .slider { background: #4a80c0; }
-        
-        body.menu-open .toolbar-wrapper {
-            opacity: 0 !important;
-            visibility: hidden !important;
-            pointer-events: none !important;
-        }
-        body.menu-open #container,
-        body.menu-open #tap,
-        body.menu-open #time,
-        body.menu-open #cap,
-        body.menu-open #authorDates,
-        body.menu-open .move {
-            filter: blur(4px) !important;
-            pointer-events: none !important;
-            transition: filter 0.3s ease;
-        }
-        body.menu-open .slide-menu,
-        body.menu-open .submenu {
-            filter: none !important;
-            pointer-events: auto !important;
-        }
-        body.menu-open .menu-overlay {
-            pointer-events: auto;
-        }
-        
-        .submenu-icon {
-            width: 24px;
-            height: 24px;
-            flex-shrink: 0;
-            color: var(--font-color);
-            stroke: currentColor;
-            stroke-width: 2;
-            fill: none;
-            transition: transform 0.3s ease;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 8px;
-        }
-        .submenu-icon:hover {
-            animation: rotate 1s linear;
-        }
-        .settings-info svg:hover, .toggle-label svg:hover {
-            animation: rotate 1s linear;
-        }
-        
-        .shortcuts-table {
-            width: 100%;
-            color: var(--font-color);
-            margin-bottom: 1rem;
-            border-collapse: collapse;
-            line-height: 1.1;
-        }
-        .shortcuts-table td {
-            padding: 1px 0;
-            border: none;
-            vertical-align: middle;
-        }
-        .shortcuts-table .key-combo {
-            white-space: nowrap;
-            padding-right: 12px;
-        }
-        kbd {
-            display: inline-block;
-            padding: 4px 8px;
-            font-family: monospace;
-            font-size: 0.9em;
-            font-weight: bold;
-            background-color: #d1d1d1;
-            color: #333;
-            border-radius: 6px;
-            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.6) inset;
-            min-width: 20px;
-            text-align: center;
-        }
-        body.dark-theme kbd {
-            background-color: #1a1a1a;
-            color: #e2e8f0;
-            border: 1px solid #333;
-        }
-        
-        .about-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            width: 100%;
-        }
-        .about-row > .about-text {
-            flex: 1;
-            min-width: 0;
-            text-align: left;
-            color: var(--font-color);
-            font-size: 13px;
-            line-height: 1.4;
-            word-break: break-word;
-            padding: 6px 0;
-        }
+        body.menu-open .toolbar-wrapper { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+        body.menu-open #container, body.menu-open #tap, body.menu-open #time, body.menu-open #cap, body.menu-open #authorDates, body.menu-open .move { filter: blur(4px) !important; pointer-events: none !important; transition: filter 0.3s ease; }
+        body.menu-open .slide-menu, body.menu-open .submenu { filter: none !important; pointer-events: auto !important; }
+        body.menu-open .menu-overlay { pointer-events: auto; }
+        .submenu-icon { width: 24px; height: 24px; flex-shrink: 0; color: var(--font-color); stroke: currentColor; stroke-width: 2; fill: none; transition: transform 0.3s ease; display: inline-block; vertical-align: middle; margin-right: 8px; }
+        .submenu-icon:hover { animation: rotate 1s linear; }
+        .settings-info svg:hover, .toggle-label svg:hover { animation: rotate 1s linear; }
+        .shortcuts-table { width: 100%; color: var(--font-color); margin-bottom: 1rem; border-collapse: collapse; line-height: 1.1; }
+        .shortcuts-table td { padding: 1px 0; border: none; vertical-align: middle; }
+        .shortcuts-table .key-combo { white-space: nowrap; padding-right: 12px; }
+        kbd { display: inline-block; padding: 4px 8px; font-family: monospace; font-size: 0.9em; font-weight: bold; background-color: #d1d1d1; color: #333; border-radius: 6px; box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.6) inset; min-width: 20px; text-align: center; }
+        body.dark-theme kbd { background-color: #1a1a1a; color: #e2e8f0; border: 1px solid #333; }
+        .about-row { display: flex; align-items: center; gap: 8px; width: 100%; }
+        .about-row > .about-text { flex: 1; min-width: 0; text-align: left; color: var(--font-color); font-size: 13px; line-height: 1.4; word-break: break-word; padding: 6px 0; }
         .about-row > .about-text p { margin: 0; }
-        .about-text a {
-            color: var(--font-color);
-            text-decoration: none;
-            border-bottom: 1px dotted var(--font-color);
-        }
+        .about-text a { color: var(--font-color); text-decoration: none; border-bottom: 1px dotted var(--font-color); }
         .about-text a:hover { border-bottom: 2px solid var(--font-color); }
+        .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 99999; overflow: hidden; }
+        .confetti-piece { position: absolute; width: 10px; height: 10px; top: -10px; animation: confetti-fall linear forwards; }
+        @keyframes confetti-fall { 0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; } }
         
-        .confetti-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 99999;
-            overflow: hidden;
-        }
-        .confetti-piece {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            top: -10px;
-            animation: confetti-fall linear forwards;
-        }
-        @keyframes confetti-fall {
-            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
-        }
-        
+        /* CORRECTION : Catalogue sur 2 colonnes en mode mobile */
         @media (max-width: 600px) {
             .toolbar { display: none !important; }
             .toolbar-mobile { display: flex !important; }
@@ -343,204 +183,89 @@
             .slide-menu, .submenu { width: 260px; right: -280px; padding: 14px 16px; }
             .menu-item { padding: 10px 14px; font-size: 12px; min-height: 48px; border-radius: 8px; }
             .menu-item svg { width: 20px; height: 20px; }
+            
+            /* Catalogue en grille 2 colonnes */
+            #models {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 10px !important;
+                padding: 10px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
             #models > div {
                 display: block !important;
-                width: calc(100% - 40px) !important;
-                margin: 15px auto !important;
-                padding: 15px !important;
-                box-sizing: border-box;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 8px !important;
+                box-sizing: border-box !important;
             }
             #models > div img {
                 max-width: 100% !important;
                 height: auto !important;
-                width: auto !important;
+                width: 100% !important;
             }
-            #models { padding: 10px; }
+            #models h2 {
+                grid-column: 1 / -1 !important;
+                width: 100% !important;
+            }
         }
 
-        html, body {
-            margin: 0px;
-            background-color: white;
-        }
+        html, body { margin: 0px; background-color: white; }
         body {
-            --colorDestacat: darkgray;
-            font-family: Arial, Helvetica, sans-serif;
+            --colorDestacat: darkgray; font-family: Arial, Helvetica, sans-serif;
             background-image: linear-gradient(60deg, white 15%, white 55%, white);
-            background-size: 100%;
-            background-attachment: fixed;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            overflow: hidden;
-            color: var(--colorDestacat);
+            background-size: 100%; background-attachment: fixed;
+            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+            overflow: hidden; color: var(--colorDestacat);
         }
-        body.dark-theme {
-            background-image: none !important;
-            background-color: #121212 !important;
-        }
-        h2 {
-            margin: 0;
-            font-weight: normal;
-        }
-        #cap {
-            display: flex;
-            align-items: center;
-            height: 50px;
-            white-space: nowrap;
-            padding-right: 55px;
-        }
-        #container {
-            margin: 5px auto;
-            background-repeat: no-repeat;
-        }
+        body.dark-theme { background-image: none !important; background-color: #121212 !important; }
+        h2 { margin: 0; font-weight: normal; }
+        #cap { display: flex; align-items: center; height: 50px; white-space: nowrap; padding-right: 55px; }
+        #container { margin: 5px auto; background-repeat: no-repeat; }
         .position {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            display: inline-block;
-            vertical-align: top;
+            position: relative; width: 100px; height: 100px; display: inline-block; vertical-align: top;
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='black' ><circle  cx='50' cy='50' r='2' /></svg>");
         }
-        #authorDates {
-            text-align: center;
-            font-size: 16px;
-            color: var(--font-color);
-            margin-top: 10px;
-            font-style: italic;
-            min-height: 24px;
-            opacity: 0.85;
-        }
+        #authorDates { text-align: center; font-size: 16px; color: var(--font-color); margin-top: 10px; font-style: italic; min-height: 24px; opacity: 0.85; }
         .move {
-            filter: drop-shadow(5px 5px 5px black);
-            width: 0px;
-            height: 0px;
-            position: absolute;
-            z-index: 0;
-            transition: transform 0.2s, filter 0.2s, z-index 0s linear 0.4s;
-            touch-action: none;
+            filter: drop-shadow(5px 5px 5px black); width: 0px; height: 0px; position: absolute; z-index: 0;
+            transition: filter 0.2s, z-index 0s linear 0.4s; touch-action: none;
+            will-change: transform; /* CORRECTION : Accélération GPU */
         }
-        .move:hover {
-            filter: drop-shadow(8px 8px 5px black);
-        }
-        .move > div {
-            margin-top: -40px;
-            margin-left: -40px;
-            width: 180px;
-            height: 180px;
-            transition: 0.16s;
-            background-color: transparent;
-        }
+        .move:hover { filter: drop-shadow(8px 8px 5px black); }
+        .move > div { margin-top: -40px; margin-left: -40px; width: 180px; height: 180px; transition: 0.16s; background-color: transparent; }
         .move > span {
-            position: absolute;
-            display: flex;
-            width: 50px;
-            height: 103px;
-            background-color: transparent;
-            border-radius: 45px;
-            margin-top: -53px;
-            margin-left: 25px;
-            transform-origin: center bottom;
-            transform: rotate(0deg) scale(0);
-            transition: 0.4s ease 0.4s;
-            cursor: default;
-            justify-content: center;
+            position: absolute; display: flex; width: 50px; height: 103px; background-color: transparent;
+            border-radius: 45px; margin-top: -53px; margin-left: 25px; transform-origin: center bottom;
+            transform: rotate(0deg) scale(0); transition: 0.4s ease 0.4s; cursor: default; justify-content: center;
         }
-        .move:hover > span:first-of-type {
-            transform: rotate(-45deg) scale(1);
-        }
-        .move:hover > span:last-of-type {
-            transform: rotate(45deg) scale(1);
-        }
+        .move:hover > span:first-of-type { transform: rotate(-45deg) scale(1); }
+        .move:hover > span:last-of-type { transform: rotate(45deg) scale(1); }
         .move > span > span {
-            display: block;
-            width: 30px;
-            height: 30px;
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            background-size: 22px;
-            background-position: center center;
-            background-repeat: no-repeat;
-            cursor: pointer;
-            transition: 0.3s;
-            touch-action: manipulation;
-            z-index: 100;
+            display: block; width: 30px; height: 30px; background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 15px; background-size: 22px; background-position: center center;
+            background-repeat: no-repeat; cursor: pointer; transition: 0.3s; touch-action: manipulation; z-index: 100;
         }
-        .move > span:first-of-type > span {
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' fill='white'> <path d='M32 4c-8.837 0-16.836 3.582-22.627 9.374l-9.373-9.374v24h24l-8.971-8.97c4.344-4.343 10.343-7.030 16.971-7.030 13.254 0 24 10.745 24 24 0 7.169-3.143 13.602-8.126 18l5.292 6c6.644-5.864 10.834-14.442 10.834-24 0-17.673-14.327-32-32-32z'/></svg>");
-        }
-        .move > span:last-of-type > span {
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' fill='white'><path d='M0 36c0 9.558 4.191 18.136 10.834 24l5.292-6c-4.983-4.398-8.126-10.831-8.126-18 0-13.255 10.746-24 24-24 6.628 0 12.627 2.687 16.971 7.030l-8.971 8.97h24v-24l-9.373 9.374c-5.791-5.791-13.79-9.374-22.627-9.374-17.673 0-32 14.327-32 32z'/></svg>");
-        }
-        .move > span > span:hover {
-            box-shadow: 0 0 15px 3px rgb(0, 255, 0), 0 0 0 2px white;
-            background-color: rgba(0, 255, 0, 0.2);
-        }
-        
+        .move > span:first-of-type > span { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' fill='white'> <path d='M32 4c-8.837 0-16.836 3.582-22.627 9.374l-9.373-9.374v24h24l-8.971-8.97c4.344-4.343 10.343-7.030 16.971-7.030 13.254 0 24 10.745 24 24 0 7.169-3.143 13.602-8.126 18l5.292 6c6.644-5.864 10.834-14.442 10.834-24 0-17.673-14.327-32-32-32z'/></svg>"); }
+        .move > span:last-of-type > span { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' fill='white'><path d='M0 36c0 9.558 4.191 18.136 10.834 24l5.292-6c-4.983-4.398-8.126-10.831-8.126-18 0-13.255 10.746-24 24-24 6.628 0 12.627 2.687 16.971 7.030l-8.971 8.97h24v-24l-9.373 9.374c-5.791-5.791-13.79-9.374-22.627-9.374-17.673 0-32 14.327-32 32z'/></svg>"); }
+        .move > span > span:hover { box-shadow: 0 0 15px 3px rgb(0, 255, 0), 0 0 0 2px white; background-color: rgba(0, 255, 0, 0.2); }
         #tap {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            z-index: 20000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.6s ease;
-            color: white;
-            overflow-y: auto;
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black;
+            z-index: 20000; opacity: 0; pointer-events: none; transition: opacity 0.6s ease;
+            color: white; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch;
         }
-        #tap[style*="opacity: 1"], #tap[style*="opacity:1"] {
-            pointer-events: auto;
-        }
-        #models {
-            text-align: center;
-            display: none;
-            padding: 20px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        #models h2 {
-            color: #ff0000;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
+        #tap[style*="opacity: 1"], #tap[style*="opacity:1"] { pointer-events: auto; }
+        #models { text-align: center; display: none; padding: 20px; width: 100%; box-sizing: border-box; }
+        #models h2 { color: #ff0000; font-size: 1.5rem; margin-bottom: 20px; }
         #models > div {
-            display: inline-block;
-            vertical-align: middle;
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid white;
-            text-align: left;
-            cursor: pointer;
-            transition: 0.24s;
+            display: inline-block; vertical-align: middle; margin: 10px; padding: 10px;
+            border: 1px solid white; text-align: left; cursor: pointer; transition: 0.24s;
         }
-        #models > div:hover {
-            background-color: white;
-            color: black;
-            white-space: pre-wrap;
-        }
-        #time {
-            text-align: center;
-            font-size: 24px;
-            margin-top: 20px;
-            transition: 0.6s;
-            transition-delay: 1s;
-            margin-left: 10px;
-            color: black;
-            display: none;
-        }
-        #time span {
-            color: gray;
-            font-style: italic;
-        }
-        #time em {
-            color: black;
-            font-style: normal;
-        }
+        #models > div:hover { background-color: white; color: black; white-space: pre-wrap; }
+        #time { text-align: center; font-size: 24px; margin-top: 20px; transition: 0.6s; transition-delay: 1s; margin-left: 10px; color: black; display: none; }
+        #time span { color: gray; font-style: italic; }
+        #time em { color: black; font-style: normal; }
     </style>
     <script>
         var zIndex = 1;
@@ -549,12 +274,8 @@
         var timeInitial;
 
         function getEventCoords(e) {
-            if (e.touches && e.touches.length > 0) {
-                return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-            }
-            if (e.changedTouches && e.changedTouches.length > 0) {
-                return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-            }
+            if (e.touches && e.touches.length > 0) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            if (e.changedTouches && e.changedTouches.length > 0) return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
             return { x: e.clientX, y: e.clientY };
         }
 
@@ -591,52 +312,24 @@
                 const color = colors[Math.floor(Math.random() * colors.length)];
                 const left = Math.random() * 100;
                 const isRound = Math.random() > 0.5;
-                
-                piece.style.cssText = `
-                    position:absolute;
-                    width:${size}px;
-                    height:${size * 0.6}px;
-                    background:${color};
-                    left:${left}%;
-                    top:-20px;
-                    border-radius:${isRound ? '50%' : '2px'};
-                    animation:confetti-fall ${duration}s linear ${delay}s forwards;
-                `;
+                piece.style.cssText = `position:absolute;width:${size}px;height:${size * 0.6}px;background:${color};left:${left}%;top:-20px;border-radius:${isRound ? '50%' : '2px'};animation:confetti-fall ${duration}s linear ${delay}s forwards;`;
                 container.appendChild(piece);
             }
-            setTimeout(() => { 
-                if (container.parentNode) container.remove(); 
-            }, 5000);
+            setTimeout(() => { if (container.parentNode) container.remove(); }, 5000);
         }
 
         function normalizeForSort(str) {
-            return String(str || "")
-                .toLowerCase()
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "")
-                .replace(/['']/g, " ")
-                .replace(/[-_]/g, " ")
-                .replace(/\s+/g, " ")
-                .trim();
+            return String(str || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/['']/g, " ").replace(/[-_]/g, " ").replace(/\s+/g, " ").trim();
         }
 
         function getAuthorSortName(model) {
             const exceptions = {
-                "marc-aurele.jpg": "marc aurele",
-                "levi-strauss.jpg": "levi strauss",
-                "merleau-ponty.jpg": "merleau ponty",
-                "sextus-empiricus.jpg": "sextus empiricus",
-                "thomas d'aquin.jpg": "aquin",
-                "presocratiques.jpg": "presocratiques"
+                "marc-aurele.jpg": "marc aurele", "levi-strauss.jpg": "levi strauss",
+                "merleau-ponty.jpg": "merleau ponty", "sextus-empiricus.jpg": "sextus empiricus",
+                "thomas d'aquin.jpg": "aquin", "presocratiques.jpg": "presocratiques"
             };
-
-            if (exceptions[model.urlImg]) {
-                return normalizeForSort(exceptions[model.urlImg]);
-            }
-
-            return normalizeForSort(
-                model.urlImg.replace(/\.[^.]+$/, "")
-            );
+            if (exceptions[model.urlImg]) return normalizeForSort(exceptions[model.urlImg]);
+            return normalizeForSort(model.urlImg.replace(/\.[^.]+$/, ""));
         }
         
         function crearDreta(i) {
@@ -662,36 +355,17 @@
         function dadesPeza(row, col, index) {
             var object = {};
             switch (true) {
-                case col == 0 && row == 0:
-                    object = { type: "supEsquerra", a: { draw: " l 100,0 " }, b: crearDreta(index), c: crearInferior(index), d: { draw: " l 0,-100" } };
-                    break;
-                case row == 0 && col == numCols - 1:
-                    object = { type: "supDreta", a: { draw: " l 100,0 " }, b: { draw: " l 0,100 " }, c: crearInferior(index), d: inversDreta(index) };
-                    break;
-                case row == numRows - 1 && col == 0:
-                    object = { type: "infEsquerra", a: inversSuperior(index), b: crearDreta(index), c: { draw: " l-100,0 " }, d: { draw: " l 0,-100 " } };
-                    break;
-                case row == numRows - 1 && col == numCols - 1:
-                    object = { type: "infDreta", a: inversSuperior(index), b: { draw: " l 0,100 " }, c: { draw: " l-100,0 " }, d: inversDreta(index) };
-                    break;
-                case row == 0:
-                    object = { type: "superior", a: { draw: " l 100,0 " }, b: crearDreta(index), c: crearInferior(index), d: inversDreta(index) };
-                    break;
-                case col == 0:
-                    object = { type: "esquerra", a: inversSuperior(index), b: crearDreta(index), c: crearInferior(index), d: { draw: " l 0,-100 " } };
-                    break;
-                case col == numCols - 1:
-                    object = { type: "dreta", a: inversSuperior(index), b: { draw: " l 0,100 " }, c: crearInferior(index), d: inversDreta(index) };
-                    break;
-                case row == numRows - 1:
-                    object = { type: "inferior", a: inversSuperior(index), b: crearDreta(index), c: { draw: " l-100,0 " }, d: inversDreta(index) };
-                    break;
-                default:
-                    object = { type: "central", a: inversSuperior(index), b: crearDreta(index), c: crearInferior(index), d: inversDreta(index) };
+                case col == 0 && row == 0: object = { type: "supEsquerra", a: { draw: " l 100,0 " }, b: crearDreta(index), c: crearInferior(index), d: { draw: " l 0,-100" } }; break;
+                case row == 0 && col == numCols - 1: object = { type: "supDreta", a: { draw: " l 100,0 " }, b: { draw: " l 0,100 " }, c: crearInferior(index), d: inversDreta(index) }; break;
+                case row == numRows - 1 && col == 0: object = { type: "infEsquerra", a: inversSuperior(index), b: crearDreta(index), c: { draw: " l-100,0 " }, d: { draw: " l 0,-100 " } }; break;
+                case row == numRows - 1 && col == numCols - 1: object = { type: "infDreta", a: inversSuperior(index), b: { draw: " l 0,100 " }, c: { draw: " l-100,0 " }, d: inversDreta(index) }; break;
+                case row == 0: object = { type: "superior", a: { draw: " l 100,0 " }, b: crearDreta(index), c: crearInferior(index), d: inversDreta(index) }; break;
+                case col == 0: object = { type: "esquerra", a: inversSuperior(index), b: crearDreta(index), c: crearInferior(index), d: { draw: " l 0,-100 " } }; break;
+                case col == numCols - 1: object = { type: "dreta", a: inversSuperior(index), b: { draw: " l 0,100 " }, c: crearInferior(index), d: inversDreta(index) }; break;
+                case row == numRows - 1: object = { type: "inferior", a: inversSuperior(index), b: crearDreta(index), c: { draw: " l-100,0 " }, d: inversDreta(index) }; break;
+                default: object = { type: "central", a: inversSuperior(index), b: crearDreta(index), c: crearInferior(index), d: inversDreta(index) };
             }
-            object.col = col;
-            object.row = row;
-            object.index = index;
+            object.col = col; object.row = row; object.index = index;
             object.path = function () { return this.a.draw + this.b.draw + this.c.draw + this.d.draw + "z"; };
             return object;
         }
@@ -708,7 +382,20 @@
             move.onmousemove = getPos;
             move.angle = 0;
             move.style.filter = "drop-shadow(0px 0px 1px black)";
-            move.position = function () { return { left: this.offsetLeft + 50, top: this.offsetTop + 50 }; };
+            // CORRECTION : position() tient compte du transform
+            move.position = function () {
+                var left = this.offsetLeft + 50;
+                var top = this.offsetTop + 50;
+                var transform = this.style.transform;
+                if (transform && transform !== '') {
+                    var match = transform.match(/translate3d?\(([^,]+),\s*([^,]+)/);
+                    if (match) {
+                        left += parseFloat(match[1]) || 0;
+                        top += parseFloat(match[2]) || 0;
+                    }
+                }
+                return { left: left, top: top };
+            };
             move.onmouseup = dropPiece;
             move.index = index;
             var position = document.createElement("DIV");
@@ -718,11 +405,8 @@
             position.appendChild(move);
             move.onmouseover = function () { this.style.zIndex = zIndex + 1; };
             move.onmouseout = function () { this.style.zIndex = this.zIndex; };
-            
-            // Attacher les événements tactiles à cette pièce
             attachTouchEventsToPiece(move);
         }
-        
         var i, element;
         var models = [
             { numRows: 4, numCols: 6, urlImg: "presocratiques.jpg", dates: "VIᵉ-Vᵉ siècle av. J.-C." },
@@ -812,49 +496,24 @@
         ];
         function createListModels() {
             var HTMLmodels = "<h2>" + TR_selecciona + "</h2>";
-
-            var sortedModels = models
-                .map(function (e, i) {
-                    return {
-                        model: e,
-                        originalIndex: i,
-                        sortName: getAuthorSortName(e)
-                    };
-                })
-                .sort(function (a, b) {
-                    return a.sortName.localeCompare(b.sortName, "fr", {
-                        sensitivity: "base"
-                    });
-                });
-
-            sortedModels.forEach(function (item) {
-                var e = item.model;
-                var i = item.originalIndex;
-
-                HTMLmodels +=
-                    "<div onClick='selectModel(" + i + ")'>" +
-                        '<img height="' + (e.numRows / 3) * 100 + '" src="' + host + e.urlImg + '" width="' + (e.numCols / 3) * 100 + '">' +
-                        "<br>" +
-                        "<small>" + e.numCols * e.numRows + " " + TR_peces + "</small>" +
-                    "</div>";
+            var sortedModels = models.map(function (e, i) {
+                return { model: e, originalIndex: i, sortName: getAuthorSortName(e) };
+            }).sort(function (a, b) {
+                return a.sortName.localeCompare(b.sortName, "fr", { sensitivity: "base" });
             });
-
+            sortedModels.forEach(function (item) {
+                var e = item.model; var i = item.originalIndex;
+                HTMLmodels += "<div onClick='selectModel(" + i + ")'>" +
+                    '<img height="' + (e.numRows / 3) * 100 + '" src="' + host + e.urlImg + '" width="' + (e.numCols / 3) * 100 + '">' +
+                    "<br><small>" + e.numCols * e.numRows + " " + TR_peces + "</small></div>";
+            });
             document.getElementById("models").innerHTML = HTMLmodels;
         }
         function createPuzzle(model) {
-            document.querySelectorAll(".move").forEach(function(e) {
-                e.remove();
-            });
-            
+            document.querySelectorAll(".move").forEach(function(e) { e.remove(); });
             if (window.resetPuzzleTimer) window.resetPuzzleTimer();
-            
-            trosAlSeuLloc = 0;
-            container.innerHTML = "";
-            director = [];
-            index = 0;
-            trosSeleccionat = false;
-            numRows = model.numRows;
-            numCols = model.numCols;
+            trosAlSeuLloc = 0; container.innerHTML = ""; director = []; index = 0; trosSeleccionat = false;
+            numRows = model.numRows; numCols = model.numCols;
             container.style.width = numCols * 100 + "px";
             container.style.backgroundPositionY = 100 * model.numRows + "px";
             for (row = 0; row < numRows; row++) {
@@ -869,59 +528,38 @@
         function selectModel(i) {
             var modelsEl = document.getElementById("models");
             var tapEl = document.getElementById("tap");
-            
             if (modelsEl) modelsEl.style.display = "none";
-            if (tapEl) {
-                tapEl.style.display = "none";
-                tapEl.style.opacity = 0;
-                tapEl.style.pointerEvents = "none";
-            }
-            
+            if (tapEl) { tapEl.style.display = "none"; tapEl.style.opacity = 0; tapEl.style.pointerEvents = "none"; }
             model = models[i];
             createPuzzle(model);
-            
             var datesEl = document.getElementById("authorDates");
-            if (datesEl && model.dates) {
-                datesEl.textContent = model.dates;
-            }
-            
+            if (datesEl && model.dates) datesEl.textContent = model.dates;
             var fs = document.getElementById("fullscreen");
-            if (fs) {
-                fs.className = (typeof isFullScreen !== 'undefined' && isFullScreen) ? "fullscreenOff" : "fullscreen";
-            }
-            
+            if (fs) fs.className = (typeof isFullScreen !== 'undefined' && isFullScreen) ? "fullscreenOff" : "fullscreen";
             start();
         }
         document.addEventListener("DOMContentLoaded", function () {
             model = models[2];
             createPuzzle(model);
             createListModels();
-            
             var datesEl = document.getElementById("authorDates");
-            if (datesEl && model.dates) {
-                datesEl.textContent = model.dates;
-            }
-            
+            if (datesEl && model.dates) datesEl.textContent = model.dates;
             var botoFullScreen = document.getElementById("fullscreen");
             if (botoFullScreen) {
                 botoFullScreen.fullScreen = false;
                 botoFullScreen.onclick = function () {
                     if (this.className == "fullscreenCloseModels") {
                         var tapEl = document.getElementById("tap");
-                        if (tapEl) {
-                            tapEl.style.opacity = 0;
-                            tapEl.style.pointerEvents = "none";
-                            tapEl.style.display = "none";
-                        }
+                        if (tapEl) { tapEl.style.opacity = 0; tapEl.style.pointerEvents = "none"; tapEl.style.display = "none"; }
                         document.getElementById("models").style.display = "none";
                         this.className = isFullScreen ? "fullscreenOff" : "fullscreen";
                         return;
                     }
                     if (this.fullScreen) {
-                        if (document.msExitFullscreen) { document.msExitFullscreen(); } else { document.exitFullscreen(); }
+                        if (document.msExitFullscreen) document.msExitFullscreen(); else document.exitFullscreen();
                         this.className = "fullscreen";
                     } else {
-                        if (document.body.msRequestFullscreen) { document.body.msRequestFullscreen(); } else { document.body.requestFullscreen(); }
+                        if (document.body.msRequestFullscreen) document.body.msRequestFullscreen(); else document.body.requestFullscreen();
                         this.className = "fullscreenOff";
                     }
                     this.fullScreen = !this.fullScreen;
@@ -932,67 +570,42 @@
         });
         function final() {
             var tapEl = document.getElementById("tap");
-            if (tapEl) {
-                tapEl.style.display = "none";
-                tapEl.style.opacity = 0;
-                tapEl.style.pointerEvents = "none";
-            }
+            if (tapEl) { tapEl.style.display = "none"; tapEl.style.opacity = 0; tapEl.style.pointerEvents = "none"; }
             var modelsEl = document.getElementById("models");
             if (modelsEl) modelsEl.style.display = "none";
-            
             var timeEl = document.getElementById("time");
             if (timeEl) timeEl.style.opacity = 1;
-            
             launchConfetti();
         }
         function showModels() {
             var fs = document.getElementById("fullscreen");
             if (fs) fs.className = "fullscreenCloseModels";
-            
             var modelsEl = document.getElementById("models");
             if (modelsEl) modelsEl.style.display = "block";
-            
             var timeEl = document.getElementById("time");
             if (timeEl) timeEl.style.display = "none";
-            
             var tapEl = document.getElementById("tap");
-            if (tapEl) {
-                tapEl.style.display = "block";
-                tapEl.style.opacity = 1;
-                tapEl.style.pointerEvents = "auto";
-            }
+            if (tapEl) { tapEl.style.display = "block"; tapEl.style.opacity = 1; tapEl.style.pointerEvents = "auto"; }
         }
         function start() {
             var tapEl = document.getElementById("tap");
-            if (tapEl) {
-                tapEl.style.display = "none";
-                tapEl.style.opacity = 0;
-                tapEl.style.pointerEvents = "none";
-            }
+            if (tapEl) { tapEl.style.display = "none"; tapEl.style.opacity = 0; tapEl.style.pointerEvents = "none"; }
             if (window.resetPuzzleTimer) window.resetPuzzleTimer();
-            
             var toolbarWrapper = document.querySelector('.toolbar-wrapper');
             var toolbarHeight = toolbarWrapper ? toolbarWrapper.offsetHeight : 0;
             var minY = toolbarHeight + 20;
             var maxY = window.innerHeight - 120;
-            if (maxY <= minY) {
-                minY = toolbarHeight;
-                maxY = window.innerHeight - 50;
-            }
+            if (maxY <= minY) { minY = toolbarHeight; maxY = window.innerHeight - 50; }
             var minX = 10;
             var maxX = window.innerWidth - 150;
-            if (maxX <= minX) {
-                minX = 0;
-                maxX = window.innerWidth - 50;
-            }
-            
+            if (maxX <= minX) { minX = 0; maxX = window.innerWidth - 50; }
             document.querySelectorAll(".move").forEach(function (e, i) {
-                e.zIndex = 1;
-                e.style.filter = "";
+                e.zIndex = 1; e.style.filter = "";
                 e.parentNode.removeChild(e);
                 document.body.appendChild(e);
                 e.style.top = (minY + Math.random() * (maxY - minY)) + "px";
                 e.style.left = (minX + Math.random() * (maxX - minX)) + "px";
+                e.style.transform = ''; // Reset transform
                 setTimeout(function () {
                     var angle = Math.floor(Math.random() * 4);
                     var img = e.querySelector("div");
@@ -1003,20 +616,10 @@
             });
             timeInitial = new Date().getTime();
             var timeEl = document.getElementById("time");
-            if (timeEl) {
-                timeEl.style.display = "none";
-                timeEl.style.opacity = 0;
-            }
+            if (timeEl) { timeEl.style.display = "none"; timeEl.style.opacity = 0; }
         }
-        
-        // CORRECTION : Rotation des pièces avec support tactile
         function girar(boto, inc) {
-            // Empêcher la propagation vers la pièce parente
-            if (event) {
-                event.stopPropagation();
-                if (event.cancelable) event.preventDefault();
-            }
-            
+            if (event) { event.stopPropagation(); if (event.cancelable) event.preventDefault(); }
             playPuzzleSound('click');
             boto.style.transform = "scale(.8)";
             boto.style.cursor = "none";
@@ -1028,6 +631,16 @@
             img.style.transform = "rotate(" + tros.angle * 90 + "deg)";
             if (tros.position().left > position.offsetLeft && tros.position().left < position.offsetLeft + 100 && tros.position().top > position.offsetTop && tros.position().top < position.offsetTop + 100) {
                 if (tros.angle % 4 == 0) {
+                    // CORRECTION : convertir transform en left/top avant de fixer
+                    var currentTransform = tros.style.transform;
+                    if (currentTransform && currentTransform !== '') {
+                        var match = currentTransform.match(/translate3d?\(([^,]+),\s*([^,]+)/);
+                        if (match) {
+                            tros.style.left = (tros.offsetLeft + (parseFloat(match[1]) || 0)) + "px";
+                            tros.style.top = (tros.offsetTop + (parseFloat(match[2]) || 0)) + "px";
+                            tros.style.transform = '';
+                        }
+                    }
                     tros.style.transition = ".15s";
                     tros.style.left = position.offsetLeft + "px";
                     tros.style.top = position.offsetTop + "px";
@@ -1036,33 +649,41 @@
             }
         }
         
-        // CORRECTION : takePiece avec meilleure gestion tactile
+        // CORRECTION : takePiece utilise transform pour un mouvement fluide
         function takePiece(e) {
-            // Ne pas traiter si c'est un clic sur un bouton de rotation
-            if (e.target && e.target.tagName === 'SPAN' && e.target.onclick) {
-                return;
-            }
-            
+            if (e.target && e.target.tagName === 'SPAN' && e.target.onclick) return;
             if (e.cancelable) e.preventDefault();
             e.stopPropagation();
-            
             if (window.startPuzzleTimer) window.startPuzzleTimer();
             playPuzzleSound('click');
-            
             var coords = getEventCoords(e);
             trosSeleccionat = this;
             zIndex++;
             this.style.zIndex = zIndex;
             this.zIndex = zIndex;
-            
-            // Calculer l'offset en tenant compte du scroll de la page
-            var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
-            var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-            offset = [this.offsetLeft - coords.x + scrollX, this.offsetTop - coords.y + scrollY];
+            // Sauvegarder la position de départ et les coordonnées initiales
+            this._dragStartX = coords.x;
+            this._dragStartY = coords.y;
+            this._origLeft = parseInt(this.style.left) || this.offsetLeft;
+            this._origTop = parseInt(this.style.top) || this.offsetTop;
+            // Reset transform pour commencer propre
+            this.style.transform = '';
+            // Activer l'accélération GPU
+            this.style.willChange = 'transform';
         }
         
         function fixarTros(p) {
             playPuzzleSound('correct');
+            // CORRECTION : convertir transform en left/top avant de fixer
+            if (p.style.transform && p.style.transform !== '') {
+                var match = p.style.transform.match(/translate3d?\(([^,]+),\s*([^,]+)/);
+                if (match) {
+                    p.style.left = (p.offsetLeft + (parseFloat(match[1]) || 0)) + "px";
+                    p.style.top = (p.offsetTop + (parseFloat(match[2]) || 0)) + "px";
+                    p.style.transform = '';
+                }
+            }
+            p.style.willChange = '';
             document.body.removeChild(p);
             document.querySelectorAll(".position")[p.index].appendChild(p);
             p.onmousedown = ""; p.onmouseover = ""; p.onmouseout = ""; p.onmousemove = ""; p.onmouseup = "";
@@ -1077,19 +698,15 @@
             trosAlSeuLloc++;
             if (trosAlSeuLloc == numRows * numCols) {
                 playPuzzleSound('score_good');
-                
                 if (window.stopPuzzleTimer) window.stopPuzzleTimer();
-                
                 var timeSpent = Math.floor((new Date().getTime() - timeInitial) / 1000);
                 var hores = Math.floor(timeSpent / 3600);
                 var minuts = Math.floor((timeSpent - hores * 3600) / 60);
                 var segons = timeSpent - hores * 3600 - minuts * 60;
-                
                 let timeStr = "";
                 if (hores > 0) timeStr += hores + " h ";
                 if (minuts > 0) timeStr += minuts + " min ";
                 timeStr += segons + " s";
-                
                 document.getElementById("resultat").innerHTML = timeStr;
                 document.getElementById("time").style.display = "block";
                 setTimeout(final, 1000);
@@ -1100,6 +717,16 @@
             var position = document.querySelectorAll(".position")[p.index];
             if (p.position().left > position.offsetLeft && p.position().left < position.offsetLeft + 100 && p.position().top > position.offsetTop && p.position().top < position.offsetTop + 100) {
                 if (p.angle % 4 == 0) {
+                    // CORRECTION : convertir transform en left/top
+                    if (p.style.transform && p.style.transform !== '') {
+                        var match = p.style.transform.match(/translate3d?\(([^,]+),\s*([^,]+)/);
+                        if (match) {
+                            p.style.left = (p.offsetLeft + (parseFloat(match[1]) || 0)) + "px";
+                            p.style.top = (p.offsetTop + (parseFloat(match[2]) || 0)) + "px";
+                            p.style.transform = '';
+                        }
+                    }
+                    p.style.willChange = '';
                     p.style.transition = "0.1s";
                     p.style.left = position.offsetLeft + "px";
                     p.style.top = position.offsetTop + "px";
@@ -1120,75 +747,52 @@
             trosSeleccionat = false;
         }
         
+        // CORRECTION : handleMove utilise transform pour un mouvement fluide (GPU)
         function handleMove(e) {
             if (!trosSeleccionat) return;
-            if (e.cancelable) e.preventDefault();
-            
             var coords = getEventCoords(e);
-            var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
-            var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-            
-            trosSeleccionat.style.left = (coords.x + offset[0] - scrollX) + "px";
-            trosSeleccionat.style.top = (coords.y + offset[1] - scrollY) + "px";
+            var dx = coords.x - trosSeleccionat._dragStartX;
+            var dy = coords.y - trosSeleccionat._dragStartY;
+            // Utilise translate3d pour l'accélération GPU
+            trosSeleccionat.style.transform = 'translate3d(' + dx + 'px, ' + dy + 'px, 0)';
         }
         
-        // Événements souris
-        document.addEventListener("mousemove", handleMove, { passive: false });
+        document.addEventListener("mousemove", handleMove, { passive: true });
         document.addEventListener("mouseup", dropPiece);
         
-        // CORRECTION : Fonction pour attacher les événements tactiles à une pièce
         function attachTouchEventsToPiece(piece) {
             var touchStartCoords = null;
-            var touchStartTime = 0;
             var isDragging = false;
             
             piece.addEventListener("touchstart", function(e) {
-                // Ne pas traiter si c'est un bouton de rotation
-                if (e.target.tagName === 'SPAN' && e.target.onclick) {
-                    return;
-                }
-                
+                if (e.target.tagName === 'SPAN' && e.target.onclick) return;
                 touchStartCoords = getEventCoords(e);
-                touchStartTime = Date.now();
                 isDragging = false;
-                
-                // Attendre un peu pour distinguer tap et drag
                 setTimeout(function() {
-                    if (!isDragging && touchStartCoords) {
-                        takePiece.call(piece, e);
-                    }
-                }, 150);
+                    if (!isDragging && touchStartCoords) takePiece.call(piece, e);
+                }, 100);
             }, { passive: false });
             
             piece.addEventListener("touchmove", function(e) {
                 if (!touchStartCoords) return;
-                
                 var coords = getEventCoords(e);
                 var dx = Math.abs(coords.x - touchStartCoords.x);
                 var dy = Math.abs(coords.y - touchStartCoords.y);
-                
-                // Si le mouvement est significatif, c'est un drag
-                if (dx > 10 || dy > 10) {
+                if (dx > 5 || dy > 5) {
                     isDragging = true;
-                    if (!trosSeleccionat) {
-                        takePiece.call(piece, e);
-                    }
+                    if (!trosSeleccionat) takePiece.call(piece, e);
                     handleMove(e);
                 }
-            }, { passive: false });
+            }, { passive: true }); // CORRECTION : passive:true pour performance
             
             piece.addEventListener("touchend", function(e) {
-                if (trosSeleccionat === piece) {
-                    dropPiece(e);
-                }
+                if (trosSeleccionat === piece) dropPiece(e);
                 touchStartCoords = null;
                 isDragging = false;
             }, { passive: false });
             
             piece.addEventListener("touchcancel", function(e) {
-                if (trosSeleccionat === piece) {
-                    dropPiece(e);
-                }
+                if (trosSeleccionat === piece) dropPiece(e);
                 touchStartCoords = null;
                 isDragging = false;
             }, { passive: false });
@@ -1214,21 +818,11 @@
         <div class="toolbar" id="toolbarDesktop">
             <div class="toolbar-left">
                 <button class="btn-sequences" id="chooseBtn" data-title="choisir">
-                    <svg class="arrow-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
-                        <g class="arrow-group"><line x1="12" y1="4" x2="12" y2="14"/><polyline points="7 10 12 15 17 10"/></g>
-                    </svg>
-                    <svg class="plate-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
-                        <g class="plate-group"><line x1="4" y1="19" x2="20" y2="19"/><line x1="4" y1="19" x2="4" y2="16"/><line x1="20" y1="19" x2="20" y2="16"/></g>
-                    </svg>
+                    <svg class="arrow-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><g class="arrow-group"><line x1="12" y1="4" x2="12" y2="14"/><polyline points="7 10 12 15 17 10"/></g></svg>
+                    <svg class="plate-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><g class="plate-group"><line x1="4" y1="19" x2="20" y2="19"/><line x1="4" y1="19" x2="4" y2="16"/><line x1="20" y1="19" x2="20" y2="16"/></g></svg>
                 </button>
-                <button class="btn btn-home" id="homeBtnDesktop" data-action="home" data-title="accueil (H)">
-                    <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24"><polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-join="round" stroke-linecap="round"/></svg>
-                    </div>
-                </button>
-                <button class="btn btn-reload" id="reloadButton" data-action="reload" data-title="recharger (R)">
-                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-                </button>
+                <button class="btn btn-home" id="homeBtnDesktop" data-action="home" data-title="accueil (H)"><div class="icon-wrapper"><svg viewBox="0 0 24 24"><polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-join="round" stroke-linecap="round"/></svg></div></button>
+                <button class="btn btn-reload" id="reloadButton" data-action="reload" data-title="recharger (R)"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
             </div>
             <div class="toolbar-center">
                 <div class="toolbar-title" id="appTitle">puzzle</div>
@@ -1236,33 +830,18 @@
             </div>
             <div class="toolbar-right">
                 <button class="timer-btn" id="timerBtnDesktop" data-title="chronomètre (T)"><span id="timerValueDesktop">00:00</span></button>
-                <button class="btn btn-fullscreen" id="fullscreenButton" data-action="fullscreen" data-title="plein écran (F)">
-                    <svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt"><line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/><line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/><line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/><line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/></svg>
-                </button>
-                <button class="btn btn-menu" id="menuButton" data-action="menu" data-title="menu (M)">
-                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-                </button>
+                <button class="btn btn-fullscreen" id="fullscreenButton" data-action="fullscreen" data-title="plein écran (F)"><svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt"><line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/><line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/><line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/><line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/></svg></button>
+                <button class="btn btn-menu" id="menuButton" data-action="menu" data-title="menu (M)"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
             </div>
         </div>
         <div class="toolbar-mobile" id="toolbarMobile">
             <div class="mobile-buttons">
-                <button class="btn-sequences" id="chooseBtnMobile" data-title="choisir">
-                    <svg class="arrow-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><g class="arrow-group"><line x1="12" y1="4" x2="12" y2="14"/><polyline points="7 10 12 15 17 10"/></g></svg>
-                    <svg class="plate-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><g class="plate-group"><line x1="4" y1="19" x2="20" y2="19"/><line x1="4" y1="19" x2="4" y2="16"/><line x1="20" y1="19" x2="20" y2="16"/></g></svg>
-                </button>
-                <button class="btn btn-home" id="homeBtnMobile" data-action="home" data-title="accueil (H)">
-                    <div class="icon-wrapper"><svg viewBox="0 0 24 24"><polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-join="round" stroke-linecap="round"/></svg></div>
-                </button>
-                <button class="btn btn-reload" id="reloadButtonMobile" data-action="reload" data-title="recharger (R)">
-                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-                </button>
+                <button class="btn-sequences" id="chooseBtnMobile" data-title="choisir"><svg class="arrow-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><g class="arrow-group"><line x1="12" y1="4" x2="12" y2="14"/><polyline points="7 10 12 15 17 10"/></g></svg><svg class="plate-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><g class="plate-group"><line x1="4" y1="19" x2="20" y2="19"/><line x1="4" y1="19" x2="4" y2="16"/><line x1="20" y1="19" x2="20" y2="16"/></g></svg></button>
+                <button class="btn btn-home" id="homeBtnMobile" data-action="home" data-title="accueil (H)"><div class="icon-wrapper"><svg viewBox="0 0 24 24"><polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-join="round" stroke-linecap="round"/></svg></div></button>
+                <button class="btn btn-reload" id="reloadButtonMobile" data-action="reload" data-title="recharger (R)"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
                 <button class="timer-btn" id="timerBtnMobile" data-title="chronomètre (T)"><span id="timerValueMobile">00:00</span></button>
-                <button class="btn btn-fullscreen" id="fullscreenButtonMobile" data-action="fullscreen" data-title="plein écran (F)">
-                    <svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt"><line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/><line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/><line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/><line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/></svg>
-                </button>
-                <button class="btn btn-menu" id="menuButtonMobile" data-action="menu" data-title="menu (M)">
-                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-                </button>
+                <button class="btn btn-fullscreen" id="fullscreenButtonMobile" data-action="fullscreen" data-title="plein écran (F)"><svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt"><line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/><line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/><line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/><line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/></svg></button>
+                <button class="btn btn-menu" id="menuButtonMobile" data-action="menu" data-title="menu (M)"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
             </div>
             <div class="mobile-title-wrapper">
                 <div class="mobile-title" id="mobileTitle">puzzle</div>
@@ -1273,256 +852,33 @@
 
     <div class="menu-overlay" id="menuOverlay"></div>
     <div class="slide-menu" id="slideMenu">
-        <div class="menu-header">
-            <button class="menu-close" id="menuClose">
-                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-        </div>
+        <div class="menu-header"><button class="menu-close" id="menuClose"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
         <div class="menu-content">
-            <button class="menu-item" id="openInstructionsSub">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
-                <span class="item-label">présentation</span>
-            </button>
-            <button class="menu-item" id="openSettingsSub">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                </svg>
-                <span class="item-label">paramètres</span>
-            </button>
-            <button class="menu-item" id="openShortcutsSub">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                    <line x1="6" y1="8" x2="10" y2="8"></line>
-                    <line x1="14" y1="8" x2="18" y2="8"></line>
-                    <line x1="6" y1="12" x2="10" y2="12"></line>
-                    <line x1="14" y1="12" x2="18" y2="12"></line>
-                    <line x1="6" y1="16" x2="10" y2="16"></line>
-                    <line x1="14" y1="16" x2="18" y2="16"></line>
-                </svg>
-                <span class="item-label">raccourcis</span>
-            </button>
-            <button class="menu-item" id="openResetSub">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 2v6h6"></path>
-                    <path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
-                    <path d="M21 22v-6h-6"></path>
-                    <path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path>
-                </svg>
-                <span class="item-label">réinitialiser</span>
-            </button>
-            <button class="menu-item" id="openAboutSub">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>
-                <span class="item-label">à propos</span>
-            </button>
+            <button class="menu-item" id="openInstructionsSub"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="item-label">présentation</span></button>
+            <button class="menu-item" id="openSettingsSub"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg><span class="item-label">paramètres</span></button>
+            <button class="menu-item" id="openShortcutsSub"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="6" y1="8" x2="10" y2="8"></line><line x1="14" y1="8" x2="18" y2="8"></line><line x1="6" y1="12" x2="10" y2="12"></line><line x1="14" y1="12" x2="18" y2="12"></line><line x1="6" y1="16" x2="10" y2="16"></line><line x1="14" y1="16" x2="18" y2="16"></line></svg><span class="item-label">raccourcis</span></button>
+            <button class="menu-item" id="openResetSub"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v6h6"></path><path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path><path d="M21 22v-6h-6"></path><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path></svg><span class="item-label">réinitialiser</span></button>
+            <button class="menu-item" id="openAboutSub"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg><span class="item-label">à propos</span></button>
         </div>
     </div>
 
-    <div class="submenu" id="submenuInstructions">
-        <div class="menu-header">
-            <button class="submenu-close" data-submenu="instructions">
-                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-        </div>
-        <div class="submenu-title">présentation</div>
-        <div class="submenu-content">
-            <div class="settings-info">
-                <p>
-                    <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14.5 9a3.5 3.5 0 1 0 0 6"></path>
-                        <circle cx="12" cy="12" r="10"></circle>
-                    </svg>
-                    <strong>objectif</strong><br><br>
-                    reconstituer les portraits des grands philosophes en assemblant les pièces du puzzle
-                </p>
-            </div>
-            <div class="settings-info">
-                <p>
-                    <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="3" y1="6" x2="21" y2="6"/>
-                        <line x1="3" y1="12" x2="21" y2="12"/>
-                        <line x1="3" y1="18" x2="21" y2="18"/>
-                    </svg>
-                    <strong>options</strong>
-                </p>
-                <br>
-                <p><strong>• animations :</strong> effets visuels activés/désactivés</p>
-                <p><strong>• mode daltonien :</strong> bleu/rouge remplacé par vert/rouge</p>
-                <p><strong>• mode sombre</strong></p>
-                <p><strong>• sons :</strong> activé/désactivé</p>
-            </div>
-        </div>
-    </div>
+    <div class="submenu" id="submenuInstructions"><div class="menu-header"><button class="submenu-close" data-submenu="instructions"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="submenu-title">présentation</div><div class="submenu-content"><div class="settings-info"><p><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 9a3.5 3.5 0 1 0 0 6"></path><circle cx="12" cy="12" r="10"></circle></svg><strong>objectif</strong><br><br>reconstituer les portraits des grands philosophes en assemblant les pièces du puzzle</p></div><div class="settings-info"><p><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><strong>options</strong></p><br><p><strong>• animations :</strong> effets visuels activés/désactivés</p><p><strong>• mode daltonien :</strong> bleu/rouge remplacé par vert/rouge</p><p><strong>• mode sombre</strong></p><p><strong>• sons :</strong> activé/désactivé</p></div></div></div>
 
-    <div class="submenu" id="submenuSettings">
-        <div class="menu-header">
-            <button class="submenu-close" data-submenu="settings">
-                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-        </div>
-        <div class="submenu-title">paramètres</div>
-        <div class="submenu-content">
-            <div class="toggle-container">
-                <span class="toggle-label">
-                    <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
-                    animations
-                </span>
-                <label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label>
-            </div>
-            <div class="toggle-container">
-                <span class="toggle-label">
-                    <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="13.5" cy="6.5" r="0.5" fill="currentColor"/>
-                        <circle cx="17.5" cy="10.5" r="0.5" fill="currentColor"/>
-                        <circle cx="8.5" cy="7.5" r="0.5" fill="currentColor"/>
-                        <circle cx="6.5" cy="12.5" r="0.5" fill="currentColor"/>
-                        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
-                    </svg>
-                    mode daltonien
-                </span>
-                <label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label>
-            </div>
-            <div class="toggle-container">
-                <span class="toggle-label">
-                    <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                    mode sombre
-                </span>
-                <label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
-            </div>
-            <div class="toggle-container">
-                <span class="toggle-label">
-                    <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                    </svg>
-                    sons
-                </span>
-                <label class="theme-switch"><input type="checkbox" id="soundToggle"><span class="slider"></span></label>
-            </div>
-        </div>
-    </div>
+    <div class="submenu" id="submenuSettings"><div class="menu-header"><button class="submenu-close" data-submenu="settings"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="submenu-title">paramètres</div><div class="submenu-content">
+        <div class="toggle-container"><span class="toggle-label"><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>animations</span><label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label></div>
+        <div class="toggle-container"><span class="toggle-label"><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="0.5" fill="currentColor"/><circle cx="17.5" cy="10.5" r="0.5" fill="currentColor"/><circle cx="8.5" cy="7.5" r="0.5" fill="currentColor"/><circle cx="6.5" cy="12.5" r="0.5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>mode daltonien</span><label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label></div>
+        <div class="toggle-container"><span class="toggle-label"><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>mode sombre</span><label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label></div>
+        <div class="toggle-container"><span class="toggle-label"><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>sons</span><label class="theme-switch"><input type="checkbox" id="soundToggle"><span class="slider"></span></label></div>
+    </div></div>
 
-    <div class="submenu" id="submenuShortcuts">
-        <div class="menu-header">
-            <button class="submenu-close" data-submenu="shortcuts">
-                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-        </div>
-        <div class="submenu-title">raccourcis</div>
-        <div class="submenu-content">
-            <div class="settings-info">
-                <table class="shortcuts-table">
-                    <tr><td class="key-combo"><kbd>C</kbd></td><td>choisir un portrait</td></tr>
-                    <tr><td class="key-combo"><kbd>H</kbd></td><td>renvoi au site académique</td></tr>
-                    <tr><td class="key-combo"><kbd>R</kbd></td><td>recharger la page</td></tr>
-                    <tr><td class="key-combo"><kbd>T</kbd></td><td>réinitialiser le chronomètre</td></tr>
-                    <tr><td class="key-combo"><kbd>F</kbd></td><td>plein écran</td></tr>
-                    <tr><td class="key-combo"><kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr>
-                    <tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer (sous-menus, menu)</td></tr>
-                </table>
-            </div>
-        </div>
-    </div>
+    <div class="submenu" id="submenuShortcuts"><div class="menu-header"><button class="submenu-close" data-submenu="shortcuts"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="submenu-title">raccourcis</div><div class="submenu-content"><div class="settings-info"><table class="shortcuts-table"><tr><td class="key-combo"><kbd>C</kbd></td><td>choisir un portrait</td></tr><tr><td class="key-combo"><kbd>H</kbd></td><td>renvoi au site académique</td></tr><tr><td class="key-combo"><kbd>R</kbd></td><td>recharger la page</td></tr><tr><td class="key-combo"><kbd>T</kbd></td><td>réinitialiser le chronomètre</td></tr><tr><td class="key-combo"><kbd>F</kbd></td><td>plein écran</td></tr><tr><td class="key-combo"><kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr><tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer (sous-menus, menu)</td></tr></table></div></div></div>
 
-    <div class="submenu" id="submenuReset">
-        <div class="menu-header">
-            <button class="submenu-close" data-submenu="reset">
-                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-        </div>
-        <div class="submenu-title">réinitialiser</div>
-        <div class="submenu-content">
-            <div class="settings-info">
-                <p>
-                    <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                        <line x1="12" y1="9" x2="12" y2="13"></line>
-                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                    </svg>
-                    <strong>attention</strong>
-                </p>
-                <br>
-                <p>Cette action effacera tous les paramètres :</p>
-                <ul style="margin: 10px 0 0 20px; font-size: 13px;">
-                    <li>préférences</li>
-                    <li>mode sombre</li>
-                    <li>sons</li>
-                </ul>
-            </div>
-            <button class="local-reset-btn" id="confirmResetBtn" style="margin-top:10px; border-color: #dc3545;">
-                tout réinitialiser
-            </button>
-        </div>
-    </div>
+    <div class="submenu" id="submenuReset"><div class="menu-header"><button class="submenu-close" data-submenu="reset"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="submenu-title">réinitialiser</div><div class="submenu-content"><div class="settings-info"><p><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg><strong>attention</strong></p><br><p>Cette action effacera tous les paramètres :</p><ul style="margin: 10px 0 0 20px; font-size: 13px;"><li>préférences</li><li>mode sombre</li><li>sons</li></ul></div><button class="local-reset-btn" id="confirmResetBtn" style="margin-top:10px; border-color: #dc3545;">tout réinitialiser</button></div></div>
 
-    <div class="submenu" id="submenuAbout">
-        <div class="menu-header">
-            <button class="submenu-close" data-submenu="about">
-                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-        </div>
-        <div class="submenu-title">à propos</div>
-        <div class="submenu-content">
-            <div class="settings-info">
-                <div class="about-row">
-                    <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                        <circle cx="12" cy="7" r="4"/>
-                    </svg>
-                    <div class="about-text">
-                        <p>application développée<br>par Daniel Boulagnon</p>
-                    </div>
-                </div>
-                <div class="about-row">
-                    <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                        <polyline points="22,6 12,13 2,6"/>
-                    </svg>
-                    <div class="about-text">
-                        <p><a href="mailto:daniel.boulagnon@ac-lille.fr?subject=Question%20sur%20la%20boîte%20à%20outils"title="envoyer un mail à Daniel Boulagnon">daniel.boulagnon@ac-lille.fr</a></p>
-                    </div>
-                </div>
-                <div class="about-row">
-                    <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M14.5 9a3.5 3.5 0 1 0 0 6" />
-                    </svg>
-                    <div class="about-text">
-                        <p>exploitation pédagogique</p>
-                        <p>et non commerciale</p>
-                    </div>
-                </div>
-                <div class="about-row">
-                    <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
-                        <line x1="7" y1="7" x2="7.01" y2="7"/>
-                    </svg>
-                    <div class="about-text">
-                        <p>version 1.0 (2026)</p>
-                    </div>
-                </div>
-                <br>
-            </div>
-        </div>
-    </div>
+    <div class="submenu" id="submenuAbout"><div class="menu-header"><button class="submenu-close" data-submenu="about"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="submenu-title">à propos</div><div class="submenu-content"><div class="settings-info"><div class="about-row"><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><div class="about-text"><p>application développée<br>par Daniel Boulagnon</p></div></div><div class="about-row"><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><div class="about-text"><p><a href="mailto:daniel.boulagnon@ac-lille.fr?subject=Question%20sur%20la%20boîte%20à%20outils"title="envoyer un mail à Daniel Boulagnon">daniel.boulagnon@ac-lille.fr</a></p></div></div><div class="about-row"><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M14.5 9a3.5 3.5 0 1 0 0 6" /></svg><div class="about-text"><p>exploitation pédagogique</p><p>et non commerciale</p></div></div><div class="about-row"><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><div class="about-text"><p>version 1.0 (2026)</p></div></div><br></div></div></div>
 
     <div id="cap"></div>
-    <div id="tap">
-        <div id="models"></div>
-    </div>
+    <div id="tap"><div id="models"></div></div>
     <div id="container"></div>
     <div id="authorDates"></div>
     <div id="time"><span>temps utilisé :</span> <em id="resultat"></em></div>
@@ -1545,11 +901,9 @@
             
             let animationsEnabled = localStorage.getItem('animations') !== 'false';
             let soundEnabled = localStorage.getItem('soundEnabled') === 'true';
-            
             let timerInterval = null;
             let timeElapsed = 0;
             let timerStarted = false;
-            
             const timerValueDesktop = document.getElementById('timerValueDesktop');
             const timerValueMobile = document.getElementById('timerValueMobile');
             const timerBtnDesktop = document.getElementById('timerBtnDesktop');
@@ -1565,21 +919,13 @@
                 else if (type === 'warning') toaster.classList.add('warning');
                 toaster.classList.add('show');
                 clearTimeout(toasterTimeout);
-                if (duration > 0) {
-                    toasterTimeout = setTimeout(() => { toaster.classList.remove('show'); }, duration);
-                }
+                if (duration > 0) toasterTimeout = setTimeout(() => { toaster.classList.remove('show'); }, duration);
             }
 
             function playSound(type) {
                 if (!soundEnabled) return;
                 try {
-                    const soundMap = {
-                        'correct': '../../src/sounds/reponse-bonne.mp3',
-                        'incorrect': '../../src/sounds/reponse-mauvaise.mp3',
-                        'score_good': '../../src/sounds/score-bon.mp3',
-                        'score_bad': '../../src/sounds/score-mauvais.mp3',
-                        'click': '../../src/sounds/bruit-clavier.mp3'
-                    };
+                    const soundMap = { 'correct': '../../src/sounds/reponse-bonne.mp3', 'incorrect': '../../src/sounds/reponse-mauvaise.mp3', 'score_good': '../../src/sounds/score-bon.mp3', 'score_bad': '../../src/sounds/score-mauvais.mp3', 'click': '../../src/sounds/bruit-clavier.mp3' };
                     const soundFile = soundMap[type];
                     if (!soundFile) return;
                     const audio = new Audio(soundFile);
@@ -1611,17 +957,11 @@
                 if (timerStarted) return;
                 timerStarted = true;
                 if (timerInterval) clearInterval(timerInterval);
-                timerInterval = setInterval(() => {
-                    timeElapsed++;
-                    updateTimerDisplay(formatTimer(timeElapsed));
-                }, 1000);
+                timerInterval = setInterval(() => { timeElapsed++; updateTimerDisplay(formatTimer(timeElapsed)); }, 1000);
             }
 
             function stopTimer() {
-                if (timerInterval) {
-                    clearInterval(timerInterval);
-                    timerInterval = null;
-                }
+                if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
                 timerStarted = false;
             }
 
@@ -1653,9 +993,7 @@
                 document.getElementById('submenuAbout')
             ];
 
-            function closeAllSubmenus() {
-                submenus.forEach(s => s.classList.remove('active'));
-            }
+            function closeAllSubmenus() { submenus.forEach(s => s.classList.remove('active')); }
 
             function toggleMenu(force) {
                 const willOpen = (force !== undefined) ? force : !slideMenu.classList.contains('open');
@@ -1711,11 +1049,8 @@
                 if (key === 'f') { e.preventDefault(); playSound('click'); toggleFullscreen(); return; }
                 if (key === 'm') { e.preventDefault(); playSound('click'); toggleMenu(); return; }
                 if (e.key === 'Escape') {
-                    if (submenus.some(s => s.classList.contains('active'))) {
-                        closeAllSubmenus();
-                    } else if (slideMenu.classList.contains('open')) {
-                        toggleMenu(false);
-                    }
+                    if (submenus.some(s => s.classList.contains('active'))) closeAllSubmenus();
+                    else if (slideMenu.classList.contains('open')) toggleMenu(false);
                 }
             });
 
@@ -1726,7 +1061,7 @@
             if (!animationsEnabled) { const el = document.getElementById('animationsToggle'); if(el) el.checked = false; document.body.classList.add('no-animations'); }
             
             const soundToggle = document.getElementById('soundToggle');
-            if (soundToggle) { soundToggle.checked = soundEnabled; }
+            if (soundToggle) soundToggle.checked = soundEnabled;
 
             const chooseBtn = document.getElementById('chooseBtn');
             const chooseBtnMobile = document.getElementById('chooseBtnMobile');
@@ -1787,15 +1122,11 @@
 
             document.addEventListener('fullscreenchange', updateFullscreen);
             updateFullscreen();
-            
             updateTimerDisplay('00:00');
         }
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initToolbar);
-        } else {
-            initToolbar();
-        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initToolbar);
+        else initToolbar();
     })();
     </script>
 </body>
