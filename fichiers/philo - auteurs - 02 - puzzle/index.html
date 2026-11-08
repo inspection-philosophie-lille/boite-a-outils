@@ -327,7 +327,14 @@
             100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
         }
         
-        /* CORRECTIONS MODE MOBILE */
+        /* CORRECTION : Empêcher le scroll pendant le drag sur mobile */
+        body.dragging {
+            overflow: hidden !important;
+            touch-action: none !important;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
         @media (max-width: 600px) {
             .toolbar { display: none !important; }
             .toolbar-mobile { display: flex !important; }
@@ -343,40 +350,19 @@
             .slide-menu, .submenu { width: 260px; right: -280px; padding: 14px 16px; }
             .menu-item { padding: 10px 14px; font-size: 12px; min-height: 48px; border-radius: 8px; }
             .menu-item svg { width: 20px; height: 20px; }
-            
-            /* Grille du puzzle visible et centrée */
-            #container {
-                display: block !important;
-                width: 100% !important;
-                max-width: 100vw !important;
-                margin: 0 auto !important;
-                overflow-x: auto !important;
-                overflow-y: visible !important;
-            }
-            
-            /* Vignettes du catalogue en pleine largeur */
-            #models {
-                padding: 10px !important;
-                width: 100% !important;
-            }
             #models > div {
                 display: block !important;
-                width: calc(100% - 20px) !important;
+                width: calc(100% - 40px) !important;
                 margin: 15px auto !important;
                 padding: 15px !important;
-                box-sizing: border-box !important;
+                box-sizing: border-box;
             }
             #models > div img {
                 max-width: 100% !important;
                 height: auto !important;
                 width: auto !important;
             }
-            
-            /* Catalogue scrollable */
-            #tap {
-                overflow-y: auto !important;
-                -webkit-overflow-scrolling: touch !important;
-            }
+            #models { padding: 10px; }
         }
 
         html, body {
@@ -509,6 +495,7 @@
             color: white;
             overflow-y: auto;
             overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
         #tap[style*="opacity: 1"], #tap[style*="opacity:1"] {
             pointer-events: auto;
@@ -564,6 +551,17 @@
         var host = "../../fichiers/philo - auteurs - 01 - quiz/src/";
         trosSeleccionat = false;
         var timeInitial;
+
+        // ===== FONCTION UTILITAIRE : Extraire coordonnées souris OU tactile =====
+        function getEventCoords(e) {
+            if (e.touches && e.touches.length > 0) {
+                return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            }
+            if (e.changedTouches && e.changedTouches.length > 0) {
+                return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+            }
+            return { x: e.clientX, y: e.clientY };
+        }
 
         function playPuzzleSound(type) {
             if (localStorage.getItem('soundEnabled') === 'false') return;
@@ -895,12 +893,8 @@
             
             start();
         }
+        // CORRECTION : Suppression du blocage mobile
         document.addEventListener("DOMContentLoaded", function () {
-            if (typeof window.orientation !== "undefined") {
-                document.write('<meta name="viewport" content="width=device-width,initial-scale=1.0"/>');
-                document.write('<div style="font-size:24px;text-align:center;margin-top:100px">⚠️ Sorry. At the moment this app does not work on mobile devices.<div  style="font-size:100px">🤔<\/div><\/div>');
-                return;
-            }
             model = models[2];
             createPuzzle(model);
             createListModels();
@@ -911,28 +905,30 @@
             }
             
             var botoFullScreen = document.getElementById("fullscreen");
-            botoFullScreen.fullScreen = false;
-            botoFullScreen.onclick = function () {
-                if (this.className == "fullscreenCloseModels") {
-                    var tapEl = document.getElementById("tap");
-                    if (tapEl) {
-                        tapEl.style.opacity = 0;
-                        tapEl.style.pointerEvents = "none";
-                        tapEl.style.display = "none";
+            if (botoFullScreen) {
+                botoFullScreen.fullScreen = false;
+                botoFullScreen.onclick = function () {
+                    if (this.className == "fullscreenCloseModels") {
+                        var tapEl = document.getElementById("tap");
+                        if (tapEl) {
+                            tapEl.style.opacity = 0;
+                            tapEl.style.pointerEvents = "none";
+                            tapEl.style.display = "none";
+                        }
+                        document.getElementById("models").style.display = "none";
+                        this.className = isFullScreen ? "fullscreenOff" : "fullscreen";
+                        return;
                     }
-                    document.getElementById("models").style.display = "none";
-                    this.className = isFullScreen ? "fullscreenOff" : "fullscreen";
-                    return;
-                }
-                if (this.fullScreen) {
-                    if (document.msExitFullscreen) { document.msExitFullscreen(); } else { document.exitFullscreen(); }
-                    this.className = "fullscreen";
-                } else {
-                    if (document.body.msRequestFullscreen) { document.body.msRequestFullscreen(); } else { document.body.requestFullscreen(); }
-                    this.className = "fullscreenOff";
-                }
-                this.fullScreen = !this.fullScreen;
-            };
+                    if (this.fullScreen) {
+                        if (document.msExitFullscreen) { document.msExitFullscreen(); } else { document.exitFullscreen(); }
+                        this.className = "fullscreen";
+                    } else {
+                        if (document.body.msRequestFullscreen) { document.body.msRequestFullscreen(); } else { document.body.requestFullscreen(); }
+                        this.className = "fullscreenOff";
+                    }
+                    this.fullScreen = !this.fullScreen;
+                };
+            }
             tap = document.getElementById("tap");
             container = document.getElementById("container");
         });
@@ -1033,15 +1029,23 @@
                 }
             }
         }
+        
+        // CORRECTION : takePiece gère souris ET tactile
         function takePiece(e) {
+            e.preventDefault(); // Empêche le scroll/zoom sur mobile
             if (window.startPuzzleTimer) window.startPuzzleTimer();
             playPuzzleSound('click');
+            
+            document.body.classList.add('dragging'); // Bloque le scroll pendant le drag
+            
+            var coords = getEventCoords(e);
             trosSeleccionat = this;
             zIndex++;
             this.style.zIndex = zIndex;
             this.zIndex = zIndex;
-            offset = [this.offsetLeft - e.clientX, this.offsetTop - e.clientY];
+            offset = [this.offsetLeft - coords.x, this.offsetTop - coords.y];
         }
+        
         function fixarTros(p) {
             playPuzzleSound('correct');
             document.body.removeChild(p);
@@ -1091,23 +1095,43 @@
                 playPuzzleSound('incorrect');
             }
         }
-        function dropPiece() {
+        
+        // CORRECTION : dropPiece gère souris ET tactile
+        function dropPiece(e) {
+            if (e) e.preventDefault();
+            document.body.classList.remove('dragging'); // Libère le scroll
             playPuzzleSound('click');
             placePiece(trosSeleccionat);
             trosSeleccionat = false;
         }
-        document.addEventListener("mousemove", function (event) {
-            event.preventDefault();
-            if (trosSeleccionat) {
-                mousePosition = { x: event.clientX, y: event.clientY };
-                trosSeleccionat.style.left = mousePosition.x + offset[0] + "px";
-                trosSeleccionat.style.top = mousePosition.y + offset[1] + "px";
-            }
-        }, true);
+        
+        // CORRECTION : Gestionnaire unifié pour souris ET tactile
+        function handleMove(e) {
+            if (!trosSeleccionat) return;
+            e.preventDefault(); // Empêche le scroll de la page pendant le drag
+            
+            var coords = getEventCoords(e);
+            trosSeleccionat.style.left = (coords.x + offset[0]) + "px";
+            trosSeleccionat.style.top = (coords.y + offset[1]) + "px";
+        }
+        
+        // Attacher les événements souris ET tactiles
+        document.addEventListener("mousemove", handleMove, { passive: false });
+        document.addEventListener("touchmove", handleMove, { passive: false });
+        document.addEventListener("mouseup", dropPiece);
+        document.addEventListener("touchend", dropPiece);
+        document.addEventListener("touchcancel", dropPiece);
+        
+        // CORRECTION : getPos attache les événements souris ET tactiles
         function getPos(e) {
+            // Souris
             this.onmousedown = takePiece;
             this.style.cursor = "move";
+            
+            // Tactile
+            this.addEventListener("touchstart", takePiece, { passive: false });
         }
+        
         isFullScreen = false;
         document.addEventListener("fullscreenchange", function () {
             isFullScreen = window.innerHeight == screen.height;
@@ -1250,7 +1274,7 @@
                         <circle cx="12" cy="12" r="10"></circle>
                     </svg>
                     <strong>objectif</strong><br><br>
-                    matérialiser la démarche philosophique en ordonnant des éléments épars et en attachant des doctrines à un visage
+                    reconstituer les portraits des grands philosophes en assemblant les pièces du puzzle
                 </p>
             </div>
             <div class="settings-info">
