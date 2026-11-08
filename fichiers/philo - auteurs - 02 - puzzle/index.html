@@ -328,13 +328,6 @@
             100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
         }
         
-        body.dragging {
-            overflow: hidden !important;
-            touch-action: none !important;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-        
         @media (max-width: 600px) {
             .toolbar { display: none !important; }
             .toolbar-mobile { display: flex !important; }
@@ -471,6 +464,7 @@
             cursor: pointer;
             transition: 0.3s;
             touch-action: manipulation;
+            z-index: 100;
         }
         .move > span:first-of-type > span {
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' fill='white'> <path d='M32 4c-8.837 0-16.836 3.582-22.627 9.374l-9.373-9.374v24h24l-8.971-8.97c4.344-4.343 10.343-7.030 16.971-7.030 13.254 0 24 10.745 24 24 0 7.169-3.143 13.602-8.126 18l5.292 6c6.644-5.864 10.834-14.442 10.834-24 0-17.673-14.327-32-32-32z'/></svg>");
@@ -724,7 +718,11 @@
             position.appendChild(move);
             move.onmouseover = function () { this.style.zIndex = zIndex + 1; };
             move.onmouseout = function () { this.style.zIndex = this.zIndex; };
+            
+            // Attacher les événements tactiles à cette pièce
+            attachTouchEventsToPiece(move);
         }
+        
         var i, element;
         var models = [
             { numRows: 4, numCols: 6, urlImg: "presocratiques.jpg", dates: "VIᵉ-Vᵉ siècle av. J.-C." },
@@ -894,8 +892,6 @@
             
             start();
         }
-        
-        // CORRECTION : Plus de blocage mobile - initialisation directe
         document.addEventListener("DOMContentLoaded", function () {
             model = models[2];
             createPuzzle(model);
@@ -934,7 +930,6 @@
             tap = document.getElementById("tap");
             container = document.getElementById("container");
         });
-        
         function final() {
             var tapEl = document.getElementById("tap");
             if (tapEl) {
@@ -1013,7 +1008,15 @@
                 timeEl.style.opacity = 0;
             }
         }
+        
+        // CORRECTION : Rotation des pièces avec support tactile
         function girar(boto, inc) {
+            // Empêcher la propagation vers la pièce parente
+            if (event) {
+                event.stopPropagation();
+                if (event.cancelable) event.preventDefault();
+            }
+            
             playPuzzleSound('click');
             boto.style.transform = "scale(.8)";
             boto.style.cursor = "none";
@@ -1033,21 +1036,29 @@
             }
         }
         
+        // CORRECTION : takePiece avec meilleure gestion tactile
         function takePiece(e) {
+            // Ne pas traiter si c'est un clic sur un bouton de rotation
+            if (e.target && e.target.tagName === 'SPAN' && e.target.onclick) {
+                return;
+            }
+            
             if (e.cancelable) e.preventDefault();
             e.stopPropagation();
             
             if (window.startPuzzleTimer) window.startPuzzleTimer();
             playPuzzleSound('click');
             
-            document.body.classList.add('dragging');
-            
             var coords = getEventCoords(e);
             trosSeleccionat = this;
             zIndex++;
             this.style.zIndex = zIndex;
             this.zIndex = zIndex;
-            offset = [this.offsetLeft - coords.x, this.offsetTop - coords.y];
+            
+            // Calculer l'offset en tenant compte du scroll de la page
+            var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+            var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            offset = [this.offsetLeft - coords.x + scrollX, this.offsetTop - coords.y + scrollY];
         }
         
         function fixarTros(p) {
@@ -1085,6 +1096,7 @@
             }
         }
         function placePiece(p) {
+            if (!p) return;
             var position = document.querySelectorAll(".position")[p.index];
             if (p.position().left > position.offsetLeft && p.position().left < position.offsetLeft + 100 && p.position().top > position.offsetTop && p.position().top < position.offsetTop + 100) {
                 if (p.angle % 4 == 0) {
@@ -1101,8 +1113,8 @@
         }
         
         function dropPiece(e) {
+            if (!trosSeleccionat) return;
             if (e && e.cancelable) e.preventDefault();
-            document.body.classList.remove('dragging');
             playPuzzleSound('click');
             placePiece(trosSeleccionat);
             trosSeleccionat = false;
@@ -1111,30 +1123,80 @@
         function handleMove(e) {
             if (!trosSeleccionat) return;
             if (e.cancelable) e.preventDefault();
-            e.stopPropagation();
             
             var coords = getEventCoords(e);
-            trosSeleccionat.style.left = (coords.x + offset[0]) + "px";
-            trosSeleccionat.style.top = (coords.y + offset[1]) + "px";
+            var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+            var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            
+            trosSeleccionat.style.left = (coords.x + offset[0] - scrollX) + "px";
+            trosSeleccionat.style.top = (coords.y + offset[1] - scrollY) + "px";
         }
         
+        // Événements souris
         document.addEventListener("mousemove", handleMove, { passive: false });
-        document.addEventListener("touchmove", handleMove, { passive: false });
         document.addEventListener("mouseup", dropPiece);
-        document.addEventListener("touchend", dropPiece);
-        document.addEventListener("touchcancel", dropPiece);
+        
+        // CORRECTION : Fonction pour attacher les événements tactiles à une pièce
+        function attachTouchEventsToPiece(piece) {
+            var touchStartCoords = null;
+            var touchStartTime = 0;
+            var isDragging = false;
+            
+            piece.addEventListener("touchstart", function(e) {
+                // Ne pas traiter si c'est un bouton de rotation
+                if (e.target.tagName === 'SPAN' && e.target.onclick) {
+                    return;
+                }
+                
+                touchStartCoords = getEventCoords(e);
+                touchStartTime = Date.now();
+                isDragging = false;
+                
+                // Attendre un peu pour distinguer tap et drag
+                setTimeout(function() {
+                    if (!isDragging && touchStartCoords) {
+                        takePiece.call(piece, e);
+                    }
+                }, 150);
+            }, { passive: false });
+            
+            piece.addEventListener("touchmove", function(e) {
+                if (!touchStartCoords) return;
+                
+                var coords = getEventCoords(e);
+                var dx = Math.abs(coords.x - touchStartCoords.x);
+                var dy = Math.abs(coords.y - touchStartCoords.y);
+                
+                // Si le mouvement est significatif, c'est un drag
+                if (dx > 10 || dy > 10) {
+                    isDragging = true;
+                    if (!trosSeleccionat) {
+                        takePiece.call(piece, e);
+                    }
+                    handleMove(e);
+                }
+            }, { passive: false });
+            
+            piece.addEventListener("touchend", function(e) {
+                if (trosSeleccionat === piece) {
+                    dropPiece(e);
+                }
+                touchStartCoords = null;
+                isDragging = false;
+            }, { passive: false });
+            
+            piece.addEventListener("touchcancel", function(e) {
+                if (trosSeleccionat === piece) {
+                    dropPiece(e);
+                }
+                touchStartCoords = null;
+                isDragging = false;
+            }, { passive: false });
+        }
         
         function getPos(e) {
             this.onmousedown = takePiece;
             this.style.cursor = "move";
-            
-            var self = this;
-            if (!self._touchAttached) {
-                self.addEventListener("touchstart", function(e) {
-                    takePiece.call(self, e);
-                }, { passive: false });
-                self._touchAttached = true;
-            }
         }
         
         isFullScreen = false;
