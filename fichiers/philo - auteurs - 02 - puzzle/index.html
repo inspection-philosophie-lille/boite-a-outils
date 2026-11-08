@@ -2,6 +2,7 @@
 <html lang="fr" >
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <link rel="icon" href="../../src/favicon.ico">
 	<title>puzzle</title>
     <style type="text/css">
@@ -123,7 +124,7 @@
         .toolbar-title { color: var(--primary-color); font-size: clamp(1.8rem, 5vw, 2.5rem); font-weight: bold; white-space: nowrap; line-height: 1.2; text-transform: lowercase; margin: 0; }
         .toolbar-subtitle { color: #555; font-size: clamp(0.8rem, 2.5vw, 1.1rem); line-height: 1.2; padding-top: 4px; font-weight: normal; }
         body.dark-theme .toolbar-subtitle, body.dark-theme .mobile-subtitle { color: #8895a7; }
-        .btn-sequences { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; background: var(--btn); color: var(--font-color); box-shadow: var(--shadow-out); border: none; cursor: pointer; transition: all 0.2s ease; }
+        .btn-sequences { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; background: var(--btn); color: var(--font-color); box-shadow: var(--shadow-out); border: none; cursor: pointer; transition: all 0.2s ease; touch-action: manipulation; }
         .btn-sequences:hover { box-shadow: var(--shadow-in); transform: translateY(-2px); }
         .btn-sequences .arrow-svg, .btn-sequences .plate-svg { position: absolute; width: 24px; height: 24px; left: 50%; top: 50%; transform: translate(-50%, -50%); pointer-events: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         .btn-sequences .arrow-svg { clip-path: inset(0 0 20.83% 0); z-index: 1; }
@@ -132,7 +133,7 @@
         @keyframes download-arrow { 0% { transform: translateY(-6px); } 100% { transform: translateY(6px); } }
         .btn-sequences::after { content: attr(data-title); position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 0.5rem; background-color: var(--tooltip-bg); color: var(--tooltip-color); padding: 0.3rem 0.6rem; border-radius: 5px; font-size: 0.8rem; white-space: nowrap; opacity: 0; pointer-events: none; z-index: 10; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
         .btn-sequences:hover::after { opacity: 1; }
-        .btn, .timer-btn, .menu-close, .submenu-close, .menu-item, .upload-btn, .local-reset-btn { background: var(--btn); color: var(--font-color); box-shadow: var(--shadow-out); transition: all 0.2s ease; border: none; cursor: pointer; }
+        .btn, .timer-btn, .menu-close, .submenu-close, .menu-item, .upload-btn, .local-reset-btn { background: var(--btn); color: var(--font-color); box-shadow: var(--shadow-out); transition: all 0.2s ease; border: none; cursor: pointer; touch-action: manipulation; }
         .btn:hover, .timer-btn:hover, .menu-close:hover, .submenu-close:hover, .menu-item:hover, .upload-btn:hover, .local-reset-btn:hover { box-shadow: var(--shadow-in); transform: translateY(-2px); }
         .btn { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; -webkit-tap-highlight-color: transparent; }
         .btn:active { transform: scale(0.95); }
@@ -327,7 +328,6 @@
             100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
         }
         
-        /* CORRECTION : Empêcher le scroll pendant le drag sur mobile */
         body.dragging {
             overflow: hidden !important;
             touch-action: none !important;
@@ -425,6 +425,7 @@
             position: absolute;
             z-index: 0;
             transition: transform 0.2s, filter 0.2s, z-index 0s linear 0.4s;
+            touch-action: none;
         }
         .move:hover {
             filter: drop-shadow(8px 8px 5px black);
@@ -469,6 +470,7 @@
             background-repeat: no-repeat;
             cursor: pointer;
             transition: 0.3s;
+            touch-action: manipulation;
         }
         .move > span:first-of-type > span {
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' fill='white'> <path d='M32 4c-8.837 0-16.836 3.582-22.627 9.374l-9.373-9.374v24h24l-8.971-8.97c4.344-4.343 10.343-7.030 16.971-7.030 13.254 0 24 10.745 24 24 0 7.169-3.143 13.602-8.126 18l5.292 6c6.644-5.864 10.834-14.442 10.834-24 0-17.673-14.327-32-32-32z'/></svg>");
@@ -552,7 +554,6 @@
         trosSeleccionat = false;
         var timeInitial;
 
-        // ===== FONCTION UTILITAIRE : Extraire coordonnées souris OU tactile =====
         function getEventCoords(e) {
             if (e.touches && e.touches.length > 0) {
                 return { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -893,7 +894,8 @@
             
             start();
         }
-        // CORRECTION : Suppression du blocage mobile
+        
+        // CORRECTION : Plus de blocage mobile - initialisation directe
         document.addEventListener("DOMContentLoaded", function () {
             model = models[2];
             createPuzzle(model);
@@ -932,6 +934,7 @@
             tap = document.getElementById("tap");
             container = document.getElementById("container");
         });
+        
         function final() {
             var tapEl = document.getElementById("tap");
             if (tapEl) {
@@ -1030,13 +1033,14 @@
             }
         }
         
-        // CORRECTION : takePiece gère souris ET tactile
         function takePiece(e) {
-            e.preventDefault(); // Empêche le scroll/zoom sur mobile
+            if (e.cancelable) e.preventDefault();
+            e.stopPropagation();
+            
             if (window.startPuzzleTimer) window.startPuzzleTimer();
             playPuzzleSound('click');
             
-            document.body.classList.add('dragging'); // Bloque le scroll pendant le drag
+            document.body.classList.add('dragging');
             
             var coords = getEventCoords(e);
             trosSeleccionat = this;
@@ -1096,40 +1100,41 @@
             }
         }
         
-        // CORRECTION : dropPiece gère souris ET tactile
         function dropPiece(e) {
-            if (e) e.preventDefault();
-            document.body.classList.remove('dragging'); // Libère le scroll
+            if (e && e.cancelable) e.preventDefault();
+            document.body.classList.remove('dragging');
             playPuzzleSound('click');
             placePiece(trosSeleccionat);
             trosSeleccionat = false;
         }
         
-        // CORRECTION : Gestionnaire unifié pour souris ET tactile
         function handleMove(e) {
             if (!trosSeleccionat) return;
-            e.preventDefault(); // Empêche le scroll de la page pendant le drag
+            if (e.cancelable) e.preventDefault();
+            e.stopPropagation();
             
             var coords = getEventCoords(e);
             trosSeleccionat.style.left = (coords.x + offset[0]) + "px";
             trosSeleccionat.style.top = (coords.y + offset[1]) + "px";
         }
         
-        // Attacher les événements souris ET tactiles
         document.addEventListener("mousemove", handleMove, { passive: false });
         document.addEventListener("touchmove", handleMove, { passive: false });
         document.addEventListener("mouseup", dropPiece);
         document.addEventListener("touchend", dropPiece);
         document.addEventListener("touchcancel", dropPiece);
         
-        // CORRECTION : getPos attache les événements souris ET tactiles
         function getPos(e) {
-            // Souris
             this.onmousedown = takePiece;
             this.style.cursor = "move";
             
-            // Tactile
-            this.addEventListener("touchstart", takePiece, { passive: false });
+            var self = this;
+            if (!self._touchAttached) {
+                self.addEventListener("touchstart", function(e) {
+                    takePiece.call(self, e);
+                }, { passive: false });
+                self._touchAttached = true;
+            }
         }
         
         isFullScreen = false;
