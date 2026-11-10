@@ -181,6 +181,13 @@
 			border-radius: 4px;
 		}
 
+		/* CORRECTION : Désactive le contour de focus sur le carrousel et les cartes pour mobile */
+		.carousel-items:focus-visible,
+		.card:focus-visible {
+			outline: none !important;
+			-webkit-tap-highlight-color: transparent !important;
+		}
+
 		@keyframes pulse {
 			0% { transform: scale(1); }
 			50% { transform: scale(1.02); }
@@ -621,10 +628,9 @@
 			margin-bottom: 15px;
 		}
 
-		/* NOUVELLE RÈGLE AJOUTÉE POUR RÉDUIRE LA MARGE GAUCHE DES LISTES */
 		.settings-info ul {
 			margin: 0;
-			padding-left: 15px; /* Ajustez cette valeur (ex: 10px, 20px) selon vos besoins */
+			padding-left: 15px;
 		}
 
 		body.dark-mode .settings-info {
@@ -903,6 +909,7 @@
 			box-shadow: var(--shadow-in);
 		}
 
+		/* CORRECTION : Suppression du box-shadow qui créait un liseré rouge fantôme */
 		.progress-bar-fill {
 			height: 100%;
 			background: var(--progress-fill);
@@ -1068,18 +1075,9 @@
 			-ms-overflow-style: none;
 		}
 
+		/* CORRECTION : Masque complètement la scrollbar sur WebKit (mobile) */
 		.carousel-items::-webkit-scrollbar {
-			height: 3px;
-		}
-
-		.carousel-items::-webkit-scrollbar-track {
-			background: #c1c1c1;
-			border-radius: 10px;
-		}
-
-		.carousel-items::-webkit-scrollbar-thumb {
-			background: var(--primary);
-			border-radius: 10px;
+			display: none;
 		}
 
 		.carousel-item {
@@ -1293,6 +1291,11 @@
 				padding: 0.1rem 35px 0 35px;
 			}
 			.progress-bar-container {
+				background: transparent !important;
+				box-shadow: none !important;
+			}
+			/* CORRECTION : Masque aussi le remplissage pour éviter tout liseré résiduel */
+			.progress-bar-fill {
 				background: transparent !important;
 				box-shadow: none !important;
 			}
@@ -2184,7 +2187,13 @@
 			let percentage = 0;
 			if (effectiveMaxScroll > 0) {
 				percentage = (effectiveScroll / effectiveMaxScroll) * 100;
-				percentage = Math.min(100, Math.max(0, percentage));
+				
+				/* CORRECTION : Seuil de tolérance pour éviter les traits de 1px dus aux sous-pixels mobiles */
+				if (percentage < 1) {
+					percentage = 0;
+				} else {
+					percentage = Math.min(100, Math.max(0, percentage));
+				}
 			}
 			
 			progressBar.style.width = percentage + '%';
