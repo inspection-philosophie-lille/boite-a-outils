@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+	<link rel="icon" href="../../src/favicon.ico">
+	<title>notion de « langage »</title>
+	<style>
+		* { box-sizing: border-box; margin: 0; padding: 0; }
+		html, body { height: 100%; }
+
+		:root {
+			--bg: #f0f0f0;
+			--btn: #e0e0e0;
+			--font-color: #000000;
+			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.9);
+			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.9);
+			--tooltip-bg: #ffffff;
+			--tooltip-color: #333333;
+			--primary-color: red;
+		}
+
+		body.dark-theme {
+			--bg: #121212;
+			--btn: #3d3d3d;
+			--font-color: #ffffff;
+			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.05);
+			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
+			--tooltip-bg: #1a1a1a;
+			--tooltip-color: #ffffff;
+			--primary-color: #ff6b6b;
+			background-color: #121212 !important;
+			color: #ffffff !important;
+		}
+
+		body.colorblind-mode { --primary-color: #2c7be5; }
+		body.dark-theme.colorblind-mode { --primary-color: #4a90d9; }
+
+		body {
+			font-family: Arial, sans-serif;
+			background-color: var(--bg);
+			color: var(--font-color);
+			padding: 12px 12px 20px 12px;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			transition: background-color 0.4s, color 0.4s;
+			overflow-y: auto;
+		}
+
+		.btn, .menu-close, .submenu-close, .menu-item, .btn-themes, .select-all-btn {
+			background: var(--btn);
+			color: var(--font-color);
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+			border: none;
+			cursor: pointer;
+			-webkit-tap-highlight-color: transparent;
+		}
+
+		.btn:hover, .menu-close:hover, .submenu-close:hover, .menu-item:hover, .btn-themes:hover, .select-all-btn:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+
+		.btn:active, .btn-themes:active { transform: scale(0.95); }
+
+		.btn {
+			width: 52px; height: 52px; border-radius: 50%;
+			display: flex; align-items: center; justify-content: center;
+			flex-shrink: 0; position: relative;
+		}
+
+		.btn svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; flex-shrink: 0; }
+
+		.btn::after, .btn-themes::after {
+			content: attr(data-title);
+			position: absolute; top: 100%; left: 50%;
+			transform: translateX(-50%);
+			margin-top: 0.5rem;
+			background-color: var(--tooltip-bg);
+			color: var(--tooltip-color);
+			padding: 0.3rem 0.6rem;
+			border-radius: 5px;
+			font-size: 0.8rem;
+			white-space: nowrap;
+			opacity: 0;
+			pointer-events: none;
+			z-index: 10;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		}
+
+		.btn:hover::after, .btn-themes:hover::after { opacity: 1; }
+
+		.btn-home .icon-wrapper {
+			width: 52px; height: 52px;
+			display: flex; align-items: center; justify-content: center;
+			transform-style: preserve-3d; flex-shrink: 0;
+		}
+		.btn-home:hover .icon-wrapper { animation: spin360 2s infinite linear; }
+		@keyframes spin360 { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+
+		.btn-reload:hover svg { animation: rotate 1s linear; }
+		@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+		.menu-item:hover svg { animation: rotate 1s linear; }
+		.menu-close:hover svg, .submenu-close:hover svg { animation: rotate 1s linear; }
+
+		/* ===== BOUTON THÈMES : deux SVG superposés ===== */
+		.btn-themes {
+			width: 52px; height: 52px; border-radius: 50%;
+			display: flex; align-items: center; justify-content: center;
+			flex-shrink: 0; position: relative; overflow: hidden;
+		}
+		.btn-themes .arrow-svg, .btn-themes .plate-svg {
+			position: absolute; width: 24px; height: 24px;
+			left: 50%; top: 50%; transform: translate(-50%, -50%);
+			pointer-events: none; fill: none; stroke: currentColor;
+			stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+		}
+		.btn-themes .arrow-svg { clip-path: inset(0 0 20.83% 0); z-index: 1; }
+		.btn-themes .plate-svg { z-index: 2; }
+		.btn-themes:hover .arrow-group { animation: download-arrow 1.6s linear infinite; }
+		@keyframes download-arrow { 0% { transform: translateY(-6px); } 100% { transform: translateY(6px); } }
+
+		.settings-info:hover svg, .toggle-label:hover svg { animation: rotate 1s linear; }
+		#submenuAbout .settings-info svg { animation: none; }
+		#submenuAbout .about-row .submenu-icon:hover { animation: rotate 1s linear !important; }
+
+		.submenu-icon {
+			width: 24px; height: 24px; flex-shrink: 0;
+			color: var(--font-color); stroke: currentColor; stroke-width: 2; fill: none;
+			transition: transform 0.3s ease;
+			display: inline-block; vertical-align: middle; margin-right: 8px;
+		}
+		.submenu-icon:hover { animation: rotate 1s linear; }
+
+		.no-animations *, .no-animations *::before, .no-animations *::after {
+			animation: none !important;
+			transition: none !important;
+		}
+
+		.menu-icon { width: 22px; height: 18px; transition: transform 0.3s ease; stroke: currentColor; }
+		.btn-menu:hover .menu-icon { transform: rotate(90deg); }
+
+		.btn-fullscreen .fullscreen-icon { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+		.btn-fullscreen:not(.fullscreen-active):hover .fullscreen-icon { transform: scale(1.5); }
+		.fullscreen-exit-icon { transform-origin: center; transition: transform 0.3s ease; stroke-width: 1.2px !important; }
+		.btn-fullscreen.fullscreen-active:hover .fullscreen-exit-icon { transform: scale(0.7); }
+
+		.toolbar-wrapper { position: relative; z-index: 10; flex-shrink: 0; margin-bottom: 12px; }
+		.toolbar {
+			display: flex; justify-content: space-between; align-items: center;
+			padding: 8px 15px; background: transparent; height: 76px;
+			border-radius: 12px 12px 0 0; gap: 10px; position: relative;
+		}
+		.toolbar-left, .toolbar-right { display: flex; align-items: center; gap: 8px; flex: 1; }
+		.toolbar-left { justify-content: flex-start; }
+		.toolbar-right { justify-content: flex-end; }
+		.toolbar-center {
+			position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+			display: flex; flex-direction: column; justify-content: center; align-items: center;
+			pointer-events: none;
+		}
+		.toolbar-title {
+			color: var(--primary-color);
+			font-size: clamp(1.8rem, 5vw, 2.5rem);
+			font-weight: bold; white-space: nowrap; line-height: 1.2;
+			text-transform: lowercase; margin: 0;
+		}
+		.toolbar-subtitle { color: #555; font-size: clamp(0.8rem, 2.5vw, 1.1rem); line-height: 1.2; padding-top: 4px; font-weight: normal; }
+		body.dark-theme .toolbar-subtitle, body.dark-theme .mobile-subtitle { color: #8895a7; }
+
+		.themes-dropdown {
+			position: absolute; top: 60px; left: 0; margin-top: 8px;
+			background: var(--bg); border-radius: 12px; box-shadow: var(--shadow-out);
+			display: none; min-width: 220px; max-width: 95vw; width: auto;
+			max-height: 460px; overflow-y: auto; z-index: 1000; padding: 6px 0;
+		}
+		.themes-dropdown.open { display: block; }
+		body.dark-theme .themes-dropdown { background: #1a1a1a; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); }
+		.themes-dropdown .dropdown-header {
+			padding: 8px 16px; margin-top: 0; margin-bottom: 8px;
+			font-weight: bold; color: var(--primary-color);
+			font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;
+		}
+		.dropdown-notion-item {
+			display: flex; align-items: center; padding: 6px 16px; margin: 2px 0;
+			cursor: pointer; transition: background 0.15s ease; white-space: nowrap;
+		}
+		.dropdown-notion-item:hover { background: rgba(0, 0, 0, 0.06); }
+		body.dark-theme .dropdown-notion-item:hover { background: rgba(255, 255, 255, 0.08); }
+		.dropdown-notion-item input[type="checkbox"] {
+			width: 16px; height: 16px; margin-right: 10px; cursor: pointer;
+			flex-shrink: 0; accent-color: var(--primary-color);
+		}
+		.dropdown-notion-item label {
+			flex: 1; cursor: pointer; font-size: 0.78rem; color: var(--font-color);
+			white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+		}
+		.dropdown-actions { display: flex; gap: 0; padding: 4px 12px 10px 12px; margin-bottom: 4px; }
+		.dropdown-actions .select-all-btn {
+			padding: 4px 10px; font-size: 0.65rem; flex: 1; text-align: center;
+			border: none; border-radius: 4px; background: var(--btn); color: var(--font-color);
+			box-shadow: var(--shadow-out); cursor: pointer; transition: all 0.2s ease;
+		}
+		.dropdown-actions .select-all-btn:first-child { border-radius: 4px 0 0 4px; }
+		.dropdown-actions .select-all-btn:last-child { border-radius: 0 4px 4px 0; border-left: 1px solid rgba(0, 0, 0, 0.08); }
+		body.dark-theme .dropdown-actions .select-all-btn:last-child { border-left-color: rgba(255, 255, 255, 0.08); }
+		.dropdown-actions .select-all-btn:hover { box-shadow: var(--shadow-in); transform: translateY(-1px); z-index: 1; }
+		.dropdown-count { padding: 6px 16px 4px 16px; font-size: 0.65rem; opacity: 0.6; text-align: center; margin-top: 4px; }
+		.dropdown-empty { padding: 10px 16px; font-size: 0.75rem; opacity: 0.7; text-align: center; }
+
+		.toolbar-mobile {
+			display: none; flex-direction: column; align-items: center; width: 100%;
+			padding: 6px 8px 2px 8px; background: transparent; border-radius: 12px 12px 0 0;
+		}
+		.toolbar-mobile .menu-icon { width: 18px; height: 14px; }
+
+		/* ===== TOPBAR MOBILE : 3 éléments seulement ===== */
+		.mobile-topbar {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			width: 100%;
+			gap: 6px;
+			position: relative;
+			margin-bottom: 4px;
+		}
+		.mobile-topbar .mobile-title {
+			flex: 1;
+			text-align: center;
+			font-size: 0.95rem;
+			font-weight: bold;
+			color: var(--primary-color);
+			text-transform: lowercase;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			line-height: 1.2;
+			margin: 0;
+			padding: 0 4px;
+		}
+		.mobile-themes-row {
+			display: flex;
+			gap: 6px;
+			overflow-x: auto;
+			overflow-y: hidden;
+			padding: 20px 2px 0px 2px;
+			-webkit-overflow-scrolling: touch;
+			scrollbar-width: none;
+			width: 100%;
+		}
+		.mobile-themes-row::-webkit-scrollbar { display: none; }
+
+		/* ===== CHIPS À TAILLE FIXE (sélectionnées ou non) ===== */
+		.mobile-themes-row .btn-theme {
+			flex: 0 0 auto;
+			width: 108px;
+			height: 36px;
+			box-sizing: border-box;
+			padding: 0 8px;
+			font-size: 0.75rem;
+			border-radius: 16px;
+			white-space: nowrap;
+			overflow: hidden;
+			justify-content: flex-start;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+		}
+		.mobile-themes-row .btn-theme .theme-label {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			min-width: 0;
+			flex: 1;
+		}
+		.mobile-themes-row .btn-theme .icone { flex-shrink: 0; }
+		.mobile-themes-row .grid-empty {
+			font-size: 0.75rem;
+			padding: 6px;
+			white-space: nowrap;
+			opacity: 0.7;
+		}
+
+		.mobile-buttons {
+			display: flex; justify-content: center; align-items: center; width: 100%;
+			gap: 8px; padding: 0 4px; margin-bottom: 2px; flex-wrap: nowrap;
+		}
+		.mobile-title-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 15px; padding: 0 4px; }
+		.mobile-title {
+			color: var(--primary-color); font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+			font-weight: bold; text-align: center; line-height: 1.2; margin-top: 2px; text-transform: lowercase;
+		}
+		.mobile-subtitle { color: #555; font-size: clamp(0.65rem, 1.8vw, 0.8rem); text-align: center; line-height: 1.2; padding-top: 10px; margin-bottom: 0; }
+
+		@media (max-width: 600px) {
+			.toolbar { display: none !important; }
+			.toolbar-mobile { display: flex !important; }
+			.mobile-topbar .btn-themes,
+			.mobile-topbar .btn-menu {
+				width: 40px; height: 40px;
+				min-width: 40px; min-height: 40px;
+			}
+			.mobile-topbar .btn-themes .arrow-svg,
+			.mobile-topbar .btn-themes .plate-svg {
+				width: 20px; height: 20px;
+			}
+			.mobile-topbar .btn-menu .menu-icon {
+				width: 20px; height: 18px;
+			}
+			.themes-dropdown {
+				position: fixed !important; left: 50% !important; transform: translateX(-50%) !important;
+				top: 110px !important; min-width: unset; max-width: 92vw; width: 92vw;
+				margin-top: 0 !important; max-height: 50vh;
+			}
+			.dropdown-notion-item { padding: 8px 14px; }
+			.dropdown-notion-item label { font-size: 0.75rem; }
+			.dropdown-notion-item input[type="checkbox"] { width: 18px; height: 18px; }
+
+			/* La grille latérale disparaît sur mobile : les chips prennent le relais */
+			.themes-panel { display: none !important; }
+
+			/* Zone texte plein largeur, sans shadow, contrôles au-dessus */
+			.generator-layout { flex-direction: column; }
+			.text-panel {
+				margin-top: 0;
+				padding: 4px 0 14px 0;
+				border-radius: 0;
+				background: transparent;
+			}
+			.text-panel h2 { font-size: 1rem; margin: 0 0 8px 0; text-align: center; }
+			.texte-genere {
+				font-size: 0.95rem;
+				line-height: 1.6;
+				padding: 12px;
+				min-height: 140px;
+			}
+			.titre-dans-texte {
+				font-size: 1.05rem;
+			}
+			.controles { gap: 10px; margin-bottom: 10px; }
+			.btn-action {
+				width: 46px;
+				height: 46px;
+			}
+			.btn-action svg { width: 20px; height: 20px; }
+		}
+
+		@media (max-width: 400px) {
+			.mobile-topbar .mobile-title { font-size: 0.85rem; }
+			.mobile-topbar .btn-themes,
+			.mobile-topbar .btn-menu {
+				width: 36px; height: 36px;
+				min-width: 36px; min-height: 36px;
+			}
+			.mobile-topbar .btn-themes .arrow-svg,
+			.mobile-topbar .btn-themes .plate-svg {
+				width: 18px; height: 18px;
+			}
+			.themes-dropdown { top: 100px !important; max-width: 95vw; width: 95vw; }
+		}
+
+		.menu-overlay {
+			position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+			background: rgba(0, 0, 0, 0.5); z-index: 1000;
+			opacity: 0; visibility: hidden; transition: all 0.3s ease;
+		}
+		.menu-overlay.open { opacity: 1; visibility: visible; }
+		.slide-menu {
+			position: fixed; top: 0; right: -300px; width: 280px; height: 100vh;
+			background-color: var(--bg); z-index: 1001; padding: 20px;
+			display: flex; flex-direction: column; border-radius: 20px 0 0 20px;
+			box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1); transition: right 0.3s ease; overflow-y: auto;
+		}
+		.slide-menu.open { right: 0; }
+		.menu-header { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+		.menu-close, .submenu-close { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+		.menu-close svg, .submenu-close svg { width: 18px; height: 18px; stroke: currentColor; }
+		.menu-item {
+			display: flex; align-items: center; padding: 0 20px; font-size: 14px;
+			border-radius: 8px; margin-bottom: 17px; width: 100%; min-height: 42px; border: none;
+		}
+		.menu-item:hover { background: rgba(0, 0, 0, 0.08); transform: translateY(-2px); }
+		body.dark-theme .menu-item:hover { background: rgba(255, 255, 255, 0.08); }
+		.menu-item svg { width: 24px; height: 24px; margin-right: 16px; stroke: currentColor; stroke-width: 2; fill: none; flex-shrink: 0; }
+		.menu-item .item-label { flex: 1; text-align: left; display: flex; align-items: center; height: 100%; }
+		.submenu {
+			position: fixed; top: 0; right: -340px; width: 280px; height: 100%;
+			background: var(--bg); z-index: 10010; box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+			border-radius: 20px 0 0 20px; padding: 2rem 1.5rem; overflow-y: auto; transition: right 0.5s ease;
+		}
+		.submenu.active { right: 0; }
+		.submenu-title { font-size: 1.4rem; font-weight: bold; color: var(--primary-color); margin: 0.5rem 0 1.5rem 0; text-align: center; text-transform: lowercase; }
+		.submenu-content { color: var(--font-color); font-size: 13px; line-height: 1.5; margin-top: 4px; }
+		.settings-info { margin-top: 0; padding: 15px; background: rgba(0, 0, 0, 0.05); border-radius: 10px; margin-bottom: 15px; }
+		body.dark-theme .settings-info { background: rgba(255, 255, 255, 0.05); }
+		.about-row { display: flex; align-items: center; gap: 8px; width: 100%; }
+		.about-row > .submenu-icon { margin-right: 0; align-self: center; }
+		.about-row > .about-text { flex: 1; min-width: 0; text-align: left; color: var(--font-color); font-size: 13px; line-height: 1.4; word-break: break-word; padding: 6px 0; }
+		.about-row > .about-text p { margin: 0; }
+		.about-text a { color: var(--font-color); text-decoration: none; border-bottom: 1px dotted var(--font-color); }
+		.about-text a:hover { border-bottom: 2px solid var(--font-color); }
+
+		.toggle-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; min-height: 24px; gap: 10px; }
+		.toggle-label {
+			color: var(--font-color); font-size: 0.9rem; text-align: left;
+			display: flex; align-items: center; gap: 0.75rem; cursor: pointer;
+			flex: 1; line-height: 1; min-height: 24px;
+		}
+		.toggle-label svg {
+			width: 24px; min-width: 24px; display: flex; align-items: center; justify-content: center;
+			flex-shrink: 0; font-size: 1rem; text-align: center; line-height: 1;
+			stroke: currentColor; fill: none; stroke-width: 2;
+		}
+		.theme-switch { position: relative; display: inline-block; width: 40px; height: 20px; flex-shrink: 0; }
+		.theme-switch input { opacity: 0; width: 0; height: 0; }
+		.theme-switch .slider { position: absolute; cursor: pointer; inset: 0; background: #b0b8c4; border-radius: 20px; transition: .3s; }
+		.theme-switch .slider:before {
+			content: ""; position: absolute; width: 16px; height: 16px; left: 2px; top: 2px;
+			background: #fff; border-radius: 50%; transition: .3s; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		}
+		.theme-switch input:checked+.slider { background: #3a7bb5; }
+		.theme-switch input:checked+.slider:before { transform: translateX(20px); }
+		body.dark-theme .theme-switch .slider { background: #3d3d3d; }
+		body.dark-theme .theme-switch input:checked+.slider { background: #4a80c0; }
+
+		/* ===== DISPOSITION : thèmes à gauche / texte à droite ===== */
+		.main-container {
+			width: 100%; max-width: 1200px; margin: 0 auto;
+			padding-left: 10px; padding-right: 10px; padding-bottom: 20px;
+			flex-grow: 1; display: flex; flex-direction: column; box-sizing: border-box;
+		}
+		.generator-layout { display: flex; gap: 16px; align-items: flex-start; width: 100%; }
+		.themes-panel {
+			width: 300px; flex-shrink: 0; background: var(--bg); border-radius: 20px;
+			padding: 12px;
+			position: sticky; top: 12px; max-height: calc(100vh - 24px); overflow-y: auto;
+		}
+		.panel-header {
+			font-weight: bold; color: var(--primary-color); font-size: 0.8rem;
+			text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 6px 10px 6px;
+			display: flex; justify-content: space-between; align-items: center;
+		}
+		.panel-header .panel-count { font-size: 0.65rem; opacity: 0.6; font-weight: normal; text-transform: none; letter-spacing: 0; }
+		.grille-boutons { display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 8px; }
+		.btn-theme {
+			display: flex; align-items: center; justify-content: flex-start; gap: 6px;
+			padding: 6px 8px; min-height: 36px;
+			background: var(--btn); border: none; border-radius: 10px;
+			color: var(--font-color); cursor: pointer;
+			font-size: 0.8rem; font-weight: bold; font-family: inherit;
+			line-height: 1.2; text-align: left;
+			box-shadow: var(--shadow-out); transition: all 0.2s ease;
+			-webkit-tap-highlight-color: transparent;
+		}
+		.btn-theme .icone { font-size: 1rem; line-height: 1; flex-shrink: 0; }
+		.btn-theme .theme-label { min-width: 0; overflow-wrap: break-word; }
+		.btn-theme:hover { box-shadow: var(--shadow-in); transform: translateY(-1px); color: var(--primary-color); }
+		.btn-theme:active { transform: scale(0.96); }
+		.btn-theme.active { box-shadow: var(--shadow-in); color: var(--primary-color); }
+		.grid-empty { grid-column: 1 / -1; text-align: center; font-size: 0.8rem; opacity: 0.7; padding: 14px 6px; line-height: 1.5; }
+		.text-panel { flex: 1; min-width: 0; background: var(--bg); border-radius: 20px; padding: 0px; margin-top: 12px; }
+		.text-panel h2 { color: var(--primary-color); font-size: 1.3rem; margin-bottom: 16px; }
+
+		/* ===== CONTROLES : centrés et circulaires (desktop + mobile) ===== */
+		.controles { display: flex; gap: 12px; margin-top: 0; margin-bottom: 16px; flex-wrap: nowrap; align-items: center; justify-content: center; }
+		.btn-action {
+			display: inline-flex; align-items: center; justify-content: center;
+			width: 52px; height: 52px; padding: 0; border: none; border-radius: 50%;
+			font-family: inherit;
+			background: var(--btn); box-shadow: var(--shadow-out); transition: all 0.2s ease;
+			-webkit-tap-highlight-color: transparent;
+		}
+		.btn-action svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+		.btn-action:hover:not(:disabled) { box-shadow: var(--shadow-in); transform: translateY(-2px); }
+		.btn-action:active:not(:disabled) { transform: scale(0.96); }
+		.btn-action:disabled { opacity: 0.5; cursor: not-allowed; }
+		.btn-parler { color: #3a7bb5; }
+		.btn-stop { color: var(--primary-color); }
+		.btn-nouveau { color: #8e44ad; }
+		body.dark-theme .btn-parler { color: #6aa9e0; }
+		body.dark-theme .btn-nouveau { color: #b07cc6; }
+
+		.texte-genere {
+			font-family: Georgia, 'Times New Roman', serif;
+			font-size: 1.05rem; line-height: 1.4; white-space: pre-wrap;
+			min-height: 180px; padding: 20px; border-radius: 15px;
+			background: var(--bg); color: var(--font-color); box-shadow: var(--shadow-in);
+		}
+
+		/* ===== TITRE DU THÈME INTÉGRÉ À LA ZONE DE TEXTE ===== */
+		.titre-dans-texte {
+			color: var(--primary-color);
+			font-family: Arial, sans-serif;
+			font-size: 1.3rem;
+			font-weight: bold;
+			margin-bottom: 12px;
+			padding-bottom: 10px;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+			white-space: normal;
+		}
+		body.dark-theme .titre-dans-texte {
+			border-bottom-color: rgba(255, 255, 255, 0.1);
+		}
+
+		.app-footer { text-align: center; font-style: italic; font-size: 0.85rem; opacity: 0.7; margin-top: 18px; padding: 0 10px; }
+
+		.toaster-global {
+			position: fixed; top: 20px; left: 50%;
+			transform: translateX(-50%) translateY(-100px);
+			background: var(--toast-bg); color: var(--toast-text);
+			padding: 16px 28px; border-radius: 12px; font-size: 1rem; font-weight: bold;
+			z-index: 99999; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+			transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+			opacity: 0; pointer-events: none; text-align: center; max-width: 90%; min-width: 200px;
+			--toast-bg: #e0e0e0; --toast-text: #333333;
+		}
+		body.dark-theme .toaster-global { --toast-bg: #3d3d3d; --toast-text: #e0e0e0; }
+		.toaster-global.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+		.toaster-global.info, .toaster-global.warning { background: var(--toast-bg); color: var(--toast-text); border: none; }
+		.toaster-global.confirm { --toast-bg: #ff6b6b; --toast-text: #ffffff; pointer-events: auto; cursor: default; padding: 20px 30px; min-width: 280px; }
+		body.dark-theme .toaster-global.confirm { --toast-bg: #cc4444; --toast-text: #ffffff; }
+		.toaster-global .confirm-actions { display: flex; gap: 12px; justify-content: center; margin-top: 12px; }
+		.toaster-global .confirm-actions button { padding: 6px 20px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; transition: all 0.2s ease; font-size: 0.9rem; }
+		.toaster-global .confirm-actions .confirm-yes { background: #ffffff; color: #cc4444; }
+		.toaster-global .confirm-actions .confirm-yes:hover { transform: scale(1.05); }
+		.toaster-global .confirm-actions .confirm-no { background: transparent; color: #ffffff; border: 2px solid #ffffff; }
+		.toaster-global .confirm-actions .confirm-no:hover { background: rgba(255, 255, 255, 0.1); }
+
+		::-webkit-scrollbar { width: 4px; }
+		::-webkit-scrollbar-track { background: transparent; }
+		::-webkit-scrollbar-thumb { background: #b0b8c4; border-radius: 4px; }
+		body.dark-theme ::-webkit-scrollbar-thumb { background: #3d3d3d; }
+
+		body.menu-open .toolbar-wrapper, body.menu-open .main-container { filter: blur(5px); transition: filter 0.3s ease; pointer-events: none; }
+		.slide-menu, .submenu, .menu-overlay { filter: none !important; pointer-events: auto !important; }
+		@media (max-width: 600px) {
+			body.menu-open .toolbar-wrapper, body.menu-open .main-container { filter: blur(3px); }
+		}
+
+		.shortcuts-table { width: 100%; border-collapse: separate; border-spacing: 0.2rem 0.2rem; font-size: 0.85rem; }
+		.shortcuts-table td { padding: 3px 3px; }
+		.shortcuts-table kbd {
+			display: inline-block; padding: 4px 8px; font-family: monospace; font-size: 0.9em; font-weight: bold;
+			background-color: #d1d1d1; color: #333; border-radius: 6px;
+			box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.6) inset;
+			min-width: 20px; text-align: center;
+		}
+		body.dark-theme .shortcuts-table kbd { background-color: #1a1a1a; color: #e2e8f0; border: 1px solid #333; }
+
+		.settings-info svg { vertical-align: middle; margin-right: 6px; flex-shrink: 0; }
+
+		@media print {
+			body { background: #fff !important; color: #000 !important; padding: 0; }
+			.toolbar-wrapper, .themes-panel, .controles, .app-footer, .slide-menu, .submenu, .menu-overlay, .toaster-global { display: none !important; }
+			.text-panel, .texte-genere { box-shadow: none !important; background: #fff !important; }
+			.text-panel h2 { color: #000; }
+			.texte-genere { border: 1px solid #ccc; color: #000; }
+			.titre-dans-texte { color: #000; border-bottom-color: #ccc; }
+		}
+	</style>
+</head>
+<body>
+	<!-- Toaster global -->
+	<div id="toasterGlobal" class="toaster-global"></div>
+
+	<div class="toolbar-wrapper">
+		<div class="toolbar">
+			<div class="toolbar-left">
+				<div style="position:relative;">
+					<button class="btn-themes" id="themesBtn" data-title="thèmes (S)" aria-label="liste des thèmes">
+						<svg class="arrow-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+							<g class="arrow-group">
+								<line x1="12" y1="4" x2="12" y2="14"/>
+								<polyline points="7 10 12 15 17 10"/>
+							</g>
+						</svg>
+						<svg class="plate-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+							<g class="plate-group">
+								<line x1="4" y1="19" x2="20" y2="19"/>
+								<line x1="4" y1="19" x2="4" y2="16"/>
+								<line x1="20" y1="19" x2="20" y2="16"/>
+							</g>
+						</svg>
+					</button>
+					<div class="themes-dropdown" id="themesDropdown">
+						<div class="dropdown-header">🎲 liste des thèmes</div>
+						<div class="dropdown-actions">
+							<button class="select-all-btn" id="selectAllThemes">✓ tout sélectionner</button>
+							<button class="select-all-btn" id="deselectAllThemes">✗ tout désélectionner</button>
+						</div>
+						<div class="dropdown-count themes-count">0 / 0 thèmes sélectionnés</div>
+						<div class="themes-list"></div>
+					</div>
+				</div>
+				<button class="btn btn-home" id="homeBtnDesktop" data-title="accueil (H)" aria-label="accueil">
+					<div class="icon-wrapper">
+						<svg viewBox="0 0 24 24">
+							<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+						</svg>
+					</div>
+				</button>
+				<button class="btn btn-reload" id="reloadBtnDesktop" data-title="recharger (R)" aria-label="nouvelle session">
+					<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="23 4 23 10 17 10"/>
+						<polyline points="1 20 1 14 7 14"/>
+						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+					</svg>
+				</button>
+			</div>
+			<div class="toolbar-center">
+				<div class="toolbar-title">notion de « langage »</div>
+				<div class="toolbar-subtitle" id="appSubtitle">0 thème sélectionné</div>
+			</div>
+			<div class="toolbar-right">
+				<button class="btn btn-fullscreen" id="fullscreenBtnDesktop" data-title="plein écran (F)" aria-label="plein écran">
+					<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+						<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+						<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+						<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+						<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+					</svg>
+				</button>
+				<button class="btn btn-menu" id="menuBtnDesktop" data-title="menu (M)" aria-label="menu">
+					<svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+						<line x1="3" y1="6" x2="21" y2="6"/>
+						<line x1="3" y1="12" x2="21" y2="12"/>
+						<line x1="3" y1="18" x2="21" y2="18"/>
+					</svg>
+				</button>
+			</div>
+		</div>
+
+		<!-- ===== TOOLBAR MOBILE SIMPLIFIÉE : thèmes + titre + menu + chips ===== -->
+		<div class="toolbar-mobile">
+			<div class="mobile-topbar">
+				<div style="position:relative;">
+					<button class="btn-themes" id="themesBtnMobile" data-title="thèmes (S)" aria-label="liste des thèmes">
+						<svg class="arrow-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+							<g class="arrow-group">
+								<line x1="12" y1="4" x2="12" y2="14"/>
+								<polyline points="7 10 12 15 17 10"/>
+							</g>
+						</svg>
+						<svg class="plate-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+							<g class="plate-group">
+								<line x1="4" y1="19" x2="20" y2="19"/>
+								<line x1="4" y1="19" x2="4" y2="16"/>
+								<line x1="20" y1="19" x2="20" y2="16"/>
+							</g>
+						</svg>
+					</button>
+					<div class="themes-dropdown" id="themesDropdownMobile">
+						<div class="dropdown-header">🎲 liste des thèmes</div>
+						<div class="dropdown-actions">
+							<button class="select-all-btn" id="selectAllThemesMobile">✓ tout sélectionner</button>
+							<button class="select-all-btn" id="deselectAllThemesMobile">✗ tout désélectionner</button>
+						</div>
+						<div class="dropdown-count themes-count">0 / 0 thèmes sélectionnés</div>
+						<div class="themes-list"></div>
+					</div>
+				</div>
+				<div class="mobile-title">notion « langage »</div>
+				<button class="btn btn-menu" id="menuBtnMobile" data-title="menu (M)" aria-label="menu">
+					<svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+						<line x1="3" y1="6" x2="21" y2="6"/>
+						<line x1="3" y1="12" x2="21" y2="12"/>
+						<line x1="3" y1="18" x2="21" y2="18"/>
+					</svg>
+				</button>
+			</div>
+			<div class="mobile-themes-row" id="mobileThemesRow"></div>
+		</div>
+	</div>
+
+	<main class="main-container">
+		<div class="generator-layout">
+			<aside class="themes-panel">
+				<div class="grille-boutons" id="grilleBoutons"></div>
+			</aside>
+			<section class="text-panel" id="zoneTexte">
+				<div class="controles">
+					<button class="btn-action btn-parler" id="btnParler" disabled title="lire à voix haute">
+						<svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+					</button>
+					<button class="btn-action btn-stop" id="btnStop" disabled title="arrêter la lecture">
+						<svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+					</button>
+					<button class="btn-action btn-nouveau" id="btnNouveau" disabled title="nouveau texte">
+						<svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+					</button>
+				</div>
+				<div class="texte-genere" id="texteGenere"><div id="titreTheme" class="titre-dans-texte">thème</div>choisissez un thème pour générer un texte.</div>
+			</section>
+		</div>
+	</main>
+
+	<!-- MENU -->
+	<div class="menu-overlay" id="menuOverlay"></div>
+	<div class="slide-menu" id="slideMenu">
+		<div class="menu-header">
+			<button class="menu-close" id="menuClose" aria-label="fermer le menu">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="menu-content">
+			<button class="menu-item" id="openInstructionsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<line x1="12" y1="16" x2="12" y2="12"></line>
+					<line x1="12" y1="8" x2="12.01" y2="8"></line>
+				</svg>
+				<span class="item-label">présentation</span>
+			</button>
+			<button class="menu-item" id="openSettingsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="3"></circle>
+					<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+				</svg>
+				<span class="item-label">paramètres</span>
+			</button>
+			<button class="menu-item" id="openShortcutsSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<rect x="2" y="4" width="20" height="16" rx="2"></rect>
+					<line x1="6" y1="8" x2="10" y2="8"></line>
+					<line x1="14" y1="8" x2="18" y2="8"></line>
+					<line x1="6" y1="12" x2="10" y2="12"></line>
+					<line x1="14" y1="12" x2="18" y2="12"></line>
+					<line x1="6" y1="16" x2="10" y2="16"></line>
+					<line x1="14" y1="16" x2="18" y2="16"></line>
+				</svg>
+				<span class="item-label">raccourcis</span>
+			</button>
+			<button class="menu-item" id="menuReload">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<polyline points="23 4 23 10 17 10"/>
+					<polyline points="1 20 1 14 7 14"/>
+					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+				</svg>
+				<span class="item-label">nouvelle session</span>
+			</button>
+			<button class="menu-item" id="menuFullscreen">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+					<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+					<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+					<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+					<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+				</svg>
+				<span class="item-label">plein écran</span>
+			</button>
+			<button class="menu-item" id="menuHome">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<polyline points="19,10 12,5"/>
+					<polyline points="8,8 5,10"/>
+					<polyline points="19,11 19,19 5,19 5,11"/>
+				</svg>
+				<span class="item-label">accueil</span>
+			</button>
+			<button class="menu-item" id="resetAppBtn">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M3 2v6h6"></path>
+					<path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
+					<path d="M21 22v-6h-6"></path>
+					<path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path>
+				</svg>
+				<span class="item-label">réinitialiser</span>
+			</button>
+			<button class="menu-item" id="openAboutSub">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+					<line x1="12" y1="17" x2="12.01" y2="17"></line>
+				</svg>
+				<span class="item-label">à propos</span>
+			</button>
+		</div>
+	</div>
+
+	<!-- SOUS-MENUS -->
+	<div class="submenu" id="submenuInstructions">
+		<div class="menu-header">
+			<button class="submenu-close" aria-label="fermer">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">présentation</div>
+		<div class="submenu-content">
+			<div class="settings-info">
+				<p>
+					<svg class="submenu-icon" viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:24px;">
+						<line x1="1" y1="12" x2="12" y2="12"/>
+						<polyline points="8,9 12,12 8,15"/>
+						<circle cx="28" cy="12" r="10"/>
+						<circle cx="28" cy="12" r="6"/>
+						<circle cx="28" cy="12" r="2"/>
+					</svg>
+					<strong>objectif</strong><br><br>découvrir les systèmes combinatoires, ancêtres des LLM (<em>Large Language Model</em>)
+				</p>
+			</div>
+			<div class="settings-info">
+				<p>
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polygon points="5 3 19 12 5 21 5 3"></polygon>
+					</svg>
+					<strong>utilisation</strong>
+				</p><br>
+				<p>• choisissez un thème</p>
+				<p>• « nouveau texte » relance la combinaison</p>
+				<p>• « lire à voix haute » écoute le résultat</p>
+				<p>• le bouton recharger tire un thème au hasard</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuSettings">
+		<div class="menu-header">
+			<button class="submenu-close" aria-label="fermer">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">paramètres</div>
+		<div class="submenu-content">
+			<div class="toggle-container">
+				<span class="toggle-label">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+					</svg>
+					mode sombre
+				</span>
+				<label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polygon points="5 3 19 12 5 21 5 3"></polygon>
+					</svg>
+					animations
+				</span>
+				<label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="13.5" cy="6.5" r="0.5" fill="currentColor"/>
+						<circle cx="17.5" cy="10.5" r="0.5" fill="currentColor"/>
+						<circle cx="8.5" cy="7.5" r="0.5" fill="currentColor"/>
+						<circle cx="6.5" cy="12.5" r="0.5" fill="currentColor"/>
+						<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+					</svg>
+					mode daltonien
+				</span>
+				<label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+						<path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+						<path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+					</svg>
+					sons
+				</span>
+				<label class="theme-switch"><input type="checkbox" id="soundToggle"><span class="slider"></span></label>
+			</div>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuShortcuts">
+		<div class="menu-header">
+			<button class="submenu-close" aria-label="fermer">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">raccourcis</div>
+		<div class="submenu-content">
+			<div class="settings-info">
+				<table class="shortcuts-table">
+					<tr><td class="key-combo"><kbd>S</kbd></td><td>ouvrir / fermer la liste des thèmes</td></tr>
+					<tr><td class="key-combo"><kbd>H</kbd></td><td>renvoi au site académique</td></tr>
+					<tr><td class="key-combo"><kbd>R</kbd></td><td>nouvelle session (thème aléatoire)</td></tr>
+					<tr><td class="key-combo"><kbd>F</kbd></td><td>mode plein écran</td></tr>
+					<tr><td class="key-combo"><kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr>
+					<tr><td class="key-combo"><kbd>Entrée</kbd></td><td>nouveau texte (thème actuel)</td></tr>
+					<tr><td class="key-combo"><kbd>L</kbd></td><td>lire le texte à voix haute</td></tr>
+					<tr><td class="key-combo"><kbd>X</kbd></td><td>arrêter la lecture du texte</td></tr>
+					<tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer (menu, sous-menus)</td></tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuAbout">
+		<div class="menu-header">
+			<button class="submenu-close" aria-label="fermer">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">à propos</div>
+		<div class="submenu-content">
+			<div class="settings-info">
+				<div class="about-row">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+						<circle cx="12" cy="7" r="4"/>
+					</svg>
+					<div class="about-text">
+						<p>application développée<br>par Daniel Boulagnon</p>
+					</div>
+				</div>
+				<div class="about-row">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+						<polyline points="22,6 12,13 2,6"/>
+					</svg>
+					<div class="about-text">
+						<p><a href="mailto:daniel.boulagnon@ac-lille.fr?subject=Question%20sur%20le%20g%C3%A9n%C3%A9rateur" title="envoyer un mail à Daniel Boulagnon">daniel.boulagnon@ac-lille.fr</a></p>
+						</div>
+				</div>
+				<div class="about-row">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="12" cy="12" r="10"/>
+						<path d="M14.5 9a3.5 3.5 0 1 0 0 6"/>
+					</svg>
+					<div class="about-text">
+						<p>exploitation pédagogique</p>
+						<p>et non commerciale</p>
+					</div>
+				</div>
+				<div class="about-row">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+						<line x1="7" y1="7" x2="7.01" y2="7"/>
+					</svg>
+					<div class="about-text">
+						<p>version 1.0 (2026)</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Chargement des données externes -->
+	<script src="donnees.js"></script>
+
+	<script>
+	(function() {
+		'use strict';
+
+		// ===== CONSTANTES =====
+		var STORAGE_PREFIX = 'generateur';
+		var HOME_URL = 'https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/';
+
+		// ===== NETTOYAGE DES ANCIENNES DONNÉES (stats / minuteur / vitesse supprimés) =====
+		localStorage.removeItem(STORAGE_PREFIX + 'Stats');
+		localStorage.removeItem(STORAGE_PREFIX + 'TimerLimit');
+		localStorage.removeItem(STORAGE_PREFIX + 'SpeechRate');
+
+		// ===== ÉTAT DE L'APPLICATION =====
+		var themesData = null;
+		var allThemeKeys = [];
+		var selectedThemes = new Set();
+		var themeActuel = null;
+		var texteActuel = '';
+		var synthese = ('speechSynthesis' in window) ? window.speechSynthesis : null;
+
+		// ===== TOASTER =====
+		var toasterTimeout = null;
+
+		function showToaster(message, type, duration) {
+			type = type || 'info';
+			duration = duration || 3000;
+			var toaster = document.getElementById('toasterGlobal');
+			if (!toaster) return;
+			toaster.innerHTML = '';
+			if (type === 'confirm') {
+				toaster.className = 'toaster-global confirm';
+				toaster.innerHTML = message;
+				toaster.classList.add('show');
+				return;
+			}
+			toaster.innerHTML = message;
+			toaster.className = 'toaster-global';
+			if (type === 'info') toaster.classList.add('info');
+			else if (type === 'warning') toaster.classList.add('warning');
+			toaster.classList.add('show');
+			clearTimeout(toasterTimeout);
+			if (duration > 0) {
+				toasterTimeout = setTimeout(function() {
+					toaster.classList.remove('show');
+				}, duration);
+			}
+		}
+
+		function showConfirmToaster(message, onConfirm, onCancel) {
+			var toaster = document.getElementById('toasterGlobal');
+			if (!toaster) return;
+			clearTimeout(toasterTimeout);
+			toaster.innerHTML = message + `
+				<div class="confirm-actions">
+					<button class="confirm-yes">✓ oui</button>
+					<button class="confirm-no">✗ non</button>
+				</div>
+			`;
+			toaster.className = 'toaster-global confirm';
+			toaster.classList.add('show');
+			var yesBtn = toaster.querySelector('.confirm-yes');
+			var noBtn = toaster.querySelector('.confirm-no');
+			function cleanup() {
+				toaster.classList.remove('show');
+				toaster.innerHTML = '';
+				toaster.className = 'toaster-global';
+				yesBtn.removeEventListener('click', handleYes);
+				noBtn.removeEventListener('click', handleNo);
+			}
+			function handleYes() { cleanup(); if (onConfirm) onConfirm(); }
+			function handleNo() { cleanup(); if (onCancel) onCancel(); }
+			yesBtn.addEventListener('click', handleYes);
+			noBtn.addEventListener('click', handleNo);
+		}
+
+		// ===== SON D'INTERFACE =====
+		var soundEnabled = localStorage.getItem(STORAGE_PREFIX + 'Sound') !== 'false';
+
+		function playSound() {
+			if (!soundEnabled) return;
+			try {
+				var audio = new Audio('../../src/sounds/bruit-clavier.mp3');
+				audio.volume = 0.3;
+				audio.preload = 'auto';
+				var playPromise = audio.play();
+				if (playPromise !== undefined) {
+					playPromise.catch(function(error) { console.debug('Erreur lecture audio:', error); });
+				}
+			} catch (e) { console.debug('Erreur audio:', e); }
+		}
+
+		// ===== UTILITAIRES =====
+		function escapeHtml(str) {
+			if (!str) return '';
+			return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+		}
+
+		// ===== SOUS-TITRE =====
+		function updateSubtitle() {
+			var total = selectedThemes.size;
+			var text = total + ' thème' + (total > 1 ? 's' : '') + ' sélectionné' + (total > 1 ? 's' : '');
+			var subtitleEl = document.getElementById('appSubtitle');
+			if (subtitleEl) subtitleEl.textContent = text;
+		}
+
+		// ===== SÉLECTION DES THÈMES =====
+		function loadSelectedThemes() {
+			var saved = localStorage.getItem(STORAGE_PREFIX + 'SelectedThemes');
+			if (saved !== null) {
+				try {
+					JSON.parse(saved).forEach(function(cle) {
+						if (themesData[cle]) selectedThemes.add(cle);
+					});
+				} catch (e) {}
+			} else {
+				allThemeKeys.forEach(function(cle) { selectedThemes.add(cle); });
+				saveSelectedThemes();
+			}
+		}
+
+		function saveSelectedThemes() {
+			localStorage.setItem(STORAGE_PREFIX + 'SelectedThemes', JSON.stringify(Array.from(selectedThemes)));
+		}
+
+		// ===== GRILLE DES THÈMES (desktop) =====
+		function buildGrid() {
+			var grille = document.getElementById('grilleBoutons');
+			if (grille) {
+				grille.innerHTML = '';
+				var keys = allThemeKeys.filter(function(k) { return selectedThemes.has(k); });
+				if (keys.length === 0) {
+					grille.innerHTML = '<div class="grid-empty">⚠️ aucun thème sélectionné.<br>ouvrez la liste « thèmes » pour en choisir.</div>';
+				} else {
+					keys.forEach(function(cle) {
+						var theme = themesData[cle];
+						var btn = document.createElement('button');
+						btn.className = 'btn-theme' + (cle === themeActuel ? ' active' : '');
+						btn.dataset.theme = cle;
+						var icone = document.createElement('span');
+						icone.className = 'icone';
+						icone.textContent = theme.icone || '🎲';
+						var label = document.createElement('span');
+						label.className = 'theme-label';
+						label.textContent = cle;
+						btn.appendChild(icone);
+						btn.appendChild(label);
+						btn.addEventListener('click', function() {
+							playSound();
+							choisirTheme(cle);
+						});
+						grille.appendChild(btn);
+					});
+				}
+			}
+			buildMobileThemesRow();
+		}
+
+		// ===== RANGÉE DE CHIPS MOBILE (remplace la grille latérale) =====
+		function buildMobileThemesRow() {
+			var row = document.getElementById('mobileThemesRow');
+			if (!row) return;
+			row.innerHTML = '';
+			var keys = allThemeKeys.filter(function(k) { return selectedThemes.has(k); });
+			if (keys.length === 0) {
+				row.innerHTML = '<span class="grid-empty">aucun thème sélectionné</span>';
+				return;
+			}
+			keys.forEach(function(cle) {
+				var theme = themesData[cle];
+				var btn = document.createElement('button');
+				btn.className = 'btn-theme' + (cle === themeActuel ? ' active' : '');
+				btn.dataset.theme = cle;
+				var icone = document.createElement('span');
+				icone.className = 'icone';
+				icone.textContent = theme.icone || '🎲';
+				var label = document.createElement('span');
+				label.className = 'theme-label';
+				label.textContent = cle;
+				btn.appendChild(icone);
+				btn.appendChild(label);
+				btn.addEventListener('click', function() {
+					playSound();
+					choisirTheme(cle);
+					btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+				});
+				row.appendChild(btn);
+			});
+		}
+
+		// ===== GÉNÉRATION (logique d'origine conservée) =====
+		function genererTexte() {
+			if (!themeActuel || !themesData[themeActuel]) return;
+			arreterParole();
+			var theme = themesData[themeActuel];
+			var fragments = theme.fragments;
+			var sep = theme.separateur !== undefined ? theme.separateur : ' ';
+			var morceaux = [];
+			if (theme.mode === 'ligne') {
+				var nbLignes = Math.max.apply(null, fragments.map(function(col) { return col.length; }));
+				var index = Math.floor(Math.random() * nbLignes);
+				fragments.forEach(function(col) {
+					var choix = col.length === 1 ? col[0] : col[index];
+					if (choix && choix.trim() !== '') morceaux.push(choix);
+				});
+			} else {
+				fragments.forEach(function(col) {
+					var options = col.filter(function(opt) { return opt.trim() !== ''; });
+					if (options.length > 0) {
+						morceaux.push(options[Math.floor(Math.random() * options.length)]);
+					}
+				});
+			}
+			texteActuel = morceaux.join(sep);
+			// Reconstruit la zone : titre (dans la zone) + texte généré
+			var zone = document.getElementById('texteGenere');
+			zone.innerHTML = '';
+			var titre = document.createElement('div');
+			titre.id = 'titreTheme';
+			titre.className = 'titre-dans-texte';
+			titre.textContent = (theme.icone || '🎲') + ' ' + theme.titre;
+			zone.appendChild(titre);
+			zone.appendChild(document.createTextNode(texteActuel));
+		}
+
+		function choisirTheme(cle) {
+			if (!themesData[cle]) return;
+			themeActuel = cle;
+			genererTexte();
+			activerControles();
+			document.querySelectorAll('.btn-theme').forEach(function(b) {
+				b.classList.toggle('active', b.dataset.theme === cle);
+			});
+			var activeChip = document.querySelector('#mobileThemesRow .btn-theme.active');
+			if (activeChip) {
+				activeChip.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+			}
+			if (window.matchMedia('(max-width: 768px)').matches) {
+				var smooth = !document.body.classList.contains('no-animations');
+				document.getElementById('zoneTexte').scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+			}
+		}
+
+		function activerControles() {
+			document.getElementById('btnParler').disabled = !synthese;
+			document.getElementById('btnNouveau').disabled = false;
+		}
+
+		function resetZone() {
+			themeActuel = null;
+			texteActuel = '';
+			arreterParole();
+			document.getElementById('texteGenere').innerHTML =
+				'<div id="titreTheme" class="titre-dans-texte">sélectionnez un thème</div>' +
+				'choisissez un thème pour générer un texte.';
+			document.getElementById('btnParler').disabled = true;
+			document.getElementById('btnStop').disabled = true;
+			document.getElementById('btnNouveau').disabled = true;
+		}
+
+		// ===== NOUVELLE SESSION =====
+		function reloadGame() {
+			var pool = allThemeKeys.filter(function(k) { return selectedThemes.has(k); });
+			if (pool.length === 0) {
+				showToaster('⚠️ aucun thème sélectionné', 'warning', 2000);
+				return;
+			}
+			choisirTheme(pool[Math.floor(Math.random() * pool.length)]);
+			playSound();
+			showToaster('nouvelle session !', 'info', 1500);
+		}
+
+		// ===== SYNTHÈSE VOCALE =====
+		function arreterParole() {
+			if (synthese) synthese.cancel();
+			var p = document.getElementById('btnParler');
+			var s = document.getElementById('btnStop');
+			if (p) p.disabled = !texteActuel || !synthese;
+			if (s) s.disabled = true;
+		}
+
+		function setupSpeech() {
+			var btnParler = document.getElementById('btnParler');
+			var btnStop = document.getElementById('btnStop');
+			if (!synthese) {
+				btnParler.disabled = true;
+				btnStop.disabled = true;
+				btnParler.title = 'synthèse vocale non disponible sur ce navigateur';
+				return;
+			}
+			btnParler.addEventListener('click', function() {
+				if (!texteActuel) return;
+				arreterParole();
+				var utterance = new SpeechSynthesisUtterance(texteActuel);
+				utterance.lang = 'fr-FR';
+				var voix = synthese.getVoices().find(function(v) { return v.lang && v.lang.toLowerCase().indexOf('fr') === 0; });
+				if (voix) utterance.voice = voix;
+				utterance.onend = function() { btnParler.disabled = !texteActuel; btnStop.disabled = true; };
+				utterance.onerror = function() { btnParler.disabled = !texteActuel; btnStop.disabled = true; };
+				synthese.speak(utterance);
+				btnParler.disabled = true;
+				btnStop.disabled = false;
+			});
+			btnStop.addEventListener('click', function() {
+				arreterParole();
+				playSound();
+			});
+			if (synthese.onvoiceschanged !== undefined) {
+				synthese.onvoiceschanged = function() { synthese.getVoices(); };
+			}
+		}
+
+		// ===== DROPDOWN =====
+		function updateThemesDropdown() {
+			['themesDropdown', 'themesDropdownMobile'].forEach(function(id) {
+				var dropdown = document.getElementById(id);
+				if (!dropdown) return;
+				var listContainer = dropdown.querySelector('.themes-list');
+				var countContainer = dropdown.querySelector('.themes-count');
+				if (!listContainer || !countContainer) return;
+				var total = allThemeKeys.length;
+				var selected = selectedThemes.size;
+				countContainer.textContent = selected + ' / ' + total + ' thèmes sélectionnés';
+				if (total === 0) {
+					listContainer.innerHTML = '<div class="dropdown-empty">aucun thème disponible</div>';
+					return;
+				}
+				var html = '';
+				allThemeKeys.forEach(function(cle, idx) {
+					var isChecked = selectedThemes.has(cle);
+					var icone = themesData[cle].icone || '🎲';
+					html += `
+						<div class="dropdown-notion-item" data-id="${idx}">
+							<input type="checkbox" class="notion-checkbox" ${isChecked ? 'checked' : ''}>
+							<label>${escapeHtml(icone)} ${escapeHtml(cle)}</label>
+						</div>
+					`;
+				});
+				listContainer.innerHTML = html;
+				listContainer.querySelectorAll('.dropdown-notion-item').forEach(function(item) {
+					var idx = parseInt(item.dataset.id, 10);
+					var cle = allThemeKeys[idx];
+					var checkbox = item.querySelector('.notion-checkbox');
+					checkbox.addEventListener('change', function(e) {
+						e.stopPropagation();
+						if (this.checked) selectedThemes.add(cle);
+						else selectedThemes.delete(cle);
+						saveSelectedThemes();
+						updateThemesDropdown();
+						buildGrid();
+						updateSubtitle();
+						if (themeActuel && !selectedThemes.has(themeActuel)) resetZone();
+						playSound();
+					});
+					item.addEventListener('click', function(e) {
+						if (e.target !== checkbox) {
+							checkbox.checked = !checkbox.checked;
+							checkbox.dispatchEvent(new Event('change'));
+						}
+					});
+				});
+			});
+		}
+
+		function selectAllThemes() {
+			allThemeKeys.forEach(function(cle) { selectedThemes.add(cle); });
+			saveSelectedThemes();
+			updateThemesDropdown();
+			buildGrid();
+			updateSubtitle();
+			showToaster('tous les thèmes sélectionnés', 'info', 1500);
+			playSound();
+		}
+
+		function deselectAllThemes() {
+			selectedThemes.clear();
+			saveSelectedThemes();
+			updateThemesDropdown();
+			buildGrid();
+			updateSubtitle();
+			resetZone();
+			showToaster('tous les thèmes désélectionnés', 'info', 1500);
+			playSound();
+		}
+
+		function toggleThemesDropdown(event) {
+			event.stopPropagation();
+			var dropdown = this.id === 'themesBtn' ?
+				document.getElementById('themesDropdown') :
+				document.getElementById('themesDropdownMobile');
+			if (dropdown) {
+				updateThemesDropdown();
+				dropdown.classList.toggle('open');
+			}
+		}
+
+		function closeThemesDropdown() {
+			['themesDropdown', 'themesDropdownMobile'].forEach(function(id) {
+				var d = document.getElementById(id);
+				if (d) d.classList.remove('open');
+			});
+		}
+
+		// ===== MENU =====
+		function setupMenu() {
+			var menuOverlay = document.getElementById('menuOverlay');
+			var slideMenu = document.getElementById('slideMenu');
+			var submenus = document.querySelectorAll('.submenu');
+
+			function closeAllSubmenus() {
+				submenus.forEach(function(s) { s.classList.remove('active'); });
+			}
+
+			function closeMenu() {
+				slideMenu.classList.remove('open');
+				menuOverlay.classList.remove('open');
+				document.body.style.overflow = '';
+				document.body.classList.remove('menu-open');
+				closeAllSubmenus();
+				closeThemesDropdown();
+			}
+
+			function openMenu() {
+				menuOverlay.classList.add('open');
+				slideMenu.classList.add('open');
+				document.body.style.overflow = 'hidden';
+				document.body.classList.add('menu-open');
+				closeAllSubmenus();
+			}
+
+			document.getElementById('menuBtnDesktop').addEventListener('click', function() { playSound(); openMenu(); });
+			document.getElementById('menuBtnMobile').addEventListener('click', function() { playSound(); openMenu(); });
+			document.getElementById('menuClose').addEventListener('click', function() { playSound(); closeMenu(); });
+			menuOverlay.addEventListener('click', function() { playSound(); closeMenu(); });
+
+			document.querySelectorAll('.submenu-close').forEach(function(btn) {
+				btn.addEventListener('click', function() {
+					playSound();
+					closeAllSubmenus();
+				});
+			});
+
+			document.getElementById('openInstructionsSub').addEventListener('click', function() {
+				playSound();
+				closeAllSubmenus();
+				document.getElementById('submenuInstructions').classList.add('active');
+				document.body.classList.add('menu-open');
+			});
+
+			document.getElementById('openSettingsSub').addEventListener('click', function() {
+				playSound();
+				closeAllSubmenus();
+				document.getElementById('submenuSettings').classList.add('active');
+				document.body.classList.add('menu-open');
+			});
+
+			document.getElementById('openShortcutsSub').addEventListener('click', function() {
+				playSound();
+				closeAllSubmenus();
+				document.getElementById('submenuShortcuts').classList.add('active');
+				document.body.classList.add('menu-open');
+			});
+
+			document.getElementById('openAboutSub').addEventListener('click', function() {
+				playSound();
+				closeAllSubmenus();
+				document.getElementById('submenuAbout').classList.add('active');
+				document.body.classList.add('menu-open');
+			});
+
+			var menuReload = document.getElementById('menuReload');
+			if (menuReload) menuReload.addEventListener('click', function() {
+				playSound(); closeMenu(); reloadGame();
+			});
+			var menuFullscreen = document.getElementById('menuFullscreen');
+			if (menuFullscreen) menuFullscreen.addEventListener('click', function() {
+				playSound(); toggleFullscreen();
+			});
+			var menuHome = document.getElementById('menuHome');
+			if (menuHome) menuHome.addEventListener('click', function() {
+				playSound(); window.open(HOME_URL, '_blank', 'noopener');
+			});
+
+			document.getElementById('resetAppBtn').addEventListener('click', function() {
+				playSound();
+				showConfirmToaster(
+					"⚠️ voulez-vous vraiment réinitialiser l'application ?<br>toutes les données seront effacées",
+					function() {
+						Object.keys(localStorage).forEach(function(k) {
+							if (k.indexOf(STORAGE_PREFIX) === 0) localStorage.removeItem(k);
+						});
+						showToaster('application réinitialisée !', 'info', 2000);
+						setTimeout(function() { location.reload(); }, 1500);
+					},
+					function() { showToaster('réinitialisation annulée', 'info', 1500); }
+				);
+			});
+
+			// TOGGLES
+			var darkModeToggle = document.getElementById('darkModeToggle');
+			if (localStorage.getItem(STORAGE_PREFIX + 'DarkMode') === 'true') {
+				document.body.classList.add('dark-theme');
+				darkModeToggle.checked = true;
+			}
+			darkModeToggle.addEventListener('change', function() {
+				playSound();
+				if (this.checked) {
+					document.body.classList.add('dark-theme');
+					localStorage.setItem(STORAGE_PREFIX + 'DarkMode', 'true');
+				} else {
+					document.body.classList.remove('dark-theme');
+					localStorage.setItem(STORAGE_PREFIX + 'DarkMode', 'false');
+				}
+				showToaster('mode sombre ' + (this.checked ? 'activé' : 'désactivé'), 'info', 1500);
+			});
+
+			var animationsToggle = document.getElementById('animationsToggle');
+			var animationsEnabled = localStorage.getItem(STORAGE_PREFIX + 'Animations') !== 'false';
+			animationsToggle.checked = animationsEnabled;
+			if (!animationsEnabled) document.body.classList.add('no-animations');
+			animationsToggle.addEventListener('change', function() {
+				animationsEnabled = this.checked;
+				localStorage.setItem(STORAGE_PREFIX + 'Animations', String(animationsEnabled));
+				if (animationsEnabled) document.body.classList.remove('no-animations');
+				else document.body.classList.add('no-animations');
+				showToaster('animations ' + (animationsEnabled ? 'activées' : 'désactivées'), 'info', 1500);
+				playSound();
+			});
+
+			var colorblindToggle = document.getElementById('colorblindToggle');
+			if (localStorage.getItem(STORAGE_PREFIX + 'Colorblind') === 'true') {
+				document.body.classList.add('colorblind-mode');
+				colorblindToggle.checked = true;
+			}
+			colorblindToggle.addEventListener('change', function() {
+				playSound();
+				if (this.checked) {
+					document.body.classList.add('colorblind-mode');
+					localStorage.setItem(STORAGE_PREFIX + 'Colorblind', 'true');
+				} else {
+					document.body.classList.remove('colorblind-mode');
+					localStorage.setItem(STORAGE_PREFIX + 'Colorblind', 'false');
+				}
+				showToaster('mode daltonien ' + (this.checked ? 'activé' : 'désactivé'), 'info', 1500);
+			});
+
+			var soundToggle = document.getElementById('soundToggle');
+			soundToggle.checked = soundEnabled;
+			soundToggle.addEventListener('change', function() {
+				soundEnabled = this.checked;
+				localStorage.setItem(STORAGE_PREFIX + 'Sound', String(soundEnabled));
+				showToaster('sons ' + (soundEnabled ? 'activés' : 'désactivés'), 'info', 1500);
+				if (soundEnabled) playSound();
+			});
+
+			document.getElementById('themesBtn').addEventListener('click', toggleThemesDropdown);
+			document.getElementById('themesBtnMobile').addEventListener('click', toggleThemesDropdown);
+
+			document.addEventListener('click', function(e) {
+				if (!e.target.closest('.btn-themes') && !e.target.closest('.themes-dropdown')) {
+					closeThemesDropdown();
+				}
+			});
+
+			document.getElementById('selectAllThemes').addEventListener('click', selectAllThemes);
+			document.getElementById('deselectAllThemes').addEventListener('click', deselectAllThemes);
+			document.getElementById('selectAllThemesMobile').addEventListener('click', selectAllThemes);
+			document.getElementById('deselectAllThemesMobile').addEventListener('click', deselectAllThemes);
+		}
+
+		// ===== TOOLBAR + CLAVIER =====
+		function setupToolbarButtons() {
+			var homeBtnDesktop = document.getElementById('homeBtnDesktop');
+			if (homeBtnDesktop) homeBtnDesktop.addEventListener('click', function() { playSound(); window.open(HOME_URL, '_blank', 'noopener'); });
+
+			var reloadBtnDesktop = document.getElementById('reloadBtnDesktop');
+			if (reloadBtnDesktop) reloadBtnDesktop.addEventListener('click', function() { playSound(); reloadGame(); });
+
+			var fullscreenBtnDesktop = document.getElementById('fullscreenBtnDesktop');
+			if (fullscreenBtnDesktop) fullscreenBtnDesktop.addEventListener('click', function() { playSound(); toggleFullscreen(); });
+
+			document.getElementById('btnNouveau').addEventListener('click', function() {
+				if (themeActuel) { genererTexte(); playSound(); }
+				else reloadGame();
+			});
+
+			document.addEventListener('keydown', function(e) {
+				if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+
+				if (e.key === 'Escape') {
+					if (document.querySelector('.submenu.active')) {
+						document.querySelectorAll('.submenu.active').forEach(function(s) {
+							var closeBtn = s.querySelector('.submenu-close');
+							if (closeBtn) closeBtn.click();
+						});
+					} else if (document.querySelector('.slide-menu.open')) {
+						document.getElementById('menuClose').click();
+					}
+					closeThemesDropdown();
+					e.preventDefault();
+					return false;
+				}
+
+				var key = e.key.toLowerCase();
+				if (key === 'enter' && e.target.tagName === 'BUTTON') return;
+
+				switch (key) {
+					case 's':
+						e.preventDefault();
+						playSound();
+						var isMobile = window.matchMedia('(max-width: 600px)').matches;
+						var dropdown = document.getElementById(isMobile ? 'themesDropdownMobile' : 'themesDropdown');
+						if (dropdown) {
+							updateThemesDropdown();
+							dropdown.classList.toggle('open');
+						}
+						return false;
+					case 'h':
+						e.preventDefault();
+						playSound();
+						window.open(HOME_URL, '_blank', 'noopener');
+						return false;
+					case 'r':
+						e.preventDefault();
+						playSound();
+						reloadGame();
+						return false;
+					case 'f':
+						e.preventDefault();
+						playSound();
+						toggleFullscreen();
+						return false;
+					case 'm':
+						e.preventDefault();
+						playSound();
+						document.getElementById('menuBtnDesktop').click();
+						return false;
+					case 'enter':
+						e.preventDefault();
+						if (themeActuel) { genererTexte(); playSound(); }
+						else reloadGame();
+						return false;
+					case 'l':
+						e.preventDefault();
+						var p = document.getElementById('btnParler');
+						if (p && !p.disabled) p.click();
+						return false;
+					case 'x':
+						e.preventDefault();
+						var st = document.getElementById('btnStop');
+						if (st && !st.disabled) st.click();
+						return false;
+				}
+			});
+		}
+
+		// ===== PLEIN ÉCRAN =====
+		function setFullscreenIcons(fs) {
+			document.querySelectorAll('.btn-fullscreen').forEach(function(b) {
+				if (fs) {
+					b.classList.add('fullscreen-active');
+					b.dataset.title = 'quitter plein écran (F)';
+					b.innerHTML = `
+						<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">
+							<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>
+							<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>
+							<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>
+							<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>
+						</svg>
+					`;
+				} else {
+					b.classList.remove('fullscreen-active');
+					b.dataset.title = 'plein écran (F)';
+					b.innerHTML = `
+						<svg class="fullscreen-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+							<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+							<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+							<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+							<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+						</svg>
+					`;
+				}
+			});
+		}
+
+		function toggleFullscreen() {
+			if (!document.fullscreenElement) {
+				var req = document.documentElement.requestFullscreen();
+				if (req && req.catch) req.catch(function() {});
+			} else {
+				var ex = document.exitFullscreen();
+				if (ex && ex.catch) ex.catch(function() {});
+			}
+			playSound();
+		}
+
+		document.addEventListener('fullscreenchange', function() {
+			setFullscreenIcons(!!document.fullscreenElement);
+		});
+
+		// ===== ATTENTE DES DONNÉES =====
+		function waitForData(tries) {
+			tries = tries || 0;
+			var ok = false;
+			try { ok = typeof themes !== 'undefined' && themes && Object.keys(themes).length > 0; } catch (e) {}
+			if (ok) {
+				themesData = themes;
+				allThemeKeys = Object.keys(themes).sort(function(a, b) { return a.localeCompare(b, 'fr'); });
+				loadSelectedThemes();
+				buildGrid();
+				updateThemesDropdown();
+				updateSubtitle();
+				setupMenu();
+				setupToolbarButtons();
+				setupSpeech();
+			} else if (tries < 100) {
+				setTimeout(function() { waitForData(tries + 1); }, 100);
+			} else {
+				document.getElementById('texteGenere').textContent = '⚠️ impossible de charger les données (donnees.js). vérifiez que le fichier est présent à côté de la page.';
+			}
+		}
+
+		document.addEventListener('DOMContentLoaded', function() { waitForData(0); });
+	})();
+	</script>
+</body>
+</html>
