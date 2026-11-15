@@ -1,238 +1,1725 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" >
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="icon" href="../../src/favicon.ico">
-    <title>d'ac ou pas d'ac ?</title>	
-    <style>
-        /* Style général */
-        body {
-            font-family: 'Muli', sans-serif;
-            background-color: #e0e5ec;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+	<link rel="icon" href="../../src/favicon.ico">
+	<title>d'ac ou pas d'ac ?</title>
+	<script src="textes.js"></script>
 
-        /* Titres */
-        h1 {
-            text-align: center;
-            color: red; /* Titre en rouge */
-            font-size: 40px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
+<style>
+/* ===== RESET & BASE ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; touch-action: manipulation; }
+html, body { height: 100%; overflow: hidden; }
 
-        h2 {
-            color: #555;
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
+:root {
+	--bg: #f0f0f0; --btn: #e0e0e0; --font-color: #000000;
+	--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.9);
+	--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.9);
+	--tooltip-bg: #ffffff; --tooltip-color: #333333;
+	--color-correct: #28a745; --color-incorrect: #dc3545;
+	--border-correct: #28a745; --border-incorrect: #dc3545;
+	--correct-bg: #90EE90; --incorrect-bg: #F08080;
+	--info-bg: #f0f0f0; --info-border: #cccccc; --info-color: #333333;
+	--toast-bg: #e0e0e0; --toast-text: #333333;
+	--primary-color: #e74c3c; --badge-bg: #e74c3c; --badge-color: #ffffff;
+	--placeholder-border: #b0b0b0;
+}
 
-        /* Conteneur principal */
-        .learner-matching-wrapper {
-            background-color: #e0e5ec;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
-            max-width: 1200px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+body {
+	font-family: Arial, sans-serif; background-color: var(--bg); padding: 12px 12px 20px 12px;
+	height: 100vh; height: 100dvh; display: flex; flex-direction: column; color: var(--font-color);
+	transition: background-color 0.4s, color 0.4s; overflow: hidden;
+}
+body.no-animations, body.no-animations *, body.no-animations *::before, body.no-animations *::after { transition: none !important; animation: none !important; }
+body.menu-open .toolbar-wrapper, body.menu-open .container, body.menu-open .toolbar-mobile, body.menu-open .score-button-container { filter: blur(5px); transition: filter 0.3s ease; pointer-events: none; }
+.slide-menu, .submenu, .menu-overlay { filter: none !important; pointer-events: auto !important; }
 
-        /* Conteneur des deux colonnes */
-        .learner-matching-wrapper-inner {
-            display: flex;
-            gap: 20px;
-            width: 100%;
-        }
+/* ===== ICÔNES SVG INLINE ===== */
+.icon-inline { width: 1em; height: 1em; vertical-align: -0.125em; margin-right: 5px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 
-        /* Colonnes */
-        .learner-matching-column {
-            background-color: #e0e5ec;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: inset 6px 6px 10px rgba(163, 177, 198, 0.6), inset -6px -6px 10px rgba(255, 255, 255, 0.5);
-            flex: 1;
-            min-height: 400px;
-            max-height: 500px;
-            overflow-y: auto;
-        }
+/* ===== BOUTONS ===== */
+.btn, .timer-btn, .menu-close, .submenu-close, .menu-item, .upload-btn, .select-all-btn {
+	background: var(--btn); color: var(--font-color); box-shadow: var(--shadow-out);
+	transition: all 0.2s ease; border: none; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.btn:hover, .timer-btn:hover, .menu-close:hover, .submenu-close:hover, .menu-item:hover, .upload-btn:hover, .select-all-btn:hover { box-shadow: var(--shadow-in); transform: translateY(-2px); }
+.btn:active, .timer-btn:active { transform: scale(0.95); }
 
-        .learner-matching-column h2 {
-            text-align: center;
-            margin-bottom: 15px;
-        }
+.btn { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; }
+.btn svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; flex-shrink: 0; }
+.btn::after, .timer-btn::after {
+	content: attr(data-title); position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+	margin-top: 0.5rem; background-color: var(--tooltip-bg); color: var(--tooltip-color); padding: 0.3rem 0.6rem;
+	border-radius: 5px; font-size: 0.8rem; white-space: nowrap; opacity: 0; pointer-events: none; z-index: 10; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.btn:hover::after, .timer-btn:hover::after { opacity: 1; }
 
-        /* Liste des propositions */
-        .connected-sortable {
-            list-style-type: none;
-            padding: 0;
-            min-height: 100px;
-        }
+/* SVG séquences : flèche + plateau */
+.btn-sequences { position: relative; }
+.btn-sequences .arrow-svg,
+.btn-sequences .plate-svg {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.btn-sequences .arrow-group { transform-origin: 12px 12px; transition: transform 0.3s ease; }
+.btn-sequences:hover .arrow-group { transform: translateY(-2px); }
+.btn-sequences .plate-group { transition: transform 0.3s ease; }
+.btn-sequences:hover .plate-group { transform: scaleX(1.1); }
 
-        .connected-sortable li {
-            background-color: #e0e5ec;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 10px;
-            box-shadow: 6px 6px 10px rgba(163, 177, 198, 0.6), -6px -6px 10px rgba(255, 255, 255, 0.5);
-            cursor: grab;
-            display: flex;
-            flex-direction: column; /* Pour afficher la justification sous l'étiquette */
-            align-items: flex-start;
-        }
+.btn-home .icon-wrapper { width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; flex-shrink: 0; }
+.btn-home:hover .icon-wrapper { animation: spin360 2s infinite linear; }
+@keyframes spin360 { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+.btn-reload:hover svg, .menu-close:hover svg, .submenu-close:hover svg { animation: rotate 1s linear; }
+@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .connected-sortable li.correct {
-            border: 2px solid green;
-        }
+.menu-icon { display: flex; flex-direction: column; gap: 4px; transition: transform 0.3s ease; width: 22px; height: 18px; justify-content: center; }
+.menu-icon span { display: block; width: 100%; height: 2px; background: currentColor; border-radius: 2px; transition: all 0.3s ease; }
+.btn-menu:hover .menu-icon { transform: rotate(90deg); }
 
-        .connected-sortable li.incorrect {
-            border: 2px solid red;
-        }
+.btn-fullscreen .fullscreen-icon { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.btn-fullscreen:not(.fullscreen-active):hover .fullscreen-icon { transform: scale(1.5); }
+.fullscreen-exit-icon { transform-origin: center; transition: transform 0.3s ease; stroke-width: 1.2px !important; }
+.btn-fullscreen.fullscreen-active:hover .fullscreen-exit-icon { transform: scale(0.7); }
 
-        .justification {
-            display: none;
-            margin-top: 10px;
-            font-style: italic;
-            color: #555;
-            width: 100%; /* Prend toute la largeur */
-        }
+/* ===== TOOLBAR ===== */
+.toolbar-wrapper { position: relative; z-index: 10; flex-shrink: 0; margin-bottom: 12px; }
+.toolbar { display: flex; justify-content: space-between; align-items: center; padding: 8px 15px; background: transparent; height: 76px; border-radius: 12px 12px 0 0; gap: 10px; position: relative; }
+.toolbar-left, .toolbar-right { display: flex; align-items: center; gap: 8px; flex: 1; }
+.toolbar-left { justify-content: flex-start; }
+.toolbar-right { justify-content: flex-end; }
+.toolbar-center { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; pointer-events: none; }
+.toolbar-title { color: var(--primary-color); font-size: clamp(1.8rem, 5vw, 2.5rem); font-weight: bold; white-space: nowrap; text-transform: lowercase; margin: 0; }
+.toolbar-subtitle { color: #555; font-size: clamp(0.9rem, 2.5vw, 1.1rem); line-height: 1.2; padding-top: 8px; text-align: center; }
 
-        .show-justification {
-            cursor: pointer;
-            margin-left: auto; /* Aligne à droite */
-            font-size: 18px;
-        }
+.timer-btn { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; padding: 0; line-height: 1; font-size: 12px; font-weight: bold; font-family: monospace; flex-shrink: 0; }
+.timer-btn.warning { color: #ff6b6b; animation: timer-pulse 0.5s ease infinite alternate; }
+.timer-btn.danger { color: #ff0000; animation: timer-pulse 0.3s ease infinite alternate; }
+@keyframes timer-pulse { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
 
-        /* Boutons */
-        .reset-sort-btn-wrapper {
-            text-align: center;
-            margin-top: 20px;
-        }
+/* ===== DROPDOWN AUTEURS ===== */
+.sequences-dropdown { position: absolute; top: 60px; left: 0; margin-top: 8px; background: var(--bg); border-radius: 12px; box-shadow: var(--shadow-out); display: none; min-width: 220px; max-width: 95vw; width: auto; max-height: 450px; overflow-y: auto; z-index: 1000; padding: 6px 0; }
+.sequences-dropdown.open { display: block; }
+.dropdown-header { padding: 8px 16px; margin-bottom: 8px; font-weight: bold; color: var(--primary-color); font-size: 0.8rem; border-bottom: 1px solid rgba(0, 0, 0, 0.08); text-transform: uppercase; letter-spacing: 0.5px; }
+.dropdown-notion-item { display: flex; align-items: center; padding: 6px 16px; margin: 2px 0; cursor: pointer; transition: background 0.15s ease; white-space: nowrap; }
+.dropdown-notion-item:hover { background: rgba(0, 0, 0, 0.06); }
+.dropdown-notion-item input[type="checkbox"] { width: 16px; height: 16px; margin-right: 10px; cursor: pointer; flex-shrink: 0; accent-color: var(--primary-color); }
+.dropdown-notion-item label { flex: 1; cursor: pointer; font-size: 0.85rem; color: var(--font-color); }
+.dropdown-actions { display: flex; gap: 0; padding: 4px 12px 10px 12px; margin-bottom: 4px; }
+.select-all-btn { padding: 4px 10px; font-size: 0.65rem; flex: 1; text-align: center; border: none; border-radius: 4px; background: var(--btn); color: var(--font-color); box-shadow: var(--shadow-out); cursor: pointer; transition: all 0.2s ease; }
+.select-all-btn:first-child { border-radius: 4px 0 0 4px; }
+.select-all-btn:last-child { border-radius: 0 4px 4px 0; border-left: 1px solid rgba(0, 0, 0, 0.08); }
+.dropdown-count { padding: 6px 16px 4px 16px; font-size: 0.65rem; opacity: 0.6; text-align: center; border-top: 1px solid rgba(0, 0, 0, 0.06); margin-top: 4px; }
 
-        .reset-sort-btn {
-            background-color: #e0e5ec;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            box-shadow: 6px 6px 10px rgba(163, 177, 198, 0.6), -6px -6px 10px rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            font-size: 16px;
-            color: #333;
-            margin: 5px;
-        }
+/* ===== MOBILE TOOLBAR ===== */
+.toolbar-mobile { display: none; flex-direction: column; align-items: center; width: 100%; padding: 2px 12px 0px; background: transparent; border-radius: 12px 12px 0 0; margin-top: 9px; }
+.toolbar-mobile .btn, .toolbar-mobile .timer-btn { width: 44px; height: 44px; }
+.toolbar-mobile .btn svg { width: 20px; height: 20px; }
+.toolbar-mobile .menu-icon { width: 20px; height: 16px; gap: 3px; }
+.toolbar-mobile .menu-icon span { height: 2px; }
+.mobile-buttons { display: flex; justify-content: center; align-items: center; width: fit-content; padding: 0 4px; margin-left: auto; margin-right: auto; }
+.mobile-title-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 10px; }
+.mobile-title { color: var(--primary-color); font-size: clamp(1.1rem, 3.5vw, 1.4rem); font-weight: bold; text-align: center; margin-top: 5px; text-transform: lowercase; }
 
-        .reset-sort-btn:hover {
-            box-shadow: inset 6px 6px 10px rgba(163, 177, 198, 0.6), inset -6px -6px 10px rgba(255, 255, 255, 0.5);
-        }
-    </style>
+/* ===== CONTENEUR PRINCIPAL ===== */
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 10px; flex: 1; display: flex; flex-direction: column; padding-bottom: 20px; box-sizing: border-box; min-height: 0; }
+.row { display: flex; justify-content: center; width: 100%; gap: 20px; margin: 10px 0; flex: 1; min-height: 0; }
+
+.dropzone { flex: 1 1 45%; min-width: 280px; min-height: 320px; background: #f0f0f0; border-radius: 15px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; font-weight: bold; font-size: 1.1em; color: var(--font-color); overflow-y: auto; }
+.dropzone strong { text-align: center; display: block; width: 100%; flex-shrink: 0; margin-bottom: 6px; }
+
+/* ===== ÉTIQUETTES ===== */
+.draggable { padding: 12px 18px; background: #d1d1d1; border-radius: 10px; box-shadow: 4px 4px 8px rgba(0,0,0,0.2), -4px -4px 8px rgba(255,255,255,0.4); cursor: grab; user-select: none; position: relative; font-weight: normal; color: var(--font-color); transition: all 0.2s ease; flex-shrink: 0; font-size: 0.9rem; line-height: 1.4; width: 100%; text-align: center;
+	height: calc(2.8em + 24px);
+	display: flex; flex-direction: column; justify-content: center;
+	overflow: hidden;
+}
+.draggable .card-text { display: block; }
+.draggable.just-open { height: auto; }
+.draggable:active { cursor: grabbing; }
+.draggable.dragging { opacity: 0.4; }
+.draggable.locked { cursor: default !important; opacity: 0.8; pointer-events: none !important; }
+.draggable.locked .justification-toggle, .draggable.locked .justification-text { pointer-events: auto !important; }
+.draggable.correct { border: 3px solid var(--border-correct, #28a745) !important; background-color: rgba(40, 167, 69, 0.15) !important; box-shadow: 0 0 8px rgba(40, 167, 69, 0.3) !important; }
+.draggable.incorrect { border: 3px solid var(--border-incorrect, #dc3545) !important; background-color: rgba(220, 53, 69, 0.15) !important; box-shadow: 0 0 8px rgba(220, 53, 69, 0.3) !important; }
+.draggable.correct, .draggable.incorrect { padding-top: 9px; padding-bottom: 9px; }
+
+/* ===== PLACEHOLDER : cellule grise à bordure pointillée ===== */
+.placeholder-vide {
+	width: 100%;
+	flex-shrink: 0;
+	background: rgba(0, 0, 0, 0.04);
+	border: 2px dashed var(--placeholder-border);
+	border-radius: 10px;
+	pointer-events: none;
+	box-sizing: border-box;
+	margin: 0;
+	transition: opacity 0.3s ease;
+}
+body.dark-mode .placeholder-vide {
+	background: rgba(255, 255, 255, 0.03);
+	border-color: #555;
+}
+.placeholder-vide.fading { opacity: 0; }
+
+/* ===== MESSAGE VIDE DANS DROPZONE ===== */
+.dropzone-empty-message {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	min-height: 200px;
+	color: var(--font-color);
+	opacity: 0.5;
+	font-size: 0.9rem;
+	font-weight: normal;
+	line-height: 1.6;
+	padding: 20px;
+	gap: 10px;
+}
+.dropzone-empty-message .empty-icon {
+	font-size: 2.5rem;
+	opacity: 0.7;
+}
+.dropzone-empty-message .empty-text strong {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 1rem;
+	opacity: 0.9;
+}
+
+/* ===== MODE DALTONISME ===== */
+body.colorblind-mode {
+	--correct-bg: #1E88E5 !important; --incorrect-bg: #FFB300 !important;
+	--border-correct: #1E88E5 !important; --border-incorrect: #FFB300 !important;
+	--color-correct: #1E88E5 !important; --color-incorrect: #FFB300 !important;
+}
+body.colorblind-mode.dark-mode {
+	--correct-bg: #1565C0 !important; --incorrect-bg: #FF8F00 !important;
+	--border-correct: #1565C0 !important; --border-incorrect: #FF8F00 !important;
+}
+body.colorblind-mode .draggable { padding-right: 32px; }
+body.colorblind-mode .draggable.correct { background-color: rgba(30, 136, 229, 0.18) !important; box-shadow: 0 0 8px rgba(30, 136, 229, 0.4) !important; }
+body.colorblind-mode .draggable.incorrect { background-color: rgba(255, 179, 0, 0.22) !important; box-shadow: 0 0 8px rgba(255, 179, 0, 0.45) !important; }
+body.colorblind-mode.dark-mode .draggable.correct { background-color: rgba(21, 101, 192, 0.35) !important; }
+body.colorblind-mode.dark-mode .draggable.incorrect { background-color: rgba(255, 143, 0, 0.28) !important; }
+body.colorblind-mode .draggable.correct::after,
+body.colorblind-mode .draggable.incorrect::after { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 16px; font-weight: bold; }
+body.colorblind-mode .draggable.correct::after { content: "✓"; color: #006400; }
+body.colorblind-mode .draggable.incorrect::after { content: "✗"; color: #8B0000; }
+body.colorblind-mode.dark-mode .draggable.correct::after { color: #90EE90; }
+body.colorblind-mode.dark-mode .draggable.incorrect::after { color: #FFB6C1; }
+
+/* ===== ANIMATION DE CORRECTION ===== */
+.draggable.flying-label {
+	position: fixed !important;
+	pointer-events: none !important;
+	border: none !important;
+	border-radius: 10px !important;
+	background: var(--correct-bg) !important;
+	color: #000 !important;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35) !important;
+	z-index: 999999 !important;
+	margin: 0 !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	text-align: center;
+	font-weight: bold;
+	white-space: normal;
+	overflow: hidden;
+	box-sizing: border-box !important;
+	transform: translate3d(0, 0, 0);
+	will-change: transform, opacity;
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+}
+body.dark-mode .draggable.flying-label { background: var(--correct-bg) !important; color: #fff !important; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6) !important; }
+
+.justification-text { display: none; margin-top: 10px; font-style: italic; color: var(--font-color); opacity: 0.8; width: 100%; text-align: left; font-size: 0.85em; line-height: 1.4; user-select: text; cursor: text; }
+.justification-toggle { background: none; border: none; padding: 0; margin-left: 8px; cursor: pointer; color: var(--primary-color); vertical-align: middle; transition: transform 0.2s ease; -webkit-tap-highlight-color: transparent; }
+.justification-toggle svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; display: block; }
+.justification-toggle:hover { transform: scale(1.2); }
+.justification-toggle.info-appear { animation: info-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) backwards; }
+@keyframes info-pop { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+
+.score-button-container { display: flex; justify-content: center; gap: 0; margin: 20px 0; flex-wrap: wrap; flex-shrink: 0; }
+.button, .score { padding: 10px 20px; border: none; background: var(--btn); box-shadow: var(--shadow-out); font-size: 1em; color: var(--font-color); display: flex; align-items: center; justify-content: center; flex: 0 1 auto; min-width: 120px; }
+.button { border-radius: 8px 0 0 8px; }
+.score { border-radius: 0 8px 8px 0; border-left: 1px solid rgba(0,0,0,0.1); font-weight: normal; }
+.button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ===== MODE ÉVALUATION ===== */
+.evaluation-info { background-color: var(--info-bg); border: 2px solid var(--info-border); border-radius: 20px; padding: 15px; margin: 10px 0; text-align: center; font-size: 14px; font-weight: 500; color: var(--info-color); box-shadow: var(--shadow-in); transition: all 0.3s ease; display: none; width: 100%; }
+body.evaluation-mode .evaluation-info { display: block; flex: 1; min-height: 0; overflow-y: auto; }
+body.evaluation-mode .row { display: none; }
+.evaluation-info .eval-list { text-align: left; margin: 12px auto 0; max-width: 720px; padding-left: 24px; font-weight: normal; line-height: 1.5; }
+.evaluation-info .eval-list li { margin-bottom: 8px; }
+
+/* ===== TOASTER & CONFETTI ===== */
+.toaster-global { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--toast-bg); color: var(--toast-text); padding: 16px 28px; border-radius: 12px; font-size: 1rem; font-weight: bold; z-index: 99999; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease; opacity: 0; pointer-events: none; text-align: center; max-width: 90%; min-width: 200px; }
+.toaster-global.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+.toaster-global.warning { background: #f39c12; color: #fff; }
+.toaster-global.danger { background: #e74c3c; color: #fff; }
+.confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 99999; overflow: hidden; }
+.confetti-piece { position: absolute; width: 10px; height: 10px; top: -10px; animation: confetti-fall linear forwards; }
+@keyframes confetti-fall { 0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; } }
+
+/* ===== MENUS ===== */
+.menu-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+.menu-overlay.open { opacity: 1; visibility: visible; }
+.slide-menu { position: fixed; top: 0; right: -300px; width: 280px; height: 100vh; background-color: var(--bg); z-index: 1001; padding: 20px; display: flex; flex-direction: column; border-radius: 20px 0 0 20px; box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1); transition: right 0.3s ease; overflow-y: auto; }
+.slide-menu.open { right: 0; }
+.menu-header { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+.menu-close, .submenu-close { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.menu-close svg, .submenu-close svg { width: 18px; height: 18px; stroke: currentColor; }
+.menu-item { display: flex; align-items: center; padding: 0px 20px; font-size: 14px; border-radius: 8px; margin-bottom: 17px; width: 100%; min-height: 42px; border: none; }
+.menu-item:hover { background: rgba(0, 0, 0, 0.08); transform: translateY(-2px); }
+.menu-item svg { width: 24px; height: 24px; margin-right: 16px; stroke: currentColor; stroke-width: 2; fill: none; flex-shrink: 0; transition: transform 0.3s ease; }
+.menu-item:hover svg { animation: rotate 1s linear; }
+.menu-item .item-label { flex: 1; text-align: left; display: flex; align-items: center; height: 100%; }
+
+.submenu { position: fixed; top: 0; right: -340px; width: 280px; height: 100%; background: var(--bg); z-index: 10010; box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2); border-radius: 20px 0 0 20px; padding: 2rem 1.5rem; overflow-y: auto; transition: right 0.5s ease; }
+.submenu.active { right: 0; }
+.submenu-title { font-size: 1.4rem; font-weight: bold; color: var(--primary-color); margin: 0.5rem 0 1.5rem 0; text-align: center; text-transform: lowercase; letter-spacing: 0.3px; }
+.submenu-content { color: var(--font-color); font-size: 13px; line-height: 1.5; margin-top: 4px; }
+.settings-info { margin-top: 0; padding: 15px; background: rgba(0, 0, 0, 0.05); border-radius: 10px; text-align: left; margin-bottom: 15px; font-size: 13px; line-height: 1.5; }
+.settings-info p { margin: 0 0 8px 0; }
+.settings-info p:last-child { margin-bottom: 0; }
+.settings-info svg:hover { animation: rotate 1s linear; }
+
+.submenu-icon { width: 24px; height: 24px; flex-shrink: 0; color: var(--font-color); stroke: currentColor; stroke-width: 2; fill: none; transition: transform 0.3s ease; display: inline-block; vertical-align: middle; }
+.submenu-icon:hover { animation: rotate 1s linear; }
+
+#submenuPresentation .settings-info ul { list-style: none; padding: 0; margin: 0; }
+#submenuPresentation .settings-info li { padding: 6px 0; margin: 0; font-size: 14px; line-height: 1.5; display: block; }
+
+.shortcuts-table { width: 100%; color: var(--font-color); margin-bottom: 1rem; border-collapse: collapse; line-height: 1.1; font-size: 13px; }
+.shortcuts-table td { padding: 1px 0; border: none; vertical-align: middle; }
+.shortcuts-table .key-combo { white-space: nowrap; padding-right: 12px; }
+kbd { display: inline-block; margin: 6px 0; padding: 4px 8px; font-family: monospace; font-size: 0.85em; font-weight: bold; background-color: #d1d1d1; color: #333; border-radius: 6px; box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.6) inset; min-width: 20px; text-align: center; }
+body.dark-mode kbd { background-color: #1a1a1a; color: #e2e8f0; border: 1px solid #333; }
+
+.about-row { display: flex; align-items: center; gap: 8px; width: 100%; }
+.about-row > .about-text { flex: 1; min-width: 0; text-align: left; color: var(--font-color); font-size: 13px; line-height: 1.4; word-break: break-word; padding: 6px 0; }
+.about-row > .about-text p { margin: 0; }
+.about-text a { color: var(--font-color); text-decoration: none; border-bottom: 1px dotted var(--font-color); }
+.about-text a:hover { border-bottom: 2px solid var(--font-color); }
+
+.toggle-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; min-height: 24px; }
+.toggle-label { color: var(--font-color); font-size: 0.9rem; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; flex: 1; }
+.toggle-label svg { width: 24px; min-width: 24px; height: 24px; flex-shrink: 0; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.toggle-label svg:hover { animation: rotate 1s linear; }
+.theme-switch { position: relative; display: inline-block; width: 40px; height: 20px; flex-shrink: 0; }
+.theme-switch input { opacity: 0; width: 0; height: 0; }
+.theme-switch .slider { position: absolute; cursor: pointer; inset: 0; background: #b0b8c4; border-radius: 20px; transition: .3s; }
+.theme-switch .slider:before { content: ""; position: absolute; width: 16px; height: 16px; left: 2px; top: 2px; background: #fff; border-radius: 50%; transition: .3s; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
+.theme-switch input:checked+.slider { background: #3a7bb5; }
+.theme-switch input:checked+.slider:before { transform: translateX(20px); }
+
+.slider-container { margin-top: 0.75rem; margin-bottom: 0.75rem; }
+.slider-label { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; margin-bottom: 0.5rem; }
+.slider-value { font-weight: bold; color: var(--primary-color); font-size: 1rem; }
+.slider-timer { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px; background: #b0b8c4; outline: none; }
+.slider-timer::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #3a7bb5; cursor: pointer; }
+.slider-graduations { display: flex; justify-content: space-between; width: 100%; padding: 0; margin-top: 5px; font-size: 0.7rem; opacity: 0.7; }
+.slider-graduations .infinity-symbol { font-size: 1.2rem; margin-top: -5px; }
+
+/* ===== BOÎTE DE DIALOGUE DE RÉINITIALISATION ===== */
+.reset-dialog-overlay {
+	position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5);
+	z-index: 100001; display: flex; align-items: center; justify-content: center;
+	opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s ease;
+	padding: 20px;
+}
+.reset-dialog-overlay.open { opacity: 1; visibility: visible; }
+.reset-dialog {
+	background: var(--bg); color: var(--font-color);
+	border-radius: 16px; padding: 24px 22px 18px;
+	max-width: 380px; width: 100%;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+	transform: scale(0.92) translateY(10px);
+	transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+	text-align: center;
+	border: 1px solid rgba(0, 0, 0, 0.05);
+}
+body.dark-mode .reset-dialog { border-color: rgba(255, 255, 255, 0.08); }
+.reset-dialog-overlay.open .reset-dialog { transform: scale(1) translateY(0); }
+.reset-dialog-icon {
+	width: 52px; height: 52px; margin: 0 auto 14px;
+	display: flex; align-items: center; justify-content: center;
+	background: rgba(231, 76, 60, 0.12);
+	border-radius: 50%; color: var(--primary-color);
+}
+body.dark-mode .reset-dialog-icon { background: rgba(255, 107, 107, 0.15); }
+.reset-dialog-icon svg { width: 26px; height: 26px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.reset-dialog-title {
+	font-size: 1.15rem; font-weight: bold; color: var(--primary-color);
+	margin: 0 0 8px 0; text-transform: lowercase;
+}
+.reset-dialog-message {
+	font-size: 0.9rem; line-height: 1.5; opacity: 0.85;
+	margin: 0 0 20px 0;
+}
+.reset-dialog-actions { display: flex; gap: 10px; justify-content: center; }
+.reset-dialog-actions button {
+	flex: 1; padding: 10px 14px; border: none; border-radius: 8px;
+	font-size: 0.9rem; cursor: pointer; font-weight: bold;
+	background: var(--btn); color: var(--font-color);
+	box-shadow: var(--shadow-out);
+	transition: all 0.2s ease;
+	-webkit-tap-highlight-color: transparent;
+}
+.reset-dialog-actions button:hover { box-shadow: var(--shadow-in); transform: translateY(-1px); }
+.reset-dialog-actions .reset-confirm {
+	background: var(--primary-color); color: #fff;
+	box-shadow: 0 4px 12px rgba(231, 76, 60, 0.35);
+}
+.reset-dialog-actions .reset-confirm:hover {
+	box-shadow: 0 6px 16px rgba(231, 76, 60, 0.45);
+	transform: translateY(-1px);
+}
+
+#loadingScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 99999; transition: opacity 0.5s ease; }
+#loadingScreen.hidden { opacity: 0; pointer-events: none; }
+#loadingScreen .loader { width: 60px; height: 60px; border: 4px solid var(--btn); border-top-color: var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+#loadingScreen p { color: var(--font-color); font-size: 1.1rem; margin-top: 10px; }
+#loadingScreen .upload-btn { padding: 12px 30px; font-size: 1rem; border-radius: 8px; margin-top: 20px; cursor: pointer; background: var(--btn); color: var(--font-color); box-shadow: var(--shadow-out); border: none; transition: all 0.2s ease; }
+#loadingScreen .upload-btn:hover { box-shadow: var(--shadow-in); transform: translateY(-2px); }
+#loadingScreen .upload-btn input[type="file"] { display: none; }
+#loadingScreen .file-info { margin-top: 15px; font-size: 0.9rem; color: var(--primary-color); }
+
+body.dark-mode {
+	--bg: #121212; --btn: #3d3d3d; --font-color: #ffffff;
+	--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.05);
+	--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
+	--color-correct: #2ecc71; --color-incorrect: #e74c3c; --border-correct: #2ecc71; --border-incorrect: #e74c3c;
+	--correct-bg: #2E7D32; --incorrect-bg: #8B0000;
+	--info-bg: #2a2a2a; --info-border: #4a4a4a; --info-color: #e0e0e0;
+	--tooltip-bg: #1a1a1a; --tooltip-color: #ffffff; --toast-bg: #3d3d3d; --toast-text: #e0e0e0;
+	--primary-color: #ff6b6b; --badge-bg: #ff6b6b; --badge-color: #ffffff;
+	--placeholder-border: #555555;
+	background-color: #121212 !important; color: #ffffff !important;
+}
+body.dark-mode .dropzone, body.dark-mode .draggable, body.dark-mode .btn, body.dark-mode .timer-btn, body.dark-mode .button, body.dark-mode .score, body.dark-mode .slide-menu, body.dark-mode .menu-item, body.dark-mode .submenu { background-color: #3d3d3d; color: #ffffff; box-shadow: 0.3rem 0.3rem 0.6rem #000000, -0.3rem -0.3rem 0.6rem #5a5a5a; }
+body.dark-mode .dropzone { background-color: #2d2d2d; }
+body.dark-mode .draggable { background: #4a4a4a !important; }
+body.dark-mode .mobile-title { color: #ff6b6b !important; }
+body.dark-mode .settings-info { background: rgba(255, 255, 255, 0.05); }
+body.dark-mode .dropdown-notion-item:hover { background: rgba(255, 255, 255, 0.08); }
+body.dark-mode .select-all-btn:last-child { border-left-color: rgba(255, 255, 255, 0.08); }
+
+@media (max-width: 768px) {
+	html, body { overflow: hidden !important; height: 100% !important; height: 100dvh !important; }
+	body { padding: 0px 4px 0px 4px !important; }
+	.toolbar { display: none; }
+	.toolbar-mobile { display: flex; padding: 4px 4px 0px 4px; flex-shrink: 0; }
+	.mobile-buttons { margin-bottom: 4px; gap: 3px; }
+	.mobile-buttons .btn, .mobile-buttons .timer-btn { width: 34px; height: 34px; }
+	.mobile-buttons .btn svg { width: 14px; height: 14px; }
+	.mobile-buttons .menu-icon { width: 14px; height: 12px; gap: 2px; }
+	.mobile-buttons .menu-icon span { height: 1.5px; }
+	.timer-btn { font-size: 8px !important; }
+	.mobile-title { font-size: 0.85rem; margin-top: 0; }
+
+	/* SVG séquences mobile */
+	.btn-sequences .arrow-svg,
+	.btn-sequences .plate-svg { width: 14px; height: 14px; }
+
+	.container { flex: 1 !important; min-height: 0 !important; padding: 0 4px !important; display: flex !important; flex-direction: column !important; }
+	.row { flex-direction: column !important; align-items: center !important; gap: 10px !important; margin: 0px 0 !important; }
+	.dropzone { flex: 1 1 100% !important; max-width: 100% !important; width: 100% !important; min-height: 0 !important; padding: 15px !important; }
+	.dropzone strong { font-size: 0.9rem !important; }
+	.draggable { padding: 10px 14px !important; font-size: 0.85rem !important; margin-bottom: 8px !important; height: calc(2.8em + 20px); }
+	.draggable.correct, .draggable.incorrect { padding-top: 7px !important; padding-bottom: 7px !important; }
+	
+	.score-button-container { gap: 0 !important; margin: 8px 0 4px 0 !important; padding: 4px 0 !important; display: flex !important; justify-content: center !important; min-height: 44px !important; }
+	.button, .score { padding: 6px 14px !important; font-size: 0.85rem !important; min-height: 36px !important; flex: 1 !important; max-width: 50% !important; }
+	.button { border-radius: 8px 0 0 8px !important; }
+	.score { border-radius: 0 8px 8px 0 !important; border-left: 1px solid rgba(0,0,0,0.1) !important; }
+
+	.sequences-dropdown { position: fixed !important; left: 50% !important; transform: translateX(-50%) !important; top: 90px !important; min-width: unset !important; max-width: 92vw !important; width: 92vw !important; margin-top: 0 !important; max-height: 40vh !important; }
+
+	.slide-menu { width: 260px; right: -280px; padding: 14px 16px; }
+	.submenu { width: 260px; right: -280px; padding: 14px 16px; }
+	.menu-item { padding: 10px 14px; font-size: 12px; min-height: 48px; border-radius: 8px; }
+	.menu-item svg { width: 20px; height: 20px; }
+
+	.reset-dialog { padding: 20px 18px 16px; }
+	.reset-dialog-title { font-size: 1.05rem; }
+	.reset-dialog-message { font-size: 0.85rem; }
+}
+@media (max-width: 400px) {
+	.mobile-buttons { gap: 2px; }
+	.mobile-buttons .btn, .mobile-buttons .timer-btn { width: 30px; height: 30px; }
+	.mobile-buttons .btn svg { width: 13px; height: 13px; }
+	.timer-btn { font-size: 7px !important; }
+	.button, .score { font-size: 0.7rem !important; padding: 3px 8px !important; min-height: 28px !important; }
+}
+</style>
 </head>
 <body>
-    <div class="learner-matching-wrapper">
-        <h1>d'ac ou pas d'ac ?</h1>
-        <p style="text-align: center; color: #555; font-size: 20px; margin-bottom: 30px;">réviser les auteurs</p>
-        <p style="margin-bottom: 20px; text-align: center; color: #777;"><i>Classez les thèses suivantes, selon qu'elles sont justes ou erronées.</i></p>
-        <div class="learner-matching-wrapper-inner">
-            <!-- Colonne de gauche : Propositions à classer -->
-            <div class="learner-matching-column learner-matching-column-all">
-                <h2>Propositions à classer</h2>
-                <ul class="connected-sortable droppable-area1" id="item-bank">
-                    <!-- Les propositions seront injectées ici par JavaScript -->
-                </ul>
-            </div>
 
-            <!-- Colonne de droite : Options de classement -->
-            <div class="learner-matching-column learner-matching-column-options">
-                <div class="learner-matching-column-inner learner-matching-column-kids">
-                    <h2 id="daccord-title"><!-- Le titre sera injecté ici par JavaScript --></h2>
-                    <ul class="connected-sortable droppable-area droppable-area2" id="daccord-target">
-                        <!-- Les propositions "d'accord" seront injectées ici par JavaScript -->
-                    </ul>
-                </div>
-                <div class="learner-matching-column-inner learner-matching-column-adults">
-                    <h2 id="pasdaccord-title"><!-- Le titre sera injecté ici par JavaScript --></h2>
-                    <ul class="connected-sortable droppable-area droppable-area3" id="pasdaccord-target">
-                        <!-- Les propositions "pas d'accord" seront injectées ici par JavaScript -->
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="reset-sort-btn-wrapper">
-            <button class="reset-sort-btn">Recommencer</button>
-        </div>
-    </div>
+<div id="loadingScreen">
+	<div class="loader"></div>
+	<p>📁 Charger un fichier de ressources</p>
+	<p style="font-size:0.85rem; opacity:0.7; margin-top:4px;">textes.js</p>
+	<button class="upload-btn" id="uploadBtn">
+		<svg class="icon-inline" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> sélectionner le fichier
+		<input type="file" id="fileInput" accept=".js">
+	</button>
+	<div class="file-info" id="fileInfo"></div>
+</div>
 
-    <script src="src/jquery.min.js"></script>
-    <script src="src/jquery-ui.min.js"></script>
-    <script src="textes.js"></script>
-    <script>
-        $(document).ready(function() {
-            const philosophe = getRandomPhilosophe(); // Sélectionne un philosophe aléatoire
-            const randomPropositions = getRandomPropositions(philosophe, 6); // Choisissez le nombre de propositions à afficher
+<div id="toasterGlobal" class="toaster-global"></div>
 
-            // Met à jour les titres avec le nom du philosophe
-            $("#daccord-title").text(`${philosophe.nom} pense que...`);
-            $("#pasdaccord-title").text(`${philosophe.nom} ne pense pas que...`);
+<div class="toolbar-wrapper" style="display:none;" id="appContent">
+	<div class="toolbar" id="toolbarDesktop">
+		<div class="toolbar-left">
+			<div style="position:relative;">
+				<button class="btn btn-sequences" id="sequencesBtn" data-title="choisir un auteur (S)">
+					<!-- SVG modifié : flèche + plateau -->
+					<svg class="arrow-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+						<g class="arrow-group">
+							<line x1="12" y1="4" x2="12" y2="14"></line>
+							<polyline points="7 10 12 15 17 10"></polyline>
+						</g>
+					</svg>
+					<svg class="plate-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+						<g class="plate-group">
+							<line x1="4" y1="19" x2="20" y2="19"></line>
+							<line x1="4" y1="19" x2="4" y2="16"></line>
+							<line x1="20" y1="19" x2="20" y2="16"></line>
+						</g>
+					</svg>
+				</button>
+				<div class="sequences-dropdown" id="sequencesDropdown">
+					<div class="dropdown-header">📚 auteurs disponibles</div>
+					<div class="dropdown-actions">
+						<button class="select-all-btn" id="selectAllAuthors">✓ tout sélectionner</button>
+						<button class="select-all-btn" id="deselectAllAuthors">✗ tout désélectionner</button>
+					</div>
+					<div id="dropdownAuthorsList"></div>
+					<div class="dropdown-count" id="dropdownAuthorsCount">0 / 0 auteurs sélectionnés</div>
+				</div>
+			</div>
 
-            // Ajoute les propositions à la liste (sans [?] dans la colonne de gauche)
-            randomPropositions.forEach(prop => {
-                const li = `
-                    <li class="ui-state-default draggable-item" id="${prop.type}-${philosophe.nom}" data-justification="${prop.justification}">
-                        ${prop.texte}
-                        <div class="justification">${prop.justification}</div>
-                    </li>`;
-                $("#item-bank").append(li);
-            });
+			<button class="btn btn-home" data-action="home" data-title="accueil (H)">
+				<div class="icon-wrapper">
+					<svg viewBox="0 0 24 24"><polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-join="round" stroke-linecap="round"/></svg>
+				</div>
+			</button>
+			<button class="btn btn-reload" data-action="reload" data-title="recharger (R)">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+			</button>
+		</div>
+		<div class="toolbar-center">
+			<div class="toolbar-title" id="appTitle">d'ac ou pas d'ac ?</div>
+			<div class="toolbar-subtitle" id="appSubtitle">classez les thèses suivantes, selon qu'elles sont justes ou erronées.</div>
+		</div>
+		<div class="toolbar-right">
+			<button class="timer-btn" id="timerBtnDesktop" data-title="temps restant (T)">
+				<span id="timerValueDesktop">01:00</span>
+			</button>
+			<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (F)">
+				<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+					<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+					<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+					<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+					<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+				</svg>
+			</button>
+			<button class="btn btn-menu" data-action="menu" data-title="menu (M)">
+				<div class="menu-icon"><span></span><span></span><span></span></div>
+			</button>
+		</div>
+	</div>
 
-            // Initialisation du drag and drop
-            $(".connected-sortable").sortable({
-                connectWith: ".connected-sortable",
-                placeholder: "ui-state-highlight",
-                receive: function(event, ui) {
-                    const item = ui.item;
-                    const target = $(this).attr("id");
-                    const type = item.attr("id").split("-")[0];
+	<div class="toolbar-mobile" id="toolbarMobile">
+		<div class="mobile-buttons">
+			<div style="position:relative;">
+				<button class="btn btn-sequences" id="sequencesBtnMobile" data-title="choisir un auteur (S)">
+					<!-- SVG modifié : flèche + plateau -->
+					<svg class="arrow-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+						<g class="arrow-group">
+							<line x1="12" y1="4" x2="12" y2="14"></line>
+							<polyline points="7 10 12 15 17 10"></polyline>
+						</g>
+					</svg>
+					<svg class="plate-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+						<g class="plate-group">
+							<line x1="4" y1="19" x2="20" y2="19"></line>
+							<line x1="4" y1="19" x2="4" y2="16"></line>
+							<line x1="20" y1="19" x2="20" y2="16"></line>
+						</g>
+					</svg>
+				</button>
+				<div class="sequences-dropdown" id="sequencesDropdownMobile">
+					<div class="dropdown-header">📚 auteurs disponibles</div>
+					<div class="dropdown-actions">
+						<button class="select-all-btn" id="selectAllAuthorsMobile">✓ tout</button>
+						<button class="select-all-btn" id="deselectAllAuthorsMobile">✗ rien</button>
+					</div>
+					<div id="dropdownAuthorsListMobile"></div>
+					<div class="dropdown-count" id="dropdownAuthorsCountMobile">0 / 0</div>
+				</div>
+			</div>
 
-                    // Vérifie si la réponse est correcte
-                    if ((target === "daccord-target" && type === "daccord") || 
-                        (target === "pasdaccord-target" && type === "pasdaccord")) {
-                        item.addClass("correct").removeClass("incorrect");
-                    } else {
-                        item.addClass("incorrect").removeClass("correct");
-                    }
+			<button class="btn btn-home" data-action="home" data-title="accueil (H)">
+				<div class="icon-wrapper" style="width:34px; height:34px;">
+					<svg viewBox="0 0 24 24" style="width:14px; height:14px;"><polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-join="round" stroke-linecap="round"/></svg>
+				</div>
+			</button>
+			<button class="btn btn-reload" data-action="reload" data-title="recharger (R)">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px; height:14px;"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+			</button>
+			<button class="timer-btn" id="timerBtnMobile" data-title="temps restant (T)">
+				<span id="timerValueMobile">01:00</span>
+			</button>
+			<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (F)">
+				<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt" style="width:14px; height:14px;">
+					<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+					<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+					<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+					<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+				</svg>
+			</button>
+			<button class="btn btn-menu" data-action="menu" data-title="menu (M)">
+				<div class="menu-icon" style="width:14px; height:12px; gap:2px;"><span style="height:1.5px;"></span><span style="height:1.5px;"></span><span style="height:1.5px;"></span></div>
+			</button>
+		</div>
+		<div class="mobile-title-wrapper">
+			<div class="mobile-title" id="mobileTitle">d'ac ou pas d'ac ?</div>
+		</div>
+	</div>
+</div>
 
-                    // Ajoute le symbole ℹ️ uniquement dans la colonne de droite
-                    if (target === "daccord-target" || target === "pasdaccord-target") {
-                        item.append('<span class="show-justification">ℹ️</span>');
-                    }
+<main class="container" style="display:none;" id="appContainer">
+	<div class="evaluation-info" id="evaluationInfo">
+		<p id="evaluationConsigne"></p>
+		<ol class="eval-list" id="evaluationList"></ol>
+	</div>
+	<div class="row" id="reperesContainer"></div>
+	<div class="score-button-container">
+		<button id="checkButton" class="button">vérifier</button>
+		<div class="score">score :&nbsp;<span id="correctCount">0</span> / <span id="totalCount">0</span></div>
+	</div>
+</main>
 
-                    // Vérifie si toutes les étiquettes ont été déplacées
-                    if ($("#item-bank").children().length === 0) {
-                        $(".show-justification").show(); // Affiche tous les ℹ️ dans la colonne de droite
-                    }
-                },
-                start: function(event, ui) {
-                    // Supprime ℹ️ lors du déplacement d'un élément
-                    ui.item.find(".show-justification").remove();
-                }
-            }).disableSelection();
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="slide-menu" id="slideMenu">
+	<div class="menu-header">
+		<button class="menu-close" id="menuClose">
+			<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+	</div>
+	<div class="menu-content">
+		<button class="menu-item" id="openPresentationSub">
+			<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+			<span class="item-label">présentation</span>
+		</button>
+		<button class="menu-item" id="openSettingsSub">
+			<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+			<span class="item-label">paramètres</span>
+		</button>
+		<button class="menu-item" id="openReset">
+			<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+			<span class="item-label">réinitialiser</span>
+		</button>
+		<button class="menu-item" id="openShortcutsSub">
+			<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="6" y1="8" x2="10" y2="8"></line><line x1="14" y1="8" x2="18" y2="8"></line><line x1="6" y1="12" x2="10" y2="12"></line><line x1="14" y1="12" x2="18" y2="12"></line><line x1="6" y1="16" x2="10" y2="16"></line><line x1="14" y1="16" x2="18" y2="16"></line></svg>
+			<span class="item-label">raccourcis clavier</span>
+		</button>
+		<button class="menu-item" id="openAboutSub">
+			<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+			<span class="item-label">à propos</span>
+		</button>
+	</div>
+</div>
 
-            // Affiche la justification au clic sur l'icône ℹ️
-            $(document).on("click", ".show-justification", function() {
-                $(this).siblings(".justification").toggle();
-            });
+<div class="submenu" id="submenuPresentation">
+	<div class="menu-header"><button class="submenu-close" data-submenu="presentation"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+	<div class="submenu-title">présentation</div>
+	<div class="submenu-content">
+		<p>Cette application permet de vérifier sa connaissance des thèses des philosophes en les classant.</p><br>
+		<div class="settings-info">
+			<ul>
+				<li><strong>Glissez</strong> (ou cliquez sur) les étiquettes pour les placer dans la bonne colonne.</li>
+				<li><strong>Vérifier :</strong> les étiquettes bien placées passent au vert, les autres au rouge.</li>
+				<li><strong>Corriger :</strong> les étiquettes mal placées rejoignent leur colonne ; les ⓘ justifient chaque réponse.</li>
+				<li><strong>Nouvelle partie :</strong> un nouvel auteur et huit nouvelles propositions.</li>
+			</ul>
+		</div>
+	</div>
+</div>
 
-            // Réinitialise le tri
-            $(".reset-sort-btn").on("click", function() {
-                location.reload(); // Recharge la page pour recommencer
-            });
-        });
-    </script>
+<div class="submenu" id="submenuSettings">
+	<div class="menu-header"><button class="submenu-close" data-submenu="settings"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+	<div class="submenu-title">paramètres</div>
+	<div class="submenu-content">
+			<div class="toggle-container">
+				<span class="toggle-label"><svg class="submenu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg> mode sombre</span>
+				<label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label"><svg class="submenu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L2 8.5L12 14L22 8.5L12 3Z"/><path d="M6 11.5V17.5C6 17.5 8 20 12 20C16 20 18 17.5 18 17.5V11.5"/><line x1="2" y1="8.5" x2="2" y2="17"/><circle cx="2" cy="17" r="2" fill="currentColor" stroke="none"/></svg> mode évaluation</span>
+				<label class="theme-switch"><input type="checkbox" id="evaluationToggle"><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label"><svg class="submenu-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="13.5" cy="6.5" r="0.5" fill="currentColor"/><circle cx="17.5" cy="10.5" r="0.5" fill="currentColor"/><circle cx="8.5" cy="7.5" r="0.5" fill="currentColor"/><circle cx="6.5" cy="12.5" r="0.5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg> mode daltonisme</span>
+				<label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label"><svg class="submenu-icon" viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg> animations</span>
+				<label class="theme-switch"><input type="checkbox" id="animationsToggle" checked><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label"><svg class="submenu-icon" viewBox="0 0 24 24" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg> sons</span>
+				<label class="theme-switch"><input type="checkbox" id="soundToggle" checked><span class="slider"></span></label>
+			</div>
+			<div class="slider-container">
+				<div class="slider-label">
+					<span class="toggle-label"><svg class="submenu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg> minuteur</span>
+					<span class="slider-value" id="timerLimitValue">1 min</span>
+				</div>
+				<input type="range" id="timerLimitSlider" class="slider-timer" min="1" max="6" step="1" value="1">
+				<div class="slider-graduations">
+					<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span class="infinity-symbol">∞</span>
+				</div>
+			</div>
+			<br>
+	</div>
+</div>
+
+<div class="submenu" id="submenuShortcuts">
+	<div class="menu-header"><button class="submenu-close" data-submenu="shortcuts"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+	<div class="submenu-title">raccourcis</div>
+	<div class="submenu-content">
+		<div class="settings-info">
+			<table class="shortcuts-table">
+				<tr><td class="key-combo"><kbd>H</kbd></td><td>accueil (site académique)</td></tr>
+				<tr><td class="key-combo"><kbd>R</kbd></td><td>recharger la partie</td></tr>
+				<tr><td class="key-combo"><kbd>F</kbd></td><td>plein écran</td></tr>
+				<tr><td class="key-combo"><kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr>
+				<tr><td class="key-combo"><kbd>S</kbd></td><td>ouvrir / fermer la liste des auteurs</td></tr>
+				<tr><td class="key-combo"><kbd>T</kbd></td><td>réinitialiser le minuteur</td></tr>
+				<tr><td class="key-combo"><kbd>E</kbd></td><td>activer/désactiver le mode évaluation</td></tr>
+				<tr><td class="key-combo"><kbd>D</kbd></td><td>activer/désactiver le mode daltonisme</td></tr>
+				<tr><td class="key-combo"><kbd>ESC</kbd></td><td>fermer les menus</td></tr>
+				<tr><td class="key-combo"><kbd>?</kbd></td><td>afficher cette aide</td></tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="submenu" id="submenuAbout">
+	<div class="menu-header"><button class="submenu-close" data-submenu="about"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+	<div class="submenu-title">à propos</div>
+	<div class="submenu-content">
+		<div class="settings-info">
+			<div class="about-row">
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+				<div class="about-text"><p>application développée<br>par Daniel Boulagnon</p></div>
+			</div>
+			<div class="about-row">
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+				<div class="about-text"><p><a href="mailto:daniel.boulagnon@ac-lille.fr">daniel.boulagnon@ac-lille.fr</a></p></div>
+			</div>
+			<div class="about-row">
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M14.5 9a3.5 3.5 0 1 0 0 6"/></svg>
+				<div class="about-text"><p>exploitation pédagogique<br>et non commerciale</p></div>
+			</div>
+			<div class="about-row">
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+				<div class="about-text"><p>© 2026 – d'accord ou pas d'accord</p></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ===== BOÎTE DE DIALOGUE DE RÉINITIALISATION ===== -->
+<div class="reset-dialog-overlay" id="resetDialogOverlay">
+	<div class="reset-dialog" role="dialog" aria-modal="true" aria-labelledby="resetDialogTitle">
+		<div class="reset-dialog-icon">
+			<svg viewBox="0 0 24 24" aria-hidden="true">
+				<polyline points="23 4 23 10 17 10"/>
+				<polyline points="1 20 1 14 7 14"/>
+				<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+			</svg>
+		</div>
+		<h2 class="reset-dialog-title" id="resetDialogTitle">réinitialiser l'application ?</h2>
+		<p class="reset-dialog-message">Cette action effacera <strong>toutes les données</strong> : scores, paramètres, sélection d'auteurs et préférences. L'application reviendra à son état initial.</p>
+		<div class="reset-dialog-actions">
+			<button type="button" id="resetCancelBtn">annuler</button>
+			<button type="button" class="reset-confirm" id="resetConfirmBtn">oui, réinitialiser</button>
+		</div>
+	</div>
+</div>
+
+<div id="saveIndicator" style="position: fixed; bottom: 20px; right: 20px; background: #4caf50; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; opacity: 0; transform: translateY(20px); pointer-events: none; z-index: 10001; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); transition: opacity 0.3s, transform 0.3s;">✓ paramètre sauvegardé</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+	const loadingScreen = document.getElementById('loadingScreen');
+	const appContent = document.getElementById('appContent');
+	const appContainer = document.getElementById('appContainer');
+	const fileInput = document.getElementById('fileInput');
+	const uploadBtn = document.getElementById('uploadBtn');
+	const fileInfo = document.getElementById('fileInfo');
+	const reperesContainer = document.getElementById('reperesContainer');
+
+	let correctCount = 0, totalCount = 0, gamesPlayed = 0;
+	let animationsEnabled = true, soundEnabled = true, darkMode = false;
+	let timerLimit = 60;
+	let timerInterval = null;
+	let timeLeft = 60;
+	let timerEnabled = true;
+	let confettiLaunched = false;
+	let toasterTimeout = null;
+	let isChecked = false;
+	let isTimerEvaluation = false;
+	let gamePhase = 'vérifier';
+	let isCorrecting = false;
+	let correctionGeneration = 0;
+	let currentPropositions = [];
+	let currentAuthorName = '';
+	
+	let availableAuthors = [];
+	let selectedAuthorIndices = new Set();
+
+	if (typeof window.databasePhilosophes !== 'undefined' && Array.isArray(window.databasePhilosophes) && window.databasePhilosophes.length > 0) {
+		loadingScreen.classList.add('hidden');
+		appContent.style.display = '';
+		appContainer.style.display = '';
+		initApp();
+	} else {
+		console.warn("⚠️ La variable 'databasePhilosophes' est introuvable ou vide.");
+		uploadBtn.addEventListener('click', () => fileInput.click());
+		fileInput.addEventListener('change', function(e) {
+			if (this.files && this.files.length > 0) loadResourceFile(this.files[0]);
+		});
+		loadingScreen.addEventListener('dragover', (e) => { e.preventDefault(); loadingScreen.style.border = '3px dashed var(--primary-color)'; });
+		loadingScreen.addEventListener('dragleave', () => { loadingScreen.style.border = 'none'; });
+		loadingScreen.addEventListener('drop', (e) => {
+			e.preventDefault(); loadingScreen.style.border = 'none';
+			const files = e.dataTransfer.files;
+			if (files && files.length > 0 && files[0].name.endsWith('.js')) loadResourceFile(files[0]);
+			else { fileInfo.textContent = '❌ Veuillez déposer un fichier .js'; fileInfo.style.color = '#dc3545'; }
+		});
+	}
+
+	function loadResourceFile(file) {
+		const reader = new FileReader();
+		reader.onload = function(e) {
+			try {
+				eval(e.target.result);
+				if (typeof window.databasePhilosophes !== 'undefined' && Array.isArray(window.databasePhilosophes) && window.databasePhilosophes.length > 0) {
+					fileInfo.textContent = '✅ Fichier chargé : ' + file.name;
+					fileInfo.style.color = '#28a745';
+					setTimeout(() => {
+						loadingScreen.classList.add('hidden');
+						appContent.style.display = '';
+						appContainer.style.display = '';
+						initApp();
+					}, 300);
+				} else {
+					fileInfo.textContent = '❌ Fichier invalide : structure "databasePhilosophes" manquante';
+					fileInfo.style.color = '#dc3545';
+				}
+			} catch(err) {
+				fileInfo.textContent = '❌ Erreur lors du chargement : ' + err.message;
+				fileInfo.style.color = '#dc3545';
+			}
+		};
+		reader.readAsText(file);
+	}
+
+	function initApp() {
+		createDropzonesDac();
+		extractAuthors();
+		loadSelectedAuthors();
+		loadGameStats();
+		loadSettings();
+		loadTimerSettings();
+		updateAuthorsDropdown();
+		configureEvents();
+		getNewWordsDac();
+		if (timerEnabled) { resetTimer(); startTimer(); } 
+		else { updateTimerDisplay('∞'); showTimerButtons(false); }
+		// Vérification initiale de la sélection
+		checkSelectionAndWarn();
+	}
+
+	// ==================== FONCTION AJOUTÉE ====================
+	function hasSelection() {
+		return selectedAuthorIndices.size > 0;
+	}
+
+	function showEmptySelectionMessage() {
+		// Message dans les dropzones
+		const daccordTitle = document.getElementById('daccord-title');
+		const pasdaccordTitle = document.getElementById('pasdaccord-title');
+		const dropzoneDaccord = document.getElementById('dropzone-daccord');
+		const dropzonePasdaccord = document.getElementById('dropzone-pasdaccord');
+
+		if (daccordTitle) daccordTitle.textContent = 'sélectionnez un auteur';
+		if (pasdaccordTitle) pasdaccordTitle.textContent = 'sélectionnez un auteur';
+
+		[dropzoneDaccord, dropzonePasdaccord].forEach(z => {
+			if (!z) return;
+			z.querySelectorAll('.draggable, .dropzone-empty-message').forEach(el => el.remove());
+			const msg = document.createElement('div');
+			msg.className = 'dropzone-empty-message';
+			msg.innerHTML = `
+				<div class="empty-icon">📚</div>
+				<div class="empty-text">
+					<strong>Aucun auteur sélectionné</strong>
+					Cliquez sur le bouton <em>« choisir un auteur »</em> en haut à gauche<br>
+					pour sélectionner au moins un philosophe.
+				</div>
+			`;
+			z.appendChild(msg);
+		});
+
+		// Désactiver le bouton vérifier
+		const checkBtn = document.getElementById('checkButton');
+		if (checkBtn) {
+			checkBtn.disabled = true;
+		}
+	}
+
+	function checkSelectionAndWarn(openDropdown) {
+		if (!hasSelection()) {
+			showEmptySelectionMessage();
+			showToaster("⚠️ Aucun auteur sélectionné — choisissez au moins un philosophe dans la liste (bouton en haut à gauche).", "warning", 5000);
+			// Ouvrir automatiquement le dropdown si demandé
+			if (openDropdown) {
+				const dropdown = document.getElementById('sequencesDropdown');
+				if (dropdown) {
+					dropdown.classList.add('open');
+					updateAuthorsDropdown();
+				}
+			}
+			return false;
+		}
+		return true;
+	}
+	// ==================== FIN FONCTION AJOUTÉE ====================
+
+	function createDropzonesDac() {
+		reperesContainer.innerHTML = `
+			<div class="dropzone" id="dropzone-daccord">
+				<strong id="daccord-title">...</strong>
+			</div>
+			<div class="dropzone" id="dropzone-pasdaccord">
+				<strong id="pasdaccord-title">...</strong>
+			</div>
+		`;
+		
+		const allowDrop = e => e.preventDefault();
+		const drop = e => { 
+			e.preventDefault(); 
+			if (isChecked) return;
+			if (!hasSelection()) return;
+			const id = e.dataTransfer.getData("text/plain");
+			const el = document.getElementById(id); 
+			const zone = e.target.closest(".dropzone"); 
+			if (zone && el && !el.classList.contains('locked')) { 
+				zone.appendChild(el); 
+				el.style.opacity = "1";
+				// Retirer le message vide si présent
+				const emptyMsg = zone.querySelector('.dropzone-empty-message');
+				if (emptyMsg) emptyMsg.remove();
+			} 
+		};
+		
+		['dropzone-daccord', 'dropzone-pasdaccord'].forEach(id => {
+			const zone = document.getElementById(id);
+			if (zone) {
+				zone.addEventListener("dragover", allowDrop);
+				zone.addEventListener("drop", drop);
+			}
+		});
+	}
+
+	function extractAuthors() {
+		if (typeof window.databasePhilosophes !== 'undefined' && Array.isArray(window.databasePhilosophes)) {
+			availableAuthors = window.databasePhilosophes.map(p => p.nom);
+		}
+	}
+
+	function loadSelectedAuthors() {
+		const saved = localStorage.getItem('dacSelectedAuthors');
+		if (saved) {
+			try { selectedAuthorIndices = new Set(JSON.parse(saved)); } catch(e) {}
+		}
+		if (selectedAuthorIndices.size === 0 && availableAuthors.length > 0) {
+			availableAuthors.forEach((_, idx) => selectedAuthorIndices.add(idx));
+			saveSelectedAuthors();
+		}
+	}
+
+	function saveSelectedAuthors() {
+		localStorage.setItem('dacSelectedAuthors', JSON.stringify(Array.from(selectedAuthorIndices)));
+	}
+
+	function getFilteredAuthors() {
+		if (selectedAuthorIndices.size === 0) return availableAuthors;
+		return availableAuthors.filter((_, idx) => selectedAuthorIndices.has(idx));
+	}
+
+	function shuffleArray(array) {
+		const a = [...array];
+		for (let i = a.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[a[i], a[j]] = [a[j], a[i]];
+		}
+		return a;
+	}
+
+	function getRandomPhilosophe() {
+		const pool = window.databasePhilosophes.filter((_, idx) => selectedAuthorIndices.size === 0 || selectedAuthorIndices.has(idx));
+		if (pool.length === 0) return null;
+		return pool[Math.floor(Math.random() * pool.length)];
+	}
+
+	function getRandomPropositions(philosophe, totalNeeded) {
+		const shuffledDaccord = shuffleArray(philosophe.daccord || []).slice(0, 4);
+		const shuffledPasdaccord = shuffleArray(philosophe.pasdaccord || []).slice(0, 4);
+		
+		const result = [];
+		shuffledDaccord.forEach(item => result.push({ type: "daccord", texte: item.texte, justification: item.justification || "" }));
+		shuffledPasdaccord.forEach(item => result.push({ type: "pasdaccord", texte: item.texte, justification: item.justification || "" }));
+		
+		return result;
+	}
+
+	function getNewWordsDac() {
+		// Vérifier la sélection
+		if (!hasSelection()) {
+			showEmptySelectionMessage();
+			return;
+		}
+
+		const filtered = getFilteredAuthors();
+		if (filtered.length === 0) {
+			showEmptySelectionMessage();
+			showToaster("⚠️ Aucun auteur sélectionné", "warning", 3000);
+			return;
+		}
+		
+		const philosophe = getRandomPhilosophe();
+		if (!philosophe) {
+			showEmptySelectionMessage();
+			showToaster("⚠️ Aucun auteur sélectionné", "warning", 3000);
+			return;
+		}
+		const propositions = getRandomPropositions(philosophe, 8);
+		currentAuthorName = philosophe.nom;
+		
+		document.getElementById('daccord-title').textContent = `${philosophe.nom} pense que...`;
+		document.getElementById('pasdaccord-title').textContent = `${philosophe.nom} ne pense pas que...`;
+		
+		totalCount += 8; 
+		document.getElementById("totalCount").textContent = totalCount;
+		
+		populateDac(propositions);
+		
+		gamesPlayed++;
+		localStorage.setItem('dacGamesPlayed', gamesPlayed);
+		saveGameStats();
+		// Réactiver le bouton vérifier
+		const checkBtn = document.getElementById('checkButton');
+		if (checkBtn && !document.body.classList.contains('evaluation-mode')) {
+			checkBtn.disabled = false;
+		}
+	}
+
+	function setCheckButton(label) {
+		gamePhase = label;
+		document.getElementById('checkButton').textContent = label;
+	}
+
+	function populateDac(propositions) {
+		const dropzoneDaccord = document.getElementById('dropzone-daccord');
+		const dropzonePasdaccord = document.getElementById('dropzone-pasdaccord');
+		
+		[dropzoneDaccord, dropzonePasdaccord].forEach(z => z.querySelectorAll(".draggable, .placeholder-vide, .dropzone-empty-message").forEach(el => el.remove()));
+		currentPropositions = propositions.slice();
+		
+		const shuffled = shuffleArray(propositions);
+		
+		const dragStart = e => { 
+			if (isChecked) { e.preventDefault(); return false; }
+			if (!hasSelection()) { e.preventDefault(); return false; }
+			e.dataTransfer.setData("text/plain", e.target.id); 
+			e.target.classList.add("dragging"); 
+			setTimeout(() => e.target.style.opacity = "0.4", 0); 
+		};
+		const dragEnd = e => { 
+			e.target.style.opacity = "1"; 
+			e.target.classList.remove("dragging"); 
+		};
+		
+		shuffled.forEach((prop, i) => {
+			const el = document.createElement("div"); 
+			el.className = "draggable";
+			const span = document.createElement('span');
+			span.className = 'card-text';
+			span.textContent = prop.texte;
+			el.appendChild(span);
+			el.id = "prop_" + Date.now() + "_" + i;
+			el.dataset.type = prop.type;
+			el.dataset.justification = prop.justification;
+			el.draggable = true;
+			el.addEventListener("dragstart", dragStart); 
+			el.addEventListener("dragend", dragEnd);
+			
+			el.addEventListener("click", () => { 
+				if (isChecked) return;
+				if (!hasSelection()) return;
+				playSound('click');
+				if (el.parentNode === dropzoneDaccord) dropzonePasdaccord.appendChild(el);
+				else dropzoneDaccord.appendChild(el);
+			});
+			
+			if (i < 4) dropzoneDaccord.appendChild(el);
+			else dropzonePasdaccord.appendChild(el);
+		});
+		
+		document.getElementById("checkButton").disabled = document.body.classList.contains('evaluation-mode');
+		isChecked = false;
+		isCorrecting = false;
+		correctionGeneration++;
+		confettiLaunched = false;
+		setCheckButton("vérifier");
+		if (document.body.classList.contains('evaluation-mode')) refreshEvaluationView();
+	}
+
+	function evaluateAnswersDac() {
+		if (isChecked || document.body.classList.contains('evaluation-mode')) return;
+		if (!hasSelection()) {
+			showToaster("⚠️ Sélectionnez d'abord un auteur pour générer des thèses.", "warning", 3000);
+			return;
+		}
+		const dropzoneDaccord = document.getElementById('dropzone-daccord');
+		const dropzonePasdaccord = document.getElementById('dropzone-pasdaccord');
+		
+		let ok = 0, total = 0;
+		
+		const evaluateZone = (zone, expectedType) => {
+			zone.querySelectorAll(".draggable").forEach(el => { 
+				const isCorrect = el.dataset.type === expectedType;
+				el.classList.toggle("correct", isCorrect); 
+				el.classList.toggle("incorrect", !isCorrect); 
+				el.classList.add("locked");
+				el.draggable = false;
+				if (isCorrect) ok++; 
+				total++;
+			});
+		};
+		
+		evaluateZone(dropzoneDaccord, "daccord");
+		evaluateZone(dropzonePasdaccord, "pasdaccord");
+		
+		if (total === 0) {
+			showToaster("⚠️ Aucune thèse à évaluer — sélectionnez un auteur.", "warning", 3000);
+			return;
+		}
+		
+		isChecked = true;
+		correctCount += ok; 
+		document.getElementById("correctCount").textContent = correctCount;
+		saveGameStats();
+		
+		const percentage = total > 0 ? Math.round((ok / total) * 100) : 0;
+		let message = `📝 ${ok} / ${total} bonnes réponses (${percentage}%)`;
+		if (percentage >= 80) { message += ' 🌟'; playSound('score_good'); launchConfetti(); } 
+		else if (percentage >= 50) { message += ' 📚'; playSound('click'); } 
+		else { message += ' 💪'; playSound('score_bad'); }
+		
+		if (isTimerEvaluation) { message = '⏰ Temps écoulé ! ' + message; isTimerEvaluation = false; }
+		
+		showToaster(message, 'info', 4000);
+		setCheckButton("corriger");
+	}
+
+	async function correctAnswersDac() {
+		if (gamePhase !== "corriger" || isCorrecting) return;
+		if (document.body.classList.contains('evaluation-mode')) return;
+		const btn = document.getElementById('checkButton');
+		const zones = {
+			daccord: document.getElementById('dropzone-daccord'),
+			pasdaccord: document.getElementById('dropzone-pasdaccord')
+		};
+		const misplaced = Array.from(document.querySelectorAll('.draggable.incorrect'));
+		const gen = correctionGeneration;
+
+		const finalize = () => {
+			document.querySelectorAll('.draggable').forEach(el => {
+				el.classList.remove('incorrect');
+				el.classList.add('correct');
+			});
+			revealJustifications();
+			isCorrecting = false;
+			btn.disabled = false;
+			setCheckButton("nouvelle partie");
+			showToaster("✅ correction effectuée — cliquez sur les ⓘ pour lire les justifications", "info", 3500);
+		};
+
+		if (misplaced.length === 0) {
+			finalize();
+			return;
+		}
+
+		if (!animationsEnabled) {
+			const slots = [];
+			misplaced.forEach(el => {
+				const ph = document.createElement('div');
+				ph.className = 'placeholder-vide';
+				ph.style.height = el.offsetHeight + 'px';
+				el.parentNode.replaceChild(ph, el);
+				slots.push({ el });
+			});
+			slots.forEach(({ el }) => {
+				const targetZone = zones[el.dataset.type];
+				const ph = targetZone.querySelector('.placeholder-vide:not([data-filled])');
+				if (ph) {
+					ph.dataset.filled = '1';
+					ph.parentNode.replaceChild(el, ph);
+				} else {
+					targetZone.appendChild(el);
+				}
+			});
+			document.querySelectorAll('.placeholder-vide').forEach(ph => {
+				ph.classList.add('fading');
+				setTimeout(() => ph.remove(), 320);
+			});
+			finalize();
+			return;
+		}
+
+		isCorrecting = true;
+		btn.disabled = true;
+
+		const slots = [];
+		misplaced.forEach(el => {
+			const first = el.getBoundingClientRect();
+			const ph = document.createElement('div');
+			ph.className = 'placeholder-vide';
+			ph.style.height = el.offsetHeight + 'px';
+			el.parentNode.replaceChild(ph, el);
+			slots.push({ el, first });
+		});
+
+		const flying = [];
+		slots.forEach(({ el, first }) => {
+			const targetZone = zones[el.dataset.type];
+			const freePh = targetZone.querySelector('.placeholder-vide:not([data-filled])');
+			let measured;
+			if (freePh) {
+				freePh.dataset.filled = '1';
+				freePh.parentNode.replaceChild(el, freePh);
+				measured = el.getBoundingClientRect();
+				const back = document.createElement('div');
+				back.className = 'placeholder-vide';
+				back.style.height = el.offsetHeight + 'px';
+				back.dataset.filled = '1';
+				back.dataset.reserved = '1';
+				el.parentNode.replaceChild(back, el);
+				el.__targetPlaceholder = back;
+			} else {
+				targetZone.appendChild(el);
+				measured = el.getBoundingClientRect();
+				el.remove();
+				el.__targetPlaceholder = null;
+			}
+			flying.push({ el, first, deltaX: measured.left - first.left, deltaY: measured.top - first.top });
+		});
+
+		const clones = [];
+		flying.forEach(({ el, first, deltaX, deltaY }) => {
+			const computed = getComputedStyle(el);
+			const clone = el.cloneNode(true);
+			clone.removeAttribute('id');
+			clone.classList.remove('incorrect', 'correct', 'locked', 'dragging');
+			clone.classList.add('flying-label');
+			clone.style.top = first.top + 'px';
+			clone.style.left = first.left + 'px';
+			clone.style.width = first.width + 'px';
+			clone.style.height = first.height + 'px';
+			clone.style.padding = computed.padding;
+			clone.style.fontSize = computed.fontSize;
+			clone.style.lineHeight = computed.lineHeight;
+			document.body.appendChild(clone);
+			clone.animate(
+				[
+					{ transform: 'translate3d(0, 0, 0)', opacity: 0.95 },
+					{ transform: `translate3d(${deltaX}px, ${deltaY}px, 0)`, opacity: 0.95 }
+				],
+				{ duration: 1200, easing: 'cubic-bezier(0.45, 0.05, 0.55, 0.95)', fill: 'forwards' }
+			);
+			clones.push(clone);
+		});
+
+		await new Promise(resolve => setTimeout(resolve, 1250));
+
+		clones.forEach(c => c.remove());
+		if (gen !== correctionGeneration) return;
+
+		flying.forEach(({ el }) => {
+			const targetPh = el.__targetPlaceholder;
+			if (targetPh && targetPh.parentNode) {
+				targetPh.classList.add('fading');
+				setTimeout(() => {
+					if (targetPh.parentNode) targetPh.parentNode.replaceChild(el, targetPh);
+					delete el.__targetPlaceholder;
+				}, 320);
+				if (targetPh.parentNode) targetPh.parentNode.replaceChild(el, targetPh);
+			} else {
+				zones[el.dataset.type].appendChild(el);
+			}
+			delete el.__targetPlaceholder;
+		});
+
+		document.querySelectorAll('.placeholder-vide').forEach(ph => {
+			ph.classList.add('fading');
+			setTimeout(() => {
+				if (ph.parentNode) ph.remove();
+			}, 320);
+		});
+
+		finalize();
+	}
+
+	function revealJustifications() {
+		let delay = 0;
+		document.querySelectorAll('.draggable').forEach(el => {
+			const justification = (el.dataset.justification || "").trim();
+			if (!justification) {
+				console.warn("⚠️ Justification manquante dans textes.js pour : « " + el.textContent.trim() + " »");
+				return;
+			}
+			if (el.querySelector('.justification-toggle')) return;
+
+			const toggle = document.createElement('button');
+			toggle.type = 'button';
+			toggle.className = 'justification-toggle info-appear';
+			toggle.style.animationDelay = delay + 'ms';
+			delay += 70;
+			toggle.title = 'afficher / masquer la justification';
+			toggle.setAttribute('aria-label', 'afficher / masquer la justification');
+			toggle.setAttribute('aria-expanded', 'false');
+			toggle.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
+
+			const justDiv = document.createElement('div');
+			justDiv.className = 'justification-text';
+			justDiv.style.display = 'none';
+			justDiv.textContent = "💡 " + justification;
+
+			toggle.addEventListener('click', (e) => {
+				e.stopPropagation();
+				const visible = justDiv.style.display === 'block';
+				justDiv.style.display = visible ? 'none' : 'block';
+				el.classList.toggle('just-open', !visible);
+				toggle.setAttribute('aria-expanded', String(!visible));
+				playSound('click');
+			});
+
+			(el.querySelector('.card-text') || el).appendChild(toggle);
+			el.appendChild(justDiv);
+		});
+	}
+
+	function refreshEvaluationView() {
+		const consigne = document.getElementById('evaluationConsigne');
+		const list = document.getElementById('evaluationList');
+		if (!consigne || !list) return;
+		consigne.textContent = currentAuthorName
+			? `Mode évaluation — ${currentAuthorName} : classez ces thèses sur papier (« pense que… » / « ne pense pas que… »)`
+			: 'Mode évaluation : classez ces thèses sur papier, puis auto-évaluez-vous.';
+		list.innerHTML = '';
+		shuffleArray(currentPropositions).forEach(p => {
+			const li = document.createElement('li');
+			li.textContent = p.texte;
+			list.appendChild(li);
+		});
+	}
+
+	function toggleEvaluationMode(force) {
+		const body = document.body;
+		const t = document.getElementById('evaluationToggle');
+		const on = force !== undefined ? force : !body.classList.contains('evaluation-mode');
+		body.classList.toggle('evaluation-mode', on);
+		if (t) t.checked = on;
+		localStorage.setItem('dacEvaluationMode', on);
+		const btn = document.getElementById('checkButton');
+		if (on) { refreshEvaluationView(); btn.disabled = true; }
+		else { btn.disabled = isCorrecting || !hasSelection(); }
+	}
+
+	function toggleColorblindMode(force) {
+		const body = document.body;
+		const t = document.getElementById('colorblindToggle');
+		const on = force !== undefined ? force : !body.classList.contains('colorblind-mode');
+		body.classList.toggle('colorblind-mode', on);
+		if (t) t.checked = on;
+		localStorage.setItem('dacColorblindMode', on);
+	}
+
+	function reloadDac() {
+		correctionGeneration++;
+		isCorrecting = false;
+		document.querySelectorAll('.flying-label').forEach(g => g.remove());
+		document.querySelectorAll('.placeholder-vide').forEach(ph => ph.remove());
+		document.getElementById('checkButton').disabled = false;
+		correctCount = 0; totalCount = 0; 
+		document.getElementById("correctCount").textContent = "0";
+		document.getElementById("totalCount").textContent = "0";
+		
+		['dropzone-daccord', 'dropzone-pasdaccord'].forEach(id => {
+			const zone = document.getElementById(id);
+			if (zone) {
+				zone.querySelectorAll(".draggable").forEach(el => {
+					el.classList.remove("correct", "incorrect", "locked");
+					el.style.opacity = '1';
+					el.style.visibility = '';
+					el.draggable = true;
+				});
+			}
+		});
+		
+		setCheckButton("vérifier");
+		confettiLaunched = false;
+		isChecked = false;
+		isTimerEvaluation = false;
+
+		if (!hasSelection()) {
+			showEmptySelectionMessage();
+			showToaster("⚠️ Aucun auteur sélectionné — choisissez un philosophe dans la liste.", "warning", 3000);
+			return;
+		}
+
+		getNewWordsDac();
+		resetTimer();
+		if (timerEnabled) startTimer();
+		saveGameStats();
+		showToaster("🔄 nouvelle partie chargée", "info", 1500);
+		playSound('click');
+	}
+
+	function saveGameStats() { localStorage.setItem('dacGameStats', JSON.stringify({ correctCount, totalCount, gamesPlayed })); }
+	function loadGameStats() {
+		const s = localStorage.getItem('dacGameStats');
+		if (s) {
+			const d = JSON.parse(s);
+			correctCount = d.correctCount || 0; totalCount = d.totalCount || 0; gamesPlayed = d.gamesPlayed || 0;
+			document.getElementById("correctCount").textContent = correctCount;
+			document.getElementById("totalCount").textContent = totalCount;
+		}
+	}
+	function loadSettings() {
+		const s = localStorage.getItem('dacSettings');
+		if (s) {
+			const d = JSON.parse(s);
+			darkMode = d.darkMode || false;
+			animationsEnabled = d.animationsEnabled !== undefined ? d.animationsEnabled : true;
+			soundEnabled = d.soundEnabled !== undefined ? d.soundEnabled : true;
+			if (darkMode) document.body.classList.add('dark-mode');
+			if (!animationsEnabled) document.body.classList.add('no-animations');
+			document.getElementById('darkModeToggle').checked = darkMode;
+			document.getElementById('animationsToggle').checked = animationsEnabled;
+			document.getElementById('soundToggle').checked = soundEnabled;
+		}
+		if (localStorage.getItem('dacEvaluationMode') === 'true') {
+			document.body.classList.add('evaluation-mode');
+			const t = document.getElementById('evaluationToggle'); if (t) t.checked = true;
+		}
+		if (localStorage.getItem('dacColorblindMode') === 'true') {
+			document.body.classList.add('colorblind-mode');
+			const t = document.getElementById('colorblindToggle'); if (t) t.checked = true;
+		}
+	}
+	function saveSettings() {
+		localStorage.setItem('dacSettings', JSON.stringify({ darkMode, animationsEnabled, soundEnabled }));
+		const ind = document.getElementById('saveIndicator');
+		ind.style.opacity = '1'; ind.style.transform = 'translateY(0)';
+		setTimeout(() => { ind.style.opacity = '0'; ind.style.transform = 'translateY(20px)'; }, 1800);
+	}
+
+	function formatTimer(seconds) { if (seconds <= 0) return '00:00'; return String(Math.floor(seconds / 60)).padStart(2, '0') + ':' + String(seconds % 60).padStart(2, '0'); }
+	function updateTimerDisplay(value) { document.getElementById('timerValueDesktop').textContent = value; document.getElementById('timerValueMobile').textContent = value; }
+	function showTimerButtons(show) { document.querySelectorAll('.timer-btn').forEach(btn => btn.style.display = show ? '' : 'none'); }
+	function startTimer() {
+		stopTimer();
+		if (!timerEnabled) { updateTimerDisplay('∞'); showTimerButtons(false); document.getElementById("checkButton").disabled = document.body.classList.contains('evaluation-mode'); return; }
+		showTimerButtons(true); timeLeft = timerLimit; updateTimerDisplay(formatTimer(timeLeft));
+		timerInterval = setInterval(() => {
+			timeLeft--; updateTimerDisplay(formatTimer(timeLeft));
+			document.querySelectorAll('.timer-btn').forEach(btn => {
+				btn.classList.remove('warning', 'danger');
+				if (timeLeft <= Math.floor(timerLimit * 0.5) && timeLeft > 0) btn.classList.add('warning');
+				if (timeLeft <= Math.floor(timerLimit * 0.25) && timeLeft > 0) btn.classList.add('danger');
+			});
+			if (timeLeft <= 0) {
+				clearInterval(timerInterval); timerInterval = null;
+				if (!isChecked) { isTimerEvaluation = true; evaluateAnswersDac(); }
+			}
+		}, 1000);
+	}
+	function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } document.querySelectorAll('.timer-btn').forEach(btn => btn.classList.remove('warning', 'danger')); }
+	function resetTimer() {
+		stopTimer();
+		if (timerEnabled) { timeLeft = timerLimit; updateTimerDisplay(formatTimer(timeLeft)); showTimerButtons(true); } 
+		else { updateTimerDisplay('∞'); showTimerButtons(false); }
+		document.getElementById("checkButton").disabled = document.body.classList.contains('evaluation-mode') || !hasSelection();
+	}
+	function loadTimerSettings() {
+		const savedLimit = localStorage.getItem('dacTimerLimit');
+		const savedEnabled = localStorage.getItem('dacTimerEnabled');
+		let sliderValue = 1;
+		if (savedLimit !== null) {
+			const limit = parseInt(savedLimit, 10);
+			if (limit === 0) { timerEnabled = false; timerLimit = 0; sliderValue = 6; } 
+			else { timerLimit = limit; sliderValue = Math.round(limit / 60); timerEnabled = true; }
+		}
+		if (savedEnabled !== null) timerEnabled = savedEnabled === 'true';
+		const slider = document.getElementById('timerLimitSlider');
+		if (slider) {
+			slider.value = sliderValue;
+			document.getElementById('timerLimitValue').textContent = sliderValue === 6 ? '∞' : sliderValue + ' min';
+		}
+		if (!timerEnabled) { updateTimerDisplay('∞'); showTimerButtons(false); }
+	}
+
+	function playSound(type) {
+		if (!soundEnabled) return;
+		try {
+			const soundMap = { 'score_good': '../../src/sounds/score-bon.mp3', 'score_bad': '../../src/sounds/score-mauvais.mp3', 'click': '../../src/sounds/bruit-clavier.mp3' };
+			if (soundMap[type]) { const audio = new Audio(soundMap[type]); audio.volume = type === 'click' ? 0.3 : 0.8; audio.play().catch(() => {}); }
+		} catch (e) {}
+	}
+	function launchConfetti() {
+		if (!animationsEnabled || confettiLaunched) return;
+		confettiLaunched = true;
+		const container = document.createElement('div'); container.className = 'confetti-container'; document.body.appendChild(container);
+		const colors = ['#ff0000', '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff', '#ff9f43'];
+		for (let i = 0; i < 120; i++) {
+			const piece = document.createElement('div'); piece.className = 'confetti-piece';
+			piece.style.left = Math.random() * 100 + '%'; piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+			piece.style.width = (Math.random() * 12 + 4) + 'px'; piece.style.height = (Math.random() * 8 + 4) + 'px';
+			piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px'; piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+			container.appendChild(piece);
+		}
+		setTimeout(() => container.remove(), 4000);
+	}
+	function showToaster(message, type = 'info', duration = 3000) {
+		const toaster = document.getElementById('toasterGlobal');
+		toaster.innerHTML = message;
+		toaster.className = 'toaster-global show' + (type === 'warning' ? ' warning' : '') + (type === 'danger' ? ' danger' : '');
+		clearTimeout(toasterTimeout);
+		if (duration > 0) toasterTimeout = setTimeout(() => toaster.classList.remove('show'), duration);
+	}
+
+	function updateAuthorsDropdown() {
+		const dropdowns = [document.getElementById('sequencesDropdown'), document.getElementById('sequencesDropdownMobile')];
+		dropdowns.forEach(dropdown => {
+			if (!dropdown) return;
+			const listContainer = dropdown.querySelector('[id^="dropdownAuthorsList"]');
+			const countContainer = dropdown.querySelector('[id^="dropdownAuthorsCount"]');
+			if (!listContainer || !countContainer) return;
+			
+			const total = availableAuthors.length;
+			const selected = selectedAuthorIndices.size;
+			countContainer.textContent = (selected === 0 ? '⚠️ ' : '') + selected + ' / ' + total + ' auteurs sélectionnés';
+			countContainer.style.color = selected === 0 ? 'var(--color-incorrect)' : '';
+			
+			if (total === 0) { listContainer.innerHTML = '<div style="padding:8px 16px; font-size:0.8rem;">Aucun auteur disponible</div>'; return; }
+			
+			let html = '';
+			availableAuthors.forEach((author, idx) => {
+				const isChecked = selectedAuthorIndices.has(idx);
+				html += `<div class="dropdown-notion-item" data-id="${idx}"><input type="checkbox" class="author-checkbox" ${isChecked ? 'checked' : ''}><label>${author}</label></div>`;
+			});
+			listContainer.innerHTML = html;
+			
+			listContainer.querySelectorAll('.dropdown-notion-item').forEach(item => {
+				const idx = parseInt(item.dataset.id);
+				const checkbox = item.querySelector('.author-checkbox');
+				checkbox.addEventListener('change', function(e) {
+					e.stopPropagation();
+					if (this.checked) selectedAuthorIndices.add(idx); else selectedAuthorIndices.delete(idx);
+					saveSelectedAuthors(); updateAuthorsDropdown();
+					if (hasSelection()) {
+						reloadDac();
+					} else {
+						showEmptySelectionMessage();
+						showToaster("⚠️ Aucun auteur sélectionné — choisissez un philosophe.", "warning", 3000);
+					}
+					playSound('click');
+				});
+				item.addEventListener('click', function(e) {
+					if (e.target !== checkbox && e.target.tagName !== 'LABEL') { checkbox.checked = !checkbox.checked; checkbox.dispatchEvent(new Event('change')); }
+				});
+			});
+		});
+	}
+
+	function toggleAuthorsDropdown(event) {
+		event.stopPropagation();
+		const dropdown = this.id === 'sequencesBtn' || this.closest('#sequencesBtn') ? document.getElementById('sequencesDropdown') : document.getElementById('sequencesDropdownMobile');
+		if (dropdown) { updateAuthorsDropdown(); dropdown.classList.toggle('open'); }
+	}
+
+	function closeAuthorsDropdown() { document.querySelectorAll('.sequences-dropdown').forEach(d => d.classList.remove('open')); }
+
+	function openResetDialog() {
+		document.getElementById('resetDialogOverlay').classList.add('open');
+	}
+
+	function closeResetDialog() {
+		document.getElementById('resetDialogOverlay').classList.remove('open');
+	}
+
+	function performReset() {
+		closeResetDialog();
+		showToaster('🧹 réinitialisation en cours…', 'info', 2000);
+		setTimeout(() => {
+			localStorage.clear();
+			window.location.reload();
+		}, 900);
+	}
+
+	function configureEvents() {
+		document.querySelectorAll('[data-action="menu"]').forEach(b => b.addEventListener('click', () => { playSound('click'); document.getElementById('slideMenu').classList.add('open'); document.getElementById('menuOverlay').classList.add('open'); document.body.classList.add('menu-open'); }));
+		document.getElementById('menuClose').addEventListener('click', () => { playSound('click'); closeMenu(); });
+		document.getElementById('menuOverlay').addEventListener('click', () => { playSound('click'); closeMenu(); });
+		document.querySelectorAll('.submenu-close').forEach(b => b.addEventListener('click', () => { playSound('click'); closeAllSubmenus(); }));
+		
+		document.getElementById('openPresentationSub').addEventListener('click', () => { playSound('click'); openSubmenu('submenuPresentation'); });
+		document.getElementById('openSettingsSub').addEventListener('click', () => { playSound('click'); openSubmenu('submenuSettings'); });
+		document.getElementById('openShortcutsSub').addEventListener('click', () => { playSound('click'); openSubmenu('submenuShortcuts'); });
+		document.getElementById('openAboutSub').addEventListener('click', () => { playSound('click'); openSubmenu('submenuAbout'); });
+
+		// Bouton réinitialiser → ouvre la boîte de dialogue
+		document.getElementById('openReset').addEventListener('click', () => {
+			playSound('click');
+			openResetDialog();
+		});
+
+		// Boutons de la boîte de dialogue
+		document.getElementById('resetCancelBtn').addEventListener('click', () => {
+			playSound('click');
+			closeResetDialog();
+		});
+		document.getElementById('resetConfirmBtn').addEventListener('click', () => {
+			playSound('click');
+			performReset();
+		});
+		document.getElementById('resetDialogOverlay').addEventListener('click', (e) => {
+			if (e.target.id === 'resetDialogOverlay') {
+				playSound('click');
+				closeResetDialog();
+			}
+		});
+
+		document.getElementById('sequencesBtn').addEventListener('click', toggleAuthorsDropdown);
+		document.getElementById('sequencesBtnMobile').addEventListener('click', toggleAuthorsDropdown);
+		document.getElementById('selectAllAuthors').addEventListener('click', () => { availableAuthors.forEach((_, idx) => selectedAuthorIndices.add(idx)); saveSelectedAuthors(); updateAuthorsDropdown(); reloadDac(); playSound('click'); });
+		document.getElementById('deselectAllAuthors').addEventListener('click', () => { selectedAuthorIndices.clear(); saveSelectedAuthors(); updateAuthorsDropdown(); showEmptySelectionMessage(); playSound('click'); });
+		document.getElementById('selectAllAuthorsMobile').addEventListener('click', () => document.getElementById('selectAllAuthors').click());
+		document.getElementById('deselectAllAuthorsMobile').addEventListener('click', () => document.getElementById('deselectAllAuthors').click());
+		document.addEventListener('click', function(e) { if (!e.target.closest('.btn-sequences') && !e.target.closest('.sequences-dropdown')) closeAuthorsDropdown(); });
+
+		document.querySelectorAll('[data-action="home"]').forEach(b => { b.addEventListener('click', () => { playSound('click'); window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); }); });
+		document.querySelectorAll('[data-action="reload"]').forEach(btn => { btn.addEventListener('click', () => { if (animationsEnabled) { const svg = btn.querySelector('svg'); svg.style.transform = "rotate(360deg)"; setTimeout(() => svg.style.transform = "", 600); } reloadDac(); }); });
+		
+		document.querySelectorAll('.timer-btn').forEach(btn => {
+			btn.addEventListener('click', function(e) { e.stopPropagation(); playSound('click'); if (timerEnabled) { resetTimer(); startTimer(); showToaster('⏱️ Timer réinitialisé', 'info', 1500); } else { showToaster('⏱️ Timer illimité', 'info', 1500); } });
+		});
+
+		document.querySelectorAll('[data-action="fullscreen"]').forEach(b => b.addEventListener('click', toggleFullscreen));
+		document.addEventListener('fullscreenchange', () => {
+			const btns = document.querySelectorAll('.btn-fullscreen');
+			const fs = !!document.fullscreenElement;
+			btns.forEach(btn => {
+				if (fs) {
+					btn.classList.add('fullscreen-active');
+					btn.dataset.title = 'quitter plein écran (F)';
+					btn.innerHTML = `<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt"><line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/><line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/><line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/><line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/></svg>`;
+				} else {
+					btn.classList.remove('fullscreen-active');
+					btn.dataset.title = 'plein écran (F)';
+					btn.innerHTML = `<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt"><line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/><line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/><line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/><line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/></svg>`;
+				}
+			});
+		});
+
+		document.getElementById('checkButton').addEventListener('click', async () => {
+			if (isCorrecting || document.body.classList.contains('evaluation-mode')) return;
+			if (!hasSelection()) {
+				showToaster("⚠️ Sélectionnez d'abord au moins un auteur avant de vérifier.", "warning", 3000);
+				// Ouvrir le dropdown pour aider
+				const dropdown = document.getElementById('sequencesDropdown');
+				if (dropdown) { dropdown.classList.add('open'); updateAuthorsDropdown(); }
+				return;
+			}
+			if (gamePhase === "vérifier") {
+				if (timerEnabled) stopTimer(); isTimerEvaluation = false; evaluateAnswersDac();
+			} else if (gamePhase === "corriger") {
+				playSound('click'); await correctAnswersDac();
+			} else { reloadDac(); }
+		});
+
+		document.getElementById('darkModeToggle').addEventListener('change', e => { darkMode = e.target.checked; document.body.classList.toggle('dark-mode', darkMode); saveSettings(); playSound('click'); });
+		document.getElementById('evaluationToggle').addEventListener('change', e => { toggleEvaluationMode(e.target.checked); playSound('click'); });
+		document.getElementById('colorblindToggle').addEventListener('change', e => { toggleColorblindMode(e.target.checked); playSound('click'); });
+		document.getElementById('animationsToggle').addEventListener('change', e => { animationsEnabled = e.target.checked; document.body.classList.toggle('no-animations', !animationsEnabled); saveSettings(); playSound('click'); });
+		document.getElementById('soundToggle').addEventListener('change', e => { soundEnabled = e.target.checked; saveSettings(); playSound('click'); });
+		document.getElementById('timerLimitSlider').addEventListener('input', function(e) {
+			const val = parseInt(this.value, 10);
+			if (val === 6) { timerEnabled = false; timerLimit = 0; document.getElementById('timerLimitValue').textContent = '∞'; updateTimerDisplay('∞'); showTimerButtons(false); stopTimer(); } 
+			else { timerEnabled = true; timerLimit = val * 60; document.getElementById('timerLimitValue').textContent = val + ' min'; resetTimer(); startTimer(); }
+			localStorage.setItem('dacTimerLimit', timerLimit); localStorage.setItem('dacTimerEnabled', timerEnabled); playSound('click');
+		});
+
+		document.addEventListener('keydown', e => {
+			if (e.target.matches('input, textarea, select')) return;
+			if (e.key === 'Escape') { closeAllSubmenus(); closeMenu(); closeAuthorsDropdown(); closeResetDialog(); e.preventDefault(); return false; }
+			const key = e.key.toLowerCase();
+			if (key === 's') { e.preventDefault(); playSound('click'); document.getElementById('sequencesDropdown').classList.toggle('open'); updateAuthorsDropdown(); }
+			if (key === 'h') { e.preventDefault(); playSound('click'); window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); }
+			if (key === 'r') { e.preventDefault(); reloadDac(); }
+			if (key === 't') { e.preventDefault(); playSound('click'); if (timerEnabled) { resetTimer(); startTimer(); showToaster('⏱️ Timer réinitialisé', 'info', 1500); } }
+			if (key === 'f') { e.preventDefault(); toggleFullscreen(); }
+			if (key === 'e') { e.preventDefault(); playSound('click'); toggleEvaluationMode(); }
+			if (key === 'd') { e.preventDefault(); playSound('click'); toggleColorblindMode(); }
+			if (key === '?') { e.preventDefault(); openSubmenu('submenuShortcuts'); }
+			if (key === 'm') { e.preventDefault(); document.getElementById('slideMenu').classList.contains('open') ? closeMenu() : (document.getElementById('slideMenu').classList.add('open'), document.getElementById('menuOverlay').classList.add('open'), document.body.classList.add('menu-open')); }
+		});
+	}
+
+	function closeAllSubmenus() { document.querySelectorAll('.submenu').forEach(s => s.classList.remove('active')); document.body.classList.remove('menu-open'); }
+	function openSubmenu(id) { closeAllSubmenus(); const el = document.getElementById(id); if (el) { el.classList.add('active'); document.body.classList.add('menu-open'); } }
+	function closeMenu() { document.getElementById('slideMenu').classList.remove('open'); document.getElementById('menuOverlay').classList.remove('open'); document.body.classList.remove('menu-open'); closeAllSubmenus(); closeAuthorsDropdown(); }
+	
+	function toggleFullscreen() {
+		playSound('click');
+		if (!document.fullscreenElement) {
+			document.documentElement.requestFullscreen().catch(err => {});
+		} else {
+			if (document.exitFullscreen) document.exitFullscreen();
+		}
+	}
+});
+</script>
 </body>
 </html>

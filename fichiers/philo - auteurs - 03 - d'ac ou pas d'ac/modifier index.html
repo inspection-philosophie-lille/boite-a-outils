@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>modifier une application « distinguer »</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.rel='stylesheet'">
+	<link rel="icon" href="favicon.ico" />
+	<style>
+	* { box-sizing: border-box; }
+	
+	body {
+		font-family: Arial, sans-serif;
+		max-width: 1600px;
+		width: 100%;
+		margin: 20px auto;
+		padding: 20px;
+		background-color: #e0e0e0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		min-height: 100vh;
+		transition: all 0.3s ease;
+	}
+	
+	:root { --text-scale: 1; --base-font-size: 16px; }
+	body { font-size: calc(var(--base-font-size) * var(--text-scale)); }
+
+	.title-inputs input, input, select, button, .tooltip,
+	.settings-group h3, .color-label-item, .checkbox-item label,
+	.select-group label, .default-mode-label {
+		font-size: calc(1rem * var(--text-scale));
+	}
+	h1 { font-size: calc(clamp(1.8rem, 5vw, 2.5rem) * var(--text-scale)); }
+	.loading { font-size: calc(1rem * var(--text-scale)); }
+		
+	.title-inputs {
+		display: flex;
+		gap: 10px;
+		margin-bottom: 20px;
+		width: 100%;
+		max-width: 1600px;
+		align-items: center;
+	}
+		
+	.entry-container { width: 100%; }
+		
+	input, select {
+		padding: 5px;
+		width: 100%;
+		border: none;
+		border-radius: 8px;
+		background-color: #e0e0e0;
+		box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+		font-size: calc(1rem * var(--text-scale));
+		outline: none;
+		transition: all 0.2s ease;
+	}
+		
+	input:focus, select:focus {
+		box-shadow: inset 1px 1px 3px #bebebe, inset -1px -1px 3px #ffffff;
+	}
+		
+	button {
+		padding: 10px;
+		background-color: #e0e0e0;
+		color: #333;
+		border: none;
+		border-radius: 8px;
+		cursor: pointer;
+		font-size: calc(1rem * var(--text-scale));
+		box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+		transition: all 0.2s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+	}
+		
+	button:hover {
+		background-color: #d0d0d0;
+		box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+	}
+		
+	button:active {
+		box-shadow: inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff;
+	}
+		
+	.remove-button, .add-button, .open-button, .save-button,
+	.add-part-button, .remove-part-button, .settings-button {
+		width: 40px; height: 40px;
+	}
+		
+	.remove-button .cross, .remove-part-button .cross {
+		color: red; font-size: 24px; transform: translateY(-1px); font-style: normal;
+	}
+		
+	.add-button .plus, .add-part-button .plus {
+		font-size: 24px; transform: translateY(-1px); font-style: normal;
+	}
+		
+	i.far, i.fas { font-style: normal !important; }
+		
+	h1 {
+		color: red;
+		text-align: center;
+		text-shadow: 1px 1px 2px #bebebe, -1px -1px 2px #ffffff;
+		transition: all 0.3s ease;
+	}
+		
+	.button-container {
+		display: flex; gap: 10px; margin-bottom: 20px;
+		justify-content: center; width: 100%;
+	}
+		
+	.title-inputs input { width: 100%; }
+	#file-input { display: none; }
+	.loading { display: none; color: #333; margin-top: 10px; }
+
+	/* ============================================================
+		 ENTRY = UN PHILOSOPHE — pleine largeur, deux colonnes
+		 ============================================================ */
+	.entry {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		margin-bottom: 30px;
+		padding: 15px;
+		width: 100%;
+		background: #e0e0e0;
+		border-radius: 12px;
+		box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+	}
+
+	/* Bandeau du haut : ✗	nom	✚ */
+	.entry .entry-header {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+	}
+
+	.entry .entry-header .category-name-left {
+		flex: 1;
+		font-weight: bold;
+		font-size: calc(1.15rem * var(--text-scale));
+		text-align: left;
+		padding-left: 15px;
+	}
+
+	.entry .entry-header .remove-button,
+	.entry .entry-header .add-button {
+		width: 40px;
+		height: 40px;
+		flex-shrink: 0;
+	}
+
+	/* Le champ "pas d'accord" n'a plus de sens ici */
+	.entry .category-name-right { display: none; }
+
+	/* Conteneur des 2 colonnes */
+	.entry .columns-container {
+		display: flex;
+		gap: 20px;
+		width: 100%;
+		align-items: flex-start;
+	}
+
+	.entry .column {
+		flex: 1 1 0;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		padding: 10px;
+		border-radius: 10px;
+		background: #ececec;
+		box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+	}
+
+	.entry .column[data-side="daccord"] {
+		border-top: 4px solid #008000;
+	}
+	.entry .column[data-side="pasdaccord"] {
+		border-top: 4px solid #ff0000;
+	}
+
+	.entry .column-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 5px;
+		font-weight: bold;
+		font-size: calc(1.05rem * var(--text-scale));
+		padding: 0 5px;
+	}
+
+	.entry .column[data-side="daccord"]	.column-header { color: #008000; }
+	.entry .column[data-side="pasdaccord"] .column-header { color: #ff0000; }
+
+	.entry .column-header .add-part-button {
+		width: 32px;
+		height: 32px;
+		flex-shrink: 0;
+	}
+
+	.entry .column-header .add-part-button .plus { font-size: 18px; }
+
+	/* Conteneur des propositions dans une colonne */
+	.part-container {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		width: 100%;
+	}
+
+	.part-entry {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		padding: 8px;
+		border-radius: 8px;
+	}
+
+	.part-entry .part-header {
+		display: flex;
+		justify-content: flex-end;
+		gap: 5px;
+	}
+
+	.part-entry .part-header .remove-part-button {
+		width: 28px;
+		height: 28px;
+	}
+	.part-entry .part-header .remove-part-button .cross { font-size: 16px; }
+
+	.part-entry textarea.part-examples,
+	.part-entry textarea.part-justification {
+		width: 100%;
+		padding: 8px 10px;
+		border: none;
+		border-radius: 8px;
+		background-color: #e0e0e0;
+		box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+		font-family: inherit;
+		font-size: calc(1rem * var(--text-scale));
+		outline: none;
+		resize: vertical;
+		transition: all 0.2s ease;
+		line-height: 1.4;
+	}
+
+	.part-entry textarea.part-examples:focus,
+	.part-entry textarea.part-justification:focus {
+		box-shadow: inset 1px 1px 3px #bebebe, inset -1px -1px 3px #ffffff;
+	}
+
+	.part-entry textarea.part-examples { min-height: 2.8em; }
+	.part-entry textarea.part-justification {
+		min-height: 2.5em;
+		font-style: italic;
+		color: #444;
+	}
+		
+	.button-container button i { color: #000; }
+	.button-container button:hover i { color: #000; }
+		
+	.fa-folder-open::before { content: "📂"; font-style: normal; color: #000; }
+	.fa-save::before { content: "💾"; font-style: normal; color: #000; }
+	.fa-times::before { content: "✗"; color: #000; font-style: normal; }
+	.fa-plus::before { content: "+"; font-style: normal; color: #000; }
+	.fa-cog::before { content: "⚙"; font-style: normal; color: #000; }
+		
+	.tooltip {
+		position: absolute;
+		background-color: white;
+		color: black;
+		padding: 5px 10px;
+		border-radius: 4px;
+		white-space: nowrap;
+		z-index: 10;
+		pointer-events: none;
+		opacity: 0;
+		transition: opacity 0.2s ease;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		border: 1px solid #ccc;
+	}
+		
+	button:hover .tooltip { opacity: 1; }
+		
+	button .tooltip {
+		bottom: 100%; left: 50%;
+		transform: translateX(-50%);
+		margin-bottom: 5px;
+	}
+		
+	.settings-panel {
+		display: none;
+		width: 100%; max-width: 1600px;
+		margin-top: 20px; padding: 20px;
+		border-radius: 8px;
+		background-color: #e0e0e0;
+		box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+	}
+		
+	.settings-group { margin-bottom: 20px; }
+	.settings-group h3 {
+		margin-top: 0; margin-bottom: 10px;
+		color: #333; transition: all 0.3s ease;
+	}
+		
+	.color-picker {
+		display: flex; gap: 10px; align-items: center; margin-bottom: 10px;
+	}
+	.color-picker label { width: 150px; text-align: right; }
+		
+	.color-picker input[type="color"],
+	.color-input-item input[type="color"] {
+		width: 40px; height: 40px; padding: 0;
+		border: none; cursor: pointer; border-radius: 50%;
+		box-shadow: 2px 2px 5px #bebebe, -2px -2px 5px #ffffff;
+	}
+		
+	.color-picker input[type="color"]:hover,
+	.color-input-item input[type="color"]:hover {
+		box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+	}
+		
+	.checkbox-group {
+		display: flex; gap: 10px; align-items: center; margin-bottom: 10px;
+	}
+	.checkbox-group label { width: auto; }
+	.checkbox-group input[type="checkbox"] { width: 20px; height: 20px; }
+		
+	.select-group {
+		display: flex; gap: 10px; align-items: center; margin-bottom: 10px;
+	}
+	.select-group label { width: 180px; transition: all 0.3s ease; }
+	.select-group select { flex: 1; min-width: 250px; }
+		
+	.color-settings-container { display: flex; gap: 0px; width: 100%; }
+		
+	.color-labels-column {
+		flex: 0 0 160px;
+		display: flex; flex-direction: column; gap: 10px;
+		padding-right: 15px;
+	}
+		
+	.color-label-item {
+		height: 40px;
+		display: flex; align-items: center; justify-content: flex-end;
+		text-align: right; margin-bottom: 10px;
+		font-weight: normal; transition: all 0.3s ease;
+	}
+		
+	.color-modes-columns { flex: 1; display: flex; gap: 20px; }
+		
+	.color-mode-column {
+		flex: 1;
+		display: flex; flex-direction: column; gap: 10px; align-items: center;
+	}
+		
+	.color-mode-column h3 {
+		text-align: center; margin-bottom: 15px;
+		display: flex; align-items: center; justify-content: center;
+		gap: 8px; height: 40px;
+	}
+		
+	.mode-icon { width: 20px; height: 20px; }
+		
+	.color-input-item {
+		height: 40px;
+		display: flex; align-items: center; justify-content: center;
+		margin-bottom: 10px;
+	}
+		
+	.separator {
+		height: 2px;
+		background: linear-gradient(to right, transparent, #bebebe, transparent);
+		margin: 25px 0; width: 100%;
+	}
+		
+	.checkbox-row {
+		display: flex; gap: 20px; align-items: center; margin-bottom: 10px;
+	}
+		
+	.single-checkbox { display: flex; gap: 10px; align-items: center; }
+	.single-checkbox label { width: auto; }
+
+	.checkbox-horizontal {
+		display: flex; gap: 15px; align-items: center;
+		margin-bottom: 10px;
+		flex-wrap: nowrap; overflow-x: auto; padding-bottom: 5px;
+	}
+		
+	.checkbox-item {
+		display: flex; gap: 5px; align-items: center;
+		white-space: nowrap; flex-shrink: 0;
+	}
+
+	.checkbox-item label { transition: all 0.3s ease; }
+
+	.default-mode-label {
+		font-weight: bold; margin-right: 5px;
+		white-space: nowrap; transition: all 0.3s ease;
+	}
+
+	.font-size-control-group {
+		display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+	}
+
+	.font-size-display {
+		display: flex; align-items: center; gap: 8px;
+		background: #e0e0e0; border-radius: 8px;
+		padding: 4px 8px;
+		box-shadow: inset 2px 2px 4px #bebebe, inset -2px -2px 4px #ffffff;
+		min-width: 70px; justify-content: center; height: 32px;
+	}
+
+	.font-size-value {
+		color: #333; min-width: 40px; text-align: center;
+	}
+
+	.triangle-buttons {
+		display: flex; flex-direction: column; gap: 2px; height: 32px;
+	}
+
+	.triangle-btn {
+		width: 24px; height: 15px;
+		background: #e0e0e0; border: none; cursor: pointer;
+		display: flex; align-items: center; justify-content: center;
+		box-shadow: 2px 2px 4px #bebebe, -2px -2px 4px #ffffff;
+		border-radius: 4px; padding: 0; color: #333;
+		transition: all 0.2s ease;
+	}
+
+	.triangle-btn:hover { box-shadow: 1px 1px 2px #bebebe, -1px -1px 2px #ffffff; }
+	.triangle-btn:active { box-shadow: inset 1px 1px 2px #bebebe, inset -1px -1px 2px #ffffff; }
+	.triangle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+	.triangle-up svg, .triangle-down svg {
+		width: 12px; height: 12px;
+		fill: none; stroke: currentColor; stroke-width: 2;
+		stroke-linecap: round; stroke-linejoin: round;
+	}
+
+	/* ===== Overlay de drag & drop ===== */
+	.drop-overlay {
+		position: fixed;
+		top: 0; left: 0; right: 0; bottom: 0;
+		background: rgba(0, 0, 0, 0.6);
+		backdrop-filter: blur(4px);
+		display: none;
+		align-items: center;
+		justify-content: center;
+		z-index: 9999;
+		pointer-events: none;
+	}
+
+	.drop-overlay.active {
+		display: flex;
+	}
+
+	.drop-overlay-content {
+		background: #e0e0e0;
+		padding: 40px 60px;
+		border-radius: 16px;
+		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+		text-align: center;
+		border: 3px dashed #666;
+		pointer-events: none;
+	}
+
+	.drop-overlay-content svg {
+		width: 64px;
+		height: 64px;
+		stroke: #333;
+		stroke-width: 1.5;
+		fill: none;
+		margin-bottom: 15px;
+		animation: bounce 1.2s ease-in-out infinite;
+	}
+
+	.drop-overlay-content p {
+		margin: 0;
+		font-size: calc(1.2rem * var(--text-scale));
+		color: #333;
+		font-weight: bold;
+	}
+
+	@keyframes bounce {
+		0%, 100% { transform: translateY(0); }
+		50%	{ transform: translateY(-8px); }
+	}
+		
+	@media (max-width: 900px) {
+		.tooltip { font-size: 0.75rem; padding: 3px 6px; }
+		.title-inputs {
+		flex-direction: column; gap: 5px; align-items: stretch;
+		}
+		.remove-button, .add-button, .settings-button {
+		width: 100%; height: 36px;
+		}
+		.color-picker, .checkbox-group, .select-group {
+		flex-direction: column; align-items: flex-start;
+		}
+		.color-picker label, .checkbox-group label, .select-group label {
+		width: 100%; margin-bottom: 5px; text-align: left;
+		}
+		.color-settings-container { flex-direction: column; }
+		.color-labels-column { flex: none; width: 100%; padding-right: 0; }
+		.color-label-item { justify-content: flex-start; text-align: left; }
+		.color-modes-columns { flex-direction: column; }
+		.checkbox-horizontal {
+		flex-wrap: wrap; gap: 10px; overflow-x: visible;
+		}
+		.select-group label { width: 100%; }
+		.select-group select { min-width: auto; width: 100%; }
+		h1 { font-size: calc(clamp(1.5rem, 4vw, 2rem) * var(--text-scale)); }
+		.drop-overlay-content { padding: 30px 40px; }
+		.drop-overlay-content svg { width: 48px; height: 48px; }
+
+		/* Colonnes empilées sur petit écran */
+		.entry .columns-container { flex-direction: column; }
+		.entry .column { width: 100%; }
+		.entry .entry-header .remove-button,
+		.entry .entry-header .add-button {
+		width: 36px; height: 36px;
+		}
+	}
+		
+	@media (max-width: 480px) {
+		.tooltip { font-size: 0.65rem; padding: 2px 5px; }
+		.checkbox-horizontal {
+		flex-direction: column; align-items: flex-start; gap: 8px;
+		}
+	}
+
+	.title-inputs input {
+		text-align: center;
+		display: flex; align-items: center; justify-content: center;
+		min-height: 40px;
+	}
+	</style>
+</head>
+<body>
+	<h1>modifier une application « distinguer »</h1>
+	
+	<div class="title-inputs">
+	<input type="text" id="app-title" placeholder="titre de l'application">
+	<input type="text" id="app-subtitle" placeholder="sous-titre de l'application">
+	</div>
+	
+	<div id="entries" class="entry-container">
+	<!-- Rempli par JS -->
+	</div>
+	
+	<div class="button-container">
+	<button onclick="openFile()" class="open-button">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-labelledby="open-folder-title" role="img">		 
+		<path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V6h5.17l2 2H20v10z"/>
+		</svg>
+		<span class="tooltip">ouvrir un fichier javaScript</span>
+	</button>
+
+	<button onclick="toggleSettings()" class="settings-button">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-labelledby="settings-title" role="img">	 
+		<path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.08-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.08.49 0 .61.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>	 
+		</svg>
+		<span class="tooltip">paramètres avancés</span>
+	</button>
+
+	<button onclick="saveData()" class="save-button">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-labelledby="save-title" role="img">		 
+		<path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zM12 12c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zM6 6h9v4H6z"/>
+		</svg>
+		<span class="tooltip">sauvegarder les données</span>
+	</button>
+
+	<input type="file" id="file-input" accept=".js" style="display: none;" onchange="loadFile(event)">
+	</div>
+	
+	<div id="settings-panel" class="settings-panel">
+	<div class="settings-group">
+		<h3>paramètres d'affichage</h3>
+		
+		<div class="select-group">
+		<label for="font-family">police de caractères&nbsp;:</label>
+		<select id="font-family">
+			<option value="'Muli', Arial, sans-serif">muli (par défaut)</option>
+			<option value="Arial, sans-serif">arial</option>
+			<option value="'Helvetica Neue', Helvetica, sans-serif">helvetica</option>
+			<option value="'Segoe UI', Tahoma, Geneva, sans-serif">segoe ui</option>
+			<option value="'Times New Roman', Times, serif">times new roman</option>
+			<option value="'Courier New', Courier, monospace">courier new</option>
+		</select>
+		</div>
+		
+		<div class="select-group">
+		<label for="title-size">taille du titre&nbsp;:</label>
+		<select id="title-size">
+			<option value="clamp(1.8rem, 5vw, 2.5rem)">normale (par défaut)</option>
+			<option value="clamp(1.5rem, 4vw, 2rem)">petite</option>
+			<option value="clamp(2rem, 6vw, 3rem)">grande</option>
+		</select>
+		</div>
+		
+		<div class="select-group">
+		<label for="cell-size">taille des cellules&nbsp;:</label>
+		<select id="cell-size">
+			<option value="clamp(0.9rem, 2.5vw, 1rem)">normale (par défaut)</option>
+			<option value="clamp(0.8rem, 2vw, 0.9rem)">petite</option>
+			<option value="clamp(1rem, 3vw, 1.2rem)">grande</option>
+		</select>
+		</div>
+
+		<div class="select-group">
+		<label for="global-text-size">taille du texte global&nbsp;:</label>
+		<div class="font-size-control-group">
+			<div class="font-size-display">
+			<span class="font-size-value" id="fontSizeValue">16px</span>
+			</div>
+			<div class="triangle-buttons">
+			<button class="triangle-btn triangle-up" id="fontSizeUpBtn" title="augmenter la taille">
+				<svg viewBox="0 0 12 12" fill="none">
+				<path d="M3 7L6 4L9 7" stroke="currentColor" stroke-width="1.5"/>
+				</svg>
+			</button>
+			<button class="triangle-btn triangle-down" id="fontSizeDownBtn" title="diminuer la taille">
+				<svg viewBox="0 0 12 12" fill="none">
+				<path d="M3 5L6 8L9 5" stroke="currentColor" stroke-width="1.5"/>
+				</svg>
+			</button>
+			</div>
+		</div>
+		</div>
+		
+		<div class="checkbox-horizontal">
+		<span class="default-mode-label">mode par défaut&nbsp;:</span>
+		<div class="checkbox-item">
+			<input type="checkbox" id="enable-animations" checked>
+			<label for="enable-animations">animations</label>
+		</div>
+		<div class="checkbox-item">
+			<input type="checkbox" id="enable-dark-mode">
+			<label for="enable-dark-mode">mode sombre</label>
+		</div>
+		<div class="checkbox-item">
+			<input type="checkbox" id="enable-colorblind-mode">
+			<label for="enable-colorblind-mode">mode daltonien</label>
+		</div>
+		</div>
+	</div>
+	
+	<div class="separator"></div>
+	
+	<div class="settings-group">
+		<h3>couleur en fonction du mode clair / sombre</h3>
+		<div class="color-settings-container">
+		<div class="color-labels-column">
+			<div class="color-label-item" style="height: 40px; margin-bottom: 15px;"></div>
+			<div class="color-label-item">titre&nbsp;:</div>
+			<div class="color-label-item">sous-titre&nbsp;:</div>
+			<div class="color-label-item">texte&nbsp;:</div>
+			<div class="color-label-item">fond&nbsp;:</div>
+			<div class="color-label-item">cellules&nbsp;:</div>
+			<div class="color-label-item">boutons&nbsp;:</div>
+			<div class="color-label-item">bonnes réponses&nbsp;:</div>
+			<div class="color-label-item">réponses fausses&nbsp;:</div>
+		</div>
+		
+		<div class="color-modes-columns">
+			<div class="color-mode-column">
+			<h3 style="height: 40px; margin-bottom: 15px;">
+				<svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+				<circle cx="12" cy="12" r="5"></circle>
+				<line x1="12" y1="1" x2="12" y2="3"></line>
+				<line x1="12" y1="21" x2="12" y2="23"></line>
+				<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+				<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+				<line x1="1" y1="12" x2="3" y2="12"></line>
+				<line x1="21" y1="12" x2="23" y2="12"></line>
+				<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+				<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+				</svg>
+			</h3>
+				
+			<div class="color-input-item"><input type="color" id="title-color" value="#ff0000"></div>
+			<div class="color-input-item"><input type="color" id="subtitle-color" value="#000000"></div>
+			<div class="color-input-item"><input type="color" id="text-color" value="#000000"></div>
+			<div class="color-input-item"><input type="color" id="background-color" value="#f0f0f0"></div>
+			<div class="color-input-item"><input type="color" id="cell-color" value="#e0e0e0"></div>
+			<div class="color-input-item"><input type="color" id="button-color" value="#e0e0e0"></div>
+			<div class="color-input-item"><input type="color" id="correct-color" value="#008000"></div>
+			<div class="color-input-item"><input type="color" id="incorrect-color" value="#ff0000"></div>
+			</div>
+			
+			<div class="color-mode-column">
+			<h3 style="height: 40px; margin-bottom: 15px;">
+				<svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+				<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+				</svg>
+			</h3>
+				
+			<div class="color-input-item"><input type="color" id="title-color-dark" value="#ff6666"></div>
+			<div class="color-input-item"><input type="color" id="subtitle-color-dark" value="#ffffff"></div>
+			<div class="color-input-item"><input type="color" id="text-color-dark" value="#ffffff"></div>
+			<div class="color-input-item"><input type="color" id="background-color-dark" value="#121212"></div>
+			<div class="color-input-item"><input type="color" id="cell-color-dark" value="#2d2d2d"></div>
+			<div class="color-input-item"><input type="color" id="button-color-dark" value="#3d3d3d"></div>
+			<div class="color-input-item"><input type="color" id="correct-color-dark" value="#4CAF50"></div>
+			<div class="color-input-item"><input type="color" id="incorrect-color-dark" value="#f44336"></div>
+			</div>
+		</div>
+		</div>
+	</div>
+	
+	<div class="separator"></div>
+	
+	<div class="settings-group">
+		<h3>paramètres du jeu</h3>
+		
+		<div class="select-group">
+		<label for="max-examples">nombre maximum d'exemples par catégorie&nbsp;:</label>
+		<select id="max-examples">
+			<option value="5">5 (par défaut)</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+		</select>
+		</div>
+		
+		<div class="checkbox-horizontal">
+		<div class="checkbox-item">
+			<input type="checkbox" id="show-score" checked>
+			<label for="show-score">score</label>
+		</div>
+		<div class="checkbox-item">
+			<input type="checkbox" id="random-order" checked>
+			<label for="random-order">mélanger l'ordre des éléments</label>
+		</div>
+		<div class="checkbox-item">
+			<input type="checkbox" id="show-hints" checked>
+			<label for="show-hints">afficher les indices</label>
+		</div>
+		</div>
+	</div>
+	</div>
+	
+	<div id="loading" class="loading">chargement...</div>
+
+	<!-- Overlay de drag & drop -->
+	<div id="drop-overlay" class="drop-overlay">
+	<div class="drop-overlay-content">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+		<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+		<polyline points="7 10 12 15 17 10"/>
+		<line x1="12" y1="15" x2="12" y2="3"/>
+		</svg>
+		<p>Déposez le fichier .js pour le charger</p>
+	</div>
+	</div>
+	
+	<script>
+	// ============================================================
+	// UTILITAIRES
+	// ============================================================
+	function escapeHtml(s) {
+		return String(s == null ? '' : s)
+		.replace(/&/g, '&amp;')
+		.replace(/"/g, '&quot;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;');
+	}
+
+	function jsEscape(s) {
+		return String(s == null ? '' : s)
+		.replace(/\\/g, '\\\\')
+		.replace(/"/g, '\\"')
+		.replace(/\n/g, '\\n')
+		.replace(/\r/g, '\\r')
+		.replace(/\t/g, '\\t');
+	}
+
+	// ============================================================
+	// PARAMÈTRES
+	// ============================================================
+	let settings = {
+		titleColor: "#ff0000",
+		subtitleColor: "#000000",
+		textColor: "#000000",
+		backgroundColor: "#f0f0f0",
+		cellColor: "#e0e0e0",
+		buttonColor: "#e0e0e0",
+		correctColor: "#008000",
+		incorrectColor: "#ff0000",
+
+		titleColorDark: "#ff6666",
+		subtitleColorDark: "#ffffff",
+		textColorDark: "#ffffff",
+		backgroundColorDark: "#121212",
+		cellColorDark: "#2d2d2d",
+		buttonColorDark: "#3d3d3d",
+		correctColorDark: "#4CAF50",
+		incorrectColorDark: "#f44336",
+
+		fontFamily: "'Muli', Arial, sans-serif",
+		titleSize: "clamp(1.8rem, 5vw, 2.5rem)",
+		cellSize: "clamp(0.9rem, 2.5vw, 1rem)",
+		enableAnimations: true,
+		enableDarkMode: false,
+		enableColorblindMode: false,
+		maxExamples: 5,
+		showScore: true,
+		randomOrder: true,
+		showHints: true,
+		baseFontSize: 16
+	};
+
+	let fontSizePx = 16;
+
+	// ============================================================
+	// TEMPLATES
+	// ============================================================
+	function partEntryHtml(texte, justification) {
+		return `
+		<div class="part-header">
+			<button onclick="removePart(this)" class="remove-part-button">
+			<i class="far fa-times cross"></i>
+			<span class="tooltip">supprimer cette proposition</span>
+			</button>
+		</div>
+		<textarea class="part-examples" rows="2" placeholder="texte de la proposition">${escapeHtml(texte || '')}</textarea>
+		<textarea class="part-justification" rows="2" placeholder="justification">${escapeHtml(justification || '')}</textarea>
+		`;
+	}
+
+	function entryHtml(nom, daccordHtml, pasdaccordHtml) {
+		return `
+		<div class="entry-header">
+			<button onclick="removeEntry(this)" class="remove-button">
+			<i class="far fa-times cross"></i>
+			<span class="tooltip">supprimer ce philosophe</span>
+			</button>
+			<input type="text" class="category-name-left" value="${escapeHtml(nom || '')}" placeholder="nom du philosophe">
+			<button onclick="addEntry()" class="add-button">
+			<i class="far fa-plus plus"></i>
+			<span class="tooltip">ajouter un nouveau philosophe</span>
+			</button>
+		</div>
+		<div class="columns-container">
+			<div class="column" data-side="daccord">
+			<div class="column-header">
+				<span>d'accord</span>
+				<button onclick="addPart(this)" class="add-part-button">
+				<i class="far fa-plus plus"></i>
+				<span class="tooltip">ajouter une proposition « d'accord »</span>
+				</button>
+			</div>
+			<div class="part-container" data-side="daccord">${daccordHtml}</div>
+			</div>
+			<div class="column" data-side="pasdaccord">
+			<div class="column-header">
+				<span>pas d'accord</span>
+				<button onclick="addPart(this)" class="add-part-button">
+				<i class="far fa-plus plus"></i>
+				<span class="tooltip">ajouter une proposition « pas d'accord »</span>
+				</button>
+			</div>
+			<div class="part-container" data-side="pasdaccord">${pasdaccordHtml}</div>
+			</div>
+		</div>
+		`;
+	}
+
+	// Auto-resize des textarea
+	function autoResize(textarea) {
+		textarea.style.height = 'auto';
+		textarea.style.height = textarea.scrollHeight + 'px';
+	}
+
+	function setupAutoResize(container) {
+		const root = container || document;
+		root.querySelectorAll('textarea.part-examples, textarea.part-justification').forEach(t => {
+		autoResize(t);
+		if (!t.dataset.autoResizeAttached) {
+			t.addEventListener('input', () => autoResize(t));
+			t.dataset.autoResizeAttached = '1';
+		}
+		});
+	}
+
+	// ============================================================
+	// GESTION DES ENTRÉES
+	// ============================================================
+	function addEntry() {
+		const entriesDiv = document.getElementById('entries');
+		const newEntry = document.createElement('div');
+		newEntry.className = 'entry';
+		newEntry.innerHTML = entryHtml(
+		'',
+		`<div class="part-entry">${partEntryHtml('', '')}</div>`,
+		`<div class="part-entry">${partEntryHtml('', '')}</div>`
+		);
+		entriesDiv.appendChild(newEntry);
+		setupAutoResize(newEntry);
+	}
+
+	function removeEntry(button) {
+		if (document.querySelectorAll('.entry').length > 1) {
+		button.closest('.entry').remove();
+		}
+	}
+
+	function addPart(button) {
+		const column = button.closest('.column');
+		const partContainer = column.querySelector('.part-container');
+		const newPart = document.createElement('div');
+		newPart.className = 'part-entry';
+		newPart.innerHTML = partEntryHtml('', '');
+		partContainer.appendChild(newPart);
+		setupAutoResize(newPart);
+	}
+
+	function removePart(button) {
+		button.closest('.part-entry').remove();
+	}
+	
+	function toggleSettings() {
+		const settingsPanel = document.getElementById('settings-panel');
+		settingsPanel.style.display = (settingsPanel.style.display === 'block') ? 'none' : 'block';
+	}
+	
+	function setupColorPickers() {
+		document.querySelectorAll('input[type="color"]').forEach(input => {
+		input.addEventListener('input', function() {
+			if (this.id === 'button-color' || this.id === 'button-color-dark') {
+			updateHoverColor();
+			}
+		});
+		});
+	}
+	
+	function updateHoverColor() {
+		const buttonColor = document.getElementById('button-color').value;
+		const darkerColor = shadeColor(buttonColor, -20);
+		
+		let style = document.getElementById('dynamic-hover-styles');
+		if (!style) {
+		style = document.createElement('style');
+		style.id = 'dynamic-hover-styles';
+		document.head.appendChild(style);
+		}
+		style.textContent = `
+		button:hover {
+			background-color: ${darkerColor};
+			box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+		}
+		`;
+	}
+
+	function shadeColor(color, percent) {
+		let R = parseInt(color.substring(1,3),16);
+		let G = parseInt(color.substring(3,5),16);
+		let B = parseInt(color.substring(5,7),16);
+		R = Math.min(255, Math.round(R * (100 + percent) / 100));
+		G = Math.min(255, Math.round(G * (100 + percent) / 100));
+		B = Math.min(255, Math.round(B * (100 + percent) / 100));
+		const RR = R.toString(16).padStart(2,'0');
+		const GG = G.toString(16).padStart(2,'0');
+		const BB = B.toString(16).padStart(2,'0');
+		return "#" + RR + GG + BB;
+	}
+	
+	function loadSettingsFromFile(loadedSettings) {
+		if (!loadedSettings) return;
+		settings = { ...settings, ...loadedSettings };
+		
+		document.getElementById('title-color').value = settings.titleColor;
+		document.getElementById('subtitle-color').value = settings.subtitleColor;
+		document.getElementById('text-color').value = settings.textColor || "#000000";
+		document.getElementById('background-color').value = settings.backgroundColor;
+		document.getElementById('cell-color').value = settings.cellColor;
+		document.getElementById('button-color').value = settings.buttonColor;
+		document.getElementById('correct-color').value = settings.correctColor;
+		document.getElementById('incorrect-color').value = settings.incorrectColor;
+		
+		document.getElementById('title-color-dark').value = settings.titleColorDark || "#ff6666";
+		document.getElementById('subtitle-color-dark').value = settings.subtitleColorDark || "#ffffff";
+		document.getElementById('text-color-dark').value = settings.textColorDark || "#ffffff";
+		document.getElementById('background-color-dark').value = settings.backgroundColorDark || "#121212";
+		document.getElementById('cell-color-dark').value = settings.cellColorDark || "#2d2d2d";
+		document.getElementById('button-color-dark').value = settings.buttonColorDark || "#3d3d3d";
+		document.getElementById('correct-color-dark').value = settings.correctColorDark || "#4CAF50";
+		document.getElementById('incorrect-color-dark').value = settings.incorrectColorDark || "#f44336";
+		
+		document.getElementById('font-family').value = settings.fontFamily;
+		document.getElementById('title-size').value = settings.titleSize;
+		document.getElementById('cell-size').value = settings.cellSize;
+		document.getElementById('enable-animations').checked = settings.enableAnimations;
+		document.getElementById('enable-dark-mode').checked = settings.enableDarkMode;
+		document.getElementById('enable-colorblind-mode').checked = settings.enableColorblindMode;
+		document.getElementById('max-examples').value = settings.maxExamples;
+		document.getElementById('show-score').checked = settings.showScore;
+		document.getElementById('random-order').checked = settings.randomOrder;
+		document.getElementById('show-hints').checked = settings.showHints;
+		
+		if (loadedSettings.baseFontSize) {
+		fontSizePx = loadedSettings.baseFontSize;
+		document.getElementById('fontSizeValue').textContent = fontSizePx + 'px';
+		updateFontSize();
+		updateTriangleButtons();
+		}
+		
+		updateHoverColor();
+	}
+
+	// ============================================================
+	// TAILLE DE TEXTE
+	// ============================================================
+	function increaseFontSize() {
+		if (fontSizePx < 24) {
+		fontSizePx += 1;
+		document.getElementById('fontSizeValue').textContent = fontSizePx + 'px';
+		updateFontSize();
+		updateTriangleButtons();
+		localStorage.setItem('fontSizePx', fontSizePx.toString());
+		}
+	}
+
+	function decreaseFontSize() {
+		if (fontSizePx > 8) {
+		fontSizePx -= 1;
+		document.getElementById('fontSizeValue').textContent = fontSizePx + 'px';
+		updateFontSize();
+		updateTriangleButtons();
+		localStorage.setItem('fontSizePx', fontSizePx.toString());
+		}
+	}
+
+	function updateFontSize() {
+		const scale = fontSizePx / 16;
+		document.documentElement.style.setProperty('--text-scale', scale.toString());
+		settings.baseFontSize = fontSizePx;
+	}
+
+	function updateTriangleButtons() {
+		document.getElementById('fontSizeUpBtn').disabled = fontSizePx >= 24;
+		document.getElementById('fontSizeDownBtn').disabled = fontSizePx <= 8;
+	}
+
+	function setupFontSizeControls() {
+		document.getElementById('fontSizeUpBtn').addEventListener('click', increaseFontSize);
+		document.getElementById('fontSizeDownBtn').addEventListener('click', decreaseFontSize);
+		const savedFontSize = localStorage.getItem('fontSizePx');
+		if (savedFontSize) {
+		fontSizePx = parseInt(savedFontSize);
+		document.getElementById('fontSizeValue').textContent = fontSizePx + 'px';
+		updateFontSize();
+		}
+		updateTriangleButtons();
+	}
+
+	// ============================================================
+	// SAUVEGARDE
+	// ============================================================
+	function saveData() {
+		const title = document.getElementById('app-title').value.trim();
+		const subtitle = document.getElementById('app-subtitle').value.trim();
+		const entries = document.querySelectorAll('.entry');
+		
+		settings.titleColor = document.getElementById('title-color').value;
+		settings.subtitleColor = document.getElementById('subtitle-color').value;
+		settings.textColor = document.getElementById('text-color').value;
+		settings.backgroundColor = document.getElementById('background-color').value;
+		settings.cellColor = document.getElementById('cell-color').value;
+		settings.buttonColor = document.getElementById('button-color').value;
+		settings.correctColor = document.getElementById('correct-color').value;
+		settings.incorrectColor = document.getElementById('incorrect-color').value;
+		
+		settings.titleColorDark = document.getElementById('title-color-dark').value;
+		settings.subtitleColorDark = document.getElementById('subtitle-color-dark').value;
+		settings.textColorDark = document.getElementById('text-color-dark').value;
+		settings.backgroundColorDark = document.getElementById('background-color-dark').value;
+		settings.cellColorDark = document.getElementById('cell-color-dark').value;
+		settings.buttonColorDark = document.getElementById('button-color-dark').value;
+		settings.correctColorDark = document.getElementById('correct-color-dark').value;
+		settings.incorrectColorDark = document.getElementById('incorrect-color-dark').value;
+		
+		settings.fontFamily = document.getElementById('font-family').value;
+		settings.titleSize = document.getElementById('title-size').value;
+		settings.cellSize = document.getElementById('cell-size').value;
+		settings.enableAnimations = document.getElementById('enable-animations').checked;
+		settings.enableDarkMode = document.getElementById('enable-dark-mode').checked;
+		settings.enableColorblindMode = document.getElementById('enable-colorblind-mode').checked;
+		settings.maxExamples = parseInt(document.getElementById('max-examples').value);
+		settings.showScore = document.getElementById('show-score').checked;
+		settings.randomOrder = document.getElementById('random-order').checked;
+		settings.showHints = document.getElementById('show-hints').checked;
+		settings.baseFontSize = fontSizePx;
+		
+		let jsContent = '// Base de données des philosophes\n\n';
+		
+		if (title) {
+		jsContent += `const title = "${jsEscape(title)}";\n`;
+		} else {
+		jsContent += `const title = "application « distinguer »";\n`;
+		}
+		
+		if (subtitle) {
+		jsContent += `const subtitle = "${jsEscape(subtitle)}";\n`;
+		} else {
+		jsContent += `const subtitle = "distinguer par glisser-déposer";\n`;
+		}
+		
+		jsContent += '\nwindow.databasePhilosophes = [\n';
+		
+		const validEntries = [];
+		entries.forEach(entry => {
+		const nom = entry.querySelector('.category-name-left').value.trim();
+		if (!nom) return;
+
+		const daccord = [];
+		const pasdaccord = [];
+
+		// Colonne d'accord
+		entry.querySelectorAll('.column[data-side="daccord"] .part-entry').forEach(part => {
+			const texte = part.querySelector('.part-examples').value.trim();
+			const justification = part.querySelector('.part-justification').value.trim();
+			if (texte || justification) daccord.push({ texte, justification });
+		});
+
+		// Colonne pas d'accord
+		entry.querySelectorAll('.column[data-side="pasdaccord"] .part-entry').forEach(part => {
+			const texte = part.querySelector('.part-examples').value.trim();
+			const justification = part.querySelector('.part-justification').value.trim();
+			if (texte || justification) pasdaccord.push({ texte, justification });
+		});
+
+		if (daccord.length > 0 || pasdaccord.length > 0) {
+			validEntries.push({ nom, daccord, pasdaccord });
+		}
+		});
+		
+		validEntries.forEach((entry, i) => {
+		jsContent += '\t{\n';
+		jsContent += `\t\tnom: "${jsEscape(entry.nom)}",\n`;
+		
+		jsContent += '\t\tdaccord: [\n';
+		entry.daccord.forEach((o, j) => {
+			jsContent += `\t\t\t{ texte: "${jsEscape(o.texte)}", justification: "${jsEscape(o.justification)}" }`;
+			jsContent += (j < entry.daccord.length - 1) ? ',\n' : '\n';
+		});
+		jsContent += '\t\t],\n';
+		
+		jsContent += '\t\tpasdaccord: [\n';
+		entry.pasdaccord.forEach((o, j) => {
+			jsContent += `\t\t\t{ texte: "${jsEscape(o.texte)}", justification: "${jsEscape(o.justification)}" }`;
+			jsContent += (j < entry.pasdaccord.length - 1) ? ',\n' : '\n';
+		});
+		jsContent += '\t\t]\n';
+		jsContent += `\t}`;
+		jsContent += (i < validEntries.length - 1) ? ',\n\n' : '\n';
+		});
+		
+		jsContent += '];\n\n';
+		
+		jsContent += 'const settings = {\n';
+		jsContent += '	// MODE CLAIR\n';
+		jsContent += `	"titleColor": "${settings.titleColor}",\n`;
+		jsContent += `	"subtitleColor": "${settings.subtitleColor}",\n`;
+		jsContent += `	"textColor": "${settings.textColor}",\n`;
+		jsContent += `	"backgroundColor": "${settings.backgroundColor}",\n`;
+		jsContent += `	"cellColor": "${settings.cellColor}",\n`;
+		jsContent += `	"buttonColor": "${settings.buttonColor}",\n`;
+		jsContent += `	"correctColor": "${settings.correctColor}",\n`;
+		jsContent += `	"incorrectColor": "${settings.incorrectColor}",\n`;
+		jsContent += '	// MODE SOMBRE\n';
+		jsContent += `	"titleColorDark": "${settings.titleColorDark}",\n`;
+		jsContent += `	"subtitleColorDark": "${settings.subtitleColorDark}",\n`;
+		jsContent += `	"textColorDark": "${settings.textColorDark}",\n`;
+		jsContent += `	"backgroundColorDark": "${settings.backgroundColorDark}",\n`;
+		jsContent += `	"cellColorDark": "${settings.cellColorDark}",\n`;
+		jsContent += `	"buttonColorDark": "${settings.buttonColorDark}",\n`;
+		jsContent += `	"correctColorDark": "${settings.correctColorDark}",\n`;
+		jsContent += `	"incorrectColorDark": "${settings.incorrectColorDark}",\n`;
+		jsContent += `	"fontFamily": "${jsEscape(settings.fontFamily)}",\n`;
+		jsContent += `	"titleSize": "${jsEscape(settings.titleSize)}",\n`;
+		jsContent += `	"cellSize": "${jsEscape(settings.cellSize)}",\n`;
+		jsContent += `	"enableAnimations": ${settings.enableAnimations},\n`;
+		jsContent += `	"enableDarkMode": ${settings.enableDarkMode},\n`;
+		jsContent += `	"enableColorblindMode": ${settings.enableColorblindMode},\n`;
+		jsContent += `	"maxExamples": ${settings.maxExamples},\n`;
+		jsContent += `	"showScore": ${settings.showScore},\n`;
+		jsContent += `	"randomOrder": ${settings.randomOrder},\n`;
+		jsContent += `	"showHints": ${settings.showHints},\n`;
+		jsContent += `	"baseFontSize": ${settings.baseFontSize}\n`;
+		jsContent += '};\n';
+
+		const blob = new Blob([jsContent], { type: 'text/javascript' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = 'fichier_ressource.js';
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		URL.revokeObjectURL(url);
+	}
+
+	// ============================================================
+	// CHARGEMENT
+	// ============================================================
+	function openFile() {
+		document.getElementById('file-input').click();
+	}
+
+	function processFile(file) {
+		if (!file || !file.name.endsWith('.js')) {
+		alert('Veuillez sélectionner un fichier JavaScript (.js).');
+		return;
+		}
+
+		const loadingIndicator = document.getElementById('loading');
+		loadingIndicator.style.display = 'block';
+		loadingIndicator.textContent = 'chargement...';
+
+		const reader = new FileReader();
+		reader.onload = function(e) {
+		try {
+			let jsContent = e.target.result.replace(/^\uFEFF/, '');
+
+			let sandbox = {};
+			try {
+			const evalFn = new Function(`
+				var result = { title: undefined, subtitle: undefined, settings: undefined, db: undefined };
+				var window = {};
+				${jsContent}
+				result.title = (typeof title !== 'undefined') ? title : (window.title !== undefined ? window.title : undefined);
+				result.subtitle = (typeof subtitle !== 'undefined') ? subtitle : (window.subtitle !== undefined ? window.subtitle : undefined);
+				if (typeof settings !== 'undefined') result.settings = settings;
+				if (window.databasePhilosophes !== undefined) result.db = window.databasePhilosophes;
+				else if (typeof databasePhilosophes !== 'undefined') result.db = databasePhilosophes;
+				else if (window.dropzone !== undefined) result.db = window.dropzone;
+				else if (typeof dropzone !== 'undefined') result.db = dropzone;
+				return result;
+			`);
+			sandbox = evalFn();
+			} catch (err) {
+			alert("Erreur d'évaluation du fichier JS : " + err.message);
+			loadingIndicator.style.display = 'none';
+			return;
+			}
+
+			if (sandbox.title !== undefined)	document.getElementById('app-title').value	= String(sandbox.title);
+			if (sandbox.subtitle !== undefined) document.getElementById('app-subtitle').value = String(sandbox.subtitle);
+
+			if (sandbox.settings && typeof sandbox.settings === 'object') {
+			loadSettingsFromFile(sandbox.settings);
+			}
+
+			const db = sandbox.db;
+			if (!Array.isArray(db)) {
+			alert("Aucune donnée 'databasePhilosophes' ou 'dropzone' (tableau) trouvée dans le fichier.");
+			if (document.querySelectorAll('.entry').length === 0) addEntry();
+			loadingIndicator.style.display = 'none';
+			return;
+			}
+
+			const isPhilosophes = db.length > 0 && (db[0].nom !== undefined || db[0].daccord !== undefined);
+
+			const entriesDiv = document.getElementById('entries');
+			entriesDiv.innerHTML = '';
+
+			if (isPhilosophes) {
+			db.forEach(item => {
+				const newEntry = document.createElement('div');
+				newEntry.className = 'entry';
+
+				const daccordList = item.daccord || [];
+				const pasdaccordList = item.pasdaccord || [];
+
+				let daccordHtml = '';
+				if (daccordList.length === 0) {
+				daccordHtml = `<div class="part-entry">${partEntryHtml('', '')}</div>`;
+				} else {
+				daccordList.forEach(o => {
+					daccordHtml += `<div class="part-entry">${partEntryHtml(o.texte, o.justification)}</div>`;
+				});
+				}
+
+				let pasdaccordHtml = '';
+				if (pasdaccordList.length === 0) {
+				pasdaccordHtml = `<div class="part-entry">${partEntryHtml('', '')}</div>`;
+				} else {
+				pasdaccordList.forEach(o => {
+					pasdaccordHtml += `<div class="part-entry">${partEntryHtml(o.texte, o.justification)}</div>`;
+				});
+				}
+
+				newEntry.innerHTML = entryHtml(item.nom || '', daccordHtml, pasdaccordHtml);
+				entriesDiv.appendChild(newEntry);
+				setupAutoResize(newEntry);
+			});
+			} else {
+			// Fallback ancienne structure dropzone
+			db.forEach(item => {
+				const newEntry = document.createElement('div');
+				newEntry.className = 'entry';
+
+				let daccordHtml = '';
+				let pasdaccordHtml = '';
+
+				if (Array.isArray(item.exemples_gauche)) {
+				item.exemples_gauche.forEach(ex => {
+					daccordHtml += `<div class="part-entry">${partEntryHtml(ex, '')}</div>`;
+				});
+				}
+				if (Array.isArray(item.exemples_droite)) {
+				item.exemples_droite.forEach(ex => {
+					pasdaccordHtml += `<div class="part-entry">${partEntryHtml(ex, '')}</div>`;
+				});
+				}
+
+				if (!daccordHtml)	daccordHtml	= `<div class="part-entry">${partEntryHtml('', '')}</div>`;
+				if (!pasdaccordHtml) pasdaccordHtml = `<div class="part-entry">${partEntryHtml('', '')}</div>`;
+
+				newEntry.innerHTML = entryHtml(
+				item.colonne_gauche || '',
+				daccordHtml,
+				pasdaccordHtml
+				);
+				entriesDiv.appendChild(newEntry);
+				setupAutoResize(newEntry);
+			});
+			}
+
+			if (entriesDiv.querySelectorAll('.entry').length === 0) addEntry();
+
+			loadingIndicator.style.display = 'none';
+		} catch (err) {
+			loadingIndicator.style.display = 'none';
+			alert('Erreur lors du chargement du fichier : ' + err.message);
+			if (document.querySelectorAll('.entry').length === 0) addEntry();
+		}
+		};
+		reader.readAsText(file);
+	}
+
+	function loadFile(event) {
+		const file = event.target.files[0];
+		processFile(file);
+		event.target.value = '';
+	}
+
+	// ============================================================
+	// DRAG & DROP
+	// ============================================================
+	function setupDragAndDrop() {
+		const overlay = document.getElementById('drop-overlay');
+
+		['dragenter', 'dragover', 'dragleave', 'drop'].forEach(evtName => {
+		window.addEventListener(evtName, e => {
+			e.preventDefault();
+			e.stopPropagation();
+		}, false);
+		});
+
+		window.addEventListener('dragenter', e => {
+		if (e.dataTransfer && Array.from(e.dataTransfer.types).includes('Files')) {
+			overlay.classList.add('active');
+		}
+		});
+
+		window.addEventListener('dragover', e => {
+		if (e.dataTransfer && Array.from(e.dataTransfer.types).includes('Files')) {
+			overlay.classList.add('active');
+		}
+		});
+
+		window.addEventListener('dragleave', e => {
+		if (e.relatedTarget === null || e.clientX <= 0 || e.clientY <= 0) {
+			overlay.classList.remove('active');
+		}
+		});
+
+		window.addEventListener('drop', e => {
+		overlay.classList.remove('active');
+
+		const files = e.dataTransfer && e.dataTransfer.files;
+		if (!files || files.length === 0) return;
+
+		const file = files[0];
+		if (!file.name.endsWith('.js')) {
+			alert('Seuls les fichiers .js peuvent être chargés.');
+			return;
+		}
+		processFile(file);
+		});
+	}
+
+	// ============================================================
+	// INIT
+	// ============================================================
+	document.addEventListener('DOMContentLoaded', function() {
+		setupColorPickers();
+		updateHoverColor();
+		setupFontSizeControls();
+		setupDragAndDrop();
+
+		if (document.querySelectorAll('.entry').length === 0) {
+		addEntry();
+		}
+	});
+	</script>
+</body>
+</html>
