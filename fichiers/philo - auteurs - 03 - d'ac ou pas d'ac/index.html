@@ -200,10 +200,12 @@ body.colorblind-mode {
 	--correct-bg: #1E88E5 !important; --incorrect-bg: #FFB300 !important;
 	--border-correct: #1E88E5 !important; --border-incorrect: #FFB300 !important;
 	--color-correct: #1E88E5 !important; --color-incorrect: #FFB300 !important;
+	--primary-color: #2c7be5 !important; --badge-bg: #2c7be5 !important;
 }
 body.colorblind-mode.dark-mode {
 	--correct-bg: #1565C0 !important; --incorrect-bg: #FF8F00 !important;
 	--border-correct: #1565C0 !important; --border-incorrect: #FF8F00 !important;
+	--primary-color: #4a90d9 !important; --badge-bg: #4a90d9 !important;
 }
 body.colorblind-mode .draggable { padding-right: 32px; }
 body.colorblind-mode .draggable.correct { background-color: rgba(30, 136, 229, 0.18) !important; box-shadow: 0 0 8px rgba(30, 136, 229, 0.4) !important; }
@@ -216,6 +218,25 @@ body.colorblind-mode .draggable.correct::after { content: "✓"; color: #006400;
 body.colorblind-mode .draggable.incorrect::after { content: "✗"; color: #8B0000; }
 body.colorblind-mode.dark-mode .draggable.correct::after { color: #90EE90; }
 body.colorblind-mode.dark-mode .draggable.incorrect::after { color: #FFB6C1; }
+
+/* ===== MODE DALTONISME : tout ce qui était rouge devient bleu ===== */
+body.colorblind-mode .toaster-global.danger { background: #1E88E5 !important; color: #fff !important; }
+body.colorblind-mode.dark-mode .toaster-global.danger { background: #1565C0 !important; }
+
+body.colorblind-mode .timer-btn.warning { color: #4a90d9 !important; }
+body.colorblind-mode .timer-btn.danger { color: #1565C0 !important; }
+
+body.colorblind-mode .reset-dialog-icon,
+body.colorblind-mode .stats-reset-dialog .reset-dialog-icon { background: rgba(30, 136, 229, 0.15) !important; color: #1E88E5 !important; }
+body.colorblind-mode.dark-mode .reset-dialog-icon,
+body.colorblind-mode.dark-mode .stats-reset-dialog .reset-dialog-icon { background: rgba(21, 101, 192, 0.25) !important; color: #4a90d9 !important; }
+
+body.colorblind-mode .reset-dialog-actions .reset-confirm { background: #1E88E5 !important; box-shadow: 0 4px 12px rgba(30, 136, 229, 0.35) !important; }
+body.colorblind-mode .reset-dialog-actions .reset-confirm:hover { box-shadow: 0 6px 16px rgba(30, 136, 229, 0.45) !important; }
+body.colorblind-mode.dark-mode .reset-dialog-actions .reset-confirm { background: #1565C0 !important; box-shadow: 0 4px 12px rgba(21, 101, 192, 0.45) !important; }
+
+body.colorblind-mode .error-message { background: #E3F2FD !important; color: #1565C0 !important; }
+body.colorblind-mode.dark-mode .error-message { background: #0D3A5C !important; color: #90CAF9 !important; }
 
 /* ===== ANIMATION DE CORRECTION ===== */
 .draggable.flying-label {
@@ -262,6 +283,8 @@ body.evaluation-mode .evaluation-info { display: block; flex: 1; min-height: 0; 
 body.evaluation-mode .row { display: none; }
 .evaluation-info .eval-list { text-align: left; margin: 12px auto 0; max-width: 720px; padding-left: 24px; font-weight: normal; line-height: 1.5; }
 .evaluation-info .eval-list li { margin-bottom: 8px; }
+#evaluationConsigne { margin: 0 0 24px 0; line-height: 1.5; font-weight: bold; font-size: 16px; }
+.evaluation-info .eval-list li { margin-bottom: 8px; }
 
 /* ===== TOASTER & CONFETTI ===== */
 .toaster-global { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--toast-bg); color: var(--toast-text); padding: 16px 28px; border-radius: 12px; font-size: 1rem; font-weight: bold; z-index: 99999; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease; opacity: 0; pointer-events: none; text-align: center; max-width: 90%; min-width: 200px; }
@@ -285,21 +308,52 @@ body.evaluation-mode .row { display: none; }
 .menu-item svg { width: 24px; height: 24px; margin-right: 16px; stroke: currentColor; stroke-width: 2; fill: none; flex-shrink: 0; transition: transform 0.3s ease; }
 .menu-item:hover svg { animation: rotate 1s linear; }
 .menu-item .item-label { flex: 1; text-align: left; display: flex; align-items: center; height: 100%; }
+.menu-item .item-badge {
+	background: var(--badge-bg);
+	color: var(--badge-color);
+	border-radius: 50%;
+	width: 34px;
+	height: 34px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 10px;
+	font-weight: bold;
+	flex-shrink: 0;
+	margin-left: 8px;
+}
 
 .submenu { position: fixed; top: 0; right: -340px; width: 280px; height: 100%; background: var(--bg); z-index: 10010; box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2); border-radius: 20px 0 0 20px; padding: 2rem 1.5rem; overflow-y: auto; transition: right 0.5s ease; }
 .submenu.active { right: 0; }
 .submenu-title { font-size: 1.4rem; font-weight: bold; color: var(--primary-color); margin: 0.5rem 0 1.5rem 0; text-align: center; text-transform: lowercase; letter-spacing: 0.3px; }
 .submenu-content { color: var(--font-color); font-size: 13px; line-height: 1.5; margin-top: 4px; }
-.settings-info { margin-top: 0; padding: 15px; background: rgba(0, 0, 0, 0.05); border-radius: 10px; text-align: left; margin-bottom: 15px; font-size: 13px; line-height: 1.5; }
+.settings-info { margin-top: 0; padding: 15px 15px 15px 25px ; background: rgba(0, 0, 0, 0.05); border-radius: 10px; text-align: left; margin-bottom: 15px; font-size: 13px; line-height: 1.5; }
 .settings-info p { margin: 0 0 8px 0; }
 .settings-info p:last-child { margin-bottom: 0; }
 .settings-info svg:hover { animation: rotate 1s linear; }
 
-.submenu-icon { width: 24px; height: 24px; flex-shrink: 0; color: var(--font-color); stroke: currentColor; stroke-width: 2; fill: none; transition: transform 0.3s ease; display: inline-block; vertical-align: middle; }
-.submenu-icon:hover { animation: rotate 1s linear; }
+/* ===== STATISTIQUES ===== */
+.settings-compact {
+	display: flex; flex-direction: column; gap: 0.5rem;
+	background: rgba(0, 0, 0, 0.03); padding: 0.75rem;
+	border-radius: 12px; margin-bottom: 0.75rem;
+}
+body.dark-mode .settings-compact { background: rgba(255, 255, 255, 0.05); }
+.settings-compact p { margin: 0; line-height: 1.5; font-size: 13px; display: flex; align-items: flex-start; gap: 8px; }
 
-#submenuPresentation .settings-info ul { list-style: none; padding: 0; margin: 0; }
-#submenuPresentation .settings-info li { padding: 6px 0; margin: 0; font-size: 14px; line-height: 1.5; display: block; }
+.stats-reload-btn {
+	width: 100%; margin-top: 15px; padding: 8px 16px;
+	font-size: 1rem; border-radius: 0.5rem;
+	display: inline-flex; gap: 8px; justify-content: center; align-items: center;
+	border: none; background: var(--btn); color: var(--font-color);
+	box-shadow: var(--shadow-out); cursor: pointer;
+	transition: all 0.2s ease; font-family: Arial, sans-serif; font-size: 13px;
+}
+.stats-reload-btn:hover { box-shadow: var(--shadow-in); transform: translateY(-2px); }
+.stats-reload-btn svg { width: 18px; height: 18px; }
+
+.submenu-icon { width: 24px; height: 24px; flex-shrink: 0; color: var(--font-color); stroke: currentColor; stroke-width: 2; fill: none; transition: transform 0.3s ease; display: inline-block; vertical-align: middle; margin-right: 8px; }
+.submenu-icon:hover { animation: rotate 1s linear; }
 
 .shortcuts-table { width: 100%; color: var(--font-color); margin-bottom: 1rem; border-collapse: collapse; line-height: 1.1; font-size: 13px; }
 .shortcuts-table td { padding: 1px 0; border: none; vertical-align: middle; }
@@ -387,6 +441,29 @@ body.dark-mode .reset-dialog-icon { background: rgba(255, 107, 107, 0.15); }
 	transform: translateY(-1px);
 }
 
+/* ===== DIALOGUE RÉINITIALISATION STATISTIQUES ===== */
+.stats-reset-overlay {
+	position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5);
+	z-index: 100002; display: flex; align-items: center; justify-content: center;
+	opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s ease;
+	padding: 20px;
+}
+.stats-reset-overlay.open { opacity: 1; visibility: visible; }
+.stats-reset-dialog {
+	background: var(--bg); color: var(--font-color);
+	border-radius: 16px; padding: 24px 22px 18px;
+	max-width: 380px; width: 100%;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+	transform: scale(0.92) translateY(10px);
+	transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+	text-align: center;
+	border: 1px solid rgba(0, 0, 0, 0.05);
+}
+body.dark-mode .stats-reset-dialog { border-color: rgba(255, 255, 255, 0.08); }
+.stats-reset-overlay.open .stats-reset-dialog { transform: scale(1) translateY(0); }
+.stats-reset-dialog .reset-dialog-icon { background: rgba(243, 156, 18, 0.15); color: #f39c12; }
+body.dark-mode .stats-reset-dialog .reset-dialog-icon { background: rgba(243, 156, 18, 0.2); }
+
 #loadingScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 99999; transition: opacity 0.5s ease; }
 #loadingScreen.hidden { opacity: 0; pointer-events: none; }
 #loadingScreen .loader { width: 60px; height: 60px; border: 4px solid var(--btn); border-top-color: var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
@@ -430,7 +507,6 @@ body.dark-mode .select-all-btn:last-child { border-left-color: rgba(255, 255, 25
 	.timer-btn { font-size: 8px !important; }
 	.mobile-title { font-size: 0.85rem; margin-top: 0; }
 
-	/* SVG séquences mobile */
 	.btn-sequences .arrow-svg,
 	.btn-sequences .plate-svg { width: 14px; height: 14px; }
 
@@ -486,7 +562,6 @@ body.dark-mode .select-all-btn:last-child { border-left-color: rgba(255, 255, 25
 		<div class="toolbar-left">
 			<div style="position:relative;">
 				<button class="btn btn-sequences" id="sequencesBtn" data-title="choisir un auteur (S)">
-					<!-- SVG modifié : flèche + plateau -->
 					<svg class="arrow-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
 						<g class="arrow-group">
 							<line x1="12" y1="4" x2="12" y2="14"></line>
@@ -523,7 +598,7 @@ body.dark-mode .select-all-btn:last-child { border-left-color: rgba(255, 255, 25
 		</div>
 		<div class="toolbar-center">
 			<div class="toolbar-title" id="appTitle">d'ac ou pas d'ac ?</div>
-			<div class="toolbar-subtitle" id="appSubtitle">classez les thèses suivantes, selon qu'elles sont justes ou erronées.</div>
+			<div class="toolbar-subtitle" id="appSubtitle">classez les thèses suivantes, selon qu'elles sont justes ou erronées</div>
 		</div>
 		<div class="toolbar-right">
 			<button class="timer-btn" id="timerBtnDesktop" data-title="temps restant (T)">
@@ -547,7 +622,6 @@ body.dark-mode .select-all-btn:last-child { border-left-color: rgba(255, 255, 25
 		<div class="mobile-buttons">
 			<div style="position:relative;">
 				<button class="btn btn-sequences" id="sequencesBtnMobile" data-title="choisir un auteur (S)">
-					<!-- SVG modifié : flèche + plateau -->
 					<svg class="arrow-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
 						<g class="arrow-group">
 							<line x1="12" y1="4" x2="12" y2="14"></line>
@@ -626,6 +700,10 @@ body.dark-mode .select-all-btn:last-child { border-left-color: rgba(255, 255, 25
 			<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
 			<span class="item-label">présentation</span>
 		</button>
+		<button class="menu-item" id="statsButton">
+			<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M 3 3 L 3 22" /><path d="M 3 22 L 22 22" /><path d="M 7 18 L 11 12 L 15 15 L 21 6" /></svg>
+			<span class="item-label">statistiques</span><span class="item-badge" id="statsBadge">0%</span>
+		</button>
 		<button class="menu-item" id="openSettingsSub">
 			<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
 			<span class="item-label">paramètres</span>
@@ -658,6 +736,51 @@ body.dark-mode .select-all-btn:last-child { border-left-color: rgba(255, 255, 25
 				<li><strong>Nouvelle partie :</strong> un nouvel auteur et huit nouvelles propositions.</li>
 			</ul>
 		</div>
+	</div>
+</div>
+
+<div class="submenu" id="submenuStats">
+	<div class="menu-header">
+		<button class="submenu-close" data-submenu="stats">
+			<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+				<line x1="18" y1="6" x2="6" y2="18" />
+				<line x1="6" y1="6" x2="18" y2="18" />
+			</svg>
+		</button>
+	</div>
+	<div class="submenu-title">statistiques</div>
+	<div class="submenu-content">
+		<div class="settings-compact">
+			<p>
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M 3 3 L 3 22" />
+					<path d="M 3 22 L 22 22" />
+					<path d="M 7 18 L 11 12 L 15 15 L 21 6" />
+				</svg>
+				<strong>quelques chiffres</strong>
+			</p>
+			<p>• score actuel : <span style="color: var(--primary-color);" id="statTotalCorrect">0</span> / <span id="statTotalAnswers">0</span></p>
+			<p>• taux de réussite : <span style="color: var(--primary-color);" id="statSuccessRate">0&nbsp;%</span></p>
+			<p>• <span id="statGamesPlayedLabel">parties jouées</span> : <span style="color: var(--primary-color);" id="statGamesPlayed">0</span></p>
+		</div>
+		<div class="settings-compact">
+			<p>
+				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+					<polyline points="17 21 17 13 7 13 7 21"></polyline>
+					<polyline points="7 3 7 8 15 8"></polyline>
+				</svg>
+				<strong>sauvegarde</strong>
+			</p>
+			<p>les statistiques sont sauvegardées automatiquement</p>
+		</div>
+		<button class="stats-reload-btn" id="resetStatsBtn">
+			<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<polyline points="23 4 23 10 17 10"></polyline>
+				<path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+			</svg>
+			réinitialiser
+		</button>
 	</div>
 </div>
 
@@ -745,7 +868,6 @@ body.dark-mode .select-all-btn:last-child { border-left-color: rgba(255, 255, 25
 	</div>
 </div>
 
-<!-- ===== BOÎTE DE DIALOGUE DE RÉINITIALISATION ===== -->
 <div class="reset-dialog-overlay" id="resetDialogOverlay">
 	<div class="reset-dialog" role="dialog" aria-modal="true" aria-labelledby="resetDialogTitle">
 		<div class="reset-dialog-icon">
@@ -760,6 +882,24 @@ body.dark-mode .select-all-btn:last-child { border-left-color: rgba(255, 255, 25
 		<div class="reset-dialog-actions">
 			<button type="button" id="resetCancelBtn">annuler</button>
 			<button type="button" class="reset-confirm" id="resetConfirmBtn">oui, réinitialiser</button>
+		</div>
+	</div>
+</div>
+
+<div class="stats-reset-overlay" id="statsResetOverlay">
+	<div class="stats-reset-dialog" role="dialog" aria-modal="true" aria-labelledby="statsResetTitle">
+		<div class="reset-dialog-icon">
+			<svg viewBox="0 0 24 24" aria-hidden="true">
+				<polyline points="23 4 23 10 17 10"/>
+				<polyline points="1 20 1 14 7 14"/>
+				<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+			</svg>
+		</div>
+		<h2 class="reset-dialog-title" id="statsResetTitle">réinitialiser les statistiques ?</h2>
+		<p class="reset-dialog-message">Cette action remettra à zéro le <strong>score</strong>, le <strong>taux de réussite</strong> et le <strong>nombre de parties jouées</strong>. Vos préférences et votre sélection d'auteurs seront conservées.</p>
+		<div class="reset-dialog-actions">
+			<button type="button" id="statsResetCancelBtn">annuler</button>
+			<button type="button" class="reset-confirm" id="statsResetConfirmBtn">oui, réinitialiser</button>
 		</div>
 	</div>
 </div>
@@ -854,17 +994,14 @@ document.addEventListener("DOMContentLoaded", () => {
 		getNewWordsDac();
 		if (timerEnabled) { resetTimer(); startTimer(); } 
 		else { updateTimerDisplay('∞'); showTimerButtons(false); }
-		// Vérification initiale de la sélection
 		checkSelectionAndWarn();
 	}
 
-	// ==================== FONCTION AJOUTÉE ====================
 	function hasSelection() {
 		return selectedAuthorIndices.size > 0;
 	}
 
 	function showEmptySelectionMessage() {
-		// Message dans les dropzones
 		const daccordTitle = document.getElementById('daccord-title');
 		const pasdaccordTitle = document.getElementById('pasdaccord-title');
 		const dropzoneDaccord = document.getElementById('dropzone-daccord');
@@ -889,7 +1026,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			z.appendChild(msg);
 		});
 
-		// Désactiver le bouton vérifier
 		const checkBtn = document.getElementById('checkButton');
 		if (checkBtn) {
 			checkBtn.disabled = true;
@@ -900,7 +1036,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (!hasSelection()) {
 			showEmptySelectionMessage();
 			showToaster("⚠️ Aucun auteur sélectionné — choisissez au moins un philosophe dans la liste (bouton en haut à gauche).", "warning", 5000);
-			// Ouvrir automatiquement le dropdown si demandé
 			if (openDropdown) {
 				const dropdown = document.getElementById('sequencesDropdown');
 				if (dropdown) {
@@ -912,7 +1047,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 		return true;
 	}
-	// ==================== FIN FONCTION AJOUTÉE ====================
 
 	function createDropzonesDac() {
 		reperesContainer.innerHTML = `
@@ -935,7 +1069,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			if (zone && el && !el.classList.contains('locked')) { 
 				zone.appendChild(el); 
 				el.style.opacity = "1";
-				// Retirer le message vide si présent
 				const emptyMsg = zone.querySelector('.dropzone-empty-message');
 				if (emptyMsg) emptyMsg.remove();
 			} 
@@ -1003,7 +1136,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	function getNewWordsDac() {
-		// Vérifier la sélection
 		if (!hasSelection()) {
 			showEmptySelectionMessage();
 			return;
@@ -1036,7 +1168,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		gamesPlayed++;
 		localStorage.setItem('dacGamesPlayed', gamesPlayed);
 		saveGameStats();
-		// Réactiver le bouton vérifier
 		const checkBtn = document.getElementById('checkButton');
 		if (checkBtn && !document.body.classList.contains('evaluation-mode')) {
 			checkBtn.disabled = false;
@@ -1416,7 +1547,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		playSound('click');
 	}
 
-	function saveGameStats() { localStorage.setItem('dacGameStats', JSON.stringify({ correctCount, totalCount, gamesPlayed })); }
+	function saveGameStats() {
+		localStorage.setItem('dacGameStats', JSON.stringify({ correctCount, totalCount, gamesPlayed }));
+		refreshStatsView();
+	}
 	function loadGameStats() {
 		const s = localStorage.getItem('dacGameStats');
 		if (s) {
@@ -1425,6 +1559,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			document.getElementById("correctCount").textContent = correctCount;
 			document.getElementById("totalCount").textContent = totalCount;
 		}
+		refreshStatsView();
 	}
 	function loadSettings() {
 		const s = localStorage.getItem('dacSettings');
@@ -1529,6 +1664,33 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (duration > 0) toasterTimeout = setTimeout(() => toaster.classList.remove('show'), duration);
 	}
 
+	function refreshStatsView() {
+		const rate = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+
+		const badge = document.getElementById('statsBadge');
+		if (badge) badge.textContent = rate + '%';
+
+		const c = document.getElementById('statTotalCorrect');
+		const t = document.getElementById('statTotalAnswers');
+		const r = document.getElementById('statSuccessRate');
+		const g = document.getElementById('statGamesPlayed');
+		const l = document.getElementById('statGamesPlayedLabel');
+		if (c) c.textContent = correctCount;
+		if (t) t.textContent = totalCount;
+		if (r) r.innerHTML = rate + '&nbsp;%';
+		if (g) g.textContent = gamesPlayed;
+		if (l) l.textContent = gamesPlayed < 2 ? 'partie jouée' : 'parties jouées';
+	}
+
+	function resetStats() {
+		correctCount = 0;
+		totalCount = 0;
+		gamesPlayed = 0;
+		document.getElementById('correctCount').textContent = '0';
+		document.getElementById('totalCount').textContent = '0';
+		saveGameStats();
+	}
+
 	function updateAuthorsDropdown() {
 		const dropdowns = [document.getElementById('sequencesDropdown'), document.getElementById('sequencesDropdownMobile')];
 		dropdowns.forEach(dropdown => {
@@ -1598,6 +1760,25 @@ document.addEventListener("DOMContentLoaded", () => {
 		}, 900);
 	}
 
+	function closeAllSubmenus() {
+		document.querySelectorAll('.submenu').forEach(s => s.classList.remove('active'));
+		if (!document.getElementById('slideMenu').classList.contains('open')) {
+			document.body.classList.remove('menu-open');
+		}
+	}
+
+	function openSubmenu(id) { closeAllSubmenus(); const el = document.getElementById(id); if (el) { el.classList.add('active'); document.body.classList.add('menu-open'); } }
+	function closeMenu() { document.getElementById('slideMenu').classList.remove('open'); document.getElementById('menuOverlay').classList.remove('open'); document.body.classList.remove('menu-open'); closeAllSubmenus(); closeAuthorsDropdown(); }
+
+	function toggleFullscreen() {
+		playSound('click');
+		if (!document.fullscreenElement) {
+			document.documentElement.requestFullscreen().catch(err => {});
+		} else {
+			if (document.exitFullscreen) document.exitFullscreen();
+		}
+	}
+
 	function configureEvents() {
 		document.querySelectorAll('[data-action="menu"]').forEach(b => b.addEventListener('click', () => { playSound('click'); document.getElementById('slideMenu').classList.add('open'); document.getElementById('menuOverlay').classList.add('open'); document.body.classList.add('menu-open'); }));
 		document.getElementById('menuClose').addEventListener('click', () => { playSound('click'); closeMenu(); });
@@ -1609,13 +1790,37 @@ document.addEventListener("DOMContentLoaded", () => {
 		document.getElementById('openShortcutsSub').addEventListener('click', () => { playSound('click'); openSubmenu('submenuShortcuts'); });
 		document.getElementById('openAboutSub').addEventListener('click', () => { playSound('click'); openSubmenu('submenuAbout'); });
 
-		// Bouton réinitialiser → ouvre la boîte de dialogue
+		document.getElementById('statsButton').addEventListener('click', () => { playSound('click'); refreshStatsView(); openSubmenu('submenuStats'); });
+
+		document.getElementById('resetStatsBtn').addEventListener('click', () => {
+			playSound('click');
+			document.getElementById('statsResetOverlay').classList.add('open');
+		});
+
+		document.getElementById('statsResetCancelBtn').addEventListener('click', () => {
+			playSound('click');
+			document.getElementById('statsResetOverlay').classList.remove('open');
+		});
+
+		document.getElementById('statsResetConfirmBtn').addEventListener('click', () => {
+			playSound('click');
+			document.getElementById('statsResetOverlay').classList.remove('open');
+			resetStats();
+			showToaster('📊 statistiques réinitialisées', 'info', 2000);
+		});
+
+		document.getElementById('statsResetOverlay').addEventListener('click', (e) => {
+			if (e.target.id === 'statsResetOverlay') {
+				playSound('click');
+				document.getElementById('statsResetOverlay').classList.remove('open');
+			}
+		});
+
 		document.getElementById('openReset').addEventListener('click', () => {
 			playSound('click');
 			openResetDialog();
 		});
 
-		// Boutons de la boîte de dialogue
 		document.getElementById('resetCancelBtn').addEventListener('click', () => {
 			playSound('click');
 			closeResetDialog();
@@ -1667,14 +1872,13 @@ document.addEventListener("DOMContentLoaded", () => {
 			if (isCorrecting || document.body.classList.contains('evaluation-mode')) return;
 			if (!hasSelection()) {
 				showToaster("⚠️ Sélectionnez d'abord au moins un auteur avant de vérifier.", "warning", 3000);
-				// Ouvrir le dropdown pour aider
 				const dropdown = document.getElementById('sequencesDropdown');
 				if (dropdown) { dropdown.classList.add('open'); updateAuthorsDropdown(); }
 				return;
 			}
 			if (gamePhase === "vérifier") {
 				if (timerEnabled) stopTimer(); isTimerEvaluation = false; evaluateAnswersDac();
-			} else if (gamePhase === "corriger") {
+				} else if (gamePhase === "corriger") {
 				playSound('click'); await correctAnswersDac();
 			} else { reloadDac(); }
 		});
@@ -1693,7 +1897,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		document.addEventListener('keydown', e => {
 			if (e.target.matches('input, textarea, select')) return;
-			if (e.key === 'Escape') { closeAllSubmenus(); closeMenu(); closeAuthorsDropdown(); closeResetDialog(); e.preventDefault(); return false; }
+			if (e.key === 'Escape') {
+				if (document.getElementById('statsResetOverlay').classList.contains('open')) {
+					document.getElementById('statsResetOverlay').classList.remove('open');
+				} else if (document.getElementById('resetDialogOverlay').classList.contains('open')) {
+					closeResetDialog();
+				} else if (document.querySelector('.submenu.active')) {
+					closeAllSubmenus();
+				} else if (document.getElementById('slideMenu').classList.contains('open')) {
+					closeMenu();
+				} else if (document.querySelector('.sequences-dropdown.open')) {
+					closeAuthorsDropdown();
+				} else if (document.fullscreenElement) {
+					if (document.exitFullscreen) document.exitFullscreen();
+				}
+				e.preventDefault();
+				return false;
+			}
 			const key = e.key.toLowerCase();
 			if (key === 's') { e.preventDefault(); playSound('click'); document.getElementById('sequencesDropdown').classList.toggle('open'); updateAuthorsDropdown(); }
 			if (key === 'h') { e.preventDefault(); playSound('click'); window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'); }
@@ -1705,19 +1925,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			if (key === '?') { e.preventDefault(); openSubmenu('submenuShortcuts'); }
 			if (key === 'm') { e.preventDefault(); document.getElementById('slideMenu').classList.contains('open') ? closeMenu() : (document.getElementById('slideMenu').classList.add('open'), document.getElementById('menuOverlay').classList.add('open'), document.body.classList.add('menu-open')); }
 		});
-	}
-
-	function closeAllSubmenus() { document.querySelectorAll('.submenu').forEach(s => s.classList.remove('active')); document.body.classList.remove('menu-open'); }
-	function openSubmenu(id) { closeAllSubmenus(); const el = document.getElementById(id); if (el) { el.classList.add('active'); document.body.classList.add('menu-open'); } }
-	function closeMenu() { document.getElementById('slideMenu').classList.remove('open'); document.getElementById('menuOverlay').classList.remove('open'); document.body.classList.remove('menu-open'); closeAllSubmenus(); closeAuthorsDropdown(); }
-	
-	function toggleFullscreen() {
-		playSound('click');
-		if (!document.fullscreenElement) {
-			document.documentElement.requestFullscreen().catch(err => {});
-		} else {
-			if (document.exitFullscreen) document.exitFullscreen();
-		}
 	}
 });
 </script>
