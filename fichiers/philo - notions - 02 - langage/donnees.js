@@ -43,11 +43,11 @@ const themes = {
     ["est"],
     ["mortel.\n", "un mammifère.\n", "sympathique.\n", "utilisateur d'outil\n", "borgne\n", "bavard.\n", "excentrique.\n", "têtu.\n", "ironique.\n", "insatiable.\n", "rêveur.\n", "fanfaron.\n", "pointilleux.\n", "prudent.\n", "heureux.\n", "impassible.\n", "indécis.\n", "sans-gêne.\n", "curieux.\n", "rigoureux.\n", "enthousiaste.\n", "pragmatique.\n", "trompeur.\n", "subtil.\n", "attentif.\n", "angoissé.\n"],	 // ← \n partout
     ["Or"],
-    ["Socrate", "Félix", "Milou", "le sculpteur", "Mickey", "Platon", "Dalí", "mon voisin", "mon maître", "Garfield", "Baudelaire", "d'Artagnan", "Aristote", "mon cousin", "mon boulanger", "Marc Aurèle", "Pyrrhon", "Diogène", "Hume", "Descartes", "mon neveu", "mon banquier", "Gorgias", "Hegel", "Husserl", "Sartre"],
+    ["Socrate", "Félix", "Milou", "le sculpteur", "Mickey", "Platon", "Dalí", "mon voisin", "mon professeur", "Garfield", "Baudelaire", "d'Artagnan", "Aristote", "mon cousin", "mon boulanger", "Marc Aurèle", "Pyrrhon", "Diogène", "Hume", "Descartes", "mon neveu", "mon banquier", "Gorgias", "Hegel", "Husserl", "Sartre"],
     ["est"],
     ["un homme.\n", "un chat.\n", "un chien.\n", "un homme qui taille la pierre.\n", "un agent de change.\n", "un philosophe.\n", "un artiste.\n", "un Breton.\n", "un professeur de philosophie.\n", "un gourmand.\n", "un poète.\n", "un Gascon.\n", "un logicien.\n", "un Normand.\n", "un épicurien.\n", "un stoïcien.\n", "un sceptique.\n", "un cynique.\n", "un empiriste.\n", "un rationaliste.\n", "un idéaliste.\n", "un matérialiste.\n", "un sophiste.\n", "un dialecticien.\n", "un phénoménologue.\n", "un existentialiste.\n"],	 // ← \n partout
     ["Donc"],
-    ["Socrate", "Félix", "Milou", "le sculpteur", "Mickey", "Platon", "Dalí", "mon voisin", "mon maître", "Garfield", "Baudelaire", "d'Artagnan", "Aristote", "mon cousin", "mon boulanger", "Marc Aurèle", "Pyrrhon", "Diogène", "Hume", "Descartes", "mon neveu", "mon banquier", "Gorgias", "Hegel", "Husserl", "Sartre"],
+    ["Socrate", "Félix", "Milou", "le sculpteur", "Mickey", "Platon", "Dalí", "mon voisin", "mon professeur", "Garfield", "Baudelaire", "d'Artagnan", "Aristote", "mon cousin", "mon boulanger", "Marc Aurèle", "Pyrrhon", "Diogène", "Hume", "Descartes", "mon neveu", "mon banquier", "Gorgias", "Hegel", "Husserl", "Sartre"],
     ["est"],
     ["mortel.", "un mammifère.", "sympathique.", "utilisateur d'outil", "borgne", "bavard.", "excentrique.", "têtu.", "ironique.", "insatiable.", "rêveur.", "fanfaron.", "pointilleux.", "prudent.", "heureux.", "impassible.", "indécis.", "sans-gêne.", "curieux.", "rigoureux.", "enthousiaste.", "pragmatique.", "trompeur.", "subtil.", "attentif.", "angoissé."]	 // ← surtout PAS de \n ici (dernière ligne)
     ]
