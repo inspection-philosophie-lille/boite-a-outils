@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" 
+     viewBox="-15 -2 57 30" 
+     width="1142" height="600"
+     preserveAspectRatio="xMidYMid meet">
+  <!-- Fond orange couvrant tout le viewBox -->
+  <rect x="-15" y="-2" width="57" height="30" fill="#F5821F" />
+
+  <g fill="none" stroke="#FFFFFF" stroke-width="1"
+     stroke-linecap="round" stroke-linejoin="round">
+    <!-- Double flèche isolée à gauche (axe x=5) -->
+    <line x1="5" y1="5" x2="5" y2="19" />
+    <polyline points="1 9 5 5 9 9" />
+    <polyline points="1 15 5 19 9 15" />
+
+    <!-- Traits de texte à droite -->
+    <line x1="16" y1="5" x2="21" y2="5" />
+    <line x1="16" y1="12" x2="26" y2="12" />
+    <line x1="16" y1="19" x2="24" y2="19" />
+  </g>
+</svg>

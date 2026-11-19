@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+	<link rel="icon" href="../../src/favicon.ico" />
+	<title>enchaîner les idées</title>
+	<style>
+	:root {
+			--bg: #e7e7e9;
+			--panel: #e0e0e0;
+			--btn: #e0e0e0;
+			--font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+			--font-color: #222;
+			--shadow-out: 4px 4px 10px rgba(0,0,0,.1), -4px -4px 10px rgba(255,255,255,.9);
+			--shadow-in: inset 3px 3px 6px rgba(0,0,0,.1), inset -3px -3px 6px rgba(255,255,255,.9);
+			--primary-color: #0169D9;
+			--model-primary: red;
+			--spacing-standard: 12px;
+		}
+
+		* { box-sizing: border-box; margin: 0; padding: 0; }
+		
+		html, body { 
+			height: 100%; 
+			font-family: var(--font); 
+			background: var(--bg); 
+			color: var(--font-color);
+			padding: 10px; 
+			padding-top: 40px;
+			overflow-x: hidden; 
+			-webkit-tap-highlight-color: transparent; 
+		}
+
+		/* ===== BARRE D'OUTILS ===== */
+		.toolbar-wrapper { 
+			position: fixed; 
+			top: 10px; 
+			left: 50%; 
+			transform: translateX(-50%);
+			width: calc(100% - 20px);
+			max-width: 1200px;
+			z-index: 100; 
+			transition: filter 0.3s ease; 
+		}
+		
+		.toolbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+			padding: 0.5rem 0.5rem;
+			margin: 0 0 var(--spacing-standard) 0;
+			background-color: var(--bg);
+			flex-wrap: wrap;
+			flex-shrink: 0;
+			box-sizing: border-box;
+			position: relative;
+			z-index: 100;
+			border-radius: 40px;
+		}
+
+		.toolbar-left, .toolbar-right {
+			display: flex;
+			gap: 0.5rem;
+			align-items: center;
+		}
+
+		.toolbar-left { justify-content: flex-start; width: auto; }
+		.toolbar-right { justify-content: flex-end; width: auto; }
+
+		.toolbar-title {
+			text-align: center;
+			flex: 1;
+			pointer-events: none;
+			min-width: 0;
+		}
+
+		.toolbar h1 {
+			color: var(--model-primary);
+			font-size: 40px;
+			margin: 0;
+			font-weight: 600;
+			line-height: 1.2;
+			text-transform: lowercase;
+		}
+
+		.toolbar h2 {
+			color: var(--font-color);
+			font-size: 20px;
+			margin: 0;
+			opacity: 0.7;
+			font-weight: 500;
+			line-height: 1.2;
+		}
+
+		.btn, .timer-btn, .btn-notions {
+			width: 52px;
+			height: 52px;
+			border-radius: 50%;
+			border: none;
+			background: var(--btn);
+			box-shadow: var(--shadow-out);
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: var(--font-color);
+			position: relative;
+			flex-shrink: 0;
+			transition: all 0.2s ease;
+			touch-action: manipulation;
+		}
+
+		.btn:hover, .timer-btn:hover, .btn-notions:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+
+		.btn:active, .timer-btn:active, .btn-notions:active {
+			transform: translateY(1px);
+		}
+
+		.btn.reload:hover svg, .menu-close:hover svg, .submenu-close:hover svg {
+			animation: rotate 1s linear;
+		}
+
+		@keyframes rotate {
+			from { transform: rotate(0deg); }
+			to { transform: rotate(360deg); }
+		}
+
+		.btn::after, .timer-btn::after, .btn-notions::after {
+			content: attr(data-title);
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: 0.5rem;
+			background-color: #2a2a2a;
+			color: #fff;
+			padding: 0.3rem 0.6rem;
+			border-radius: 5px;
+			font-size: 0.8rem;
+			white-space: nowrap;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.2s;
+			z-index: 10;
+		}
+
+		.btn:hover::after, .timer-btn:hover::after, .btn-notions:hover::after {
+			opacity: 1;
+		}
+
+		.btn-notions .arrow-svg, .btn-notions .plate-svg {
+			position: absolute;
+			width: 22px;
+			height: 22px;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			pointer-events: none;
+			fill: none;
+			stroke: currentColor;
+			stroke-width: 2;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+		}
+
+		.btn-notions .arrow-svg {
+			clip-path: inset(0 0 20.83% 0);
+			z-index: 1;
+		}
+
+		.btn-notions .plate-svg { z-index: 2; }
+
+		.btn-notions:hover .arrow-group {
+			animation: download-arrow 1.6s linear infinite;
+		}
+
+		@keyframes download-arrow {
+			0% { transform: translateY(-4px); }
+			100% { transform: translateY(4px); }
+		}
+
+		.timer-btn {
+			font-size: 12px;
+			font-weight: bold;
+			font-family: monospace;
+			padding: 0;
+			line-height: 1;
+			min-width: 52px;
+		}
+
+		.timer-btn.warning { color: #ff6b6b; animation: timer-pulse 0.5s ease infinite alternate; }
+		.timer-btn.danger { color: #ff0000; animation: timer-pulse 0.3s ease infinite alternate; }
+
+		@keyframes timer-pulse {
+			0% { transform: scale(1); }
+			100% { transform: scale(1.05); }
+		}
+
+		.home-btn {
+			background: var(--btn) !important;
+			box-shadow: var(--shadow-out) !important;
+			width: 52px !important;
+			height: 52px !important;
+			perspective: 1200px;
+			padding: 0;
+			border: none !important;
+		}
+
+		.home-btn .icon-wrapper {
+			width: 44px;
+			height: 44px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			transform-style: preserve-3d;
+		}
+
+		.home-btn:hover .icon-wrapper {
+			animation: tourne360 2s infinite linear;
+		}
+
+		@keyframes tourne360 {
+			0% { transform: rotateY(0deg); }
+			100% { transform: rotateY(360deg); }
+		}
+
+		.home-btn svg {
+			width: 28px;
+			height: 28px;
+			stroke: currentColor;
+			stroke-width: 2;
+			fill: none;
+		}
+
+		.menu-btn {
+			position: relative;
+			z-index: 100;
+		}
+
+		.menu-btn .menu-icon {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			transition: transform 0.3s ease;
+			align-items: center;
+			justify-content: center;
+			width: 24px;
+			height: 24px;
+		}
+
+		.menu-btn:hover .menu-icon { transform: rotate(90deg); }
+
+		.menu-btn span {
+			display: block;
+			width: 18px;
+			height: 2px;
+			background-color: var(--font-color);
+			transition: all 0.3s ease;
+			border-radius: 2px;
+		}
+
+		/* ===== DROPDOWN SÉQUENCES ===== */
+		.sequences-dropdown { 
+			position: fixed; 
+			top: 80px; 
+			left: 50%;
+			transform: translateX(-50%);
+			background: var(--bg); 
+			border-radius: 12px; 
+			box-shadow: var(--shadow-out); 
+			display: none; 
+			min-width: 220px; 
+			max-width: 95vw; 
+			max-height: 60vh; 
+			overflow-y: auto; 
+			padding: 4px 0 36px 0; 
+			z-index: 9999; 
+		}
+		.sequences-dropdown.open { display: block !important; }
+		.dropdown-header { padding: 10px 16px; font-weight: bold; color: var(--model-primary); font-size: 0.85rem; text-transform: uppercase; text-align: center; position: sticky; top: -2; background: var(--bg); z-index: 10; }
+		.dropdown-action { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 8px 16px; border: none; background: transparent; color: var(--font-color); font-size: 0.85rem; text-align: center; cursor: pointer; font-family: inherit; line-height: 1.4; transition: background 0.2s ease; font-weight: bold; }
+		.dropdown-action:hover { background: rgba(0, 0, 0, 0.06); }
+		.dropdown-action svg { width: 16px; height: 16px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 2; }
+		.dropdown-divider { margin: 4px 0; }
+		.dropdown-item { display: block; width: 100%; padding: 6px 16px; border: none; background: transparent; color: var(--font-color); font-size: 0.85rem; text-align: left; cursor: pointer; transition: background 0.2s ease; font-family: inherit; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+		.dropdown-item:hover { background: rgba(255, 0, 0, 0.08); }
+		.dropdown-item.active { font-weight: bold; color: var(--model-primary) !important; background: rgba(255, 0, 0, 0.15) !important; }
+
+		/* ===== MENUS ET SOUS-MENUS ===== */
+		.menu-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 998; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+		.menu-overlay.open { opacity: 1; visibility: visible; }
+		
+		body.menu-open > *:not(.slide-menu):not(.submenu):not(.menu-overlay):not(.toast-container):not(.toolbar-wrapper):not(.sequences-dropdown):not(.question-header) { 
+			filter: blur(4px); pointer-events: none; transition: filter 0.3s ease; 
+		}
+		body.menu-open .slide-menu, body.menu-open .submenu, body.menu-open .menu-overlay, body.menu-open .sequences-dropdown, body.menu-open .question-header { 
+			filter: none !important; pointer-events: auto !important; 
+		}
+
+		.slide-menu { position: fixed; top: 0; right: -300px; width: 280px; height: 100vh; background-color: var(--bg); z-index: 999; padding: 20px; display: flex; flex-direction: column; border-radius: 20px 0 0 20px; box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1); transition: right 0.3s ease; overflow-y: auto; }
+		.slide-menu.open { right: 0; }
+		.menu-header { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+		.menu-close, .submenu-close { background: var(--btn); border: none; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-out); color: var(--font-color); position: relative; }
+		.menu-close:hover, .submenu-close:hover { box-shadow: var(--shadow-in); }
+		.menu-item { display: flex; align-items: center; padding: 0px 20px; background: var(--btn); color: var(--font-color); font-size: 14px; cursor: pointer; border-radius: 8px; margin-bottom: 17px; width: 100%; box-shadow: var(--shadow-out); border: none; transition: all 0.2s ease; min-height: 42px; position: relative; }
+		.menu-item:hover { background: rgba(0, 0, 0, 0.08); box-shadow: var(--shadow-in); transform: translateY(-2px); }
+		.menu-item:hover svg { animation: rotate 1s linear; }
+		.menu-item svg { width: 24px; height: 24px; margin-right: 16px; stroke: currentColor; stroke-width: 2; fill: none; flex-shrink: 0; }
+		.menu-item .item-label { flex: 1; text-align: left; display: flex; align-items: center; height: 100%; }
+
+		.submenu { position: fixed; top: 0; right: -340px; width: 280px; height: 100%; background: var(--bg); z-index: 1000; box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2); border-radius: 20px 0 0 20px; padding: 2rem 1.5rem; overflow-y: auto; transition: right 0.5s ease; }
+		.submenu.active { right: 0; }
+		.submenu-title { font-size: 1.4rem; font-weight: bold; color: var(--model-primary); margin: 0.5rem 0 1.5rem 0; text-align: center; text-transform: lowercase; letter-spacing: 0.3px; }
+		.submenu-content { color: var(--font-color); font-size: 13px; line-height: 1.5; margin-top: 4px; }
+		.settings-info, .stats-info { margin-top: 25px; padding: 15px; background: rgba(0, 0, 0, 0.05); border-radius: 10px; text-align: left; margin-bottom: 15px; }
+		.settings-info p, .stats-info p { margin: 0 0 8px 0; }
+		.settings-info p:last-child, .stats-info p:last-child { margin-bottom: 0; }
+		.submenu-icon { width: 24px; height: 24px; flex-shrink: 0; color: var(--font-color); stroke: currentColor; stroke-width: 2; fill: none; transition: transform 0.3s ease; display: inline-block; vertical-align: middle; margin-right: 8px; pointer-events: auto; }
+		.submenu-icon:hover { animation: rotate 1s linear; }
+
+		.about-row { display: flex; align-items: center; gap: 8px; width: 100%; }
+		.about-row > .about-text { flex: 1; min-width: 0; text-align: left; color: var(--font-color); font-size: 13px; line-height: 1.4; word-break: break-word; padding: 6px 0; }
+		.about-row > .about-text p { margin: 0; }
+		.about-text a { color: var(--font-color); text-decoration: none; border-bottom: 1px dotted var(--font-color); }
+		.about-text a:hover { border-bottom: 2px solid var(--font-color); }
+
+		kbd { display: inline-block; padding: 5px 7px; font-family: monospace; font-size: 0.9em; font-weight: bold; background-color: #d1d1d1; color: #333; border-radius: 5px; box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.6) inset; min-width: 18px; text-align: center; line-height: 1.2; }
+		.shortcuts-table { width: 100%; border-collapse: separate; border-spacing: 0.15rem 0.05rem; font-size: 0.8rem; }
+		.shortcuts-table td { padding: 0px 2px; line-height: 1.15; }
+		.shortcuts-table .key-combo { white-space: nowrap; }
+
+		/* ===== QUESTION HEADER ===== */
+		.question-header {
+			width: 100%;
+			margin: 33px 0 8px 0;
+		}
+		#contenuTexte {
+			background: var(--panel);
+			padding: 12px 15px;
+			border-radius: 40px;
+			margin: 8px auto 12px auto;
+			box-shadow: var(--shadow-in);
+			font-size: 15px;
+			font-weight: bold;
+			line-height: 1.5;
+			width: 95%;
+			max-width: 860px;
+			color: var(--font-color);
+			text-align: center;
+			display: none;
+		}
+
+		/* ===== TOAST NOTIFICATIONS ===== */
+		.toast-container { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; gap: 8px; align-items: center; z-index: 100000; pointer-events: none; }
+		.toast { display: flex; align-items: center; gap: 10px; background: #2a2a2a; color: #fff; font-size: 13px; font-weight: 400; padding: 10px 16px; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,.25); opacity: 0; transform: translateY(12px); transition: opacity .22s, transform .22s; max-width: min(90vw, 420px); }
+		.toast.show { opacity: 1; transform: translateY(0); }
+		.toast.success { background: #0a9c73; }
+		.toast.error { background: #b32020; }
+		.toast > svg { width: 20px; height: 20px; flex: 0 0 auto; }
+
+		/* ===== JEU : ENCHAÎNEMENT DES IDÉES ===== */
+		.container { 
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			margin: 8px auto 0 auto; 
+			transition: filter 0.3s ease; 
+			width: 100%;
+			max-width: 860px;
+		}
+		.column { 
+			width: 100%; 
+			background-color: var(--bg); 
+			border-radius: 15px; 
+			padding: 15px; 
+			position: relative; 
+			display: flex; 
+			flex-direction: column; 
+		}
+		
+		.card { 
+			background-color: var(--bg); 
+			border-radius: 10px; 
+			padding: 12px 14px; 
+			margin-bottom: 10px; 
+			cursor: move; 
+			box-shadow: var(--shadow-in); 
+			min-height: 40px; 
+			display: flex; 
+			align-items: center; 
+			transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, opacity 0.2s ease; 
+			font-size: 0.95rem; 
+			line-height: 1.4; 
+			touch-action: none;
+			user-select: none;
+			-webkit-user-select: none;
+		}
+
+		.card:last-child { margin-bottom: 0; }
+
+		.card.dragging {
+			opacity: 0.35;
+		}
+
+		.card.drag-over-before {
+			box-shadow: 0 -3px 0 0 var(--model-primary), var(--shadow-in);
+		}
+
+		.card.drag-over-after {
+			box-shadow: 0 3px 0 0 var(--model-primary), var(--shadow-in);
+		}
+
+		.drag-ghost {
+			position: fixed;
+			pointer-events: none;
+			z-index: 10000;
+			background-color: var(--bg);
+			border-radius: 10px;
+			padding: 12px 14px;
+			box-shadow: 0 10px 30px rgba(0,0,0,.25), 0 0 0 2px var(--model-primary);
+			font-size: 0.95rem;
+			line-height: 1.4;
+			opacity: 0.95;
+			transform: rotate(2deg) scale(1.03);
+			transition: transform 0.15s ease;
+			max-width: 90vw;
+		}
+
+		/* ===== ANIMATION DE CORRECTION ===== */
+		.flying-card {
+			position: fixed !important;
+			top: var(--start-top) !important;
+			left: var(--start-left) !important;
+			width: var(--card-width) !important;
+			height: var(--card-height) !important;
+			pointer-events: none !important;
+			border-radius: 10px !important;
+			background-color: var(--bg) !important;
+			box-shadow: 0 15px 35px rgba(0,0,0,0.3), 0 0 0 2px var(--model-primary) !important;
+			z-index: 999999 !important;
+			margin: 0 !important;
+			display: flex !important;
+			align-items: center !important;
+			padding: 12px 14px !important;
+			font-size: 0.95rem !important;
+			line-height: 1.4 !important;
+			white-space: normal;
+			overflow: hidden;
+			box-sizing: border-box !important;
+			transform: translate3d(0, 0, 0);
+			will-change: transform;
+			backface-visibility: hidden;
+			-webkit-backface-visibility: hidden;
+			opacity: 0.95;
+		}
+
+		.game-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 0px; max-width: 860px; margin-left: auto; margin-right: auto; width: 100%; }
+		.timer-container { flex: 1; margin-right: 20px; }
+		#progress-bar { height: 10px; width: 100%; background: linear-gradient(to left, green, yellow, red); border-radius: 5px; transition: width 1s linear; }
+		.score-container { font-weight: bold; margin-right: 20px; color: var(--font-color); }
+		#action-btn { padding: 10px 20px; border: none; border-radius: 5px; background-color: var(--bg); box-shadow: var(--shadow-out); cursor: pointer; transition: all 0.3s ease; color: var(--font-color); font-weight: bold; touch-action: manipulation; }
+		#action-btn:hover { box-shadow: var(--shadow-in); transform: translateY(-2px); }
+
+		body.is-dragging {
+			overflow: hidden;
+			touch-action: none;
+		}
+
+		/* ===== MEDIA QUERIES ===== */
+		@media (max-width: 767px) {
+			body { padding-top: 100px; }
+			
+			.question-header {
+				margin-top: -34px;
+			}
+			
+			.toolbar {
+				flex-direction: row;
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				padding: 8px 6px;
+				border-radius: 20px;
+			}
+			.toolbar-left {
+				display: flex;
+				flex-wrap: nowrap;
+				justify-content: center;
+				align-items: center;
+				gap: 6px;
+				order: 1;
+			}
+			.toolbar-right {
+				display: flex;
+				flex-wrap: nowrap;
+				justify-content: center;
+				align-items: center;
+				gap: 6px;
+				order: 2;
+			}
+			.toolbar-title {
+				width: 100%;
+				flex: none;
+				order: 3;
+				margin: 0;
+				padding-top: 4px;
+			}
+			.toolbar h2 { display: none !important; }
+			.toolbar h1 { font-size: 22px; margin: 0; }
+			
+			.btn, .timer-btn, .btn-notions { width: 40px; height: 40px; }
+			.home-btn { width: 40px !important; height: 40px !important; }
+			.home-btn .icon-wrapper { width: 40px; height: 40px; }
+			.btn svg { width: 20px; height: 20px; }
+			.home-btn svg { width: 22px; height: 22px; }
+			.btn-notions .arrow-svg, .btn-notions .plate-svg { width: 18px; height: 18px; }
+			.menu-btn .menu-icon { width: 16px; height: 13px; }
+			.menu-btn span { width: 16px; }
+			.timer-btn { font-size: 10px !important; min-width: 40px; }
+			.btn::after, .timer-btn::after, .btn-notions::after { display: none; }
+			
+			.sequences-dropdown { top: 90px; }
+			.column { padding: 12px; }
+			.card { font-size: 0.9rem; padding: 10px 12px; }
+			.drag-ghost { font-size: 0.9rem; padding: 10px 12px; }
+			.slide-menu, .submenu { width: 260px; right: -280px; padding: 14px 16px; }
+			
+			.flying-card {
+				padding: 10px 12px !important;
+				font-size: 0.9rem !important;
+			}
+		}
+	</style>
+</head>
+<body>
+
+<!-- DÉFINITIONS SVG -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+	<defs>
+		<symbol id="icon-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12.5l2.5 2.5L16 9.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+		<symbol id="icon-error" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v6M12 16.5v.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+		<symbol id="icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6M12 7.5v.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+	</defs>
+</svg>
+
+<!-- BARRE D'OUTILS -->
+<div class="toolbar-wrapper" id="toolbarWrapper">
+	<div class="toolbar" id="toolbarDesktop">
+		<div class="toolbar-left">
+			<button class="btn-notions" id="sequencesBtn" data-title="textes">
+				<svg class="arrow-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"
+					stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+					<g class="arrow-group">
+						<line x1="12" y1="4" x2="12" y2="14" />
+						<polyline points="7 10 12 15 17 10" />
+					</g>
+				</svg>
+				<svg class="plate-svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"
+					stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+					<g class="plate-group">
+						<line x1="4" y1="19" x2="20" y2="19" />
+						<line x1="4" y1="19" x2="4" y2="16" />
+						<line x1="20" y1="19" x2="20" y2="16" />
+					</g>
+				</svg>
+			</button>
+			<button class="btn home-btn" id="home-btn" data-action="home" data-title="réinitialiser">
+				<div class="icon-wrapper">
+					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+						<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+						<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2"
+							stroke-linecap="round" />
+					</svg>
+				</div>
+			</button>
+			<button class="btn reload" id="reload-btn" data-action="new" data-title="nouveau texte">
+				<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="round" stroke-linejoin="round">
+					<polyline points="23 4 23 10 17 10"></polyline>
+					<polyline points="1 20 1 14 7 14"></polyline>
+					<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+				</svg>
+			</button>
+		</div>
+
+		<div class="toolbar-title">
+			<h1>enchaîner les idées</h1>
+			<h2>mettre les idées dans le bon ordre</h2>
+		</div>
+
+		<div class="toolbar-right">
+			<button class="timer-btn" id="timerBtnDesktop" data-title="temps restant">
+				<span id="timerValueDesktop">1:00</span>
+			</button>
+			<button class="btn fullscreen" id="fullscreenBtn" data-action="fullscreen" data-title="plein écran">
+				<svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="butt">
+					<line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" />
+					<line x1="5" y1="6" x2="5" y2="10" stroke="currentColor" />
+					<line x1="14" y1="5" x2="20" y2="5" stroke="currentColor" />
+					<line x1="19" y1="6" x2="19" y2="10" stroke="currentColor" />
+					<line x1="5" y1="14" x2="5" y2="20" stroke="currentColor" />
+					<line x1="6" y1="19" x2="10" y2="19" stroke="currentColor" />
+					<line x1="14" y1="19" x2="20" y2="19" stroke="currentColor" />
+					<line x1="19" y1="14" x2="19" y2="18" stroke="currentColor" />
+				</svg>
+			</button>
+			<button class="btn menu-btn" id="menuBtn" data-action="menu" data-title="menu principal">
+				<div class="menu-icon">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</button>
+		</div>
+	</div>
+</div>
+
+<header class="question-header">
+	<div id="contenuTexte"></div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<input id="importfileLocal" type="file" accept=".js,.json" style="display:none;" />
+
+<div id="sequencesDropdown" class="sequences-dropdown">
+	<div class="dropdown-header">📚 textes disponibles</div>
+	<button class="dropdown-action" id="ddLoadBtnInnerReal">
+		<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+		charger un fichier .js local
+	</button>
+	<div class="dropdown-divider"></div>
+	<div class="dropdown-empty" style="padding: 12px 16px; color: var(--font-color); opacity: 0.6; font-style: italic; font-size: 0.85rem; text-align: center;">Sélectionnez un fichier via le bouton ci-dessus.</div>
+</div>
+
+<div class="slide-menu" id="slideMenu">
+	<div class="menu-header"><button class="menu-close" id="menuClose" data-title="fermer le menu"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+	<div class="menu-content">
+		<button class="menu-item" id="instructionsButton"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span class="item-label">présentation</span></button>
+		<button class="menu-item" id="statsButton"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 5-5" stroke-dasharray="100" stroke-dashoffset="0"/></svg><span class="item-label">statistiques</span></button>
+		<button class="menu-item" id="shortcutsButton"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6.01" y2="8"/><line x1="10" y1="8" x2="10.01" y2="8"/><line x1="14" y1="8" x2="14.01" y2="8"/><line x1="18" y1="8" x2="18.01" y2="8"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="10" y1="12" x2="10.01" y2="12"/><line x1="14" y1="12" x2="14.01" y2="12"/><line x1="18" y1="12" x2="18.01" y2="12"/><line x1="8" y1="16" x2="16" y2="16"/></svg><span class="item-label">raccourcis</span></button>
+		<button class="menu-item" id="aboutButton"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span class="item-label">à propos</span></button>
+	</div>
+</div>
+
+<div class="submenu" id="submenuInstructions">
+	<div class="menu-header"><button class="submenu-close" data-submenu="instructions" data-title="fermer"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+	<div class="submenu-title">présentation</div>
+	<div class="submenu-content">
+		<div class="settings-info"><p><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><strong>objectif : </strong>réordonner 4 phrases consécutives extraites au hasard d'un texte en les faisant glisser les unes sur les autres. Fonctionne à la souris comme au doigt sur écran tactile.</p></div>
+	</div>
+</div>
+
+<div class="submenu" id="submenuStats">
+	<div class="menu-header"><button class="submenu-close" data-submenu="stats" data-title="fermer"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+	<div class="submenu-title">statistiques</div>
+	<div class="submenu-content">
+		<div class="stats-info"><p><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M 3 3 L 3 22" /><path d="M 3 22 L 22 22" /><path d="M 7 18 L 11 12 L 15 15 L 21 6" /></svg><strong>score actuel</strong></p><br><p>• points : <span style="color: var(--model-primary);" id="statsScoreCount">0</span></p></div>
+	</div>
+</div>
+
+<div class="submenu" id="submenuShortcuts">
+	<div class="menu-header"><button class="submenu-close" data-submenu="shortcuts" data-title="fermer"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+	<div class="submenu-title">raccourcis</div>
+	<div class="submenu-content">
+		<div class="settings-info"><table class="shortcuts-table"><tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer les menus</td></tr><tr><td class="key-combo"><kbd>F</kbd></td><td>plein écran</td></tr><tr><td class="key-combo"><kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr><tr><td class="key-combo"><kbd>N</kbd></td><td>nouveau texte</td></tr><tr><td class="key-combo"><kbd>S</kbd></td><td>textes disponibles</td></tr></table></div>
+	</div>
+</div>
+
+<div class="submenu" id="submenuAbout">
+	<div class="menu-header"><button class="submenu-close" data-submenu="about" data-title="fermer"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+	<div class="submenu-title">à propos</div>
+	<div class="submenu-content">
+		<div class="settings-info">
+			<div class="about-row"><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><div class="about-text"><p>application développée<br>pour l'exploitation pédagogique</p></div></div>
+			<div class="about-row"><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><div class="about-text"><p>version 1.2.2 (2026)</p></div></div>
+		</div>
+	</div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- CONTENEUR DU JEU : UNE SEULE COLONNE -->
+<div class="container">
+	<div class="column" id="cards-column"></div>
+</div>
+
+<div class="game-controls">
+	<div class="timer-container">
+		<div id="progress-bar"></div>
+	</div>
+	<div class="score-container">
+		<span>Score : </span>
+		<span id="score">0</span>
+	</div>
+	<button id="action-btn">vérifier</button>
+</div>
+
+<script>
+	const GITHUB_REPO = 'inspection-philosophie-lille/boite-a-outils';
+	const GITHUB_PATH = 'src/textes';
+	const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_PATH}`;
+	
+	let githubFilesList = [];
+	let currentFileName = "texte_local.js";
+	let currentText, currentParts;
+	let score = 0;
+	let timeLeft = 60;
+	let timerInterval;
+
+	let dragState = {
+		active: false,
+		sourceCard: null,
+		ghost: null,
+		offsetX: 0,
+		offsetY: 0,
+		startX: 0,
+		startY: 0,
+		pointerId: null,
+		thresholdMet: false,
+		targetCard: null,
+		insertBefore: true,
+	};
+	const DRAG_THRESHOLD = 6;
+
+	function cleanTextForDisplay(text) {
+		if (!text) return "";
+		return text
+			.replace(/<br\s*\/?>/gi, ' ')
+			.replace(/<[^>]+>/g, '')
+			.replace(/\[\d+\]/g, '')
+			.replace(/\*\*/g, '')
+			.replace(/\n/g, ' ')
+			.replace(/\s+/g, ' ')
+			.trim();
+	}
+
+	function cleanAndSplitText(text) {
+		if (!text) return [];
+		
+		text = text.replace(/^["«\s]+/, '').replace(/["»\s]+$/, '');
+		
+		// MODIFICATION : On extrait les phrases en exigeant au moins un caractère alphanumérique (lettre ou chiffre).
+		// Cela empêche une suite de points de suspension "..." d'être capturée ou considérée comme une phrase valide.
+		const sentences = text.match(/[^.!?]*[a-zA-ZÀ-ÿ0-9][^.!?]*[.!?]+/g) || [text];
+		
+		const cleanSentences = sentences
+			.map(s => s.trim())
+			.filter(s => s.length > 0 && /[a-zA-ZÀ-ÿ0-9]/.test(s)); // Vérifie qu'il y a au moins une lettre ou un chiffre
+			
+		if (cleanSentences.length >= 4) {
+			const maxStartIndex = cleanSentences.length - 4;
+			const randomStartIndex = Math.floor(Math.random() * (maxStartIndex + 1));
+			return cleanSentences.slice(randomStartIndex, randomStartIndex + 4);
+		}
+		
+		// MODIFICATION : On ne complète plus artificiellement avec des "..." 
+		// On retourne simplement les phrases valides identifiées.
+		return cleanSentences;
+	}
+
+	function closeAllSubmenus() { document.querySelectorAll('.submenu').forEach(s => s.classList.remove('active')); }
+	function closeMenu() { 
+		document.getElementById('slideMenu')?.classList.remove('open'); 
+		document.getElementById('menuOverlay')?.classList.remove('open'); 
+		document.body.classList.remove('menu-open'); 
+		closeAllSubmenus(); 
+	}
+	function toggleMenu() {
+		const menu = document.getElementById('slideMenu'); 
+		const overlay = document.getElementById('menuOverlay');
+		if (menu?.classList.contains('open')) closeMenu();
+		else { 
+			overlay?.classList.add('open'); 
+			menu?.classList.add('open'); 
+			document.body.classList.add('menu-open'); 
+			closeAllSubmenus(); 
+		}
+	}
+
+	document.getElementById("menuBtn").addEventListener("click", (e) => { e.preventDefault(); toggleMenu(); });
+	document.getElementById('menuClose')?.addEventListener('click', () => { closeMenu(); });
+	document.getElementById('menuOverlay')?.addEventListener('click', () => { closeMenu(); });
+
+	document.getElementById('instructionsButton')?.addEventListener('click', () => { closeAllSubmenus(); document.getElementById('submenuInstructions')?.classList.add('active'); });
+	document.getElementById('statsButton')?.addEventListener('click', () => { 
+		closeAllSubmenus(); 
+		document.getElementById('statsScoreCount').textContent = score; 
+		document.getElementById('submenuStats')?.classList.add('active'); 
+	});
+	document.getElementById('shortcutsButton')?.addEventListener('click', () => { closeAllSubmenus(); document.getElementById('submenuShortcuts')?.classList.add('active'); });
+	document.getElementById('aboutButton')?.addEventListener('click', () => { closeAllSubmenus(); document.getElementById('submenuAbout')?.classList.add('active'); });
+	document.querySelectorAll('.submenu-close').forEach(btn => { btn.addEventListener('click', () => { closeAllSubmenus(); }); });
+
+	function toggleFullscreen() { 
+		if (!document.fullscreenElement) document.documentElement.requestFullscreen(); 
+		else document.exitFullscreen(); 
+	}
+	document.getElementById('fullscreenBtn')?.addEventListener('click', toggleFullscreen);
+
+	document.getElementById('home-btn')?.addEventListener('click', () => {
+		if (currentText) resetCurrentSequence();
+	});
+	
+	document.getElementById('reload-btn')?.addEventListener('click', () => {
+		loadRandomText();
+	});
+
+	document.getElementById('timerBtnDesktop')?.addEventListener('click', () => {
+		clearInterval(timerInterval);
+		timeLeft = 60;
+		startTimer();
+		showToast("Minuteur réinitialisé", "info", 1500);
+	});
+
+	function updateTextReference(source) {
+		const contentEl = document.getElementById('contenuTexte');
+		if (!source || source.trim() === "") {
+			contentEl.style.display = 'none';
+			return;
+		}
+		contentEl.style.display = 'block';
+		contentEl.innerHTML = source;
+	}
+
+	function showToast(message, type = "info", duration = 2600) {
+		const container = document.getElementById("toastContainer");
+		const el = document.createElement("div");
+		el.className = "toast" + (type === "success" ? " success" : type === "error" ? " error" : "");
+		const iconSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		iconSvg.setAttribute("viewBox", "0 0 24 24");
+		const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+		use.setAttribute("href", type === "success" ? "#icon-check" : type === "error" ? "#icon-error" : "#icon-info");
+		iconSvg.appendChild(use); el.appendChild(iconSvg);
+		const txt = document.createElement("span"); txt.textContent = message; el.appendChild(txt);
+		container.appendChild(el);
+		requestAnimationFrame(() => el.classList.add("show"));
+		setTimeout(() => { el.classList.remove("show"); setTimeout(() => el.remove(), 250); }, duration);
+	}
+
+	function parseJSContent(src) {
+		let result = { textes: null, philosophieData: null, texte: null, source: null };
+		try {
+			eval(`${src}
+				result.textes = typeof textes !== 'undefined' ? textes : null;
+				result.philosophieData = typeof philosophieData !== 'undefined' ? philosophieData : null;
+				result.texte = typeof texte !== 'undefined' ? texte : null;
+				result.source = typeof source !== 'undefined' ? source : null;
+			`);
+		} catch (e) {
+			console.error("Erreur d'évaluation du fichier JS:", e);
+			throw new Error("Le fichier contient une erreur de syntaxe ou une référence invalide.");
+		}
+		return result;
+	}
+
+	const importfileLocal = document.getElementById('importfileLocal');
+	importfileLocal.addEventListener('change', function(evt) {
+		const file = evt.target.files[0]; 
+		evt.target.value = ""; 
+		if (!file) return;
+		const reader = new FileReader();
+		reader.onload = e => {
+			try {
+				const src = String(e.target.result);
+				const data = parseJSContent(src);
+				let texteToLoad = "", sourceToLoad = "", titreToLoad = file.name.replace('.js', '');
+				if (data.textes && Array.isArray(data.textes) && data.textes.length > 0) {
+					const t = data.textes[0];
+					texteToLoad = t.contenu || t.texte || "";
+					sourceToLoad = t.source || "";
+					titreToLoad = t.titre || titreToLoad;
+				} else if (data.philosophieData) {
+					texteToLoad = data.philosophieData.texte || "";
+					sourceToLoad = data.philosophieData.source || "";
+				} else if (data.texte) {
+					texteToLoad = data.texte;
+					sourceToLoad = data.source || "";
+				}
+				if (texteToLoad) {
+					currentFileName = file.name;
+					loadText({ titre: titreToLoad, contenu: texteToLoad, source: sourceToLoad });
+					showToast("Fichier importé avec succès : " + file.name, "success");
+				} else {
+					showToast("Aucune donnée de texte reconnue dans le fichier.", "error");
+				}
+			} catch (err) { 
+				showToast("Erreur d'import : " + err.message, "error", 4000); 
+			}
+		};
+		reader.readAsText(file);
+	});
+
+	const sequencesBtn = document.getElementById('sequencesBtn');
+	const sequencesDropdown = document.getElementById('sequencesDropdown');
+
+	async function fetchGitHubFiles() {
+		try {
+			const resp = await fetch(GITHUB_API_URL); 
+			if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+			const files = await resp.json();
+			githubFilesList = files.filter(f => f.type === 'file' && f.name.endsWith('.js'));
+			updateSequencesDropdown();
+		} catch (err) { 
+			console.warn("Chargement GitHub bloqué (CORS). Utilisez l'import manuel.", err);
+			sequencesDropdown.querySelector('.dropdown-empty').textContent = "Chargement GitHub indisponible en mode local. Utilisez le bouton d'import ci-dessus.";
+		}
+	}
+
+	function updateSequencesDropdown() {
+		let html = `<div class="dropdown-header">📚 textes disponibles</div>
+		<button class="dropdown-action" id="ddLoadBtnInnerReal">
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+			charger un fichier .js local
+		</button><div class="dropdown-divider"></div>`;
+		if (githubFilesList.length > 0) {
+			githubFilesList.sort((a, b) => a.name.localeCompare(b.name));
+			githubFilesList.forEach(f => { 
+				const name = f.name.replace('.js', ''); 
+				const isActive = currentFileName === f.name ? 'active' : ''; 
+				html += `<div class="dropdown-item ${isActive}" data-url="${f.download_url}" data-name="${f.name}">${name}</div>`; 
+			});
+		}
+		sequencesDropdown.innerHTML = html;
+		sequencesDropdown.querySelectorAll('.dropdown-item[data-url]').forEach(el => { 
+			el.addEventListener('click', function(e) { 
+				e.stopPropagation(); 
+				loadFromGitHub(this.dataset.url, this.dataset.name); 
+				closeSequencesDropdown(); 
+			}); 
+		});
+		document.getElementById('ddLoadBtnInnerReal')?.addEventListener('click', function(e) { 
+			e.stopPropagation(); 
+			closeSequencesDropdown(); 
+			importfileLocal.click(); 
+		});
+	}
+
+	async function loadFromGitHub(url, fileName) {
+		try {
+			showToast("Chargement depuis GitHub...", "info", 2000);
+			const resp = await fetch(url); 
+			if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+			const src = await resp.text();
+			const data = parseJSContent(src);
+			let texteToLoad = "", sourceToLoad = "", titreToLoad = fileName.replace('.js', '');
+			if (data.textes && Array.isArray(data.textes) && data.textes.length > 0) {
+				const t = data.textes[0];
+				texteToLoad = t.contenu || t.texte || "";
+				sourceToLoad = t.source || "";
+				titreToLoad = t.titre || titreToLoad;
+			} else if (data.philosophieData) {
+				texteToLoad = data.philosophieData.texte || "";
+				sourceToLoad = data.philosophieData.source || "";
+			} else if (data.texte) {
+				texteToLoad = data.texte;
+				sourceToLoad = data.source || "";
+			}
+			if (texteToLoad) {
+				currentFileName = fileName;
+				loadText({ titre: titreToLoad, contenu: texteToLoad, source: sourceToLoad });
+				showToast("Fichier chargé : " + fileName, "success");
+				updateSequencesDropdown();
+			} else {
+				showToast("Aucune donnée de texte reconnue dans le fichier.", "error");
+			}
+		} catch (err) { 
+			showToast("Erreur d'import GitHub : " + err.message, "error", 4000); 
+		}
+	}
+
+	function toggleSequencesDropdown(event) { 
+		event.stopPropagation(); 
+		sequencesDropdown.classList.toggle('open'); 
+	}
+	function closeSequencesDropdown() { sequencesDropdown.classList.remove('open'); }
+	
+	if (sequencesBtn) sequencesBtn.addEventListener('click', toggleSequencesDropdown);
+	document.addEventListener('click', e => {
+		if (!e.target.closest('.btn-notions') && !e.target.closest('.sequences-dropdown')) closeSequencesDropdown();
+	});
+
+	function loadText(textObj) {
+		currentText = textObj;
+		const textePropre = cleanTextForDisplay(textObj.contenu || textObj.texte);
+		
+		currentParts = cleanAndSplitText(textePropre);
+		
+		// MODIFICATION : Alerter si le texte est trop court pour former un exercice valide
+		if (currentParts.length < 4) {
+			showToast("Ce texte est trop court (moins de 4 phrases valides trouvées).", "error", 3500);
+		}
+		
+		const partsWithIndex = currentParts.map((part, index) => ({ text: part, correctIndex: index }));
+		const shuffledParts = [...partsWithIndex];
+		shuffleArray(shuffledParts);
+
+		const column = document.getElementById('cards-column');
+		column.innerHTML = '';
+
+		shuffledParts.forEach((item) => {
+			const card = document.createElement('div');
+			card.className = 'card';
+			card.textContent = item.text;
+			card.dataset.correctIndex = item.correctIndex;
+			card.style.backgroundColor = 'var(--bg)';
+			
+			card.addEventListener('pointerdown', onCardPointerDown);
+			
+			column.appendChild(card);
+		});
+
+		const sourceText = textObj.source || textObj.ref || `${textObj.auteur || ''} - ${textObj.titre || 'Texte'}`;
+		updateTextReference(sourceText);
+		
+		document.getElementById('action-btn').textContent = 'vérifier';
+		document.getElementById('action-btn').disabled = false;
+		
+		clearInterval(timerInterval);
+		timeLeft = 60;
+		startTimer();
+	}
+
+	function loadNewSequence() {
+		if (!currentText) {
+			loadRandomText();
+			return;
+		}
+
+		const textePropre = cleanTextForDisplay(currentText.contenu || currentText.texte);
+		currentParts = cleanAndSplitText(textePropre);
+		
+		if (currentParts.length < 4) {
+			showToast("Ce texte est trop court pour un nouvel extrait.", "error", 3500);
+		}
+		
+		const partsWithIndex = currentParts.map((part, index) => ({ text: part, correctIndex: index }));
+		const shuffledParts = [...partsWithIndex];
+		shuffleArray(shuffledParts);
+
+		const column = document.getElementById('cards-column');
+		column.innerHTML = '';
+
+		shuffledParts.forEach((item) => {
+			const card = document.createElement('div');
+			card.className = 'card';
+			card.textContent = item.text;
+			card.dataset.correctIndex = item.correctIndex;
+			card.style.backgroundColor = 'var(--bg)';
+			card.addEventListener('pointerdown', onCardPointerDown);
+			column.appendChild(card);
+		});
+
+		const sourceText = currentText.source || currentText.ref || `${currentText.auteur || ''} - ${currentText.titre || 'Texte'}`;
+		updateTextReference(sourceText);
+		
+		document.getElementById('action-btn').textContent = 'vérifier';
+		document.getElementById('action-btn').disabled = false;
+		
+		clearInterval(timerInterval);
+		timeLeft = 60;
+		startTimer();
+		
+		showToast("Nouvel extrait du même texte", "info", 1500);
+	}
+
+	function resetCurrentSequence() {
+		if (!currentParts || currentParts.length === 0) return;
+		
+		const partsWithIndex = currentParts.map((part, index) => ({ text: part, correctIndex: index }));
+		const shuffledParts = [...partsWithIndex];
+		shuffleArray(shuffledParts);
+
+		const column = document.getElementById('cards-column');
+		column.innerHTML = '';
+
+		shuffledParts.forEach((item) => {
+			const card = document.createElement('div');
+			card.className = 'card';
+			card.textContent = item.text;
+			card.dataset.correctIndex = item.correctIndex;
+			card.style.backgroundColor = 'var(--bg)';
+			card.addEventListener('pointerdown', onCardPointerDown);
+			column.appendChild(card);
+		});
+		
+		document.getElementById('action-btn').textContent = 'vérifier';
+		document.getElementById('action-btn').disabled = false;
+		
+		clearInterval(timerInterval);
+		timeLeft = 60;
+		startTimer();
+	}
+
+	function loadRandomText() {
+		if (githubFilesList && githubFilesList.length > 0) {
+			const randomIndex = Math.floor(Math.random() * githubFilesList.length);
+			const randomFile = githubFilesList[randomIndex];
+			loadFromGitHub(randomFile.download_url, randomFile.name);
+		} else if (typeof textes !== 'undefined' && textes.length > 0) {
+			const randomIndex = Math.floor(Math.random() * textes.length);
+			currentFileName = "texte_local.js";
+			loadText(textes[randomIndex]);
+		} else if (typeof philosophieData !== 'undefined') {
+			currentFileName = "texte_local.js";
+			loadText({ titre: "Texte par défaut", contenu: philosophieData.texte, source: philosophieData.source });
+		} else {
+			showToast("Aucun texte disponible. Veuillez importer un fichier .js ou vérifier la connexion.", "error");
+		}
+	}
+
+	function shuffleArray(array) {
+		for (let i = array.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[array[i], array[j]] = [array[j], array[i]];
+		}
+	}
+
+	function onCardPointerDown(e) {
+		if (e.pointerType === 'mouse' && e.button !== 0) return;
+		
+		const card = e.currentTarget;
+		
+		card.setPointerCapture(e.pointerId);
+		
+		dragState.sourceCard = card;
+		dragState.pointerId = e.pointerId;
+		dragState.startX = e.clientX;
+		dragState.startY = e.clientY;
+		dragState.thresholdMet = false;
+		dragState.active = false;
+		
+		const rect = card.getBoundingClientRect();
+		dragState.offsetX = e.clientX - rect.left;
+		dragState.offsetY = e.clientY - rect.top;
+		
+		document.addEventListener('pointermove', onDocumentPointerMove);
+		document.addEventListener('pointerup', onDocumentPointerUp);
+		document.addEventListener('pointercancel', onDocumentPointerUp);
+		
+		e.preventDefault();
+	}
+
+	function onDocumentPointerMove(e) {
+		if (!dragState.sourceCard) return;
+		
+		const dx = e.clientX - dragState.startX;
+		const dy = e.clientY - dragState.startY;
+		
+		if (!dragState.thresholdMet) {
+			if (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD) {
+				dragState.thresholdMet = true;
+				startDragVisual(e);
+			} else {
+				return;
+			}
+		}
+		
+		e.preventDefault();
+		
+		if (dragState.ghost) {
+			dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+			dragState.ghost.style.top = (e.clientY - dragState.offsetY) + 'px';
+		}
+		
+		updateDropIndicator(e.clientX, e.clientY);
+		autoScrollIfNeeded(e.clientY);
+	}
+
+	function startDragVisual(e) {
+		dragState.active = true;
+		document.body.classList.add('is-dragging');
+		
+		const card = dragState.sourceCard;
+		card.classList.add('dragging');
+		
+		const ghost = document.createElement('div');
+		ghost.className = 'drag-ghost';
+		ghost.textContent = card.textContent;
+		ghost.style.width = card.offsetWidth + 'px';
+		ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+		ghost.style.top = (e.clientY - dragState.offsetY) + 'px';
+		document.body.appendChild(ghost);
+		dragState.ghost = ghost;
+		
+		if (navigator.vibrate) navigator.vibrate(20);
+	}
+
+	function updateDropIndicator(clientX, clientY) {
+		const column = document.getElementById('cards-column');
+		const cards = [...column.querySelectorAll('.card')];
+		
+		cards.forEach(c => {
+			c.classList.remove('drag-over-before', 'drag-over-after');
+		});
+		
+		let targetCard = null;
+		let insertBefore = true;
+		
+		for (const card of cards) {
+			if (card === dragState.sourceCard) continue;
+			const rect = card.getBoundingClientRect();
+			const midY = rect.top + rect.height / 2;
+			
+			if (clientY < midY) {
+				targetCard = card;
+				insertBefore = true;
+				break;
+			}
+		}
+		
+		if (!targetCard) {
+			const lastCard = cards[cards.length - 1];
+			if (lastCard && lastCard !== dragState.sourceCard) {
+				targetCard = lastCard;
+				insertBefore = false;
+			}
+		}
+		
+		if (targetCard) {
+			targetCard.classList.add(insertBefore ? 'drag-over-before' : 'drag-over-after');
+			dragState.targetCard = targetCard;
+			dragState.insertBefore = insertBefore;
+		} else {
+			dragState.targetCard = null;
+		}
+	}
+
+	function autoScrollIfNeeded(clientY) {
+		const threshold = 60;
+		const speed = 15;
+		const windowHeight = window.innerHeight;
+		
+		if (clientY < threshold) {
+			window.scrollBy(0, -speed);
+		} else if (clientY > windowHeight - threshold) {
+			window.scrollBy(0, speed);
+		}
+	}
+
+	function onDocumentPointerUp(e) {
+		document.removeEventListener('pointermove', onDocumentPointerMove);
+		document.removeEventListener('pointerup', onDocumentPointerUp);
+		document.removeEventListener('pointercancel', onDocumentPointerUp);
+		
+		if (!dragState.sourceCard) {
+			resetDragState();
+			return;
+		}
+		
+		const card = dragState.sourceCard;
+		
+		try {
+			card.releasePointerCapture(dragState.pointerId);
+		} catch (err) { /* ignore */ }
+		
+		if (dragState.active && dragState.targetCard && dragState.targetCard !== card) {
+			const column = document.getElementById('cards-column');
+			if (dragState.insertBefore) {
+				column.insertBefore(card, dragState.targetCard);
+			} else {
+				column.insertBefore(card, dragState.targetCard.nextSibling);
+			}
+		}
+		
+		card.classList.remove('dragging');
+		if (dragState.ghost) {
+			dragState.ghost.remove();
+		}
+		document.querySelectorAll('.card').forEach(c => {
+			c.classList.remove('drag-over-before', 'drag-over-after');
+		});
+		document.body.classList.remove('is-dragging');
+		
+		resetDragState();
+	}
+
+	function resetDragState() {
+		dragState = {
+			active: false,
+			sourceCard: null,
+			ghost: null,
+			offsetX: 0,
+			offsetY: 0,
+			startX: 0,
+			startY: 0,
+			pointerId: null,
+			thresholdMet: false,
+			targetCard: null,
+			insertBefore: true,
+		};
+	}
+
+	function startTimer() {
+		const timerDisplay = document.getElementById('timerValueDesktop');
+		const progressBar = document.getElementById('progress-bar');
+		const timerBtn = document.getElementById('timerBtnDesktop');
+		
+		timerInterval = setInterval(() => {
+			timeLeft--;
+			const mins = Math.floor(timeLeft / 60);
+			const secs = timeLeft % 60;
+			timerDisplay.textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+			
+			if (progressBar) progressBar.style.width = `${(timeLeft / 60) * 100}%`;
+			
+			if (timerBtn) {
+				timerBtn.classList.remove('warning', 'danger');
+				if (timeLeft <= 30 && timeLeft > 0) timerBtn.classList.add('warning');
+				if (timeLeft <= 15 && timeLeft > 0) timerBtn.classList.add('danger');
+			}
+
+			if (timeLeft <= 0) {
+				clearInterval(timerInterval);
+				showToast("Temps écoulé !", "error");
+				document.getElementById('action-btn').textContent = 'corriger';
+			}
+		}, 1000);
+	}
+
+	function updateScore(points) {
+		score += points;
+		document.getElementById('score').textContent = score;
+	}
+
+	document.getElementById('action-btn').addEventListener('click', async () => {
+		const cards = [...document.getElementById('cards-column').querySelectorAll('.card')];
+		const actionBtn = document.getElementById('action-btn');
+		
+		if (actionBtn.textContent === 'vérifier') {
+			let isEntirelyCorrect = true;
+			cards.forEach((card, index) => {
+				if (parseInt(card.dataset.correctIndex) === index) {
+					card.style.backgroundColor = 'lightgreen';
+				} else {
+					card.style.backgroundColor = 'lightcoral';
+					isEntirelyCorrect = false;
+				}
+			});
+			if (isEntirelyCorrect) {
+				updateScore(10);
+				showToast("Parfait ! +10 points", "success");
+			} else {
+				showToast("Des erreurs sont présentes", "error");
+			}
+			actionBtn.textContent = isEntirelyCorrect ? 'recommencer' : 'corriger';
+		} else if (actionBtn.textContent === 'corriger') {
+			actionBtn.disabled = true;
+			actionBtn.textContent = 'correction...';
+			
+			const column = document.getElementById('cards-column');
+			const currentCards = [...column.children];
+			const flyingElements = [];
+			
+			currentCards.forEach((card) => {
+				const currentIndex = currentCards.indexOf(card);
+				const correctIndex = parseInt(card.dataset.correctIndex);
+				
+				if (correctIndex !== currentIndex) {
+					const destinationCard = currentCards[correctIndex];
+					
+					const clone = card.cloneNode(true);
+					clone.classList.add('flying-card');
+					
+					const rect = card.getBoundingClientRect();
+					const targetRect = destinationCard.getBoundingClientRect();
+					
+					clone.style.setProperty('--start-top', rect.top + 'px');
+					clone.style.setProperty('--start-left', rect.left + 'px');
+					clone.style.setProperty('--card-width', rect.width + 'px');
+					clone.style.setProperty('--card-height', rect.height + 'px');
+					
+					document.body.appendChild(clone);
+					
+					const deltaX = targetRect.left - rect.left;
+					const deltaY = targetRect.top - rect.top;
+					
+					flyingElements.push({ clone, deltaX, deltaY, correctIndex, card });
+				}
+			});
+			
+			flyingElements.forEach(({ clone, deltaX, deltaY }) => {
+				clone.animate(
+					[
+						{ transform: 'translate3d(0, 0, 0)', opacity: 0.95 },
+						{ transform: `translate3d(${deltaX}px, ${deltaY}px, 0)`, opacity: 0.95 }
+					],
+					{
+						duration: 1200,
+						easing: 'cubic-bezier(0.45, 0.05, 0.55, 0.95)',
+						fill: 'forwards'
+					}
+				);
+			});
+			
+			await new Promise(resolve => setTimeout(resolve, 1250));
+			
+			currentParts.forEach((part, index) => {
+				const card = currentCards.find(c => parseInt(c.dataset.correctIndex) === index);
+				if (card) {
+					card.style.backgroundColor = 'lightgreen';
+					column.appendChild(card);
+				}
+			});
+			
+			flyingElements.forEach(({ clone }) => clone.remove());
+			
+			actionBtn.textContent = 'recommencer';
+			actionBtn.disabled = false;
+			
+			updateScore(10);
+			showToast("Correction appliquée !", "success");
+		} else if (actionBtn.textContent === 'recommencer') {
+			loadNewSequence();
+		}
+	});
+
+	window.addEventListener("keydown", e => {
+		const tag = document.activeElement.tagName; 
+		if (tag === "TEXTAREA" || tag === "INPUT") return;
+		if (e.key === "Escape") { closeMenu(); closeSequencesDropdown(); }
+		if (e.key.toLowerCase() === "f" && !e.ctrlKey && !e.metaKey) { e.preventDefault(); toggleFullscreen(); }
+		if (e.key.toLowerCase() === "m" && !e.ctrlKey && !e.metaKey) { e.preventDefault(); toggleMenu(); }
+		if (e.key.toLowerCase() === "n" && !e.ctrlKey && !e.metaKey) { e.preventDefault(); loadRandomText(); }
+		if (e.key.toLowerCase() === "s" && !e.ctrlKey && !e.metaKey) { e.preventDefault(); toggleSequencesDropdown(e); }
+	});
+
+	window.addEventListener("load", () => {
+		if (typeof textes !== 'undefined' && Array.isArray(textes) && textes.length > 0) {
+			loadText(textes[0]);
+		} else if (typeof philosophieData !== 'undefined') {
+			loadText({ titre: "texte par défaut", contenu: philosophieData.texte, source: philosophieData.source });
+		} else {
+			const contentEl = document.getElementById('contenuTexte');
+			if (contentEl) {
+				contentEl.style.display = 'block';
+				contentEl.innerHTML = 'choisissez un texte par le bouton « textes »';
+			}
+		}
+		fetchGitHubFiles();
+	});
+</script>
+</body>
+</html>
