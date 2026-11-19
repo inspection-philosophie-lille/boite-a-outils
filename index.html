@@ -5,14 +5,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>boîte à outils</title>
 	<link rel="icon" href="src/favicon.ico">
-	
 	<style>
 		:root {
 			--bg-light: #F9F9FB;
 			--bg-dark: #121212;
-			--text-light: #15141a;
-			--text-light: #15141a;
-			--text-dark: #f5f5f5;
+			--text-light: #000;
+			--text-dark: #fff;
 			--primary: #ff0000;
 			--border-color: #D7D7DB;
 			--hover-color: rgba(0, 0, 0, 0.05);
@@ -141,13 +139,17 @@
 			font-weight: 603;
 		}
 
-		.toolbar h2 {
-			color: var(--text-light);
-			font-size: 1rem;
-			margin: 0;
-			opacity: 0.7;
-			font-weight: 500;
-		}
+.toolbar h2 {
+	color: #000000; /* Noir pur en mode clair */
+	font-size: 1rem;
+	margin: 0;
+	font-weight: 500;
+	/* L'opacité a été supprimée */
+}
+
+body.dark-mode .toolbar h2 {
+	color: #ffffff; /* Blanc pur en mode sombre */
+}
 
 		.btn {
 			width: 60px;
@@ -2284,7 +2286,7 @@
 						<a href="fichiers/philo - pattern - 05 - questionner/application « questionner ».zip" class="card-link">
 							<div class="card-image-container">
 								<img src="src/svg/quiz.svg" alt="Questionner" class="card-image">
-								<span class="new-badge">new</span>	
+								<span class="new-badge">new !!!!</span>	
 							</div>
 							<div class="card-content">
 								<h3 class="card-title">« questionner »</h3>
