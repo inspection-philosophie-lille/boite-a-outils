@@ -1,0 +1,4197 @@
+<!DOCTYPE html>
+<!-- Daniel Boulagnon -->
+<!-- daniel.boulagnon@ac-lille.fr -->
+<!-- version 2026 -->
+<!-- Exploitation à but strictement pédagogique et non lucratif -->
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3.0, user-scalable=yes, viewport-fit=cover">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link rel="icon" href="src/favicon.ico" />
+	<title id="pageTitle">application « repérer »</title>
+	<style>
+		/* ========== STYLES DE BASE ========== */
+		* {
+			box-sizing: border-box;
+			touch-action: manipulation;
+			margin: 0;
+			padding: 0;
+		}
+
+		html,
+		body {
+			height: 100%;
+		}
+
+		:root {
+			--bg: #f0f0f0;
+			--btn: #e0e0e0;
+			--font-color: #000000;
+			--title-color: #e74c3c;
+			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.9);
+			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.9);
+			--tooltip-bg: #ffffff;
+			--tooltip-color: #333333;
+			--letter-color: #e74c3c;
+			--color-correct: #28a745;
+			--color-incorrect: #dc3545;
+			--border-correct: #28a745;
+			--border-incorrect: #dc3545;
+			--selected-bg: #ffeb3b;
+			--selected-color: #000000;
+			--dropzone-hover: #e0e0e0;
+			--toast-bg: #888888;
+			--toast-text: #f5f5f5;
+		}
+
+		body.dark-theme {
+			--bg: #121212;
+			--btn: #3d3d3d;
+			--font-color: #ffffff;
+			--title-color: #ff6666;
+			--shadow-out: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5), -0.3rem -0.3rem 0.6rem rgba(255, 255, 255, 0.05);
+			--shadow-in: inset 0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.5), inset -0.2rem -0.2rem 0.4rem rgba(255, 255, 255, 0.05);
+			--color-correct: #2ecc71;
+			--color-incorrect: #e74c3c;
+			--tooltip-bg: #1a1a1a;
+			--tooltip-color: #ffffff;
+			--selected-bg: #ff9800;
+			--selected-color: #000000;
+			--dropzone-hover: #555555;
+			--toast-bg: #555555;
+			--toast-text: #e0e0e0;
+			background-color: #121212;
+			color: #ffffff;
+		}
+
+		body.colorblind-mode {
+			--color-correct: #2c7be5;
+			--color-incorrect: #1a3a5c;
+			--border-correct: #2c7be5;
+			--border-incorrect: #1a3a5c;
+			--letter-color: #2c7be5;
+			--title-color: #2c7be5;
+		}
+
+		body.dark-theme.colorblind-mode {
+			--color-correct: #4a90d9;
+			--color-incorrect: #3a5a7a;
+			--border-correct: #4a90d9;
+			--border-incorrect: #3a5a7a;
+			--letter-color: #4a90d9;
+			--title-color: #4a90d9;
+		}
+
+		body {
+			font-family: 'Inter', 'Muli', sans-serif;
+			background-color: var(--bg);
+			color: var(--font-color);
+			margin: 0;
+			padding: 12px;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			overflow-x: hidden;
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
+			transition: background-color 0.4s, color 0.4s;
+		}
+
+		/* ===== TOASTER ===== */
+		.toaster {
+			position: fixed;
+			top: 20px;
+			left: 50%;
+			transform: translateX(-50%) translateY(-100px);
+			background: var(--toast-bg);
+			color: var(--toast-text);
+			padding: 16px 28px;
+			border-radius: 12px;
+			font-size: 1rem;
+			font-weight: bold;
+			z-index: 99999;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+			transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+			opacity: 0;
+			pointer-events: none;
+			text-align: center;
+			max-width: 90%;
+			min-width: 200px;
+		}
+
+		.toaster.show {
+			transform: translateX(-50%) translateY(0);
+			opacity: 1;
+		}
+
+		.toaster.correct {
+			background: var(--toast-bg);
+			color: var(--toast-text);
+		}
+		.toaster.info { background: var(--toast-bg); color: var(--toast-text); }
+		.toaster.warning { background: var(--toast-bg); color: var(--toast-text); }
+
+		/* ===== TOOLBAR ===== */
+		.toolbar-wrapper {
+			position: relative;
+			z-index: 10;
+			flex-shrink: 0;
+			width: 100%;
+			margin-bottom: 12px;
+			transition: filter 0.3s ease;
+		}
+
+		.toolbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 8px 15px;
+			background: transparent;
+			height: 76px;
+			border-radius: 12px 12px 0 0;
+			gap: 10px;
+			position: relative;
+		}
+
+		.toolbar-left,
+		.toolbar-right {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			flex: 1;
+		}
+		.toolbar-left { justify-content: flex-start; }
+		.toolbar-right { justify-content: flex-end; }
+
+		.toolbar-center {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			pointer-events: none;
+		}
+
+		.toolbar-title {
+			color: var(--title-color);
+			font-size: clamp(1.2rem, 4vw, 1.8rem);
+			font-weight: bold;
+			white-space: nowrap;
+			line-height: 1.2;
+			text-transform: lowercase;
+			margin: 0;
+		}
+
+		.toolbar-subtitle {
+			color: #555;
+			font-size: clamp(0.8rem, 2.5vw, 1rem);
+			line-height: 1.2;
+			padding-top: 2px;
+		}
+		body.dark-theme .toolbar-subtitle,
+		body.dark-theme .mobile-subtitle { color: #8895a7; }
+
+		/* ===== BOUTONS ===== */
+		.btn,
+		.timer-btn,
+		.menu-close,
+		.submenu-close,
+		.menu-item,
+		.quiz-select,
+		.upload-btn,
+		.local-reset-btn,
+		.stats-reload-btn {
+			background: var(--btn);
+			color: var(--font-color);
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+			border: none;
+			cursor: pointer;
+		}
+		.btn:hover,
+		.timer-btn:hover,
+		.menu-close:hover,
+		.submenu-close:hover,
+		.menu-item:hover,
+		.quiz-select:hover,
+		.upload-btn:hover,
+		.local-reset-btn:hover,
+		.stats-reload-btn:hover {
+			box-shadow: var(--shadow-in);
+			transform: translateY(-2px);
+		}
+
+		.btn {
+			width: 52px;
+			height: 52px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			position: relative;
+		}
+		.btn svg {
+			width: 24px;
+			height: 24px;
+			fill: none;
+			stroke: currentColor;
+			stroke-width: 2;
+			flex-shrink: 0;
+		}
+		.btn::after {
+			content: attr(data-title);
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: 0.5rem;
+			background-color: var(--tooltip-bg);
+			color: var(--tooltip-color);
+			padding: 0.3rem 0.6rem;
+			border-radius: 5px;
+			font-size: 0.8rem;
+			white-space: nowrap;
+			opacity: 0;
+			pointer-events: none;
+			z-index: 10;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+			transition: opacity 0.2s;
+		}
+		.btn:hover::after { opacity: 1; }
+
+		.btn-home .icon-wrapper {
+			width: 52px;
+			height: 52px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transform-style: preserve-3d;
+			flex-shrink: 0;
+		}
+		.btn-home:hover .icon-wrapper { animation: spin360 2s infinite linear; }
+		@keyframes spin360 { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+
+		.btn-reload:hover svg { animation: rotate 1s linear; }
+		.menu-item:hover svg { animation: rotate 1s linear; }
+		.menu-close:hover svg { animation: rotate 1s linear; }
+		.submenu-close:hover svg { animation: rotate 1s linear; }
+
+		.menu-icon {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			transition: transform 0.3s ease;
+			width: 22px;
+			height: 18px;
+			justify-content: center;
+		}
+		.menu-icon span {
+			display: block;
+			width: 100%;
+			height: 2px;
+			background: currentColor;
+			border-radius: 2px;
+			transition: all 0.3s ease;
+		}
+		.btn-menu:hover .menu-icon { transform: rotate(90deg); }
+
+		.btn-fullscreen .fullscreen-icon {
+			transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+		}
+		.btn-fullscreen:not(.fullscreen-active):hover .fullscreen-icon { transform: scale(1.5); }
+		.fullscreen-exit-icon {
+			transform-origin: center;
+			transition: transform 0.3s ease;
+			stroke-width: 1.2px !important;
+		}
+		.btn-fullscreen.fullscreen-active:hover .fullscreen-exit-icon { transform: scale(0.7); }
+
+		/* ===== TIMER ===== */
+		.timer-btn {
+			width: 52px;
+			height: 52px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			padding: 0;
+			line-height: 1;
+			font-size: 12px;
+			font-weight: bold;
+			font-family: monospace;
+			flex-shrink: 0;
+		}
+
+		.timer-btn.warning {
+			color: #ff6b6b;
+			animation: timer-pulse 0.5s ease infinite alternate;
+		}
+
+		.timer-btn.danger {
+			color: #ff0000;
+			animation: timer-pulse 0.3s ease infinite alternate;
+		}
+
+		@keyframes timer-pulse {
+			0% { transform: scale(1); }
+			100% { transform: scale(1.05); }
+		}
+
+		.timer-btn::after {
+			content: attr(data-title);
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: 0.5rem;
+			background-color: var(--tooltip-bg);
+			color: var(--tooltip-color);
+			padding: 0.3rem 0.6rem;
+			border-radius: 5px;
+			font-size: 0.8rem;
+			white-space: nowrap;
+			opacity: 0;
+			pointer-events: none;
+			z-index: 10;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+			transition: opacity 0.2s;
+		}
+
+		.timer-btn:hover::after {
+			opacity: 1;
+		}
+
+		/* ===== TOOLBAR MOBILE ===== */
+		.toolbar-mobile {
+			display: none;
+			flex-direction: column;
+			align-items: center;
+			width: 100%;
+			padding: 6px 12px 4px;
+			background: transparent;
+			border-radius: 12px 12px 0 0;
+		}
+		.toolbar-mobile .btn,
+		.toolbar-mobile .timer-btn {
+			width: 38px;
+			height: 38px;
+		}
+		.toolbar-mobile .btn svg {
+			width: 20px;
+			height: 20px;
+		}
+		.toolbar-mobile .menu-icon {
+			width: 18px;
+			height: 14px;
+			gap: 3px;
+		}
+		.toolbar-mobile .menu-icon span { height: 2px; }
+		.toolbar-mobile .btn-sequences {
+			width: 44px;
+			height: 44px;
+		}
+		.toolbar-mobile .btn-sequences svg {
+			width: 20px;
+			height: 20px;
+		}
+		.mobile-buttons {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			gap: 4px;
+			padding: 10px 4px;
+		}
+		.mobile-title-wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 100%;
+			margin-top: 6px;
+		}
+		.mobile-title {
+			color: var(--title-color);
+			font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+			font-weight: bold;
+			text-align: center;
+			line-height: 1.2;
+			margin-top: 5px;
+			text-transform: lowercase;
+		}
+		.mobile-subtitle {
+			color: #555;
+			font-size: clamp(0.7rem, 2vw, 0.85rem);
+			text-align: center;
+			line-height: 1.2;
+			padding-top: 12px;
+		}
+
+		/* ===== SURVOL POUR LA TOOLBAR EN PLEIN ÉCRAN ===== */
+		.hover-trigger { display: none; }
+		.fullscreen .hover-trigger { display: block; }
+		.fullscreen body { overflow: hidden; }
+		.fullscreen .container--quiz { max-height: calc(100vh - 40px); overflow-y: auto; }
+		.fullscreen .toolbar-wrapper {
+			transform: translateY(-100%);
+			opacity: 0;
+			pointer-events: none;
+			transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+		}
+		.fullscreen .hover-trigger {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 40px;
+			z-index: 9;
+			pointer-events: none;
+		}
+		.fullscreen .hover-trigger.active { pointer-events: auto; }
+		.fullscreen .hover-trigger.active~.toolbar-wrapper,
+		.fullscreen .toolbar-wrapper:hover {
+			transform: translateY(0);
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		/* ===== MENUS ===== */
+		.menu-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(0, 0, 0, 0.5);
+			z-index: 1000;
+			opacity: 0;
+			visibility: hidden;
+			transition: all 0.3s ease;
+		}
+		.menu-overlay.open {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.slide-menu {
+			position: fixed;
+			top: 0;
+			right: -300px;
+			width: 280px;
+			height: 100vh;
+			background-color: var(--bg);
+			z-index: 1001;
+			padding: 20px;
+			display: flex;
+			flex-direction: column;
+			border-radius: 20px 0 0 20px;
+			box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+			transition: right 0.3s ease;
+			overflow-y: auto;
+		}
+		.slide-menu.open { right: 0; }
+		.menu-header {
+			display: flex;
+			justify-content: flex-end;
+			margin-bottom: 1rem;
+		}
+		.menu-close,
+		.submenu-close {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.menu-close svg,
+		.submenu-close svg {
+			width: 18px;
+			height: 18px;
+			stroke: currentColor;
+		}
+
+		.menu-item {
+			display: flex;
+			align-items: center;
+			padding: 0px 20px;
+			font-size: 14px;
+			border-radius: 8px;
+			margin-bottom: 17px;
+			width: 100%;
+			min-height: 42px;
+			border: none;
+		}
+		.menu-item:hover {
+			background: rgba(0, 0, 0, 0.08);
+			transform: translateY(-2px);
+		}
+		body.dark-theme .menu-item:hover { background: rgba(255, 255, 255, 0.08); }
+		.menu-item svg {
+			width: 24px;
+			height: 24px;
+			margin-right: 16px;
+			stroke: currentColor;
+			stroke-width: 2;
+			fill: none;
+			flex-shrink: 0;
+		}
+		.menu-item .item-label {
+			flex: 1;
+			text-align: left;
+			display: flex;
+			align-items: center;
+			height: 100%;
+		}
+		.menu-item .item-badge {
+			background: var(--title-color);
+			color: #fff;
+			border-radius: 50%;
+			width: 34px;
+			height: 34px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 10px;
+			font-weight: bold;
+			flex-shrink: 0;
+			margin-left: 8px;
+		}
+
+		.submenu {
+			position: fixed;
+			top: 0;
+			right: -340px;
+			width: 280px;
+			height: 100%;
+			background: var(--bg);
+			z-index: 10010;
+			box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+			border-radius: 20px 0 0 20px;
+			padding: 2rem 1.5rem;
+			overflow-y: auto;
+			transition: right 0.5s ease;
+		}
+		.submenu.active { right: 0; }
+		.submenu-title {
+			font-size: 1.4rem;
+			font-weight: bold;
+			color: var(--title-color);
+			margin: 0.5rem 0 1.5rem 0;
+			text-align: center;
+			text-transform: lowercase;
+		}
+		.submenu-content {
+			color: var(--font-color);
+			font-size: 13px;
+			line-height: 1.5;
+			margin-top: 4px;
+		}
+		.submenu-content em {
+			font-style: italic;
+		}
+		.settings-info {
+			margin-top: 20px;
+			padding: 15px;
+			background: rgba(0, 0, 0, 0.05);
+			border-radius: 10px;
+			text-align: left;
+		}
+		body.dark-theme .settings-info { background: rgba(255, 255, 255, 0.05); }
+
+		.toggle-container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 0.75rem;
+			min-height: 24px;
+		}
+		.toggle-label {
+			color: var(--font-color);
+			font-size: 0.9rem;
+			text-align: left;
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			cursor: pointer;
+			flex: 1;
+		}
+		.toggle-label i {
+			width: 24px;
+			min-width: 24px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			font-size: 1rem;
+			text-align: center;
+			line-height: 1;
+		}
+		.toggle-label em {
+			font-style: italic;
+		}
+
+		.theme-switch {
+				position: relative;
+				display: inline-block;
+				width: 40px;
+				height: 20px;
+				flex-shrink: 0;
+			}
+			.theme-switch input {
+				opacity: 0;
+				width: 0;
+				height: 0;
+			}
+			.theme-switch .slider {
+				position: absolute;
+				cursor: pointer;
+				inset: 0;
+				background: #b0b8c4;
+				border-radius: 20px;
+				transition: .3s;
+			}
+			.theme-switch .slider:before {
+				content: "";
+				position: absolute;
+				width: 16px;
+				height: 16px;
+				left: 2px;
+				top: 2px;
+				background: #fff;
+				border-radius: 50%;
+				transition: .3s;
+				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+			}
+			.theme-switch input:checked+.slider { background: #3a7bb5; }
+			.theme-switch input:checked+.slider:before { transform: translateX(20px); }
+			body.dark-theme .theme-switch .slider { background: #3d3d3d; }
+			body.dark-theme .theme-switch input:checked+.slider { background: #4a80c0; }
+
+		/* ===== SLIDERS POUR LE TIMER ET LE NOMBRE DE QUESTIONS ===== */
+		.questions-slider-container {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+		}
+
+		.questions-slider-label {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 0.9rem;
+		}
+
+		.questions-slider-label .toggle-label {
+			font-size: 0.9rem;
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			cursor: pointer;
+			flex: 1;
+		}
+
+		.questions-slider-label .toggle-label i {
+			width: 24px;
+			min-width: 24px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			font-size: 1rem;
+			text-align: center;
+			line-height: 1;
+		}
+
+		.questions-slider-value {
+			font-weight: bold;
+			color: var(--title-color);
+			font-size: 1rem;
+		}
+
+		.questions-slider {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 100%;
+			height: 4px;
+			border-radius: 2px;
+			background: #b0b8c4;
+			outline: none;
+			transition: background 0.3s ease;
+		}
+
+		.questions-slider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 16px;
+			height: 16px;
+			border-radius: 50%;
+			background: #3a7bb5;
+			cursor: pointer;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+			transition: background 0.2s ease;
+		}
+
+		.questions-slider::-webkit-slider-thumb:hover {
+			transform: scale(1.1);
+		}
+
+		.questions-slider::-moz-range-thumb {
+			width: 16px;
+			height: 16px;
+			border-radius: 50%;
+			background: #3a7bb5;
+			cursor: pointer;
+			border: none;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		}
+
+		body.dark-theme .questions-slider {
+			background: #3d3d3d;
+		}
+
+		body.dark-theme .questions-slider::-webkit-slider-thumb {
+			background: #4a80c0;
+		}
+
+		body.dark-theme .questions-slider::-moz-range-thumb {
+			background: #4a80c0;
+		}
+
+		.slider-graduations {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			padding: 0;
+			margin-top: 5px;
+			font-size: 0.7rem;
+			opacity: 0.7;
+		}
+
+		.slider-graduations span {
+			text-align: center;
+			flex: 1;
+		}
+
+		.slider-graduations .infinity-symbol {
+			font-size: 1rem;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			line-height: 1;
+		}
+
+		/* ===== TOGGLE DALTONIEN / ÉVALUATION ===== */
+		.color-settings-group {
+			margin-top: 8px;
+			margin-bottom: 8px;
+		}
+		.color-settings-label {
+			font-weight: 600;
+			color: var(--font-color);
+			font-size: 14px;
+			margin-bottom: 12px;
+			display: block;
+			text-align: center;
+		}
+		.color-settings-label em {
+			font-style: italic;
+		}
+		.color-buttons-container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: left;
+			gap: 4px;
+			margin: 8px 0;
+			width: 210px;
+		}
+		.color-button {
+			width: 28px;
+			height: 28px;
+			border-radius: 50%;
+			border: 2px solid transparent;
+			cursor: pointer;
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+		}
+		.color-button:hover { transform: translateY(-2px); }
+		.color-button.active {
+			border: 3px solid #333;
+			box-shadow: var(--shadow-in);
+			transform: scale(0.95);
+		}
+		body.dark-theme .color-button.active { border: 3px solid #ffffff; }
+		.color-button.color-turquoise { background-color: #2DDFF3; }
+		.color-button.color-green { background-color: #00ff00; }
+		.color-button.color-yellow { background-color: #FFFF00; }
+		.color-button.color-gold { background-color: #FFDF00; }
+		.color-button.color-orange { background-color: #F75B14; }
+		.color-button.color-red { background-color: #FF0000; }
+
+		/* ===== LAYOUT PRINCIPAL ===== */
+		.container {
+			background-color: var(--bg);
+			border-radius: 12px;
+			box-shadow: var(--shadow-out);
+			padding: 20px;
+			max-width: 1200px;
+			margin: 0 auto;
+			width: 100%;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+		}
+
+		/* ===== FAUX SELECT PERSONNALISÉ ===== */
+		.text-selector {
+			padding: 4px 15px;
+			background-color: var(--btn);
+			border-radius: 8px;
+			text-align: center;
+			box-shadow: var(--shadow-in);
+			margin-bottom: 12px;
+			flex-shrink: 0;
+			width: 100%;
+			position: relative;
+		}
+
+		.custom-select {
+			position: relative;
+			width: 100%;
+			cursor: pointer;
+			user-select: none;
+		}
+
+		.custom-select .selected-value {
+			padding: 8px 40px 8px 16px;
+			border-radius: 8px;
+			border: 2px solid var(--btn);
+			font-size: 16px;
+			font-family: 'Inter', sans-serif;
+			background-color: var(--btn);
+			color: var(--font-color);
+			width: 100%;
+			text-align: center;
+			display: block;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+			transition: all 0.2s ease;
+			cursor: pointer;
+		}
+
+		.custom-select .selected-value em {
+			font-style: italic;
+		}
+
+		.custom-select .arrow {
+			position: absolute;
+			right: 12px;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 20px;
+			height: 20px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: transform 0.3s ease;
+			pointer-events: none;
+			color: var(--font-color);
+		}
+
+		.custom-select .arrow svg {
+			width: 16px;
+			height: 16px;
+			stroke: currentColor;
+			stroke-width: 2;
+			fill: none;
+			transition: transform 0.3s ease;
+		}
+
+		.custom-select.open .arrow {
+			transform: translateY(-50%) rotate(180deg);
+		}
+
+		.custom-select .options {
+			display: none;
+			position: absolute;
+			top: calc(100% + 4px);
+			left: 0;
+			right: 0;
+			background: var(--bg);
+			border-radius: 8px;
+			box-shadow: var(--shadow-out);
+			max-height: 250px;
+			overflow-y: auto;
+			z-index: 100;
+			padding: 4px 0;
+			border: 1px solid rgba(0, 0, 0, 0.05);
+			min-width: 100%;
+			width: 100%;
+		}
+
+		body.dark-theme .custom-select .options {
+			background: #1a1a1a;
+			border-color: rgba(255, 255, 255, 0.05);
+		}
+
+		.custom-select.open .options {
+			display: block;
+		}
+
+		.custom-select .option {
+			padding: 8px 16px;
+			font-size: 14px;
+			font-family: 'Inter', sans-serif;
+			color: var(--font-color);
+			cursor: pointer;
+			transition: background 0.2s ease;
+			text-align: center;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.custom-select .option em {
+			font-style: italic;
+		}
+
+		.custom-select .option:hover {
+			background: rgba(0, 0, 0, 0.06);
+		}
+
+		body.dark-theme .custom-select .option:hover {
+			background: rgba(255, 255, 255, 0.08);
+		}
+
+		.custom-select .option.selected {
+			color: var(--title-color);
+			font-weight: normal;
+			background: rgba(255, 0, 0, 0.06);
+		}
+
+		body.dark-theme .custom-select .option.selected {
+			background: rgba(255, 0, 0, 0.12);
+		}
+
+		.custom-select .option.hidden-option {
+			display: none;
+		}
+
+		/* Suppression du select natif */
+		#textSelect {
+			display: none;
+		}
+
+		.content-wrapper {
+			position: relative;
+			flex: 1;
+			min-height: 0;
+			border-radius: 8px;
+			overflow: hidden;
+			background-color: var(--bg);
+			box-shadow: var(--shadow-in);
+			display: flex;
+			flex-direction: column;
+		}
+
+		.text-content {
+			position: relative;
+			line-height: 1.8;
+			font-size: 0.85em;
+			color: var(--font-color);
+			width: 100%;
+			z-index: 3;
+			pointer-events: auto;
+			text-align: justify;
+			flex-grow: 1;
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
+			padding: 20px !important;
+		}
+		.text-content p { margin: 0 0 0 0; text-indent: 2em; }
+		.sentence-number { color: #0000FF !important; }
+		body.dark-theme .sentence-number { color: #0000FF !important; }
+		.word-span { display: inline; margin: 0; padding: 0; white-space: normal; }
+		.text-content .reference-text { margin-top: 20px; text-align: right; font-size: 1em; color: inherit; text-indent: 0; }
+		.text-content .reference-text a { color: var(--font-color); text-decoration: underline; }
+
+		#drawingCanvas {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 2;
+			pointer-events: none;
+		}
+		.drawing-layer {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			z-index: 4;
+			opacity: 0;
+			touch-action: pan-y pinch-zoom;
+		}
+
+		.button,
+		.mode-button {
+			padding: 10px;
+			border-radius: 8px;
+			border: none;
+			background: var(--btn);
+			color: var(--font-color);
+			cursor: pointer;
+			width: 44px;
+			height: 44px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+		}
+		.button:hover,
+		.mode-button:hover {
+			background: var(--btn);
+			box-shadow: var(--shadow-in);
+			transform: translateY(-1px);
+		}
+		.mode-button.active {
+			background: var(--btn);
+			box-shadow: var(--shadow-in);
+		}
+
+		.results-panel {
+			padding: 15px;
+			background-color: var(--bg);
+			border-radius: 8px;
+			box-shadow: var(--shadow-in);
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			height: 100%;
+		}
+		.results-panel.empty .button-row,
+		.results-panel.empty .results-title,
+		.results-panel.empty .found-list,
+		.results-panel.empty .stats { display: none; }
+		.results-title {
+			font-size: 16px;
+			font-weight: bold;
+			color: var(--font-color);
+			margin-top: 0px;
+			margin-bottom: 20px;
+			flex-shrink: 0;
+		}
+		.found-list {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			margin-bottom: 10px;
+			align-items: center;
+			min-height: 100px;
+		}
+		.found-item {
+			padding: 8px 12px;
+			border-radius: 4px;
+			font-size: 13px;
+			background: var(--btn);
+			box-shadow: var(--shadow-out);
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			color: var(--font-color);
+		}
+		.found-item .connector-cat {
+			font-size: 10px;
+			padding: 2px 6px;
+			border-radius: 12px;
+			background-color: #cbd5e0;
+			color: #2d3748;
+		}
+		.found-item .connector-count { font-size: 10px; font-weight: bold; color: #0000FF; }
+
+		.stats {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 8px;
+			margin-bottom: 8px;
+			flex-shrink: 0;
+		}
+		.stat-item {
+			text-align: center;
+			padding: 10px 0 10px 0;
+			background: var(--btn);
+			border-radius: 6px;
+			box-shadow: var(--shadow-out);
+		}
+		.stat-value {
+			font-size: 20px;
+			font-weight: bold;
+			color: var(--title-color);
+		}
+		.stat-label { font-size: 12px; color: #718096; }
+
+		.two-columns {
+			display: grid;
+			grid-template-columns: 1fr 237px;
+			gap: 20px;
+			align-items: stretch;
+			flex: 1;
+		}
+		.text-column {
+			display: flex;
+			flex-direction: column;
+			min-height: 0;
+			height: 100%;
+		}
+		.button-row {
+			display: flex;
+			gap: 10px;
+			justify-content: center;
+			flex-shrink: 0;
+			margin-bottom: 15px;
+		}
+
+		/* ===== MODE ÉVALUATION ===== */
+		.evaluation-mode .stats,
+		.evaluation-mode #modeReveal { display: none !important; }
+		.evaluation-list {
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+		}
+		.evaluation-category-group {
+			background-color: #ffffff;
+			border-radius: 8px;
+			padding: 12px;
+			border-left: 4px solid;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+		body.dark-theme .evaluation-category-group { background-color: #1a202c; }
+		.evaluation-category-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 5px;
+			margin-bottom: 8px;
+		}
+		.evaluation-category-title {
+			font-weight: 600;
+			color: var(--font-color);
+			font-size: 14px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+		.evaluation-category-stats {
+			font-size: 12px;
+			font-weight: 600;
+			color: #000000;
+			background: #e2e8f0;
+			padding: 4px 10px;
+			border-radius: 20px;
+			transition: background-color 0.2s ease;
+		}
+		body.dark-theme .evaluation-category-stats { background-color: #2d3748; color: #e2e8f0; }
+		.evaluation-category-progress {
+			margin-top: 8px;
+			height: 6px;
+			background-color: #e2e8f0;
+			border-radius: 3px;
+			overflow: hidden;
+		}
+		.evaluation-category-progress-bar {
+			height: 100%;
+			border-radius: 3px;
+			transition: width 0.3s ease;
+		}
+
+		/* ===== STYLES MODE DALTONIEN ===== */
+		body.colorblind-mode .evaluation-category-group { border-left-width: 6px !important; }
+		.pattern-diagonal {
+			background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 2px, transparent 2px, transparent 8px) !important;
+		}
+		.pattern-dots {
+			background-image: radial-gradient(circle at 2px 3px, rgba(0, 0, 0, 0.2) 1.5px, transparent 1.5px) !important;
+			background-size: 8px 8px !important;
+		}
+		.pattern-crosshatch {
+			background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.12) 0px, rgba(0, 0, 0, 0.12) 2px, transparent 2px, transparent 6px), repeating-linear-gradient(135deg, rgba(0, 0, 0, 0.12) 0px, rgba(0, 0, 0, 0.12) 2px, transparent 2px, transparent 6px) !important;
+		}
+		.pattern-horizontal {
+			background-image: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 2px, transparent 2px, transparent 6px) !important;
+		}
+		.pattern-vertical {
+			background-image: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 2px, transparent 2px, transparent 6px) !important;
+		}
+		.pattern-zigzag {
+			background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 2px, transparent 2px, transparent 10px), repeating-linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 2px, transparent 2px, transparent 10px) !important;
+		}
+		.pattern-icon {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			border-radius: 4px;
+			margin-right: 8px;
+			vertical-align: middle;
+			border: 1px solid rgba(0, 0, 0, 0.2);
+		}
+
+		/* ===== FILE UPLOAD ===== */
+		.file-upload-btn {
+			width: 100%;
+			padding: 10px;
+			margin-top: 10px;
+			border-radius: 8px;
+			background-color: var(--btn);
+			border: none;
+			cursor: pointer;
+			box-shadow: var(--shadow-out);
+			transition: all 0.2s ease;
+			font-weight: 500;
+			color: var(--font-color);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+		}
+		.file-upload-btn em {
+			font-style: italic;
+		}
+		.file-upload-btn:hover {
+			background-color: var(--btn);
+			box-shadow: var(--shadow-in);
+			transform: translateY(-1px);
+		}
+
+		/* ===== RESPONSIVE ===== */
+		@media (max-width: 768px) {
+			body { padding: 0px 0px 0px 0px; }
+			.toolbar { display: none; }
+			.toolbar-mobile { display: flex !important; }
+			.container { padding: 10px 20px 10px 10px !important; margin-top: -10px; margin-bottom: 20px; }
+			.two-columns { grid-template-columns: 1fr; gap: 15px; }
+			.text-content { font-size: 14px; line-height: 1.5; padding: 12px 12px 12px 8px !important; }
+			.button,
+			.mode-button { width: 40px; height: 40px; }
+			.results-panel { margin: 0; min-height: auto; height: auto; }
+			.found-item { max-width: calc(100% - 10px); word-break: break-word; }
+			#drawingCanvas { max-width: 100%; }
+			.custom-select .selected-value {
+				font-size: 14px;
+				padding: 6px 36px 6px 12px;
+			}
+			.custom-select .option {
+				font-size: 13px;
+				padding: 6px 12px;
+			}
+		}
+
+		@media (min-width: 769px) {
+			.toolbar-mobile { display: none !important; }
+			.toolbar { display: flex !important; }
+			.container { padding: 20px !important; }
+			.text-content { padding: 20px !important; }
+			.text-selector { padding-left: 20px; padding-right: 20px; }
+		}
+
+		/* ===== SCROLLBAR ===== */
+		::-webkit-scrollbar { width: 4px; }
+		::-webkit-scrollbar-track { background: transparent; }
+		::-webkit-scrollbar-thumb { background: #b0b8c4; border-radius: 4px; }
+		body.dark-theme ::-webkit-scrollbar-thumb { background: #3d3d3d; }
+
+		/* ===== SHORTCUTS TABLE ===== */
+		kbd {
+			display: inline-block;
+			padding: 4px 8px;
+			font-family: monospace;
+			font-size: 0.9em;
+			font-weight: bold;
+			background-color: #d1d1d1;
+			color: #333;
+			border-radius: 6px;
+			box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 rgba(255, 255, 255, 0.6) inset;
+			min-width: 40px;
+			text-align: center;
+		}
+		body.dark-theme kbd { background-color: #3d3d3d; color: #e2e8f0; }
+		table { width: 100%; border-collapse: collapse; }
+		td { padding: 8px 4px; border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+
+		/* ===== STARS / CONFETTIS ===== */
+		.star-particle {
+			position: fixed;
+			pointer-events: none;
+			font-size: 24px;
+			z-index: 99998;
+			animation: star-float 1.2s ease-out forwards;
+		}
+
+		@keyframes star-float {
+			0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+			100% { opacity: 0; transform: translateY(-150px) scale(0) rotate(180deg); }
+		}
+
+		.confetti-container {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			z-index: 99999;
+			overflow: hidden;
+		}
+
+		.confetti-piece {
+			position: absolute;
+			width: 10px;
+			height: 10px;
+			top: -10px;
+			animation: confetti-fall linear forwards;
+		}
+
+		@keyframes confetti-fall {
+			0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+			100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
+		}
+	</style>
+</head>
+
+<body id="appBody">
+	<div class="hover-trigger" id="hoverTrigger"></div>
+	<div id="toaster" class="toaster"></div>
+
+	<!-- ===== TOOLBAR ===== -->
+	<div class="toolbar-wrapper">
+		<div class="toolbar" id="toolbarDesktop">
+			<div class="toolbar-left">
+				<!-- BOUTON CHARGER FICHIER -->
+				<div style="position:relative;">
+					<button class="btn btn-menu" id="fileLoadBtn" data-title="charger un fichier (C)">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+							<polyline points="17 8 12 3 7 8"/>
+							<line x1="12" y1="3" x2="12" y2="15"/>
+						</svg>
+					</button>
+					<input type="file" id="fileInput" accept=".js" style="display:none;" />
+				</div>
+
+				<!-- BOUTON SÉLECTIONNER LES TEXTES -->
+				<button class="btn btn-menu" id="selectTextsBtn" data-title="sélectionner les textes (L)">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+						<polyline points="22 4 12 14.01 9 11.01"/>
+					</svg>
+				</button>
+
+				<!-- RECHARGER -->
+				<button class="btn btn-reload" data-action="reload" data-title="réinitialiser (R)">
+					<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="23 4 23 10 17 10"/>
+						<polyline points="1 20 1 14 7 14"/>
+						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+					</svg>
+				</button>
+			</div>
+			<div class="toolbar-center">
+				<div class="toolbar-title" id="appTitle">application « repérer »</div>
+				<div class="toolbar-subtitle" id="appSubtitle">travailler les enchaînements logiques</div>
+			</div>
+			<div class="toolbar-right">
+				<!-- TIMER -->
+				<button class="timer-btn" id="timerBtnDesktop" data-title="temps restant (T)">
+					<span id="timerValueDesktop">∞</span>
+				</button>
+
+				<!-- ACCUEIL -->
+				<button class="btn btn-home" data-action="home" data-title="accueil (H)">
+					<div class="icon-wrapper">
+						<svg viewBox="0 0 24 24">
+							<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-join="round" stroke-linecap="round"/>
+						</svg>
+					</div>
+				</button>
+				<!-- PLEIN ÉCRAN -->
+				<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (F)">
+					<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+						<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+						<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+						<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+						<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+					</svg>
+				</button>
+				<!-- MENU -->
+				<button class="btn btn-menu" data-action="menu" data-title="menu (M)">
+					<div class="menu-icon"><span></span><span></span><span></span></div>
+				</button>
+			</div>
+		</div>
+
+		<div class="toolbar-mobile" id="toolbarMobile">
+			<div class="mobile-buttons">
+				<!-- BOUTON CHARGER FICHIER MOBILE -->
+				<div style="position:relative;">
+					<button class="btn btn-menu" id="fileLoadBtnMobile" data-title="charger un fichier">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+							<polyline points="17 8 12 3 7 8"/>
+							<line x1="12" y1="3" x2="12" y2="15"/>
+						</svg>
+					</button>
+				</div>
+
+				<!-- BOUTON SÉLECTIONNER LES TEXTES MOBILE -->
+				<button class="btn btn-menu" id="selectTextsBtnMobile" data-title="sélectionner les textes">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+						<polyline points="22 4 12 14.01 9 11.01"/>
+					</svg>
+				</button>
+
+				<!-- ACCUEIL -->
+				<button class="btn btn-home" data-action="home" data-title="accueil (H)">
+					<div class="icon-wrapper">
+						<svg viewBox="0 0 24 24">
+							<polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							<polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							<polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-join="round" stroke-linecap="round"/>
+						</svg>
+					</div>
+				</button>
+				<!-- RECHARGER -->
+				<button class="btn btn-reload" data-action="reload" data-title="réinitialiser (R)">
+					<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="23 4 23 10 17 10"/>
+						<polyline points="1 20 1 14 7 14"/>
+						<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+					</svg>
+				</button>
+				<!-- TIMER MOBILE -->
+				<button class="timer-btn" id="timerBtnMobile" data-title="temps restant (T)">
+					<span id="timerValueMobile">∞</span>
+				</button>
+				<!-- PLEIN ÉCRAN -->
+				<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (F)">
+					<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">
+						<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>
+						<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>
+						<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>
+						<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>
+					</svg>
+				</button>
+				<!-- MENU -->
+				<button class="btn btn-menu" data-action="menu" data-title="menu (M)">
+					<div class="menu-icon"><span></span><span></span><span></span></div>
+				</button>
+			</div>
+			<div class="mobile-title-wrapper">
+				<div class="mobile-title" id="mobileTitle">application « repérer »</div>
+				<div class="mobile-subtitle" id="mobileSubtitle">travailler les enchaînements logiques</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ===== CONTENU PRINCIPAL ===== -->
+	<div class="container">
+		<div class="text-selector">
+			<!-- FAUX SELECT PERSONNALISÉ -->
+			<div class="custom-select" id="customSelect">
+				<div class="selected-value" id="selectedValue">charger un fichier</div>
+				<div class="arrow">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="6 9 12 15 18 9"/>
+					</svg>
+				</div>
+				<div class="options" id="optionsContainer"></div>
+			</div>
+			<!-- SELECT NATIF CACHÉ -->
+			<select id="textSelect" style="display:none;">
+				<option value="">sélectionner un texte</option>
+			</select>
+		</div>
+		<div class="two-columns">
+			<div class="text-column">
+				<div class="content-wrapper">
+					<canvas id="drawingCanvas"></canvas>
+					<div class="text-content" id="textContent"></div>
+					<div class="drawing-layer" id="drawingLayer"></div>
+				</div>
+			</div>
+			<div class="results-panel empty" id="resultsPanel">
+				<div class="button-row">
+					<button id="undoButton" class="button" title="annuler le dernier trait"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12.207 2.293a1 1 0 0 1 0 1.414L10.914 5H12.5c4.652 0 8.5 3.848 8.5 8.5S17.152 22 12.5 22 4 18.152 4 13.5a1 1 0 1 1 2 0c0 3.548 2.952 6.5 6.5 6.5s6.5-2.952 6.5-6.5S16.048 7 12.5 7h-1.586l1.293 1.293a1 1 0 0 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 0z" fill="currentColor"/></svg></button>
+					<button id="highlightModeButton" class="mode-button active" title="mode surligneur"><svg width="20" height="20" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M0.0184994 13.6645L0.612501 10.4635C0.687501 10.0545 0.884501 9.6805 1.1805 9.3825L9.9815 0.5805C10.7555 -0.1925 12.0145 -0.1945 12.7915 0.5805L14.4195 2.2085C15.1935 2.9835 15.1935 4.2435 14.4195 5.0185L5.6155 13.8215C5.3195 14.1165 4.9455 14.3125 4.5375 14.3875L1.3355 14.9815C1.2655 14.9935 1.1975 15.0005 1.1295 15.0005C0.8325 15.0005 0.544499 14.8835 0.3305 14.6695C0.0674992 14.4055 -0.0495005 14.0305 0.0184994 13.6645ZM12.4715 5.1965L13.6315 4.0365L13.6305 3.1885L11.8105 1.3675L10.9625 1.3685L9.8025 2.5285L12.4715 5.1965ZM4.3105 13.1585C4.4705 13.1285 4.6175 13.0515 4.7335 12.9345L11.5865 6.0815L8.9185 3.4135L2.0655 10.2655C1.9485 10.3835 1.8715 10.5305 1.8405 10.6915L1.3665 13.2485L1.7515 13.6335L4.3105 13.1585Z"/></svg></button>
+					<button id="modeEraser" class="mode-button" title="gomme"><svg width="20" height="20" viewBox="300 300 1200 1400" xmlns="http://www.w3.org/2000/svg"><style>.st0{fill:none}.st1{fill:none;stroke:#231f20;stroke-width:100;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10}</style><path class="st0" d="M1137.2 321.6l475.3 475.3-123 123-475.3-475.3 123-123zm-738.1 738.1L874.4 1535l615-615-475.3-475.3-615 615zm-3 3l-84.3 84.3c67.5 67.5-67.5 176.9 0 244.3l230.9 230.9c67.5 67.5 176.9 67.5 244.4 0l84.3-84.3-475.3-475.2z"/><g id="STROKES"><path class="st1" d="M1014.1 444.6l123.1-123 475.2 475.3-123 123-615 615-475.3-475.2z"/><path class="st1" d="M396.1 1062.7L871.4 1538l-84.3 84.3c-67.5 67.5-176.9 67.5-244.4 0l-230.9-230.9c67.5 67.5-67.5-176.9 0-244.3l84.3-84.4z"/><path class="st1" d="M1489.4 919.9l-475.3-475.3"/></g></svg></button>
+					<button id="modeReveal" class="mode-button" title="afficher solutions"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+				</div>
+				<div class="stats" id="stats"></div>
+				<div id="normalModeContainer">
+					<div class="results-title">connecteurs trouvés :</div>
+					<div id="foundList" class="found-list"></div>
+				</div>
+				<div id="evaluationModeContainer" style="display: none;">
+					<div class="results-title">catégories de connecteurs</div>
+					<div id="evaluationList" class="evaluation-list"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ===== MENUS ===== -->
+	<div class="menu-overlay" id="menuOverlay"></div>
+	<div class="slide-menu" id="slideMenu">
+		<div class="menu-header">
+			<button class="menu-close" id="menuClose">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="menu-content">
+			<button class="menu-item" id="presentationButton">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+				<span class="item-label">présentation</span>
+			</button>
+			<button class="menu-item" id="shortcutsButton">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="6" y1="8" x2="10" y2="8"></line><line x1="14" y1="8" x2="18" y2="8"></line><line x1="6" y1="12" x2="10" y2="12"></line><line x1="14" y1="12" x2="18" y2="12"></line><line x1="6" y1="16" x2="10" y2="16"></line><line x1="14" y1="16" x2="18" y2="16"></line></svg>
+				<span class="item-label">raccourcis</span>
+			</button>
+			<button class="menu-item" id="statsButton">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M 3 3 L 3 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+					<path d="M 3 22 L 22 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+					<path d="M 7 18 L 11 12 L 15 15 L 21 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+				</svg>
+				<span class="item-label">statistiques</span>
+				<span class="item-badge" id="statsBadge">0%</span>
+			</button>
+			<button class="menu-item" id="settingsButton">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+				<span class="item-label">paramètres</span>
+			</button>
+			<button class="menu-item" id="resetButton">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M3 2v6h6"></path>
+					<path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
+					<path d="M21 22v-6h-6"></path>
+					<path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path>
+				</svg>
+				<span class="item-label">réinitialiser</span>
+			</button>
+			<button class="menu-item" id="aboutButton">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="17" x2="12.01" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+				<span class="item-label">à propos</span>
+			</button>
+		</div>
+	</div>
+
+	<!-- ===== SOUS-MENUS ===== -->
+	<div class="submenu" id="submenuPresentation">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="presentation">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">présentation</div>
+		<div class="submenu-content">
+			<div class="settings-info">
+				<p><i class="fas fa-bullseye"></i> <strong>objectif</strong><br><br>identifier et comprendre les connecteurs logiques dans des textes</p>
+			</div>
+			<div class="settings-info">
+				<p><i class="fas fa-bars"></i> <strong>options</strong></p><br>
+				<p><strong>• mode <em>sombre</em> :</strong> pour une lecture confortable</p>
+				<p><strong>• mode <em>daltonien</em> :</strong> motifs pour distinguer les catégories</p>
+				<p><strong>• mode <em>évaluation</em> :</strong> affiche les catégories à trouver</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuShortcuts">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="shortcuts">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">raccourcis</div>
+		<div class="submenu-content">
+			<div class="settings-info">
+				<table class="shortcuts-table">
+					<tr><td class="key-combo"><kbd>C</kbd></td><td>charger un fichier</td></tr>
+					<tr><td class="key-combo"><kbd>L</kbd></td><td>sélectionner les textes</td></tr>
+					<tr><td class="key-combo"><kbd>S</kbd></td><td>ouvrir/fermer la liste des textes</td></tr>
+					<tr><td class="key-combo"><kbd>H</kbd></td><td>renvoi au site académique</td></tr>
+					<tr><td class="key-combo"><kbd>R</kbd></td><td>réinitialiser l'application</td></tr>
+					<tr><td class="key-combo"><kbd>T</kbd></td><td>réinitialiser le minuteur</td></tr>
+					<tr><td class="key-combo"><kbd>F</kbd></td><td>plein écran</td></tr>
+					<tr><td class="key-combo"><kbd>M</kbd></td><td>ouvrir / fermer le menu</td></tr>
+					<tr><td class="key-combo"><kbd>Échap</kbd></td><td>fermer</td></tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<!-- ===== SOUS-MENU STATISTIQUES ===== -->
+	<div class="submenu" id="submenuStats">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="stats">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">statistiques</div>
+		<div class="submenu-content">
+			<div class="stats-info">
+				<div class="settings-info">
+					<p><i class="fas fa-chart-simple"></i> <strong>quelques chiffres :</strong></p>
+					<p>• score actuel : <span style="color: var(--title-color);" id="statsCorrectCount2">0</span> / <span id="statsTotalCount2">0</span></p>
+					<p>• taux de réussite : <span style="color: var(--title-color);" id="statsPercentage2">0&nbsp;%</span></p>
+					<p>• parties jouées : <span style="color: var(--title-color);" id="gamesPlayed2">0</span></p>
+				</div>
+				<div class="settings-info">
+					<p><i class="fas fa-save"></i> <strong>sauvegarde :</strong></p>
+					<p>les statistiques sont sauvegardées automatiquement</p>
+				</div>
+			</div>
+			<button class="stats-reload-btn" id="resetStatsBtn" style="font-size: 13px; width:100%; margin-top:15px; padding:8px 16px; border-radius:8px; display:inline-flex; gap:8px; justify-content:center; align-items:center; border:none;">
+				<i class="fas fa-sync-alt"></i> réinitialiser les statistiques
+			</button>
+		</div>
+	</div>
+
+	<!-- ===== SOUS-MENU PARAMÈTRES ===== -->
+	<div class="submenu" id="submenuSettings">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="settings">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">paramètres</div>
+		<div class="submenu-content">
+			<div class="toggle-container">
+				<span class="toggle-label"><i class="fas fa-moon"></i> mode sombre</span>
+				<label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label"><i class="fas fa-palette"></i> mode daltonien</span>
+				<label class="theme-switch"><input type="checkbox" id="colorblindToggle"><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label"><i class="fas fa-graduation-cap"></i> mode évaluation</span>
+				<label class="theme-switch"><input type="checkbox" id="evaluationModeToggle"><span class="slider"></span></label>
+			</div>
+			<div class="toggle-container">
+				<span class="toggle-label"><i class="fas fa-volume-up"></i> sons</span>
+				<label class="theme-switch"><input type="checkbox" id="soundToggle" checked><span class="slider"></span></label>
+			</div>
+			<div class="questions-slider-container" style="padding-bottom:0; margin-bottom:0;">
+				<div class="questions-slider-label">
+					<span class="toggle-label"><i class="fas fa-highlighter"></i> couleur du surligneur</span>
+				</div>
+				<div class="color-buttons-container" style="width:100%; justify-content:space-between;">
+					<button class="color-button color-turquoise" data-color="#2DDFF3" style="flex:1; aspect-ratio:1/1; width:auto; height:auto; max-width:40px; min-width:28px; border-radius:50%;"></button>
+					<button class="color-button color-green" data-color="#00ff00" style="flex:1; aspect-ratio:1/1; width:auto; height:auto; max-width:40px; min-width:28px; border-radius:50%;"></button>
+					<button class="color-button color-yellow active" data-color="#FFFF00" style="flex:1; aspect-ratio:1/1; width:auto; height:auto; max-width:40px; min-width:28px; border-radius:50%;"></button>
+					<button class="color-button color-gold" data-color="#FFDF00" style="flex:1; aspect-ratio:1/1; width:auto; height:auto; max-width:40px; min-width:28px; border-radius:50%;"></button>
+					<button class="color-button color-orange" data-color="#F75B14" style="flex:1; aspect-ratio:1/1; width:auto; height:auto; max-width:40px; min-width:28px; border-radius:50%;"></button>
+					<button class="color-button color-red" data-color="#FF0000" style="flex:1; aspect-ratio:1/1; width:auto; height:auto; max-width:40px; min-width:28px; border-radius:50%;"></button>
+				</div>
+			</div>
+			<div class="questions-slider-container">
+				<div class="questions-slider-label">
+					<span class="toggle-label"><i class="fas fa-hourglass-half"></i> minuteur</span>
+					<span class="questions-slider-value" id="timerLimitValue">∞</span>
+				</div>
+				<input type="range" id="timerLimitSlider" class="questions-slider" min="1" max="6" step="1" value="6">
+				<div class="slider-graduations">
+					<span>1 min</span><span>2 min</span><span>3 min</span><span>4 min</span><span>5 min</span><span class="infinity-symbol">∞</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="submenu" id="submenuAbout">
+		<div class="menu-header">
+			<button class="submenu-close" data-submenu="about">
+				<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+		</div>
+		<div class="submenu-title">à propos</div>
+		<div class="submenu-content">
+			<div class="settings-info"><p><i class="fas fa-user"></i> application développée par Daniel Boulagnon</p>
+			<p><i class="fas fa-envelope"></i> daniel.boulagnon@ac-lille.fr</p></div>
+			<div class="settings-info"><p><i class="fas fa-tag"></i> version 3.2.0 (2026)</p></div>
+			<div class="settings-info"><p> © exploitation pédagogique et non commerciale</p></div>
+		</div>
+	</div>
+
+	<!-- ===== SCRIPT PRINCIPAL ===== -->
+	<script>
+		// ============================================================
+		// FONCTION POUR METTRE À JOUR LES TITRES
+		// ============================================================
+		function updateTitles() {
+			if (window.APP_TITLE) {
+				var titleText = window.APP_TITLE;
+				var pageTitle = document.getElementById('pageTitle');
+				var appTitle = document.getElementById('appTitle');
+				var mobileTitle = document.getElementById('mobileTitle');
+				
+				if (pageTitle) pageTitle.textContent = titleText;
+				if (appTitle) appTitle.textContent = titleText;
+				if (mobileTitle) mobileTitle.textContent = titleText;
+			}
+
+			if (window.APP_SUBTITLE) {
+				var subtitleText = window.APP_SUBTITLE;
+				var appSubtitle = document.getElementById('appSubtitle');
+				var mobileSubtitle = document.getElementById('mobileSubtitle');
+				
+				if (appSubtitle) appSubtitle.textContent = subtitleText;
+				if (mobileSubtitle) mobileSubtitle.textContent = subtitleText;
+			}
+		}
+
+		// ============================================================
+		// FONCTION POUR VIDER L'AFFICHAGE CENTRAL
+		// ============================================================
+		function clearCentralDisplay() {
+			textContent.innerHTML = '';
+			clearCanvasCompletely();
+			currentTextData = null;
+			targetSpans = [];
+			foundSpans = [];
+			updateStatsDisplay();
+			updateResultsPanelVisibility();
+			updateUndoButton();
+			selectedValue.textContent = 'sélectionner un texte';
+			textSelect.value = '';
+			stopTimer();
+			timerStarted = false;
+			if (statsContainer) statsContainer.innerHTML = '';
+			if (foundListContainer) foundListContainer.innerHTML = '';
+			resultsPanel.classList.add('empty');
+		}
+
+		// ============================================================
+		// FONCTION DE CHARGEMENT D'UN FICHIER JS
+		// ============================================================
+		function loadJSFile(file) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				try {
+					var script = document.createElement('script');
+					script.textContent = e.target.result;
+					document.head.appendChild(script);
+					
+					setTimeout(function() {
+						updateTitles();
+						
+						if (window.textData && window.textData.texts && window.textData.texts.length > 0) {
+							populateTextSelect();
+							
+							selectedTexts = new Set();
+							window.textData.texts.forEach(function(_, i) {
+								selectedTexts.add(i.toString());
+							});
+							localStorage.setItem('selectedTexts', JSON.stringify([...selectedTexts]));
+							
+							updateTextSelector();
+							populateCustomSelect();
+							
+							var firstVisible = document.querySelector('.custom-select .option:not(.hidden-option)');
+							if (firstVisible) {
+								selectOption(firstVisible.dataset.value, firstVisible.dataset.display);
+							}
+							
+							showToaster('✓ ' + window.textData.texts.length + ' texte(s) chargé(s) !', 'correct', 3000);
+						} else {
+							showToaster('⚠️ Fichier chargé mais aucun texte trouvé. Vérifiez le format.', 'warning', 3000);
+						}
+					}, 200);
+					
+					playSound('click');
+				} catch (error) {
+					showToaster('❌ Erreur : ' + error.message, 'error', 3000);
+				}
+			};
+			reader.onerror = function() {
+				showToaster('❌ Erreur de lecture du fichier', 'error', 3000);
+			};
+			reader.readAsText(file);
+		}
+
+		// ============================================================
+		// GESTION DES TEXTES CHARGÉS AVEC COCHES
+		// ============================================================
+
+		var loadedTextsList = [];
+
+		function showTextsSelection() {
+			if (!window.textData || !window.textData.texts || window.textData.texts.length === 0) {
+				showToaster('📭 Aucun texte chargé. Chargez un fichier .js d\'abord.', 'info', 3000);
+				return;
+			}
+
+			var container = document.createElement('div');
+			container.id = 'textSelectionContainer';
+			container.style.cssText = `
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				background: var(--bg);
+				color: var(--font-color);
+				border-radius: 16px;
+				padding: 24px 28px;
+				max-width: 500px;
+				width: 90%;
+				max-height: 80vh;
+				overflow-y: auto;
+				z-index: 99999;
+				box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+				font-family: 'Inter', sans-serif;
+				border: 2px solid var(--btn);
+			`;
+
+			var overlay = document.createElement('div');
+			overlay.id = 'textSelectionOverlay';
+			overlay.style.cssText = `
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: rgba(0,0,0,0.5);
+				z-index: 99998;
+				backdrop-filter: blur(4px);
+			`;
+			overlay.addEventListener('click', closeTextSelection);
+
+			var header = document.createElement('div');
+			header.style.cssText = `
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 16px;
+				border-bottom: 2px solid var(--btn);
+				padding-bottom: 12px;
+			`;
+			header.innerHTML = `
+				<span style="font-size: 1.2rem; font-weight: bold; color: var(--title-color, red);">
+					📚 sélectionner les textes
+				</span>
+				<button id="closeTextSelectionBtn" style="
+					background: var(--btn);
+					border: none;
+					border-radius: 50%;
+					width: 36px;
+					height: 36px;
+					cursor: pointer;
+					color: var(--font-color);
+					font-size: 1.2rem;
+					box-shadow: var(--shadow-out);
+					transition: all 0.2s ease;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				">✕</button>
+			`;
+
+			var listContainer = document.createElement('div');
+			listContainer.style.cssText = `
+				margin: 8px 0 16px 0;
+				max-height: 50vh;
+				overflow-y: auto;
+			`;
+
+			var html = '';
+			window.textData.texts.forEach(function(text, index) {
+				var isChecked = selectedTexts.has(index.toString());
+				var cleanTitle = text.title || 'texte n°' + (index + 1);
+				var displayTitle = cleanTitle.replace(/<[^>]*>/g, '').substring(0, 60);
+				if (displayTitle.length < cleanTitle.replace(/<[^>]*>/g, '').length) {
+					displayTitle += '...';
+				}
+				
+				html += `
+					<div class="text-item" data-index="${index}" style="
+						display: flex;
+						align-items: center;
+						gap: 12px;
+						padding: 8px 12px;
+						margin: 4px 0;
+						border-radius: 8px;
+						background: var(--btn);
+						cursor: pointer;
+						transition: all 0.2s ease;
+						box-shadow: var(--shadow-out);
+						border: 2px solid ${isChecked ? 'red' : 'transparent'};
+					">
+						<div class="checkbox-wrapper" data-index="${index}" style="
+							width: 24px;
+							height: 24px;
+							border-radius: 4px;
+							background: ${isChecked ? 'red' : 'var(--bg)'};
+							border: 2px solid ${isChecked ? 'red' : '#888'};
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							flex-shrink: 0;
+							transition: all 0.2s ease;
+							cursor: pointer;
+						">
+							${isChecked ? '<svg viewBox="0 0 24 24" width="16" height="16" stroke="white" stroke-width="3" fill="none"><polyline points="4 12 9 17 20 6"/></svg>' : ''}
+						</div>
+						<span style="flex:1; font-size: 0.85rem; line-height: 1.3; word-break: break-word; color: var(--font-color);">
+							${displayTitle}
+						</span>
+						<span style="font-size: 0.7rem; opacity: 0.5; flex-shrink: 0;">#${index + 1}</span>
+					</div>
+				`;
+			});
+
+			listContainer.innerHTML = html;
+
+			var actions = document.createElement('div');
+			actions.style.cssText = `
+				display: flex;
+				gap: 10px;
+				margin-top: 12px;
+				flex-wrap: wrap;
+				justify-content: center;
+				border-top: 2px solid var(--btn);
+				padding-top: 16px;
+			`;
+			actions.innerHTML = `
+				<button id="selectAllTextsBtn" style="
+					padding: 8px 16px;
+					border-radius: 8px;
+					border: none;
+					background: var(--btn);
+					color: var(--font-color);
+					cursor: pointer;
+					box-shadow: var(--shadow-out);
+					transition: all 0.2s ease;
+					font-size: 0.85rem;
+					flex: 1;
+					min-width: 100px;
+				">✅ tout cocher</button>
+				<button id="deselectAllTextsBtn" style="
+					padding: 8px 16px;
+					border-radius: 8px;
+					border: none;
+					background: var(--btn);
+					color: var(--font-color);
+					cursor: pointer;
+					box-shadow: var(--shadow-out);
+					transition: all 0.2s ease;
+					font-size: 0.85rem;
+					flex: 1;
+					min-width: 100px;
+				">❌ tout décocher</button>
+				<button id="applyTextSelectionBtn" style="
+					padding: 8px 24px;
+					border-radius: 8px;
+					border: none;
+					background: red;
+					color: white;
+					cursor: pointer;
+					box-shadow: var(--shadow-out);
+					transition: all 0.2s ease;
+					font-size: 0.85rem;
+					font-weight: bold;
+					flex: 1;
+					min-width: 120px;
+				">✓ appliquer</button>
+			`;
+
+			container.appendChild(overlay);
+			container.appendChild(header);
+			container.appendChild(listContainer);
+			container.appendChild(actions);
+			document.body.appendChild(container);
+			document.body.appendChild(overlay);
+
+			function closeTextSelection() {
+				var containerEl = document.getElementById('textSelectionContainer');
+				var overlayEl = document.getElementById('textSelectionOverlay');
+				if (containerEl) containerEl.remove();
+				if (overlayEl) overlayEl.remove();
+			}
+
+			document.getElementById('closeTextSelectionBtn').addEventListener('click', closeTextSelection);
+
+			document.querySelectorAll('.text-item').forEach(function(item) {
+				item.addEventListener('click', function(e) {
+					if (e.target.closest('#closeTextSelectionBtn')) return;
+					var index = this.dataset.index;
+					var checkbox = this.querySelector('.checkbox-wrapper');
+					var isChecked = checkbox.classList.contains('checked');
+					toggleCheckbox(index, !isChecked);
+				});
+			});
+
+			document.querySelectorAll('.checkbox-wrapper').forEach(function(wrapper) {
+				wrapper.addEventListener('click', function(e) {
+					e.stopPropagation();
+					var index = this.dataset.index;
+					var isChecked = this.classList.contains('checked');
+					toggleCheckbox(index, !isChecked);
+				});
+			});
+
+			function toggleCheckbox(index, checked) {
+				var wrapper = document.querySelector('.checkbox-wrapper[data-index="' + index + '"]');
+				var item = wrapper.closest('.text-item');
+				
+				if (checked) {
+					wrapper.classList.add('checked');
+					wrapper.style.background = 'red';
+					wrapper.style.borderColor = 'red';
+					wrapper.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" stroke="white" stroke-width="3" fill="none"><polyline points="4 12 9 17 20 6"/></svg>';
+					item.style.borderColor = 'red';
+					selectedTexts.add(index);
+				} else {
+					wrapper.classList.remove('checked');
+					wrapper.style.background = 'var(--bg)';
+					wrapper.style.borderColor = '#888';
+					wrapper.innerHTML = '';
+					item.style.borderColor = 'transparent';
+					selectedTexts.delete(index);
+				}
+				
+				localStorage.setItem('selectedTexts', JSON.stringify([...selectedTexts]));
+
+				if (selectedTexts.size === 0) {
+					clearCentralDisplay();
+				}
+			}
+
+			document.getElementById('selectAllTextsBtn').addEventListener('click', function() {
+				document.querySelectorAll('.checkbox-wrapper').forEach(function(wrapper) {
+					var index = wrapper.dataset.index;
+					if (!wrapper.classList.contains('checked')) {
+						toggleCheckbox(index, true);
+					}
+				});
+				playSound('click');
+			});
+
+			document.getElementById('deselectAllTextsBtn').addEventListener('click', function() {
+				document.querySelectorAll('.checkbox-wrapper').forEach(function(wrapper) {
+					var index = wrapper.dataset.index;
+					if (wrapper.classList.contains('checked')) {
+						toggleCheckbox(index, false);
+					}
+				});
+				playSound('click');
+				
+				if (selectedTexts.size === 0) {
+					clearCentralDisplay();
+				}
+			});
+
+			document.getElementById('applyTextSelectionBtn').addEventListener('click', function() {
+				var count = selectedTexts.size;
+				closeTextSelection();
+				populateCustomSelect();
+				updateTextSelector();
+				
+				if (count === 0) {
+					clearCentralDisplay();
+					showToaster('⚠️ Aucun texte sélectionné', 'warning', 2000);
+				} else {
+					var firstVisible = document.querySelector('.custom-select .option:not(.hidden-option)');
+					if (firstVisible) {
+						selectOption(firstVisible.dataset.value, firstVisible.dataset.display);
+					}
+					showToaster('✓ ' + count + ' texte(s) sélectionné(s)', 'correct', 2000);
+				}
+				playSound('click');
+			});
+
+			var escapeHandler = function(e) {
+				if (e.key === 'Escape') {
+					closeTextSelection();
+					document.removeEventListener('keydown', escapeHandler);
+				}
+			};
+			document.addEventListener('keydown', escapeHandler);
+		}
+
+		// ============================================================
+		// GESTION DU CHARGEMENT DE FICHIER
+		// ============================================================
+		function setupFileLoading() {
+			var fileInput = document.getElementById('fileInput');
+			var fileLoadBtn = document.getElementById('fileLoadBtn');
+			var fileLoadBtnMobile = document.getElementById('fileLoadBtnMobile');
+
+			function openFileDialog() {
+				fileInput.click();
+				playSound('click');
+			}
+
+			if (fileLoadBtn) fileLoadBtn.addEventListener('click', openFileDialog);
+			if (fileLoadBtnMobile) fileLoadBtnMobile.addEventListener('click', openFileDialog);
+
+			if (fileInput) {
+				fileInput.addEventListener('change', function(e) {
+					if (e.target.files && e.target.files.length > 0) {
+						loadJSFile(e.target.files[0]);
+						e.target.value = '';
+					}
+				});
+			}
+
+			var selectBtn = document.getElementById('selectTextsBtn');
+			var selectBtnMobile = document.getElementById('selectTextsBtnMobile');
+			if (selectBtn) selectBtn.addEventListener('click', function() { showTextsSelection(); playSound('click'); });
+			if (selectBtnMobile) selectBtnMobile.addEventListener('click', function() { showTextsSelection(); playSound('click'); });
+		}
+
+		// ============================================================
+		// RACCOURCIS CLAVIER
+		// ============================================================
+		function setupKeyboardShortcuts() {
+			document.addEventListener('keydown', function(e) {
+				if (e.target.matches('input, textarea, select, [contenteditable]')) return;
+
+				var key = e.key.toLowerCase();
+
+				if (key === 'c') {
+					e.preventDefault();
+					var fileInput = document.getElementById('fileInput');
+					if (fileInput) {
+						fileInput.click();
+						playSound('click');
+					}
+					return;
+				}
+
+				if (key === 'l') {
+					e.preventDefault();
+					showTextsSelection();
+					playSound('click');
+					return;
+				}
+
+				if (key === 's') {
+					e.preventDefault();
+					var dropdown = document.getElementById('customSelect');
+					if (dropdown) {
+						dropdown.classList.toggle('open');
+					}
+					playSound('click');
+					return;
+				}
+
+				if (key === 'h') {
+					e.preventDefault();
+					playSound('click');
+					window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+					return;
+				}
+
+				if (key === 'r') {
+					e.preventDefault();
+					playSound('click');
+					resetApplication();
+					return;
+				}
+
+				if (key === 't') {
+					e.preventDefault();
+					resetTimer();
+					return;
+				}
+
+				if (key === 'f') {
+					e.preventDefault();
+					toggleFullscreen();
+					return;
+				}
+
+				if (key === 'm') {
+					e.preventDefault();
+					toggleMainMenu();
+					return;
+				}
+
+				if (e.key === 'Escape') {
+					closeMenu();
+					closeAllSubmenus();
+					closeSequencesDropdown();
+					closeCustomSelect();
+					if (document.fullscreenElement) {
+						document.exitFullscreen();
+					}
+					return;
+				}
+			});
+		}
+
+		// ============================================================
+		// SUITE DU SCRIPT PRINCIPAL
+		// ============================================================
+		
+		// ==================== FONCTIONS SONORES ====================
+		var soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
+
+		function playSound(type) {
+			if (!soundEnabled) return;
+			try {
+				var soundMap = {
+					'correct': 'sounds/reponse-bonne.mp3',
+					'incorrect': 'sounds/reponse-mauvaise.mp3',
+					'score_good': 'sounds/score-bon.mp3',
+					'score_bad': 'sounds/score-mauvais.mp3',
+					'click': 'sounds/bruit-clavier.mp3'
+				};
+				var soundFile = soundMap[type];
+				if (!soundFile) return;
+				var audio = new Audio(soundFile);
+				audio.volume = type === 'click' ? 0.3 : 0.8;
+				audio.preload = 'auto';
+				audio.play().catch(function() {});
+			} catch (e) {}
+		}
+
+		function preloadSounds() {
+			if (!soundEnabled) return;
+			['reponse-bonne.mp3', 'reponse-mauvaise.mp3', 'score-bon.mp3', 'score-mauvais.mp3', 'bruit-clavier.mp3']
+				.forEach(function(file) {
+					var audio = new Audio();
+					audio.preload = 'auto';
+					audio.src = 'sounds/' + file;
+					audio.load();
+				});
+		}
+
+		// ==================== CONFETTIS ====================
+		var animationsEnabled = localStorage.getItem('animations') !== 'false';
+
+		function launchConfetti() {
+			if (!animationsEnabled) return;
+			var container = document.createElement('div');
+			container.className = 'confetti-container';
+			document.body.appendChild(container);
+			var colors = ['#ff0000', '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff', '#ff9f43', '#00d2d3', '#f368e0', '#ff9f43'];
+			for (var i = 0; i < 160; i++) {
+				var piece = document.createElement('div');
+				piece.className = 'confetti-piece';
+				piece.style.left = Math.random() * 100 + '%';
+				piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+				piece.style.width = (Math.random() * 16 + 4) + 'px';
+				piece.style.height = (Math.random() * 8 + 4) + 'px';
+				piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+				piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+				piece.style.animationDelay = (Math.random() * 1.5) + 's';
+				container.appendChild(piece);
+			}
+			setTimeout(function() { container.remove(); }, 4000);
+		}
+
+		// ==================== DONNÉES PAR DÉFAUT ====================
+		var defaultTextData = {
+			texts: [],
+			categoryColors: {}
+		};
+
+		var defaultConnecteursData = {
+			connecteurs: {}
+		};
+
+		if (!window.textData) window.textData = defaultTextData;
+		if (!window.connecteursData) window.connecteursData = defaultConnecteursData;
+
+		// ==================== MAPPING MOTIFS DALTONIENS ====================
+		var patternMapping = {
+			"cause": "pattern-dots",
+			"conséquence": "pattern-diagonal",
+			"opposition": "pattern-crosshatch",
+			"addition": "pattern-horizontal",
+			"concession": "pattern-vertical",
+			"condition": "pattern-zigzag"
+		};
+
+		var patternIcons = {
+			"pattern-dots": "● ●",
+			"pattern-diagonal": "///",
+			"pattern-crosshatch": "##",
+			"pattern-horizontal": "━━",
+			"pattern-vertical": "┃┃",
+			"pattern-zigzag": "⚡⚡"
+		};
+
+		function getPatternForCategory(category) {
+			return patternMapping[category] || "pattern-diagonal";
+		}
+
+		function getPatternIcon(category) {
+			var patternClass = getPatternForCategory(category);
+			return patternIcons[patternClass] || "◆";
+		}
+
+		// ==================== VARIABLES GLOBALES ====================
+		var evaluationModeActive = false;
+		var revealModeActive = false;
+		var currentTextData = null;
+		var targetSpans = [];
+		var foundSpans = [];
+		var categoryStats = {};
+		var drawingHistory = [];
+		var historyIndex = -1;
+		var MAX_HISTORY = 30;
+		var settings = {
+			brushSize: 30,
+			brushColor: '#FFFF00',
+			brushColorHex: '#FFFF00',
+			darkTheme: false,
+			colorblindMode: false,
+			evaluationMode: false,
+			soundEnabled: true,
+			brushCursor: 'feutrejaune.png'
+		};
+		var drawingEnabled = true;
+		var currentMode = 'highlight';
+		var isDrawing = false;
+		var lastX = 0,
+			lastY = 0;
+		var statsUpdateScheduled = false;
+		var lastFoundCount = -1;
+
+		var selectedTexts = new Set();
+
+		var canvas = document.getElementById('drawingCanvas');
+		var ctx = canvas.getContext('2d');
+		var drawingLayer = document.getElementById('drawingLayer');
+		var textContent = document.getElementById('textContent');
+		var textSelect = document.getElementById('textSelect');
+		var customSelect = document.getElementById('customSelect');
+		var selectedValue = document.getElementById('selectedValue');
+		var optionsContainer = document.getElementById('optionsContainer');
+		var statsContainer = document.getElementById('stats');
+		var foundListContainer = document.getElementById('foundList');
+		var resultsPanel = document.getElementById('resultsPanel');
+		var appBody = document.getElementById('appBody');
+		var toast = document.getElementById('toaster');
+		var highlightBtn = document.getElementById('highlightModeButton');
+		var eraserBtn = document.getElementById('modeEraser');
+		var revealBtn = document.getElementById('modeReveal');
+
+		var cumulativeStats = { totalFound: 0, totalAttempts: 0, textResults: [] };
+		var toastTimeout = null;
+		var lastCanvasWidth = 0;
+		var lastCanvasHeight = 0;
+		var previousFoundSpansCount = 0;
+
+		// ==================== TIMER ====================
+		var timerEnabled = true;
+		var timerLimit = 0; // 0 = infini
+		var timerInterval = null;
+		var timeLeft = 0;
+		var timerExpired = false;
+		var timerStoppedManually = false;
+		var timerStarted = false;
+
+		var timerValueDesktop = document.getElementById('timerValueDesktop');
+		var timerValueMobile = document.getElementById('timerValueMobile');
+		var timerBtnDesktop = document.getElementById('timerBtnDesktop');
+		var timerBtnMobile = document.getElementById('timerBtnMobile');
+
+		// ==================== GESTION DU TIMER ====================
+		function formatTimer(seconds) {
+			if (seconds <= 0) return '00:00';
+			var mins = Math.floor(seconds / 60);
+			var secs = seconds % 60;
+			return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+		}
+
+		function updateTimerDisplay(value) {
+			if (timerValueDesktop) timerValueDesktop.textContent = value;
+			if (timerValueMobile) timerValueMobile.textContent = value;
+		}
+
+		function showTimerButtons(show) {
+			var btns = document.querySelectorAll('.timer-btn');
+			btns.forEach(function(btn) {
+				btn.style.display = show ? '' : 'none';
+			});
+		}
+
+		function sliderPosToValue(pos) {
+			if (pos === 6) return 0;
+			return parseInt(pos) * 60;
+		}
+
+		function valueToSliderPos(val) {
+			if (val === 0) return 6;
+			var minutes = Math.round(val / 60);
+			if (minutes >= 1 && minutes <= 5) return minutes;
+			return 1;
+		}
+
+		function startTimer() {
+			if (timerStarted) return;
+			if (!currentTextData) return;
+
+			timerStarted = true;
+			timerExpired = false;
+			timerStoppedManually = false;
+			if (!timerEnabled || timerLimit === 0) {
+				updateTimerDisplay('∞');
+				showTimerButtons(false);
+				return;
+			}
+			showTimerButtons(true);
+			timeLeft = timerLimit;
+			updateTimerDisplay(formatTimer(timeLeft));
+
+			if (timerInterval) clearInterval(timerInterval);
+
+			timerInterval = setInterval(function() {
+				if (timerStoppedManually) return;
+
+				timeLeft--;
+				updateTimerDisplay(formatTimer(timeLeft));
+
+				var timerBtns = [timerBtnDesktop, timerBtnMobile].filter(function(b) { return b; });
+				timerBtns.forEach(function(btn) {
+					btn.classList.remove('warning', 'danger');
+					if (timeLeft <= 30 && timeLeft > 0) btn.classList.add('warning');
+					if (timeLeft <= 15 && timeLeft > 0) btn.classList.add('danger');
+				});
+
+				if (timeLeft <= 0) {
+					clearInterval(timerInterval);
+					timerInterval = null;
+					timerExpired = true;
+					showToaster('⏰ temps écoulé !', 'info', 3000);
+					playSound('score_bad');
+				}
+			}, 1000);
+		}
+
+		function stopTimer() {
+			if (timerInterval) {
+				clearInterval(timerInterval);
+				timerInterval = null;
+			}
+			[timerBtnDesktop, timerBtnMobile].forEach(function(btn) {
+				if (btn) btn.classList.remove('warning', 'danger');
+			});
+		}
+
+		function resetTimer() {
+			stopTimer();
+			timerStarted = false;
+			timerExpired = false;
+			timerStoppedManually = false;
+			if (timerEnabled && timerLimit > 0) {
+				timeLeft = timerLimit;
+				updateTimerDisplay(formatTimer(timeLeft));
+				showTimerButtons(true);
+			} else {
+				updateTimerDisplay('∞');
+				showTimerButtons(false);
+			}
+			if (currentTextData && timerLimit > 0) {
+				setTimeout(startTimer, 100);
+			}
+			showToaster('⏱️ timer réinitialisé', 'info', 1500);
+			playSound('click');
+		}
+
+		// ==================== GESTION DU FAUX SELECT ====================
+		function toggleCustomSelect() {
+			customSelect.classList.toggle('open');
+		}
+
+		function closeCustomSelect() {
+			customSelect.classList.remove('open');
+		}
+
+		function selectOption(value, html) {
+			selectedValue.innerHTML = html || value;
+			textSelect.value = value;
+			var event = new Event('change');
+			textSelect.dispatchEvent(event);
+			closeCustomSelect();
+			document.querySelectorAll('.custom-select .option').forEach(function(opt) {
+				opt.classList.toggle('selected', opt.dataset.value === value);
+			});
+		}
+
+		function populateCustomSelect() {
+			if (!window.textData || !window.textData.texts || window.textData.texts.length === 0) {
+				optionsContainer.innerHTML = '';
+				selectedValue.textContent = 'charger un fichier';
+				return;
+			}
+
+			if (selectedTexts.size === 0) {
+				clearCentralDisplay();
+				optionsContainer.innerHTML = '';
+				selectedValue.textContent = 'sélectionner un texte';
+				return;
+			}
+
+			var html = '';
+			window.textData.texts.forEach(function(t, i) {
+				var cleanTitle = t.title || 'texte n°' + (i + 1);
+				var textNumber = (i + 1 < 10) ? '0' + (i + 1) : '' + (i + 1);
+				var displayHtml = 'texte n°' + textNumber + ' : ' + cleanTitle;
+				var isVisible = selectedTexts.has(i.toString());
+				var isSelected = (textSelect.value == i);
+				html += '<div class="option' + (isSelected ? ' selected' : '') + (!isVisible ? ' hidden-option' : '') + '" data-value="' + i + '" data-display="' + displayHtml.replace(/"/g, '&quot;') + '">' + displayHtml + '</div>';
+			});
+
+			optionsContainer.innerHTML = html;
+
+			document.querySelectorAll('.custom-select .option').forEach(function(opt) {
+				opt.addEventListener('click', function(e) {
+					e.stopPropagation();
+					var value = this.dataset.value;
+					var display = this.dataset.display;
+					if (value === undefined || value === null) return;
+					if (this.classList.contains('hidden-option')) return;
+					selectOption(value, display);
+					playSound('click');
+				});
+			});
+
+			if (textSelect.value) {
+				var selectedOpt = document.querySelector('.custom-select .option[data-value="' + textSelect.value + '"]');
+				if (selectedOpt && !selectedOpt.classList.contains('hidden-option')) {
+					selectedValue.innerHTML = selectedOpt.dataset.display;
+				} else {
+					var firstVisible = document.querySelector('.custom-select .option:not(.hidden-option)');
+					if (firstVisible) {
+						selectOption(firstVisible.dataset.value, firstVisible.dataset.display);
+					} else {
+						selectedValue.textContent = 'sélectionner un texte';
+						textSelect.value = '';
+					}
+				}
+			} else {
+				selectedValue.textContent = 'sélectionner un texte';
+			}
+		}
+
+		selectedValue.addEventListener('click', function(e) {
+			e.stopPropagation();
+			if (this.textContent.trim() === 'charger un fichier') {
+				var input = document.createElement('input');
+				input.type = 'file';
+				input.accept = '.js,.txt';
+				input.onchange = function(e2) {
+					if (e2.target.files && e2.target.files[0]) {
+						loadCustomTextsFile(e2.target.files[0]);
+					}
+				};
+				input.click();
+				playSound('click');
+				return;
+			}
+			toggleCustomSelect();
+		});
+
+		customSelect.addEventListener('click', function(e) {
+			if (e.target.closest('.option')) return;
+			if (e.target === this) return;
+		});
+
+		document.addEventListener('click', function(e) {
+			if (!e.target.closest('.custom-select')) {
+				closeCustomSelect();
+			}
+		});
+
+		// ==================== FONCTIONS PRINCIPALES ====================
+		function normalizeForComparison(text) {
+			if (!text) return '';
+			var s = text.toLowerCase();
+			s = s.replace(/[''`]/g, "'");
+			s = s.replace(/\bqu'/g, 'que');
+			s = s.replace(/\bpuisqu'/g, 'puisque');
+			s = s.replace(/\blorsqu'/g, 'lorsque');
+			s = s.replace(/\bparce qu'/g, 'parce que');
+			s = s.replace(/\bquoiqu'/g, 'quoique');
+			s = s.replace(/\bjusqu'/g, 'jusque');
+			s = s.replace(/\bl'/g, 'le');
+			s = s.replace(/\bd'/g, 'de');
+			s = s.replace(/\bj'/g, 'je');
+			s = s.replace(/\bm'/g, 'me');
+			s = s.replace(/\bt'/g, 'te');
+			s = s.replace(/\bs'/g, 'si');
+			s = s.replace(/\bn'/g, 'ne');
+			s = s.replace(/\bc'/g, 'ce');
+			s = s.replace(/'/g, '');
+			s = s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+			s = s.replace(/[.,!?;:()"«»]/g, '');
+			s = s.replace(/\s+/g, ' ').trim();
+			return s;
+		}
+
+		function getConnectorCategory(spanText) {
+			if (!spanText || !window.connecteursData || !window.connecteursData.connecteurs) return null;
+			var normSpan = normalizeForComparison(spanText.trim());
+			for (var cat in window.connecteursData.connecteurs) {
+				var connectors = window.connecteursData.connecteurs[cat];
+				if (!Array.isArray(connectors)) continue;
+				for (var j = 0; j < connectors.length; j++) {
+					var normConnector = normalizeForComparison(connectors[j]);
+					if (normSpan === normConnector) return cat;
+				}
+			}
+			return null;
+		}
+
+		function getCategoryColors() {
+			return (window.textData && window.textData.categoryColors) || defaultTextData.categoryColors;
+		}
+
+		function getCategoryColorRgba(category, alpha) {
+			if (alpha === undefined) alpha = 0.4;
+			var colors = getCategoryColors();
+			var hex = colors[category] || '#FFFF00';
+			var r = parseInt(hex.slice(1, 3), 16),
+				g = parseInt(hex.slice(3, 5), 16),
+				b = parseInt(hex.slice(5, 7), 16);
+			return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
+		}
+
+		function applyPatternToSpan(span, category) {
+			if (!settings.colorblindMode) return;
+			var patternClass = getPatternForCategory(category);
+			span.classList.add(patternClass);
+		}
+
+		function removePatternFromSpan(span) {
+			for (var p in patternMapping) {
+				var patternClass = patternMapping[p];
+				if (patternClass) span.classList.remove(patternClass);
+			}
+		}
+
+		function updateAllPatterns() {
+			for (var i = 0; i < targetSpans.length; i++) {
+				var span = targetSpans[i];
+				removePatternFromSpan(span);
+				if (settings.colorblindMode && foundSpans.includes(span)) {
+					var cat = getConnectorCategory(span.textContent.trim());
+					if (cat) applyPatternToSpan(span, cat);
+				}
+			}
+		}
+
+		function renderText(content) {
+			var paragraphs = content.split(/<br\s*\/?>/i);
+			var html = '';
+			for (var i = 0; i < paragraphs.length; i++) {
+				var para = paragraphs[i];
+				if (para.trim() === '') continue;
+				var processedPara = para.replace(/\[(\d+)\]/g, function(m, n) { return '<span class="sentence-number">[' + n + ']</span>'; });
+				processedPara = processedPara.replace(/\*\*(.*?)\*\*/g, function(m, p1) { return '<span class="word-span target-word" data-is-target="true">' + p1 + '</span>'; });
+				html += '<p>' + processedPara + '</p>';
+			}
+			html += '<p class="reference-text">' + currentTextData.title + '</p>';
+			textContent.innerHTML = html;
+		}
+
+		function identifyTargetSpans() {
+			targetSpans = Array.from(document.querySelectorAll('.word-span.target-word'));
+			
+			targetSpans.forEach(function(span, index) {
+				span.dataset.index = index;
+			});
+			
+			foundSpans = [];
+			previousFoundSpansCount = 0;
+			if (evaluationModeActive) { 
+				updateCategoryStats();
+				renderEvaluationList(); 
+			} else {
+				updateFoundList();
+			}
+			updateStatsDisplay();
+		}
+
+		// ============================================================
+		// FONCTIONS POUR GÉRER LES MOTS SUR PLUSIEURS LIGNES
+		// ============================================================
+		
+		function isSpanHighlighted(span) {
+			if (!span || !canvas.width || !canvas.height) return false;
+			
+			var rects = span.getClientRects();
+			if (rects.length === 0) return false;
+			
+			var canvasRect = canvas.getBoundingClientRect();
+			var highlighted = 0;
+			var total = 0;
+			var hex = settings.brushColorHex || '#FFFF00';
+			var r = parseInt(hex.slice(1, 3), 16),
+				g = parseInt(hex.slice(3, 5), 16),
+				b = parseInt(hex.slice(5, 7), 16);
+			
+			for (var rIdx = 0; rIdx < rects.length; rIdx++) {
+				var rect = rects[rIdx];
+				
+				if (rect.right < canvasRect.left || rect.left > canvasRect.right || 
+					rect.bottom < canvasRect.top || rect.top > canvasRect.bottom) continue;
+				
+				var scaleX = canvas.width / canvasRect.width;
+				var scaleY = canvas.height / canvasRect.height;
+				
+				var sx = Math.max(0, Math.floor((rect.left - canvasRect.left) * scaleX));
+				var sy = Math.max(0, Math.floor((rect.top - canvasRect.top) * scaleY));
+				var ex = Math.min(canvas.width, Math.floor((rect.right - canvasRect.left) * scaleX));
+				var ey = Math.min(canvas.height, Math.floor((rect.bottom - canvasRect.top) * scaleY));
+				
+				if (sx >= ex || sy >= ey) continue;
+				
+				var sw = Math.max(1, Math.floor((ex - sx) * 0.5));
+				var sh = Math.max(1, Math.floor((ey - sy) * 0.5));
+				var stepX = Math.max(1, Math.floor(sw / 5));
+				var stepY = Math.max(1, Math.floor(sh / 5));
+				
+				for (var x = sx + Math.floor(sw/2); x < ex; x += stepX) {
+					for (var y = sy + Math.floor(sh/2); y < ey; y += stepY) {
+						if (x < 0 || y < 0 || x >= canvas.width || y >= canvas.height) continue;
+						try {
+							var pixel = ctx.getImageData(Math.floor(x), Math.floor(y), 1, 1);
+							var data = pixel.data;
+							total++;
+							if (data[3] < 30) continue;
+							if (Math.abs(data[0] - r) + Math.abs(data[1] - g) + Math.abs(data[2] - b) < 200) {
+								highlighted++;
+							}
+						} catch(e) { continue; }
+					}
+				}
+			}
+			
+			return total > 0 && (highlighted / total) > 0.15;
+		}
+
+		function isSpanPartiallyHighlighted(span) {
+			if (!span || !canvas.width || !canvas.height) return false;
+			
+			var rects = span.getClientRects();
+			if (rects.length === 0) return false;
+			
+			var canvasRect = canvas.getBoundingClientRect();
+			var hex = settings.brushColorHex || '#FFFF00';
+			var r = parseInt(hex.slice(1, 3), 16),
+				g = parseInt(hex.slice(3, 5), 16),
+				b = parseInt(hex.slice(5, 7), 16);
+			
+			var highlightedRects = 0;
+			var totalRects = rects.length;
+			
+			for (var rIdx = 0; rIdx < rects.length; rIdx++) {
+				var rect = rects[rIdx];
+				
+				if (rect.right < canvasRect.left || rect.left > canvasRect.right || 
+					rect.bottom < canvasRect.top || rect.top > canvasRect.bottom) continue;
+				
+				var scaleX = canvas.width / canvasRect.width;
+				var scaleY = canvas.height / canvasRect.height;
+				
+				var sx = Math.max(0, Math.floor((rect.left - canvasRect.left) * scaleX));
+				var sy = Math.max(0, Math.floor((rect.top - canvasRect.top) * scaleY));
+				var ex = Math.min(canvas.width, Math.floor((rect.right - canvasRect.left) * scaleX));
+				var ey = Math.min(canvas.height, Math.floor((rect.bottom - canvasRect.top) * scaleY));
+				
+				if (sx >= ex || sy >= ey) continue;
+				
+				var sw = Math.max(1, Math.floor((ex - sx) * 0.4));
+				var sh = Math.max(1, Math.floor((ey - sy) * 0.4));
+				var foundHighlight = false;
+				
+				for (var x = sx + Math.floor(sw/2); x < ex && !foundHighlight; x += Math.max(1, Math.floor(sw / 4))) {
+					for (var y = sy + Math.floor(sh/2); y < ey && !foundHighlight; y += Math.max(1, Math.floor(sh / 4))) {
+						if (x < 0 || y < 0 || x >= canvas.width || y >= canvas.height) continue;
+						try {
+							var pixel = ctx.getImageData(Math.floor(x), Math.floor(y), 1, 1);
+							var data = pixel.data;
+							if (data[3] > 30 && Math.abs(data[0] - r) + Math.abs(data[1] - g) + Math.abs(data[2] - b) < 200) {
+								foundHighlight = true;
+							}
+						} catch(e) { continue; }
+					}
+				}
+				
+				if (foundHighlight) highlightedRects++;
+			}
+			
+			return highlightedRects > 0;
+		}
+
+		function clearCanvasCompletely() {
+			if (canvas && ctx) { ctx.save();
+				ctx.setTransform(1, 0, 0, 1, 0, 0);
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				ctx.restore(); }
+			drawingHistory = [];
+			historyIndex = -1;
+			updateUndoButton();
+		}
+
+		function updateBrushCursor() {
+			var colorMap = { '#FFFF00': 'feutrejaune.png', '#FFDF00': 'feutrejaune.png', '#2DDFF3': 'feutrebleu.png',
+				'#00ff00': 'feutrevert.png', '#F75B14': 'feutreorange.png', '#FF0000': 'feutrerouge.png' };
+			settings.brushCursor = colorMap[settings.brushColorHex] || 'feutrejaune.png';
+		}
+
+		function showToast(message, type, connectorText, category, foundCount, totalCount) {
+			if (type === undefined) type = 'info';
+			if (toastTimeout) clearTimeout(toastTimeout);
+			var htmlContent = '';
+			if (connectorText && category) {
+				htmlContent =
+					'<span style="font-size:1rem;font-weight:bold;">« ' + connectorText + ' » ➝ ' + category + '</span>';
+				if (foundCount !== null && totalCount !== null) {
+					var remaining = totalCount - foundCount;
+					htmlContent +=
+						'<br><span style="font-size:0.8rem;opacity:0.8;">reste à trouver ' + remaining + ' ' + (remaining === 1 ? 'connecteur' : 'connecteurs') + '</span>';
+				}
+				toast.classList.add('multiline');
+			} else {
+				htmlContent = '<span>' + message + '</span>';
+				toast.classList.remove('multiline');
+			}
+			toast.innerHTML = htmlContent;
+			toast.className = 'toaster ' + type;
+			if (connectorText && category) toast.classList.add('multiline');
+			void toast.offsetWidth;
+			toast.classList.add('show');
+			toastTimeout = setTimeout(function() {
+				toast.classList.remove('show');
+				toastTimeout = null;
+				toast.innerHTML = '';
+				toast.classList.remove('multiline');
+			}, 2500);
+		}
+
+		function resizeCanvasToContent() {
+			if (!currentTextData) return;
+			var wrapper = canvas.parentElement;
+			var wrapperRect = wrapper.getBoundingClientRect();
+			var textHeight = textContent.scrollHeight;
+			var newWidth = Math.floor(wrapperRect.width);
+			var newHeight = Math.max(Math.floor(textHeight), 300);
+			newHeight = Math.max(newHeight, Math.floor(textHeight + 50));
+			
+			if (newWidth === lastCanvasWidth && newHeight === lastCanvasHeight) return;
+			var savedImageData = null;
+			if (canvas.width > 0 && canvas.height > 0) savedImageData = canvas.toDataURL();
+			canvas.width = newWidth;
+			canvas.style.width = newWidth + 'px';
+			canvas.height = newHeight;
+			canvas.style.height = newHeight + 'px';
+			drawingLayer.style.height = newHeight + 'px';
+			drawingLayer.style.width = newWidth + 'px';
+			lastCanvasWidth = newWidth;
+			lastCanvasHeight = newHeight;
+			ctx.lineCap = 'round';
+			ctx.lineJoin = 'round';
+			if (savedImageData) {
+				var img = new Image();
+				img.onload = function() { ctx.globalAlpha = 1.0;
+					ctx.globalCompositeOperation = 'source-over';
+					ctx.drawImage(img, 0, 0); };
+				img.src = savedImageData;
+			}
+			updateDrawingCursor();
+		}
+
+		function saveCanvasState() {
+			if (!canvas.width || !canvas.height || isDrawing) return;
+			var currentState = canvas.toDataURL();
+			if (historyIndex >= 0 && drawingHistory[historyIndex] === currentState) return;
+			if (historyIndex < drawingHistory.length - 1) drawingHistory = drawingHistory.slice(0, historyIndex + 1);
+			drawingHistory.push(currentState);
+			if (drawingHistory.length > MAX_HISTORY) drawingHistory.shift();
+			else historyIndex++;
+			historyIndex = drawingHistory.length - 1;
+			updateUndoButton();
+		}
+
+		function undoLastAction() {
+			if (historyIndex > 0) { historyIndex--;
+				restoreCanvasState(); } else if (historyIndex === 0) { clearCanvasCompletely(); if (currentTextData)
+					scheduleStatsUpdate(); }
+			playSound('click');
+		}
+
+		function restoreCanvasState() {
+			if (historyIndex >= 0 && historyIndex < drawingHistory.length) {
+				var img = new Image();
+				img.onload = function() { ctx.clearRect(0, 0, canvas.width, canvas.height);
+					ctx.drawImage(img, 0, 0);
+					updateUndoButton(); if (currentTextData) scheduleStatsUpdate(); };
+				img.src = drawingHistory[historyIndex];
+			}
+		}
+
+		function updateUndoButton() {
+			var btn = document.getElementById('undoButton');
+			if (btn) { btn.disabled = historyIndex < 0;
+				btn.title = historyIndex >= 0 ? 'annuler le dernier trait' : 'rien à annuler'; }
+		}
+
+		function setActiveMode(mode) {
+			currentMode = mode;
+			highlightBtn.classList.remove('active');
+			eraserBtn.classList.remove('active');
+			revealBtn.classList.remove('active');
+			if (mode === 'highlight') { highlightBtn.classList.add('active');
+				drawingEnabled = true; if (revealModeActive) { revealModeActive = false;
+					clearSolutionHighlight(); } } else if (mode === 'erase') { eraserBtn.classList.add('active');
+				drawingEnabled = true; if (revealModeActive) { revealModeActive = false;
+					clearSolutionHighlight(); } } else if (mode === 'reveal') { revealBtn.classList.add('active');
+				drawingEnabled = false;
+				revealModeActive = true;
+				applySolutionHighlight(); }
+			updateDrawingCursor();
+			playSound('click');
+		}
+
+		function updateCategoryStats() {
+			if (!currentTextData) return;
+			categoryStats = {};
+			for (var i = 0; i < targetSpans.length; i++) {
+				var span = targetSpans[i];
+				var cat = getConnectorCategory(span.textContent.trim());
+				if (cat) {
+					if (!categoryStats[cat]) categoryStats[cat] = { total: 0, found: 0 };
+					categoryStats[cat].total++;
+					if (isSpanHighlighted(span)) categoryStats[cat].found++;
+				}
+			}
+		}
+
+		function renderEvaluationList() {
+			var evalList = document.getElementById('evaluationList');
+			if (!evalList) return;
+			if (Object.keys(categoryStats).length === 0) { evalList.innerHTML = '<p>Aucune catégorie de connecteurs.</p>'; return; }
+			var colors = getCategoryColors();
+			var html = '';
+			var sortedKeys = Object.keys(categoryStats).sort();
+			for (var k = 0; k < sortedKeys.length; k++) {
+				var cat = sortedKeys[k];
+				var stats = categoryStats[cat];
+				var color = colors[cat] || '#FFFF00';
+				var percent = stats.total > 0 ? Math.round((stats.found / stats.total) * 100) : 0;
+				var isComplete = stats.found === stats.total;
+				var patternIcon = getPatternIcon(cat);
+				var patternClass = getPatternForCategory(cat);
+				html += '<div class="evaluation-category-group" style="border-left-color:' + color + '"><div class="evaluation-category-header"><div class="evaluation-category-title"><div style="width:14px;height:14px;background:' + color + ';border-radius:3px;"></div><span class="' + patternClass + '" style="display:inline-block;width:24px;text-align:center;font-weight:bold;">' + patternIcon + '</span><span>' + cat + '</span></div><div class="evaluation-category-stats ' + (isComplete ? 'complete' : '') + '">' + stats.found + '/' + stats.total + '</div></div><div class="evaluation-category-progress"><div class="evaluation-category-progress-bar" style="width:' + percent + '%;background-color:' + color + ';"></div></div></div>';
+			}
+			evalList.innerHTML = html;
+		}
+
+		function toggleEvaluationMode(enabled) {
+			evaluationModeActive = enabled;
+			var evalContainer = document.getElementById('evaluationModeContainer');
+			var normalContainer = document.getElementById('normalModeContainer');
+			if (evaluationModeActive) {
+				if (evalContainer) evalContainer.style.display = 'block';
+				if (normalContainer) normalContainer.style.display = 'none';
+				appBody.classList.add('evaluation-mode');
+				updateCategoryStats();
+				renderEvaluationList();
+				if (revealModeActive) { revealModeActive = false;
+					revealBtn.classList.remove('active');
+					clearSolutionHighlight();
+					setActiveMode('highlight'); }
+			} else {
+				if (evalContainer) evalContainer.style.display = 'none';
+				if (normalContainer) normalContainer.style.display = 'block';
+				appBody.classList.remove('evaluation-mode');
+				updateFoundList();
+			}
+		}
+
+		function updateFoundList() {
+			if (!currentTextData || evaluationModeActive) return;
+			if (foundSpans.length === 0) {
+				foundListContainer.innerHTML = '';
+				return;
+			}
+			var foundGroups = {};
+			for (var i = 0; i < foundSpans.length; i++) {
+				var span = foundSpans[i];
+				var text = span.textContent.trim();
+				var cat = getConnectorCategory(text);
+				var key = text;
+				if (!foundGroups[key]) foundGroups[key] = { text: text, category: cat, count: 0 };
+				foundGroups[key].count++;
+			}
+			var html = '';
+			for (var key2 in foundGroups) {
+				var item = foundGroups[key2];
+				var catDisplay = item.category ? '<span class="connector-cat">' + item.category + '</span>' : '';
+				var countDisplay = item.count > 1 ? '<span class="connector-count">(x' + item.count + ')</span>' : '';
+				html += '<div class="found-item">' + item.text + ' ' + catDisplay + ' ' + countDisplay + '</div>';
+			}
+			foundListContainer.innerHTML = html;
+		}
+
+		function applySolutionHighlight() {
+			if (!revealModeActive || !currentTextData || evaluationModeActive) return;
+			clearSolutionHighlight();
+			for (var i = 0; i < targetSpans.length; i++) {
+				var span = targetSpans[i];
+				if (!foundSpans.includes(span)) {
+					var cat = getConnectorCategory(span.textContent.trim());
+					if (cat) span.style.setProperty('background-color', getCategoryColorRgba(cat, 0.5), 'important');
+					else span.style.setProperty('background-color', 'rgba(255,255,0,0.4)', 'important');
+				}
+			}
+		}
+
+		function clearSolutionHighlight() {
+			for (var i = 0; i < targetSpans.length; i++) {
+				var span = targetSpans[i];
+				if (!foundSpans.includes(span)) span.style.backgroundColor = '';
+			}
+		}
+
+		function drawLine(fromX, fromY, toX, toY) {
+			ctx.lineWidth = settings.brushSize;
+			ctx.lineCap = 'round';
+			ctx.lineJoin = 'round';
+			if (currentMode === 'highlight') {
+				ctx.strokeStyle = settings.brushColorHex || '#FFFF00';
+				ctx.globalCompositeOperation = 'source-over';
+				ctx.globalAlpha = 0.7;
+			} else {
+				ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+				ctx.globalAlpha = 0.9;
+				ctx.globalCompositeOperation = 'destination-out';
+			}
+			ctx.beginPath();
+			ctx.moveTo(fromX, fromY);
+			ctx.lineTo(toX, toY);
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.arc(toX, toY, settings.brushSize / 2, 0, Math.PI * 2);
+			if (currentMode === 'highlight') {
+				ctx.fillStyle = settings.brushColorHex || '#FFFF00';
+				ctx.globalAlpha = 0.7;
+			} else {
+				ctx.fillStyle = 'rgba(255,255,255,0.9)';
+				ctx.globalAlpha = 0.9;
+			}
+			ctx.fill();
+			scheduleStatsUpdate();
+		}
+
+		function analyzeHighlightedWords() {
+			if (!currentTextData || targetSpans.length === 0) return { found: 0, total: 0, occurrences: [],
+				foundSpans: [] };
+			
+			var newFoundSpans = [];
+			
+			for (var i = 0; i < targetSpans.length; i++) {
+				var span = targetSpans[i];
+				if (isSpanHighlighted(span) && !newFoundSpans.includes(span)) {
+					newFoundSpans.push(span);
+				} else if (isSpanPartiallyHighlighted(span) && !newFoundSpans.includes(span)) {
+					newFoundSpans.push(span);
+				}
+			}
+
+			var oldFoundCount = foundSpans.length;
+			var newFoundCount = newFoundSpans.length;
+
+			for (var j = 0; j < newFoundSpans.length; j++) {
+				var span2 = newFoundSpans[j];
+				if (!foundSpans.includes(span2)) {
+					var connectorText = span2.textContent.trim();
+					var category = getConnectorCategory(connectorText);
+					if (category) {
+						showToast('', 'success', connectorText, category, newFoundSpans.length, targetSpans.length);
+						if (settings.colorblindMode) applyPatternToSpan(span2, category);
+						playSound('correct');
+					} else {
+						showToast('', 'success', connectorText, null, newFoundSpans.length, targetSpans.length);
+						playSound('correct');
+					}
+				}
+			}
+
+			for (var k = 0; k < foundSpans.length; k++) {
+				var span3 = foundSpans[k];
+				if (!newFoundSpans.includes(span3) && settings.colorblindMode) {
+					var cat2 = getConnectorCategory(span3.textContent.trim());
+					if (cat2) removePatternFromSpan(span3);
+				}
+			}
+
+			foundSpans = newFoundSpans;
+
+			if (foundSpans.length === targetSpans.length && targetSpans.length > 0) {
+				playSound('score_good');
+				setTimeout(function() {
+					launchConfetti();
+				}, 300);
+			}
+
+			return { found: foundSpans.length, total: targetSpans.length, occurrences: foundSpans.map(function(s) { return s.textContent
+					.trim(); }), foundSpans: foundSpans };
+		}
+
+		function scheduleStatsUpdate() {
+			if (statsUpdateScheduled) return;
+			statsUpdateScheduled = true;
+			setTimeout(function() { statsUpdateScheduled = false; if (!isDrawing) updateStatsDisplay(); }, 50);
+		}
+
+		function updateStatsDisplay() {
+			if (isDrawing) return;
+			if (!currentTextData || targetSpans.length === 0) { 
+				if (!evaluationModeActive) statsContainer.innerHTML = ''; 
+				return; 
+			}
+			var analysis = analyzeHighlightedWords();
+			var correct = analysis.found,
+				total = analysis.total;
+			var accuracy = total > 0 ? Math.round((correct / total) * 100) : 0;
+			if (!evaluationModeActive) {
+				statsContainer.innerHTML =
+					'<div class="stat-item"><div class="stat-value">' + accuracy + '%</div><div class="stat-label">précision</div></div>						<div class="stat-item"><div class="stat-value">' + correct + '</div><div class="stat-label">trouvés</div></div>						<div class="stat-item"><div class="stat-value">' + (total - correct) + '</div><div class="stat-label">à trouver</div></div>';
+				if (correct !== lastFoundCount) { lastFoundCount = correct; if (correct === total && total > 0) {
+						showToast('Tous les connecteurs ont été trouvés !', 'success');
+					} }
+			}
+			if (evaluationModeActive) { updateCategoryStats();
+				renderEvaluationList(); } else updateFoundList();
+			updateCumulativeStats();
+			if (revealModeActive && !evaluationModeActive) { clearSolutionHighlight();
+				applySolutionHighlight(); }
+			updateStatsBadge();
+		}
+
+		function updateStatsBadge() {
+			var badge = document.getElementById('statsBadge');
+			if (!badge) return;
+			var acc = cumulativeStats.totalAttempts > 0 ? Math.round((cumulativeStats.totalFound / cumulativeStats
+				.totalAttempts) * 100) : 0;
+			badge.textContent = acc + '%';
+		}
+
+		function updateCumulativeStats() {
+			if (!currentTextData) return;
+			var analysis = analyzeHighlightedWords();
+			var correct = analysis.found,
+				total = analysis.total;
+			var title = currentTextData.title.replace(/<[^>]*>/g, '').substring(0, 50);
+			var idx = cumulativeStats.textResults.findIndex(function(r) { return r.title === title; });
+			if (idx >= 0) { cumulativeStats.totalFound -= cumulativeStats.textResults[idx].found;
+				cumulativeStats.totalAttempts -= cumulativeStats.textResults[idx].total;
+				cumulativeStats.textResults[idx] = { title: title, found: correct, total: total };
+				cumulativeStats.totalFound += correct;
+				cumulativeStats.totalAttempts += total; } else { cumulativeStats.textResults.push({ title: title, found: correct,
+					total: total });
+				cumulativeStats.totalFound += correct;
+				cumulativeStats.totalAttempts += total; }
+			localStorage.setItem('cumulativeStats', JSON.stringify(cumulativeStats));
+			updateStatsBadge();
+		}
+
+		function loadCumulativeStats() {
+			var s = localStorage.getItem('cumulativeStats');
+			if (s) cumulativeStats = JSON.parse(s);
+			updateStatsBadge();
+		}
+
+		function displayStatsInSubmenu() {
+			var sc = document.getElementById('statsContent');
+			if (!sc) return;
+			var acc = cumulativeStats.totalAttempts > 0 ? Math.round((cumulativeStats.totalFound / cumulativeStats
+				.totalAttempts) * 100) : 0;
+			var html =
+				'<div class="settings-info" style="margin-bottom:15px;"><p><strong>vue d\'ensemble :</strong></p><p>trouvés : ' + cumulativeStats.totalFound + ' / ' + cumulativeStats.totalAttempts + '</p><p>précision : ' + acc + '%</p></div>';
+			if (cumulativeStats.textResults.length) {
+				html += '<div class="settings-info" style="margin-bottom:15px;"><p><strong>par texte :</strong></p>';
+				cumulativeStats.textResults.forEach(function(r) {
+					var p = r.total > 0 ? Math.round((r.found / r.total) * 100) : 0;
+					html += '<p>• ' + r.title + ' : ' + r.found + '/' + r.total + ' (' + p + '%)</p>';
+				});
+				html += '</div>';
+			}
+			sc.innerHTML = html;
+		}
+
+		function updateResultsPanelVisibility() {
+			if (currentTextData) resultsPanel.classList.remove('empty');
+			else resultsPanel.classList.add('empty');
+		}
+
+		function loadCustomTextsFile(file) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				try {
+					var script = document.createElement('script');
+					script.textContent = e.target.result + "\n\nif(typeof textData !== 'undefined') window.textData = textData;";
+					document.head.appendChild(script);
+					localStorage.setItem('customTextsData', e.target.result);
+					setTimeout(function() {
+						if (window.textData && window.textData.texts && window.textData.texts.length > 0) {
+							selectedTexts = new Set();
+							window.textData.texts.forEach(function(_, i) {
+								selectedTexts.add(i.toString());
+							});
+							localStorage.setItem('selectedTexts', JSON.stringify([...selectedTexts]));
+							populateTextSelect();
+							resetApplicationState();
+							showToast('✓ ' + window.textData.texts.length + ' texte(s) chargé(s)', 'success');
+							if (settings.colorblindMode) updateAllPatterns();
+							playSound('click');
+						} else {
+							alert('Le fichier ne contient pas de variable "textData" valide');
+						}
+					}, 100);
+				} catch (error) { alert('Erreur : ' + error.message); }
+			};
+			reader.readAsText(file);
+		}
+
+		function populateTextSelect() {
+			if (!window.textData || !window.textData.texts || window.textData.texts.length === 0) {
+				textSelect.innerHTML = '<option value="">charger un fichier</option>';
+				selectedValue.textContent = 'charger un fichier';
+				populateCustomSelect();
+				updateSequencesDropdown();
+				return;
+			}
+			textSelect.innerHTML = '<option value="">sélectionner un texte</option>';
+			window.textData.texts.forEach(function(t, i) {
+				var opt = document.createElement('option');
+				opt.value = i;
+				var cleanTitle = t.title || 'texte n°' + (i + 1);
+				var textNumber = (i + 1 < 10) ? '0' + (i + 1) : '' + (i + 1);
+				opt.innerHTML = 'texte n°' + textNumber + ' : ' + cleanTitle;
+				opt.title = cleanTitle.replace(/<[^>]*>/g, '');
+				textSelect.appendChild(opt);
+				selectedTexts.add(i.toString());
+			});
+			populateCustomSelect();
+			updateSequencesDropdown();
+		}
+
+		function resetApplication() {
+			localStorage.clear();
+			localStorage.removeItem('customTextsData');
+
+			window.textData = JSON.parse(JSON.stringify(defaultTextData));
+			window.connecteursData = JSON.parse(JSON.stringify(defaultConnecteursData));
+
+			selectedTexts = new Set();
+
+			cumulativeStats = { totalFound: 0, totalAttempts: 0, textResults: [] };
+			localStorage.setItem('cumulativeStats', JSON.stringify(cumulativeStats));
+
+			totalCorrectAnswers = 0;
+			totalQuestionsAnswered = 0;
+			gamesPlayed = 0;
+			localStorage.setItem('totalCorrectAnswers', '0');
+			localStorage.setItem('totalQuestionsAnswered', '0');
+			localStorage.setItem('gamesPlayed', '0');
+
+			currentTextData = null;
+			targetSpans = [];
+			foundSpans = [];
+			categoryStats = {};
+			drawingHistory = [];
+			historyIndex = -1;
+			lastCanvasWidth = 0;
+			lastCanvasHeight = 0;
+
+			settings = {
+				brushSize: 30,
+				brushColor: '#FFFF00',
+				brushColorHex: '#FFFF00',
+				darkTheme: false,
+				colorblindMode: false,
+				evaluationMode: false,
+				soundEnabled: true,
+				brushCursor: 'feutrejaune.png'
+			};
+
+			document.body.classList.remove('dark-theme', 'colorblind-mode');
+			var darkToggle = document.getElementById('darkModeToggle');
+			var colorblindToggle = document.getElementById('colorblindToggle');
+			var evalToggle = document.getElementById('evaluationModeToggle');
+			var soundToggle = document.getElementById('soundToggle');
+			if (darkToggle) darkToggle.checked = false;
+			if (colorblindToggle) colorblindToggle.checked = false;
+			if (evalToggle) evalToggle.checked = false;
+			if (soundToggle) soundToggle.checked = true;
+			evaluationModeActive = false;
+			document.body.classList.remove('evaluation-mode');
+
+			document.querySelectorAll('.color-button').forEach(function(btn) {
+				btn.classList.remove('active');
+				if (btn.dataset.color === '#FFFF00') btn.classList.add('active');
+			});
+
+			stopTimer();
+			timerStarted = false;
+			timerExpired = false;
+			timerStoppedManually = false;
+			timerLimit = 0;
+			timeLeft = 0;
+			updateTimerDisplay('∞');
+			showTimerButtons(false);
+
+			var timerSlider = document.getElementById('timerLimitSlider');
+			var timerValue = document.getElementById('timerLimitValue');
+			if (timerSlider) {
+				timerSlider.value = 6;
+				timerValue.textContent = '∞';
+				localStorage.setItem('timerLimit', '0');
+			}
+
+			selectedTexts = new Set();
+			localStorage.setItem('selectedTexts', JSON.stringify([...selectedTexts]));
+
+			populateTextSelect();
+
+			textContent.innerHTML = '';
+			clearCanvasCompletely();
+			updateUndoButton();
+			updateResultsPanelVisibility();
+			updateStatsBadge();
+			updateStatsDisplay();
+
+			updateSequencesDropdown();
+
+			showToast('✓ application réinitialisée', 'success', 3000);
+			playSound('click');
+		}
+
+		function resetApplicationState() {
+			currentTextData = null;
+			targetSpans = [];
+			foundSpans = [];
+			previousFoundSpansCount = 0;
+			lastFoundCount = -1;
+			drawingHistory = [];
+			historyIndex = -1;
+			lastCanvasWidth = 0;
+			lastCanvasHeight = 0;
+			textContent.innerHTML = '';
+			clearCanvasCompletely();
+			if (!evaluationModeActive) { if (statsContainer) statsContainer.innerHTML = '';
+				if (foundListContainer) foundListContainer.innerHTML = ''; }
+			updateResultsPanelVisibility();
+			setActiveMode('highlight');
+			if (revealModeActive) { revealModeActive = false;
+				revealBtn.classList.remove('active'); }
+			updateUndoButton();
+			updateSequencesDropdown();
+		}
+
+		function loadSelectedText() {
+			var idx = parseInt(textSelect.value);
+			if (isNaN(idx) || idx < 0 || !window.textData || !window.textData.texts || !window.textData.texts[idx]) {
+				resetApplicationState();
+				return;
+			}
+			currentTextData = window.textData.texts[idx];
+			renderText(currentTextData.content);
+			identifyTargetSpans();
+			if (revealModeActive) { revealModeActive = false;
+				revealBtn.classList.remove('active');
+				clearSolutionHighlight();
+				setActiveMode('highlight'); } else setActiveMode('highlight');
+			drawingHistory = [];
+			historyIndex = -1;
+			lastCanvasWidth = 0;
+			lastCanvasHeight = 0;
+			clearCanvasCompletely();
+			updateUndoButton();
+			updateResultsPanelVisibility();
+
+			if (!timerStarted) {
+				setTimeout(startTimer, 300);
+			}
+
+			setTimeout(function() {
+				resizeCanvasToContent();
+				updateStatsDisplay();
+				if (settings.colorblindMode) updateAllPatterns();
+				updateSequencesDropdown();
+			}, 100);
+		}
+
+		function handleDrawStart(clientX, clientY) {
+			if (!drawingEnabled || !currentTextData) return;
+			if (currentMode !== 'highlight' && currentMode !== 'erase') return;
+			isDrawing = true;
+			var rect = canvas.getBoundingClientRect();
+			var sx = canvas.width / rect.width,
+				sy = canvas.height / rect.height;
+			lastX = (clientX - rect.left) * sx;
+			lastY = (clientY - rect.top) * sy;
+			var brushRadius = settings.brushSize / 1.5;
+			ctx.beginPath();
+			ctx.arc(lastX, lastY, brushRadius, 0, Math.PI * 2);
+			if (currentMode === 'highlight') {
+				ctx.fillStyle = settings.brushColorHex || '#FFFF00';
+				ctx.globalAlpha = 0.7;
+				ctx.globalCompositeOperation = 'source-over';
+			} else {
+				ctx.fillStyle = 'rgba(255,255,255,0.9)';
+				ctx.globalAlpha = 0.9;
+				ctx.globalCompositeOperation = 'destination-out';
+			}
+			ctx.fill();
+		}
+
+		function handleDrawMove(clientX, clientY) {
+			if (!isDrawing || !drawingEnabled || !currentTextData) return;
+			if (currentMode !== 'highlight' && currentMode !== 'erase') return;
+			var rect = canvas.getBoundingClientRect();
+			var sx = canvas.width / rect.width,
+				sy = canvas.height / rect.height;
+			var curX = (clientX - rect.left) * sx,
+				curY = (clientY - rect.top) * sy;
+			drawLine(lastX, lastY, curX, curY);
+			lastX = curX;
+			lastY = curY;
+		}
+
+		function handleDrawEnd() {
+			if (isDrawing) { isDrawing = false;
+				saveCanvasState();
+				updateStatsDisplay(); }
+		}
+
+		function loadSettings() {
+			var saved = localStorage.getItem('connectorsSettings');
+			if (saved) {
+				var p = JSON.parse(saved);
+				for (var key in p) {
+					if (p.hasOwnProperty(key)) settings[key] = p[key];
+				}
+				if (!settings.brushColorHex) settings.brushColorHex = settings.brushColor;
+				if (settings.soundEnabled === undefined) settings.soundEnabled = true;
+			}
+			soundEnabled = settings.soundEnabled !== false;
+			updateBrushCursor();
+			var evalToggle = document.getElementById('evaluationModeToggle');
+			if (evalToggle && settings.evaluationMode) { evalToggle.checked = true;
+				toggleEvaluationMode(true); }
+			var darkToggle = document.getElementById('darkModeToggle');
+			if (darkToggle && settings.darkTheme) darkToggle.checked = true;
+			var colorblindToggle = document.getElementById('colorblindToggle');
+			if (colorblindToggle && settings.colorblindMode) colorblindToggle.checked = true;
+			var soundToggle = document.getElementById('soundToggle');
+			if (soundToggle) soundToggle.checked = settings.soundEnabled !== false;
+
+			document.querySelectorAll('.color-button').forEach(function(btn) {
+				if (btn.dataset.color === settings.brushColorHex) btn.classList.add('active');
+				else btn.classList.remove('active');
+			});
+			applySettings();
+
+			var savedTimerLimit = parseInt(localStorage.getItem('timerLimit') || '0');
+			timerLimit = savedTimerLimit;
+			timerEnabled = true;
+			if (timerLimit === 0) {
+				updateTimerDisplay('∞');
+				showTimerButtons(false);
+			} else {
+				timeLeft = timerLimit;
+				updateTimerDisplay(formatTimer(timeLeft));
+				showTimerButtons(true);
+			}
+			timerStarted = false;
+
+			var timerSlider = document.getElementById('timerLimitSlider');
+			var timerValue = document.getElementById('timerLimitValue');
+			if (timerSlider && timerValue) {
+				var sliderPos = valueToSliderPos(savedTimerLimit);
+				timerSlider.value = sliderPos;
+				timerValue.textContent = savedTimerLimit === 0 ? '∞' : (savedTimerLimit / 60) + ' min';
+			}
+
+			if (soundEnabled) preloadSounds();
+		}
+
+		function saveSettings() {
+			localStorage.setItem('connectorsSettings', JSON.stringify(settings));
+			applySettings();
+		}
+
+		function applySettings() {
+			if (settings.darkTheme) document.body.classList.add('dark-theme');
+			else document.body.classList.remove('dark-theme');
+			if (settings.colorblindMode) document.body.classList.add('colorblind-mode');
+			else document.body.classList.remove('colorblind-mode');
+			soundEnabled = settings.soundEnabled !== false;
+			updateAllPatterns();
+			updateDrawingCursor();
+		}
+
+		function updateDrawingCursor() {
+			if (!currentTextData) { drawingLayer.style.cursor = 'default';
+				drawingLayer.style.opacity = '0'; return; }
+			if (drawingEnabled && currentMode === 'highlight') {
+				drawingLayer.style.cursor = "url('src/" + settings.brushCursor + "') 0 5, crosshair";
+				drawingLayer.style.opacity = '0.01';
+			} else if (drawingEnabled && currentMode === 'erase') {
+				drawingLayer.style.cursor = "url('src/gomme.png') 0 5, crosshair";
+				drawingLayer.style.opacity = '0.01';
+			} else {
+				drawingLayer.style.cursor = 'default';
+				drawingLayer.style.opacity = '0';
+			}
+		}
+
+		drawingLayer.addEventListener('mousedown', function(e) { handleDrawStart(e.clientX, e.clientY); });
+		drawingLayer.addEventListener('mousemove', function(e) { handleDrawMove(e.clientX, e.clientY); });
+		drawingLayer.addEventListener('mouseup', handleDrawEnd);
+		drawingLayer.addEventListener('mouseout', handleDrawEnd);
+		drawingLayer.addEventListener('touchstart', function(e) { e.preventDefault();
+			handleDrawStart(e.touches[0].clientX, e.touches[0].clientY); });
+		drawingLayer.addEventListener('touchmove', function(e) { e.preventDefault(); if (isDrawing) handleDrawMove(e.touches[0]
+				.clientX, e.touches[0].clientY); });
+		drawingLayer.addEventListener('touchend', function(e) { e.preventDefault(); if (isDrawing) { handleDrawEnd();
+				isDrawing = false; } });
+		drawingLayer.addEventListener('touchcancel', function(e) { e.preventDefault(); if (isDrawing) { handleDrawEnd();
+				isDrawing = false; } });
+		window.addEventListener('resize', function() { if (currentTextData) setTimeout(resizeCanvasToContent, 50); });
+		var resizeObserver = new ResizeObserver(function() { if (currentTextData) resizeCanvasToContent(); });
+		if (textContent) resizeObserver.observe(textContent);
+
+		function loadStoredCustomData() {
+			var storedData = localStorage.getItem('customTextsData');
+			if (storedData) {
+				try {
+					var script = document.createElement('script');
+					script.textContent = storedData;
+					document.head.appendChild(script);
+					setTimeout(function() {
+						if (window.textData && window.textData.texts && window.textData.texts.length > 0) {
+							selectedTexts = new Set();
+							window.textData.texts.forEach(function(_, i) {
+								selectedTexts.add(i.toString());
+							});
+							localStorage.setItem('selectedTexts', JSON.stringify([...selectedTexts]));
+							populateTextSelect();
+							updateSequencesDropdown();
+						} else {
+							populateTextSelect();
+							updateSequencesDropdown();
+						}
+					}, 100);
+				} catch (e) { console.warn('Impossible de charger les données sauvegardées', e); }
+			} else {
+				populateTextSelect();
+				updateSequencesDropdown();
+			}
+		}
+
+		// ==================== FONCTIONS TOOLBAR ====================
+		function toggleMainMenu() {
+			var menu = document.getElementById('slideMenu');
+			var overlay = document.getElementById('menuOverlay');
+			if (menu.classList.contains('open')) {
+				closeMenu();
+			} else {
+				overlay.classList.add('open');
+				menu.classList.add('open');
+				document.body.style.overflow = 'hidden';
+				document.body.classList.add('menu-open');
+				closeAllSubmenus();
+				closeSequencesDropdown();
+			}
+			playSound('click');
+		}
+
+		function closeMenu() {
+			var menu = document.getElementById('slideMenu');
+			var overlay = document.getElementById('menuOverlay');
+			if (menu) menu.classList.remove('open');
+			if (overlay) overlay.classList.remove('open');
+			document.body.style.overflow = '';
+			document.body.classList.remove('menu-open');
+			closeAllSubmenus();
+			closeSequencesDropdown();
+		}
+
+		function closeAllSubmenus() {
+			document.querySelectorAll('.submenu.active').forEach(function(s) { s.classList.remove('active'); });
+		}
+
+		function openSubmenu(sub) {
+			closeAllSubmenus();
+			if (sub) sub.classList.add('active');
+			document.body.classList.add('menu-open');
+			playSound('click');
+		}
+
+		function closeSequencesDropdown() {
+			var dropdown = document.getElementById('sequencesDropdown');
+			var dropdownMobile = document.getElementById('sequencesDropdownMobile');
+			if (dropdown) dropdown.classList.remove('open');
+			if (dropdownMobile) dropdownMobile.classList.remove('open');
+		}
+
+		function toggleSequencesDropdown(event) {
+			event.stopPropagation();
+			var isDesktop = this.id === 'sequencesBtn';
+			var dropdown = isDesktop ? document.getElementById('sequencesDropdown') : document.getElementById(
+				'sequencesDropdownMobile');
+			if (dropdown) dropdown.classList.toggle('open');
+			playSound('click');
+		}
+
+		function updateSequencesDropdown() {
+			var items = [];
+			if (window.textData && window.textData.texts && window.textData.texts.length > 0) {
+				window.textData.texts.forEach(function(t, i) {
+					var cleanTitle = t.title || 'texte n°' + (i + 1);
+					var textNumber = (i + 1 < 10) ? '0' + (i + 1) : '' + (i + 1);
+					var displayName = 'texte n°' + textNumber + ' : ' + cleanTitle;
+					var isChecked = selectedTexts.has(i.toString());
+					items.push({
+						name: displayName,
+						value: i.toString(),
+						display: displayName,
+						checked: isChecked,
+						formattedLabel: displayName
+					});
+				});
+			}
+
+			var dropdowns = [document.getElementById('sequencesDropdown'), document.getElementById(
+				'sequencesDropdownMobile')];
+			dropdowns.forEach(function(dropdown) {
+				if (!dropdown) return;
+				var html = '<div class="dropdown-header">';
+				html += '<span>textes :</span>';
+				html += '<div class="dropdown-header-actions">';
+				var idSuffix = dropdown === document.getElementById('sequencesDropdown') ? '' : 'Mobile';
+				html +=
+					'<button class="file-upload-btn-small" id="loadTextsBtnDropdown' + idSuffix + '">charger</button>';
+				html +=
+					'<button class="select-all-btn" id="selectAllTexts' + idSuffix + '">tout cocher</button>';
+				html += '</div></div>';
+				if (items.length === 0) {
+					html += '<div class="dropdown-empty">aucun texte disponible</div>';
+				} else {
+					items.forEach(function(item) {
+						var isActive = (textSelect.value === item.value);
+						var checkedClass = item.checked ? 'checked' : '';
+						html +=
+							'<div class="dropdown-item' + (isActive ? ' active' : '') + '" data-value="' + item.value + '" data-fullname="' + item.name.replace(/"/g, '&quot;') + '" title="' + item.display.replace(/<[^>]*>/g, '') + '">					<span class="checkbox-wrapper ' + checkedClass + '" data-value="' + item.value + '">						<svg viewBox="0 0 24 24" stroke="white" stroke-width="3" fill="none">						<polyline points="4 12 9 17 20 6"/>						</svg>					</span>					<span class="item-label">' + item.formattedLabel + '</span>					</div>';
+					});
+				}
+				dropdown.innerHTML = html;
+			});
+
+			updateSelectAllButtons();
+
+			document.querySelectorAll('.sequences-dropdown .checkbox-wrapper').forEach(function(wrapper) {
+				wrapper.addEventListener('click', function(e) {
+					e.stopPropagation();
+					var value = this.dataset.value;
+					if (!value || value === 'loading') return;
+					var isChecked = this.classList.toggle('checked');
+					if (isChecked) {
+						selectedTexts.add(value);
+					} else {
+						selectedTexts.delete(value);
+					}
+					var parentItem = this.closest('.dropdown-item');
+					if (parentItem) {
+						if (isChecked) {
+							parentItem.classList.add('active');
+						} else {
+							parentItem.classList.remove('active');
+						}
+					}
+					localStorage.setItem('selectedTexts', JSON.stringify([...selectedTexts]));
+					updateTextSelector();
+					updateSelectAllButtons();
+					playSound('click');
+
+					if (selectedTexts.size === 0) {
+						clearCentralDisplay();
+					}
+				});
+			});
+
+			document.querySelectorAll('.sequences-dropdown .dropdown-item[data-value]').forEach(function(el) {
+				el.addEventListener('click', function(e) {
+					if (e.target.closest('.checkbox-wrapper')) return;
+					e.stopPropagation();
+					var value = this.dataset.value;
+					if (!value || value === 'loading') return;
+					textSelect.value = value;
+					textSelect.dispatchEvent(new Event('change'));
+					closeSequencesDropdown();
+					populateCustomSelect();
+					playSound('click');
+				});
+			});
+
+			document.querySelectorAll('.select-all-btn').forEach(function(btn) {
+				btn.addEventListener('click', function(e) {
+					e.stopPropagation();
+					var dropdown = this.closest('.sequences-dropdown');
+					var wrappers = dropdown.querySelectorAll('.checkbox-wrapper');
+					var allChecked = wrappers.length > 0 && Array.from(wrappers).every(function(w) { return w.classList.contains('checked'); });
+					wrappers.forEach(function(w) {
+						if (allChecked) {
+							w.classList.remove('checked');
+							selectedTexts.delete(w.dataset.value);
+							var parentItem = w.closest('.dropdown-item');
+							if (parentItem) parentItem.classList.remove('active');
+						} else {
+							w.classList.add('checked');
+							selectedTexts.add(w.dataset.value);
+							var parentItem2 = w.closest('.dropdown-item');
+							if (parentItem2) parentItem2.classList.add('active');
+						}
+					});
+					localStorage.setItem('selectedTexts', JSON.stringify([...selectedTexts]));
+					updateTextSelector();
+					updateSelectAllButtons();
+					populateCustomSelect();
+					playSound('click');
+
+					if (selectedTexts.size === 0) {
+						clearCentralDisplay();
+					}
+				});
+			});
+
+			document.querySelectorAll('.file-upload-btn-small').forEach(function(btn) {
+				btn.addEventListener('click', function(e) {
+					e.stopPropagation();
+					var input = document.createElement('input');
+					input.type = 'file';
+					input.accept = '.js,.txt';
+					input.onchange = function(e2) {
+						if (e2.target.files && e2.target.files[0]) {
+							loadCustomTextsFile(e2.target.files[0]);
+							closeSequencesDropdown();
+						}
+					};
+					input.click();
+					playSound('click');
+				});
+			});
+
+			var saved = localStorage.getItem('selectedTexts');
+			if (saved) {
+				try {
+					var savedSet = new Set(JSON.parse(saved));
+					selectedTexts = savedSet;
+					document.querySelectorAll('.sequences-dropdown .checkbox-wrapper').forEach(function(w) {
+						var val = w.dataset.value;
+						if (selectedTexts.has(val)) {
+							w.classList.add('checked');
+							var parent = w.closest('.dropdown-item');
+							if (parent) parent.classList.add('active');
+						} else {
+							w.classList.remove('checked');
+							var parent2 = w.closest('.dropdown-item');
+							if (parent2) parent2.classList.remove('active');
+						}
+					});
+					updateSelectAllButtons();
+				} catch (e) { /* ignore */ }
+			}
+
+			updateTextSelector();
+			populateCustomSelect();
+		}
+
+		function updateSelectAllButtons() {
+			var dropdowns = [document.getElementById('sequencesDropdown'), document.getElementById('sequencesDropdownMobile')];
+			dropdowns.forEach(function(dropdown) {
+				if (!dropdown) return;
+				var wrappers = dropdown.querySelectorAll('.checkbox-wrapper');
+				var allChecked = wrappers.length > 0 && Array.from(wrappers).every(function(w) { return w.classList.contains('checked'); });
+				var btn = dropdown.querySelector('.select-all-btn');
+				if (btn) {
+					btn.textContent = allChecked ? 'tout décocher' : 'tout cocher';
+				}
+			});
+		}
+
+		function updateTextSelector() {
+			if (!textSelect) return;
+			
+			if (selectedTexts.size === 0) {
+				clearCentralDisplay();
+				return;
+			}
+			
+			document.querySelectorAll('.custom-select .option').forEach(function(opt) {
+				var value = opt.dataset.value;
+				if (selectedTexts.has(value)) {
+					opt.classList.remove('hidden-option');
+				} else {
+					opt.classList.add('hidden-option');
+					if (opt.classList.contains('selected')) {
+						opt.classList.remove('selected');
+					}
+				}
+			});
+
+			if (textSelect.value && !selectedTexts.has(textSelect.value)) {
+				var firstVisible = document.querySelector('.custom-select .option:not(.hidden-option)');
+				if (firstVisible) {
+					selectOption(firstVisible.dataset.value, firstVisible.dataset.display);
+				} else {
+					selectedValue.textContent = 'sélectionner un texte';
+					textSelect.value = '';
+					clearCentralDisplay();
+				}
+			}
+		}
+
+		function toggleFullscreen() {
+			if (!document.fullscreenElement) {
+				document.documentElement.requestFullscreen();
+			} else {
+				document.exitFullscreen();
+			}
+			playSound('click');
+		}
+
+		function updateFullscreen() {
+			var isFullscreen = !!document.fullscreenElement;
+			document.body.classList.toggle('fullscreen', isFullscreen);
+			var trigger = document.getElementById('hoverTrigger');
+			if (trigger) trigger.classList.toggle('active', isFullscreen);
+			document.querySelectorAll('.btn-fullscreen').forEach(function(btn) {
+				btn.classList.toggle('fullscreen-active', isFullscreen);
+				btn.dataset.title = isFullscreen ? 'quitter plein écran (F)' : 'plein écran (F)';
+				if (isFullscreen) {
+					btn.innerHTML = '<svg class="fullscreen-exit-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt">			<line x1="1" y1="7" x2="7" y2="7"/><line x1="7" y1="7" x2="7" y2="1"/>			<line x1="13" y1="1" x2="13" y2="7"/><line x1="13" y1="7" x2="19" y2="7"/>			<line x1="1" y1="13" x2="7" y2="13"/><line x1="7" y1="13" x2="7" y2="19"/>			<line x1="13" y1="19" x2="13" y2="13"/><line x1="13" y1="13" x2="19" y2="13"/>			</svg>';
+				} else {
+					btn.innerHTML = '<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt">			<line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/>			<line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/>			<line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/>			<line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/>			</svg>';
+				}
+			});
+		}
+
+		// ==================== INITIALISATION DE LA TOOLBAR ====================
+		function initToolbarFromFichier1() {
+			var sequencesBtn = document.getElementById('sequencesBtn');
+			var sequencesBtnMobile = document.getElementById('sequencesBtnMobile');
+			if (sequencesBtn) sequencesBtn.addEventListener('click', toggleSequencesDropdown);
+			if (sequencesBtnMobile) sequencesBtnMobile.addEventListener('click', toggleSequencesDropdown);
+
+			document.addEventListener('click', function(e) {
+				if (!e.target.closest('.btn-sequences') && !e.target.closest('.sequences-dropdown')) {
+					closeSequencesDropdown();
+				}
+			});
+
+			document.querySelectorAll('[data-action="home"]').forEach(function(btn) {
+				btn.addEventListener('click', function() {
+					playSound('click');
+					window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank');
+				});
+			});
+
+			document.querySelectorAll('[data-action="reload"]').forEach(function(btn) {
+				btn.addEventListener('click', function() {
+					playSound('click');
+					resetApplication();
+				});
+			});
+
+			document.querySelectorAll('[data-action="fullscreen"]').forEach(function(btn) {
+				btn.addEventListener('click', toggleFullscreen);
+			});
+
+			document.querySelectorAll('[data-action="menu"]').forEach(function(btn) {
+				btn.addEventListener('click', toggleMainMenu);
+			});
+
+			var menuClose = document.getElementById('menuClose');
+			var menuOverlay = document.getElementById('menuOverlay');
+			if (menuClose) menuClose.addEventListener('click', closeMenu);
+			if (menuOverlay) menuOverlay.addEventListener('click', closeMenu);
+
+			var timerBtnDesktop = document.getElementById('timerBtnDesktop');
+			var timerBtnMobile = document.getElementById('timerBtnMobile');
+			if (timerBtnDesktop) timerBtnDesktop.addEventListener('click', resetTimer);
+			if (timerBtnMobile) timerBtnMobile.addEventListener('click', resetTimer);
+
+			var presentationBtn = document.getElementById('presentationButton');
+			var shortcutsBtn = document.getElementById('shortcutsButton');
+			var resetBtn = document.getElementById('resetButton');
+			var statsBtn = document.getElementById('statsButton');
+			var settingsBtn = document.getElementById('settingsButton');
+			var aboutBtn = document.getElementById('aboutButton');
+
+			if (presentationBtn) presentationBtn.addEventListener('click', function() {
+				openSubmenu(document.getElementById('submenuPresentation'));
+				closeSequencesDropdown();
+			});
+			if (shortcutsBtn) shortcutsBtn.addEventListener('click', function() {
+				openSubmenu(document.getElementById('submenuShortcuts'));
+				closeSequencesDropdown();
+			});
+			if (resetBtn) resetBtn.addEventListener('click', function() {
+				resetApplication();
+			});
+			if (statsBtn) statsBtn.addEventListener('click', function() {
+				displayStatsInSubmenu();
+				openSubmenu(document.getElementById('submenuStats'));
+				closeSequencesDropdown();
+			});
+			if (settingsBtn) settingsBtn.addEventListener('click', function() {
+				openSubmenu(document.getElementById('submenuSettings'));
+				closeSequencesDropdown();
+			});
+			if (aboutBtn) aboutBtn.addEventListener('click', function() {
+				openSubmenu(document.getElementById('submenuAbout'));
+				closeSequencesDropdown();
+			});
+
+			document.querySelectorAll('.submenu-close').forEach(function(btn) {
+				btn.addEventListener('click', function() {
+					var submenuId = this.dataset.submenu;
+					if (submenuId) {
+						var submenu = document.getElementById('submenu' + submenuId.charAt(0).toUpperCase() +
+							submenuId.slice(1));
+						if (submenu) submenu.classList.remove('active');
+					} else {
+						closeAllSubmenus();
+					}
+					document.body.classList.remove('menu-open');
+					playSound('click');
+				});
+			});
+
+			document.addEventListener('fullscreenchange', updateFullscreen);
+			document.addEventListener('keydown', setupKeyboardShortcuts);
+
+			updateSequencesDropdown();
+		}
+
+		// ==================== ÉVÉNEMENTS DES PARAMÈTRES ====================
+		function initSettingsEvents() {
+			var timerSlider = document.getElementById('timerLimitSlider');
+			var timerValue = document.getElementById('timerLimitValue');
+
+			if (timerSlider && timerValue) {
+				timerSlider.addEventListener('input', function(e) {
+					var pos = parseInt(e.target.value, 10);
+					var newLimit = sliderPosToValue(pos);
+					timerLimit = newLimit;
+					timerValue.textContent = timerLimit === 0 ? '∞' : (timerLimit / 60) + ' min';
+					localStorage.setItem('timerLimit', timerLimit);
+
+					if (timerLimit === 0) {
+						updateTimerDisplay('∞');
+						showTimerButtons(false);
+						stopTimer();
+						timerStarted = false;
+					} else {
+						showTimerButtons(true);
+						updateTimerDisplay(formatTimer(timerLimit));
+						resetTimer();
+						if (currentTextData) {
+							setTimeout(startTimer, 100);
+						}
+					}
+					playSound('click');
+				});
+
+				var savedTimerLimit = parseInt(localStorage.getItem('timerLimit') || '0');
+				timerLimit = savedTimerLimit;
+				var sliderPos = valueToSliderPos(savedTimerLimit);
+				timerSlider.value = sliderPos;
+				timerValue.textContent = savedTimerLimit === 0 ? '∞' : (savedTimerLimit / 60) + ' min';
+				if (savedTimerLimit === 0) {
+					updateTimerDisplay('∞');
+					showTimerButtons(false);
+				} else {
+					updateTimerDisplay(formatTimer(savedTimerLimit));
+					showTimerButtons(true);
+				}
+			}
+
+			var soundToggle = document.getElementById('soundToggle');
+			if (soundToggle) {
+				soundToggle.addEventListener('change', function() {
+					settings.soundEnabled = this.checked;
+					soundEnabled = this.checked;
+					localStorage.setItem('connectorsSettings', JSON.stringify(settings));
+					if (soundEnabled) preloadSounds();
+					playSound('click');
+				});
+			}
+		}
+
+		// ==================== STATISTIQUES ====================
+		var totalCorrectAnswers = parseInt(localStorage.getItem('totalCorrectAnswers') || '0');
+		var totalQuestionsAnswered = parseInt(localStorage.getItem('totalQuestionsAnswered') || '0');
+		var gamesPlayed = parseInt(localStorage.getItem('gamesPlayed') || '0');
+
+		function updateStatsDisplaySubmenu() {
+			var pct = totalQuestionsAnswered ? Math.round((totalCorrectAnswers / totalQuestionsAnswered) * 100) : 0;
+			
+			document.querySelectorAll('#statsCorrectCount2').forEach(function(el) { el.textContent = totalCorrectAnswers; });
+			document.querySelectorAll('#statsTotalCount2').forEach(function(el) { el.textContent = totalQuestionsAnswered; });
+			document.querySelectorAll('#statsPercentage2').forEach(function(el) { el.textContent = pct + '%'; });
+			document.querySelectorAll('#gamesPlayed2').forEach(function(el) { el.textContent = gamesPlayed; });
+		}
+
+		// ============================================================
+		// INITIALISATION PRINCIPALE
+		// ============================================================
+		document.addEventListener('DOMContentLoaded', function() {
+			if (window.APP_TITLE || window.APP_SUBTITLE) {
+				updateTitles();
+			}
+			
+			setupFileLoading();
+			setupKeyboardShortcuts();
+			
+			loadSettings();
+			loadCumulativeStats();
+			loadStoredCustomData();
+
+			textSelect.addEventListener('change', loadSelectedText);
+
+			var undoBtn = document.getElementById('undoButton');
+			if (undoBtn) undoBtn.addEventListener('click', undoLastAction);
+			if (highlightBtn) highlightBtn.addEventListener('click', function() { setActiveMode('highlight'); });
+			if (eraserBtn) eraserBtn.addEventListener('click', function() { setActiveMode('erase'); });
+			if (revealBtn) revealBtn.addEventListener('click', function() { setActiveMode('reveal'); });
+
+			var loadTextsBtn = document.getElementById('loadTextsFileBtn');
+			var textsFileInput = document.getElementById('textsFileInput');
+			if (loadTextsBtn && textsFileInput) {
+				loadTextsBtn.addEventListener('click', function() { textsFileInput.click(); });
+				textsFileInput.addEventListener('change', function(e) {
+					if (e.target.files && e.target.files[0]) {
+						loadCustomTextsFile(e.target.files[0]);
+						textsFileInput.value = '';
+					}
+				});
+			}
+
+			var darkToggle = document.getElementById('darkModeToggle');
+			if (darkToggle) {
+				darkToggle.addEventListener('change', function(e) {
+					settings.darkTheme = e.target.checked;
+					if (settings.darkTheme && settings.brushColorHex === '#FFFF00') {
+						settings.brushColor = '#F75B14';
+						settings.brushColorHex = '#F75B14';
+						updateBrushCursor();
+						document.querySelectorAll('.color-button').forEach(function(btn) {
+							if (btn.dataset.color === '#F75B14') btn.classList.add('active');
+							else btn.classList.remove('active');
+						});
+					} else if (!settings.darkTheme && settings.brushColorHex === '#F75B14') {
+						settings.brushColor = '#FFFF00';
+						settings.brushColorHex = '#FFFF00';
+						updateBrushCursor();
+						document.querySelectorAll('.color-button').forEach(function(btn) {
+							if (btn.dataset.color === '#FFFF00') btn.classList.add('active');
+							else btn.classList.remove('active');
+						});
+					}
+					saveSettings();
+					playSound('click');
+				});
+			}
+
+			var colorblindToggle = document.getElementById('colorblindToggle');
+			if (colorblindToggle) {
+				colorblindToggle.addEventListener('change', function(e) {
+					settings.colorblindMode = e.target.checked;
+					saveSettings();
+					updateAllPatterns();
+					playSound('click');
+				});
+			}
+
+			var evalToggle = document.getElementById('evaluationModeToggle');
+			if (evalToggle) {
+				evalToggle.addEventListener('change', function(e) {
+					settings.evaluationMode = e.target.checked;
+					saveSettings();
+					toggleEvaluationMode(settings.evaluationMode);
+					if (currentTextData) updateStatsDisplay();
+					playSound('click');
+				});
+			}
+
+			document.querySelectorAll('.color-button').forEach(function(btn) {
+				btn.addEventListener('click', function() {
+					var color = this.dataset.color;
+					if (color) {
+						settings.brushColor = color;
+						settings.brushColorHex = color;
+						updateBrushCursor();
+						saveSettings();
+						document.querySelectorAll('.color-button').forEach(function(b) { b.classList.remove(
+							'active'); });
+						this.classList.add('active');
+						playSound('click');
+					}
+				});
+			});
+
+			var resetStatsBtn = document.getElementById('resetStatsBtn');
+			if (resetStatsBtn) {
+				resetStatsBtn.addEventListener('click', function() {
+					totalCorrectAnswers = 0;
+					totalQuestionsAnswered = 0;
+					gamesPlayed = 0;
+					
+					localStorage.setItem('totalCorrectAnswers', '0');
+					localStorage.setItem('totalQuestionsAnswered', '0');
+					localStorage.setItem('gamesPlayed', '0');
+					
+					updateStatsDisplaySubmenu();
+					showToast('Statistiques réinitialisées', 'info', 2000);
+					playSound('click');
+				});
+			}
+
+			initSettingsEvents();
+
+			updateResultsPanelVisibility();
+			initToolbarFromFichier1();
+			updateStatsDisplaySubmenu();
+
+			if (soundEnabled) preloadSounds();
+		});
+	</script>
+</body>
+
+</html>
