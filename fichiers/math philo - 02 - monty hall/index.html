@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="icon" href="../../src/favicon.ico" />
-	<title>jeu de monty hall</title>
+	<title>let's make a deal</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
 	<style>
@@ -56,6 +56,147 @@
 			padding-left: calc(20px + var(--sal));
 			padding-right: calc(20px + var(--sar));
 			touch-action: manipulation;
+		}
+
+		/* ===== ÉCRAN D'ACCUEIL ===== */
+		.welcome-screen {
+			position: fixed;
+			inset: 0;
+			background: var(--bg-color);
+			z-index: 10000;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 30px;
+			padding: 30px;
+			transition: opacity 0.5s ease, visibility 0.5s ease;
+		}
+
+		.welcome-screen.hidden {
+			opacity: 0;
+			visibility: hidden;
+			pointer-events: none;
+		}
+
+		.welcome-image {
+			max-width: 100%;
+			max-height: 55vh;
+			width: auto;
+			height: auto;
+			object-fit: contain;
+			filter: drop-shadow(6px 6px 12px var(--shadow-dark));
+			user-select: none;
+			-webkit-user-drag: none;
+		}
+
+		.welcome-buttons {
+			display: flex;
+			gap: 20px;
+			justify-content: center;
+			align-items: center;
+			flex-wrap: wrap;
+		}
+
+		.welcome-btn {
+			background: var(--bg-color);
+			border: none;
+			border-radius: 50%;
+			width: 80px;
+			height: 80px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			color: var(--text-color);
+			transition: all 0.2s ease;
+			box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+			flex-shrink: 0;
+		}
+
+		.welcome-btn:hover {
+			box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light);
+		}
+
+		.welcome-btn:active {
+			box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+		}
+
+		.welcome-btn svg {
+			width: 36px;
+			height: 36px;
+			fill: none;
+			stroke: currentColor;
+			stroke-width: 2;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+			transition: transform 0.3s ease;
+		}
+
+		.welcome-btn.playing {
+			color: var(--primary);
+		}
+
+		.welcome-btn.playing:hover svg {
+			transform: scale(1.1);
+		}
+
+		.welcome-btn.start-btn {
+			background: var(--primary);
+			color: white;
+			box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light), 0 0 0 2px var(--primary-dark);
+		}
+
+		.welcome-btn.start-btn:hover {
+			box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light), 0 0 0 2px var(--primary-dark);
+		}
+
+		.welcome-btn.start-btn:active {
+			box-shadow: inset 3px 3px 6px var(--primary-dark), inset -3px -3px 6px var(--primary);
+		}
+
+		.welcome-label {
+			font-size: 0.85rem;
+			color: var(--text-light);
+			text-align: center;
+			margin-top: 15px;
+			letter-spacing: 0.5px;
+			text-transform: lowercase;
+		}
+
+		.welcome-btn-group {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 10px;
+		}
+
+		@media (max-width: 600px) {
+			.welcome-screen { gap: 20px; padding: 20px; }
+			.welcome-image { max-height: 45vh; }
+			.welcome-btn { width: 70px; height: 70px; }
+			.welcome-btn svg { width: 30px; height: 30px; }
+			.welcome-buttons { gap: 16px; }
+		}
+
+		@media (max-width: 380px) {
+			.welcome-screen { gap: 14px; padding: 12px; }
+			.welcome-image { max-height: 40vh; }
+			.welcome-btn { width: 60px; height: 60px; }
+			.welcome-btn svg { width: 26px; height: 26px; }
+			.welcome-buttons { gap: 12px; }
+			.welcome-label { font-size: 0.75rem; margin-top: 12px; }
+		}
+
+		/* ===== Canvas confettis ===== */
+		#confettiCanvas {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			pointer-events: none;
+			z-index: 9999;
 		}
 
 		.container {
@@ -219,7 +360,7 @@
 			transform: translateX(-50%);
 			width: 147px;
 			height: 280px;
-			background-image: url('chambranle.png');
+			background-image: url('img/chambranle.png');
 			background-size: contain;
 			background-repeat: no-repeat;
 			background-position: center bottom;
@@ -276,7 +417,7 @@
 
 		.front {
 			background-color: var(--door-base);
-			background-image: url('porte.png');
+			background-image: url('img/porte.png');
 			transform: rotateY(0deg);
 			z-index: 2;
 			border: 2px solid var(--door-border);
@@ -288,7 +429,7 @@
 
 		.back {
 			background-color: var(--door-base);
-			background-image: url('porte.png');
+			background-image: url('img/porte.png');
 			transform: rotateY(180deg);
 			border: 2px solid var(--door-border);
 		}
@@ -455,6 +596,8 @@
 
 		.stay-header { color: var(--primary); }
 		.switch-header { color: var(--success); }
+		.stay-value { color: var(--primary); }
+		.switch-value { color: var(--success); }
 		.stats-value { font-weight: bold; font-size: 1.1rem; }
 
 		.chart-container {
@@ -599,18 +742,6 @@
 			box-shadow: 2px 2px 4px var(--shadow-dark), -2px -2px 4px var(--shadow-light);
 		}
 
-		.radio-group input[type="radio"]:checked::after {
-			content: '';
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			width: 8px;
-			height: 8px;
-			border-radius: 50%;
-			background: white;
-		}
-
 		.toggle-container {
 			display: flex;
 			justify-content: space-between;
@@ -652,7 +783,7 @@
 			position: relative;
 			display: inline-block;
 			width: 44px;
-			height: 24px;
+			height: 20px;
 			flex-shrink: 0;
 		}
 
@@ -667,15 +798,15 @@
 			cursor: pointer;
 			inset: 0;
 			background: #b0b8c4;
-			border-radius: 24px;
+			border-radius: 20px;
 			transition: .3s;
 		}
 
 		.theme-switch .slider:before {
 			content: "";
 			position: absolute;
-			width: 18px;
-			height: 18px;
+			width: 14px;
+			height: 14px;
 			left: 3px;
 			top: 3px;
 			background: #fff;
@@ -689,7 +820,7 @@
 		}
 
 		.theme-switch input:checked + .slider:before {
-			transform: translateX(20px);
+			transform: translateX(24px);
 		}
 
 		body.dark-mode .theme-switch .slider {
@@ -1312,9 +1443,6 @@
 				left: -2px;
 			}
 			
-
-
-
 			.door.open .front .handle {
 				top: calc(50% - 2.5px);
 				margin-top: -4px;
@@ -1326,11 +1454,7 @@
 				transform: translate(4px, -7px) rotate3d(0, 0, 1, 60deg);
 			}
 
-
-
-
-
-			.game-message { font-size: 0.8rem; padding: 5px 8px; min-height: 35px; }
+			.game-message { font-size: 0.8rem; padding: 8px 8px; min-height: 35px; }
 
 			/* Stats ultra-compactes */
 			.stats-container { padding: 10px; margin: -36px 15px 0 15px; }
@@ -1362,6 +1486,33 @@
 </head>
 
 <body>
+	<!-- ===== ÉCRAN D'ACCUEIL ===== -->
+	<div class="welcome-screen" id="welcomeScreen">
+		<img class="welcome-image" src="img/ouverture.png" alt="accueil" draggable="false">
+		<div class="welcome-buttons">
+			<div class="welcome-btn-group">
+				<button class="welcome-btn" id="welcomeSoundBtn" title="diffuser le générique">
+					<svg id="welcomeSoundIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+						<path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+						<path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+					</svg>
+				</button>
+				<span class="welcome-label">générique</span>
+			</div>
+			<div class="welcome-btn-group">
+				<button class="welcome-btn start-btn" id="welcomeStartBtn" title="lancer le jeu">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polygon points="5 3 19 12 5 21 5 3"></polygon>
+					</svg>
+				</button>
+				<span class="welcome-label">jouer</span>
+			</div>
+		</div>
+	</div>
+
+	<canvas id="confettiCanvas"></canvas>
+
 	<div class="container">
 		<div class="toolbar">
 			<div class="toolbar-left">
@@ -1528,18 +1679,18 @@
 								<tbody>
 									<tr>
 										<td>victoires :</td>
-										<td class="stats-value" id="stayWins">0</td>
-										<td class="stats-value" id="switchWins">0</td>
+										<td class="stats-value stay-value" id="stayWins">0</td>
+										<td class="stats-value switch-value" id="switchWins">0</td>
 									</tr>
 									<tr>
 										<td>défaites :</td>
-										<td class="stats-value" id="stayLosses">0</td>
-										<td class="stats-value" id="switchLosses">0</td>
+										<td class="stats-value stay-value" id="stayLosses">0</td>
+										<td class="stats-value switch-value" id="switchLosses">0</td>
 									</tr>
 									<tr>
 										<td>total :</td>
-										<td class="stats-value" id="stayTotal">0</td>
-										<td class="stats-value" id="switchTotal">0</td>
+										<td class="stats-value stay-value" id="stayTotal">0</td>
+										<td class="stats-value switch-value" id="switchTotal">0</td>
 									</tr>
 								</tbody>
 							</table>
@@ -1602,7 +1753,7 @@
 					<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
 					<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
 				</svg>
-				<span>règles du jeu</span>
+				<span>présentation</span>
 			</button>
 			<button class="menu-item" id="statsButton" title="Voir les statistiques">
 				<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1647,12 +1798,15 @@
 				</svg>
 			</button>
 		</div>
-		<div class="submenu-title">règles du jeu</div>
-		<div class="submenu-content">
+		<div class="submenu-title">présentation</div>
+		<div class="submenu-content">	
 			<div class="settings-info">
-				<p>• Une voiture se cache derrière l'une de ces trois portes. Derrière les deux autres portes se trouvent des chèvres. Choisissez l'une de ces trois portes.</p>
-				<p>• Les deux portes restantes, où il y a nécessairement une chèvre, seront ensuite ouvertes. Vous aurez alors un choix à faire.</p>
-				<p>• Soit cliquer sur la porte choisie initialement, soit changer de porte en cliquant sur l'autre porte que la porte initialement choisie.</p>
+				<p>• Derrière une porte se trouve une voiture. Derrière les deux autres, une chèvre. Choisissez la bonne porte !</p>
+				<p>• Le présentateur, qui sait où se trouve la voiture, ouvre l'une des deux autres portes et montre une chèvre.</p>
+				<p>• Le présentateur propose alors de garder la porte initiale ou de changer pour la porte restante afin de remporter ce qui se cache derrière.</p>
+			</div>
+			<div class="settings-info">			
+				<p>• Le problème de Monty Hall confronte l'intuition et la rationalité face à l'incertitude. Nos biais psychologiques (l'attachement à nos choix initiaux, la peur du regret...) entravent notre capacité à actualiser nos croyances devant une information nouvelle.</p>
 			</div>
 		</div>
 	</div>
@@ -1670,17 +1824,17 @@
 		<div class="submenu-content">
 			<div class="settings-info">
 				<p><strong>stratégie « rester » :</strong></p>
-				<p>victoires : <span id="modalStayWins">0</span> / Total : <span id="modalStayTotal">0</span></p>
+				<p><span id="modalStayWins">0</span> <span id="stayVictoireLabel">victoires</span> / <span id="modalStayTotal">0</span> <span id="stayPartieLabel">parties</span></p>
 				<p>taux de réussite : <span id="modalStayRate">0%</span></p>
 			</div>
 			<div class="settings-info">
 				<p><strong>stratégie « changer » :</strong></p>
-				<p>victoires : <span id="modalSwitchWins">0</span> / total : <span id="modalSwitchTotal">0</span></p>
+				<p><span id="modalSwitchWins">0</span> <span id="switchVictoireLabel">victoires</span> / <span id="modalSwitchTotal">0</span> <span id="switchPartieLabel">parties</span></p>
 				<p>taux de réussite : <span id="modalSwitchRate">0%</span></p>
 			</div>
 			<div class="settings-info">
 				<p><strong>résultats globaux :</strong></p>
-				<p>total des parties jouées : <span id="modalTotalGames">0</span></p>
+				<p><span id="modalTotalGames">0</span> <span id="totalPartieLabel">parties jouées</span></p>
 			</div>
 		</div>
 	</div>
@@ -1705,6 +1859,21 @@
 				</span>
 				<label class="theme-switch">
 					<input type="checkbox" id="settingsAnimateCheckbox" checked onchange="toggleAnimationFromSettings()">
+					<span class="slider"></span>
+				</label>
+			</div>
+
+			<div class="toggle-container">
+				<span class="toggle-label">
+					<svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+						<path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+						<path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+					</svg>
+					son
+				</span>
+				<label class="theme-switch">
+					<input type="checkbox" id="soundCheckbox" checked onchange="toggleSound()">
 					<span class="slider"></span>
 				</label>
 			</div>
@@ -1815,14 +1984,238 @@
 			},
 			animate: true,
 			darkMode: false,
-			colorblindMode: false
+			colorblindMode: false,
+			soundEnabled: true,
+			genericPlaying: false
 		};
 
 		const gameMessage = document.getElementById('gameMessage');
 		const chartPoints = document.getElementById('chartPoints');
 		const simulationBtn = document.getElementById('simulationBtn');
 
+		/* ===== Gestion du son ===== */
+		const sounds = {
+			victoire: null,
+			defaite: null,
+			porte: null,
+			generique: null
+		};
+
+		function initSounds() {
+			sounds.victoire = new Audio('sounds/victoire.mp3');
+			sounds.defaite = new Audio('sounds/defaite.mp3');
+			sounds.porte = new Audio('sounds/porte.mp3');
+			sounds.generique = new Audio('sounds/generique.mp3');
+			sounds.victoire.preload = 'auto';
+			sounds.defaite.preload = 'auto';
+			sounds.porte.preload = 'auto';
+			sounds.generique.preload = 'auto';
+		}
+
+		function playSound(name) {
+			if (!gameState.soundEnabled) return;
+			const snd = sounds[name];
+			if (!snd) return;
+			try {
+				snd.currentTime = 0;
+				snd.play().catch(err => console.warn('Lecture audio impossible :', err));
+			} catch (e) {
+				console.warn('Erreur audio :', e);
+			}
+		}
+
+		function fadeOutAudio(audio) {
+			if (!audio) return;
+			if (audio._fadeInterval) clearInterval(audio._fadeInterval);
+			
+			let vol = audio.volume;
+			audio._fadeInterval = setInterval(() => {
+				if (vol > 0.05) {
+					vol -= 0.05;
+					audio.volume = Math.max(0, vol);
+				} else {
+					audio.volume = 1;
+					audio.pause();
+					audio.currentTime = 0;
+					clearInterval(audio._fadeInterval);
+					audio._fadeInterval = null;
+				}
+			}, 50);
+		}
+
+		function toggleSound() {
+			const cb = document.getElementById('soundCheckbox');
+			gameState.soundEnabled = cb.checked;
+			try {
+				localStorage.setItem('montyhall_sound', gameState.soundEnabled ? '1' : '0');
+			} catch (e) {}
+			if (!gameState.soundEnabled) {
+				Object.values(sounds).forEach(s => {
+					if (s) { try { s.pause(); } catch(e){} }
+				});
+				gameState.genericPlaying = false;
+				updateWelcomeSoundIcon();
+			}
+		}
+
+		function loadSoundPreference() {
+			try {
+				const saved = localStorage.getItem('montyhall_sound');
+				if (saved === '0') {
+					gameState.soundEnabled = false;
+					const cb = document.getElementById('soundCheckbox');
+					if (cb) cb.checked = false;
+				}
+			} catch (e) {}
+		}
+
+		function updateWelcomeSoundIcon() {
+			const icon = document.getElementById('welcomeSoundIcon');
+			const btn = document.getElementById('welcomeSoundBtn');
+			if (!icon || !btn) return;
+			if (gameState.genericPlaying) {
+				icon.innerHTML = `
+					<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+					<line x1="23" y1="9" x2="17" y2="15"></line>
+					<line x1="17" y1="9" x2="23" y2="15"></line>
+				`;
+				btn.classList.add('playing');
+				btn.title = 'couper le générique';
+			} else {
+				icon.innerHTML = `
+					<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+					<path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+					<path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+				`;
+				btn.classList.remove('playing');
+				btn.title = 'diffuser le générique';
+			}
+		}
+
+		function toggleWelcomeSound() {
+			if (!sounds.generique) return;
+			if (!gameState.soundEnabled) {
+				gameState.soundEnabled = true;
+				const cb = document.getElementById('soundCheckbox');
+				if (cb) cb.checked = true;
+				try { localStorage.setItem('montyhall_sound', '1'); } catch(e){}
+			}
+			if (gameState.genericPlaying) {
+				try { sounds.generique.pause(); } catch(e){}
+				gameState.genericPlaying = false;
+			} else {
+				try {
+					sounds.generique.currentTime = 0;
+					sounds.generique.play().catch(err => console.warn('Lecture générique impossible :', err));
+				} catch(e){}
+				gameState.genericPlaying = true;
+			}
+			updateWelcomeSoundIcon();
+		}
+
+		function startGame() {
+			if (gameState.genericPlaying && sounds.generique) {
+				fadeOutAudio(sounds.generique);
+				gameState.genericPlaying = false;
+				updateWelcomeSoundIcon();
+			}
+			
+			const welcomeScreen = document.getElementById('welcomeScreen');
+			if (welcomeScreen) {
+				welcomeScreen.classList.add('hidden');
+				setTimeout(() => {
+					welcomeScreen.style.display = 'none';
+				}, 500);
+			}
+		}
+
+		const confettiCanvas = document.getElementById('confettiCanvas');
+		const confettiCtx = confettiCanvas.getContext('2d');
+		let confettiPieces = [];
+		let confettiAnimId = null;
+
+		function resizeConfettiCanvas() {
+			confettiCanvas.width = window.innerWidth;
+			confettiCanvas.height = window.innerHeight;
+		}
+
+		function launchConfetti(duration = 3500) {
+			resizeConfettiCanvas();
+			confettiPieces = [];
+			const colors = ['#e53935', '#6D83F2', '#4CAF50', '#FFC107', '#FF9800', '#9C27B0', '#00BCD4', '#ffffff'];
+			const count = 160;
+			for (let i = 0; i < count; i++) {
+				confettiPieces.push({
+					x: Math.random() * confettiCanvas.width,
+					y: -20 - Math.random() * confettiCanvas.height * 0.3,
+					w: 6 + Math.random() * 8,
+					h: 10 + Math.random() * 10,
+					color: colors[Math.floor(Math.random() * colors.length)],
+					vx: -2 + Math.random() * 4,
+					vy: 2 + Math.random() * 4,
+					rot: Math.random() * Math.PI * 2,
+					vr: -0.15 + Math.random() * 0.3,
+					shape: Math.random() < 0.5 ? 'rect' : 'circle'
+				});
+			}
+			if (confettiAnimId) cancelAnimationFrame(confettiAnimId);
+			const startTime = performance.now();
+			function animate(now) {
+				confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+				const elapsed = now - startTime;
+				let alive = 0;
+				confettiPieces.forEach(p => {
+					p.x += p.vx;
+					p.y += p.vy;
+					p.vy += 0.05;
+					p.rot += p.vr;
+					if (p.y < confettiCanvas.height + 30) alive++;
+					confettiCtx.save();
+					confettiCtx.translate(p.x, p.y);
+					confettiCtx.rotate(p.rot);
+					confettiCtx.fillStyle = p.color;
+					if (p.shape === 'rect') {
+						confettiCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+					} else {
+						confettiCtx.beginPath();
+						confettiCtx.arc(0, 0, p.w / 2, 0, Math.PI * 2);
+						confettiCtx.fill();
+					}
+					confettiCtx.restore();
+				});
+				if (elapsed < duration || alive > 0) {
+					confettiAnimId = requestAnimationFrame(animate);
+				} else {
+					confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+					confettiAnimId = null;
+				}
+			}
+			confettiAnimId = requestAnimationFrame(animate);
+		}
+
+		function stopConfetti() {
+			if (confettiAnimId) {
+				cancelAnimationFrame(confettiAnimId);
+				confettiAnimId = null;
+			}
+			confettiPieces = [];
+			confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+		}
+
+		window.addEventListener('resize', () => {
+			if (confettiPieces.length > 0) resizeConfettiCanvas();
+		});
+
 		function initGame() {
+			initSounds();
+			loadSoundPreference();
+			updateWelcomeSoundIcon();
+
+			const welcomeSoundBtn = document.getElementById('welcomeSoundBtn');
+			const welcomeStartBtn = document.getElementById('welcomeStartBtn');
+			if (welcomeSoundBtn) welcomeSoundBtn.addEventListener('click', toggleWelcomeSound);
+			if (welcomeStartBtn) welcomeStartBtn.addEventListener('click', startGame);
+
 			resetGame();
 			updateStats();
 			setupMenuListeners();
@@ -2013,6 +2406,13 @@
 			document.getElementById('modalSwitchTotal').textContent = switchTotal;
 			document.getElementById('modalSwitchRate').textContent = switchRate + '%';
 			document.getElementById('modalTotalGames').textContent = totalGames;
+
+			// Gestion du pluriel
+			document.getElementById('stayVictoireLabel').textContent = stayWins < 2 ? 'victoire' : 'victoires';
+			document.getElementById('stayPartieLabel').textContent = stayTotal < 2 ? 'partie' : 'parties';
+			document.getElementById('switchVictoireLabel').textContent = switchWins < 2 ? 'victoire' : 'victoires';
+			document.getElementById('switchPartieLabel').textContent = switchTotal < 2 ? 'partie' : 'parties';
+			document.getElementById('totalPartieLabel').textContent = totalGames < 2 ? 'partie jouée' : 'parties jouées';
 		}
 
 		function doorClick(doorNum) {
@@ -2054,9 +2454,12 @@
 			if (isWin) {
 				show("carwin", doorNum);
 				for (let i = 1; i <= 3; i++) if (i !== gameState.carDoor) show("goat", i);
+				playSound('victoire');
+				launchConfetti(3500);
 			} else {
 				show("goatlose", doorNum);
 				show("carlose", gameState.carDoor);
+				playSound('defaite');
 			}
 
 			const strategy = isStaying ? 'rester' : 'changer';
@@ -2071,16 +2474,18 @@
 			if (content) {
 				const img = content.querySelector("img");
 				if (img) {
-					if (what === "goat" || what === "goatlose") { img.src = "chèvre.png"; img.alt = "chèvre"; }
-					else if (what === "carwin" || what === "carlose") { img.src = "voiture.png"; img.alt = "voiture"; }
+					if (what === "goat" || what === "goatlose") { img.src = "img/chevre.png"; img.alt = "chèvre"; }
+					else if (what === "carwin" || what === "carlose") { img.src = "img/voiture.png"; img.alt = "voiture"; }
 					img.style.display = "block";
 				}
 				content.style.display = "block";
 			}
 			document.getElementById(`door${which}`)?.classList.add("open");
+			playSound('porte');
 		}
 
 		function playAgain() {
+			stopConfetti();
 			for (let i = 1; i <= 3; i++) {
 				document.getElementById(`door${i}`)?.classList.remove("open");
 				const content = document.getElementById(`doorContent${i}`);
