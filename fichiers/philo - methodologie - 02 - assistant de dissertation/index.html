@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>feuille de route</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+	<link rel="icon" href="../../src/favicon.ico" />
+	<title>feuille de route</title>
 <style>
 	* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
 	body { background: #f4f6f8; color: #374151; line-height: 1.5; min-height: 100vh; padding: 12px; transition: background 0.3s ease; }
@@ -130,7 +131,6 @@
 	.recall-banner .item { margin: 4px 0; }
 	.recall-banner .item + .item { border-top: 1px dashed #fde68a; padding-top: 4px; }
 
-	/* ========== STEPPER PRINCIPAL ========== */
 	.stepper-main { display: flex; justify-content: space-between; position: relative; margin-bottom: 20px; padding: 0 5px; }
 	.stepper-main::before { content: ''; position: absolute; top: 19px; left: 24px; right: 24px; height: 3px; background: #e0e0e0; z-index: 0; }
 	.stepper-main .step { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; cursor: pointer; }
@@ -143,14 +143,12 @@
 	.stepper-main .step.active .step-label { color: #4f46e5; font-weight: 600; }
 	.stepper-main .step.completed .step-label { color: #10b981; font-weight: 600; }
 
-	/* ========== SUBSTEPPER HORIZONTAL ========== */
 	.substepper-horizontal { display: flex; justify-content: space-between; overflow-x: auto; padding: 10px 5px 24px 5px; margin-bottom: 20px; position: relative; scrollbar-width: none; -ms-overflow-style: none; }
 	.substepper-horizontal::-webkit-scrollbar { display: none; }
 	.substepper-horizontal::before { content: ''; position: absolute; top: 27px; left: 24px; right: 24px; height: 3px; background: #e0e0e0; z-index: 0; }
 	.substepper-horizontal .substep { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; cursor: pointer; flex-shrink: 0; min-width: 50px; margin: 0 8px; }
 	.substepper-horizontal .substep:first-child { margin-left: 0; }
 	.substepper-horizontal .substep:last-child { margin-right: 0; }
-	/* MODIFICATION : width/height passés à 42px et font-size à 13px pour accueillir "1.12" */
 	.substepper-horizontal .substep-circle { width: 42px; height: 42px; border-radius: 50%; background: #e0e0e0; color: #888; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; transition: all .3s; position: relative; z-index: 1; flex-shrink: 0; }
 	.substepper-horizontal .substep.active .substep-circle { background: #4f46e5; color: #fff; }
 	.substepper-horizontal .substep.completed .substep-circle { background: #10b981; color: #fff; }
@@ -182,7 +180,6 @@
 	.saved-hint { font-size: 12px; color: #10b981; margin-left: 8px; opacity: 0; transition: opacity .3s; }
 	.saved-hint.show { opacity: 1; }
 
-	/* ========== THÈME SOMBRE ========== */
 	body.dark-theme { background: #1a202c; color: #e2e8f0; }
 	body.dark-theme .toolbar, body.dark-theme .toolbar-mobile { background: rgba(26, 32, 44, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
 	body.dark-theme .toolbar-title, body.dark-theme .mobile-title { color: #ff0000 !important; }
@@ -317,18 +314,18 @@
 		<input type="file" id="importInput" accept=".js,application/javascript">
 	</div>
 	<div class="title-field" id="titleField">
-		<label for="dissertationTitle">Intitulé de la dissertation</label>
-		<input type="text" id="dissertationTitle" placeholder="Exemple : « Peut-on être libre sans le savoir ? »">
-		<div class="hint">Ce champ verrouille toutes les étapes tant qu'il est vide. Appuyez sur Entrée pour continuer.</div>
+		<label for="dissertationTitle">intitulé de la dissertation</label>
+		<input type="text" id="dissertationTitle" placeholder="exemple : « peut-on être libre sans le savoir ? »">
+		<div class="hint">ce champ verrouille toutes les étapes tant qu'il est vide. Appuyez sur Entrée pour continuer.</div>
 	</div>
 	<h2 class="step-main-title" id="stepMainTitle">étape 1 · analyse du sujet</h2>
 	<div class="recall-banner" id="recallBanner" style="display:none;"></div>
 	<div id="subStepperRoot" class="substepper-horizontal"></div>
 	<div id="contentRoot"></div>
 	<div class="actions">
-		<button class="btn-prev" id="btnPrev">← Précédent</button>
-		<div><span class="saved-hint" id="savedHint">✓ Enregistré</span></div>
-		<button class="btn-next" id="btnNext">Suivant →</button>
+		<button class="btn-prev" id="btnPrev">← précédent</button>
+		<div><span class="saved-hint" id="savedHint">✓ enregistré</span></div>
+		<button class="btn-next" id="btnNext">suivant →</button>
 	</div>
 </div>
 <div class="print-container" id="printContainer"></div>
@@ -484,7 +481,7 @@ function cleanFileName(title) {
 				if ((sIdx === 2 && cIdx === 12) || (sIdx === 5 && cIdx === 3)) return;
 
 				const k = keyFor(sIdx, cIdx);
-				const txt = (answers[k] || '').trim();
+				const txt = (answers[k] || '').trim().replace(/\|/g, ', ');
 
 				if (txt) {
 					const block = document.createElement('div');
@@ -648,76 +645,79 @@ function cleanFileName(title) {
 const tree = [
 	{ label: 'analyse', fullTitle: "étape 1 · analyse du sujet",
 		children: [
-			{ label: 'Thème', fullTitle: "1.1 · thème", type: 'tags', consigne: "sélectionnez un ou plusieurs thèmes du programme dans lesquels s'inscrit le sujet",
+			{ label: 'thème', fullTitle: "1.1 · thème", type: 'tags', consigne: "sélectionnez une ou plusieurs notions du programme dans lesquels s'inscrit le sujet",
 				options: ['art', 'bonheur', 'conscience', 'devoir', 'État', 'inconscient', 'justice', 'langage', 'liberté', 'nature', 'raison', 'religion', 'science', 'technique', 'temps', 'travail', 'vérité'] },
-			{ label: 'Repère', fullTitle: "1.2 · repère", type: 'tags', consigne: "sélectionnez un ou plusieurs repères conceptuels du programme utiles pour analyser le sujet",
+			{ label: 'repère', fullTitle: "1.2 · repère", type: 'tags', consigne: "sélectionnez un ou plusieurs repères du programme utiles pour analyser le sujet",
 				options: ['absolu / relatif','abstrait / concret','en acte / en puissance','analyse / synthèse','concept / image / métaphore','contingent / nécessaire','croire / savoir','essentiel / accidentel','exemple / preuve','expliquer / comprendre','en fait / en droit','formel / matériel','genre / espèce / individu','hypothèse / conséquence / conclusion','idéal / réel','identité / égalité / différence','impossible / possible','intuitif / discursif','légal / légitime','médiat / immédiat','objectif / subjectif / intersubjectif','obligation / contrainte','origine / fondement','persuader / convaincre','principe / cause / fin','public / privé','ressemblance / analogie','théorie / pratique','transcendant / immanent','universel / général / particulier / singulier','vrai / probable / certain'] },
-			{ label: 'Mots-clés', fullTitle: "1.3 · mots-clés", type: 'textarea', consigne: "listez les mots-clés du sujet" },
-			{ label: 'Petits mots', fullTitle: "1.4 · petits mots logiques", type: 'textarea', consigne: "« peut-on », « faut-il », « toujours », « sans »… : analysez ces connecteurs qui orientent le sujet." },
-			{ label: 'Définitions', fullTitle: "1.5 · termes essentiels", type: 'textarea', consigne: "définissez chaque terme essentiel et posez les sources importantes" },
-			{ label: 'Présupposés', fullTitle: "1.6 · présupposés", type: 'textarea', consigne: "qu'est-ce que la question suppose ? quelles évidences ne sont pas questionnées ?" }
+			{ label: 'mots-clés', fullTitle: "1.3 · mots-clés", type: 'textarea', consigne: "liste des mots-clés du sujet" },
+			{ label: 'connecteurs logiques', fullTitle: "1.4 · connecteurs logiques", type: 'textarea', consigne: "analyse des connecteurs qui orientent le sujet : « peut-on », « faut-il », « toujours », « sans »…" },
+			{ label: 'définitions', fullTitle: "1.5 · termes essentiels", type: 'textarea', consigne: "définir chaque terme essentiel et posez les sources importantes" },
+			{ label: 'présupposés', fullTitle: "1.6 · présupposés", type: 'textarea', consigne: "que suppose la question ? quelles évidences ne sont pas questionnées ?" }
 		]
 	},
 	{ label: 'problématisation', fullTitle: "étape 2 · problématisation du sujet",
 		children: [
-			{ label: 'option A', fullTitle: "2.1 · option A : réponse spontanée", type: 'textarea', consigne: "quelle est la réponse immédiate et spontanée du sens commun à la question ?" },
-			{ label: 'option B', fullTitle: "2.2 · option B : objection, limite de l'option A", type: 'textarea', consigne: "montrez en quoi l'option A est insuffisante, contestable ou limitée." },
-			{ label: 'contradiction', fullTitle: "2.3 · formulation de la contradiction", type: 'textarea', consigne: "explicitez la tension logique entre l'option A et l'option B." },
-			{ label: 'problème', fullTitle: "2.4 · rédaction du problème", type: 'textarea', consigne: "formulez la problématique en 1–2 phrases." }
+			{ label: 'option A', fullTitle: "2.1 · option A : réponse spontanée, ce qui semble évident", type: 'textarea', consigne: "quelle est la réponse immédiate et spontanée, celle du sens commun, à la question ?" },
+			{ label: 'option B', fullTitle: "2.2 · option B : objection, limite de l'option A", type: 'textarea', consigne: "en quoi l'option A est insuffisante, contestable ou limitée ?" },
+			{ label: 'contradiction', fullTitle: "2.3 · formulation de la contradiction", type: 'textarea', consigne: "explicitez la tension logique entre l'option A et l'option B" },
+			{ label: 'problème', fullTitle: "2.4 · rédaction du problème", type: 'textarea', consigne: "formulez la problématique en 1–2 phrases" }
 		]
 	},
 	{ label: 'plan', fullTitle: "étape 3 · plan",
 		children: [
-			{ label: 'partie 1<br> titre', fullTitle: "1. titre", type: 'text', consigne: "titre explicite énonçant la thèse de la partie." },
-			{ label: 'partie 1<br> argument 1', fullTitle: "1.1 argument", type: 'textarea', consigne: "argument 1 + référence philosophique (facultatif)." },
-			{ label: 'partie 1<br> argument 2', fullTitle: "1.2 argument", type: 'textarea', consigne: "argument 2 + référence philosophique (facultatif)." },
-			{ label: 'partie 1<br> bilan', fullTitle: "1.3 bilan", type: 'textarea', consigne: "ce que cette partie a établi, et ce qui reste à examiner." },
-			{ label: 'partie 2<br> titre', fullTitle: "2. titre", type: 'text', consigne: "titre explicite énonçant la thèse de la partie." },
-			{ label: 'partie 2<br> argument 1', fullTitle: "2.1 argument", type: 'textarea', consigne: "argument 1 + référence philosophique (facultatif)." },
-			{ label: 'partie 2<br> argument 2', fullTitle: "2.2 argument", type: 'textarea', consigne: "argument 2 + référence philosophique (facultatif)." },
-			{ label: 'partie 2<br> bilan', fullTitle: "2.3 bilan", type: 'textarea', consigne: "ce que cette partie a établi, et ce qui reste à examiner." },
-			{ label: 'partie 3<br> titre', fullTitle: "3. titre", type: 'text', consigne: "titre explicite énonçant la thèse de la partie." },
-			{ label: 'partie 3<br> argument 1', fullTitle: "3.1 argument", type: 'textarea', consigne: "argument 1 + référence philosophique (facultatif)." },
-			{ label: 'partie 3<br> argument 2', fullTitle: "3.2 argument", type: 'textarea', consigne: "argument 2 + référence philosophique (facultatif)." },
-			{ label: 'partie 3<br> bilan', fullTitle: "3.3 bilan", type: 'textarea', consigne: "ce que cette partie a établi, et ce qui reste à examiner." },
-			{ label: 'cohérence', fullTitle: "contrôle de cohérence", type: 'checkbox', consigne: "vérifiez la cohérence du plan",
-				options: [ {value:'p2-decule',label:'P2 découle de P1'}, {value:'p3-repond',label:'P3 répond aux objections de P2'} ] }
+			{ label: 'titre', fullTitle: "1. titre", type: 'text', consigne: "titre explicite énonçant la thèse de la partie" },
+			{ label: 'argument 1', fullTitle: "1.1 argument", type: 'textarea', consigne: "argument 1 + référence philosophique (facultatif)" },
+			{ label: 'argument 2', fullTitle: "1.2 argument", type: 'textarea', consigne: "argument 2 + référence philosophique (facultatif)" },
+			{ label: 'bilan', fullTitle: "1.3 bilan", type: 'textarea', consigne: "ce que cette partie a établi, et ce qui reste à examiner" },
+			
+			{ label: 'titre', fullTitle: "2. titre", type: 'text', consigne: "titre explicite énonçant la thèse de la partie" },
+			{ label: 'argument 1', fullTitle: "2.1 argument", type: 'textarea', consigne: "argument 1 + référence philosophique (facultatif)" },
+			{ label: 'argument 2', fullTitle: "2.2 argument", type: 'textarea', consigne: "argument 2 + référence philosophique (facultatif)" },
+			{ label: 'bilan', fullTitle: "2.3 bilan", type: 'textarea', consigne: "ce que cette partie a établi, et ce qui reste à examiner" },
+			
+			{ label: 'titre', fullTitle: "3. titre", type: 'text', consigne: "titre explicite énonçant la thèse de la partie" },
+			{ label: 'argument 1', fullTitle: "3.1 argument", type: 'textarea', consigne: "argument 1 + référence philosophique (facultatif)" },
+			{ label: 'argument 2', fullTitle: "3.2 argument", type: 'textarea', consigne: "argument 2 + référence philosophique (facultatif)" },
+			{ label: 'bilan', fullTitle: "3.3 bilan", type: 'textarea', consigne: "ce que cette partie a établi, et ce qui reste à examiner" },
+
+			{ label: '', fullTitle: "à vérifier", type: 'checkbox', consigne: "",
+			options: [ {value:'p2-decule',label:'la partie 2 découle de la partie 1'}, {value:'p3-repond',label:'la partie 3 répond aux objections de la partie 2'} ] }
 		]
 	},
 	{ label: 'introduction', fullTitle: "étape 4 · rédaction de l'introduction",
 		children: [
-			{ label: 'Accroche', fullTitle: "4.1 · Accroche", type: 'textarea', optional: true, consigne: "Point de départ au choix : concrète (★ recommandée), conceptuelle ou textuelle. (Facultatif)" },
-			{ label: 'Définitions', fullTitle: "4.2 · Définition des termes", type: 'textarea', autoFill: '0.4', consigne: "Reprise des définitions de 1.5 — modifiable." },
-			{ label: 'Problème', fullTitle: "4.3 · Émergence du problème", type: 'textarea', autoFill: '1.3', consigne: "Reprise de la problématique de 2.4 — modifiable." },
-			{ label: 'Annonce du plan', fullTitle: "4.4 · Annonce du plan", type: 'textarea', consigne: "Annoncez le mouvement des trois parties." }
+			{ label: 'accroche', fullTitle: "4.1 · accroche", type: 'textarea', optional: true, consigne: "point de départ au choix : concrète (★ recommandée), conceptuelle ou textuelle" },
+			{ label: 'définitions', fullTitle: "4.2 · définition des termes", type: 'textarea', autoFill: '0.4', consigne: "reprise des définitions de 1.5 — modifiable" },
+			{ label: 'problème', fullTitle: "4.3 · émergence du problème", type: 'textarea', autoFill: '1.3', consigne: "reprise du problème de 2.4 — modifiable" },
+			{ label: 'annonce du plan', fullTitle: "4.4 · annonce du plan", type: 'textarea', optional: true, consigne: "annoncez le mouvement des trois parties" }
 		]
 	},
 	{ label: 'développement', fullTitle: "étape 5 · rédaction du développement",
 		children: [
-			{ label: 'Transition intro', fullTitle: "5.1 · Transition depuis l'introduction", type: 'textarea', consigne: "Transition entre l'introduction et la Partie 1." },
-			{ label: 'Partie 1', fullTitle: "5.2 · Rédaction de la Partie 1", type: 'textarea', autoFill: '2.3', consigne: "Rédigez la Partie 1 (référence : plan 1.1 à 1.3)." },
-			{ label: 'Transition P2', fullTitle: "5.3 · Transition vers la Partie 2", type: 'textarea', consigne: "Transition entre les Parties 1 et 2." },
-			{ label: 'Partie 2', fullTitle: "5.4 · Rédaction de la Partie 2", type: 'textarea', autoFill: '2.7', consigne: "Rédigez la Partie 2 (référence : plan 2.1 à 2.3)." },
-			{ label: 'Transition P3', fullTitle: "5.5 · Transition vers la Partie 3", type: 'textarea', consigne: "Transition entre les Parties 2 et 3." },
-			{ label: 'Partie 3', fullTitle: "5.6 · Rédaction de la Partie 3", type: 'textarea', autoFill: '2.11', consigne: "Rédigez la Partie 3 (référence : plan 3.1 à 3.3)." }
+			{ label: 'transition', fullTitle: "5.1 · transition depuis l'introduction", type: 'textarea', consigne: "transition entre l'introduction et la partie 1" },
+			{ label: 'partie 1', fullTitle: "5.2 · rédaction de la partie 1", type: 'textarea', autoFill: '2.3', consigne: "rédigez la partie 1 (référence : plan 1.1 à 1.3)" },
+			{ label: 'transition', fullTitle: "5.3 · transition vers la partie 2", type: 'textarea', consigne: "transition entre les parties 1 et 2" },
+			{ label: 'partie 2', fullTitle: "5.4 · rédaction de la partie 2", type: 'textarea', autoFill: '2.7', consigne: "rédigez la partie 2 (référence : plan 2.1 à 2.3)" },
+			{ label: 'transition', fullTitle: "5.5 · transition vers la partie 3", type: 'textarea', consigne: "transition entre les parties 2 et 3" },
+			{ label: 'partie 3', fullTitle: "5.6 · rédaction de la partie 3", type: 'textarea', autoFill: '2.11', consigne: "rédigez la partie 3 (référence : plan 3.1 à 3.3)" }
 		]
 	},
 	{ label: 'conclusion', fullTitle: "étape 6 · rédaction de la conclusion",
 		children: [
-			{ label: 'Bilan du parcours', fullTitle: "6.1 · bilan du parcours logique", type: 'textarea', consigne: "Retracez brièvement les grandes étapes du raisonnement." },
-			{ label: 'Réponse', fullTitle: "6.2 · réponse claire à la problématique", type: 'textarea', consigne: "Apportez une prise de position nette et nuancée." },
-			{ label: 'Ouverture', fullTitle: "6.3 · ouverture (facultatif)", type: 'textarea', optional: true, consigne: "Proposez un prolongement philosophique pertinent." },
-			{ label: 'Contrôles', fullTitle: "6.4 · contrôles de la conclusion", type: 'checkbox', consigne: "À éviter absolument.",
-				options: [ {value:'pas-nouvel-ex',label:'Pas de nouveaux exemples/concepts'}, {value:'reponse-claire',label:'Réponse claire (pas de relativisme)'} ] }
+			{ label: 'bilan', fullTitle: "6.1 · bilan du parcours logique", type: 'textarea', consigne: "résumé de la partie 1 et de la partie 2" },
+			{ label: 'réponse', fullTitle: "6.2 · réponse claire à la problématique", type: 'textarea', consigne: "résumé de la partie 3, une prise de position nette et nuancée" },
+			{ label: 'ouverture', fullTitle: "6.3 · ouverture", type: 'textarea', optional: true, consigne: "proposez un prolongement philosophique pertinent" },
+			{ label: 'contrôles', fullTitle: "6.4 · à vérifier", type: 'checkbox',
+			options: [ {value:'pas-nouvel-ex',label:'pas de nouveaux exemples/concepts'}, {value:'reponse-claire',label:'réponse claire (pas de relativisme)'} ] }
 		]
 	},
 	{ label: 'relecture', fullTitle: "étape 7 · relecture",
 		children: [
-			{ label: 'Orthographe', fullTitle: "7.1 · orthographe / grammaire", type: 'checkbox', consigne: "Relisez attentivement.", options: [ {value:'ok',label:'Orthographe et grammaire vérifiées'} ] },
-			{ label: 'Pertinence', fullTitle: "7.2 · chaque paragraphe sert le plan", type: 'checkbox', consigne: "Supprimez les digressions.", options: [ {value:'ok',label:'Chaque paragraphe sert le plan'} ] },
-			{ label: 'Transitions', fullTitle: "7.3 · transitions présentes et logiques", type: 'checkbox', consigne: "Vérifiez les transitions.", options: [ {value:'ok',label:'Transitions présentes et logiques'} ] },
-			{ label: 'Cohérence prob.', fullTitle: "7.4 · problématique annoncée = problématique traitée", type: 'checkbox', consigne: "Vérifiez la cohérence.", options: [ {value:'ok',label:'Problématique annoncée = problématique traitée'} ] },
-			{ label: 'Conclusion ↔ prob.', fullTitle: "7.5 · conclusion répond à la problématique", type: 'checkbox', consigne: "Vérifiez la réponse finale.", options: [ {value:'ok',label:'La conclusion répond à la problématique'} ] }
+			{ label: 'orthographe', fullTitle: "7.1 · orthographe / grammaire", type: 'checkbox', consigne: "relisez attentivement", options: [ {value:'ok',label:'orthographe et grammaire vérifiées'} ] },
+			{ label: 'pertinence', fullTitle: "7.2 · chaque paragraphe sert le plan", type: 'checkbox', consigne: "supprimez les digressions", options: [ {value:'ok',label:'chaque paragraphe sert le plan'} ] },
+			{ label: 'transitions', fullTitle: "7.3 · transitions présentes et logiques", type: 'checkbox', consigne: "vérifiez les transitions", options: [ {value:'ok',label:'transitions présentes et logiques'} ] },
+			{ label: 'problème', fullTitle: "7.4 · problème annoncé = problème traité", type: 'checkbox', consigne: "vérifiez la cohérence", options: [ {value:'ok',label:'problématique annoncée = problématique traitée'} ] },
+			{ label: 'conclusion ↔ prob.', fullTitle: "7.5 · conclusion répond à la problématique", type: 'checkbox', consigne: "vérifiez la réponse finale", options: [ {value:'ok',label:'la conclusion répond à la problématique'} ] }
 		]
 	}
 ];
@@ -733,7 +733,7 @@ function loadAnswers() {
 let answers = loadAnswers();
 let dissertationTitle = localStorage.getItem(TITLE_KEY) || '';
 let currentStep = 0;
-let currentSubStep = 0; // Variable simple pour suivre le sous-élément actif
+let currentSubStep = 0;
 
 function saveAnswers(a) { localStorage.setItem(STORAGE_KEY, JSON.stringify(a)); }
 function keyFor(stepIdx, childIdx) { return `${stepIdx}.${childIdx}`; }
@@ -742,8 +742,8 @@ function isOptional(node) { return node.optional === true; }
 function isChildCompleted(stepIdx, childIdx) {
 	const node = tree[stepIdx].children[childIdx];
 	const key = keyFor(stepIdx, childIdx);
-	const rawValue = (answers[key] || '').trim();
-	const autoValue = node.autoFill ? (answers[node.autoFill] || '').trim() : '';
+	const rawValue = typeof answers[key] === 'string' ? answers[key].trim() : '';
+	const autoValue = node.autoFill && typeof answers[node.autoFill] === 'string' ? answers[node.autoFill].trim() : '';
 	if (isOptional(node)) return true;
 	return rawValue.length > 0 || autoValue.length > 0;
 }
@@ -754,7 +754,8 @@ function computeProgress() {
 		step.children.forEach((child, cIdx) => {
 			if (!isOptional(child)) {
 				total++;
-				if ((answers[keyFor(sIdx, cIdx)] || '').trim().length > 0) filled++;
+				const val = typeof answers[keyFor(sIdx, cIdx)] === 'string' ? answers[keyFor(sIdx, cIdx)].trim() : '';
+				if (val.length > 0) filled++;
 			}
 		});
 	});
@@ -779,19 +780,17 @@ function renderMainStepper() {
 		const isCompleted = currentStep > i;
 		step.className = `step ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
 		step.onclick = () => { currentStep = i; render(); };
-		step.innerHTML = `<div class="step-circle">${i + 1}</div><div class="step-label">${child.label}</div>`;
+		step.innerHTML = `<div class="step-circle">${i + 1}</div><div class="step-label">${child.label || '...'}</div>`;
 		mainWrapper.appendChild(step);
 	});
 	root.appendChild(mainWrapper);
 }
 
-// LOGIQUE SIMPLIFIÉE : Un sous-élément est vert s'il est rempli OU si son indice est inférieur au currentSubStep
 function renderSubStepper() {
 	const root = document.getElementById('subStepperRoot');
 	root.innerHTML = '';
 	const children = tree[currentStep].children;
 
-	// Sécurité : s'assurer que l'indice est dans les limites
 	if (currentSubStep >= children.length) currentSubStep = 0;
 
 	children.forEach((child, i) => {
@@ -808,8 +807,7 @@ function renderSubStepper() {
 			document.getElementById(`block-${i}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		};
 
-		// MODIFICATION ICI : Affichage du format "X.Y" (ex: 1.1, 2.3)
-		step.innerHTML = `<div class="substep-circle">${currentStep + 1}.${i + 1}</div><div class="substep-label">${child.label}</div>`;
+		step.innerHTML = `<div class="substep-circle">${currentStep + 1}.${i + 1}</div><div class="substep-label">${child.label || ''}</div>`;
 		root.appendChild(step);
 	});
 }
@@ -821,30 +819,34 @@ function renderContent() {
 
 	if (currentStep === 2) {
 		const groups = [
-			{ title: 'Partie 1', indices: [0, 1, 2, 3] },
-			{ title: 'Partie 2', indices: [4, 5, 6, 7] },
-			{ title: 'Partie 3', indices: [8, 9, 10, 11] },
-			{ title: 'Contrôle de cohérence', indices: [12] }
+			{ title: 'partie 1', indices: [0, 1, 2, 3] },
+			{ title: 'partie 2', indices: [4, 5, 6, 7] },
+			{ title: 'partie 3', indices: [8, 9, 10, 11] },
+			{ title: 'vérifiez la cohérence du plan', indices: [12] }
 		];
 		groups.forEach(group => {
 			const block = document.createElement('div');
 			block.className = 'content-block';
-			let html = `<h3>${group.title}</h3>`;
-			group.indices.forEach(i => {
+			let html = group.title ? `<h3>${group.title}</h3>` : '';
+			group.indices.forEach((i, idx) => {
 				const child = children[i];
 				const key = keyFor(currentStep, i);
-				const rawValue = answers[key] || '';
-				const autoValue = child.autoFill ? answers[child.autoFill] : '';
+				const rawValue = typeof answers[key] === 'string' ? answers[key].trim() : '';
+				const autoValue = (child.autoFill && typeof answers[child.autoFill] === 'string') ? answers[child.autoFill].trim() : '';
 				const value = rawValue || autoValue;
 				const isAuto = !rawValue && autoValue;
 				const autoClass = isAuto ? 'auto-filled' : '';
 				const autoBadge = isAuto ? ' <span class="auto-badge">PRÉ-REMPLI</span>' : '';
 				const optional = isOptional(child);
 				const optionalTag = optional ? ' <span class="auto-badge" style="background:#f59e0b;">FACULTATIF</span>' : '';
-				html += `<label style="margin-top:16px; font-size:12px; color:#6366f1; font-weight:700; text-transform:uppercase; display:block;">${child.label}${optionalTag} ${autoBadge}</label>`;
+				
+				if (child.label && !(idx === 0 && child.label === 'titre')) {
+					html += `<label style="margin-top:16px; font-size:12px; color:#6366f1; font-weight:700; text-transform:uppercase; display:block;">${child.label}${optionalTag} ${autoBadge}</label>`;
+				}
+				
 				if (child.consigne) html += `<div style="font-size:12px; color:#666; margin-bottom:6px; font-style:italic;">${child.consigne}</div>`;
 				if (child.type === 'tags' || child.type === 'checkbox') {
-					const selected = value.split('|').filter(Boolean);
+					const selected = value ? value.split('|').filter(Boolean) : [];
 					html += `<div class="tag-list">`;
 					child.options.forEach(opt => {
 						const val = typeof opt === 'string' ? opt : opt.value;
@@ -871,8 +873,8 @@ function renderContent() {
 		for (let i = 0; i < 3; i++) {
 			const child = children[i];
 			const key = keyFor(currentStep, i);
-			const value = answers[key] || '';
-			const selected = value.split('|').filter(Boolean);
+			const value = typeof answers[key] === 'string' ? answers[key] : '';
+			const selected = value ? value.split('|').filter(Boolean) : [];
 			const itemDiv = document.createElement('div');
 			itemDiv.style.cssText = 'width: 100%;';
 			let html = '';
@@ -891,8 +893,8 @@ function renderContent() {
 		for (let i = 3; i < 5; i++) {
 			const child = children[i];
 			const key = keyFor(currentStep, i);
-			const value = answers[key] || '';
-			const selected = value.split('|').filter(Boolean);
+			const value = typeof answers[key] === 'string' ? answers[key] : '';
+			const selected = value ? value.split('|').filter(Boolean) : [];
 			const itemDiv = document.createElement('div');
 			itemDiv.style.cssText = 'width: 100%;';
 			let html = '';
@@ -915,8 +917,8 @@ function renderContent() {
 	} else {
 		children.forEach((child, i) => {
 			const key = keyFor(currentStep, i);
-			const rawValue = answers[key] || '';
-			const autoValue = child.autoFill ? answers[child.autoFill] : '';
+			const rawValue = typeof answers[key] === 'string' ? answers[key].trim() : '';
+			const autoValue = (child.autoFill && typeof answers[child.autoFill] === 'string') ? answers[child.autoFill].trim() : '';
 			const value = rawValue || autoValue;
 			const isAuto = !rawValue && autoValue;
 			const autoClass = isAuto ? 'auto-filled' : '';
@@ -929,7 +931,7 @@ function renderContent() {
 			let html = `<h3>${child.fullTitle}${optionalTag}</h3>`;
 			if (child.consigne) html += `<div class="consigne">${child.consigne}</div>`;
 			if (child.type === 'tags' || child.type === 'checkbox') {
-				const selected = value.split('|').filter(Boolean);
+				const selected = value ? value.split('|').filter(Boolean) : [];
 				html += `<div class="tag-list">`;
 				child.options.forEach(opt => {
 					const val = typeof opt === 'string' ? opt : opt.value;
@@ -963,7 +965,8 @@ function renderContent() {
 	root.querySelectorAll('.tag').forEach(tag => {
 		tag.addEventListener('click', () => {
 			const key = tag.dataset.key;
-			let selected = (answers[key] || '').split('|').filter(Boolean);
+			let currentVal = typeof answers[key] === 'string' ? answers[key] : '';
+			let selected = currentVal ? currentVal.split('|').filter(Boolean) : [];
 			const val = tag.dataset.value;
 			if (selected.includes(val)) selected = selected.filter(v => v !== val);
 			else selected.push(val);
@@ -983,19 +986,22 @@ function renderRecallBanner() {
 	const items = [];
 	if (dissertationTitle.trim()) items.push(`<div class="item"><span class="label">Sujet : </span>« ${escapeHtml(dissertationTitle)} »</div>`);
 	const themes = answers['0.0'];
-	if (themes && themes.trim()) items.push(`<div class="item"><span class="label">Thème(s) : </span>${themes.split('|').map(t => escapeHtml(t)).join(', ')}</div>`);
+	if (themes && typeof themes === 'string' && themes.trim()) items.push(`<div class="item"><span class="label">Thème(s) : </span>${themes.split('|').map(t => escapeHtml(t)).join(', ')}</div>`);
 	const reperes = answers['0.1'];
-	if (reperes && reperes.trim()) items.push(`<div class="item"><span class="label">Repère(s) : </span>${reperes.split('|').map(r => escapeHtml(r)).join(', ')}</div>`);
+	if (reperes && typeof reperes === 'string' && reperes.trim()) items.push(`<div class="item"><span class="label">Repère(s) : </span>${reperes.split('|').map(r => escapeHtml(r)).join(', ')}</div>`);
 	const these = answers['1.0'];
-	if (these && these.trim()) items.push(`<div class="item"><span class="label">Option A : </span>${escapeHtml(these)}</div>`);
+	if (these && typeof these === 'string' && these.trim()) items.push(`<div class="item"><span class="label">Option A : </span>${escapeHtml(these)}</div>`);
 	const anti = answers['1.1'];
-	if (anti && anti.trim()) items.push(`<div class="item"><span class="label">Option B : </span>${escapeHtml(anti)}</div>`);
+	if (anti && typeof anti === 'string' && anti.trim()) items.push(`<div class="item"><span class="label">Option B : </span>${escapeHtml(anti)}</div>`);
 	if (items.length <= 1) { el.style.display = 'none'; return; }
 	el.style.display = 'block';
 	el.innerHTML = items.join('');
 }
 
-function escapeHtml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function escapeHtml(s) { 
+	if (s === undefined || s === null) return '';
+	return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); 
+}
 
 let savedTimer = null;
 function flashSaved() {
@@ -1016,7 +1022,7 @@ function updateButtons() {
 		btnNext.style.background = '#10b981';
 	} else {
 		btnNext.disabled = titleLock;
-		btnNext.textContent = 'Suivant →';
+		btnNext.textContent = 'suivant →';
 		btnNext.style.background = '';
 	}
 }
@@ -1104,7 +1110,7 @@ document.getElementById('importInput').addEventListener('change', (e) => {
 function render() {
 	document.getElementById('stepMainTitle').textContent = tree[currentStep].fullTitle;
 	renderMainStepper();
-	currentSubStep = 0; // Réinitialise le sous-stepper à 0 quand on change d'étape principale
+	currentSubStep = 0;
 	renderSubStepper();
 	renderContent();
 	updateButtons();
