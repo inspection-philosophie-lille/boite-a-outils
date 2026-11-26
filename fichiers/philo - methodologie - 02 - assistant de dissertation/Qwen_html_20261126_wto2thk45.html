@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>feuille de route</title>
+<style>
+	* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+	body { background: #f4f6f8; color: #374151; line-height: 1.5; min-height: 100vh; padding: 12px; transition: background 0.3s ease; }
+	.toast-container { position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
+	.toast { background: #fff; border-left: 4px solid #10b981; box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 16px 20px; border-radius: 8px; min-width: 300px; max-width: 400px; animation: slideIn 0.3s ease; }
+	.toast.hiding { animation: slideOut 0.3s ease forwards; }
+	.toast.info { border-left-color: #3b82f6; }
+	.toast.warning { border-left-color: #f59e0b; }
+	@keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+	@keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(400px); opacity: 0; } }
+	.toast-title { font-weight: 700; font-size: 14px; color: #10b981; margin-bottom: 6px; }
+	.toast.info .toast-title { color: #3b82f6; }
+	.toast.warning .toast-title { color: #f59e0b; }
+	.toast-message { font-size: 13px; color: #374151; line-height: 1.5; }
+	.confirm-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 11000; display: none; align-items: center; justify-content: center; animation: fadeIn 0.2s ease; }
+	.confirm-overlay.active { display: flex; }
+	@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+	.confirm-modal { background: #fff; border-radius: 16px; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-width: 480px; width: 90%; animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+	@keyframes scaleIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+	.confirm-modal h3 { font-size: 18px; font-weight: 700; color: #4f46e5; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+	.confirm-modal h3 svg { width: 24px; height: 24px; stroke: #4f46e5; }
+	.confirm-modal .confirm-subject { background: #f3f4f6; border-left: 3px solid #4f46e5; padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; font-style: italic; color: #374151; font-size: 14px; word-break: break-word; }
+	.confirm-modal .confirm-message { font-size: 14px; color: #6b7280; line-height: 1.6; margin-bottom: 24px; }
+	.confirm-modal .confirm-message strong { color: #dc2626; }
+	.confirm-actions { display: flex; justify-content: flex-end; gap: 10px; }
+	.confirm-actions button { padding: 10px 20px; border-radius: 8px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+	.confirm-cancel { background: #e5e7eb; color: #374151; }
+	.confirm-cancel:hover { background: #d1d5db; }
+	.confirm-validate { background: #4f46e5; color: #fff; }
+	.confirm-validate:hover { background: #4338ca; }
+	.drag-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(79, 70, 229, 0.9); z-index: 9999; display: none; align-items: center; justify-content: center; pointer-events: none; }
+	.drag-overlay.active { display: flex; }
+	.drag-overlay-content { background: white; padding: 40px 60px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); text-align: center; }
+	.drag-overlay-content h2 { color: #4f46e5; font-size: 24px; margin-bottom: 10px; }
+	.drag-overlay-content p { color: #666; font-size: 16px; }
+	.toolbar-wrapper { position: relative; z-index: 10; margin-bottom: 12px; flex-shrink: 0; }
+	.toolbar { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background: rgba(244, 246, 248, 0.95); backdrop-filter: blur(10px); height: 72px; border-radius: 12px 12px 0 0; gap: 10px; transition: background 0.3s ease; }
+	.toolbar-left, .toolbar-right { display: flex; align-items: center; gap: 10px; flex: 1; }
+	.toolbar-left { justify-content: flex-start; }
+	.toolbar-right { justify-content: flex-end; }
+	.toolbar-center { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; pointer-events: none; }
+	.toolbar-title { color: #ff0000 !important; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: bold; white-space: nowrap; line-height: 1.2; }
+	.toolbar-subtitle { color: #666; font-size: clamp(0.9rem, 2.5vw, 1.1rem); line-height: 1.2; margin-top: 2px; }
+	.btn { width: 52px; height: 52px; border-radius: 50%; background: #e0e5ec; border: none; color: #444; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff; transition: all 0.2s ease; flex-shrink: 0; position: relative; }
+	.btn:hover { box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff; transform: translateY(-2px); }
+	.btn:active { transform: translateY(1px); }
+	.btn svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; flex-shrink: 0; }
+	.btn::after { content: attr(data-title); position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 0.5rem; background: #fff; color: #333; padding: 0.3rem 0.6rem; border-radius: 5px; font-size: 0.8rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 10; }
+	.btn:hover::after { opacity: 1; }
+	.btn-home .icon-wrapper { width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; }
+	.btn-home:hover .icon-wrapper { animation: spin360 2s infinite linear; }
+	@keyframes spin360 { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+	.btn-reload:hover svg, .btn-pdf:hover svg { animation: rotate 1s linear; }
+	@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+	.menu-icon { display: flex; flex-direction: column; gap: 4px; transition: transform 0.3s ease; }
+	.menu-icon span { display: block; width: 22px; height: 2px; background: currentColor; transition: all 0.3s ease; }
+	.btn-menu:hover .menu-icon { transform: rotate(90deg); }
+	.toolbar-mobile { display: none; flex-direction: column; align-items: center; width: 100%; padding: 8px 15px 0px; background: rgba(244, 246, 248, 0.95); backdrop-filter: blur(10px); border-radius: 12px 12px 0 0; }
+	.toolbar-mobile .btn { width: 46px; height: 46px; }
+	.toolbar-mobile .btn svg { width: 22px; height: 22px; }
+	.mobile-buttons { display: flex; justify-content: center; align-items: center; width: 100%; gap: 8px; padding: 0 10px; }
+	.mobile-title-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 10px; }
+	.mobile-title { color: #ff0000 !important; font-size: clamp(1.3rem, 4vw, 1.6rem); font-weight: bold; text-align: center; }
+	.mobile-subtitle { color: #666; font-size: clamp(0.8rem, 2.5vw, 1rem); text-align: center; margin-top: 2px; }
+	.fullscreen .toolbar-wrapper { transform: translateY(-100%); opacity: 0; pointer-events: none; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease; }
+	.fullscreen .hover-trigger { position: fixed; top: 0; left: 0; right: 0; height: 40px; z-index: 9; pointer-events: none; }
+	.fullscreen .hover-trigger.active { pointer-events: auto; }
+	.fullscreen .hover-trigger.active ~ .toolbar-wrapper, .fullscreen .toolbar-wrapper:hover { transform: translateY(0); opacity: 1; pointer-events: auto; }
+	.menu-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+	.menu-overlay.open { opacity: 1; visibility: visible; }
+	.slide-menu { position: fixed; top: 0; right: -300px; width: 280px; height: 100vh; background: #e0e5ec; transition: right 0.3s ease; z-index: 1001; padding: 20px; display: flex; flex-direction: column; border-radius: 20px 0 0 20px; }
+	.slide-menu.open { right: 0; }
+	.menu-header { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+	.menu-close, .submenu-close { background: #e0e5ec; border: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff; cursor: pointer; transition: all 0.2s ease; color: #444; }
+	.menu-close:hover, .submenu-close:hover { box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff; }
+	.menu-close svg, .submenu-close svg { width: 18px; height: 18px; stroke: currentColor; }
+	.menu-close:hover svg, .submenu-close:hover svg { animation: rotate 1s linear; }
+	.menu-item { display: flex; align-items: center; padding: 15px 20px; border: none; background: #e0e5ec; color: #444; font-size: 14px; cursor: pointer; border-radius: 8px; transition: all 0.2s ease; margin-bottom: 5px; width: 100%; gap: 16px; box-shadow: 0.3rem 0.3rem 0.6rem #bebebe, -0.3rem -0.3rem 0.6rem #ffffff; }
+	.menu-item:hover { background: #d1d1d1; box-shadow: inset 0.2rem 0.2rem 0.3rem #bebebe, inset -0.2rem -0.2rem 0.3rem #ffffff; }
+	.menu-item svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; fill: none; }
+	.submenu { position: fixed; top: 0; right: -340px; width: 280px; height: 100%; background: #e0e5ec; z-index: 10010; box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2); transition: right 0.5s ease; border-radius: 20px 0 0 20px; padding: 2rem 1.5rem; overflow-y: auto; }
+	.submenu.active { right: 0; }
+	.submenu-title { font-size: 1.4rem; font-weight: bold; color: #ff0000; margin: 2.5rem 0 0 0; text-align: center; }
+	.submenu-close { position: absolute; right: 20px; top: 20px; }
+	.submenu-content { color: #444; font-size: 14px; line-height: 1.4; margin-top: 20px; }
+	.settings-info { margin-top: 0; padding: 9px; background: rgba(0, 0, 0, 0.05); border-radius: 10px; text-align: left; margin-bottom: 9px; }
+	.info-icon, .submenu-icon { width: 24px; height: 24px; flex-shrink: 0; color: #444; stroke: currentColor; stroke-width: 2; fill: none; transition: transform 0.3s ease; display: inline-block; vertical-align: middle; margin-right: 8px; }
+	.info-icon:hover, .submenu-icon:hover { animation: rotate 1s linear; }
+	.toggle-container { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding: 10px 0; }
+	.toggle-label { color: #444; font-size: 1rem; }
+	.theme-switch { position: relative; display: inline-block; width: 52px; height: 26px; }
+	.theme-switch input { opacity: 0; width: 0; height: 0; }
+	.theme-switch .slider { position: absolute; cursor: pointer; inset: 0; background: #ccc; border-radius: 26px; transition: .3s; }
+	.theme-switch .slider:before { content: ""; position: absolute; width: 22px; height: 22px; left: 2px; top: 2px; background: white; border-radius: 50%; transition: .3s; }
+	.theme-switch input:checked + .slider { background: #2196F3; }
+	.theme-switch input:checked + .slider:before { transform: translateX(26px); }
+	kbd { background: #b9b3b3; border-radius: 4px; box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); color: white; display: inline-block; font-size: 0.85em; font-weight: 700; padding: 2px 6px; margin: 2px; }
+	.shortcuts-table { width: 100%; color: #444; border-collapse: collapse; line-height: 1.4; }
+	.shortcuts-table td { padding: 4px 0; border: none; vertical-align: middle; }
+	.shortcuts-table .key-combo { white-space: nowrap; padding-right: 12px; width: 1px; }
+	.about-row { display: flex; align-items: center; gap: 8px; width: 100%; }
+	.about-row > .about-text { flex: 1; min-width: 0; text-align: left; color: #444; font-size: 13px; line-height: 1.4; word-break: break-word; padding: 6px 0; }
+	body.menu-open .toolbar-wrapper, body.menu-open .stepper-main-wrapper, body.menu-open .stepper-container, body.menu-open .hover-trigger { filter: blur(4px); pointer-events: none; transition: filter 0.3s ease; }
+	body.menu-open .slide-menu, body.menu-open .submenu { filter: none !important; pointer-events: auto !important; }
+	body.menu-open .menu-overlay { pointer-events: auto; }
+	body.menu-open .toolbar, body.menu-open .toolbar-mobile { backdrop-filter: none; }
+	.stepper-main-wrapper { max-width: 1000px; margin: 0 auto 12px auto; padding: 0 16px; }
+	.stepper-container { max-width: 1000px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 20px 16px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); transition: background 0.3s ease; }
+	.step-main-title { font-size: 1.5rem; font-weight: 800; color: #4f46e5; margin: 0 0 16px 0; text-align: center; }
+	.progress-wrap { display: flex; align-items: center; gap: 10px; }
+	.progress-bar { width: 120px; height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
+	.progress-fill { height: 100%; background: linear-gradient(90deg, #4f46e5, #10b981); width: 0%; transition: width .4s; }
+	.progress-label { font-size: 12px; color: #666; font-weight: 600; min-width: 60px; }
+	.title-field { padding: 18px 20px; background: linear-gradient(135deg, #eef2ff, #f5f3ff); border-radius: 10px; margin-bottom: 22px; border: 2px solid #c7d2fe; }
+	.title-field label { display: block; font-size: 13px; font-weight: 700; color: #4f46e5; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+	.title-field input { width: 100%; padding: 12px 14px; font-size: 16px; border-radius: 8px; border: 2px solid #e0e7ff; background: #fff; font-family: inherit; font-weight: 600; color: #1e1b4b; transition: all .2s; }
+	.title-field input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.15); }
+	.title-field input::placeholder { color: #a5b4fc; font-weight: 400; font-style: italic; }
+	.title-field .hint { font-size: 11px; color: #6366f1; margin-top: 6px; font-style: italic; }
+	.title-field.locked-warning { animation: shake 0.4s ease; border-color: #ef4444; }
+	@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
+	.recall-banner { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 16px; margin-bottom: 18px; font-size: 13px; color: #78350f; line-height: 1.6; }
+	.recall-banner .label { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #b45309; margin-right: 6px; }
+	.recall-banner .item { margin: 4px 0; }
+	.recall-banner .item + .item { border-top: 1px dashed #fde68a; padding-top: 4px; }
+
+	/* ========== STEPPER PRINCIPAL ========== */
+	.stepper-main { display: flex; justify-content: space-between; position: relative; margin-bottom: 20px; padding: 0 5px; }
+	.stepper-main::before { content: ''; position: absolute; top: 19px; left: 24px; right: 24px; height: 3px; background: #e0e0e0; z-index: 0; }
+	.stepper-main .step { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; cursor: pointer; }
+	.stepper-main .step:first-child { margin-left: 0; }
+	.stepper-main .step:last-child { margin-right: 0; }
+	.stepper-main .step-circle { width: 38px; height: 38px; border-radius: 50%; background: #e0e0e0; color: #888; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; transition: all .3s; position: relative; z-index: 1; flex-shrink: 0; }
+	.stepper-main .step.active .step-circle { background: #4f46e5; color: #fff; }
+	.stepper-main .step.completed .step-circle { background: #10b981; color: #fff; }
+	.stepper-main .step-label { margin-top: 8px; font-size: 12px; color: #666; text-align: center; max-width: 100px; line-height: 1.3; }
+	.stepper-main .step.active .step-label { color: #4f46e5; font-weight: 600; }
+	.stepper-main .step.completed .step-label { color: #10b981; font-weight: 600; }
+
+	/* ========== SUBSTEPPER HORIZONTAL ========== */
+	.substepper-horizontal { display: flex; justify-content: space-between; overflow-x: auto; padding: 10px 5px 24px 5px; margin-bottom: 20px; position: relative; scrollbar-width: none; -ms-overflow-style: none; }
+	.substepper-horizontal::-webkit-scrollbar { display: none; }
+	.substepper-horizontal::before { content: ''; position: absolute; top: 27px; left: 24px; right: 24px; height: 3px; background: #e0e0e0; z-index: 0; }
+	.substepper-horizontal .substep { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; cursor: pointer; flex-shrink: 0; min-width: 50px; margin: 0 8px; }
+	.substepper-horizontal .substep:first-child { margin-left: 0; }
+	.substepper-horizontal .substep:last-child { margin-right: 0; }
+	/* MODIFICATION ICI : width/height passés à 42px et font-size à 13px pour accueillir "1.12" */
+	.substepper-horizontal .substep-circle { width: 42px; height: 42px; border-radius: 50%; background: #e0e0e0; color: #888; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; transition: all .3s; position: relative; z-index: 1; flex-shrink: 0; }
+	.substepper-horizontal .substep.active .substep-circle { background: #4f46e5; color: #fff; }
+	.substepper-horizontal .substep.completed .substep-circle { background: #10b981; color: #fff; }
+	.substepper-horizontal .substep-label { margin-top: 8px; font-size: 11px; color: #666; text-align: center; max-width: 70px; line-height: 1.2; white-space: normal; word-break: break-word; text-transform: lowercase; }
+	.substepper-horizontal .substep.active .substep-label { color: #4f46e5; font-weight: 600; }
+	.substepper-horizontal .substep.completed .substep-label { color: #10b981; font-weight: 600; }
+
+	.tag-list { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+	.tag { padding: 10px 16px; border-radius: 8px; border: 2px solid #e5e7eb; background: #fff; font-size: 13px; font-weight: 600; color: #6b7280; cursor: pointer; transition: all .2s; }
+	.tag:hover { border-color: #c7d2fe; color: #4f46e5; }
+	.tag.selected { border-color: #4f46e5; background: #eef2ff; color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+	.content-block { padding: 22px; background: #fafbff; border: 1px solid #e0e7ff; border-radius: 10px; margin-bottom: 20px; scroll-margin-top: 100px; }
+	.content-block h3 { margin: 0 0 6px; color: #4f46e5; font-size: 17px; line-height: 1.35; }
+	.content-block .consigne { background: #eef2ff; border-left: 3px solid #4f46e5; padding: 10px 14px; border-radius: 6px; font-size: 13px; color: #3730a3; margin-bottom: 15px; line-height: 1.5; }
+	.content-block label { display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 6px; margin-top: 14px; }
+	.content-block label:first-of-type { margin-top: 0; }
+	.content-block textarea, .content-block input[type="text"] { width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #e5e7eb; font-size: 14px; font-family: inherit; line-height: 1.5; resize: vertical; transition: border-color .2s; background: #fff; }
+	.content-block textarea { min-height: 100px; }
+	.content-block textarea:focus, .content-block input[type="text"]:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+	.content-block textarea.auto-filled { background: #f0fdf4; border-color: #86efac; }
+	.auto-badge { display: inline-block; font-size: 10px; font-weight: 700; background: #10b981; color: #fff; padding: 2px 8px; border-radius: 10px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: middle; }
+	.actions { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+	.actions button { padding: 10px 22px; border-radius: 8px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; }
+	.btn-prev { background: #e5e7eb; color: #374151; }
+	.btn-prev:hover:not(:disabled) { background: #d1d5db; }
+	.btn-next { background: #4f46e5; color: #fff; }
+	.btn-next:hover:not(:disabled) { background: #4338ca; }
+	.actions button:disabled { opacity: .4; cursor: not-allowed; }
+	.saved-hint { font-size: 12px; color: #10b981; margin-left: 8px; opacity: 0; transition: opacity .3s; }
+	.saved-hint.show { opacity: 1; }
+
+	/* ========== THÈME SOMBRE ========== */
+	body.dark-theme { background: #1a202c; color: #e2e8f0; }
+	body.dark-theme .toolbar, body.dark-theme .toolbar-mobile { background: rgba(26, 32, 44, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+	body.dark-theme .toolbar-title, body.dark-theme .mobile-title { color: #ff0000 !important; }
+	body.dark-theme .toolbar-subtitle, body.dark-theme .mobile-subtitle { color: #a0aec0; }
+	body.dark-theme .btn, body.dark-theme .slide-menu, body.dark-theme .submenu, body.dark-theme .menu-item, body.dark-theme .menu-close, body.dark-theme .submenu-close { background: #2d3748; color: #e0e0e0; box-shadow: 0.3rem 0.3rem 0.6rem #1a202c, -0.3rem -0.3rem 0.6rem #4a5568; }
+	body.dark-theme .btn:hover, body.dark-theme .menu-item:hover, body.dark-theme .menu-close:hover, body.dark-theme .submenu-close:hover { box-shadow: inset 0.2rem 0.2rem 0.3rem #1a202c, inset -0.2rem -0.2rem 0.3rem #4a5568; }
+	body.dark-theme .submenu-content, body.dark-theme .toggle-label { color: #e2e8f0; }
+	body.dark-theme .toast, body.dark-theme .confirm-modal { background: #2d3748; }
+	body.dark-theme .toast-title { color: #10b981; }
+	body.dark-theme .toast-message { color: #e2e8f0; }
+	body.dark-theme .confirm-modal h3 { color: #818cf8; }
+	body.dark-theme .confirm-modal h3 svg { stroke: #818cf8; }
+	body.dark-theme .confirm-modal .confirm-subject { background: #1e293b; color: #e2e8f0; border-left-color: #6366f1; }
+	body.dark-theme .confirm-modal .confirm-message { color: #cbd5e1; }
+	body.dark-theme .confirm-cancel { background: #475569; color: #e2e8f0; }
+	body.dark-theme .confirm-cancel:hover { background: #64748b; }
+	body.dark-theme .stepper-container { background: #1e293b; color: #e2e8f0; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+	body.dark-theme .step-main-title { color: #818cf8; }
+	body.dark-theme .progress-bar { background: #334155; }
+	body.dark-theme .progress-label { color: #94a3b8; }
+	body.dark-theme .title-field { background: #334155; border-color: #4f46e5; }
+	body.dark-theme .title-field input { background: #1e293b; color: #e2e8f0; border-color: #475569; }
+	body.dark-theme .recall-banner { background: #422006; border-color: #78350f; color: #fcd34d; }
+	body.dark-theme .stepper-main::before, body.dark-theme .substepper-horizontal::before { background: #475569; }
+	body.dark-theme .step-circle, body.dark-theme .substepper-horizontal .substep-circle { background: #475569; color: #94a3b8; }
+	body.dark-theme .step-label, body.dark-theme .substepper-horizontal .substep-label { color: #94a3b8; }
+	body.dark-theme .stepper-main .step.active .step-label, body.dark-theme .substepper-horizontal .substep.active .substep-label { color: #818cf8; }
+	body.dark-theme .stepper-main .step.completed .step-label, body.dark-theme .substepper-horizontal .substep.completed .substep-label { color: #10b981; font-weight: 600; }
+	body.dark-theme .content-block { background: #334155; border-color: #475569; }
+	body.dark-theme .content-block h3 { color: #818cf8; }
+	body.dark-theme .content-block .consigne { background: #312e81; color: #c7d2fe; border-left-color: #6366f1; }
+	body.dark-theme .content-block label { color: #cbd5e1; }
+	body.dark-theme .content-block textarea, body.dark-theme .content-block input[type="text"] { background: #1e293b; color: #e2e8f0; border-color: #475569; }
+	body.dark-theme .btn-prev { background: #475569; color: #e2e8f0; }
+
+	@page { size: A4; margin: 2cm; }
+
+	@media print {
+		body { background: #fff !important; padding: 0 !important; font-size: 12pt !important; line-height: 1.6 !important; color: #000 !important; }
+		@page {
+			@top-left { content: none !important; }
+			@top-center { content: none !important; }
+			@top-right { content: none !important; }
+			@bottom-left { content: none !important; }
+			@bottom-center { content: none !important; }
+			@bottom-right { content: none !important; }
+		}
+		.toolbar-wrapper, .menu-overlay, .slide-menu, .submenu, .hover-trigger,
+		.stepper-main-wrapper, .substepper-horizontal, .actions, .toast-container,
+		.drag-overlay, .confirm-overlay, .toolbar, .recall-banner, .tag-list,
+		.title-field, .saved-hint, .auto-badge,
+		.stepper-container, #contentRoot, #stepperMainWrapper, #subStepperRoot,
+		#progressFill, .progress-wrap { display: none !important; }
+		.print-container { display: block !important; }
+		.content-block pre, .content-block textarea, .content-block input, .print-block pre { white-space: pre-wrap !important; word-wrap: break-word !important; font-family: 'Times New Roman', serif !important; font-size: 12pt !important; line-height: 1.6 !important; text-align: justify !important; background: none !important; padding: 0 !important; border: none !important; border-radius: 0 !important; margin: 0 !important; color: #000 !important; }
+		.print-block { display: block !important; page-break-inside: avoid !important; margin-bottom: 15pt !important; }
+		.print-block h3 { font-size: 13pt !important; font-weight: bold !important; color: #000 !important; margin: 0 0 8pt 0 !important; page-break-after: avoid !important; }
+		.print-block .print-step-title { font-size: 14pt !important; font-weight: bold !important; color: #000 !important; margin: 18pt 0 10pt 0 !important; padding-bottom: 4pt !important; border-bottom: 1.5pt solid #000 !important; page-break-after: avoid !important; text-transform: uppercase !important; letter-spacing: 0.5pt !important; }
+		.print-block .print-main-title { font-size: 18pt !important; font-weight: bold !important; color: #000 !important; text-align: center !important; margin: 0 0 24pt 0 !important; page-break-after: avoid !important; }
+		.content-block label { display: none !important; }
+	}
+
+	.print-container { display: none; }
+	#importInput { display: none; }
+	@media (max-width: 768px) {
+		.toolbar { display: none !important; }
+		.toolbar-mobile { display: flex !important; }
+		.stepper-main .step-label { font-size: 10px; max-width: 70px; }
+		.stepper-main .step-circle { width: 32px; height: 32px; font-size: 12px; }
+		.stepper-main::before { top: 16px; left: 21px; right: 21px; }
+	}
+</style>
+</head>
+<body>
+<div class="hover-trigger" id="hoverTrigger"></div>
+<div class="toast-container" id="toastContainer"></div>
+<div class="confirm-overlay" id="confirmOverlay">
+	<div class="confirm-modal">
+		<h3>
+			<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+			<span id="confirmTitle">Confirmer l'import</span>
+		</h3>
+		<div class="confirm-subject" id="confirmSubject"></div>
+		<div class="confirm-message" id="confirmMessage"></div>
+		<div class="confirm-actions">
+			<button class="confirm-cancel" id="confirmCancel">Annuler</button>
+			<button class="confirm-validate" id="confirmValidate">Confirmer</button>
+		</div>
+	</div>
+</div>
+<div class="drag-overlay" id="dragOverlay">
+	<div class="drag-overlay-content">
+		<h2>Déposez le fichier ici</h2>
+		<p>Glissez votre fichier .js pour l'importer</p>
+	</div>
+</div>
+<div class="toolbar-wrapper">
+	<div class="toolbar" id="toolbarDesktop">
+		<div class="toolbar-left">
+			<button class="btn btn-home" data-action="home" data-title="accueil (H)"><div class="icon-wrapper"><svg viewBox="0 0 24 24"><polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg></div></button>
+			<button class="btn btn-reload" data-action="reload" data-title="recharger (R)"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
+		</div>
+		<div class="toolbar-center">
+			<div class="toolbar-title">feuille de route</div>
+			<div class="toolbar-subtitle">dissertation de philosophie</div>
+		</div>
+		<div class="toolbar-right">
+			<button class="btn btn-pdf" data-action="pdf" data-title="imprimer / PDF (P)"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/><text x="6" y="17" font-family="Arial, sans-serif" font-weight="bold" font-size="6" fill="currentColor" stroke="none">PDF</text></svg></button>
+			<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran (F)"><svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt"><line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/><line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/><line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/><line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/></svg></button>
+			<button class="btn btn-menu" data-action="menu" data-title="menu (M)"><div class="menu-icon"><span></span><span></span><span></span></div></button>
+		</div>
+	</div>
+	<div class="toolbar-mobile" id="toolbarMobile">
+		<div class="mobile-buttons">
+			<button class="btn btn-home" data-action="home" data-title="accueil"><div class="icon-wrapper"><svg viewBox="0 0 24 24"><polyline points="19,10 12,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="8,8 5,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="19,11 19,19 5,19 5,11" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg></div></button>
+			<button class="btn btn-reload" data-action="reload" data-title="recharger"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
+			<button class="btn btn-fullscreen" data-action="fullscreen" data-title="plein écran"><svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt"><line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/><line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/><line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/><line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/></svg></button>
+			<button class="btn btn-pdf" data-action="pdf" data-title="imprimer / PDF"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><text x="6" y="17" font-family="Arial, sans-serif" font-weight="bold" font-size="6" fill="currentColor" stroke="none">PDF</text></svg></button>
+			<button class="btn btn-menu" data-action="menu" data-title="menu"><div class="menu-icon"><span></span><span></span><span></span></div></button>
+		</div>
+		<div class="mobile-title-wrapper">
+			<div class="mobile-title">feuille de route</div>
+			<div class="mobile-subtitle">dissertation de philosophie</div>
+		</div>
+	</div>
+</div>
+<div id="stepperMainWrapper" class="stepper-main-wrapper"></div>
+<div class="stepper-container">
+	<div class="toolbar" style="background: transparent; box-shadow: none; padding: 0 0 12px 0; height: auto; border-radius: 0;">
+		<div class="toolbar-left"><div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-label" id="progressLabel">0%</span></div></div>
+		<div class="toolbar-right"></div>
+		<input type="file" id="importInput" accept=".js,application/javascript">
+	</div>
+	<div class="title-field" id="titleField">
+		<label for="dissertationTitle">Intitulé de la dissertation</label>
+		<input type="text" id="dissertationTitle" placeholder="Exemple : « Peut-on être libre sans le savoir ? »">
+		<div class="hint">Ce champ verrouille toutes les étapes tant qu'il est vide. Appuyez sur Entrée pour continuer.</div>
+	</div>
+	<h2 class="step-main-title" id="stepMainTitle">étape 1 · analyse du sujet</h2>
+	<div class="recall-banner" id="recallBanner" style="display:none;"></div>
+	<div id="subStepperRoot" class="substepper-horizontal"></div>
+	<div id="contentRoot"></div>
+	<div class="actions">
+		<button class="btn-prev" id="btnPrev">← Précédent</button>
+		<div><span class="saved-hint" id="savedHint">✓ Enregistré</span></div>
+		<button class="btn-next" id="btnNext">Suivant →</button>
+	</div>
+</div>
+<div class="print-container" id="printContainer"></div>
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="slide-menu" id="slideMenu">
+	<div class="menu-header"><button class="menu-close" id="menuClose"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+	<button class="menu-item" data-submenu="presentation"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>présentation</button>
+	<button class="menu-item" data-submenu="shortcuts"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="10" y2="8"/><line x1="14" y1="8" x2="18" y2="8"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="14" y1="12" x2="18" y2="12"/><line x1="6" y1="16" x2="10" y2="16"/><line x1="14" y1="16" x2="18" y2="16"/></svg>raccourcis clavier</button>
+	<button class="menu-item" id="menuBtnExport"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>exporter (JS)</button>
+	<button class="menu-item" id="menuBtnImport"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>importer (JS)</button>
+	<button class="menu-item" data-submenu="settings"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>paramètres</button>
+	<button class="menu-item" id="btnMenuReset"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>réinitialiser les données</button>
+	<button class="menu-item" data-submenu="about"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>à propos</button>
+</div>
+<div class="submenu" id="submenuPresentation">
+	<button class="submenu-close" data-submenu="presentation"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+	<div class="submenu-title">présentation</div>
+	<div class="submenu-content">
+		<div class="settings-info"><p><strong>objectif</strong><br>Structurer méthodiquement une dissertation de philosophie en 7 étapes.</p></div>
+		<div class="settings-info"><p><strong>parcours en 7 étapes</strong></p>
+		<p>1. Analyse du sujet</p><p>2. Problématisation</p><p>3. Plan</p><p>4. Introduction</p><p>5. Développement</p><p>6. Conclusion</p><p>7. Relecture</p></div>
+		<div class="settings-info"><p><strong>conseil</strong></p><p>• Saisissez d'abord l'intitulé.</p><p>• Navigation : <kbd>←</kbd> <kbd>→</kbd></p><p>• Sauvegarde automatique.</p></div>
+	</div>
+</div>
+<div class="submenu" id="submenuShortcuts">
+	<button class="submenu-close" data-submenu="shortcuts"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+	<div class="submenu-title">raccourcis clavier</div>
+	<div class="submenu-content">
+		<table class="shortcuts-table">
+		<tr><td class="key-combo"><kbd>H</kbd></td><td>accueil</td></tr>
+		<tr><td class="key-combo"><kbd>R</kbd></td><td>recharger</td></tr>
+		<tr><td class="key-combo"><kbd>P</kbd></td><td>imprimer / PDF</td></tr>
+		<tr><td class="key-combo"><kbd>F</kbd></td><td>plein écran</td></tr>
+		<tr><td class="key-combo"><kbd>M</kbd></td><td>menu</td></tr>
+		<tr><td class="key-combo"><kbd>←</kbd> <kbd>→</kbd></td><td>étape précédente / suivante</td></tr>
+		<tr><td class="key-combo"><kbd>ESC</kbd></td><td>fermer les menus</td></tr>
+		</table>
+	</div>
+</div>
+<div class="submenu" id="submenuSettings">
+	<button class="submenu-close" data-submenu="settings"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+	<div class="submenu-title">paramètres</div>
+	<div class="submenu-content"><div class="toggle-container"><span class="toggle-label">mode sombre</span><label class="theme-switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label></div></div>
+</div>
+<div class="submenu" id="submenuAbout">
+	<button class="submenu-close" data-submenu="about"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+	<div class="submenu-title">à propos</div>
+	<div class="submenu-content"><div class="settings-info"><div class="about-row"><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><div class="about-text"><p>feuille de route — dissertation de philosophie</p></div></div><div class="about-row"><svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><div class="about-text"><p>version 1.3 (2026)</p></div></div></div></div>
+</div>
+
+<script>
+function showToast(title, message, duration = 4000, type = 'success') {
+	const container = document.getElementById('toastContainer');
+	const toast = document.createElement('div');
+	toast.className = `toast ${type}`;
+	toast.innerHTML = `<div class="toast-title">${title}</div><div class="toast-message">${message}</div>`;
+	container.appendChild(toast);
+	setTimeout(() => { toast.classList.add('hiding'); setTimeout(() => toast.remove(), 300); }, duration);
+}
+
+function showConfirmModal(title, subject, message) {
+	return new Promise((resolve) => {
+		const overlay = document.getElementById('confirmOverlay');
+		const titleEl = document.getElementById('confirmTitle');
+		const subjectEl = document.getElementById('confirmSubject');
+		const messageEl = document.getElementById('confirmMessage');
+		const cancelBtn = document.getElementById('confirmCancel');
+		const validateBtn = document.getElementById('confirmValidate');
+		titleEl.textContent = title;
+		subjectEl.textContent = `« ${subject} »`;
+		messageEl.innerHTML = message;
+		overlay.classList.add('active');
+		function cleanup(result) {
+			overlay.classList.remove('active');
+			cancelBtn.removeEventListener('click', onCancel);
+			validateBtn.removeEventListener('click', onValidate);
+			overlay.removeEventListener('click', onOverlayClick);
+			resolve(result);
+		}
+		function onCancel() { cleanup(false); }
+		function onValidate() { cleanup(true); }
+		function onOverlayClick(e) { if (e.target === overlay) cleanup(false); }
+		cancelBtn.addEventListener('click', onCancel);
+		validateBtn.addEventListener('click', onValidate);
+		overlay.addEventListener('click', onOverlayClick);
+	});
+}
+
+let dragCounter = 0;
+document.addEventListener('dragenter', (e) => { e.preventDefault(); dragCounter++; document.getElementById('dragOverlay').classList.add('active'); });
+document.addEventListener('dragleave', (e) => { e.preventDefault(); dragCounter--; if (dragCounter === 0) document.getElementById('dragOverlay').classList.remove('active'); });
+document.addEventListener('dragover', (e) => { e.preventDefault(); });
+document.addEventListener('drop', (e) => {
+	e.preventDefault();
+	dragCounter = 0;
+	document.getElementById('dragOverlay').classList.remove('active');
+	const files = e.dataTransfer.files;
+	if (files.length > 0) {
+		const file = files[0];
+		if (file.name.endsWith('.js') || file.type === 'application/javascript') processImportFile(file);
+		else showToast('Erreur', 'Veuillez déposer un fichier .js', 3000, 'warning');
+	}
+});
+
+function cleanFileName(title) {
+	if (!title || !title.trim()) return 'dissertation';
+	let cleaned = title.trim();
+	cleaned = cleaned.replace(/\s*[?!¡¿.]+$/g, '');
+	cleaned = cleaned.replace(/^[?!¡¿.\s]+/g, '');
+	cleaned = cleaned.replace(/[«»""]/g, '');
+	cleaned = cleaned
+		.replace(/[^a-z0-9\u00C0-\u024F\s'’\-]/gi, '')
+		.toLowerCase();
+	cleaned = cleaned.slice(0, 60).trimEnd();
+	return cleaned || 'dissertation';
+}
+
+(function() {
+	'use strict';
+	const ACTIONS = { HOME: 'home', RELOAD: 'reload', PDF: 'pdf', FULLSCREEN: 'fullscreen', MENU: 'menu' };
+	const $ = (sel, ctx = document) => ctx.querySelector(sel);
+	const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+	const hoverTrigger = $('#hoverTrigger');
+	const menuOverlay = $('#menuOverlay');
+	const slideMenu = $('#slideMenu');
+	const menuClose = $('#menuClose');
+	const submenus = { presentation: $('#submenuPresentation'), shortcuts: $('#submenuShortcuts'), settings: $('#submenuSettings'), about: $('#submenuAbout') };
+	const darkToggle = $('#darkModeToggle');
+
+	function triggerPrint() {
+		const printContainer = document.getElementById('printContainer');
+		printContainer.innerHTML = '';
+
+		const originalTitle = document.title;
+		const pdfFileName = cleanFileName(dissertationTitle);
+		document.title = pdfFileName;
+
+		const titleToShow = dissertationTitle.trim() || 'Dissertation de philosophie';
+		const titleBlock = document.createElement('div');
+		titleBlock.className = 'print-block';
+		titleBlock.innerHTML = `<div class="print-main-title">${escapeHtml(titleToShow)}</div>`;
+		printContainer.appendChild(titleBlock);
+
+		tree.forEach((step, sIdx) => {
+			if (sIdx === 6) return;
+
+			const stepTitleBlock = document.createElement('div');
+			stepTitleBlock.className = 'print-block';
+			stepTitleBlock.innerHTML = `<div class="print-step-title">${escapeHtml(step.fullTitle)}</div>`;
+			printContainer.appendChild(stepTitleBlock);
+
+			step.children.forEach((child, cIdx) => {
+				if ((sIdx === 2 && cIdx === 12) || (sIdx === 5 && cIdx === 3)) return;
+
+				const k = keyFor(sIdx, cIdx);
+				const txt = (answers[k] || '').trim();
+
+				if (txt) {
+					const block = document.createElement('div');
+					block.className = 'print-block';
+					block.innerHTML = `<h3>${escapeHtml(child.fullTitle)}</h3><pre>${escapeHtml(txt)}</pre>`;
+					printContainer.appendChild(block);
+				}
+			});
+		});
+
+		if (printContainer.children.length <= 1) {
+			showToast('Information', 'Aucune réponse à imprimer (seul le titre sera exporté).', 3000, 'info');
+		} else {
+			showToast('Impression', 'Pensez à décocher "En-têtes et pieds de page" dans les paramètres d\'impression', 5000, 'info');
+		}
+
+		printContainer.style.display = 'block';
+
+		const cleanup = () => {
+			printContainer.style.display = 'none';
+			document.title = originalTitle;
+			window.removeEventListener('afterprint', cleanup);
+		};
+		window.addEventListener('afterprint', cleanup);
+
+		window.print();
+
+		setTimeout(cleanup, 1500);
+	}
+
+	const actions = {
+		[ACTIONS.HOME]: () => window.open('https://pedagogie.ac-lille.fr/philosophie/boite-a-outil/', '_blank'),
+		[ACTIONS.RELOAD]: () => location.reload(),
+		[ACTIONS.PDF]: () => triggerPrint(),
+		[ACTIONS.FULLSCREEN]: () => { if (!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); },
+		[ACTIONS.MENU]: toggleMenu
+	};
+
+	document.addEventListener('click', (e) => {
+		const btn = e.target.closest('[data-action]');
+		if (!btn) return;
+		const action = btn.dataset.action;
+		if (actions[action]) { e.preventDefault(); actions[action](); }
+	});
+
+	function closeAllSubmenus() {
+		Object.values(submenus).forEach(s => s && s.classList.remove('active'));
+		const anySubmenuOpen = Object.values(submenus).some(s => s?.classList.contains('active'));
+		if (!slideMenu?.classList.contains('open') && !anySubmenuOpen) document.body.classList.remove('menu-open');
+	}
+	function closeMenu() {
+		slideMenu?.classList.remove('open'); menuOverlay?.classList.remove('open');
+		document.body.style.overflow = ''; document.body.classList.remove('menu-open');
+		closeAllSubmenus();
+	}
+	function toggleMenu() {
+		if (slideMenu?.classList.contains('open')) closeMenu();
+		else {
+			menuOverlay?.classList.add('open'); slideMenu?.classList.add('open');
+			document.body.style.overflow = 'hidden'; document.body.classList.add('menu-open');
+			closeAllSubmenus();
+		}
+	}
+	menuClose?.addEventListener('click', closeMenu);
+	menuOverlay?.addEventListener('click', closeMenu);
+	document.querySelectorAll('.menu-item[data-submenu]').forEach(item => {
+		item.addEventListener('click', () => {
+			const key = item.dataset.submenu;
+			closeAllSubmenus();
+			if (submenus[key]) submenus[key].classList.add('active');
+			document.body.classList.add('menu-open');
+		});
+	});
+	document.querySelectorAll('.submenu-close').forEach(btn => {
+		btn.addEventListener('click', () => {
+			closeAllSubmenus();
+			if (!slideMenu?.classList.contains('open')) document.body.classList.remove('menu-open');
+		});
+	});
+	slideMenu?.addEventListener('click', e => e.stopPropagation());
+	Object.values(submenus).forEach(s => s?.addEventListener('click', e => e.stopPropagation()));
+
+	$('#btnMenuReset')?.addEventListener('click', async () => {
+		const confirmed = await showConfirmModal(
+			'Réinitialiser les données',
+			'toutes vos réponses',
+		 'Voulez-vous vraiment réinitialiser toutes les données ? Cette action est <strong>irréversible</strong>.'
+		);
+		if (confirmed) {
+			localStorage.removeItem(STORAGE_KEY);
+			localStorage.removeItem(TITLE_KEY);
+			localStorage.removeItem(VISITED_KEY);
+			location.reload();
+		}
+	});
+
+	$('#menuBtnExport')?.addEventListener('click', () => {
+		closeMenu();
+		const payload = {
+			version: 1.3,
+			date: new Date().toISOString(),
+			title: dissertationTitle,
+			answers: answers
+		};
+		const jsContent = `// Feuille de route - dissertation de philosophie\n// Sujet : ${dissertationTitle.replace(/\n/g, ' ')}\n// Date d'export : ${new Date().toLocaleString('fr-FR')}\n\nwindow.ROADMAP_DATA = ${JSON.stringify(payload, null, 2)};`;
+		const blob = new Blob([jsContent], { type: 'application/javascript' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		const fileName = cleanFileName(dissertationTitle);
+		a.download = `${fileName}.js`;
+		document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+		showToast('Export réussi', `Le fichier "${fileName}.js" a été téléchargé.`);
+	});
+
+	$('#menuBtnImport')?.addEventListener('click', () => {
+		closeMenu();
+		document.getElementById('importInput').click();
+	});
+
+	function updateFullscreen() {
+		const isFullscreen = !!document.fullscreenElement;
+		document.body.classList.toggle('fullscreen', isFullscreen);
+		if (hoverTrigger) hoverTrigger.classList.toggle('active', isFullscreen);
+		const btns = $$('.btn-fullscreen');
+		const exitSVG = `<svg class="fullscreen-exit-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt"><line x1="3" y1="10" x2="10" y2="10"/><line x1="9" y1="4" x2="9" y2="11"/><line x1="14" y1="10" x2="21" y2="10"/><line x1="15" y1="4" x2="15" y2="10"/><line x1="3" y1="15.5" x2="10" y2="15.5"/><line x1="9" y1="15" x2="9" y2="21"/><line x1="14" y1="15.5" x2="21" y2="15.5"/><line x1="15" y1="15" x2="15" y2="21"/></svg>`;
+		const enterSVG = `<svg class="fullscreen-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="butt"><line x1="4" y1="5" x2="10" y2="5"/><line x1="5" y1="6" x2="5" y2="10"/><line x1="14" y1="5" x2="20" y2="5"/><line x1="19" y1="6" x2="19" y2="10"/><line x1="5" y1="14" x2="5" y2="20"/><line x1="6" y1="19" x2="10" y2="19"/><line x1="14" y1="19" x2="20" y2="19"/><line x1="19" y1="14" x2="19" y2="18"/></svg>`;
+		btns.forEach(btn => {
+			btn.classList.toggle('fullscreen-active', isFullscreen);
+			btn.dataset.title = isFullscreen ? 'quitter plein écran (F)' : 'plein écran (F)';
+			btn.innerHTML = isFullscreen ? exitSVG : enterSVG;
+		});
+	}
+	document.addEventListener('fullscreenchange', updateFullscreen);
+
+	document.addEventListener('keydown', (e) => {
+		const target = e.target;
+		const isTyping = target.matches('textarea, input, select, [contenteditable="true"]');
+		const key = e.key.toLowerCase();
+		const ctrl = e.ctrlKey || e.metaKey;
+		if (key === 'escape') { closeMenu(); closeAllSubmenus(); return; }
+		const keyMap = { 'h': ACTIONS.HOME, 'r': ACTIONS.RELOAD, 'p': ACTIONS.PDF, 'f': ACTIONS.FULLSCREEN, 'm': ACTIONS.MENU };
+		if (keyMap[key] && !ctrl && !isTyping) { e.preventDefault(); actions[keyMap[key]](); return; }
+		if ((key === 'arrowleft' || key === 'arrowright') && !isTyping) {
+			e.preventDefault();
+			const btn = key === 'arrowleft' ? document.getElementById('btnPrev') : document.getElementById('btnNext');
+			if (btn && !btn.disabled) btn.click();
+		}
+	});
+
+	if (darkToggle) {
+		const saved = localStorage.getItem('darkMode');
+		if (saved === 'true') { document.body.classList.add('dark-theme'); darkToggle.checked = true; }
+		darkToggle.addEventListener('change', () => {
+			const isDark = darkToggle.checked;
+			document.body.classList.toggle('dark-theme', isDark);
+			localStorage.setItem('darkMode', String(isDark));
+		});
+	}
+})();
+
+const tree = [
+	{ label: 'analyse', fullTitle: "étape 1 · analyse du sujet",
+		children: [
+			{ label: 'Thème', fullTitle: "1.1 · thème", type: 'tags', consigne: "sélectionnez un ou plusieurs thèmes du programme dans lesquels s'inscrit le sujet",
+				options: ['art', 'bonheur', 'conscience', 'devoir', 'État', 'inconscient', 'justice', 'langage', 'liberté', 'nature', 'raison', 'religion', 'science', 'technique', 'temps', 'travail', 'vérité'] },
+			{ label: 'Repère', fullTitle: "1.2 · repère", type: 'tags', consigne: "sélectionnez un ou plusieurs repères conceptuels du programme utiles pour analyser le sujet",
+				options: ['absolu / relatif','abstrait / concret','en acte / en puissance','analyse / synthèse','concept / image / métaphore','contingent / nécessaire','croire / savoir','essentiel / accidentel','exemple / preuve','expliquer / comprendre','en fait / en droit','formel / matériel','genre / espèce / individu','hypothèse / conséquence / conclusion','idéal / réel','identité / égalité / différence','impossible / possible','intuitif / discursif','légal / légitime','médiat / immédiat','objectif / subjectif / intersubjectif','obligation / contrainte','origine / fondement','persuader / convaincre','principe / cause / fin','public / privé','ressemblance / analogie','théorie / pratique','transcendant / immanent','universel / général / particulier / singulier','vrai / probable / certain'] },
+			{ label: 'Mots-clés', fullTitle: "1.3 · mots-clés", type: 'textarea', consigne: "listez les mots-clés du sujet" },
+			{ label: 'Petits mots', fullTitle: "1.4 · petits mots logiques", type: 'textarea', consigne: "« peut-on », « faut-il », « toujours », « sans »… : analysez ces connecteurs qui orientent le sujet." },
+			{ label: 'Définitions', fullTitle: "1.5 · termes essentiels", type: 'textarea', consigne: "définissez chaque terme essentiel et posez les sources importantes" },
+			{ label: 'Présupposés', fullTitle: "1.6 · présupposés", type: 'textarea', consigne: "qu'est-ce que la question suppose ? quelles évidences ne sont pas questionnées ?" }
+		]
+	},
+	{ label: 'problématisation', fullTitle: "étape 2 · problématisation du sujet",
+		children: [
+			{ label: 'option A', fullTitle: "2.1 · option A : réponse spontanée", type: 'textarea', consigne: "quelle est la réponse immédiate et spontanée du sens commun à la question ?" },
+			{ label: 'option B', fullTitle: "2.2 · option B : objection, limite de l'option A", type: 'textarea', consigne: "montrez en quoi l'option A est insuffisante, contestable ou limitée." },
+			{ label: 'contradiction', fullTitle: "2.3 · formulation de la contradiction", type: 'textarea', consigne: "explicitez la tension logique entre l'option A et l'option B." },
+			{ label: 'problème', fullTitle: "2.4 · rédaction du problème", type: 'textarea', consigne: "formulez la problématique en 1–2 phrases." }
+		]
+	},
+	{ label: 'plan', fullTitle: "étape 3 · plan",
+		children: [
+			{ label: 'partie 1<br> titre', fullTitle: "1. titre", type: 'text', consigne: "titre explicite énonçant la thèse de la partie." },
+			{ label: 'partie 1<br> argument 1', fullTitle: "1.1 argument", type: 'textarea', consigne: "argument 1 + référence philosophique (facultatif)." },
+			{ label: 'partie 1<br> argument 2', fullTitle: "1.2 argument", type: 'textarea', consigne: "argument 2 + référence philosophique (facultatif)." },
+			{ label: 'partie 1<br> bilan', fullTitle: "1.3 bilan", type: 'textarea', consigne: "ce que cette partie a établi, et ce qui reste à examiner." },
+			{ label: 'partie 2<br> titre', fullTitle: "2. titre", type: 'text', consigne: "titre explicite énonçant la thèse de la partie." },
+			{ label: 'partie 2<br> argument 1', fullTitle: "2.1 argument", type: 'textarea', consigne: "argument 1 + référence philosophique (facultatif)." },
+			{ label: 'partie 2<br> argument 2', fullTitle: "2.2 argument", type: 'textarea', consigne: "argument 2 + référence philosophique (facultatif)." },
+			{ label: 'partie 2<br> bilan', fullTitle: "2.3 bilan", type: 'textarea', consigne: "ce que cette partie a établi, et ce qui reste à examiner." },
+			{ label: 'partie 3<br> titre', fullTitle: "3. titre", type: 'text', consigne: "titre explicite énonçant la thèse de la partie." },
+			{ label: 'partie 3<br> argument 1', fullTitle: "3.1 argument", type: 'textarea', consigne: "argument 1 + référence philosophique (facultatif)." },
+			{ label: 'partie 3<br> argument 2', fullTitle: "3.2 argument", type: 'textarea', consigne: "argument 2 + référence philosophique (facultatif)." },
+			{ label: 'partie 3<br> bilan', fullTitle: "3.3 bilan", type: 'textarea', consigne: "ce que cette partie a établi, et ce qui reste à examiner." },
+			{ label: 'cohérence', fullTitle: "contrôle de cohérence", type: 'checkbox', consigne: "vérifiez la cohérence du plan",
+				options: [ {value:'p2-decule',label:'P2 découle de P1'}, {value:'p3-repond',label:'P3 répond aux objections de P2'} ] }
+		]
+	},
+	{ label: 'introduction', fullTitle: "étape 4 · rédaction de l'introduction",
+		children: [
+			{ label: 'Accroche', fullTitle: "4.1 · Accroche", type: 'textarea', optional: true, consigne: "Point de départ au choix : concrète (★ recommandée), conceptuelle ou textuelle. (Facultatif)" },
+			{ label: 'Définitions', fullTitle: "4.2 · Définition des termes", type: 'textarea', autoFill: '0.4', consigne: "Reprise des définitions de 1.5 — modifiable." },
+			{ label: 'Problème', fullTitle: "4.3 · Émergence du problème", type: 'textarea', autoFill: '1.3', consigne: "Reprise de la problématique de 2.4 — modifiable." },
+			{ label: 'Annonce du plan', fullTitle: "4.4 · Annonce du plan", type: 'textarea', consigne: "Annoncez le mouvement des trois parties." }
+		]
+	},
+	{ label: 'développement', fullTitle: "étape 5 · rédaction du développement",
+		children: [
+			{ label: 'Transition intro', fullTitle: "5.1 · Transition depuis l'introduction", type: 'textarea', consigne: "Transition entre l'introduction et la Partie 1." },
+			{ label: 'Partie 1', fullTitle: "5.2 · Rédaction de la Partie 1", type: 'textarea', autoFill: '2.3', consigne: "Rédigez la Partie 1 (référence : plan 1.1 à 1.3)." },
+			{ label: 'Transition P2', fullTitle: "5.3 · Transition vers la Partie 2", type: 'textarea', consigne: "Transition entre les Parties 1 et 2." },
+			{ label: 'Partie 2', fullTitle: "5.4 · Rédaction de la Partie 2", type: 'textarea', autoFill: '2.7', consigne: "Rédigez la Partie 2 (référence : plan 2.1 à 2.3)." },
+			{ label: 'Transition P3', fullTitle: "5.5 · Transition vers la Partie 3", type: 'textarea', consigne: "Transition entre les Parties 2 et 3." },
+			{ label: 'Partie 3', fullTitle: "5.6 · Rédaction de la Partie 3", type: 'textarea', autoFill: '2.11', consigne: "Rédigez la Partie 3 (référence : plan 3.1 à 3.3)." }
+		]
+	},
+	{ label: 'conclusion', fullTitle: "étape 6 · rédaction de la conclusion",
+		children: [
+			{ label: 'Bilan du parcours', fullTitle: "6.1 · bilan du parcours logique", type: 'textarea', consigne: "Retracez brièvement les grandes étapes du raisonnement." },
+			{ label: 'Réponse', fullTitle: "6.2 · réponse claire à la problématique", type: 'textarea', consigne: "Apportez une prise de position nette et nuancée." },
+			{ label: 'Ouverture', fullTitle: "6.3 · ouverture (facultatif)", type: 'textarea', optional: true, consigne: "Proposez un prolongement philosophique pertinent." },
+			{ label: 'Contrôles', fullTitle: "6.4 · contrôles de la conclusion", type: 'checkbox', consigne: "À éviter absolument.",
+				options: [ {value:'pas-nouvel-ex',label:'Pas de nouveaux exemples/concepts'}, {value:'reponse-claire',label:'Réponse claire (pas de relativisme)'} ] }
+		]
+	},
+	{ label: 'relecture', fullTitle: "étape 7 · relecture",
+		children: [
+			{ label: 'Orthographe', fullTitle: "7.1 · orthographe / grammaire", type: 'checkbox', consigne: "Relisez attentivement.", options: [ {value:'ok',label:'Orthographe et grammaire vérifiées'} ] },
+			{ label: 'Pertinence', fullTitle: "7.2 · chaque paragraphe sert le plan", type: 'checkbox', consigne: "Supprimez les digressions.", options: [ {value:'ok',label:'Chaque paragraphe sert le plan'} ] },
+			{ label: 'Transitions', fullTitle: "7.3 · transitions présentes et logiques", type: 'checkbox', consigne: "Vérifiez les transitions.", options: [ {value:'ok',label:'Transitions présentes et logiques'} ] },
+			{ label: 'Cohérence prob.', fullTitle: "7.4 · problématique annoncée = problématique traitée", type: 'checkbox', consigne: "Vérifiez la cohérence.", options: [ {value:'ok',label:'Problématique annoncée = problématique traitée'} ] },
+			{ label: 'Conclusion ↔ prob.', fullTitle: "7.5 · conclusion répond à la problématique", type: 'checkbox', consigne: "Vérifiez la réponse finale.", options: [ {value:'ok',label:'La conclusion répond à la problématique'} ] }
+		]
+	}
+];
+
+const STORAGE_KEY = 'philo-dissertation-roadmap';
+const TITLE_KEY = STORAGE_KEY + '-title';
+const VISITED_KEY = STORAGE_KEY + '-visited';
+
+function loadAnswers() {
+	try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+	catch { return {}; }
+}
+
+let answers = loadAnswers();
+let dissertationTitle = localStorage.getItem(TITLE_KEY) || '';
+let currentStep = 0;
+
+let visitedSubSteps = {};
+try { visitedSubSteps = JSON.parse(localStorage.getItem(VISITED_KEY)) || {}; } catch(e) {}
+function saveVisited() { localStorage.setItem(VISITED_KEY, JSON.stringify(visitedSubSteps)); }
+
+function saveAnswers(a) { localStorage.setItem(STORAGE_KEY, JSON.stringify(a)); }
+function keyFor(stepIdx, childIdx) { return `${stepIdx}.${childIdx}`; }
+function isOptional(node) { return node.optional === true; }
+
+function isChildCompleted(stepIdx, childIdx) {
+	const node = tree[stepIdx].children[childIdx];
+	const key = keyFor(stepIdx, childIdx);
+	const rawValue = (answers[key] || '').trim();
+	const autoValue = node.autoFill ? (answers[node.autoFill] || '').trim() : '';
+	
+	if (isOptional(node)) return true;
+	return rawValue.length > 0 || autoValue.length > 0;
+}
+
+function computeProgress() {
+	let total = 0, filled = 0;
+	tree.forEach((step, sIdx) => {
+		step.children.forEach((child, cIdx) => {
+			if (!isOptional(child)) {
+				total++;
+				if ((answers[keyFor(sIdx, cIdx)] || '').trim().length > 0) filled++;
+			}
+		});
+	});
+	return { total, filled };
+}
+
+function updateProgressUI() {
+	const { total, filled } = computeProgress();
+	const pct = total === 0 ? 0 : Math.round(filled / total * 100);
+	document.getElementById('progressFill').style.width = pct + '%';
+	document.getElementById('progressLabel').textContent = `${pct}% (${filled}/${total})`;
+}
+
+function renderMainStepper() {
+	const root = document.getElementById('stepperMainWrapper');
+	root.innerHTML = '';
+	const mainWrapper = document.createElement('div');
+	mainWrapper.className = 'stepper-main';
+	tree.forEach((child, i) => {
+		const step = document.createElement('div');
+		const isActive = currentStep === i;
+		const isCompleted = currentStep > i;
+		step.className = `step ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
+		step.onclick = () => { currentStep = i; render(); };
+		step.innerHTML = `<div class="step-circle">${i + 1}</div><div class="step-label">${child.label}</div>`;
+		mainWrapper.appendChild(step);
+	});
+	root.appendChild(mainWrapper);
+}
+
+function renderSubStepper() {
+	const root = document.getElementById('subStepperRoot');
+	root.innerHTML = '';
+	const children = tree[currentStep].children;
+
+	if (visitedSubSteps[currentStep] === undefined) {
+		visitedSubSteps[currentStep] = 0;
+	}
+
+	children.forEach((child, i) => {
+		const step = document.createElement('div');
+		const isFilled = isChildCompleted(currentStep, i);
+		const isVisited = visitedSubSteps[currentStep] >= i;
+		const isCompleted = isFilled || isVisited;
+
+		step.className = `substep ${isCompleted ? 'completed' : ''}`;
+
+		step.onclick = () => {
+			if (i > visitedSubSteps[currentStep]) {
+				visitedSubSteps[currentStep] = i;
+				saveVisited();
+			}
+
+			document.getElementById(`block-${i}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			root.querySelectorAll('.substep').forEach(p => p.classList.remove('active'));
+			step.classList.add('active');
+		};
+
+		// MODIFICATION ICI : Affichage du format "X.Y" (ex: 1.1, 2.3)
+		step.innerHTML = `<div class="substep-circle">${currentStep + 1}.${i + 1}</div><div class="substep-label">${child.label}</div>`;
+		root.appendChild(step);
+	});
+
+	const hasActive = root.querySelector('.substep.active');
+	if (!hasActive && visitedSubSteps[currentStep] !== undefined) {
+		const activeStep = root.children[visitedSubSteps[currentStep]];
+		if (activeStep) activeStep.classList.add('active');
+	}
+}
+
+function renderContent() {
+	const root = document.getElementById('contentRoot');
+	root.innerHTML = '';
+	const children = tree[currentStep].children;
+
+	if (currentStep === 2) {
+		const groups = [
+			{ title: 'Partie 1', indices: [0, 1, 2, 3] },
+			{ title: 'Partie 2', indices: [4, 5, 6, 7] },
+			{ title: 'Partie 3', indices: [8, 9, 10, 11] },
+			{ title: 'Contrôle de cohérence', indices: [12] }
+		];
+		groups.forEach(group => {
+			const block = document.createElement('div');
+			block.className = 'content-block';
+			let html = `<h3>${group.title}</h3>`;
+			group.indices.forEach(i => {
+				const child = children[i];
+				const key = keyFor(currentStep, i);
+				const rawValue = answers[key] || '';
+				const autoValue = child.autoFill ? answers[child.autoFill] : '';
+				const value = rawValue || autoValue;
+				const isAuto = !rawValue && autoValue;
+				const autoClass = isAuto ? 'auto-filled' : '';
+				const autoBadge = isAuto ? ' <span class="auto-badge">PRÉ-REMPLI</span>' : '';
+				const optional = isOptional(child);
+				const optionalTag = optional ? ' <span class="auto-badge" style="background:#f59e0b;">FACULTATIF</span>' : '';
+				html += `<label style="margin-top:16px; font-size:12px; color:#6366f1; font-weight:700; text-transform:uppercase; display:block;">${child.label}${optionalTag} ${autoBadge}</label>`;
+				if (child.consigne) html += `<div style="font-size:12px; color:#666; margin-bottom:6px; font-style:italic;">${child.consigne}</div>`;
+				if (child.type === 'tags' || child.type === 'checkbox') {
+					const selected = value.split('|').filter(Boolean);
+					html += `<div class="tag-list">`;
+					child.options.forEach(opt => {
+						const val = typeof opt === 'string' ? opt : opt.value;
+						const label = typeof opt === 'string' ? opt : opt.label;
+						const sel = selected.includes(val) ? ' selected' : '';
+						html += `<div class="tag${sel}" data-key="${key}" data-value="${escapeHtml(val)}">${escapeHtml(label)}</div>`;
+					});
+					html += `</div>`;
+				} else if (child.type === 'text') {
+					html += `<input type="text" class="answer-box ${autoClass}" data-key="${key}" value="${escapeHtml(value)}" placeholder="Titre…">`;
+				} else {
+					html += `<textarea class="answer-box ${autoClass}" data-key="${key}" placeholder="rédigez ici…">${escapeHtml(value)}</textarea>`;
+				}
+			});
+			block.innerHTML = html;
+			root.appendChild(block);
+		});
+	} else if (currentStep === 6) {
+		const block = document.createElement('div');
+		block.className = 'content-block';
+		block.style.padding = '18px';
+		const leftColumn = document.createElement('div');
+		leftColumn.style.cssText = 'display: flex; flex-direction: column; gap: 14px; align-items: flex-start;';
+		for (let i = 0; i < 3; i++) {
+			const child = children[i];
+			const key = keyFor(currentStep, i);
+			const value = answers[key] || '';
+			const selected = value.split('|').filter(Boolean);
+			const itemDiv = document.createElement('div');
+			itemDiv.style.cssText = 'width: 100%;';
+			let html = '';
+			if (child.consigne) html += `<div style="font-size: 12px; color: #666; margin-bottom: 6px; font-style: italic; text-align: left;">${child.consigne}</div>`;
+			html += `<div class="tag-list" style="margin-bottom: 0; gap: 8px; justify-content: flex-start;">`;
+			child.options.forEach(opt => {
+				const sel = selected.includes(opt.value) ? ' selected' : '';
+				html += `<div class="tag${sel}" data-key="${key}" data-value="${opt.value}" style="padding: 8px 12px; font-size: 12px;">${opt.label}</div>`;
+			});
+			html += `</div>`;
+			itemDiv.innerHTML = html;
+			leftColumn.appendChild(itemDiv);
+		}
+		const rightColumn = document.createElement('div');
+		rightColumn.style.cssText = 'display: flex; flex-direction: column; gap: 14px; align-items: flex-end;';
+		for (let i = 3; i < 5; i++) {
+			const child = children[i];
+			const key = keyFor(currentStep, i);
+			const value = answers[key] || '';
+			const selected = value.split('|').filter(Boolean);
+			const itemDiv = document.createElement('div');
+			itemDiv.style.cssText = 'width: 100%;';
+			let html = '';
+			if (child.consigne) html += `<div style="font-size: 12px; color: #666; margin-bottom: 6px; font-style: italic; text-align: right;">${child.consigne}</div>`;
+			html += `<div class="tag-list" style="margin-bottom: 0; gap: 8px; justify-content: flex-end;">`;
+			child.options.forEach(opt => {
+				const sel = selected.includes(opt.value) ? ' selected' : '';
+				html += `<div class="tag${sel}" data-key="${key}" data-value="${opt.value}" style="padding: 8px 12px; font-size: 12px;">${opt.label}</div>`;
+			});
+			html += `</div>`;
+			itemDiv.innerHTML = html;
+			rightColumn.appendChild(itemDiv);
+		}
+		const columnsWrapper = document.createElement('div');
+		columnsWrapper.style.cssText = 'display: grid; grid-template-columns: 1fr 1fr; gap: 24px;';
+		columnsWrapper.appendChild(leftColumn);
+		columnsWrapper.appendChild(rightColumn);
+		block.appendChild(columnsWrapper);
+		root.appendChild(block);
+	} else {
+		children.forEach((child, i) => {
+			const key = keyFor(currentStep, i);
+			const rawValue = answers[key] || '';
+			const autoValue = child.autoFill ? answers[child.autoFill] : '';
+			const value = rawValue || autoValue;
+			const isAuto = !rawValue && autoValue;
+			const autoClass = isAuto ? 'auto-filled' : '';
+			const autoBadge = isAuto ? ' <span class="auto-badge">PRÉ-REMPLI</span>' : '';
+			const optional = isOptional(child);
+			const optionalTag = optional ? ' <span class="auto-badge" style="background:#f59e0b;">FACULTATIF</span>' : '';
+			const block = document.createElement('div');
+			block.className = 'content-block';
+			block.id = `block-${i}`;
+			let html = `<h3>${child.fullTitle}${optionalTag}</h3>`;
+			if (child.consigne) html += `<div class="consigne">${child.consigne}</div>`;
+			if (child.type === 'tags' || child.type === 'checkbox') {
+				const selected = value.split('|').filter(Boolean);
+				html += `<div class="tag-list">`;
+				child.options.forEach(opt => {
+					const val = typeof opt === 'string' ? opt : opt.value;
+					const label = typeof opt === 'string' ? opt : opt.label;
+					const sel = selected.includes(val) ? ' selected' : '';
+					html += `<div class="tag${sel}" data-key="${key}" data-value="${escapeHtml(val)}">${escapeHtml(label)}</div>`;
+				});
+				html += `</div>`;
+			} else if (child.type === 'text') {
+				html += `<input type="text" class="answer-box ${autoClass}" data-key="${key}" value="${escapeHtml(value)}" placeholder="Titre…">`;
+			} else {
+				html += `<label for="box-${key}">votre travail ${autoBadge}:</label>`;
+				html += `<textarea id="box-${key}" class="answer-box ${autoClass}" data-key="${key}" placeholder="rédigez ici…">${escapeHtml(value)}</textarea>`;
+			}
+			block.innerHTML = html;
+			root.appendChild(block);
+		});
+	}
+
+	root.querySelectorAll('.answer-box').forEach(box => {
+		box.addEventListener('input', () => {
+			answers[box.dataset.key] = box.value;
+			saveAnswers(answers);
+			flashSaved();
+			updateProgressUI();
+			renderRecallBanner();
+			renderSubStepper();
+		});
+	});
+
+	root.querySelectorAll('.tag').forEach(tag => {
+		tag.addEventListener('click', () => {
+			const key = tag.dataset.key;
+			let selected = (answers[key] || '').split('|').filter(Boolean);
+			const val = tag.dataset.value;
+			if (selected.includes(val)) selected = selected.filter(v => v !== val);
+			else selected.push(val);
+			answers[key] = selected.join('|');
+			saveAnswers(answers);
+			flashSaved();
+			renderContent();
+			renderSubStepper();
+			updateProgressUI();
+			renderRecallBanner();
+		});
+	});
+}
+
+function renderRecallBanner() {
+	const el = document.getElementById('recallBanner');
+	const items = [];
+	if (dissertationTitle.trim()) items.push(`<div class="item"><span class="label">Sujet : </span>« ${escapeHtml(dissertationTitle)} »</div>`);
+	const themes = answers['0.0'];
+	if (themes && themes.trim()) items.push(`<div class="item"><span class="label">Thème(s) : </span>${themes.split('|').map(t => escapeHtml(t)).join(', ')}</div>`);
+	const reperes = answers['0.1'];
+	if (reperes && reperes.trim()) items.push(`<div class="item"><span class="label">Repère(s) : </span>${reperes.split('|').map(r => escapeHtml(r)).join(', ')}</div>`);
+	const these = answers['1.0'];
+	if (these && these.trim()) items.push(`<div class="item"><span class="label">Option A : </span>${escapeHtml(these)}</div>`);
+	const anti = answers['1.1'];
+	if (anti && anti.trim()) items.push(`<div class="item"><span class="label">Option B : </span>${escapeHtml(anti)}</div>`);
+	if (items.length <= 1) { el.style.display = 'none'; return; }
+	el.style.display = 'block';
+	el.innerHTML = items.join('');
+}
+
+function escapeHtml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+let savedTimer = null;
+function flashSaved() {
+	const hint = document.getElementById('savedHint');
+	hint.classList.add('show');
+	clearTimeout(savedTimer);
+	savedTimer = setTimeout(() => hint.classList.remove('show'), 1200);
+}
+
+function updateButtons() {
+	const btnPrev = document.getElementById('btnPrev');
+	const btnNext = document.getElementById('btnNext');
+	const titleLock = !dissertationTitle.trim();
+	btnPrev.disabled = currentStep === 0;
+	if (currentStep === tree.length - 1) {
+		btnNext.disabled = false;
+		btnNext.textContent = '✓ Terminer';
+		btnNext.style.background = '#10b981';
+	} else {
+		btnNext.disabled = titleLock;
+		btnNext.textContent = 'Suivant →';
+		btnNext.style.background = '';
+	}
+}
+
+document.getElementById('btnNext').addEventListener('click', () => {
+	if (document.getElementById('btnNext').textContent.includes('Terminer')) {
+		showToast('🎉 Félicitations !', 'Votre feuille de route est terminée. Vous pouvez exporter votre travail ou l\'imprimer en PDF via le menu.');
+		return;
+	}
+	if (!dissertationTitle.trim()) { shakeTitle(); return; }
+	if (currentStep < tree.length - 1) {
+		currentStep++;
+		render();
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	}
+});
+
+document.getElementById('btnPrev').addEventListener('click', () => {
+	if (currentStep > 0) {
+		currentStep--;
+		render();
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	}
+});
+
+function shakeTitle() {
+	const tf = document.getElementById('titleField');
+	tf.classList.add('locked-warning');
+	setTimeout(() => tf.classList.remove('locked-warning'), 500);
+}
+
+const titleInput = document.getElementById('dissertationTitle');
+titleInput.value = dissertationTitle;
+titleInput.addEventListener('input', () => {
+	dissertationTitle = titleInput.value;
+	localStorage.setItem(TITLE_KEY, dissertationTitle);
+	flashSaved(); updateProgressUI(); renderRecallBanner(); updateButtons();
+});
+titleInput.addEventListener('keydown', (e) => {
+	if (e.key === 'Enter') {
+		e.preventDefault();
+		if (currentStep < tree.length - 1) { currentStep++; render(); }
+	}
+});
+
+async function processImportFile(file) {
+	const reader = new FileReader();
+	reader.onload = async (evt) => {
+		try {
+			const content = evt.target.result;
+			window.ROADMAP_DATA = null;
+			const fn = new Function(content + '\n; return window.ROADMAP_DATA;');
+			const data = fn();
+			if (!data || typeof data !== 'object') throw new Error('Le fichier ne définit pas window.ROADMAP_DATA correctement.');
+			const importedTitle = data.title || '(sans titre)';
+			const hasExistingData = dissertationTitle.trim() || Object.keys(answers).length > 0;
+			const message = hasExistingData
+				? `<strong>Attention :</strong> vos réponses actuelles seront <strong>remplacées</strong> par celles du fichier importé.`
+				: `Aucune donnée n'est actuellement présente. Le fichier sera chargé directement.`;
+			const confirmed = await showConfirmModal('Confirmer l\'import', importedTitle, message);
+			if (!confirmed) { showToast('Import annulé', 'Aucune modification n\'a été apportée.', 3000, 'info'); return; }
+			if (data.title !== undefined) {
+				dissertationTitle = data.title;
+				titleInput.value = dissertationTitle;
+				localStorage.setItem(TITLE_KEY, dissertationTitle);
+			}
+			answers = data.answers || {};
+			saveAnswers(answers);
+			
+			visitedSubSteps = {};
+			saveVisited();
+			
+			currentStep = 0;
+			render();
+			showToast('Import réussi', `Feuille de route chargée : "${dissertationTitle}"`);
+		} catch (err) {
+			showToast('Erreur d\'import', 'Fichier invalide : ' + err.message, 5000, 'warning');
+		}
+	};
+	reader.readAsText(file);
+}
+
+document.getElementById('importInput').addEventListener('change', (e) => {
+	const file = e.target.files[0];
+	if (file) { processImportFile(file); e.target.value = ''; }
+});
+
+function render() {
+	document.getElementById('stepMainTitle').textContent = tree[currentStep].fullTitle;
+	renderMainStepper();
+	renderSubStepper();
+	renderContent();
+	updateButtons();
+	updateProgressUI();
+	renderRecallBanner();
+	const titleField = document.getElementById('titleField');
+	if (currentStep > 0) titleField.style.display = 'none';
+	else titleField.style.display = 'block';
+}
+render();
+</script>
+</body>
+</html>
